@@ -1,0 +1,29 @@
+Package: r2dii.analysis
+Title: TODO What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Clare",
+             family = "Murray",
+             role = c("aut", "cre"),
+             email = "clare@2degrees-investing.org"),
+      person(given = "Klaus",
+             family = "Hogedorn",
+             role = "aut",
+             email = "klaus@2degrees-investing.org"),
+      person(given = "Mauro",
+             family = "Lepore",
+             role = "aut",
+             email = "maurolepore@gmail.com",
+             comment = c(ORCID = "0000-0002-1986-7988")),
+      person(given = "2 Degrees Investing Initiative",
+             role = c("cph", "fnd"),
+             email = "contact@2degrees-investing.org"))
+Description: TODO Add description.
+License: GPL-3 + file LICENSE
+URL: https://github.com/2DegreesInvesting/r2dii.analysis
+BugReports: 
+    https://github.com/2DegreesInvesting/r2dii.analysis/issues
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1

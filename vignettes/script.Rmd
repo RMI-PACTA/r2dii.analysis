@@ -1,3 +1,19 @@
+---
+title: "script"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(r2dii.analysis)
+```
+
+```{r}
 rm(list=ls())
 
 library(r2dii)
@@ -56,3 +72,4 @@ if (nrow(fin_data) != nrow(fin_data_raw)){stop("Additional rows added to fin dat
 check_funds_wo_bbg(fund_data,fin_data)
 
 portfolio_input_check()
+```

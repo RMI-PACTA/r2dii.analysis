@@ -4,8 +4,7 @@ library(r2dii)
 library(readr)
 library(tidyverse)
 
-source("R/util.R")
-source("R/prep_portfolio_input_check.R")
+library(r2dii.analysis)
 
 project_name <- "TEST"
 

@@ -11,4 +11,7 @@ Currencies
 \description{
 TODO: Add a description (1 paragraph).
 }
+\examples{
+Currencies
+}
 \keyword{datasets}

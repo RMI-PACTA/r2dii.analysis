@@ -3,7 +3,6 @@
 # * Use the `.data$` pronoun to refer to variables of the data mask.
 globalVariables(
   c(
-    "%>%",
     "CB.mapped_to_assets",
     "Currency_abbr",
     "DROPBOX.PATH",

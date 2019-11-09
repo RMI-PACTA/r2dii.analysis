@@ -25,6 +25,11 @@ BugReports:
     https://github.com/2DegreesInvesting/r2dii.analysis/issues
 Depends:
     R (>= 3.4)
+Imports: 
+    config,
+    magrittr,
+    plyr,
+    rstudioapi
 Suggests: 
     rmarkdown,
     testthat (>= 2.1.0)
@@ -32,7 +37,3 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-Imports: 
-    config,
-    plyr,
-    rstudioapi

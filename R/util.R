@@ -112,7 +112,7 @@ set_git_path <- function(){
     git_path <- getwd()
   }
 
-  git_path <- gsub("Â","",git_path)
+  git_path <- gsub("\u00C2","",git_path)
   git_path <- paste0(git_path, "/")
 
   git_path
@@ -175,16 +175,16 @@ first_char_up <- function(x){
 
 clean_punctuation <- function(x){
 
-  x <- gsub("ó","o",x)
+  x <- gsub("\u00F3","o",x)
   x <- gsub("&"," and ",x)
-  x <- gsub("á","a",x)
+  x <- gsub("\u00E1","a",x)
   x <- gsub("/"," ",x)
-  x <- gsub("ä","ae", x)
-  x <- gsub("ö","oe", x)
-  x <- gsub("ü","ue", x)
-  x <- gsub("Ä","Ae", x)
-  x <- gsub("Ö","Oe", x)
-  x <- gsub("Ü","Ue", x)
+  x <- gsub("\u00E4","ae", x)
+  x <- gsub("\u00F6","oe", x)
+  x <- gsub("\u00FC","ue", x)
+  x <- gsub("\u00C4","Ae", x)
+  x <- gsub("\u00D6","Oe", x)
+  x <- gsub("\u00DC","Ue", x)
 
   x
 

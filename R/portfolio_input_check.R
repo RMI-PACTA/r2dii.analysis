@@ -146,7 +146,7 @@ clean_colnames_portfolio_input_file <- function(portfolio){
     print("No portfolio Data readable")
   }
 
-  colnames(portfolio) <- gsub("ï..","",colnames(portfolio))
+  colnames(portfolio) <- gsub("\u00EF..","",colnames(portfolio))
 
   names(portfolio)[1] <- gsub("[^A-Za-z0-9]", "", names(portfolio)[1])
 

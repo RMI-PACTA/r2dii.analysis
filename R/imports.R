@@ -1,3 +1,6 @@
+#' @importFrom tibble as_tibble
+NULL
+
 # FIXME: It is best practice to avoid this global variables in other ways:
 # * Import required functions from others packages
 # * Use the `.data$` pronoun to refer to variables of the data mask.
@@ -11,8 +14,6 @@ globalVariables(
     "ald_date",
     "ald_timestamp",
     "allowable_asset_list",
-    "as.tibble",
-    "as_tibble",
     "asset_type",
     "asset_value_usd",
     "bics_subgroup",

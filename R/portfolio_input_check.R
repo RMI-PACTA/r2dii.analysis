@@ -625,7 +625,7 @@ add_fund_portfolio <- function(portfolio, fund_portfolio){
 
   portfolio_total <- rbind(portfolio_no_funds, fund_portfolio)
 
-  portfolio_total <- as.tibble(portfolio_total)
+  portfolio_total <- as_tibble(portfolio_total)
 
   portfolio_total
 

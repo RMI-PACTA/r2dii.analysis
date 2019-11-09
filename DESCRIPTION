@@ -29,7 +29,8 @@ Imports:
     config,
     magrittr,
     plyr,
-    rstudioapi
+    rstudioapi,
+    tibble
 Suggests: 
     rmarkdown,
     testthat (>= 2.1.0)

@@ -31,7 +31,9 @@ Imports:
     plyr,
     rstudioapi,
     tibble,
-    dplyr
+    dplyr,
+    readr,
+    utils
 Suggests: 
     rmarkdown,
     testthat (>= 2.1.0)

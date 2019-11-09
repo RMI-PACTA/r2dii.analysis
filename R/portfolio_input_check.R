@@ -108,9 +108,9 @@ read_raw_portfolio_file <- function(project_name){
   }
 
   # Reads in Files saved with a ; not a ,
-  if (ncol(portfolio) == 1 & length(csv_to_read) == 1){ portfolio <- read.csv(paste0(input_path,csv_to_read), strip.white = T, stringsAsFactors = F, sep = ";")}
-  if (ncol(portfolio) == 1 & length(txt_to_read) == 1){ portfolio <- read.table(paste0(input_path,txt_to_read),sep = "\t", header = T, fileEncoding = enc)}
-  if (ncol(portfolio) == 1 & length(txt_to_read) == 1){ portfolio <- read.table(paste0(input_path,txt_to_read),sep = ";", header = T, fileEncoding = enc)}
+  if (ncol(portfolio) == 1 & length(csv_to_read) == 1){ portfolio <- utils::read.csv(paste0(input_path,csv_to_read), strip.white = T, stringsAsFactors = F, sep = ";")}
+  if (ncol(portfolio) == 1 & length(txt_to_read) == 1){ portfolio <- utils::read.table(paste0(input_path,txt_to_read),sep = "\t", header = T, fileEncoding = enc)}
+  if (ncol(portfolio) == 1 & length(txt_to_read) == 1){ portfolio <- utils::read.table(paste0(input_path,txt_to_read),sep = ";", header = T, fileEncoding = enc)}
 
 
 
@@ -641,10 +641,10 @@ check_funds_wo_bbg <- function(fund_data, fin_data){
 
   fund_isins_missing_bbg <- fund_isins %>% filter(!fund_isin %in% fin_data_funds$isin)
 
-  known_missing_isins <- read.csv("data/Fund_ISINs_No_BBG_Data.csv")
+  known_missing_isins <- utils::read.csv("data/Fund_ISINs_No_BBG_Data.csv")
   known_missing_isins <- known_missing_isins %>% dplyr::bind_rows(fund_isins_missing_bbg) %>% distinct()
 
-  write.csv(fund_isins_missing_bbg, "data/Fund_ISINs_No_BBG_Data.csv", row.names = F)
+  utils::write.csv(fund_isins_missing_bbg, "data/Fund_ISINs_No_BBG_Data.csv", row.names = F)
 
   if (data_check(fund_isins_missing_bbg)){print("Warning: There are funds without bbg data. These are excluded from the analysis.")}
 

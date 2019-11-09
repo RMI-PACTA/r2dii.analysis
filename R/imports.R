@@ -70,8 +70,6 @@ globalVariables(
     "project_meta_investor_name",
     "project_meta_portfolio_name",
     "project_name",
-    "read.csv",
-    "read.table",
     "read_csv",
     "sector_list",
     "sector_override",
@@ -83,7 +81,6 @@ globalVariables(
     "unit_share_price",
     "valid_input",
     "valid_value_usd",
-    "value_usd",
-    "write.csv"
+    "value_usd"
   )
 )

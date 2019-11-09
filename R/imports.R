@@ -70,7 +70,6 @@ globalVariables(
     "project_meta_investor_name",
     "project_meta_portfolio_name",
     "project_name",
-    "read_csv",
     "sector_list",
     "sector_override",
     "sector_override.x",

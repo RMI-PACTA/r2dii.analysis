@@ -27,12 +27,12 @@ Depends:
     R (>= 3.4)
 Imports: 
     config,
+    dplyr,
     magrittr,
     plyr,
+    readr,
     rstudioapi,
     tibble,
-    dplyr,
-    readr,
     utils
 Suggests: 
     rmarkdown,

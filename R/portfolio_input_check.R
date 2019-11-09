@@ -104,7 +104,7 @@ read_raw_portfolio_file <- function(project_name){
   if (length(csv_to_read) == 1){portfolio <- readr::read_csv(paste0(input_path,csv_to_read))}
   if (length(txt_to_read) == 1){
     enc <- guess_encoding(paste0(input_path,txt_to_read))$encoding[1]
-    portfolio <- read.table(paste0(input_path,txt_to_read),sep = ",", header = T, fileEncoding = enc)
+    portfolio <- utils::read.table(paste0(input_path,txt_to_read),sep = ",", header = T, fileEncoding = enc)
   }
 
   # Reads in Files saved with a ; not a ,

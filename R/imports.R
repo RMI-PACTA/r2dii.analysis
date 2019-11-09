@@ -1,4 +1,6 @@
 #' @importFrom tibble as_tibble
+#' @importFrom dplyr case_when distinct filter group_by if_else left_join
+#' @importFrom dplyr mutate select
 NULL
 
 # FIXME: It is best practice to avoid this global variables in other ways:
@@ -17,12 +19,9 @@ globalVariables(
     "asset_type",
     "asset_value_usd",
     "bics_subgroup",
-    "bind_cols",
-    "bind_rows",
     "bloomberg_id",
     "calendar_quarter",
     "calendar_year",
-    "case_when",
     "cols_funds",
     "cols_portfolio_no_bbg",
     "company_corp_ticker",
@@ -33,9 +32,7 @@ globalVariables(
     "dataprep_timestamp",
     "datastore_timestamp",
     "direct_holding",
-    "distinct",
     "exchange_rate_usd",
-    "filter",
     "fin_data",
     "fin_sector_override",
     "fin_sector_override.x",
@@ -43,7 +40,6 @@ globalVariables(
     "financial_timestamp",
     "fund_data",
     "fund_isin",
-    "group_by",
     "guess_encoding",
     "has_bv",
     "has_map",
@@ -52,21 +48,17 @@ globalVariables(
     "has_sb",
     "holding_isin",
     "icb_subsector",
-    "if_else",
     "inc_metaportfolio",
     "inc_project_metaportfolio",
     "investor_name",
     "is_sb",
     "isin",
     "isin_weight",
-    "left_join",
     "mapped_sector",
     "mapped_to_assets",
     "mapped_value_usd",
     "meta_investor_name",
     "meta_portfolio_name",
-    "mutate",
-    "mutate_at",
     "number_of_shares",
     "original_value_usd",
     "other_sector_list",
@@ -86,15 +78,12 @@ globalVariables(
     "sector_override.x",
     "sector_override.y",
     "security_type",
-    "select",
-    "summarise",
     "ticker",
     "total_weight",
     "unit_share_price",
     "valid_input",
     "valid_value_usd",
     "value_usd",
-    "vars",
     "write.csv"
   )
 )

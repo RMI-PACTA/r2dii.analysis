@@ -254,7 +254,7 @@ set_currency_timestamp <- function(currencies){
 override_sector_classification <- function(fin_data, overrides){
 
   overrides <- overrides %>%
-    mutate_at(vars(company_name, company_corp_ticker,fin_sector_override), list(as.character))
+    dplyr::mutate_at(dplyr::vars(company_name, company_corp_ticker,fin_sector_override), list(as.character))
 
   overrides$sector_override <- TRUE
 
@@ -495,11 +495,11 @@ normalise_fund_data <- function(fund_data){
       select(-total_weight)
 
     fund_data_missing <- fund_data_small %>%
-      summarise(isin_weight = 1 - sum(isin_weight,na.rm = T)) %>%
+      dplyr::summarise(isin_weight = 1 - sum(isin_weight,na.rm = T)) %>%
       mutate(holding_isin = "MissingValue")
 
 
-    fund_data <- bind_rows(fund_data_large,fund_data_small,fund_data_missing)
+    fund_data <- dplyr::bind_rows(fund_data_large,fund_data_small,fund_data_missing)
 
     fund_data
 
@@ -584,7 +584,7 @@ calculate_fund_portfolio <- function(fund_portfolio, fund_data){
 
   }else{
 
-    fund_portfolio <- fund_portfolio %>% bind_cols(data.frame(direct_holding = integer(0), fund_isin = character(0), original_value_usd = numeric(0)))
+    fund_portfolio <- fund_portfolio %>% dplyr::bind_cols(data.frame(direct_holding = integer(0), fund_isin = character(0), original_value_usd = numeric(0)))
 
 
 
@@ -642,7 +642,7 @@ check_funds_wo_bbg <- function(fund_data, fin_data){
   fund_isins_missing_bbg <- fund_isins %>% filter(!fund_isin %in% fin_data_funds$isin)
 
   known_missing_isins <- read.csv("data/Fund_ISINs_No_BBG_Data.csv")
-  known_missing_isins <- known_missing_isins %>% bind_rows(fund_isins_missing_bbg) %>% distinct()
+  known_missing_isins <- known_missing_isins %>% dplyr::bind_rows(fund_isins_missing_bbg) %>% distinct()
 
   write.csv(fund_isins_missing_bbg, "data/Fund_ISINs_No_BBG_Data.csv", row.names = F)
 

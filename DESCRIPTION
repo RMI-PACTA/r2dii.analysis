@@ -30,7 +30,8 @@ Imports:
     magrittr,
     plyr,
     rstudioapi,
-    tibble
+    tibble,
+    dplyr
 Suggests: 
     rmarkdown,
     testthat (>= 2.1.0)

@@ -61,7 +61,7 @@ fund_data <- normalise_fund_data(fund_data)
 # Financial Data
 fin_data_raw <- readRDS(paste0(analysis_inputs_path,"FinancialData_DataStore.rda"))
 
-overrides <- read_csv("data/Fin-Sector-Overrides.csv")
+overrides <- readr::read_csv("data/Fin-Sector-Overrides.csv")
 
 fin_data <<- clean_fin_data(fin_data_raw, overrides)
 

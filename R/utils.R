@@ -113,10 +113,13 @@ set_git_path <- function() {
   git_path
 }
 
+data_path <- function(...) {
+  r2dii.utils::path_dropbox_2dii("PortCheck", "00_Data", ...)
+}
+
 set_general_paths <- function() {
   git_path <- set_git_path()
 
-  data_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data")
   analysis_inputs_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data/07_AnalysisInputs/", financial_timestamp, "_", dataprep_timestamp, "/")
   data_store_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data/06_DataStore/F", financial_timestamp, "_A", ald_timestamp, "_export_", datastore_timestamp, "/")
 }

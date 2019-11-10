@@ -1,0 +1,20 @@
+test_that("data_path with 'a' creates a path to file 'a'", {
+  expect_equal(
+    fs::path_file(data_path("a")),
+    "a"
+  )
+})
+
+test_that("data_path with and without arguments is an fs_path", {
+  expect_is(data_path("a"), "fs_path")
+  expect_is(data_path("a", "b"), "fs_path")
+
+  expect_is(data_path(), "fs_path")
+})
+
+test_that("data_path outputs the expected path inside 2dii's drobbox", {
+  expect_match(
+    data_path(),
+    "^.*Dropbox .2. Investing..PortCheck.00_Data$"
+  )
+})

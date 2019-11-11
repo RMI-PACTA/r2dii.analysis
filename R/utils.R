@@ -1,7 +1,7 @@
 # Use parameters from the configuration file ------------------------------
 
 project_meta_investor_name <- function(inc_project_metaportfolio,
-                                       file = get_config()) {
+                                       file = r2dii.utils::get_config()) {
   if (is.logical(inc_project_metaportfolio) && inc_project_metaportfolio) {
     paste0("Project ", meta_investor_name(file = file))
   } else {
@@ -10,7 +10,7 @@ project_meta_investor_name <- function(inc_project_metaportfolio,
 }
 
 project_meta_portfolio_name <- function(inc_project_metaportfolio,
-                                        file = get_config()) {
+                                        file = r2dii.utils::get_config()) {
   if (is.logical(inc_project_metaportfolio) && inc_project_metaportfolio) {
     paste0("Project ", meta_portfolio_name(file = file))
   } else {

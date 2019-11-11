@@ -1,11 +1,10 @@
 # FIXME: These function should implemente deprecation and live in r2dii.utils
 financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP
 ald_timestamp <- r2dii.utils::ALD.TIMESTAMP
+datastore_timestamp <- r2dii.utils::DATASTORE.TIMESTAMP
 
 set_global_parameters <- function(file_path) {
   cfg <- config::get(file = file_path)
-
-  datastore_timestamp <<- cfg$TimeStamps$DataStore.Export
 
   dataprep_timestamp <<- cfg$TimeStamps$DataPrep.Timestamp
   if (is.null(dataprep_timestamp)) {

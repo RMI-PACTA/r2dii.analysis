@@ -1,4 +1,7 @@
+# Functions that get parameters from the configuration file ---------------
+
 # FIXME: These function should implemente deprecation and live in r2dii.utils
+
 financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP
 ald_timestamp <- r2dii.utils::ALD.TIMESTAMP
 datastore_timestamp <- r2dii.utils::DATASTORE.TIMESTAMP
@@ -27,29 +30,33 @@ has_bv <- r2dii.utils::HasBV
 has_map <- r2dii.utils::HasMAP
 has_sb <- r2dii.utils::HasSB
 
+# These functions do not yet exist in r2dii.utils
+allowable_asset_list <- r2dii.utils::get_param(
+  "Lists", "AssetTypes",
+  if_null = c("Funds", "Equity", "Bonds", "Others")
+
+)
+
+inc_metaportfolio <- r2dii.utils::get_param(
+  "ComparisonBenchmarks", "CreateMetaPortfolio",
+  if_null = FALSE
+)
+
+inc_project_metaportfolio <- r2dii.utils::get_param(
+  "ComparisonBenchmarks", "CreateProjectMetaPortfolio",
+  if_null = FALSE
+)
+
 set_global_parameters <- function(file_path) {
   cfg <- config::get(file = file_path)
 
-  allowable_asset_list <<- cfg$Lists$AssetTypes
-  if (is.null(allowable_asset_list)) {
-    allowable_asset_list <<- c("Funds", "Equity", "Bonds", "Others")
-  }
-
-  inc_metaportfolio <<- cfg$ComparisonBenchmarks$CreateMetaPortfolio
-  if (is.null(inc_metaportfolio)) {
-    inc_metaportfolio <<- FALSE
-  }
-
-  inc_project_metaportfolio <<- cfg$ComparisonBenchmarks$CreateProjectMetaPortfolio
-
-  if (is.null(inc_project_metaportfolio)) {
-    inc_project_metaportfolio <<- FALSE
-  }
   if (inc_project_metaportfolio) {
     project_meta_investor_name <<- paste0("Project ", meta_investor_name())
     project_meta_portfolio_name <<- paste0("Project ", meta_portfolio_name())
   }
 }
+
+# Other stuff -------------------------------------------------------------
 
 set_project_paths <- function(project_name) {
   portcheck_v2_path <<- paste0(path_dropbox_2dii(), "/PortCheck_v2")

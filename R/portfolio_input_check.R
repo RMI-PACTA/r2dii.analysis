@@ -230,7 +230,7 @@ check_missing_cols <- function(portfolio) {
 ###
 set_currency_timestamp <- function(currencies) {
   currencies <- currencies %>%
-    select(Currency_abbr, paste0("ExchangeRate_", financial_timestamp)) %>%
+    select(Currency_abbr, paste0("ExchangeRate_", financial_timestamp())) %>%
     filter(!is.na(Currency_abbr), Currency_abbr != "") %>%
     distinct()
 

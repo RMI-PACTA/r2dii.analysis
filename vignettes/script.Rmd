@@ -50,7 +50,7 @@ currencies <- readRDS("data/Currencies.rda")
 currencies <<- set_currency_timestamp(currencies)
 
 # Fund Data
-fund_data <- readRDS(paste0(analysis_inputs_path,"FundsData",financial_timestamp,".rda"))
+fund_data <- readRDS(paste0(analysis_inputs_path,"FundsData",financial_timestamp(),".rda"))
 
 fund_data <- clean_fund_data(fund_data)
 

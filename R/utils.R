@@ -110,8 +110,8 @@ data_path <- function(...) {
 set_general_paths <- function() {
   git_path <- set_git_path()
 
-  analysis_inputs_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data/07_AnalysisInputs/", financial_timestamp, "_", dataprep_timestamp, "/")
-  data_store_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data/06_DataStore/F", financial_timestamp, "_A", ald_timestamp, "_export_", datastore_timestamp, "/")
+  analysis_inputs_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data/07_AnalysisInputs/", financial_timestamp(), "_", dataprep_timestamp(), "/")
+  data_store_path <<- paste0(DROPBOX.PATH(), "/PortCheck/00_Data/06_DataStore/F", financial_timestamp(), "_A", ald_timestamp(), "_export_", datastore_timestamp(), "/")
 }
 
 create_project_folder <- function(project_name) {

@@ -18,3 +18,29 @@ test_that("data_path outputs the expected path inside 2dii's drobbox", {
     "^.*Dropbox .2. Investing..PortCheck.00_Data$"
   )
 })
+
+test_that("project_meta_investor_name outputs the expected string", {
+  config <- r2dii.utils::create_config("
+    default:
+      ComparisonBenchmarks:
+        MetaInvestorName: value
+  ")
+
+  expect_equal(
+    project_meta_investor_name(TRUE, file = config),
+    "Project value"
+  )
+})
+
+test_that("project_meta_portfolio_name outputs the expected string", {
+  config <- r2dii.utils::create_config("
+    default:
+      ComparisonBenchmarks:
+        MetaPortfolioName: value
+  ")
+
+  expect_equal(
+    project_meta_portfolio_name(TRUE, file = config),
+    "Project value"
+  )
+})

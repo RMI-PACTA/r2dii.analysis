@@ -1,11 +1,9 @@
 # Functions that get parameters from the configuration file ---------------
 
-# FIXME: These function should implemente deprecation and live in r2dii.utils
-
+# FIXME: The lowercase names should be defined in r2dii.utils (r2dii.utils#6)
 financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP
 ald_timestamp <- r2dii.utils::ALD.TIMESTAMP
 datastore_timestamp <- r2dii.utils::DATASTORE.TIMESTAMP
-# FIXME: Now `if_null = NULL`. Do we need `if_null = stop`? (ASK @Clare2D)
 dataprep_timestamp <- r2dii.utils::DATAPREP.TIMESTAMP
 start_year <- r2dii.utils::START.YEAR
 time_horizon <- r2dii.utils::TIME.HORIZON
@@ -30,26 +28,9 @@ has_bv <- r2dii.utils::HasBV
 has_map <- r2dii.utils::HasMAP
 has_sb <- r2dii.utils::HasSB
 
-# These functions do not yet exist in r2dii.utils
-allowable_asset_list <- r2dii.utils::get_param(
-  "Lists", "AssetTypes",
-  if_null = c("Funds", "Equity", "Bonds", "Others")
-
-)
-
-inc_metaportfolio <- r2dii.utils::get_param(
-  "ComparisonBenchmarks", "CreateMetaPortfolio",
-  if_null = FALSE
-)
-
-inc_project_metaportfolio <- r2dii.utils::get_param(
-  "ComparisonBenchmarks", "CreateProjectMetaPortfolio",
-  if_null = FALSE
-)
-
-# These functions have a different structure. Ask @Clare2D if this is okay
+# These functions have a different structure.
 project_meta_investor_name <- function(inc_project_metaportfolio) {
-  if (is.logical() && inc_project_metaportfolio) {
+  if (is.logical(inc_project_metaportfolio) && inc_project_metaportfolio) {
     paste0("Project ", meta_investor_name())
   } else {
     NULL
@@ -57,7 +38,7 @@ project_meta_investor_name <- function(inc_project_metaportfolio) {
 }
 
 project_meta_portfolio_name <- function(inc_project_metaportfolio) {
-  if (is.logical() && inc_project_metaportfolio) {
+  if (is.logical(inc_project_metaportfolio) && inc_project_metaportfolio) {
     paste0("Project ", meta_portfolio_name())
   } else {
     NULL

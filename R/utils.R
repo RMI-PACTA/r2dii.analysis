@@ -2,14 +2,11 @@
 financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP
 ald_timestamp <- r2dii.utils::ALD.TIMESTAMP
 datastore_timestamp <- r2dii.utils::DATASTORE.TIMESTAMP
+# FIXME: Now `if_null = NULL`. Do we need `if_null = stop`? (ASK @Clare2D)
+dataprep_timestamp <- r2dii.utils::DATAPREP.TIMESTAMP
 
 set_global_parameters <- function(file_path) {
   cfg <- config::get(file = file_path)
-
-  dataprep_timestamp <<- cfg$TimeStamps$DataPrep.Timestamp
-  if (is.null(dataprep_timestamp)) {
-    stop("Error: No Analysis Inputs Timestamp is defined in the parameter file. Please add a dataprep_timestamp in the parameter file!")
-  }
 
   start_year <<- cfg$AnalysisPeriod$Years.Startyear
   time_horizon <<- cfg$AnalysisPeriod$Years.Horizon

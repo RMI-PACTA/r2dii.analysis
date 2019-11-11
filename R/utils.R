@@ -4,43 +4,41 @@ ald_timestamp <- r2dii.utils::ALD.TIMESTAMP
 datastore_timestamp <- r2dii.utils::DATASTORE.TIMESTAMP
 # FIXME: Now `if_null = NULL`. Do we need `if_null = stop`? (ASK @Clare2D)
 dataprep_timestamp <- r2dii.utils::DATAPREP.TIMESTAMP
+start_year <- r2dii.utils::START.YEAR
+time_horizon <- r2dii.utils::TIME.HORIZON
+risk_year <- r2dii.utils::RISK.YEAR
+additional_year <- r2dii.utils::ADDITIONAL.YEAR
+tech_list <- r2dii.utils::TECH.LIST
+tech_exclude <- r2dii.utils::TECH.EXCLUDE
+sector_list <- r2dii.utils::SECTOR.LIST
+other_sector_list <- r2dii.utils::OTHER.SECTOR.LIST
+scenario_sources_list <- r2dii.utils::SCENARIO.SOURCES.LIST
+iea_scenario_list <- r2dii.utils::IEA.SCENARIO.LIST
+web_region_list <- r2dii.utils::WEB.REGION.LIST
+scenario_geographies_list <- r2dii.utils::SCENARIO.GEOGRAPHIES.LIST
+equity_market_list <- r2dii.utils::EQUITY.MARKET.LIST
+global_aggregate_sector_list <- r2dii.utils::GLOBAL.AGGREGATE.SECTOR.LIST
+global_aggregate_scenario_sources_list <-
+  r2dii.utils::GLOBAL.AGGREGATE.SCENARIO.SOURCES.LIST
+meta_investor_name <- r2dii.utils::META.INVESTOR.NAME
+meta_portfolio_name <- r2dii.utils::META.PORTFOLIO.NAME
+has_risk <- r2dii.utils::HasRISK
+has_bv <- r2dii.utils::HasBV
+has_map <- r2dii.utils::HasMAP
+has_sb <- r2dii.utils::HasSB
 
 set_global_parameters <- function(file_path) {
   cfg <- config::get(file = file_path)
-
-  start_year <<- cfg$AnalysisPeriod$Years.Startyear
-  time_horizon <<- cfg$AnalysisPeriod$Years.Horizon
-  risk_year <<- cfg$AnalysisPeriod$Years.Riskyear
-  additional_year <<- cfg$AnalysisPeriod$Years.Additional
-
-  tech_list <<- cfg$Lists$Technology.List
-  tech_exclude <<- cfg$Lists$Technology.Exclusion.List
-  sector_list <<- cfg$Lists$TechnologyRoadmap.Sector.List
-  other_sector_list <<- cfg$Lists$CO2Intensity.Sector.List
-
-  scenario_sources_list <<- cfg$Lists$Scenario.Sources.List
-  iea_scenario_list <<- cfg$Lists$IEA.Scenarios.List
-  web_region_list <<- cfg$Lists$WebToolRegions
-  scenario_geographies_list <<- cfg$Lists$Scenario.Geography.List
-
-  equity_market_list <<- cfg$Lists$Equity.Market.List
 
   allowable_asset_list <<- cfg$Lists$AssetTypes
   if (is.null(allowable_asset_list)) {
     allowable_asset_list <<- c("Funds", "Equity", "Bonds", "Others")
   }
 
-  global_aggregate_sector_list <<- cfg$Lists$Global.Aggregate.Sector.List
-  global_aggregate_scenario_sources_list <<- cfg$Lists$Global.Aggregate.Scenario.Sources.List
-
-
-  meta_investor_name <<- cfg$ComparisonBenchmarks$MetaInvestorName
-  meta_portfolio_name <<- cfg$ComparisonBenchmarks$MetaPortfolioName
   inc_metaportfolio <<- cfg$ComparisonBenchmarks$CreateMetaPortfolio
   if (is.null(inc_metaportfolio)) {
     inc_metaportfolio <<- FALSE
   }
-
 
   inc_project_metaportfolio <<- cfg$ComparisonBenchmarks$CreateProjectMetaPortfolio
 
@@ -50,31 +48,6 @@ set_global_parameters <- function(file_path) {
   if (inc_project_metaportfolio) {
     project_meta_investor_name <<- paste0("Project ", meta_investor_name)
     project_meta_portfolio_name <<- paste0("Project ", meta_portfolio_name)
-  }
-
-
-  has_bv <<- cfg$Methodology$HasBookValue
-  if (is.null(has_bv)) {
-    has_bv <<- FALSE
-    print("Warning: has_bv set to standard value (FALSE) as not defined in the parameter file")
-  }
-
-  has_risk <<- cfg$Methodology$HasRISK
-  if (is.null(has_risk)) {
-    has_risk <<- TRUE
-    print("Warning: has_risk set to standard value (TRUE) as not defined in the parameter file")
-  }
-
-  has_map <<- cfg$Methodology$HasMAP
-  if (is.null(has_map)) {
-    has_map <<- TRUE
-    print("Warning: has_map set to standard value (TRUE) as not defined in the parameter file")
-  }
-
-  has_sb <<- cfg$Methodology$HasSB
-  if (is.null(has_sb)) {
-    has_sb <<- FALSE
-    print("Warning: has_sb set to standard value (FALSE) as not defined in the parameter file")
   }
 }
 

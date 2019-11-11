@@ -49,21 +49,21 @@ inc_project_metaportfolio <- r2dii.utils::get_param(
 
 # These functions have a different structure. Ask @Clare2D if this is okay
 project_meta_investor_name <- function(inc_project_metaportfolio) {
-  if (is.logical() && inc_project_metaportfolio) {
+  if (is.logical() && inc_project_metaportfolio()) {
     paste0("Project ", meta_investor_name())
   } else {
     # FIXME: @Clare2D, what's the best action to take when
-    # inc_project_metaportfolio is not identical to `TRUE`?
+    # inc_project_metaportfolio() is not identical to `TRUE`?
     invisible()
   }
 }
 
 project_meta_portfolio_name <- function(inc_project_metaportfolio) {
-  if (is.logical() && inc_project_metaportfolio) {
+  if (is.logical() && inc_project_metaportfolio()) {
     paste0("Project ", meta_portfolio_name())
   } else {
     # FIXME: @Clare2D, what's the best action to take when
-    # inc_project_metaportfolio is not identical to `TRUE`?
+    # inc_project_metaportfolio() is not identical to `TRUE`?
     invisible()
   }
 }

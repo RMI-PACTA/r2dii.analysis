@@ -7,7 +7,7 @@ portfolio_input_check <- function() {
 
   portfolio <- clear_portfolio_input_blanks(portfolio)
 
-  portfolio <- add_meta_portfolio(inc_metaportfolio, inc_project_metaportfolio)
+  portfolio <- add_meta_portfolio(inc_metaportfolio(), inc_project_metaportfolio())
 
   portfolio <- add_holding_id(portfolio)
 
@@ -196,8 +196,8 @@ add_meta_portfolio <- function(inc_metaportfolio, inc_project_metaportfolio) {
   }
 
   if (inc_project_metaportfolio) {
-    portfolio_meta$portfolio_name <- project_meta_portfolio_name
-    portfolio_meta$investor_name <- project_meta_investor_name
+    portfolio_meta$portfolio_name <- project_meta_portfolio_name()
+    portfolio_meta$investor_name <- project_meta_investor_name()
     portfolio <- rbind(portfolio, portfolio_meta)
   }
 
@@ -294,7 +294,7 @@ check_asset_types <- function(fin_data) {
   fin_data$asset_type <- first_char_up(fin_data$asset_type)
 
   ### TEST
-  if (!any(unique(fin_data$asset_type) %in% allowable_asset_list)) {
+  if (!any(unique(fin_data$asset_type) %in% allowable_asset_list())) {
     stop("Check Financial Data Asset Types")
   }
 

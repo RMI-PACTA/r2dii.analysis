@@ -1,12 +1,9 @@
+# FIXME: These function should implemente deprecation and live in r2dii.utils
 financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP
+ald_timestamp <- r2dii.utils::ALD.TIMESTAMP
 
 set_global_parameters <- function(file_path) {
   cfg <- config::get(file = file_path)
-
-  ald_timestamp <<- cfg$TimeStamps$ALD.Timestamp
-  if (is.null(ald_timestamp)) {
-    stop("Error: No Asset level Data Timestamp is defined in the parameter file. Please add a ALD.Timestamp!")
-  }
 
   datastore_timestamp <<- cfg$TimeStamps$DataStore.Export
 

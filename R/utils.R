@@ -1,10 +1,7 @@
+financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP
+
 set_global_parameters <- function(file_path) {
   cfg <- config::get(file = file_path)
-
-  financial_timestamp <<- cfg$TimeStamps$FinancialData.Timestamp
-  if (is.null(financial_timestamp)) {
-    stop("Error: No Financial Timestamp is defined in the parameter file. Please add a FinancialData.Timestamp!")
-  }
 
   ald_timestamp <<- cfg$TimeStamps$ALD.Timestamp
   if (is.null(ald_timestamp)) {

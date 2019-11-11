@@ -356,7 +356,7 @@ check_fin_mapped_sectors <- function(fin_data) {
 
   # actual_sectors <- unique(fin_data$mapped_sector)
 
-  if (any(!unique(fin_data$mapped_sector) %in% c(sector_list, other_sector_list, "Other"))) {
+  if (any(!unique(fin_data$mapped_sector) %in% c(sector_list(), other_sector_list(), "Other"))) {
     stop("Additional Sectors in fin_data")
   }
 

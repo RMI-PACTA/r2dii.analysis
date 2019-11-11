@@ -46,8 +46,8 @@ set_global_parameters <- function(file_path) {
     inc_project_metaportfolio <<- FALSE
   }
   if (inc_project_metaportfolio) {
-    project_meta_investor_name <<- paste0("Project ", meta_investor_name)
-    project_meta_portfolio_name <<- paste0("Project ", meta_portfolio_name)
+    project_meta_investor_name <<- paste0("Project ", meta_investor_name())
+    project_meta_portfolio_name <<- paste0("Project ", meta_portfolio_name())
   }
 }
 

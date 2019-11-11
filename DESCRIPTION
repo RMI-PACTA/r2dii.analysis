@@ -30,12 +30,13 @@ Imports:
     dplyr,
     magrittr,
     plyr,
+    r2dii.utils,
     readr,
     rstudioapi,
     tibble,
-    utils,
-    r2dii.utils
+    utils
 Suggests: 
+    fs,
     rmarkdown,
     testthat (>= 2.1.0)
 Encoding: UTF-8

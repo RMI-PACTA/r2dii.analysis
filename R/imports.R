@@ -9,6 +9,7 @@ NULL
 globalVariables(
   c(
     ".data",
+    # FIXME: Where is this function comming from?
     "addMessageToLogFile",
     "asset_type",
     "asset_value_usd",

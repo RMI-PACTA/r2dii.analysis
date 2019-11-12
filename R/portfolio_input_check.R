@@ -734,7 +734,9 @@ check_funds_wo_bbg <- function(fund_data, fin_data) {
   )
 
   if (data_check(fund_isins_missing_bbg)) {
-    print("Warning: There are funds without bbg data. These are excluded from the analysis.")
+    warning(
+      "There are funds without bbg data. These are excluded from the analysis."
+    )
   }
 }
 

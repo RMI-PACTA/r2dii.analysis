@@ -47,14 +47,17 @@ create_project_folder <- function(project_name) {
   folder_location <- paste0(portcheck_v2_path, "/00_Administration/10_Folder_Structures/StartFolders")
 
   # Create the new project folder
-  if (dir.exists(project_location)) {
-    print("Project Folder Already Exists")
+  project_directory <- with_path_in_10_projects(project_name)()
+  if (fs::dir_exists(project_directory)) {
+    message("Project Folder Already Exists")
+    # FIXME: This branch of the condition checks that the parent directory
+    # exists but not if the children directories exist
+    # Is this expected? (ASK @Clare2D)
   } else {
-    dir.create(project_location)
-    a <- list.dirs(folder_location)
-    b <- basename(a)[-1]
-    c <- paste0(project_location, b)
-    lapply(c, function(x) dir.create(x))
+    fs::dir_create(project_directory)
+    dir_names <- fs::path_file(fs::dir_ls(folder_location))
+    dir_paths <- fs::path(project_directory, dir_names)
+    fs::dir_create(dir_paths)
   }
 }
 

@@ -94,3 +94,6 @@ has_risk <- r2dii.utils::HasRISK
 has_bv <- r2dii.utils::HasBV
 has_map <- r2dii.utils::HasMAP
 has_sb <- r2dii.utils::HasSB
+# FIXME: The version by @Clare2D seems different.
+datastore_path <- r2dii.utils::DATA.STORE.PATH
+analysis_inputs_path <- r2dii.utils::ANALYSIS.INPUTS.PATH

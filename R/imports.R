@@ -3,19 +3,7 @@
 #' @importFrom dplyr mutate select
 NULL
 
-# FIXME: It is best practice to avoid this global variables in other ways:
-# * Import required functions from others packages
-# * Use the `.data$` pronoun to refer to variables of the data mask.
-globalVariables(
-  c(
-    ".data",
-    "sector_override",
-    "sector_override.x",
-    "sector_override.y",
-    "unit_share_price",
-    "value_usd"
-  )
-)
+globalVariables(".data")
 
 # FIXME: The lowercase names should be defined in r2dii.utils (r2dii.utils#6)
 financial_timestamp <- r2dii.utils::FINANCIAL.TIMESTAMP

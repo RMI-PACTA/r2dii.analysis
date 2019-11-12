@@ -1,4 +1,5 @@
 portfolio_input_check <- function() {
+  # FIXME: Instead of `project_name` reuse usethis::proj_*()
   portfolio <- read_raw_portfolio_file(project_name)
 
   portfolio <- clean_colnames_portfolio_input_file(portfolio)
@@ -17,6 +18,8 @@ portfolio_input_check <- function() {
 
   portfolio <- clean_portfolio_col_types(portfolio)
 
+  # FIXME: Where is `currencies` comming from? (ASK @Clare2D)
+  # Is this the `Currencies` dataset?
   portfolio <- convert_currencies(portfolio, currencies)
 
   cols_portfolio_no_bbg <- colnames(portfolio)
@@ -24,6 +27,7 @@ portfolio_input_check <- function() {
 
   # Add financial data
   # Merges in the clean data and calculates the marketvalue and number of shares
+  # FIXME: Where does `fin_data` come from? (ASK @Clare2D)
   portfolio <- add_fin_data(portfolio, fin_data)
 
   portfolio <- calculate_value_usd_with_fin_data(portfolio)
@@ -34,6 +38,7 @@ portfolio_input_check <- function() {
   fund_portfolio <- identify_fund_portfolio(portfolio)
 
   # Creates the fund_portfolio to match the original portfolio
+  # FIXME: Where does `fund_data` come from?
   fund_portfolio <- calculate_fund_portfolio(fund_portfolio, fund_data)
 
   # Merges in the bbg data to the fund portfolio
@@ -90,7 +95,7 @@ portfolio_input_check <- function() {
 ### Portfolio cleaning functions
 read_raw_portfolio_file <- function(project_name) {
   portfolio <- NA
-
+  # FIXME: Instead of `peoject_location` reuse r2dii.utils
   input_path <- paste0(project_location, "20_Raw_Inputs/")
 
   csv_to_read <- list.files(path = input_path, pattern = paste0(project_name, "_Input.csv"))
@@ -101,6 +106,7 @@ read_raw_portfolio_file <- function(project_name) {
     portfolio <- readr::read_csv(paste0(input_path, csv_to_read))
   }
   if (length(txt_to_read) == 1) {
+    # FIXME: Where does `guess_encoding()` come from? (ASK @Clare2D)
     enc <- guess_encoding(paste0(input_path, txt_to_read))$encoding[1]
     portfolio <- utils::read.table(paste0(input_path, txt_to_read), sep = ",", header = T, fileEncoding = enc)
   }
@@ -220,6 +226,7 @@ check_missing_cols <- function(portfolio) {
   missing_columns <- setdiff(required_input_cols, colnames(portfolio))
 
   if (length(missing_columns) > 0) {
+    # FIXME: Where is this function comming from? (ASK @Clare2D)
     addMessageToLogFile("Error", paste0("The input file is missing the following data columns: ", missing_columns))
     error_count <- error_count + 1
   }

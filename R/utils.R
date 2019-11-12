@@ -44,7 +44,7 @@ add_intial_project_files <- function(project_name) {
     r2dii.utils::DROPBOX.PATH(),
     "Portcheck_v2/00_Administration/20_Input_Files/"
   )
-
+  # FIXME: Instead of `project_location` reuse r2dii.utils
   input_file <- paste0(project_location, "20_Raw_Inputs/", project_name, "_Input.csv")
   par_file <- paste0(project_location, "20_Raw_Inputs/", "ReportParameterFile.yml")
   yml_file <- paste0(project_location, "20_Raw_Inputs/", "AnalysisParameters.yml")

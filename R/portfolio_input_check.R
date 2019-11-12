@@ -572,9 +572,8 @@ calculate_value_usd_with_fin_data <- function(portfolio) {
 }
 
 identify_fund_portfolio <- function(portfolio) {
-  fund_portfolio <- portfolio %>% filter(.data$asset_type == "Funds")
+  portfolio %>% filter(.data$asset_type == "Funds")
 
-  fund_portfolio
 }
 
 calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
@@ -654,14 +653,19 @@ check_funds_wo_bbg <- function(fund_data, fin_data) {
     select(fund_isin) %>%
     distinct()
 
-  fund_isins_missing_bbg <- fund_isins %>% filter(!fund_isin %in% fin_data_funds$isin)
+  fund_isins_missing_bbg <- fund_isins %>%
+    filter(!fund_isin %in% fin_data_funds$isin)
 
   known_missing_isins <- utils::read.csv("data/Fund_ISINs_No_BBG_Data.csv")
   known_missing_isins <- known_missing_isins %>%
     dplyr::bind_rows(fund_isins_missing_bbg) %>%
     distinct()
 
-  utils::write.csv(fund_isins_missing_bbg, "data/Fund_ISINs_No_BBG_Data.csv", row.names = F)
+  utils::write.csv(
+    fund_isins_missing_bbg,
+    "data/Fund_ISINs_No_BBG_Data.csv",
+    row.names = FALSE
+  )
 
   if (data_check(fund_isins_missing_bbg)) {
     print("Warning: There are funds without bbg data. These are excluded from the analysis.")

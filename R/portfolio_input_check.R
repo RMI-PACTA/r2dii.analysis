@@ -323,7 +323,7 @@ check_mapped_assets_flag <- function(fin_data) {
             TRUE ~ 0
           )
         ) %>%
-        select(-.data$CB.mapped_to_assets, -EQ.mapped_to_assets)
+        select(-.data$CB.mapped_to_assets, -.data$EQ.mapped_to_assets)
     } else if ("has_prod_after_2018" %in% colnames(fin_data)) {
       fin_data <- fin_data %>%
         mutate(
@@ -440,15 +440,23 @@ clean_fin_data <- function(fin_data_raw, overrides) {
   fin_data <- fin_data %>%
     mutate(ald_date = paste0(calendar_year, calendar_quarter)) %>%
     select(
-      bloomberg_id, company_name, country_of_domicile, ticker, company_corp_ticker,
-      isin, # figi, cusip, sedol1,
-      unit_share_price, exchange_rate_usd,
-      asset_type, security_type,
-      mapped_sector, icb_subsector, bics_subgroup, # bclass4,
-      mapped_to_assets,
-      sector_override,
-      is_sb,
-      ald_date
+      .data$bloomberg_id,
+      .data$company_name,
+      .data$country_of_domicile,
+      .data$ticker,
+      .data$company_corp_ticker,
+      .data$isin, # figi, cusip, sedol1,
+      .data$unit_share_price,
+      .data$exchange_rate_usd,
+      .data$asset_type,
+      .data$security_type,
+      .data$mapped_sector,
+      .data$icb_subsector,
+      .data$bics_subgroup, # bclass4,
+      .data$mapped_to_assets,
+      .data$sector_override,
+      .data$is_sb,
+      .data$ald_date
     )
 
   fin_data

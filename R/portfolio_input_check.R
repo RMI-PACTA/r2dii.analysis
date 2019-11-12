@@ -232,8 +232,8 @@ check_missing_cols <- function(portfolio) {
 ###
 set_currency_timestamp <- function(currencies) {
   currencies <- currencies %>%
-    select(Currency_abbr, paste0("ExchangeRate_", financial_timestamp())) %>%
-    filter(!is.na(Currency_abbr), Currency_abbr != "") %>%
+    select(.data$Currency_abbr, paste0("ExchangeRate_", financial_timestamp())) %>%
+    filter(!is.na(.data$Currency_abbr), .data$Currency_abbr != "") %>%
     distinct()
 
   names(currencies) <- c("currency", "exchange_rate")
@@ -320,7 +320,7 @@ check_mapped_assets_flag <- function(fin_data) {
             TRUE ~ 0
           )
         ) %>%
-        select(-CB.mapped_to_assets, -EQ.mapped_to_assets)
+        select(-.data$CB.mapped_to_assets, -EQ.mapped_to_assets)
     } else if ("has_prod_after_2018" %in% colnames(fin_data)) {
       fin_data <- fin_data %>%
         mutate(

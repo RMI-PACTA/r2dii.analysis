@@ -13,8 +13,6 @@ globalVariables(
     "addMessageToLogFile",
     "calendar_quarter",
     "calendar_year",
-    "cols_funds",
-    "cols_portfolio_no_bbg",
     "company_corp_ticker",
     "company_name",
     "currencies",
@@ -28,7 +26,6 @@ globalVariables(
     "fund_isin",
     "guess_encoding",
     "has_prod_after_2018",
-    "holding_isin",
     "isin",
     "isin_weight",
     "mapped_sector",
@@ -39,7 +36,6 @@ globalVariables(
     "sector_override",
     "sector_override.x",
     "sector_override.y",
-    "total_weight",
     "unit_share_price",
     "value_usd"
   )

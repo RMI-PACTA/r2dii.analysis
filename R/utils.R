@@ -39,10 +39,6 @@ set_git_path <- function() {
   git_path
 }
 
-data_path <- function(...) {
-  r2dii.utils::path_dropbox_2dii("PortCheck", "00_Data", ...)
-}
-
 set_general_paths <- function() {
   git_path <- set_git_path()
 }

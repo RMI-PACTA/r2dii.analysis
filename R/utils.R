@@ -20,17 +20,11 @@ project_meta_portfolio_name <- function(inc_project_metaportfolio,
 
 # Other stuff -------------------------------------------------------------
 
-set_project_paths <- function(project_name) {
-  portcheck_v2_path <<- paste0(path_dropbox_2dii(), "/PortCheck_v2")
-  project_location <<- paste0(portcheck_v2_path, "/10_Projects/", project_name, "/")
-
-  log_path <<- paste0(project_location, "00_Log_Files/")
-  par_file_path <<- paste0(project_location, "10_Parameter_File/")
-  raw_input_path <<- paste0(project_location, "20_Raw_Inputs/")
-  proc_input_path <<- paste0(project_location, "30_Processed_Inputs/")
-  results_path <<- paste0(project_location, "40_Results/")
-  outputs_path <<- paste0(project_location, "50_Outputs/")
+portcheck_v2_path <- function(...) {
+  r2dii.utils::path_dropbox_2dii("PortCheck_v2", ...)
 }
+
+# project_location <- paste0(portcheck_v2_path, "/10_Projects/", project_name, "/")
 
 set_git_path <- function() {
   if (rstudioapi::isAvailable()) {

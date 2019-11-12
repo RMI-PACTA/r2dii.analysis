@@ -10,7 +10,7 @@
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 <!-- badges: end -->
 
-The goal of r2dii.analysis is to TODO add gaol.
+The goal of r2dii.analysis is to TODO add goal.
 
 ## Installation
 

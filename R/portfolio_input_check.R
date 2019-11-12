@@ -32,7 +32,7 @@ portfolio_input_check <- function() {
 
   portfolio <- calculate_value_usd_with_fin_data(portfolio)
 
-  original_value_usd <- sum(portfolio$value_usd, na.rm = T)
+  original_value_usd <- sum(portfolio$value_usd, na.rm = TRUE)
 
   # identify funds in the portfolio
   fund_portfolio <- identify_fund_portfolio(portfolio)
@@ -47,7 +47,7 @@ portfolio_input_check <- function() {
   # add fund_portfolio and check that the total value is the same
   portfolio_total <- add_fund_portfolio(portfolio, fund_portfolio)
 
-  if (round(sum(portfolio_total$value_usd, na.rm = T), 1) != round(original_value_usd, 1)) {
+  if (round(sum(portfolio_total$value_usd, na.rm = TRUE), 1) != round(original_value_usd, 1)) {
     stop("Fund Portfolio introducing errors in total value")
   }
 
@@ -256,7 +256,10 @@ set_currency_timestamp <- function(currencies) {
 
 override_sector_classification <- function(fin_data, overrides) {
   overrides <- overrides %>%
-    dplyr::mutate_at(dplyr::vars(company_name, company_corp_ticker, fin_sector_override), list(as.character))
+    dplyr::mutate_at(
+      dplyr::vars(company_name, company_corp_ticker, fin_sector_override),
+      list(as.character)
+    )
 
   overrides$sector_override <- TRUE
 
@@ -519,7 +522,7 @@ normalise_fund_data <- function(fund_data) {
   if (data_check(fund_data)) {
     fund_data <- fund_data %>%
       group_by(.data$fund_isin) %>%
-      mutate(total_weight = sum(isin_weight, na.rm = T))
+      mutate(total_weight = sum(isin_weight, na.rm = TRUE))
 
     fund_data_large <- fund_data %>%
       group_by(.data$fund_isin) %>%
@@ -533,7 +536,7 @@ normalise_fund_data <- function(fund_data) {
       select(-.data$total_weight)
 
     fund_data_missing <- fund_data_small %>%
-      dplyr::summarise(isin_weight = 1 - sum(.data$isin_weight, na.rm = T)) %>%
+      dplyr::summarise(isin_weight = 1 - sum(.data$isin_weight, na.rm = TRUE)) %>%
       mutate(holding_isin = "MissingValue")
 
 
@@ -795,15 +798,15 @@ portfolio_summary <- function(portfolio_total) {
       .data$mapped_sector,
       .data$valid_input
     ) %>%
-    mutate(valid_value_usd = sum(.data$value_usd, na.rm = T)) %>%
+    mutate(valid_value_usd = sum(.data$value_usd, na.rm = TRUE)) %>%
     group_by(
       .data$investor_name,
       .data$portfolio_name,
       .data$asset_type,
       .data$valid_input) %>%
-    mutate(asset_value_usd = sum(value_usd, na.rm = T)) %>%
+    mutate(asset_value_usd = sum(value_usd, na.rm = TRUE)) %>%
     group_by(.data$investor_name, .data$portfolio_name, .data$valid_input) %>%
-    mutate(portfolio_value_usd = sum(value_usd, na.rm = T)) %>%
+    mutate(portfolio_value_usd = sum(value_usd, na.rm = TRUE)) %>%
     select(
       .data$investor_name,
       .data$portfolio_name,

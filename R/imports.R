@@ -11,7 +11,6 @@ globalVariables(
     ".data",
     # FIXME: Where is this function comming from?
     "addMessageToLogFile",
-    "bloomberg_id",
     "calendar_quarter",
     "calendar_year",
     "cols_funds",

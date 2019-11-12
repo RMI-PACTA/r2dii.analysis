@@ -11,7 +11,6 @@ globalVariables(
     ".data",
     # FIXME: Where is this function comming from?
     "addMessageToLogFile",
-    "asset_value_usd",
     "bloomberg_id",
     "calendar_quarter",
     "calendar_year",
@@ -31,16 +30,11 @@ globalVariables(
     "guess_encoding",
     "has_prod_after_2018",
     "holding_isin",
-    "investor_name",
     "isin",
     "isin_weight",
     "mapped_sector",
-    "mapped_to_assets",
-    "mapped_value_usd",
     "number_of_shares",
     "original_value_usd",
-    "portfolio_name",
-    "portfolio_value_usd",
     "project_location",
     "project_name",
     "sector_override",
@@ -48,8 +42,6 @@ globalVariables(
     "sector_override.y",
     "total_weight",
     "unit_share_price",
-    "valid_input",
-    "valid_value_usd",
     "value_usd"
   )
 )

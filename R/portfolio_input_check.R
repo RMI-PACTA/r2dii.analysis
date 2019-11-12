@@ -257,7 +257,11 @@ set_currency_timestamp <- function(currencies) {
 override_sector_classification <- function(fin_data, overrides) {
   overrides <- overrides %>%
     dplyr::mutate_at(
-      dplyr::vars(company_name, company_corp_ticker, fin_sector_override),
+      dplyr::vars(
+        .data$company_name,
+        .data$company_corp_ticker,
+        .data$fin_sector_override
+      ),
       list(as.character)
     )
 
@@ -296,11 +300,19 @@ override_sector_classification <- function(fin_data, overrides) {
   # Clean resulting financial data
   fin_data <- fin_data %>%
     mutate(
-      sector_override = sector_override.x,
-      sector_override = if_else(sector_override.y != "" & !is.na(sector_override.y), sector_override.y, sector_override),
-      fin_sector_override = fin_sector_override.x,
-      fin_sector_override = if_else(!is.na(fin_sector_override.y) & fin_sector_override.y != "", fin_sector_override.y, fin_sector_override),
-      sector_override = if_else(is.na(sector_override), FALSE, TRUE)
+      sector_override = .data$sector_override.x,
+      sector_override = if_else(
+        .data$sector_override.y != "" & !is.na(.data$sector_override.y),
+        .data$sector_override.y,
+        .data$sector_override
+      ),
+      fin_sector_override = .data$fin_sector_override.x,
+      fin_sector_override = if_else(
+        !is.na(.data$fin_sector_override.y) & .data$fin_sector_override.y != "",
+        .data$fin_sector_override.y,
+        .data$fin_sector_override
+      ),
+      sector_override = if_else(is.na(.data$sector_override), FALSE, TRUE)
     ) %>%
     select(
       -.data$sector_override.x,
@@ -310,7 +322,11 @@ override_sector_classification <- function(fin_data, overrides) {
     )
 
   fin_data <- fin_data %>%
-    mutate(mapped_sector = if_else(sector_override, fin_sector_override, mapped_sector)) %>%
+    mutate(
+      mapped_sector = if_else(
+        .data$sector_override, .data$fin_sector_override, .data$mapped_sector
+      )
+    ) %>%
     select(-.data$fin_sector_override)
 
   fin_data
@@ -319,8 +335,9 @@ override_sector_classification <- function(fin_data, overrides) {
 check_asset_types <- function(fin_data) {
   fin_data <- fin_data %>%
     mutate(
-      asset_type =
-        if_else(.data$asset_type == "Other", "Others", .data$asset_type)
+      asset_type = if_else(
+        .data$asset_type == "Other", "Others", .data$asset_type
+      )
     )
 
   fin_data$asset_type <- first_char_up(fin_data$asset_type)
@@ -357,7 +374,7 @@ check_mapped_assets_flag <- function(fin_data) {
     } else if ("has_prod_after_2018" %in% colnames(fin_data)) {
       fin_data <- fin_data %>%
         mutate(
-          mapped_to_assets = has_prod_after_2018
+          mapped_to_assets = .data$has_prod_after_2018
         ) %>%
         select(-.data$has_prod_after_2018)
     }
@@ -468,7 +485,7 @@ clean_fin_data <- function(fin_data_raw, overrides) {
 
   # Select relevant columns
   fin_data <- fin_data %>%
-    mutate(ald_date = paste0(calendar_year, calendar_quarter)) %>%
+    mutate(ald_date = paste0(.data$calendar_year, .data$calendar_quarter)) %>%
     select(
       .data$bloomberg_id,
       .data$company_name,
@@ -522,7 +539,7 @@ normalise_fund_data <- function(fund_data) {
   if (data_check(fund_data)) {
     fund_data <- fund_data %>%
       group_by(.data$fund_isin) %>%
-      mutate(total_weight = sum(isin_weight, na.rm = TRUE))
+      mutate(total_weight = sum(.data$isin_weight, na.rm = TRUE))
 
     fund_data_large <- fund_data %>%
       group_by(.data$fund_isin) %>%
@@ -536,11 +553,15 @@ normalise_fund_data <- function(fund_data) {
       select(-.data$total_weight)
 
     fund_data_missing <- fund_data_small %>%
-      dplyr::summarise(isin_weight = 1 - sum(.data$isin_weight, na.rm = TRUE)) %>%
+      dplyr::summarise(
+        isin_weight = 1 - sum(.data$isin_weight, na.rm = TRUE)
+      ) %>%
       mutate(holding_isin = "MissingValue")
 
 
-    fund_data <- dplyr::bind_rows(fund_data_large, fund_data_small, fund_data_missing)
+    fund_data <- dplyr::bind_rows(
+      fund_data_large, fund_data_small, fund_data_missing
+    )
 
     fund_data
   } else {
@@ -579,14 +600,16 @@ calculate_value_usd_with_fin_data <- function(portfolio) {
 
   # add missing currency for number of shares
   portfolio <- portfolio %>%
-    mutate(currency = if_else(!is.na(number_of_shares), "USD", currency))
+    mutate(
+      currency = if_else(!is.na(.data$number_of_shares), "USD", .data$currency)
+    )
 
   # calculates the value_usd where number of shares are given
   portfolio <- portfolio %>%
     mutate(value_usd = if_else(
-      .data$asset_type %in% c("Equity", "Funds") & is.na(value_usd),
-      number_of_shares * unit_share_price,
-      value_usd
+      .data$asset_type %in% c("Equity", "Funds") & is.na(.data$value_usd),
+      .data$number_of_shares * .data$unit_share_price,
+      .data$value_usd
     ))
 
   portfolio
@@ -607,15 +630,35 @@ calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
     fund_portfolio$fund_isin <- fund_portfolio$isin
     fund_portfolio$isin <- fund_portfolio$holding_isin
 
-    # If there is no fund breakdown available, return the "original isin data" to the original locations
+    # If there is no fund breakdown available, return the "original isin data"
+    # to the original locations
     fund_portfolio <- fund_portfolio %>%
       mutate(
-        value_usd = if_else(!fund_isin %in% fund_data$fund_isin, original_value_usd, value_usd),
-        isin = if_else(!fund_isin %in% fund_data$fund_isin, fund_isin, isin),
-        direct_holding = if_else(!fund_isin %in% fund_data$fund_isin, TRUE, direct_holding),
+        value_usd = if_else(
+          !.data$fund_isin %in% fund_data$fund_isin,
+          .data$original_value_usd,
+          .data$value_usd
+        ),
+        isin = if_else(
+          !.data$fund_isin %in% fund_data$fund_isin,
+          .data$fund_isin,
+          .data$isin
+        ),
+        direct_holding = if_else(
+          !.data$fund_isin %in% fund_data$fund_isin,
+          TRUE,
+          .data$direct_holding
+        ),
       )
   } else {
-    fund_portfolio <- fund_portfolio %>% dplyr::bind_cols(data.frame(direct_holding = integer(0), fund_isin = character(0), original_value_usd = numeric(0)))
+    fund_portfolio <- fund_portfolio %>%
+      dplyr::bind_cols(
+        data.frame(
+          direct_holding = integer(0),
+          fund_isin = character(0),
+          original_value_usd = numeric(0)
+        )
+      )
   }
 
 
@@ -630,7 +673,7 @@ add_fund_portfolio <- function(portfolio, fund_portfolio) {
 
   # Remove the fund lines from the portfolio
   portfolio_no_funds <- portfolio %>%
-    filter(!isin %in% fund_portfolio$fund_isin)
+    filter(!.data$isin %in% fund_portfolio$fund_isin)
 
   # Check that there are the correct number of isins in both portfolios
   if (nrow(portfolio_no_funds) + length(unique(fund_portfolio$holding_id)) != nrow(portfolio)) {
@@ -642,7 +685,7 @@ add_fund_portfolio <- function(portfolio, fund_portfolio) {
     mutate(
       direct_holding = TRUE,
       fund_isin = NA,
-      original_value_usd = value_usd
+      original_value_usd = .data$value_usd
     )
 
   # select same columns for both portfolios
@@ -677,7 +720,7 @@ check_funds_wo_bbg <- function(fund_data, fin_data) {
     distinct()
 
   fund_isins_missing_bbg <- fund_isins %>%
-    filter(!fund_isin %in% fin_data_funds$isin)
+    filter(!.data$fund_isin %in% fin_data_funds$isin)
 
   known_missing_isins <- utils::read.csv("data/Fund_ISINs_No_BBG_Data.csv")
   known_missing_isins <- known_missing_isins %>%
@@ -804,9 +847,9 @@ portfolio_summary <- function(portfolio_total) {
       .data$portfolio_name,
       .data$asset_type,
       .data$valid_input) %>%
-    mutate(asset_value_usd = sum(value_usd, na.rm = TRUE)) %>%
+    mutate(asset_value_usd = sum(.data$value_usd, na.rm = TRUE)) %>%
     group_by(.data$investor_name, .data$portfolio_name, .data$valid_input) %>%
-    mutate(portfolio_value_usd = sum(value_usd, na.rm = TRUE)) %>%
+    mutate(portfolio_value_usd = sum(.data$value_usd, na.rm = TRUE)) %>%
     select(
       .data$investor_name,
       .data$portfolio_name,
@@ -820,9 +863,6 @@ portfolio_summary <- function(portfolio_total) {
       .data$portfolio_value_usd
     ) %>%
     distinct()
-
-
-
 
   overview_data
 }

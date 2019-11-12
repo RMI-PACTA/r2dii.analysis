@@ -298,7 +298,10 @@ override_sector_classification <- function(fin_data, overrides) {
 
 check_asset_types <- function(fin_data) {
   fin_data <- fin_data %>%
-    mutate(asset_type = if_else(asset_type == "Other", "Others", asset_type))
+    mutate(
+      asset_type =
+        if_else(.data$asset_type == "Other", "Others", .data$asset_type)
+    )
 
   fin_data$asset_type <- first_char_up(fin_data$asset_type)
 
@@ -560,7 +563,7 @@ calculate_value_usd_with_fin_data <- function(portfolio) {
   # calculates the value_usd where number of shares are given
   portfolio <- portfolio %>%
     mutate(value_usd = if_else(
-      asset_type %in% c("Equity", "Funds") & is.na(value_usd),
+      .data$asset_type %in% c("Equity", "Funds") & is.na(value_usd),
       number_of_shares * unit_share_price,
       value_usd
     ))
@@ -569,7 +572,7 @@ calculate_value_usd_with_fin_data <- function(portfolio) {
 }
 
 identify_fund_portfolio <- function(portfolio) {
-  fund_portfolio <- portfolio %>% filter(asset_type == "Funds")
+  fund_portfolio <- portfolio %>% filter(.data$asset_type == "Funds")
 
   fund_portfolio
 }
@@ -643,7 +646,7 @@ check_funds_wo_bbg <- function(fund_data, fin_data) {
 
   # isin in the fund_data but no bbg data available
   fin_data_funds <- fin_data %>%
-    filter(asset_type == "Funds") %>%
+    filter(.data$asset_type == "Funds") %>%
     select(isin) %>%
     distinct()
 

@@ -1,5 +1,3 @@
-# Use parameters from the configuration file ------------------------------
-
 project_meta_investor_name <- function(inc_project_metaportfolio,
                                        file = r2dii.utils::get_config()) {
   if (is.logical(inc_project_metaportfolio) && inc_project_metaportfolio) {
@@ -18,33 +16,13 @@ project_meta_portfolio_name <- function(inc_project_metaportfolio,
   }
 }
 
-# Other stuff -------------------------------------------------------------
-
-portcheck_v2_path <- function(...) {
-  r2dii.utils::path_dropbox_2dii("PortCheck_v2", ...)
-}
-
-# project_location <- paste0(portcheck_v2_path, "/10_Projects/", project_name, "/")
-
-set_git_path <- function() {
-  if (rstudioapi::isAvailable()) {
-    git_path <- dirname(rstudioapi::getActiveDocumentContext()$path)
-  } else {
-    git_path <- getwd()
-  }
-
-  git_path <- gsub("\u00C2", "", git_path)
-  git_path <- paste0(git_path, "/")
-
-  git_path
-}
-
-set_general_paths <- function() {
-  git_path <- set_git_path()
-}
-
 create_project_folder <- function(project_name) {
-  folder_location <- paste0(portcheck_v2_path, "/00_Administration/10_Folder_Structures/StartFolders")
+  folder_location <- r2dii.utils::path_dropbox_2dii(
+    "PortCheck_v2",
+    "00_Administration",
+    "10_Folder_Structures",
+    "StartFolders"
+  )
 
   # Create the new project folder
   project_directory <- with_path_in_10_projects(project_name)()

@@ -49,7 +49,6 @@ globalVariables(
     "number_of_shares",
     "original_value_usd",
     "path_dropbox_2dii",
-    "portcheck_v2_path",
     "portfolio_name",
     "portfolio_value_usd",
     "project_location",

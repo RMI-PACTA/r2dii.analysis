@@ -358,10 +358,10 @@ check_mapped_assets_flag <- function(fin_data) {
   # convert old naming of "mapped to assets" column to be mapped_to_assets
 
   if ("EQ.mapped_to_assets" %in% colnames(fin_data) |
-      "CB.mapped_to_assets" %in% colnames(fin_data) |
-      "has_prod_after_2018" %in% colnames(fin_data)) {
+    "CB.mapped_to_assets" %in% colnames(fin_data) |
+    "has_prod_after_2018" %in% colnames(fin_data)) {
     if ("EQ.mapped_to_assets" %in% colnames(fin_data)
-        | "CB.mapped_to_assets" %in% colnames(fin_data)) {
+    | "CB.mapped_to_assets" %in% colnames(fin_data)) {
       fin_data <- fin_data %>%
         mutate(
           mapped_to_assets = case_when(
@@ -617,7 +617,6 @@ calculate_value_usd_with_fin_data <- function(portfolio) {
 
 identify_fund_portfolio <- function(portfolio) {
   portfolio %>% filter(.data$asset_type == "Funds")
-
 }
 
 calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
@@ -848,7 +847,8 @@ portfolio_summary <- function(portfolio_total) {
       .data$investor_name,
       .data$portfolio_name,
       .data$asset_type,
-      .data$valid_input) %>%
+      .data$valid_input
+    ) %>%
     mutate(asset_value_usd = sum(.data$value_usd, na.rm = TRUE)) %>%
     group_by(.data$investor_name, .data$portfolio_name, .data$valid_input) %>%
     mutate(portfolio_value_usd = sum(.data$value_usd, na.rm = TRUE)) %>%

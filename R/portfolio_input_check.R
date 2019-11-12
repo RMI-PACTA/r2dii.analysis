@@ -310,8 +310,11 @@ check_mapped_assets_flag <- function(fin_data) {
 
   # convert old naming of "mapped to assets" column to be mapped_to_assets
 
-  if ("EQ.mapped_to_assets" %in% colnames(fin_data) | "CB.mapped_to_assets" %in% colnames(fin_data) | "has_prod_after_2018" %in% colnames(fin_data)) {
-    if ("EQ.mapped_to_assets" %in% colnames(fin_data) | "CB.mapped_to_assets" %in% colnames(fin_data)) {
+  if ("EQ.mapped_to_assets" %in% colnames(fin_data) |
+      "CB.mapped_to_assets" %in% colnames(fin_data) |
+      "has_prod_after_2018" %in% colnames(fin_data)) {
+    if ("EQ.mapped_to_assets" %in% colnames(fin_data)
+        | "CB.mapped_to_assets" %in% colnames(fin_data)) {
       fin_data <- fin_data %>%
         mutate(
           mapped_to_assets = case_when(

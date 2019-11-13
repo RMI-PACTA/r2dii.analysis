@@ -32,11 +32,11 @@ set_general_paths()
 
 fs::dir_create(get_project_paths(project_name))
 
-add_intial_project_files(project_name = project_name)
-
-
-
-
+fs::dir_copy(
+  path_input_files(),
+  path_output_files(project_name),
+  overwrite = FALSE
+)
 
 ### Process Input Files
 

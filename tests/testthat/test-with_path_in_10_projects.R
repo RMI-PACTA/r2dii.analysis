@@ -1,5 +1,5 @@
 test_that("with_path_in_10_projects returns the expected path", {
-  expect_is(with_path_in_10_projects(), "function")
+  expect_is(with_path_in_10_projects("a-project"), "function")
 
   actual <- with_path_in_10_projects("a-dir")()
   expected <- fs::path(r2dii.utils::dbox_port2_10proj(), "a-dir")

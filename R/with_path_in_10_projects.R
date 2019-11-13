@@ -21,6 +21,8 @@
 #' path_analysis("40_Results")
 #' path_analysis("50_Outputs")
 with_path_in_10_projects <- function(directory) {
+  force(directory)
+
   function(...) {
     r2dii.utils::dbox_port2_10proj(directory, ...)
   }

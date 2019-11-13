@@ -60,3 +60,12 @@ is_blank_na <- function(x) {
   }
   flag
 }
+
+path_proj <- function(project, parent = NULL) {
+  out <- with_path_in_10_projects(project)()
+  if (!is.null(parent)) {
+    out <- fs::path(parent, project)
+  }
+
+  out
+}

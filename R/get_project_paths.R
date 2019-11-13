@@ -29,15 +29,6 @@ get_project_paths <- function(project, parent = NULL) {
   fs::path(project_path, nested_dirs)
 }
 
-path_proj <- function(project, parent = NULL) {
-  out <- with_path_in_10_projects(project)()
-  if (!is.null(parent)) {
-    out <- fs::path(parent, project)
-  }
-
-  out
-}
-
 get_nested_dirs <- function() {
   r2dii.utils::path_dropbox_2dii(
     "PortCheck_v2", "00_Administration", "10_Folder_Structures", "StartFolders"

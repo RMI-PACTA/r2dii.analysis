@@ -46,5 +46,4 @@ path_output_files("a-project", file_names = c("new_file_1", "new_file_2"))
 # Use `parent` to change the parent directory
 path_input_files(parent = tempdir())
 path_output_files("a-project", parent = tempdir())
-
 }

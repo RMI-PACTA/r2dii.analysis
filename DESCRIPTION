@@ -36,7 +36,8 @@ Imports:
     rlang,
     rstudioapi,
     tibble,
-    utils
+    utils,
+    glue
 Suggests: 
     rmarkdown,
     testthat (>= 2.1.0)

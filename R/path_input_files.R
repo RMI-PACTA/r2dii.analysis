@@ -60,22 +60,3 @@ input_file_names <- function() {
   )
 }
 
-path_project_files <- function(project_name) {
-
-  path_project <- with_path_in_10_projects(project_name)
-
-  input_file <- path_project("20_Raw_Inputs", glue("{project_name}_Input.csv"))
-  if (!file.exists(input_file)) {
-    file.copy(paste0(folder_location, "ProjectName_Input.csv"), input_file, overwrite = F)
-  }
-
-  par_file <- path_project("20_Raw_Inputs", "ReportParameterFile.yml")
-  if (!file.exists(par_file)) {
-    file.copy(paste0(folder_location, "ReportParameterFile.yml"), par_file, overwrite = F)
-  }
-
-  yml_file <- path_project("20_Raw_Inputs", "AnalysisParameters.yml")
-  if (!file.exists(yml_file)) {
-    file.copy(paste0(folder_location, "AnalysisParameters.yml"), yml_file, overwrite = F)
-  }
-}

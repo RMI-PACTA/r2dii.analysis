@@ -16,6 +16,15 @@ project_meta_portfolio_name <- function(inc_project_metaportfolio,
   }
 }
 
+path_proj <- function(project, parent = NULL) {
+  out <- with_path_in_10_projects(project)()
+  if (!is.null(parent)) {
+    out <- fs::path(parent, project)
+  }
+
+  out
+}
+
 first_char_up <- function(x) {
   x <- paste0(toupper(substr(x, 1, 1)), tolower(substr(x, 2, nchar(x))))
   x
@@ -59,13 +68,4 @@ is_blank_na <- function(x) {
     flag <- FALSE
   }
   flag
-}
-
-path_proj <- function(project, parent = NULL) {
-  out <- with_path_in_10_projects(project)()
-  if (!is.null(parent)) {
-    out <- fs::path(parent, project)
-  }
-
-  out
 }

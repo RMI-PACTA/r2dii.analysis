@@ -16,21 +16,21 @@
 #' path_project_dirs("a-project")
 #'
 #' # Use `fs::dir_crete() to create all directories in one step
-#' project_paths <- path_project_dirs("a-project", parent = tempdir())
-#' fs::dir_create(project_paths)
+#' path_to_project_dirs <- path_project_dirs("a-project", parent = tempdir())
+#' fs::dir_create(path_to_project_dirs)
 #'
-#' all(fs::dir_exists(project_paths))
+#' all(fs::dir_exists(path_to_project_dirs))
 #'
 #' # Cleanup
-#' fs::dir_delete(project_paths)
+#' fs::dir_delete(path_to_project_dirs)
 path_project_dirs <- function(project, parent = NULL) {
-  project_path <- path_proj(project = project, parent = parent)
-  nested_dirs <- fs::path_file(fs::dir_ls(get_nested_dirs()))
-  fs::path(project_path, nested_dirs)
+  path_dir <- path_proj(project, parent)
+  fs::path(path_dir, get_nested_dirs())
 }
 
 get_nested_dirs <- function() {
-  r2dii.utils::path_dropbox_2dii(
+  path <- r2dii.utils::path_dropbox_2dii(
     "PortCheck_v2", "00_Administration", "10_Folder_Structures", "StartFolders"
   )
+  fs::path_file(fs::dir_ls(path))
 }

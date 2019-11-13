@@ -1,4 +1,4 @@
-#' Create paths to an analysis project
+#' Create paths to common project directories
 #'
 #' This function creates paths that represent the structure of a common
 #' "analysis project".
@@ -13,17 +13,17 @@
 #' @export
 #'
 #' @examples
-#' get_project_paths("a-project")
+#' path_project_dirs("a-project")
 #'
 #' # Use `fs::dir_crete() to create all directories in one step
-#' project_paths <- get_project_paths("a-project", parent = tempdir())
+#' project_paths <- path_project_dirs("a-project", parent = tempdir())
 #' fs::dir_create(project_paths)
 #'
 #' all(fs::dir_exists(project_paths))
 #'
 #' # Cleanup
 #' fs::dir_delete(project_paths)
-get_project_paths <- function(project, parent = NULL) {
+path_project_dirs <- function(project, parent = NULL) {
   project_path <- path_proj(project = project, parent = parent)
   nested_dirs <- fs::path_file(fs::dir_ls(get_nested_dirs()))
   fs::path(project_path, nested_dirs)

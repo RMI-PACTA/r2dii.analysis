@@ -3,7 +3,7 @@
 #' @param parent String. Path to the directory containing `file_names`
 #' @param file_names Character vector giving the name of the files in
 #'   `parent`.
-#' @inheritParams get_project_paths
+#' @inheritParams path_project_dirs
 #'
 #' @return A character vector.
 #' @export

@@ -1,6 +1,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr case_when distinct filter group_by if_else left_join
 #' @importFrom dplyr mutate select
+#' @importFrom rlang %||%
 NULL
 
 globalVariables(".data")

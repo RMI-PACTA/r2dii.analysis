@@ -28,15 +28,16 @@ Depends:
 Imports: 
     config,
     dplyr,
+    fs,
     magrittr,
     plyr,
     r2dii.utils,
     readr,
+    rlang,
     rstudioapi,
     tibble,
     utils
 Suggests: 
-    fs,
     rmarkdown,
     testthat (>= 2.1.0)
 Encoding: UTF-8

@@ -1,8 +1,9 @@
-#' Create paths to common input files
+#' Create paths to common input and output files
 #'
-#' @param path_dir String. Path to the directory containing `file_names`
+#' @param parent String. Path to the directory containing `file_names`
 #' @param file_names Character vector giving the name of the files in
-#'   `path_dir`.
+#'   `parent`.
+#' @inheritParams get_project_paths
 #'
 #' @return A character vector.
 #' @export
@@ -10,22 +11,45 @@
 #' @examples
 #' path_input_files()
 #'
-#' # The argument defaults should be okay but you can change them if needed
-#' # This is useful if the name of a directory changes
+#' path_output_files("a-project")
+#'
+#' # Use fs::file_copy() to copy all files in one step
+#' \dontrun{
+#' fs::file_copy(
+#'   path_input_files(),
+#'   path_output_files("a-project"),
+#'   overwrite = TRUE
+#' )
+#' }
+#'
+#' # Use `file_names` to create pahts to new files
 #' path_input_files(file_names = c("new_file_1", "new_file_2"))
-#' # This is useful for tests and examples
-#' path_input_files(path_dir = tempdir())
-path_input_files <- function(path_dir = r2dii.utils::path_dropbox_2dii(
+#' path_output_files("a-project", file_names = c("new_file_1", "new_file_2"))
+#'
+#' # Use `parent` to change the parent directory
+#' path_input_files(parent = tempdir())
+#' path_output_files("a-project", parent = tempdir())
+path_input_files <- function(parent = r2dii.utils::path_dropbox_2dii(
                                "Portcheck_v2",
                                "00_Administration",
                                "20_Input_Files"),
                              file_names = input_file_names()) {
-  fs::path(path_dir = path_dir, file_names = file_names)
+  fs::path(parent = parent, file_names = file_names)
+}
+
+#' @rdname path_input_files
+#' @examples
+#'
+path_output_files <- function(project, parent = NULL, file_names = NULL) {
+  path_dir <- path_proj(project = project, parent = parent)
+  file_names <- file_names %||% input_file_names()
+
+  fs::path(path_dir, file_names)
 }
 
 #' Name of common input files
 #'
-#' @return
+#' @return A character vector.
 #' @export
 #'
 #' @examples
@@ -39,7 +63,6 @@ input_file_names <- function() {
 }
 
 path_project_files <- function(project_name) {
-  folder_location
 
   path_project <- with_path_in_10_projects(project_name)
 

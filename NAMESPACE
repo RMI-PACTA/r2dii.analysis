@@ -2,6 +2,7 @@
 
 export("%>%")
 export(get_project_paths)
+export(input_file_names)
 export(path_input_files)
 export(with_path_in_10_projects)
 importFrom(dplyr,case_when)

@@ -24,7 +24,7 @@
 #' # Cleanup
 #' fs::dir_delete(project_paths)
 get_project_paths <- function(project, parent = NULL) {
-  project_path <- path_proj(project, parent)
+  project_path <- path_proj(project = project, parent = parent)
   nested_dirs <- fs::path_file(fs::dir_ls(get_nested_dirs()))
   fs::path(project_path, nested_dirs)
 }

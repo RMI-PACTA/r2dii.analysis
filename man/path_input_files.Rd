@@ -7,7 +7,7 @@
 \usage{
 path_input_files(parent = r2dii.utils::path_dropbox_2dii("Portcheck_v2",
   "00_Administration", "20_Input_Files"),
-  file_names = input_file_names())
+  file_names = get_input_file_names())
 
 path_output_files(project, parent = NULL, file_names = NULL)
 }

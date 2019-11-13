@@ -23,13 +23,13 @@ This function creates paths that represent the structure of a common
 path_project_dirs("a-project")
 
 # Use `fs::dir_crete() to create all directories in one step
-project_paths <- path_project_dirs("a-project", parent = tempdir())
-fs::dir_create(project_paths)
+path_to_project_dirs <- path_project_dirs("a-project", parent = tempdir())
+fs::dir_create(path_to_project_dirs)
 
-all(fs::dir_exists(project_paths))
+all(fs::dir_exists(path_to_project_dirs))
 
 # Cleanup
-fs::dir_delete(project_paths)
+fs::dir_delete(path_to_project_dirs)
 }
 \seealso{
 \code{\link[fs:dir_create]{fs::dir_create()}}

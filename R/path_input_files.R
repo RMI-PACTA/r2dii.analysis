@@ -33,7 +33,7 @@ path_input_files <- function(parent = r2dii.utils::path_dropbox_2dii(
                                "Portcheck_v2",
                                "00_Administration",
                                "20_Input_Files"),
-                             file_names = input_file_names()) {
+                             file_names = get_input_file_names()) {
   fs::path(parent = parent, file_names = file_names)
 }
 
@@ -41,7 +41,7 @@ path_input_files <- function(parent = r2dii.utils::path_dropbox_2dii(
 #' @export
 path_output_files <- function(project, parent = NULL, file_names = NULL) {
   path_dir <- path_proj(project = project, parent = parent)
-  file_names <- file_names %||% input_file_names()
+  file_names <- file_names %||% get_input_file_names()
   fs::path(path_dir, file_names)
 }
 
@@ -51,8 +51,8 @@ path_output_files <- function(project, parent = NULL, file_names = NULL) {
 #' @export
 #'
 #' @examples
-#' input_file_names()
-input_file_names <- function() {
+#' get_input_file_names()
+get_input_file_names <- function() {
   c(
     "ProjectName_Input.csv",
     "ReportParameterFile.yml",

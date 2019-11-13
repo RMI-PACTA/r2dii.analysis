@@ -24,17 +24,18 @@
 #' # Cleanup
 #' fs::dir_delete(project_paths)
 get_project_paths <- function(project, parent = NULL) {
-  project_path <- project_path(project, parent)
+  project_path <- path_proj(project, parent)
   nested_dirs <- fs::path_file(fs::dir_ls(get_nested_dirs()))
   fs::path(project_path, nested_dirs)
 }
 
-project_path <- function(project, parent) {
-  project_path <- with_path_in_10_projects(project)()
+path_proj <- function(project, parent = NULL) {
+  out <- with_path_in_10_projects(project)()
   if (!is.null(parent)) {
-    project_path <- fs::path(parent, project)
+    out <- fs::path(parent, project)
   }
-  project_path
+
+  out
 }
 
 get_nested_dirs <- function() {

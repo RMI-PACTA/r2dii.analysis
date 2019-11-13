@@ -16,29 +16,6 @@ project_meta_portfolio_name <- function(inc_project_metaportfolio,
   }
 }
 
-create_project_folder <- function(project_name) {
-  folder_location <- r2dii.utils::path_dropbox_2dii(
-    "PortCheck_v2",
-    "00_Administration",
-    "10_Folder_Structures",
-    "StartFolders"
-  )
-
-  # Create the new project folder
-  project_directory <- with_path_in_10_projects(project_name)()
-  if (fs::dir_exists(project_directory)) {
-    message("Project Folder Already Exists")
-    # FIXME: This branch of the condition checks that the parent directory
-    # exists but not if the children directories exist
-    # Is this expected? (ASK @Clare2D)
-  } else {
-    fs::dir_create(project_directory)
-    dir_names <- fs::path_file(fs::dir_ls(folder_location))
-    dir_paths <- fs::path(project_directory, dir_names)
-    fs::dir_create(dir_paths)
-  }
-}
-
 add_intial_project_files <- function(project_name) {
   folder_location <- paste0(
     r2dii.utils::DROPBOX.PATH(),

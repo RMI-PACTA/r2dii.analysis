@@ -19,15 +19,24 @@ path_input_files <- function(path_dir = r2dii.utils::path_dropbox_2dii(
                                "Portcheck_v2",
                                "00_Administration",
                                "20_Input_Files"),
-                             file_names = c(
-                               "ProjectName_Input.csv",
-                               "ReportParameterFile.yml",
-                               "AnalysisParameters.yml"
-                             )) {
+                             file_names = input_file_names()) {
   fs::path(path_dir = path_dir, file_names = file_names)
 }
 
-
+#' Name of common input files
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' input_file_names()
+input_file_names <- function() {
+  c(
+    "ProjectName_Input.csv",
+    "ReportParameterFile.yml",
+    "AnalysisParameters.yml"
+  )
+}
 
 path_project_files <- function(project_name) {
   folder_location

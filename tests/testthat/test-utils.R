@@ -45,3 +45,10 @@ test_that("project_meta_portfolio_name outputs the expected string", {
   )
 })
 
+test_that("is_dataframe_with_0_rows", {
+  expect_true(data_check(mtcars))
+  expect_false(data_check(1))
+
+  expect_true(data_check(mtcars[ , 0]))
+  expect_false(data_check(mtcars[0, ]))
+})

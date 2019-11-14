@@ -164,8 +164,9 @@ clean_colnames_portfolio_input_file <- function(portfolio) {
 }
 
 clean_portfolio_col_types <- function(portfolio) {
-  portfolio$investor_name <- clean_punctuation(portfolio$investor_name)
-  portfolio$portfolio_name <- clean_punctuation(portfolio$portfolio_name)
+  portfolio$investor_name <- convert_special_characters(portfolio$investor_name)
+  portfolio$portfolio_name <-
+    convert_special_characters(portfolio$portfolio_name)
   portfolio$number_of_shares <- as.numeric(portfolio$number_of_shares)
   portfolio$market_value <- as.numeric(portfolio$market_value)
   portfolio$currency <- as.character(portfolio$currency)

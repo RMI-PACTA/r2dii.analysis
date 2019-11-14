@@ -25,7 +25,7 @@ path_proj <- function(project, parent = NULL) {
   out
 }
 
-clean_punctuation <- function(x) {
+convert_special_characters <- function(x) {
   x <- gsub("\u00F3", "o", x)
   x <- gsub("&", " and ", x)
   x <- gsub("\u00E1", "a", x)

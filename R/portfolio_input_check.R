@@ -144,22 +144,6 @@ read_raw_portfolio_file <- function(project_name) {
   out
 }
 
-rename_portfolio_columns <- function(portfolio) {
-  portfolio <- plyr::rename(portfolio,
-    replace = c(
-      "PortfolioName" = "portfolio_name",
-      "InvestorName" = "investor_name",
-      "Portfolio.Name" = "portfolio_name",
-      "Investor.Name" = "investor_name",
-      "Currency" = "currency",
-      "NumberofShares" = "number_of_shares",
-      "MarketValue" = "market_value",
-      "ISIN" = "isin"
-    ),
-    warn_missing = F
-  )
-}
-
 clean_colnames_portfolio_input_file <- function(portfolio) {
   if (is.data.frame(portfolio)) {
     # Removes additional columns added by Excel on saving

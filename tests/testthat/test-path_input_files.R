@@ -32,3 +32,18 @@ test_that("path_output_files output matches the expected paths", {
   all_matching <- all(purrr::map_lgl(expected, ~ any(grepl(.x, out))))
   expect_true(all_matching)
 })
+
+test_that("path_output_files is sensitive to `parent`", {
+  fourth_parent <- function(x) {
+    x %>%
+      fs::path_dir() %>%
+      fs::path_dir() %>%
+      fs::path_dir()
+  }
+
+  "a-project" %>%
+    path_output_files(parent = "parent") %>%
+    fourth_parent() %>%
+    unique() %>%
+    expect_equal(".")
+})

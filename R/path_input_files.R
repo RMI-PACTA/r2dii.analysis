@@ -40,7 +40,7 @@ path_input_files <- function(parent = r2dii.utils::path_dropbox_2dii(
 #' @rdname path_input_files
 #' @export
 path_output_files <- function(project, parent = NULL, file_names = NULL) {
-  path_dir <- path_proj(project = project, parent = parent)
+  path_dir <- path_project(project = project, parent = parent)
   file_names <- file_names %||% get_input_file_names()
   fs::path(path_dir, file_names)
 }

@@ -16,7 +16,7 @@ project_meta_portfolio_name <- function(inc_project_metaportfolio,
   }
 }
 
-path_proj <- function(project, parent = NULL) {
+path_project <- function(project, parent = NULL) {
   out <- with_path_in_10_projects(project)()
   if (!is.null(parent)) {
     out <- fs::path(parent, project)

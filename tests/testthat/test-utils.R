@@ -55,3 +55,16 @@ test_that("is_dataframe_with_some_row works as expected", {
   expect_false(is_dataframe_with_some_row(mtcars[0, ]))
 })
 
+test_that("is_blank_na with length-1 input works as expected", {
+  expect_true(is_blank_na(NA))
+  expect_true(is_blank_na(""))
+
+  # FIXME: Works with non string. Is this okay? (ASK @Clare2D)
+  expect_false(is_blank_na(" "))
+  expect_false(is_blank_na(1))
+
+  # The original implementation works only with length-1 inputs. I made this
+  # explicit via an assertion. Is this the expected behaviour? (ASK @Clare2D)
+  expect_error(is_blank_na(NULL), "has_length_1 is not TRUE")
+  expect_error(is_blank_na(1:2), "has_length_1 is not TRUE")
+})

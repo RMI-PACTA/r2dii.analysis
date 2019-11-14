@@ -100,6 +100,7 @@ portfolio_input_check <- function(portfolio) {
 
 ### Portfolio cleaning functions
 
+# TODO: Sould we use janitr::clean_names()? (ASK @Clare2D)
 clean_colnames <- function(portfolio) {
   stopifnot(is.data.frame(portfolio))
 

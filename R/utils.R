@@ -47,15 +47,9 @@ is_dataframe_with_some_row <- function(data) {
   is.data.frame(data) && nrow(data) > 0L
 }
 
-# Checks whether a value is null or blank
 is_blank_na <- function(x) {
   has_length_1 <- identical(length(x), 1L)
   stopifnot(has_length_1)
 
-  if (is.na(x) | x == "") {
-    flag <- TRUE
-  } else {
-    flag <- FALSE
-  }
-  flag
+  is.na(x) || identical(x, "")
 }

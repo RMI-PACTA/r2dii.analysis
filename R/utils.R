@@ -26,18 +26,20 @@ path_project <- function(project, parent = NULL) {
 }
 
 convert_special_characters <- function(x) {
-  x <- gsub("\u00F3", "o", x)
-  x <- gsub("&", " and ", x)
-  x <- gsub("\u00E1", "a", x)
-  x <- gsub("/", " ", x)
-  x <- gsub("\u00E4", "ae", x)
-  x <- gsub("\u00F6", "oe", x)
-  x <- gsub("\u00FC", "ue", x)
-  x <- gsub("\u00C4", "Ae", x)
-  x <- gsub("\u00D6", "Oe", x)
-  x <- gsub("\u00DC", "Ue", x)
+  out <- x
 
-  x
+  out <- gsub("\u00F3", "o", out)
+  out <- gsub("&", " and ", out)
+  out <- gsub("\u00E1", "a", out)
+  out <- gsub("/", " ", out)
+  out <- gsub("\u00E4", "ae", out)
+  out <- gsub("\u00F6", "oe", out)
+  out <- gsub("\u00FC", "ue", out)
+  out <- gsub("\u00C4", "Ae", out)
+  out <- gsub("\u00D6", "Oe", out)
+  out <- gsub("\u00DC", "Ue", out)
+
+  out
 }
 
 # Checks whether a variable is a dataframe. Considers also logicals and null values.

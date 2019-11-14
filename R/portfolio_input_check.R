@@ -340,7 +340,7 @@ check_asset_types <- function(fin_data) {
       )
     )
 
-  fin_data$asset_type <- first_char_up(fin_data$asset_type)
+  fin_data$asset_type <- stringr::str_to_sentence(fin_data$asset_type)
 
   ### TEST
   if (

@@ -25,11 +25,6 @@ path_proj <- function(project, parent = NULL) {
   out
 }
 
-first_char_up <- function(x) {
-  x <- paste0(toupper(substr(x, 1, 1)), tolower(substr(x, 2, nchar(x))))
-  x
-}
-
 clean_punctuation <- function(x) {
   x <- gsub("\u00F3", "o", x)
   x <- gsub("&", " and ", x)

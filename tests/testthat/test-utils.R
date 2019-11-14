@@ -44,3 +44,4 @@ test_that("project_meta_portfolio_name outputs the expected string", {
     "Project value"
   )
 })
+

@@ -47,7 +47,7 @@ is_dataframe_with_some_row <- function(data) {
   is.data.frame(data) && nrow(data) > 0L
 }
 
-is_blank_na <- function(x) {
+is_na_or_empty_string <- function(x) {
   has_length_1 <- identical(length(x), 1L)
   stopifnot(has_length_1)
 

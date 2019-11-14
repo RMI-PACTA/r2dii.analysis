@@ -43,18 +43,8 @@ convert_special_characters <- function(x) {
 }
 
 # Checks whether a variable is a dataframe. Considers also logicals and null values.
-is_dataframe_with_some_row <- function(df) {
-  if (is.data.frame(df)) {
-    if (nrow(df) > 0) {
-      check <- TRUE
-    } else {
-      check <- FALSE
-    }
-  } else {
-    check <- FALSE
-  }
-
-  return(check)
+is_dataframe_with_some_row <- function(data) {
+  is.data.frame(data) && nrow(data) > 0L
 }
 
 # Checks whether a value is null or blank

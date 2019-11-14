@@ -104,13 +104,12 @@ clean_colnames <- function(portfolio) {
   stopifnot(is.data.frame(portfolio))
 
   # Removes additional columns added by Excel on saving
-  portfolio <- portfolio[, !grepl("X", colnames(portfolio))]
+  out <- portfolio[, !grepl("X", names(portfolio))]
 
-  colnames(portfolio) <- gsub("\u00EF..", "", colnames(portfolio))
-  names(portfolio)[1] <- gsub("[^A-Za-z0-9]", "", names(portfolio)[1])
+  names(out) <- gsub("\u00EF..", "", names(out))
+  names(out)[1] <- gsub("[^A-Za-z0-9]", "", names(out)[1])
 
-
-  portfolio
+  out
 }
 
 clean_portfolio_col_types <- function(portfolio) {

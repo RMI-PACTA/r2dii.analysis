@@ -101,15 +101,12 @@ portfolio_input_check <- function(portfolio) {
 ### Portfolio cleaning functions
 
 clean_colnames <- function(portfolio) {
-  if (is.data.frame(portfolio)) {
-    # Removes additional columns added by Excel on saving
-    portfolio <- portfolio[, !grepl("X", colnames(portfolio))]
-  } else {
-    print("No portfolio Data readable")
-  }
+  stopifnot(is.data.frame(portfolio))
+
+  # Removes additional columns added by Excel on saving
+  portfolio <- portfolio[, !grepl("X", colnames(portfolio))]
 
   colnames(portfolio) <- gsub("\u00EF..", "", colnames(portfolio))
-
   names(portfolio)[1] <- gsub("[^A-Za-z0-9]", "", names(portfolio)[1])
 
 

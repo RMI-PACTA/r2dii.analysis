@@ -1,6 +1,12 @@
-portfolio_input_check <- function() {
-  # FIXME: Instead of `project_name` reuse usethis::proj_*()
-  portfolio <- read_raw_portfolio(project_name)
+#' Title
+#'
+#' @inheritParams path_project_dirs
+#'
+#' @examples
+#' read_raw_portfolio(project) %>%
+#' portfolio_input_check()
+#' @noRd
+portfolio_input_check <- function(portfolio) {
 
   portfolio <- clean_colnames_portfolio_input_file(portfolio)
 

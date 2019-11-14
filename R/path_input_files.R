@@ -32,7 +32,8 @@
 path_input_files <- function(parent = r2dii.utils::path_dropbox_2dii(
                                "Portcheck_v2",
                                "00_Administration",
-                               "20_Input_Files"),
+                               "20_Input_Files"
+                             ),
                              file_names = get_input_file_names()) {
   fs::path(parent = parent, file_names = file_names)
 }
@@ -59,4 +60,3 @@ get_input_file_names <- function() {
     "AnalysisParameters.yml"
   )
 }
-

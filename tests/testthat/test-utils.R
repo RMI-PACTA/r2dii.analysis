@@ -47,7 +47,7 @@ test_that("project_meta_portfolio_name outputs the expected string", {
 
 test_that("is_dataframe_with_some_row works as expected", {
   expect_true(is_dataframe_with_some_row(mtcars))
-  expect_true(is_dataframe_with_some_row(mtcars[ , 0]))
+  expect_true(is_dataframe_with_some_row(mtcars[, 0]))
 
   # Not a dataframe
   expect_false(is_dataframe_with_some_row(1))

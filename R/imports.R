@@ -1,7 +1,8 @@
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr case_when distinct filter group_by if_else left_join
 #' @importFrom dplyr mutate select
-#' @importFrom rlang %||% abort
+#' @importFrom rlang %||% abort warn
+#' @importFrom usethis ui_field
 #' @importFrom glue glue
 #' @importFrom fs dir_ls
 #' @importFrom utils read.table

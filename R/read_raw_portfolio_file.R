@@ -18,12 +18,14 @@ read_raw_portfolio <- function(project) {
 
   if (identical(length(csv_path), 1L)) {
     out <- readr::read_csv(csv_path)
-    if (has_expected_structure(out))
+    if (has_expected_structure(out)) {
       return(out)
+    }
 
     out <- readr::read_delim(csv_path, delim = ";")
-    if (has_expected_structure(out))
+    if (has_expected_structure(out)) {
       return(out)
+    }
   }
 
   txt_path <- dir_ls(inputs_path, regexp = glue("{project}_Input.txt"))
@@ -32,16 +34,19 @@ read_raw_portfolio <- function(project) {
   if (identical(length(txt_path), 1L)) {
     enc <- readr::guess_encoding(txt_path)$encoding[1]
     out <- read.table(txt_path, sep = ",", header = TRUE, fileEncoding = enc)
-    if (has_expected_structure(out))
+    if (has_expected_structure(out)) {
       return(out)
+    }
 
     out <- read.table(txt_path, sep = "\t", header = TRUE, fileEncoding = enc)
-    if (has_expected_structure(out))
+    if (has_expected_structure(out)) {
       return(out)
+    }
 
     out <- read.table(txt_path, sep = ";", header = TRUE, fileEncoding = enc)
-    if (has_expected_structure(out))
+    if (has_expected_structure(out)) {
       return(out)
+    }
   }
 
   abort("Can't read porfolio input file")

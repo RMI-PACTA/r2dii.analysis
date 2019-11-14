@@ -4,12 +4,13 @@
 #'
 #' @examples
 #' read_raw_portfolio(project) %>%
-#' portfolio_input_check()
+#'   portfolio_input_check()
 #' @noRd
 portfolio_input_check <- function(portfolio) {
-  portfolio <- clean_column_names(portfolio)
-
-  portfolio <- clear_portfolio_input_blanks(portfolio)
+  portfolio <- portfolio %>%
+    clean_column_names() %>%
+    drop_rows_with_empty_string(in_column = "investor_name") %>%
+    drop_rows_with_empty_string(in_column = "portfolio_name")
 
   portfolio <- add_meta_portfolio(
     r2dii.utils::inc_metaportfolio(), r2dii.utils::inc_project_metaportfolio()
@@ -110,9 +111,22 @@ clean_column_names <- function(data) {
   out <- janitor::clean_names(out)
 
   if (rlang::has_name(out, "numberof_shares")) {
-    out <- dplyr::rename(out, number_of_shares=  "numberof_shares")
+    out <- dplyr::rename(out, number_of_shares = "numberof_shares")
   } else {
     warn(glue("Can't find expected column {ui_field('numberof_shares')}"))
+  }
+
+  out
+}
+
+drop_rows_with_empty_string <- function(data, in_column) {
+  out <- data
+  col <- data[[in_column]]
+
+  if (any(col == "" | is.na(col))) {
+    col_name <- ui_field(in_column)
+    warn(glue("Removing rows where {col_name} is an empty string."))
+    out <- data[col != "" & !is.na(out$investor_name), ]
   }
 
   out
@@ -127,26 +141,6 @@ clean_portfolio_col_types <- function(portfolio) {
   portfolio$currency <- as.character(portfolio$currency)
 
   portfolio$currency <- if_else(portfolio$currency == "Euro", "EUR", portfolio$currency)
-
-  portfolio
-}
-
-clear_portfolio_input_blanks <- function(portfolio) {
-
-  # clear blank lines
-  if (any(portfolio$investor_name == "" | is.na(portfolio$investor_name))) {
-    ### TEST - this replaces a warning log
-    print("Warning: Missing Investor Names, corresponding lines removed")
-    print("Missing Investor Names, corresponding lines removed")
-    portfolio <- portfolio[portfolio$investor_name != "" & !is.na(portfolio$investor_name), ]
-  }
-
-  if (any(portfolio$portfolio_name == "" | is.na(portfolio$portfolio_name))) {
-    ### TEST
-    print("Warning: Missing portfolio Names, corresponding lines removed")
-    print("Missing portfolio Names, corresponding lines removed")
-    portfolio <- portfolio[portfolio$portfolio_name != "" & !is.na(portfolio$portfolio_name), ]
-  }
 
   portfolio
 }

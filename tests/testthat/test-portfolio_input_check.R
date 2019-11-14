@@ -1,26 +1,40 @@
-test_that("multiplication works", {
-  out_portfolio <- read_raw_portfolio("TEST")
+test_that("read_raw_portfolio outputs a tibble dataframe", {
+  out <- read_raw_portfolio("TEST")
+  expect_is(out, "data.frame")
+})
 
-  out_clean_column_names <- clean_column_names(out_portfolio)
-  expect_is(out_clean_column_names, "data.frame")
-
-  # FIXME:
-  # "Investor.Name" becomes "InvestorName" but "Portfolio.Name" stays the same
-  # Is this expected? (ASK @CLARE2D)
-  expect_false(
-    identical(
-      names(out_portfolio),
-      names(out_clean_column_names)
-    )
-  )
+test_that("clean_column_names outputs the expected names", {
+  out <- clean_column_names(read_raw_portfolio("TEST"))
+  expect_is(out, "data.frame")
 
   expected_names <- c(
-      "investor_name",
-      "portfolio_name",
-      "isin",
-      "number_of_shares",
-      "market_value",
-      "currency"
-    )
-  expect_named(out_clean_column_names, expected_names)
+    "investor_name",
+    "portfolio_name",
+    "isin",
+    "number_of_shares",
+    "market_value",
+    "currency"
+  )
+  expect_named(out, expected_names)
+})
+
+test_that("drop_rows_with_empty_string drops expected rows with a warning", {
+  # Create a toy dataset
+  out <- read_raw_portfolio("TEST") %>%
+    head(4) %>%
+    clean_column_names()
+  out[1, "investor_name"] <- ""
+  out[2, "portfolio_name"] <- ""
+
+  expect_warning(
+    out1 <- drop_rows_with_empty_string(out, "investor_name"),
+    "Removing.*investor_name.*empty"
+  )
+  expect_equal(nrow(out1), 3L)
+
+  expect_warning(
+    out2 <- drop_rows_with_empty_string(out, "portfolio_name"),
+    "Removing.*portfolio_name.*empty"
+  )
+  expect_equal(nrow(out2), 3L)
 })

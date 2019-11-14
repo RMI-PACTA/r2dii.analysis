@@ -39,7 +39,8 @@ Imports:
     stringr,
     tibble,
     utils,
-    janitor
+    janitor,
+    usethis
 Suggests: 
     purrr,
     rmarkdown,

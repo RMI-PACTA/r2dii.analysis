@@ -94,41 +94,54 @@ portfolio_input_check <- function() {
 
 ### Portfolio cleaning functions
 read_raw_portfolio_file <- function(project_name) {
-  portfolio <- NA
-  # FIXME: Instead of `peoject_location` reuse r2dii.utils
-  input_path <- paste0(project_location, "20_Raw_Inputs/")
+  out <- NA
+  inputs_path <- with_path_in_10_projects(project_name)("20_Raw_Inputs")
 
-  csv_to_read <- list.files(path = input_path, pattern = paste0(project_name, "_Input.csv"))
-  txt_to_read <- list.files(path = input_path, pattern = paste0(project_name, "_Input.txt"))
-
-
-  if (length(csv_to_read) == 1) {
-    portfolio <- readr::read_csv(paste0(input_path, csv_to_read))
+  # FIXME: What if `csv_to_read` has length 0 or > 1? (ASK @Clare2D)
+  # Now we do nothing. Is this okay?
+  csv_path <- fs::dir_ls(inputs_path, regexp = glue("{project_name}_Input.csv"))
+  if (identical(length(csv_path), 1L)) {
+    out <- readr::read_csv(csv_path)
   }
-  if (length(txt_to_read) == 1) {
-    # FIXME: Where does `guess_encoding()` come from? (ASK @Clare2D)
-    enc <- guess_encoding(paste0(input_path, txt_to_read))$encoding[1]
-    portfolio <- utils::read.table(paste0(input_path, txt_to_read), sep = ",", header = T, fileEncoding = enc)
+
+  # FIXME: If input path has both .csv and .txt files then this function is
+  # expensive -- it re-reades the data and overwrites previous data.
+  # Should we end as soon as we successfully read the data? ASK @Clare2D
+
+  txt_path <- fs::dir_ls(inputs_path, regexp = glue("{project_name}_Input.txt"))
+  # FIXME: What if `csv_to_read` has length 0 or > 1? (ASK @Clare2D)
+  # Now we do nothing. Is this okay?
+  if (identical(length(txt_path), 1L)) {
+    enc <- readr::guess_encoding(txt_path)$encoding[1]
+    out <- utils::read.table(
+      txt_path, sep = ",", header = TRUE, fileEncoding = enc
+    )
   }
 
   # Reads in Files saved with a ; not a ,
-  if (ncol(portfolio) == 1 & length(csv_to_read) == 1) {
-    portfolio <- utils::read.csv(paste0(input_path, csv_to_read), strip.white = T, stringsAsFactors = F, sep = ";")
-  }
-  if (ncol(portfolio) == 1 & length(txt_to_read) == 1) {
-    portfolio <- utils::read.table(paste0(input_path, txt_to_read), sep = "\t", header = T, fileEncoding = enc)
-  }
-  if (ncol(portfolio) == 1 & length(txt_to_read) == 1) {
-    portfolio <- utils::read.table(paste0(input_path, txt_to_read), sep = ";", header = T, fileEncoding = enc)
+  # FIXME: Re-reading may be expensive. Should we sanitize malformed objects?
+  # ASK @Clare2D
+  if (identical(ncol(out), 1L) && identical(length(csv_path), 1L)) {
+    out <- readr::read_delim(csv_path, delim = ";")
   }
 
+  if (identical(ncol(out), 1L) && identical(length(txt_path), 1L)) {
+    out <- utils::read.table(
+      txt_path, sep = "\t", header = TRUE, fileEncoding = enc
+    )
+  }
 
+  if (identical(ncol(out), 1L) && identical(length(txt_path), 1L)) {
+    out <- utils::read.table(
+     txt_path, sep = ";", header = TRUE, fileEncoding = enc
+    )
+  }
 
-  if (!is_dataframe_with_some_row(portfolio)) {
+  if (!is_dataframe_with_some_row(out)) {
     stop("No portfolio Input File")
   }
 
-  portfolio
+  out
 }
 
 rename_portfolio_columns <- function(portfolio) {

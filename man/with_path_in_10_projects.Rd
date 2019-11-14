@@ -18,7 +18,7 @@ This is a function factory to create functions which output a path inside
 "<a directory>" is usually a directory within which you may need to access
 multiple subdirectories. Use this function to access those multiple
 subdirectories on the fly, which avoids storing variables in the global
-environment and reduces duplication. This function replaces the lagacy
+environment and reduces duplication. This function replaces the legacy
 global variable \code{project_location}.
 }
 \examples{

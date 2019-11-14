@@ -1,4 +1,4 @@
-read_raw_portfolio_file <- function(project) {
+read_raw_portfolio <- function(project) {
   out <- NA
   inputs_path <- with_path_in_10_projects(project)("20_Raw_Inputs")
 

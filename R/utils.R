@@ -43,7 +43,7 @@ convert_special_characters <- function(x) {
 }
 
 # Checks whether a variable is a dataframe. Considers also logicals and null values.
-data_check <- function(df) {
+is_dataframe_with_some_row <- function(df) {
   if (is.data.frame(df)) {
     if (nrow(df) > 0) {
       check <- TRUE

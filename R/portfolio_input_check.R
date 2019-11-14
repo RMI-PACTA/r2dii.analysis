@@ -124,7 +124,7 @@ read_raw_portfolio_file <- function(project_name) {
 
 
 
-  if (!data_check(portfolio)) {
+  if (!is_dataframe_with_some_row(portfolio)) {
     stop("No portfolio Input File")
   }
 
@@ -537,7 +537,7 @@ clean_fund_data <- function(fund_data) {
 }
 
 normalise_fund_data <- function(fund_data) {
-  if (data_check(fund_data)) {
+  if (is_dataframe_with_some_row(fund_data)) {
     fund_data <- fund_data %>%
       group_by(.data$fund_isin) %>%
       mutate(total_weight = sum(.data$isin_weight, na.rm = TRUE))
@@ -621,7 +621,7 @@ identify_fund_portfolio <- function(portfolio) {
 }
 
 calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
-  if (data_check(fund_portfolio)) {
+  if (is_dataframe_with_some_row(fund_portfolio)) {
     fund_portfolio <- left_join(fund_portfolio, fund_data, by = c("isin" = "fund_isin"), all.x = T)
     fund_portfolio$direct_holding <- FALSE
 
@@ -733,7 +733,7 @@ check_funds_wo_bbg <- function(fund_data, fin_data) {
     row.names = FALSE
   )
 
-  if (data_check(fund_isins_missing_bbg)) {
+  if (is_dataframe_with_some_row(fund_isins_missing_bbg)) {
     warning(
       "There are funds without bbg data. These are excluded from the analysis."
     )

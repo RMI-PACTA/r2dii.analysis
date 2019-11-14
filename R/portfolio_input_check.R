@@ -7,10 +7,7 @@
 #' portfolio_input_check()
 #' @noRd
 portfolio_input_check <- function(portfolio) {
-
-  portfolio <- clean_colnames(portfolio)
-
-  portfolio <- rename_portfolio_columns(portfolio)
+  portfolio <- clean_column_names(portfolio)
 
   portfolio <- clear_portfolio_input_blanks(portfolio)
 
@@ -101,7 +98,7 @@ portfolio_input_check <- function(portfolio) {
 ### Portfolio cleaning functions
 
 # TODO: Sould we use janitr::clean_names()? (ASK @Clare2D)
-clean_colnames <- function(portfolio) {
+clean_column_names <- function(portfolio) {
   stopifnot(is.data.frame(portfolio))
 
   # Removes additional columns added by Excel on saving
@@ -110,7 +107,8 @@ clean_colnames <- function(portfolio) {
   names(out) <- gsub("\u00EF..", "", names(out))
   names(out)[1] <- gsub("[^A-Za-z0-9]", "", names(out)[1])
 
-  out
+  out <- janitor::clean_names(out)
+  dplyr::rename(out, number_of_shares=  "numberof_shares")
 }
 
 clean_portfolio_col_types <- function(portfolio) {

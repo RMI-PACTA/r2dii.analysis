@@ -38,7 +38,8 @@ Imports:
     rstudioapi,
     stringr,
     tibble,
-    utils
+    utils,
+    janitor
 Suggests: 
     purrr,
     rmarkdown,

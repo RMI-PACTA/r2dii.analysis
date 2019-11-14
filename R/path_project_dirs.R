@@ -32,5 +32,5 @@ get_nested_dirs <- function() {
   path <- r2dii.utils::path_dropbox_2dii(
     "PortCheck_v2", "00_Administration", "10_Folder_Structures", "StartFolders"
   )
-  fs::path_file(fs::dir_ls(path))
+  fs::path_file(dir_ls(path))
 }

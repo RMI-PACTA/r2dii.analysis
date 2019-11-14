@@ -1,3 +1,14 @@
+#' Read raw portfolio data
+#'
+#' @inheritParams path_project_dirs
+#'
+#' @return A [tibble::tibble].
+#' @export
+#'
+#' @examples
+#' if (r2dii.utils::dropbox_exists()) {
+#'   read_raw_portfolio("TEST")
+#' }
 read_raw_portfolio <- function(project) {
   out <- NA
   inputs_path <- with_path_in_10_projects(project)("20_Raw_Inputs")

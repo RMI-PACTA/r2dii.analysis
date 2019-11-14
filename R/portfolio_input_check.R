@@ -8,7 +8,7 @@
 #' @noRd
 portfolio_input_check <- function(portfolio) {
 
-  portfolio <- clean_colnames_portfolio_input_file(portfolio)
+  portfolio <- clean_colnames(portfolio)
 
   portfolio <- rename_portfolio_columns(portfolio)
 
@@ -100,7 +100,7 @@ portfolio_input_check <- function(portfolio) {
 
 ### Portfolio cleaning functions
 
-clean_colnames_portfolio_input_file <- function(portfolio) {
+clean_colnames <- function(portfolio) {
   if (is.data.frame(portfolio)) {
     # Removes additional columns added by Excel on saving
     portfolio <- portfolio[, !grepl("X", colnames(portfolio))]

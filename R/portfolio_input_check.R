@@ -3,7 +3,9 @@
 #' @inheritParams path_project_dirs
 #'
 #' @examples
-#' read_raw_portfolio(project) %>%
+#' "TEST" %>%
+#'   find_project_input_files() %>%
+#'   read_raw_portfolio() %>%
 #'   portfolio_input_check()
 #' @noRd
 portfolio_input_check <- function(portfolio) {

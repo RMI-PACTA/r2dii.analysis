@@ -6,6 +6,7 @@
 #' @importFrom fs dir_ls path
 #' @importFrom utils read.table
 #' @importFrom ellipsis check_dots_used
+#' @importFrom r2dii.utils path_example
 NULL
 
 globalVariables(".data")

@@ -10,19 +10,12 @@ test_that("read_raw_portfolio outputs a data.frame", {
 })
 
 test_that("read_raw_portfolio reads a comma-separated .csv", {
-  skip_if_not(r2dii.utils::dropbox_exists())
-
-  path <- r2dii.utils::path_example("raw_portfolio.csv", "r2dii.analysis")
+  path <- path_example("raw_portfolio.csv", "r2dii.analysis")
   expect_is(read_raw_portfolio(path), "data.frame")
 })
 
 test_that("read_raw_portfolio reads a semi-colon-separated .csv", {
-  skip_if_not(r2dii.utils::dropbox_exists())
-
-  path <- r2dii.utils::path_example(
-    "raw_portfolio_semicolon.csv", "r2dii.analysis"
-  )
-
+  path <- path_example("raw_portfolio_semicolon.csv", "r2dii.analysis")
   expect_is(read_raw_portfolio(path, delim = ";"), "data.frame")
 })
 

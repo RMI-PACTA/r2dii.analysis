@@ -10,9 +10,17 @@
 #' @export
 #'
 #' @examples
+#' library(r2dii.utils)
+#'
 #' "raw_portfolio.csv" %>%
 #'   path_example("r2dii.analysis") %>%
 #'   read_raw_portfolio()
+#'
+#' if (dropbox_exists()) {
+#' "TEST" %>%
+#'   find_project_input_files() %>%
+#'   read_raw_portfolio()
+#' }
 read_raw_portfolio <- function(path, delim = ",", ...) {
   abort_if_multiple_paths(path)
 

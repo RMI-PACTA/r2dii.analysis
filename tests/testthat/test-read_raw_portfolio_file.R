@@ -1,6 +1,4 @@
 test_that("read_raw_portfolio outputs a data.frame", {
-  skip_if_not(r2dii.utils::dropbox_exists())
-
   out <- "raw_portfolio.csv" %>%
     path_example("r2dii.analysis") %>%
     read_raw_portfolio()

@@ -4,10 +4,13 @@
 \alias{read_raw_portfolio}
 \title{Read raw portfolio data}
 \usage{
-read_raw_portfolio(project)
+read_raw_portfolio(project, parent = NULL)
 }
 \arguments{
 \item{project}{String giving the name of a project directory.}
+
+\item{parent}{String giving the path or the parent directory of the
+\code{project}.}
 }
 \value{
 A \link[tibble:tibble]{tibble::tibble}.

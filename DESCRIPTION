@@ -40,7 +40,8 @@ Imports:
     tibble,
     utils,
     janitor,
-    usethis
+    usethis,
+    ellipsis
 Suggests: 
     purrr,
     rmarkdown,

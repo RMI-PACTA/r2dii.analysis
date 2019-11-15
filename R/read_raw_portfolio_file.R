@@ -9,9 +9,9 @@
 #' if (r2dii.utils::dropbox_exists()) {
 #'   read_raw_portfolio("TEST")
 #' }
-read_raw_portfolio <- function(project) {
+read_raw_portfolio <- function(project, parent = NULL) {
   out <- NA
-  inputs_path <- with_path_in_10_projects(project)("20_Raw_Inputs")
+  inputs_path <- path(path_project(project, parent = parent), "20_Raw_Inputs")
 
   csv_path <- dir_ls(inputs_path, regexp = glue("{project}_Input.csv"))
   abort_if_multiple_paths(csv_path)

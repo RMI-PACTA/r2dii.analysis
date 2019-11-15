@@ -4,7 +4,7 @@
 #' @importFrom rlang %||% abort warn
 #' @importFrom usethis ui_field
 #' @importFrom glue glue
-#' @importFrom fs dir_ls
+#' @importFrom fs dir_ls path
 #' @importFrom utils read.table
 NULL
 

@@ -3,23 +3,20 @@
 #' @inheritParams path_project_dirs
 #'
 #' @examples
-#' "TEST" %>%
-#'   find_project_input_files() %>%
+#' "raw_portfolio.csv" %>%
+#'   path_example("r2dii.analysis") %>%
 #'   read_raw_portfolio() %>%
 #'   portfolio_input_check()
 #' @noRd
 portfolio_input_check <- function(portfolio) {
   portfolio <- portfolio %>%
     clean_column_names() %>%
-
     drop_rows_with_empty_string(in_column = "investor_name") %>%
     drop_rows_with_empty_string(in_column = "portfolio_name") %>%
-
     may_rbind_meta_portfolio(
       inc_metaportfolio = r2dii.utils::inc_metaportfolio(),
       inc_project_metaportfolio = r2dii.utils::inc_project_metaportfolio()
     ) %>%
-
     add_holding_id_if_needed()
 
 
@@ -139,8 +136,8 @@ drop_rows_with_empty_string <- function(data, in_column) {
 }
 
 may_rbind_meta_portfolio <- function(portfolio,
-                               inc_metaportfolio,
-                               inc_project_metaportfolio) {
+                                     inc_metaportfolio,
+                                     inc_project_metaportfolio) {
   meta <- portfolio
 
   if (inc_metaportfolio) {

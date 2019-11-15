@@ -28,8 +28,10 @@ Depends:
 Imports: 
     config,
     dplyr,
+    ellipsis,
     fs,
     glue,
+    janitor,
     magrittr,
     plyr,
     r2dii.utils,
@@ -37,10 +39,8 @@ Imports:
     rlang,
     rstudioapi,
     stringr,
-    utils,
-    janitor,
     usethis,
-    ellipsis
+    utils
 Suggests: 
     purrr,
     rmarkdown,

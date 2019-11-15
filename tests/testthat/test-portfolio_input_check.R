@@ -1,14 +1,14 @@
 test_that("read_raw_portfolio outputs a tibble dataframe", {
-  out <- "TEST" %>%
-    find_project_input_files() %>%
+  out <- "raw_portfolio.csv" %>%
+    path_example("r2dii.analysis") %>%
     read_raw_portfolio()
 
   out <- expect_is(out, "data.frame")
 })
 
 test_that("clean_column_names outputs the expected names", {
-  out <- "TEST" %>%
-    find_project_input_files() %>%
+  out <- "raw_portfolio.csv" %>%
+    path_example("r2dii.analysis") %>%
     read_raw_portfolio() %>%
     clean_column_names()
 
@@ -28,8 +28,8 @@ test_that("clean_column_names outputs the expected names", {
 
 test_that("drop_rows_with_empty_string drops expected rows with a warning", {
   # Create a toy dataset
-  out <- "TEST" %>%
-    find_project_input_files() %>%
+  out <- "raw_portfolio.csv" %>%
+    path_example("r2dii.analysis") %>%
     read_raw_portfolio() %>%
     head(4) %>%
     clean_column_names()

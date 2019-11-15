@@ -20,11 +20,9 @@ A \link[tibble:tibble]{tibble::tibble}.
 Read raw portfolio data
 }
 \examples{
-if (r2dii.utils::dropbox_exists()) {
-  "TEST" \%>\%
-    find_project_input_files() \%>\%
-    read_raw_portfolio()
-}
+"raw_portfolio.csv" \%>\%
+  path_example("r2dii.analysis") \%>\%
+  read_raw_portfolio()
 }
 \seealso{
 \code{\link[=find_project_input_files]{find_project_input_files()}}

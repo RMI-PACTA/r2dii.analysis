@@ -11,12 +11,14 @@
 portfolio_input_check <- function(portfolio) {
   portfolio <- portfolio %>%
     clean_column_names() %>%
-    drop_rows_with_empty_string(in_column = "investor_name") %>%
-    drop_rows_with_empty_string(in_column = "portfolio_name")
 
-  portfolio <- add_meta_portfolio(
-    r2dii.utils::inc_metaportfolio(), r2dii.utils::inc_project_metaportfolio()
-  )
+    drop_rows_with_empty_string(in_column = "investor_name") %>%
+    drop_rows_with_empty_string(in_column = "portfolio_name") %>%
+
+    may_rbind_meta_portfolio(
+      inc_metaportfolio = r2dii.utils::inc_metaportfolio(),
+      inc_project_metaportfolio = r2dii.utils::inc_project_metaportfolio()
+    )
 
   portfolio <- add_holding_id(portfolio)
 
@@ -134,6 +136,35 @@ drop_rows_with_empty_string <- function(data, in_column) {
   out
 }
 
+may_rbind_meta_portfolio <- function(portfolio,
+                               inc_metaportfolio,
+                               inc_project_metaportfolio) {
+  meta <- portfolio
+
+  if (inc_metaportfolio) {
+    meta$portfolio_name <- meta$investor_name
+    out <- rbind(portfolio, meta)
+  }
+
+  if (inc_project_metaportfolio) {
+    meta$portfolio_name <-
+      project_meta_portfolio_name(inc_project_metaportfolio)
+    meta$investor_name <-
+      project_meta_investor_name(inc_project_metaportfolio)
+    out <- rbind(portfolio, meta)
+  }
+
+  out
+}
+
+add_holding_id <- function(portfolio) {
+  if (length(setdiff("holding_id", names(portfolio))) != 0) {
+    portfolio$holding_id <- row.names(portfolio)
+  }
+
+  portfolio
+}
+
 clean_portfolio_col_types <- function(portfolio) {
   portfolio$investor_name <- convert_special_characters(portfolio$investor_name)
   portfolio$portfolio_name <-
@@ -143,31 +174,6 @@ clean_portfolio_col_types <- function(portfolio) {
   portfolio$currency <- as.character(portfolio$currency)
 
   portfolio$currency <- if_else(portfolio$currency == "Euro", "EUR", portfolio$currency)
-
-  portfolio
-}
-
-add_meta_portfolio <- function(inc_metaportfolio, inc_project_metaportfolio) {
-  portfolio_meta <- portfolio
-
-  if (inc_metaportfolio) {
-    portfolio_meta$portfolio_name <- portfolio_meta$investor_name
-    portfolio <- rbind(portfolio, portfolio_meta)
-  }
-
-  if (inc_project_metaportfolio) {
-    portfolio_meta$portfolio_name <- project_meta_portfolio_name()
-    portfolio_meta$investor_name <- project_meta_investor_name()
-    portfolio <- rbind(portfolio, portfolio_meta)
-  }
-
-  portfolio
-}
-
-add_holding_id <- function(portfolio) {
-  if (length(setdiff("holding_id", names(portfolio))) != 0) {
-    portfolio$holding_id <- row.names(portfolio)
-  }
 
   portfolio
 }

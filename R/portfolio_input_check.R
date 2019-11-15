@@ -11,22 +11,33 @@
 portfolio_input_check <- function(portfolio) {
   portfolio <- portfolio %>%
     clean_column_names() %>%
-    drop_rows_with_empty_string(in_column = "investor_name") %>%
-    drop_rows_with_empty_string(in_column = "portfolio_name") %>%
+    may_add_column_holding_id() %>%
+    check_crucial_columns()
+
+  portfolio <- portfolio %>%
+    filter(
+      !is_missing(.data$investor_name) %>% warn_if_removing()
+    ) %>%
+    filter(
+      !is_missing(.data$portfolio_name) %>% warn_if_removing()
+    )
+
+  portfolio <- portfolio %>%
     may_rbind_meta_portfolio(
       inc_metaportfolio = r2dii.utils::inc_metaportfolio(),
       inc_project_metaportfolio = r2dii.utils::inc_project_metaportfolio()
-    ) %>%
-    add_holding_id_if_needed()
+    )
 
+  portfolio <- portfolio %>%
+    dplyr::mutate_at(
+      .vars = c("investor_name", "portfolio_name"),
+      .funs = replace_some_charactes
+    )
 
-
-  portfolio <- check_missing_cols(portfolio)
-
-  abort("TODO")
 
   portfolio <- clean_portfolio_col_types(portfolio)
 
+  abort("TODO")
 
   # FIXME: Where is `currencies` comming from? (ASK @Clare2D)
   # Is this the `Currencies` dataset?
@@ -125,17 +136,38 @@ clean_column_names <- function(data) {
   out
 }
 
-drop_rows_with_empty_string <- function(data, in_column) {
-  out <- data
-  col <- data[[in_column]]
-
-  if (any(col == "" | is.na(col))) {
-    col_name <- ui_field(in_column)
-    warn(glue("Removing rows where {col_name} is an empty string."))
-    out <- data[col != "" & !is.na(out$investor_name), ]
+may_add_column_holding_id <- function(portfolio) {
+  if (rlang::has_name(portfolio, "holding_id")) {
+    return(portfolio)
   }
 
-  out
+  mutate(portfolio, holding_id = row.names(portfolio))
+}
+
+check_crucial_columns <- function(portfolio) {
+  r2dii.utils::check_crucial_names(
+    portfolio,
+    c(
+      "holding_id",
+      "market_value",
+      "currency",
+      "isin",
+      "portfolio_name",
+      "investor_name",
+      "number_of_shares"
+    )
+  )
+}
+
+is_missing <- function(x) {
+  stopifnot(is.character(x))
+  x == "" | is.na(x)
+}
+
+warn_if_removing <- function(x) {
+  stopifnot(is.logical(x))
+  if (sum(x) > 0) warn(glue('Removing {sum(x)} empty values ("" and ).'))
+  invisible(x)
 }
 
 may_rbind_meta_portfolio <- function(portfolio,
@@ -159,18 +191,24 @@ may_rbind_meta_portfolio <- function(portfolio,
   out
 }
 
-add_holding_id_if_needed <- function(portfolio) {
-  if (rlang::has_name(portfolio, "holding_id")) {
-    return(portfolio)
-  }
+replace_some_charactes <- function(x) {
+  out <- x
 
-  mutate(portfolio, holding_id = row.names(portfolio))
+  out <- gsub("\u00F3", "o", out)
+  out <- gsub("&", " and ", out)
+  out <- gsub("\u00E1", "a", out)
+  out <- gsub("/", " ", out)
+  out <- gsub("\u00E4", "ae", out)
+  out <- gsub("\u00F6", "oe", out)
+  out <- gsub("\u00FC", "ue", out)
+  out <- gsub("\u00C4", "Ae", out)
+  out <- gsub("\u00D6", "Oe", out)
+  out <- gsub("\u00DC", "Ue", out)
+
+  out
 }
 
 clean_portfolio_col_types <- function(portfolio) {
-  portfolio$investor_name <- convert_special_characters(portfolio$investor_name)
-  portfolio$portfolio_name <-
-    convert_special_characters(portfolio$portfolio_name)
   portfolio$number_of_shares <- as.numeric(portfolio$number_of_shares)
   portfolio$market_value <- as.numeric(portfolio$market_value)
   portfolio$currency <- as.character(portfolio$currency)
@@ -181,19 +219,16 @@ clean_portfolio_col_types <- function(portfolio) {
 }
 
 check_missing_cols <- function(portfolio) {
-  required_input_cols <- c("holding_id", "market_value", "currency", "isin", "portfolio_name", "investor_name", "number_of_shares")
-
-  missing_columns <- setdiff(required_input_cols, colnames(portfolio))
-
-  if (length(missing_columns) > 0) {
-    # FIXME: Where is this function comming from? (ASK @Clare2D)
-    addMessageToLogFile("Error", paste0("The input file is missing the following data columns: ", missing_columns))
-    error_count <- error_count + 1
-  }
-
-  portfolio <- as_tibble(portfolio)
-
-  portfolio
+  crucial <- c(
+      "holding_id",
+      "market_value",
+      "currency",
+      "isin",
+      "portfolio_name",
+      "investor_name",
+      "number_of_shares"
+    )
+  r2dii.utils::check_crucial_names(portfolio, crucial)
 }
 
 ###

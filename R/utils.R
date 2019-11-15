@@ -16,23 +16,6 @@ project_meta_portfolio_name <- function(inc_project_metaportfolio,
   }
 }
 
-convert_special_characters <- function(x) {
-  out <- x
-
-  out <- gsub("\u00F3", "o", out)
-  out <- gsub("&", " and ", out)
-  out <- gsub("\u00E1", "a", out)
-  out <- gsub("/", " ", out)
-  out <- gsub("\u00E4", "ae", out)
-  out <- gsub("\u00F6", "oe", out)
-  out <- gsub("\u00FC", "ue", out)
-  out <- gsub("\u00C4", "Ae", out)
-  out <- gsub("\u00D6", "Oe", out)
-  out <- gsub("\u00DC", "Ue", out)
-
-  out
-}
-
 # Checks whether a variable is a dataframe. Considers also logicals and null values.
 is_dataframe_with_some_row <- function(data) {
   is.data.frame(data) && nrow(data) > 0L

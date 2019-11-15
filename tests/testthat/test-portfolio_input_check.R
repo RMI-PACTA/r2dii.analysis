@@ -4,7 +4,8 @@ test_that("portfolio_input_check runs until TODO", {
     read_raw_portfolio()
 
   expect_error(
-    portfolio_input_check(portfolio), "TODO"
+    suppressWarnings(portfolio_input_check(portfolio)),
+    "TODO"
   )
 })
 
@@ -36,7 +37,20 @@ test_that("clean_column_names outputs the expected names", {
   expect_named(out, expected_names)
 })
 
-test_that("drop_rows_with_empty_string drops expected rows with a warning", {
+test_that("is_missing detects '' and `NA`", {
+  expect_equal(
+    is_missing(c("a", "", NA)),
+    c(FALSE, TRUE, TRUE)
+  )
+})
+
+test_that("warn_if_removing warns if any is TRUE", {
+  expect_warning(warn_if_removing(TRUE), "Removing 1")
+  expect_warning(warn_if_removing(c(FALSE, TRUE)), "Removing 1")
+  expect_warning(warn_if_removing(FALSE), NA)
+})
+
+test_that("is_missing + dplyr::filter drops expected rows with a warning", {
   # Create a toy dataset
   out <- "raw_portfolio.csv" %>%
     path_example("r2dii.analysis") %>%
@@ -44,26 +58,19 @@ test_that("drop_rows_with_empty_string drops expected rows with a warning", {
     head(4) %>%
     clean_column_names()
   out[1, "investor_name"] <- ""
-  out[2, "portfolio_name"] <- ""
 
   expect_warning(
-    out1 <- drop_rows_with_empty_string(out, "investor_name"),
-    "Removing.*investor_name.*empty"
+    out <- out %>%
+      dplyr::filter(warn_if_removing(!is_missing(.data$investor_name))),
+    "Removing"
   )
-  expect_equal(nrow(out1), 3L)
-
-  expect_warning(
-    out2 <- drop_rows_with_empty_string(out, "portfolio_name"),
-    "Removing.*portfolio_name.*empty"
-  )
-  expect_equal(nrow(out2), 3L)
+  expect_equal(nrow(out), 3L)
 })
 
-test_that("add_holding_id_if_needed adds holding_id if it doesnt exist", {
+test_that("may_add_column_holding_id adds holding_id if it doesnt exist", {
   portfolio <- dplyr::tibble(x = 1)
-  expect_named(add_holding_id_if_needed(portfolio), c("x", "holding_id"))
+  expect_named(may_add_column_holding_id(portfolio), c("x", "holding_id"))
 
   portfolio <- dplyr::tibble(holding_id = 1)
-  expect_named(add_holding_id_if_needed(portfolio), "holding_id")
+  expect_named(may_add_column_holding_id(portfolio), "holding_id")
 })
-

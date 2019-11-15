@@ -48,3 +48,11 @@ test_that("drop_rows_with_empty_string drops expected rows with a warning", {
   )
   expect_equal(nrow(out2), 3L)
 })
+
+test_that("add_holding_id_if_needed adds holding_id if it doesnt exist", {
+  portfolio <- dplyr::tibble(x = 1)
+  expect_named(add_holding_id_if_needed(portfolio), c("x", "holding_id"))
+
+  portfolio <- dplyr::tibble(holding_id = 1)
+  expect_named(add_holding_id_if_needed(portfolio), "holding_id")
+})

@@ -18,9 +18,11 @@ portfolio_input_check <- function(portfolio) {
     may_rbind_meta_portfolio(
       inc_metaportfolio = r2dii.utils::inc_metaportfolio(),
       inc_project_metaportfolio = r2dii.utils::inc_project_metaportfolio()
-    )
+    ) %>%
 
-  portfolio <- add_holding_id(portfolio)
+    add_holding_id_if_needed()
+
+
 
   portfolio <- check_missing_cols(portfolio)
 
@@ -157,12 +159,12 @@ may_rbind_meta_portfolio <- function(portfolio,
   out
 }
 
-add_holding_id <- function(portfolio) {
-  if (length(setdiff("holding_id", names(portfolio))) != 0) {
-    portfolio$holding_id <- row.names(portfolio)
+add_holding_id_if_needed <- function(portfolio) {
+  if (rlang::has_name(portfolio, "holding_id")) {
+    return(portfolio)
   }
 
-  portfolio
+  mutate(portfolio, holding_id = row.names(portfolio))
 }
 
 clean_portfolio_col_types <- function(portfolio) {

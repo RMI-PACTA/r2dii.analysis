@@ -4,7 +4,7 @@
 \alias{find_project_input_files}
 \title{Find input files in a project}
 \usage{
-find_project_input_files(project, regexp = glue("{project}_Input.csv"),
+find_project_input_files(project, regexp = glue("{project}_Input[.]csv"),
   ...)
 }
 \arguments{
@@ -36,4 +36,7 @@ Find input files in a project
 }
 \examples{
 find_project_input_files("TEST")
+
+match_csv_files <- "TEST_Input[.]csv"
+find_project_input_files("TEST", regexp = match_csv_files)
 }

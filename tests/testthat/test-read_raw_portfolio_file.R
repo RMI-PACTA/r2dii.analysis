@@ -25,3 +25,10 @@ test_that("read_raw_portfolio reads a semi-colon-separated .csv", {
 
   expect_is(read_raw_portfolio(path, delim = ";"), "data.frame")
 })
+
+test_that("find_project_input_files finds expected files", {
+  expect_match(
+    find_project_input_files("TEST"),
+    "PortCheck_v2/10_Projects/TEST/20_Raw_Inputs/TEST_Input.csv"
+  )
+})

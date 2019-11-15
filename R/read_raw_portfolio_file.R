@@ -45,14 +45,14 @@ read_raw_portfolio <- function(path, delim = ",", ...) {
 #'
 #' @examples
 #' find_project_input_files("TEST")
+#'
+#' match_csv_files <- "TEST_Input[.]csv"
+#' find_project_input_files("TEST", regexp = match_csv_files)
 find_project_input_files <- function(project,
-                                     regexp = glue("{project}_Input.csv"),
+                                     regexp = glue("{project}_Input[.]csv"),
                                      ...) {
-  ellipsis::check_dots_used()
-
-  dir_ls(
-    path(path_project(project, "20_Raw_Inputs")), regexp = regexp, ...
-  )
+  check_dots_used()
+  dir_ls(path(path_project(project, "20_Raw_Inputs")), regexp = regexp, ...)
 }
 
 abort_if_multiple_paths <- function(path) {

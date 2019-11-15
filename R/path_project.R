@@ -27,7 +27,7 @@
 #' path_project("a-project", "40_Results")
 #' path_project("a-project", "50_Outputs")
 path_project <- function(project, ..., parent = NULL) {
-  ellipsis::check_dots_used()
+  check_dots_used()
 
   if (is.null(parent)) {
     return(

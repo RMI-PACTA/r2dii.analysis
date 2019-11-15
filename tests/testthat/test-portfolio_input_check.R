@@ -1,3 +1,13 @@
+test_that("portfolio_input_check runs until TODO", {
+  portfolio <- "raw_portfolio.csv" %>%
+    path_example("r2dii.analysis") %>%
+    read_raw_portfolio()
+
+  expect_error(
+    portfolio_input_check(portfolio), "TODO"
+  )
+})
+
 test_that("read_raw_portfolio outputs a tibble dataframe", {
   out <- "raw_portfolio.csv" %>%
     path_example("r2dii.analysis") %>%
@@ -56,3 +66,4 @@ test_that("add_holding_id_if_needed adds holding_id if it doesnt exist", {
   portfolio <- dplyr::tibble(holding_id = 1)
   expect_named(add_holding_id_if_needed(portfolio), "holding_id")
 })
+

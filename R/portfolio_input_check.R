@@ -23,7 +23,10 @@ portfolio_input_check <- function(portfolio) {
 
   portfolio <- check_missing_cols(portfolio)
 
+  abort("TODO")
+
   portfolio <- clean_portfolio_col_types(portfolio)
+
 
   # FIXME: Where is `currencies` comming from? (ASK @Clare2D)
   # Is this the `Currencies` dataset?
@@ -138,7 +141,7 @@ drop_rows_with_empty_string <- function(data, in_column) {
 may_rbind_meta_portfolio <- function(portfolio,
                                      inc_metaportfolio,
                                      inc_project_metaportfolio) {
-  meta <- portfolio
+  meta <- out <- portfolio
 
   if (inc_metaportfolio) {
     meta$portfolio_name <- meta$investor_name

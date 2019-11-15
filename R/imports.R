@@ -5,6 +5,7 @@
 #' @importFrom glue glue
 #' @importFrom fs dir_ls path
 #' @importFrom utils read.table
+#' @importFrom ellipsis check_dots_used
 NULL
 
 globalVariables(".data")

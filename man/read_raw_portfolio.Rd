@@ -4,13 +4,14 @@
 \alias{read_raw_portfolio}
 \title{Read raw portfolio data}
 \usage{
-read_raw_portfolio(project, parent = NULL)
+read_raw_portfolio(path, delim = ",", ...)
 }
 \arguments{
-\item{project}{String giving the name of a project directory.}
+\item{path}{A character string giving the path to a raw portfolio file.}
 
-\item{parent}{String giving the path or the parent directory of the
-\code{project}.}
+\item{delim}{Passed to \link[readr:read_delim]{readr::read_delim}.}
+
+\item{...}{Arguments passed to \link[readr:read_delim]{readr::read_delim}.}
 }
 \value{
 A \link[tibble:tibble]{tibble::tibble}.
@@ -20,6 +21,11 @@ Read raw portfolio data
 }
 \examples{
 if (r2dii.utils::dropbox_exists()) {
-  read_raw_portfolio("TEST")
+  "TEST" \%>\%
+    find_project_input_files() \%>\%
+    read_raw_portfolio()
 }
+}
+\seealso{
+\code{\link[=find_project_input_files]{find_project_input_files()}}
 }

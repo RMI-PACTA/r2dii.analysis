@@ -1,10 +1,17 @@
 test_that("read_raw_portfolio outputs a tibble dataframe", {
-  out <- read_raw_portfolio("TEST")
-  expect_is(out, "data.frame")
+  out <- "TEST" %>%
+    find_project_input_files() %>%
+    read_raw_portfolio()
+
+  out <- expect_is(out, "data.frame")
 })
 
 test_that("clean_column_names outputs the expected names", {
-  out <- clean_column_names(read_raw_portfolio("TEST"))
+  out <- "TEST" %>%
+    find_project_input_files() %>%
+    read_raw_portfolio() %>%
+    clean_column_names()
+
   expect_is(out, "data.frame")
 
   expected_names <- c(
@@ -15,12 +22,15 @@ test_that("clean_column_names outputs the expected names", {
     "market_value",
     "currency"
   )
+
   expect_named(out, expected_names)
 })
 
 test_that("drop_rows_with_empty_string drops expected rows with a warning", {
   # Create a toy dataset
-  out <- read_raw_portfolio("TEST") %>%
+  out <- "TEST" %>%
+    find_project_input_files() %>%
+    read_raw_portfolio() %>%
     head(4) %>%
     clean_column_names()
   out[1, "investor_name"] <- ""

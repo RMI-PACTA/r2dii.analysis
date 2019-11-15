@@ -1,59 +1,58 @@
 #' Read raw portfolio data
 #'
-#' @inheritParams path_project_dirs
+#' @param path A character string giving the path to a raw portfolio file.
+#' @param delim Passed to [readr::read_delim].
+#' @param ... Arguments passed to [readr::read_delim].
+#'
+#' @seealso [find_project_input_files()]
 #'
 #' @return A [tibble::tibble].
 #' @export
 #'
 #' @examples
 #' if (r2dii.utils::dropbox_exists()) {
-#'   read_raw_portfolio("TEST")
+#'   "TEST" %>%
+#'     find_project_input_files() %>%
+#'     read_raw_portfolio()
 #' }
-read_raw_portfolio <- function(project, parent = NULL) {
-  out <- NA
-  inputs_path <- path(path_project(project, parent = parent), "20_Raw_Inputs")
+read_raw_portfolio <- function(path, delim = ",", ...) {
+  abort_if_multiple_paths(path)
 
-  csv_path <- dir_ls(inputs_path, regexp = glue("{project}_Input.csv"))
-  abort_if_multiple_paths(csv_path)
-
-  if (identical(length(csv_path), 1L)) {
-    out <- readr::read_csv(csv_path)
-    if (has_expected_structure(out)) {
-      return(out)
-    }
-
-    out <- readr::read_delim(csv_path, delim = ";")
-    if (has_expected_structure(out)) {
-      return(out)
-    }
+  if (identical(length(path), 1L)) {
+    out <- readr::read_delim(path, delim = delim, ...)
   }
 
-  txt_path <- dir_ls(inputs_path, regexp = glue("{project}_Input.txt"))
-  abort_if_multiple_paths(txt_path)
-
-  if (identical(length(txt_path), 1L)) {
-    enc <- readr::guess_encoding(txt_path)$encoding[1]
-    out <- read.table(txt_path, sep = ",", header = TRUE, fileEncoding = enc)
-    if (has_expected_structure(out)) {
-      return(out)
-    }
-
-    out <- read.table(txt_path, sep = "\t", header = TRUE, fileEncoding = enc)
-    if (has_expected_structure(out)) {
-      return(out)
-    }
-
-    out <- read.table(txt_path, sep = ";", header = TRUE, fileEncoding = enc)
-    if (has_expected_structure(out)) {
-      return(out)
-    }
+  if (!isTRUE(ncol(out) > 1L)) {
+    warn(
+      glue(
+        "The portfolio should have multiple columns but it doesn't.
+        Do you need a different {ui_code('delim')}?"
+      )
+    )
   }
 
-  abort("Can't read porfolio input file")
+  out
 }
 
-has_expected_structure <- function(data) {
-  isTRUE(ncol(data) > 1L)
+#' Find input files in a project
+#'
+#' @inheritParams path_project_dirs
+#' @param regexp A regular expression for match files in `project`.
+#' @inheritDotParams fs::dir_ls
+#'
+#' @return A character vector
+#' @export
+#'
+#' @examples
+#' find_project_input_files("TEST")
+find_project_input_files <- function(project,
+                                     regexp = glue("{project}_Input.csv"),
+                                     ...) {
+  ellipsis::check_dots_used()
+
+  dir_ls(
+    path(path_project(project, "20_Raw_Inputs")), regexp = regexp, ...
+  )
 }
 
 abort_if_multiple_paths <- function(path) {

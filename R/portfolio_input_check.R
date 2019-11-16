@@ -34,8 +34,9 @@ portfolio_input_check <- function(portfolio) {
       .funs = replace_some_charactes
     )
 
-
-  portfolio <- clean_portfolio_col_types(portfolio)
+  portfolio <- portfolio %>%
+    clean_portfolio_col_types() %>%
+    mutate(currency = if_else(.data$currency == "Euro", "EUR", .data$currency))
 
   abort("TODO")
 
@@ -212,8 +213,6 @@ clean_portfolio_col_types <- function(portfolio) {
   portfolio$number_of_shares <- as.numeric(portfolio$number_of_shares)
   portfolio$market_value <- as.numeric(portfolio$market_value)
   portfolio$currency <- as.character(portfolio$currency)
-
-  portfolio$currency <- if_else(portfolio$currency == "Euro", "EUR", portfolio$currency)
 
   portfolio
 }

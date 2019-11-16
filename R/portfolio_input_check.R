@@ -43,7 +43,10 @@ portfolio_input_check <- function(portfolio) {
     add_exchange_rate_and_value_usd()
 
   abort("TODO")
-
+  # FIXME: This seems like a dangerous move. `cols_portfolio_no_bbg` would too
+  # easily change if we slide this line elsewhere. Maybe hard code the specific
+  # column names we are looknig for -- just as we did with `cols_funds` (but
+  # closer to where the variable is actually used)? ASK @Clare2D
   cols_portfolio_no_bbg <- colnames(portfolio)
   cols_funds <- c("direct_holding", "fund_isin", "original_value_usd")
 
@@ -655,7 +658,9 @@ calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
 
 
 
-  fund_portfolio <- fund_portfolio %>%
+  fund_portfolio <- fund_portfolio %>%  # FIXME: This seems like a dangerous move. `select` would too
+    # easily change if we slide this line elsewhere. Maybe hard code the specific
+    # column names we are looknig for here? ASK @Clare2D
     select(.data$cols_portfolio_no_bbg, .data$cols_funds)
 
   fund_portfolio

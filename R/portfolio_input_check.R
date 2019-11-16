@@ -38,11 +38,11 @@ portfolio_input_check <- function(portfolio) {
     clean_portfolio_col_types() %>%
     mutate(currency = if_else(.data$currency == "Euro", "EUR", .data$currency))
 
-  abort("TODO")
+  portfolio <- portfolio %>%
+    # FIXME: This is very hacky -- just to move on. ASK @Clare2D what to do.
+    add_exchange_rate_and_value_usd()
 
-  # FIXME: Where is `currencies` comming from? (ASK @Clare2D)
-  # Is this the `Currencies` dataset?
-  portfolio <- convert_currencies(portfolio, currencies)
+  abort("TODO")
 
   cols_portfolio_no_bbg <- colnames(portfolio)
   cols_funds <- c("direct_holding", "fund_isin", "original_value_usd")
@@ -567,12 +567,23 @@ normalise_fund_data <- function(fund_data) {
 
 
 ### Portfolio Check Functions
-convert_currencies <- function(portfolio, currencies) {
-  portfolio <- left_join(portfolio, currencies, by = "currency")
+add_exchange_rate_and_value_usd <- function(portfolio, currencies = NULL) {
+  # FIXME: `currencies` does not exist. Instead using r2dii.analysis::Currencies
+  # with cleaned names
+  currencies <- currencies %||% {
+    r2dii.analysis::Currencies %>%
+      janitor::clean_names() %>%
+      dplyr::transmute(
+        currency = .data$currency_abbr,
+        exchange_rate = .data$exchange_rate_2018q4
+      )
+  }
 
-  portfolio$value_usd <- portfolio$market_value * portfolio$exchange_rate
-
-  portfolio
+  left_join(portfolio, currencies, by = "currency") %>%
+    # FIXME: The original implementation used `exchange_rate` but it doesn't
+    # exist in `portfolio` or `currencies`. Instead, I'm using
+    # `currencies$exchange_rate_2018q3`
+    mutate(value_usd = .data$market_value * .data$exchange_rate)
 }
 
 add_fin_data <- function(portfolio, fin_data) {

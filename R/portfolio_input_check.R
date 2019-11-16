@@ -160,6 +160,19 @@ check_crucial_columns <- function(portfolio) {
   )
 }
 
+check_missing_cols <- function(portfolio) {
+  crucial <- c(
+    "holding_id",
+    "market_value",
+    "currency",
+    "isin",
+    "portfolio_name",
+    "investor_name",
+    "number_of_shares"
+  )
+  r2dii.utils::check_crucial_names(portfolio, crucial)
+}
+
 is_missing <- function(x) {
   stopifnot(is.character(x))
   x == "" | is.na(x)
@@ -217,17 +230,23 @@ clean_portfolio_col_types <- function(portfolio) {
   portfolio
 }
 
-check_missing_cols <- function(portfolio) {
-  crucial <- c(
-      "holding_id",
-      "market_value",
-      "currency",
-      "isin",
-      "portfolio_name",
-      "investor_name",
-      "number_of_shares"
-    )
-  r2dii.utils::check_crucial_names(portfolio, crucial)
+add_exchange_rate_and_value_usd <- function(portfolio, currencies = NULL) {
+  # FIXME: `currencies` does not exist. Instead using r2dii.analysis::Currencies
+  # with cleaned names
+  currencies <- currencies %||% {
+    r2dii.analysis::Currencies %>%
+      janitor::clean_names() %>%
+      dplyr::transmute(
+        currency = .data$currency_abbr,
+        exchange_rate = .data$exchange_rate_2018q4
+      )
+  }
+
+  left_join(portfolio, currencies, by = "currency") %>%
+    # FIXME: The original implementation used `exchange_rate` but it doesn't
+    # exist in `portfolio` or `currencies`. Instead, I'm using
+    # `currencies$exchange_rate_2018q3`
+    mutate(value_usd = .data$market_value * .data$exchange_rate)
 }
 
 ###
@@ -567,24 +586,6 @@ normalise_fund_data <- function(fund_data) {
 
 
 ### Portfolio Check Functions
-add_exchange_rate_and_value_usd <- function(portfolio, currencies = NULL) {
-  # FIXME: `currencies` does not exist. Instead using r2dii.analysis::Currencies
-  # with cleaned names
-  currencies <- currencies %||% {
-    r2dii.analysis::Currencies %>%
-      janitor::clean_names() %>%
-      dplyr::transmute(
-        currency = .data$currency_abbr,
-        exchange_rate = .data$exchange_rate_2018q4
-      )
-  }
-
-  left_join(portfolio, currencies, by = "currency") %>%
-    # FIXME: The original implementation used `exchange_rate` but it doesn't
-    # exist in `portfolio` or `currencies`. Instead, I'm using
-    # `currencies$exchange_rate_2018q3`
-    mutate(value_usd = .data$market_value * .data$exchange_rate)
-}
 
 add_fin_data <- function(portfolio, fin_data) {
   portfolio_fin <- left_join(portfolio, fin_data, by = "isin")

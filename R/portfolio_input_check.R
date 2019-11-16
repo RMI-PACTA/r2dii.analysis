@@ -160,19 +160,6 @@ check_crucial_columns <- function(portfolio) {
   )
 }
 
-check_missing_cols <- function(portfolio) {
-  crucial <- c(
-    "holding_id",
-    "market_value",
-    "currency",
-    "isin",
-    "portfolio_name",
-    "investor_name",
-    "number_of_shares"
-  )
-  r2dii.utils::check_crucial_names(portfolio, crucial)
-}
-
 is_missing <- function(x) {
   stopifnot(is.character(x))
   x == "" | is.na(x)

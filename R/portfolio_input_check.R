@@ -639,7 +639,12 @@ calculate_fund_portfolio <- function(portfolio, fund_data) {
   }
 
   out %>%
-    select(cols_portfolio_no_bbg(), cols_funds())
+    select(
+      cols_portfolio_no_bbg(), cols_funds(),
+      # FIXME: These columns are later required. Not sure thought if they should
+      # come from here or elsewhere. ASK @Clare2D
+      .data$exchange_rate, .data$value_usd
+    )
 }
 
 cols_portfolio_no_bbg <- function() {

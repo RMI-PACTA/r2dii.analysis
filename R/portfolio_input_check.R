@@ -598,17 +598,8 @@ identify_fund_portfolio <- function(portfolio) {
 
 calculate_fund_portfolio <- function(portfolio, fund_data) {
   if (is_dataframe_with_some_row(portfolio)) {
-    out <- left_join(
-      portfolio, fund_data,
-      by = c("isin" = "fund_isin"),
-      # FIXME: Is this useful? Or is it a left over from a previous use of
-      # merge(x, y, by, all.x)
-      # https://stackoverflow.com/questions/
-      # 48991097/is-dplyrleft-join-equivalent-to-basemerge-all-x-true
-      all.x = TRUE
-    )
+    out <- left_join(portfolio, fund_data, by = c("isin" = "fund_isin"))
     out$direct_holding <- FALSE
-
     out$original_value_usd <- out$value_usd
     out$value_usd <- out$isin_weight * out$value_usd
     out$fund_isin <- out$isin

@@ -47,7 +47,8 @@ portfolio_input_check <- function(portfolio) {
   # Add financial data
   # Merges in the clean data and calculates the marketvalue and number of shares
   # FIXME: Where does `fin_data` come from? (ASK @Clare2D)
-  portfolio <- add_fin_data(portfolio, fin_data)
+  portfolio <- left_join(portfolio, fin_data, by = "isin")
+
 
   portfolio <- calculate_value_usd_with_fin_data(portfolio)
 
@@ -61,7 +62,7 @@ portfolio_input_check <- function(portfolio) {
   fund_portfolio <- calculate_fund_portfolio(fund_portfolio, fund_data)
 
   # Merges in the bbg data to the fund portfolio
-  fund_portfolio <- add_fin_data(fund_portfolio, fin_data)
+  fund_portfolio <- left_join(fund_portfolio, fin_data, by = "isin")
 
   # add fund_portfolio and check that the total value is the same
   portfolio_total <- add_fund_portfolio(portfolio, fund_portfolio)
@@ -570,12 +571,6 @@ normalise_fund_data <- function(fund_data) {
 
 
 ### Portfolio Check Functions
-
-add_fin_data <- function(portfolio, fin_data) {
-  portfolio_fin <- left_join(portfolio, fin_data, by = "isin")
-
-  portfolio_fin
-}
 
 calculate_value_usd_with_fin_data <- function(portfolio) {
 

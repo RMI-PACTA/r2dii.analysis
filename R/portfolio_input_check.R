@@ -596,19 +596,27 @@ identify_fund_portfolio <- function(portfolio) {
   portfolio %>% filter(.data$asset_type == "Funds")
 }
 
-calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
-  if (is_dataframe_with_some_row(fund_portfolio)) {
-    fund_portfolio <- left_join(fund_portfolio, fund_data, by = c("isin" = "fund_isin"), all.x = T)
-    fund_portfolio$direct_holding <- FALSE
+calculate_fund_portfolio <- function(portfolio, fund_data) {
+  if (is_dataframe_with_some_row(portfolio)) {
+    out <- left_join(
+      portfolio, fund_data,
+      by = c("isin" = "fund_isin"),
+      # FIXME: Is this useful? Or is it a left over from a previous use of
+      # merge(x, y, by, all.x)
+      # https://stackoverflow.com/questions/
+      # 48991097/is-dplyrleft-join-equivalent-to-basemerge-all-x-true
+      all.x = TRUE
+    )
+    out$direct_holding <- FALSE
 
-    fund_portfolio$original_value_usd <- fund_portfolio$value_usd
-    fund_portfolio$value_usd <- fund_portfolio$isin_weight * fund_portfolio$value_usd
-    fund_portfolio$fund_isin <- fund_portfolio$isin
-    fund_portfolio$isin <- fund_portfolio$holding_isin
+    out$original_value_usd <- out$value_usd
+    out$value_usd <- out$isin_weight * out$value_usd
+    out$fund_isin <- out$isin
+    out$isin <- out$holding_isin
 
     # If there is no fund breakdown available, return the "original isin data"
     # to the original locations
-    fund_portfolio <- fund_portfolio %>%
+    out <- out %>%
       mutate(
         value_usd = if_else(
           !.data$fund_isin %in% fund_data$fund_isin,
@@ -627,7 +635,9 @@ calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
         ),
       )
   } else {
-    fund_portfolio <- fund_portfolio %>%
+    # FIXME: This seems odd: If the data has cero-rows, then add columns
+    # ASK @Clare2D if this is okay
+    out <- portfolio %>%
       dplyr::bind_cols(
         data.frame(
           direct_holding = integer(0),
@@ -637,11 +647,8 @@ calculate_fund_portfolio <- function(fund_portfolio, fund_data) {
       )
   }
 
-
-  fund_portfolio <- fund_portfolio %>%
+  out %>%
     select(cols_portfolio_no_bbg(), cols_funds())
-
-  fund_portfolio
 }
 
 cols_portfolio_no_bbg <- function() {

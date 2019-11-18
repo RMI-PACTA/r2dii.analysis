@@ -1,6 +1,8 @@
-#' Title
+#' TODO: Write title (ASK \@Clare2D)
 #'
 #' @inheritParams path_project_dirs
+#' @param fin_data TODO: Document (ASK \@Clare2D)
+#' @param fund_data TODO: Document (ASK \@Clare2D)
 #'
 #' @examples
 #' "raw_portfolio.csv" %>%
@@ -8,11 +10,35 @@
 #'   read_raw_portfolio() %>%
 #'   portfolio_input_check()
 #' @noRd
-portfolio_input_check <- function(portfolio) {
+portfolio_input_check <- function(portfolio, fin_data, fund_data) {
   portfolio <- portfolio %>%
     clean_column_names() %>%
-    may_add_column_holding_id() %>%
-    check_crucial_columns()
+    may_add_column_holding_id()
+
+  portfolio %>%
+    r2dii.utils::check_crucial_names(
+      c(
+        "holding_id",
+        "market_value",
+        "currency",
+        "isin",
+        "portfolio_name",
+        "investor_name",
+        "number_of_shares"
+      )
+    )
+
+  fin_data %>%
+    r2dii.utils::check_crucial_names(
+      c(
+        "isin",
+        # FIXME: This column is required. Legacy code checks for it in
+        # `portfolio` but I suspect it comes from `fin_data`. Ask @Clare2D
+        "unit_share_price",
+        # FIXME: Not sure where this comes from. ASK @Clare2D
+        "asset_type"
+      )
+    )
 
   portfolio <- portfolio %>%
     filter(
@@ -40,33 +66,28 @@ portfolio_input_check <- function(portfolio) {
 
   portfolio <- portfolio %>%
     # FIXME: This is very hacky -- just to move on. ASK @Clare2D what to do.
-    add_exchange_rate_and_value_usd()
+    add_exchange_rate_and_value_usd() %>%
+    # Add financial data
+    # Merges in the clean data and calculates the marketvalue and number of shares
+    # FIXME: `fin_data` lacks the crucial column `isin`. Where can we get it from?
+    # ASK @Clare2D
+    left_join(fin_data, by = "isin") %>%
+    calculate_value_usd_with_fin_data()
 
+  browser()
   abort("TODO")
-
-  # Add financial data
-  # Merges in the clean data and calculates the marketvalue and number of shares
-  # FIXME: Where does `fin_data` come from? (ASK @Clare2D)
-  portfolio <- left_join(portfolio, fin_data, by = "isin")
-
-
-  portfolio <- calculate_value_usd_with_fin_data(portfolio)
-
-  original_value_usd <- sum(portfolio$value_usd, na.rm = TRUE)
-
-  # identify funds in the portfolio
-  fund_portfolio <- identify_fund_portfolio(portfolio)
-
-  # Creates the fund_portfolio to match the original portfolio
-  # FIXME: Where does `fund_data` come from?
-  fund_portfolio <- calculate_fund_portfolio(fund_portfolio, fund_data)
-
-  # Merges in the bbg data to the fund portfolio
-  fund_portfolio <- left_join(fund_portfolio, fin_data, by = "isin")
+  fund_portfolio <- portfolio %>%
+    # identify funds in the portfolio
+    identify_fund_portfolio() %>%
+    # Creates the fund_portfolio to match the original portfolio
+    calculate_fund_portfolio(fund_data) %>%
+    # Merges in the bbg data to the fund portfolio
+    left_join(fin_data, by = "isin")
 
   # add fund_portfolio and check that the total value is the same
   portfolio_total <- add_fund_portfolio(portfolio, fund_portfolio)
 
+  original_value_usd <- sum(portfolio$value_usd, na.rm = TRUE)
   if (round(sum(portfolio_total$value_usd, na.rm = TRUE), 1) != round(original_value_usd, 1)) {
     stop("Fund Portfolio introducing errors in total value")
   }
@@ -141,21 +162,6 @@ may_add_column_holding_id <- function(portfolio) {
   }
 
   mutate(portfolio, holding_id = row.names(portfolio))
-}
-
-check_crucial_columns <- function(portfolio) {
-  r2dii.utils::check_crucial_names(
-    portfolio,
-    c(
-      "holding_id",
-      "market_value",
-      "currency",
-      "isin",
-      "portfolio_name",
-      "investor_name",
-      "number_of_shares"
-    )
-  )
 }
 
 is_missing <- function(x) {
@@ -573,31 +579,17 @@ normalise_fund_data <- function(fund_data) {
 ### Portfolio Check Functions
 
 calculate_value_usd_with_fin_data <- function(portfolio) {
-
-  # check correct inputs
-  necessary_columns <- c("currency", "unit_share_price")
-
-  ### TEST
-  if (!any(necessary_columns %in% colnames(portfolio))) {
-    stop("portfolio not structured correctly")
-  }
-
-
-  # add missing currency for number of shares
-  portfolio <- portfolio %>%
+  portfolio %>%
     mutate(
-      currency = if_else(!is.na(.data$number_of_shares), "USD", .data$currency)
+      # add missing currency for number of shares
+      currency = if_else(!is.na(.data$number_of_shares), "USD", .data$currency),
+      # calculates the value_usd where number of shares are given
+      value_usd = if_else(
+        .data$asset_type %in% c("Equity", "Funds") & is.na(.data$value_usd),
+        .data$number_of_shares * .data$unit_share_price,
+        .data$value_usd
+      )
     )
-
-  # calculates the value_usd where number of shares are given
-  portfolio <- portfolio %>%
-    mutate(value_usd = if_else(
-      .data$asset_type %in% c("Equity", "Funds") & is.na(.data$value_usd),
-      .data$number_of_shares * .data$unit_share_price,
-      .data$value_usd
-    ))
-
-  portfolio
 }
 
 identify_fund_portfolio <- function(portfolio) {

@@ -3,8 +3,22 @@ test_that("portfolio_input_check runs until TODO", {
     path_example("r2dii.analysis") %>%
     read_raw_portfolio()
 
+  # Overcome missing columns
+  fin <- r2dii.analysis::fin_data %>%
+    mutate(
+      isin = NA_character_,
+      unit_share_price = NA_real_,
+      asset_type = NA_character_
+    )
+
   expect_error(
-    suppressWarnings(portfolio_input_check(portfolio)),
+    suppressWarnings(
+      portfolio_input_check(
+        portfolio = portfolio,
+        fin_data = fin,
+        fund_data = r2dii.analysis::fund_data
+      )
+    ),
     "TODO"
   )
 })

@@ -74,8 +74,6 @@ portfolio_input_check <- function(portfolio, fin_data, fund_data) {
     left_join(fin_data, by = "isin") %>%
     calculate_value_usd_with_fin_data()
 
-  browser()
-  abort("TODO")
   fund_portfolio <- portfolio %>%
     # identify funds in the portfolio
     identify_fund_portfolio() %>%
@@ -86,6 +84,7 @@ portfolio_input_check <- function(portfolio, fin_data, fund_data) {
 
   # add fund_portfolio and check that the total value is the same
   portfolio_total <- add_fund_portfolio(portfolio, fund_portfolio)
+  abort("TODO")
 
   original_value_usd <- sum(portfolio$value_usd, na.rm = TRUE)
   if (round(sum(portfolio_total$value_usd, na.rm = TRUE), 1) != round(original_value_usd, 1)) {
@@ -670,8 +669,17 @@ add_fund_portfolio <- function(portfolio, fund_portfolio) {
     filter(!.data$isin %in% fund_portfolio$fund_isin)
 
   # Check that there are the correct number of isins in both portfolios
-  if (nrow(portfolio_no_funds) + length(unique(fund_portfolio$holding_id)) != nrow(portfolio)) {
-    stop("Something unexpected with fund portfolio merge")
+  is_incorrect_number_of_isins_in_both_portfolios <-
+    nrow(portfolio_no_funds) +
+    length(unique(fund_portfolio$holding_id)) !=
+    nrow(portfolio)
+  if (is_incorrect_number_of_isins_in_both_portfolios) {
+    abort(
+      glue(
+        "The number of ISINss in both portfolios is incorrect.
+        When fund portolio are merged, Is the result what you expect?"
+      )
+    )
   }
 
   # Add additional fund relevant lines to original portfolio
@@ -685,6 +693,7 @@ add_fund_portfolio <- function(portfolio, fund_portfolio) {
   # select same columns for both portfolios
   portfolio_no_funds <- portfolio_no_funds %>%
     select(colnames(portfolio), cols_funds())
+
   fund_portfolio <- fund_portfolio %>%
     select(colnames(portfolio), cols_funds())
 

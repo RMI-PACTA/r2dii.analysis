@@ -1,7 +1,7 @@
-#' TODO: Write title (ASK \@Clare2D)
+#' TODO: Write title (ASK \@Clare2D) Portfolio Input Check
 #'
 #' @inheritParams path_project_dirs
-#' @param fin_data TODO: Document (ASK \@Clare2D)
+#' @param fin_data TODO: Document (ASK \@Clare2D) 
 #' @param fund_data TODO: Document (ASK \@Clare2D)
 #'
 #' @examples
@@ -33,9 +33,9 @@ portfolio_input_check <- function(portfolio, fin_data, fund_data) {
       c(
         "isin",
         # FIXME: This column is required. Legacy code checks for it in
-        # `portfolio` but I suspect it comes from `fin_data`. Ask @Clare2D
+        # `portfolio` but I suspect it comes from `fin_data`. Ask @Clare2D - this comes from the financial data
         "unit_share_price",
-        # FIXME: Not sure where this comes from. ASK @Clare2D
+        # FIXME: Not sure where this comes from. ASK @Clare2D - also from  financial data
         "asset_type"
       )
     )
@@ -65,12 +65,14 @@ portfolio_input_check <- function(portfolio, fin_data, fund_data) {
     mutate(currency = if_else(.data$currency == "Euro", "EUR", .data$currency))
 
   portfolio <- portfolio %>%
-    # FIXME: This is very hacky -- just to move on. ASK @Clare2D what to do.
+    # FIXME: This is very hacky -- just to move on. ASK @Clare2D what to do. 
+    # What are the alternatives? I'm too versed in hacky to know better solutions!
     add_exchange_rate_and_value_usd() %>%
     # Add financial data
     # Merges in the clean data and calculates the marketvalue and number of shares
     # FIXME: `fin_data` lacks the crucial column `isin`. Where can we get it from?
-    # ASK @Clare2D
+    # ASK @Clare2D 
+    # I'm not sure why it would be missing? maybe it's still ISIN?
     left_join(fin_data, by = "isin") %>%
     calculate_value_usd_with_fin_data()
 
@@ -135,6 +137,8 @@ portfolio_input_check <- function(portfolio, fin_data, fund_data) {
 ### Portfolio cleaning functions
 
 # TODO: Sould we use janitr::clean_names()? (ASK @Clare2D)
+# This looks nice, but doesn't do everything. We also need special characters removed, 
+# and weird symbols that are occasionally read in.
 clean_column_names <- function(data) {
   stopifnot(is.data.frame(data))
 
@@ -627,6 +631,8 @@ calculate_fund_portfolio <- function(portfolio, fund_data) {
   } else {
     # FIXME: This seems odd: If the data has cero-rows, then add columns
     # ASK @Clare2D if this is okay
+    #  this is my hack to solve the case where there are no funds in a portfolio. 
+    # This provides something to merge back in. 
     out <- portfolio %>%
       dplyr::bind_cols(
         data.frame(

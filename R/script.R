@@ -122,8 +122,6 @@ portfolio_input_check <- function(){
   identify_missing_funds <- function(portfolio_total, fund_data){}
   ###
 
-  # Keep going with portfolio_total
-
   ### FLAGS/Exclusions
 
   portfolio_total <- check_isin_format(portfolio_total)
@@ -134,23 +132,52 @@ portfolio_input_check <- function(){
   portfolio_total <- add_flags(portfolio_total)
   portfolio_total <- overall_validity_flag(portfolio_total)
 
-
-  portfolio_overview <- portfolio_summary(portfolio_total)
-  # Missing is still flags about whether an isin is linked to ald or data or not.
-  # these tend to confuse, without more specific information about what sector the asset level data is in
-  # option to add in technology information from datastore?
-
-
-  ### Create portfolios to print.
-
-  ### Revenue Data
-  # This needs to be an optional
+  portfolio_total
+}
 
 
 
+portfolio_overview <- portfolio_summary(portfolio_total)
+# Missing is still flags about whether an isin is linked to ald or data or not.
+# these tend to confuse, without more specific information about what sector the asset level data is in
+# option to add in technology information from datastore?
 
+
+eq_portfolio <- weight_calculations(portfolio_total, port_type = "Equity")
+cb_portfolio <- weight_calculations(portfolio_total, port_type = "Bonds")
+
+
+# used for the total shares out
+company_financial_data <- read_csv(paste0(data_store_path, "balance_sheet_data.csv"))
+
+ald_cb <- readRDS(paste0(analysis_inputs_path, "Bonds-ALD-Scenario-DB.rda")) %>%
+  mutate(mapped_ald = 1)
+ald_eq <- readRDS(paste0(analysis_inputs_path, "Equity-ALD-Scenario-DB.rda")) %>%
+  mutate(mapped_ald = 1)
+
+convert_data_style <- function(df){
+  names(df) = tolower(names(df))
+  names(df) = gsub("[.]","_", names(df))
 
 
 }
+
+ald_cb <- convert_data_style(ald_cb)
+ald_eq <- convert_data_style(ald_eq)
+
+
+
+  ### Revenue Data
+  # This needs to be an optional
+  revenue_data <- readRDS(paste0(analysis_inputs_path,"TotalRevenueList.rda"))
+
+
+
+
+
+
+
+
+
 
 

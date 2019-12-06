@@ -17,6 +17,7 @@ The goal of r2dii.analysis is to TODO add gaol.
 Install the development version of r2dii.analysis with something like
 this:
 
+
 ``` r
 # install.packages("devtools")
 
@@ -30,5 +31,3 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ## TODO: Add example
 library(r2dii.analysis)
 ```
-
-Welcome Vincent\!

@@ -17,7 +17,6 @@ The goal of r2dii.analysis is to TODO add gaol.
 Install the development version of r2dii.analysis with something like
 this:
 
-
 ``` r
 # install.packages("devtools")
 

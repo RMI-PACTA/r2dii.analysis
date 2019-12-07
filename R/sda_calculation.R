@@ -5,9 +5,23 @@ sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "St
     var <- enquo(var)
 
     output_data <- input_data %>%
-      filter(!is.nan(!!var) & Year == year & Scenario %in% ref_scenario & Sector %in% ref_sector & ScenarioGeography %in% ref_geography) %>%
+      filter(
+        !is.nan(!!var) &
+          .data$Year == year &
+          .data$Scenario %in% ref_scenario &
+          .data$Sector %in% ref_sector &
+          .data$ScenarioGeography %in% ref_geography
+      ) %>%
       rename(CI = !!var) %>%
-      distinct(Investor.Name, Portfolio.Name, CI, Scenario, ScenarioGeography, Sector, Allocation)
+      distinct(
+        .data$Investor.Name,
+        .data$Portfolio.Name,
+        .data$CI,
+        .data$Scenario,
+        .data$ScenarioGeography,
+        .data$Sector,
+        .data$Allocation
+      )
 
     return(output_data)
   }
@@ -16,18 +30,31 @@ sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "St
   CI_port <- startender(input_data = port_data)
   CI_market <- startender(input_data = market_data)
   SI <- startender(input_data = market_data, year = target_year, var = Scen.Sec.EmissionsFactor) %>%
-    rename(SI = CI)
+    rename(SI = .data$CI)
 
   Distance <- CI_market %>%
     inner_join(SI, by = c("Sector", "Scenario", "Allocation", "Portfolio.Name",  "Investor.Name", "ScenarioGeography")) %>%
     inner_join(CI_port, by = c("Sector", "Scenario", "Allocation", "ScenarioGeography"), suffix = c("_market", "_port")) %>%
-    mutate(D_port = CI_port - SI)
+    mutate(D_port = .data$CI_port - .data$SI)
 
   view <- function(input_data = port_data) {
 
     output_data <- input_data %>%
-      filter(Scenario %in% ref_scenario & Sector %in% ref_sector & ScenarioGeography %in% ref_geography) %>%
-      distinct(Investor.Name, Portfolio.Name, Allocation, Sector, Scenario, ScenarioGeography, Year, Scen.Sec.EmissionsFactor)
+      filter(
+        .data$Scenario %in% ref_scenario &
+          .data$Sector %in% ref_sector &
+          .data$ScenarioGeography %in% ref_geography
+      ) %>%
+      distinct(
+        .data$Investor.Name,
+        .data$Portfolio.Name,
+        .data$Allocation,
+        .data$Sector,
+        .data$Scenario,
+        .data$ScenarioGeography,
+        .data$Year,
+        .data$Scen.Sec.EmissionsFactor
+      )
 
     return(output_data)
   }
@@ -37,25 +64,43 @@ sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "St
 
 
   port_to_market <- market_view %>%
-    select(-c(Investor.Name, Portfolio.Name)) %>%
+    select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
     inner_join(port_view, by = c("Sector", "Year", "Allocation", "ScenarioGeography", "Scenario"), suffix = c("_port", "_market"))
 
   port_to_distance <- port_to_market %>%
     inner_join(Distance, by = c("Scenario", "Sector", "Investor.Name" = "Investor.Name_port", "Portfolio.Name" = "Portfolio.Name_port", "Allocation", "ScenarioGeography"))
 
   port_calculation <- port_to_distance %>%
-    mutate(P_market  = (Scen.Sec.EmissionsFactor_market - SI)/(CI_market - SI),
-           Scen.Sec.EmissionsFactor = (D_port*1*P_market)+SI)
+    mutate(
+      P_market  = (.data$Scen.Sec.EmissionsFactor_market - SI)/(CI_market - SI),
+      Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
+    )
 
   port_calculation <- port_calculation %>%
-    select(Investor.Name, Portfolio.Name, Allocation, Sector, Scenario, ScenarioGeography, Year, Scen.Sec.EmissionsFactor)
+    select(
+      .data$Investor.Name,
+      .data$Portfolio.Name,
+      .data$Allocation,
+      .data$Sector,
+      .data$Scenario,
+      .data$ScenarioGeography,
+      .data$Year,
+      .data$Scen.Sec.EmissionsFactor
+    )
 
   port_data <- port_calculation %>%
     right_join(port_data, by = c("Investor.Name", "Portfolio.Name", "Allocation", "Scenario", "Sector", "ScenarioGeography", "Year"), suffix = c("", "_sda"))
 
   port_data <- port_data %>%
-    mutate(Scen.Sec.EmissionsFactor = if_else(!is.na(Scen.Sec.EmissionsFactor_sda), Scen.Sec.EmissionsFactor_sda, Scen.Sec.EmissionsFactor)) %>%
-    select(-Scen.Sec.EmissionsFactor_sda)
+    mutate(
+      Scen.Sec.EmissionsFactor =
+        if_else(
+          !is.na(.data$Scen.Sec.EmissionsFactor_sda),
+          .data$Scen.Sec.EmissionsFactor_sda,
+          .data$Scen.Sec.EmissionsFactor
+        )
+      ) %>%
+    select(-.data$Scen.Sec.EmissionsFactor_sda)
 
   return(port_data)
 

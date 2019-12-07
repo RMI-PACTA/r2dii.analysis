@@ -29,4 +29,18 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ``` r
 ## TODO: Add example
 library(r2dii.analysis)
+
+sda_calculation(
+  market = market,
+  port = portfolio,
+  ref_sectors = c("Cement", "Steel"),
+  ref_scenario = "B2DS",
+  start_year = 2019,
+  target_year = 2040
+)
+#> Warning in sda_calculation(market = market, port = portfolio, ref_sectors =
+#> c("Cement", : partial argument match of 'market' to 'market_data'
+#> Warning in sda_calculation(market = market, port = portfolio, ref_sectors =
+#> c("Cement", : partial argument match of 'port' to 'port_data'
+#> Error in sda_calculation(market = market, port = portfolio, ref_sectors = c("Cement", : unused argument (ref_sectors = c("Cement", "Steel"))
 ```

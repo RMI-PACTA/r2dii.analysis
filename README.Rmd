@@ -35,6 +35,7 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 
 ```{r example, error=TRUE}
 library(r2dii.analysis)
+packageVersion("r2dii.analysis")
 
 market
 

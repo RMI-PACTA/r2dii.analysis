@@ -28,6 +28,8 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 
 ``` r
 library(r2dii.analysis)
+packageVersion("r2dii.analysis")
+#> [1] '0.0.0.9001'
 
 market
 #> # A tibble: 24 x 9

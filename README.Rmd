@@ -34,8 +34,11 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ## Example
 
 ```{r example, error=TRUE}
-## TODO: Add example
 library(r2dii.analysis)
+
+market
+
+portfolio
 
 sda_calculation(
   market = market,

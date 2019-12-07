@@ -27,8 +27,41 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ## Example
 
 ``` r
-## TODO: Add example
 library(r2dii.analysis)
+
+market
+#> # A tibble: 24 x 9
+#>    Investor.Name Portfolio.Name Scenario ScenarioGeograp~ Allocation  Year
+#>    <chr>         <chr>          <chr>    <chr>            <chr>      <int>
+#>  1 Market        GlobalMarket   B2DS     Global           Portfolio~  2019
+#>  2 Market        GlobalMarket   B2DS     Global           Portfolio~  2020
+#>  3 Market        GlobalMarket   B2DS     Global           Portfolio~  2021
+#>  4 Market        GlobalMarket   B2DS     Global           Portfolio~  2022
+#>  5 Market        GlobalMarket   B2DS     Global           Portfolio~  2023
+#>  6 Market        GlobalMarket   B2DS     Global           Portfolio~  2024
+#>  7 Market        GlobalMarket   B2DS     Global           Portfolio~  2025
+#>  8 Market        GlobalMarket   B2DS     Global           Portfolio~  2026
+#>  9 Market        GlobalMarket   B2DS     Global           Portfolio~  2027
+#> 10 Market        GlobalMarket   B2DS     Global           Portfolio~  2028
+#> # ... with 14 more rows, and 3 more variables: Sector <chr>,
+#> #   Plan.Sec.EmissionsFactor <dbl>, Scen.Sec.EmissionsFactor <dbl>
+
+portfolio
+#> # A tibble: 24 x 9
+#>    Investor.Name Portfolio.Name Scenario ScenarioGeograp~ Allocation  Year
+#>    <chr>         <chr>          <chr>    <chr>            <chr>      <int>
+#>  1 Investor1     Portfolio1     B2DS     Global           Portfolio~  2019
+#>  2 Investor1     Portfolio1     B2DS     Global           Portfolio~  2020
+#>  3 Investor1     Portfolio1     B2DS     Global           Portfolio~  2021
+#>  4 Investor1     Portfolio1     B2DS     Global           Portfolio~  2022
+#>  5 Investor1     Portfolio1     B2DS     Global           Portfolio~  2023
+#>  6 Investor1     Portfolio1     B2DS     Global           Portfolio~  2024
+#>  7 Investor1     Portfolio1     B2DS     Global           Portfolio~  2025
+#>  8 Investor1     Portfolio1     B2DS     Global           Portfolio~  2026
+#>  9 Investor1     Portfolio1     B2DS     Global           Portfolio~  2027
+#> 10 Investor1     Portfolio1     B2DS     Global           Portfolio~  2028
+#> # ... with 14 more rows, and 3 more variables: Sector <chr>,
+#> #   Plan.Sec.EmissionsFactor <dbl>, Scen.Sec.EmissionsFactor <dbl>
 
 sda_calculation(
   market = market,

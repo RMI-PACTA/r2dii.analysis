@@ -2,7 +2,7 @@
 #   issues/6#issuecomment-561543097
 
 read_and_sanitize <- function(path, sheet) {
-  out <- readxl::read_excel(path, sheet = sheet, na = c("", "NaN"))
+  out <- readxl::read_excel(path, sheet = sheet)
   out$Year <- as.integer(out$Year)
   out
 }

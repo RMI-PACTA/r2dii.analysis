@@ -212,13 +212,7 @@ temp <- singel_indicator(input_results = input_results,
                          allocation = "PortfolioWeight")
 
 
-
-input_audit = test_audit
-input_results = test_results
-
-input_results$metric <- input_results$
-
-influencemap_weighting_methodology<- function(input_results = test_results, input_audit = test_audit, metric = temperature) {
+influencemap_weighting_methodology<- function(input_results = temp, input_audit = input_audit, metric = temperature) {
 
 
   metric <- enquo(metric)
@@ -234,7 +228,7 @@ influencemap_weighting_methodology<- function(input_results = test_results, inpu
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
     group_by(Investor.Name, Portfolio.Name, Sector) %>%
-    summarise(ValueUSD_sector = sum(ValueUSD, na.rm = T))
+    summarise(value_usd_sector = sum(ValueUSD, na.rm = T))
 
   input_results <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
@@ -249,14 +243,13 @@ influencemap_weighting_methodology<- function(input_results = test_results, inpu
     filter(!is.na(technology_weight)) %>%
     group_by(Investor.Name, Portfolio.Name, Sector) %>%
     mutate(
-      metric_sector = weighted.mean(metric, technology_weight, na.rm = T)
+      metric_sector = weighted.mean(!!metric, technology_weight, na.rm = T)
       )
 
   input_results_sector <- input_results %>%
     filter(is.na(technology_weight)) %>%
-    group_by(Investor.Name, Portfolio.Name, Sector) %>%
     mutate(
-      metric_sector = metric
+      metric_sector = !!metric
     )
 
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
@@ -264,7 +257,7 @@ influencemap_weighting_methodology<- function(input_results = test_results, inpu
   input_results_port <- input_results_sector %>%
     group_by(Portfolio.Name, Investor.Name) %>%
     mutate(
-      sector_value_weight = ValueUSD_sector*sector_weight,
+      sector_value_weight = value_usd_sector*sector_weight,
       metric_port = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
       )
 
@@ -273,7 +266,7 @@ influencemap_weighting_methodology<- function(input_results = test_results, inpu
 
 }
 
-test <- influencemap_weighting_methodology(input_results = test_results, input_audit = test_audit, metric = temperature)
+test <- influencemap_weighting_methodology(input_results = temp, input_audit = input_audit, metric = temperature)
 
 
 mapped_sector_exposure <-  function(input_audit = test_audit) {

@@ -35,3 +35,17 @@ TODO \@vintented
 \description{
 TODO \@vintented
 }
+\examples{
+
+market
+
+portfolio
+
+sda_calculation(market, portfolio)
+
+sample_market
+
+sample_portfolio
+
+sda_calculation(sample_market, sample_portfolio)
+}

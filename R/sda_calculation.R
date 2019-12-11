@@ -11,6 +11,20 @@
 #' @return TODO \@vintented
 #'
 #' @export
+#'
+#' @examples
+#'
+#' market
+#'
+#' portfolio
+#'
+#' sda_calculation(market, portfolio)
+#'
+#' sample_market
+#'
+#' sample_portfolio
+#'
+#' sda_calculation(sample_market, sample_portfolio)
 sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "Steel"), ref_scenario = "B2DS", ref_geography = "Global", start_year = 2019, target_year = 2040)  {
 
   startender <- function(input_data, var = Plan.Sec.EmissionsFactor, year = start_year) {

@@ -218,6 +218,7 @@ influencemap_weighting_methodology<- function(input_results = temp, input_audit 
   metric <- enquo(metric)
   metric_name <- quo(metric)
 
+
   #################################################################
   #preparing audit file to calculate $ sector exposure
   #################################################################

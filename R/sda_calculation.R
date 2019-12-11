@@ -10,6 +10,12 @@
 #'
 #' @return TODO \@vintented
 #' @export
+
+
+library(tidyverse)
+library(reprex)
+library(datapasta)
+
 sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "Steel"), ref_scenario = "B2DS", ref_geography = "Global", start_year = 2019, target_year = 2040)  {
 
   startender <- function(input_data, var = Plan.Sec.EmissionsFactor, year = start_year) {

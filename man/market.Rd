@@ -3,6 +3,7 @@
 \docType{data}
 \name{market}
 \alias{market}
+\alias{sample_market}
 \title{TODO \@vintented: Add title}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 24 rows and 9 columns.}
 \source{
@@ -11,8 +12,15 @@ r2dii.analysis/issues/6#issuecomment-561543097>.
 }
 \usage{
 market
+
+sample_market
 }
 \description{
 TODO \@vintented: Add description
 }
+\seealso{
+Other demo datasets: 
+\code{\link{portfolio}}
+}
+\concept{demo datasets}
 \keyword{datasets}

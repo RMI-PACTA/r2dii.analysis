@@ -216,7 +216,6 @@ influencemap_weighting_methodology<- function(input_results = temp, input_audit 
 
 
   metric <- enquo(metric)
-  metric_name <- quo(metric)
 
 
   #################################################################
@@ -262,15 +261,15 @@ influencemap_weighting_methodology<- function(input_results = temp, input_audit 
       metric_port = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
       )
 
-  output <- input_results_port %>%
-    rename(!!metric_name := metric_port)
+  output_results_port <- input_results_port %>%
+    rename(!!metric := metric_port)
 
 }
 
-test <- influencemap_weighting_methodology(input_results = temp, input_audit = input_audit, metric = temperature)
+temp_port <- influencemap_weighting_methodology(input_results = temp, input_audit = input_audit, metric = temperature)
 
 
-mapped_sector_exposure <-  function(input_audit = test_audit) {
+mapped_sector_exposure <-  function(input_audit = input_audit) {
 
   #################################################################
   #coverage assessment for the single indicator metric
@@ -302,18 +301,17 @@ mapped_sector_exposure <-  function(input_audit = test_audit) {
 
 }
 
-mapped_sector_exposure(input_audit = test_audit)
+coverage <- mapped_sector_exposure(input_audit = input_audit)
 
 
-  #################################################################
-  #connecting all of the dots
-  #################################################################
+#################################################################
+#connecting all of the dots
+#################################################################
 
-  temp_port_to_coverage <- temp_port %>%
-    inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
+temp_metric <- temp_port %>%
+  distinct(Investor.Name, Portfolio.Name, temperature) %>%
+  inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
 
-  temp_metric <- temp_port_to_coverage %>%
-    distinct(Investor.Name, Portfolio.Name, temperature_port, exposure_climate_sectors)
 
 
 

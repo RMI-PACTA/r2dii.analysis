@@ -11,10 +11,68 @@
 #' @return TODO \@vintented
 #' @export
 
-
 library(tidyverse)
 library(reprex)
 library(datapasta)
+
+sample_portfolio <- tibble::tribble(
+                                       ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2019, "Steel",                        1.8,                  1.1063532,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2020, "Steel",                        1.8,                  1.0608054,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2021, "Steel",                        1.8,                  1.0152576,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2022, "Steel",                        1.8,                  0.9697098,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2023, "Steel",                        1.8,                   0.924162,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2024, "Steel",                        1.8,                  0.8786143,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2025, "Steel",                        1.8,                  0.8330665,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2026, "Steel",                         NA,                  0.7955433,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2027, "Steel",                         NA,                  0.7580202,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2028, "Steel",                         NA,                  0.7204971,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2029, "Steel",                         NA,                   0.682974,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global", "PortfolioWeight",  2040, "Steel",                         NA,                  0.3663936,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2019, "Steel",                       1.85,                  1.1449154,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2020, "Steel",                       1.85,                  1.0977801,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2021, "Steel",                       1.85,                  1.0506447,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2022, "Steel",                       1.85,                  1.0035093,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2023, "Steel",                       1.85,                   0.956374,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2024, "Steel",                       1.85,                  0.9092386,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2025, "Steel",                       1.85,                  0.8621032,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2026, "Steel",                         NA,                  0.8232722,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2027, "Steel",                         NA,                  0.7844412,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2028, "Steel",                         NA,                  0.7456102,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2029, "Steel",                         NA,                  0.7067792,
+                                          "Investor1",    "Portfolio1",    "B2DS",            "Global",       "Ownership",  2040, "Steel",                         NA,                  0.3791643
+                                       )
+
+
+
+sample_market <- tibble::tribble(
+                   ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2019, "Steel",                       1.11,                  1.1063532,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2020, "Steel",                       1.11,                  1.0608054,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2021, "Steel",                       1.11,                  1.0152576,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2022, "Steel",                       1.11,                  0.9697098,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2023, "Steel",                       1.11,                   0.924162,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2024, "Steel",                       1.11,                  0.8786143,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2025, "Steel",                       1.11,                  0.8330665,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2026, "Steel",                         NA,                  0.7955433,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2027, "Steel",                         NA,                  0.7580202,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2028, "Steel",                         NA,                  0.7204971,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2029, "Steel",                         NA,                   0.682974,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global", "PortfolioWeight",  2040, "Steel",                         NA,                  0.3663936,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2019, "Steel",                       1.14,                  1.1449154,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2020, "Steel",                       1.14,                  1.0977801,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2021, "Steel",                       1.14,                  1.0506447,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2022, "Steel",                       1.14,                  1.0035093,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2023, "Steel",                       1.14,                   0.956374,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2024, "Steel",                       1.14,                  0.9092386,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2025, "Steel",                       1.14,                  0.8621032,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2026, "Steel",                         NA,                  0.8232722,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2027, "Steel",                         NA,                  0.7844412,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2028, "Steel",                         NA,                  0.7456102,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2029, "Steel",                         NA,                  0.7067792,
+                         "Market",  "GlobalMarket",    "B2DS",            "Global",       "Ownership",  2040, "Steel",                         NA,                  0.3791643
+                   )
+
 
 sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "Steel"), ref_scenario = "B2DS", ref_geography = "Global", start_year = 2019, target_year = 2040)  {
 
@@ -24,7 +82,7 @@ sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "St
 
     output_data <- input_data %>%
       filter(
-        !is.nan(!!var) &
+        !is.na(!!var) &
           .data$Year == year &
           .data$Scenario %in% ref_scenario &
           .data$Sector %in% ref_sector &
@@ -123,3 +181,13 @@ sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "St
   return(port_data)
 
 }
+
+sda_calculation(market_data = sample_market,
+                port_data = sample_portfolio,
+                ref_sector = "Steel",
+                ref_scenario = "B2DS",
+                ref_geography = "Global",
+                start_year = 2019,
+                target_year = 2040)
+
+

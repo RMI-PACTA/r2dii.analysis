@@ -40,11 +40,11 @@ sda_calculation <- function(market_data,
     ref_geography = ref_geography
   )
   CI_port <- port_data %>%
-    startender2(var = Plan.Sec.EmissionsFactor, year = start_year)
+    startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
   CI_market <- market_data %>%
-    startender2(var = Plan.Sec.EmissionsFactor, year = start_year)
+    startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
   SI <- market_data %>%
-    startender2(var = Scen.Sec.EmissionsFactor, year = target_year) %>%
+    startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
   Distance <- CI_market %>%
@@ -128,17 +128,15 @@ startender <- function(data,
                        ref_scenario,
                        ref_sector,
                        ref_geography) {
-  var <- enquo(var)
-
   output_data <- data %>%
     filter(
-      !is.na(!!var) &
+      !is.na(!! sym(var)) &
         .data$Year == year &
         .data$Scenario %in% ref_scenario &
         .data$Sector %in% ref_sector &
         .data$ScenarioGeography %in% ref_geography
     ) %>%
-    rename(CI = !!var) %>%
+    rename(CI = !! sym(var)) %>%
     distinct(
       .data$Investor.Name,
       .data$Portfolio.Name,

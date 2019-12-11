@@ -28,7 +28,8 @@ Depends:
 Imports: 
     dplyr,
     magrittr,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    purrr
 Suggests: 
     roxygen2,
     testthat (>= 2.1.0)

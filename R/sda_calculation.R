@@ -32,30 +32,19 @@ sda_calculation <- function(market_data,
                             ref_geography = "Global",
                             start_year = 2019,
                             target_year = 2040)  {
-  CI_port <- startender(
-    port_data,
-    var = Plan.Sec.EmissionsFactor,
-    year = start_year,
+  # Prefill with common arguments
+  startender2 <- purrr::partial(
+    startender,
     ref_scenario = ref_scenario,
     ref_sector = ref_sector,
     ref_geography = ref_geography
   )
-  CI_market <- startender(
-    market_data,
-    var = Plan.Sec.EmissionsFactor,
-    year = start_year,
-    ref_scenario = ref_scenario,
-    ref_sector = ref_sector,
-    ref_geography = ref_geography
-  )
-  SI <- startender(
-    market_data,
-    var = Scen.Sec.EmissionsFactor,
-    year = target_year,
-    ref_scenario = ref_scenario,
-    ref_sector = ref_sector,
-    ref_geography = ref_geography
-  ) %>%
+  CI_port <- port_data %>%
+    startender2(var = Plan.Sec.EmissionsFactor, year = start_year)
+  CI_market <- market_data %>%
+    startender2(var = Plan.Sec.EmissionsFactor, year = start_year)
+  SI <- market_data %>%
+    startender2(var = Scen.Sec.EmissionsFactor, year = target_year) %>%
     rename(SI = .data$CI)
 
   Distance <- CI_market %>%
@@ -133,7 +122,7 @@ sda_calculation <- function(market_data,
 }
 
 
-startender <- function(input_data,
+startender <- function(data,
                        var,
                        year,
                        ref_scenario,
@@ -141,7 +130,7 @@ startender <- function(input_data,
                        ref_geography) {
   var <- enquo(var)
 
-  output_data <- input_data %>%
+  output_data <- data %>%
     filter(
       !is.na(!!var) &
         .data$Year == year &

@@ -25,38 +25,37 @@
 #' sample_portfolio
 #'
 #' sda_calculation(sample_market, sample_portfolio)
-sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "Steel"), ref_scenario = "B2DS", ref_geography = "Global", start_year = 2019, target_year = 2040)  {
-
-  startender <- function(input_data, var = Plan.Sec.EmissionsFactor, year = start_year) {
-
-    var <- enquo(var)
-
-    output_data <- input_data %>%
-      filter(
-        !is.na(!!var) &
-          .data$Year == year &
-          .data$Scenario %in% ref_scenario &
-          .data$Sector %in% ref_sector &
-          .data$ScenarioGeography %in% ref_geography
-      ) %>%
-      rename(CI = !!var) %>%
-      distinct(
-        .data$Investor.Name,
-        .data$Portfolio.Name,
-        .data$CI,
-        .data$Scenario,
-        .data$ScenarioGeography,
-        .data$Sector,
-        .data$Allocation
-      )
-
-    return(output_data)
-  }
-
-
-  CI_port <- startender(input_data = port_data)
-  CI_market <- startender(input_data = market_data)
-  SI <- startender(input_data = market_data, year = target_year, var = Scen.Sec.EmissionsFactor) %>%
+sda_calculation <- function(market_data,
+                            port_data,
+                            ref_sector = c("Cement", "Steel"),
+                            ref_scenario = "B2DS",
+                            ref_geography = "Global",
+                            start_year = 2019,
+                            target_year = 2040)  {
+  CI_port <- startender(
+    port_data,
+    var = Plan.Sec.EmissionsFactor,
+    year = start_year,
+    ref_scenario = ref_scenario,
+    ref_sector = ref_sector,
+    ref_geography = ref_geography
+  )
+  CI_market <- startender(
+    market_data,
+    var = Plan.Sec.EmissionsFactor,
+    year = start_year,
+    ref_scenario = ref_scenario,
+    ref_sector = ref_sector,
+    ref_geography = ref_geography
+  )
+  SI <- startender(
+    market_data,
+    var = Scen.Sec.EmissionsFactor,
+    year = target_year,
+    ref_scenario = ref_scenario,
+    ref_sector = ref_sector,
+    ref_geography = ref_geography
+  ) %>%
     rename(SI = .data$CI)
 
   Distance <- CI_market %>%
@@ -133,12 +132,33 @@ sda_calculation <- function(market_data, port_data, ref_sector = c("Cement", "St
 
 }
 
-sda_calculation(market_data = sample_market,
-                port_data = sample_portfolio,
-                ref_sector = "Steel",
-                ref_scenario = "B2DS",
-                ref_geography = "Global",
-                start_year = 2019,
-                target_year = 2040)
 
+startender <- function(input_data,
+                       var,
+                       year,
+                       ref_scenario,
+                       ref_sector,
+                       ref_geography) {
+  var <- enquo(var)
 
+  output_data <- input_data %>%
+    filter(
+      !is.na(!!var) &
+        .data$Year == year &
+        .data$Scenario %in% ref_scenario &
+        .data$Sector %in% ref_sector &
+        .data$ScenarioGeography %in% ref_geography
+    ) %>%
+    rename(CI = !!var) %>%
+    distinct(
+      .data$Investor.Name,
+      .data$Portfolio.Name,
+      .data$CI,
+      .data$Scenario,
+      .data$ScenarioGeography,
+      .data$Sector,
+      .data$Allocation
+    )
+
+  return(output_data)
+}

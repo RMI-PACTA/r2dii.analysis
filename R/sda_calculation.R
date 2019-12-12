@@ -76,7 +76,7 @@ sda_calculation <- function(market_data,
         .data$Scen.Sec.EmissionsFactor
       )
 
-    return(output_data)
+    output_data
   }
 
   market_view <- view2(input_data = market_data)
@@ -122,7 +122,7 @@ sda_calculation <- function(market_data,
     ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_sda)
 
-  return(port_data)
+  port_data
 }
 
 
@@ -151,5 +151,5 @@ startender <- function(data,
       .data$Allocation
     )
 
-  return(output_data)
+  output_data
 }

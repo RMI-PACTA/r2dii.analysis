@@ -2,6 +2,13 @@ test_that("sda_calculation with `market` and `portfolio` returns a tibble", {
   expect_is(sda_calculation(market, portfolio), "tbl")
 })
 
+test_that("sda_calculation outputs a known value", {
+  expect_known_value(
+    sda_calculation(market, portfolio), "ref-sda_calculation"
+
+  )
+})
+
 sample_market <- dplyr::tribble(
   ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography, ~Allocation, ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
   "Market", "GlobalMarket", "B2DS", "Global", "PortfolioWeight", 2019, "Steel", 1.11, 1.1063532,

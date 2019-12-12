@@ -36,16 +36,8 @@ TODO \@vintented
 TODO \@vintented
 }
 \examples{
-
-market
-
-portfolio
-
-sda_calculation(market, portfolio)
-
-sample_market
-
-sample_portfolio
-
-sda_calculation(sample_market, sample_portfolio)
+sda_calculation(
+  r2dii.analysis::market,
+  r2dii.analysis::portfolio
+)
 }

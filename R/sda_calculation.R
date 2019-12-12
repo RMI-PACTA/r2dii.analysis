@@ -35,14 +35,13 @@ sda_calculation <- function(market_data,
     startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
   ci_market <- market_data %>%
     startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
-  SI <- market_data %>%
+  si <- market_data %>%
     startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
-
   Distance <- ci_market %>%
     inner_join(
-      SI, by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
+      si, by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
     ) %>%
     inner_join(
       ci_port, by = get_common_by(), suffix = c("_market", "_port")
@@ -56,7 +55,6 @@ sda_calculation <- function(market_data,
     ref_sector = ref_sector,
     ref_geography = ref_geography
   )
-
   port_to_market <- view3(market_data) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
     inner_join(

@@ -77,8 +77,8 @@ sda_calculation <- function(market_data,
 
   port_calculation <- port_to_distance %>%
     mutate(
-      P_market  = (.data$Scen.Sec.EmissionsFactor_market - SI) /
-        (CI_market - SI),
+      P_market  = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
+        (.data$CI_market - .data$SI),
       Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     )
 

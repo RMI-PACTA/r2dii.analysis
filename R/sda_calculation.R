@@ -63,7 +63,7 @@ sda_calculation <- function(market_data,
     ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
-  port_to_distance <- port_to_market %>%
+  port_to_market %>%
     inner_join(
       distance,
       by = c(
@@ -71,9 +71,7 @@ sda_calculation <- function(market_data,
         "Investor.Name" = "Investor.Name_port",
         "Portfolio.Name" = "Portfolio.Name_port"
         )
-    )
-
-  port_calculation <- port_to_distance %>%
+    ) %>%
     mutate(
       P_market  = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
         (.data$CI_market - .data$SI),
@@ -88,9 +86,7 @@ sda_calculation <- function(market_data,
       .data$ScenarioGeography,
       .data$Year,
       .data$Scen.Sec.EmissionsFactor
-    )
-
-  port_calculation %>%
+    ) %>%
     right_join(
       port_data,
       by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),

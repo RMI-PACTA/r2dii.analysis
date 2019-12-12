@@ -78,9 +78,7 @@ sda_calculation <- function(market_data,
       P_market  = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
         (.data$CI_market - .data$SI),
       Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
-    )
-
-  port_calculation <- port_calculation %>%
+    ) %>%
     select(
       .data$Investor.Name,
       .data$Portfolio.Name,

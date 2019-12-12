@@ -53,7 +53,12 @@ sda_calculation <- function(market_data,
     ) %>%
     inner_join(
       CI_port,
-      by = c("Sector", "Scenario", "Allocation", "ScenarioGeography"),
+      by = c(
+        "Sector",
+        "Scenario",
+        "Allocation",
+        "ScenarioGeography"
+      ),
       suffix = c("_market", "_port")
     ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
@@ -70,16 +75,33 @@ sda_calculation <- function(market_data,
     select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
     inner_join(
       view3(port_data),
-      by = c("Sector", "Year", "Allocation", "ScenarioGeography", "Scenario"),
+      by = c(
+        "Sector",
+        "Year",
+        "Allocation",
+        "ScenarioGeography",
+        "Scenario"
+      ),
       suffix = c("_port", "_market")
     )
 
   port_to_distance <- port_to_market %>%
-    inner_join(Distance, by = c("Scenario", "Sector", "Investor.Name" = "Investor.Name_port", "Portfolio.Name" = "Portfolio.Name_port", "Allocation", "ScenarioGeography"))
+    inner_join(
+      Distance,
+      by = c(
+        "Scenario",
+        "Sector",
+        "Investor.Name" = "Investor.Name_port",
+        "Portfolio.Name" = "Portfolio.Name_port",
+        "Allocation",
+        "ScenarioGeography"
+        )
+    )
 
   port_calculation <- port_to_distance %>%
     mutate(
-      P_market  = (.data$Scen.Sec.EmissionsFactor_market - SI) / (CI_market - SI),
+      P_market  = (.data$Scen.Sec.EmissionsFactor_market - SI) /
+        (CI_market - SI),
       Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     )
 
@@ -96,7 +118,19 @@ sda_calculation <- function(market_data,
     )
 
   port_data <- port_calculation %>%
-    right_join(port_data, by = c("Investor.Name", "Portfolio.Name", "Allocation", "Scenario", "Sector", "ScenarioGeography", "Year"), suffix = c("", "_sda"))
+    right_join(
+      port_data,
+      by = c(
+        "Investor.Name",
+        "Portfolio.Name",
+        "Allocation",
+        "Scenario",
+        "Sector",
+        "ScenarioGeography",
+        "Year"
+      ),
+      suffix = c("", "_sda")
+    )
 
   port_data <- port_data %>%
     mutate(

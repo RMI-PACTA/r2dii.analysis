@@ -92,14 +92,12 @@ sda_calculation <- function(market_data,
       .data$Scen.Sec.EmissionsFactor
     )
 
-  port_data2 <- port_calculation %>%
+  port_calculation %>%
     right_join(
       port_data,
       by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
       suffix = c("", "_sda")
-    )
-
-  port_data2 %>%
+    ) %>%
     mutate(
       Scen.Sec.EmissionsFactor =
         if_else(

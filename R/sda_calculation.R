@@ -141,8 +141,8 @@ startender <- function(data,
   output_data
 }
 
-view2 <- function(input_data, ref_scenario, ref_sector, ref_geography) {
-  output_data <- input_data %>%
+view2 <- function(data, ref_scenario, ref_sector, ref_geography) {
+  data %>%
     filter(
       .data$Scenario %in% ref_scenario &
         .data$Sector %in% ref_sector &
@@ -158,6 +158,4 @@ view2 <- function(input_data, ref_scenario, ref_sector, ref_geography) {
       .data$Year,
       .data$Scen.Sec.EmissionsFactor
     )
-
-  output_data
 }

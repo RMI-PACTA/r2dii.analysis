@@ -112,14 +112,13 @@ sda_calculation <- function(market_data,
   port_data
 }
 
-
 startender <- function(data,
                        var,
                        year,
                        ref_scenario,
                        ref_sector,
                        ref_geography) {
-  output_data <- data %>%
+  data %>%
     filter(
       !is.na(!!sym(var)) &
         .data$Year == year &
@@ -137,8 +136,6 @@ startender <- function(data,
       .data$Sector,
       .data$Allocation
     )
-
-  output_data
 }
 
 view2 <- function(data, ref_scenario, ref_sector, ref_geography) {

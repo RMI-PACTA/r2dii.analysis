@@ -39,15 +39,6 @@ sda_calculation <- function(market_data,
     startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
-  distance <- ci_market %>%
-    inner_join(
-      si, by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
-    ) %>%
-    inner_join(
-      ci_port, by = get_common_by(), suffix = c("_market", "_port")
-    ) %>%
-    mutate(D_port = .data$CI_port - .data$SI)
-
   # Prefill with common arguments
   view3 <- purrr::partial(
     view2,
@@ -62,6 +53,15 @@ sda_calculation <- function(market_data,
       by = c(get_common_by(), "Year"),
       suffix = c("_port", "_market")
     )
+
+  distance <- ci_market %>%
+    inner_join(
+      si, by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
+    ) %>%
+    inner_join(
+      ci_port, by = get_common_by(), suffix = c("_market", "_port")
+    ) %>%
+    mutate(D_port = .data$CI_port - .data$SI)
 
   port_to_distance <- port_to_market %>%
     inner_join(

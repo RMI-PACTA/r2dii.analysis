@@ -22,7 +22,7 @@ sda_calculation <- function(market_data,
                             ref_sector = c("Cement", "Steel"),
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
-                            start_year = 2019,
+                            start_year = get_current_year(),
                             target_year = 2040)  {
   # Prefill with common arguments
   startender2 <- purrr::partial(

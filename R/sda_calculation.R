@@ -44,7 +44,7 @@ sda_calculation <- function(market_data,
     inner_join(CI_port, by = c("Sector", "Scenario", "Allocation", "ScenarioGeography"), suffix = c("_market", "_port")) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
-  view <- function(input_data = port_data) {
+  view2 <- function(input_data = port_data) {
     output_data <- input_data %>%
       filter(
         .data$Scenario %in% ref_scenario &
@@ -65,8 +65,8 @@ sda_calculation <- function(market_data,
     return(output_data)
   }
 
-  market_view <- view(input_data = market_data)
-  port_view <- view(input_data = port_data)
+  market_view <- view2(input_data = market_data)
+  port_view <- view2(input_data = port_data)
 
 
   port_to_market <- market_view %>%

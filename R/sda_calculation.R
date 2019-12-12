@@ -58,34 +58,21 @@ sda_calculation <- function(market_data,
     ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
-  view2 <- function(input_data = port_data) {
-    output_data <- input_data %>%
-      filter(
-        .data$Scenario %in% ref_scenario &
-          .data$Sector %in% ref_sector &
-          .data$ScenarioGeography %in% ref_geography
-      ) %>%
-      distinct(
-        .data$Investor.Name,
-        .data$Portfolio.Name,
-        .data$Allocation,
-        .data$Sector,
-        .data$Scenario,
-        .data$ScenarioGeography,
-        .data$Year,
-        .data$Scen.Sec.EmissionsFactor
-      )
+  # Prefill with common arguments
+  view3 <- purrr::partial(
+    view2,
+    ref_scenario = ref_scenario,
+    ref_sector = ref_sector,
+    ref_geography = ref_geography
+  )
 
-    output_data
-  }
-
-  market_view <- view2(input_data = market_data)
-  port_view <- view2(input_data = port_data)
-
-
-  port_to_market <- market_view %>%
+  port_to_market <- view3(market_data) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
-    inner_join(port_view, by = c("Sector", "Year", "Allocation", "ScenarioGeography", "Scenario"), suffix = c("_port", "_market"))
+    inner_join(
+      view3(port_data),
+      by = c("Sector", "Year", "Allocation", "ScenarioGeography", "Scenario"),
+      suffix = c("_port", "_market")
+    )
 
   port_to_distance <- port_to_market %>%
     inner_join(Distance, by = c("Scenario", "Sector", "Investor.Name" = "Investor.Name_port", "Portfolio.Name" = "Portfolio.Name_port", "Allocation", "ScenarioGeography"))
@@ -149,6 +136,27 @@ startender <- function(data,
       .data$ScenarioGeography,
       .data$Sector,
       .data$Allocation
+    )
+
+  output_data
+}
+
+view2 <- function(input_data, ref_scenario, ref_sector, ref_geography) {
+  output_data <- input_data %>%
+    filter(
+      .data$Scenario %in% ref_scenario &
+        .data$Sector %in% ref_sector &
+        .data$ScenarioGeography %in% ref_geography
+    ) %>%
+    distinct(
+      .data$Investor.Name,
+      .data$Portfolio.Name,
+      .data$Allocation,
+      .data$Sector,
+      .data$Scenario,
+      .data$ScenarioGeography,
+      .data$Year,
+      .data$Scen.Sec.EmissionsFactor
     )
 
   output_data

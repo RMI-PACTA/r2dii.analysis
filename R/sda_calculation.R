@@ -39,27 +39,13 @@ sda_calculation <- function(market_data,
     startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
+
   Distance <- CI_market %>%
     inner_join(
-      SI,
-      by = c(
-        "Allocation",
-        "Investor.Name",
-        "Portfolio.Name",
-        "Sector",
-        "Scenario",
-        "ScenarioGeography"
-      )
+      SI, by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
     ) %>%
     inner_join(
-      CI_port,
-      by = c(
-        "Allocation",
-        "Sector",
-        "Scenario",
-        "ScenarioGeography"
-      ),
-      suffix = c("_market", "_port")
+      CI_port, by = get_common_by(), suffix = c("_market", "_port")
     ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
@@ -75,13 +61,7 @@ sda_calculation <- function(market_data,
     select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
     inner_join(
       view3(port_data),
-      by = c(
-        "Allocation",
-        "Sector",
-        "Scenario",
-        "ScenarioGeography",
-        "Year"
-      ),
+      by = c(get_common_by(), "Year"),
       suffix = c("_port", "_market")
     )
 
@@ -89,12 +69,9 @@ sda_calculation <- function(market_data,
     inner_join(
       Distance,
       by = c(
-        "Allocation",
+        get_common_by(),
         "Investor.Name" = "Investor.Name_port",
-        "Portfolio.Name" = "Portfolio.Name_port",
-        "Sector",
-        "Scenario",
-        "ScenarioGeography"
+        "Portfolio.Name" = "Portfolio.Name_port"
         )
     )
 
@@ -120,15 +97,7 @@ sda_calculation <- function(market_data,
   port_data <- port_calculation %>%
     right_join(
       port_data,
-      by = c(
-        "Allocation",
-        "Investor.Name",
-        "Portfolio.Name",
-        "Sector",
-        "Scenario",
-        "ScenarioGeography",
-        "Year"
-      ),
+      by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
       suffix = c("", "_sda")
     )
 
@@ -189,4 +158,13 @@ view2 <- function(data, ref_scenario, ref_sector, ref_geography) {
       .data$Year,
       .data$Scen.Sec.EmissionsFactor
     )
+}
+
+get_common_by <- function() {
+  c(
+    "Allocation",
+    "Sector",
+    "Scenario",
+    "ScenarioGeography"
+  )
 }

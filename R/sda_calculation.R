@@ -99,7 +99,7 @@ sda_calculation <- function(market_data,
       suffix = c("", "_sda")
     )
 
-  port_data3 <- port_data2 %>%
+  port_data2 %>%
     mutate(
       Scen.Sec.EmissionsFactor =
         if_else(
@@ -109,8 +109,6 @@ sda_calculation <- function(market_data,
         )
     ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_sda)
-
-  port_data3
 }
 
 startender <- function(data,

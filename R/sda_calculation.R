@@ -40,8 +40,22 @@ sda_calculation <- function(market_data,
     rename(SI = .data$CI)
 
   Distance <- CI_market %>%
-    inner_join(SI, by = c("Sector", "Scenario", "Allocation", "Portfolio.Name", "Investor.Name", "ScenarioGeography")) %>%
-    inner_join(CI_port, by = c("Sector", "Scenario", "Allocation", "ScenarioGeography"), suffix = c("_market", "_port")) %>%
+    inner_join(
+      SI,
+      by = c(
+        "Sector",
+        "Scenario",
+        "Allocation",
+        "Portfolio.Name",
+        "Investor.Name",
+        "ScenarioGeography"
+      )
+    ) %>%
+    inner_join(
+      CI_port,
+      by = c("Sector", "Scenario", "Allocation", "ScenarioGeography"),
+      suffix = c("_market", "_port")
+    ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
   view2 <- function(input_data = port_data) {

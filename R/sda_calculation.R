@@ -43,20 +43,20 @@ sda_calculation <- function(market_data,
     inner_join(
       SI,
       by = c(
+        "Allocation",
+        "Investor.Name",
+        "Portfolio.Name",
         "Sector",
         "Scenario",
-        "Allocation",
-        "Portfolio.Name",
-        "Investor.Name",
         "ScenarioGeography"
       )
     ) %>%
     inner_join(
       CI_port,
       by = c(
+        "Allocation",
         "Sector",
         "Scenario",
-        "Allocation",
         "ScenarioGeography"
       ),
       suffix = c("_market", "_port")
@@ -76,11 +76,11 @@ sda_calculation <- function(market_data,
     inner_join(
       view3(port_data),
       by = c(
-        "Sector",
-        "Year",
         "Allocation",
+        "Sector",
+        "Scenario",
         "ScenarioGeography",
-        "Scenario"
+        "Year"
       ),
       suffix = c("_port", "_market")
     )
@@ -89,11 +89,11 @@ sda_calculation <- function(market_data,
     inner_join(
       Distance,
       by = c(
-        "Scenario",
-        "Sector",
+        "Allocation",
         "Investor.Name" = "Investor.Name_port",
         "Portfolio.Name" = "Portfolio.Name_port",
-        "Allocation",
+        "Sector",
+        "Scenario",
         "ScenarioGeography"
         )
     )
@@ -121,11 +121,11 @@ sda_calculation <- function(market_data,
     right_join(
       port_data,
       by = c(
+        "Allocation",
         "Investor.Name",
         "Portfolio.Name",
-        "Allocation",
-        "Scenario",
         "Sector",
+        "Scenario",
         "ScenarioGeography",
         "Year"
       ),

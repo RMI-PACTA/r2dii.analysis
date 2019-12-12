@@ -16,14 +16,14 @@
 #' sda_calculation(
 #'   r2dii.analysis::market,
 #'   r2dii.analysis::portfolio
-#')
+#' )
 sda_calculation <- function(market_data,
                             port_data,
                             ref_sector = c("Cement", "Steel"),
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
                             start_year = get_current_year(),
-                            target_year = 2040)  {
+                            target_year = 2040) {
   # Prefill with common arguments
   startender2 <- purrr::partial(
     startender,
@@ -40,12 +40,11 @@ sda_calculation <- function(market_data,
     rename(SI = .data$CI)
 
   Distance <- CI_market %>%
-    inner_join(SI, by = c("Sector", "Scenario", "Allocation", "Portfolio.Name",  "Investor.Name", "ScenarioGeography")) %>%
+    inner_join(SI, by = c("Sector", "Scenario", "Allocation", "Portfolio.Name", "Investor.Name", "ScenarioGeography")) %>%
     inner_join(CI_port, by = c("Sector", "Scenario", "Allocation", "ScenarioGeography"), suffix = c("_market", "_port")) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
   view <- function(input_data = port_data) {
-
     output_data <- input_data %>%
       filter(
         .data$Scenario %in% ref_scenario &
@@ -79,7 +78,7 @@ sda_calculation <- function(market_data,
 
   port_calculation <- port_to_distance %>%
     mutate(
-      P_market  = (.data$Scen.Sec.EmissionsFactor_market - SI)/(CI_market - SI),
+      P_market  = (.data$Scen.Sec.EmissionsFactor_market - SI) / (CI_market - SI),
       Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     )
 
@@ -106,11 +105,10 @@ sda_calculation <- function(market_data,
           .data$Scen.Sec.EmissionsFactor_sda,
           .data$Scen.Sec.EmissionsFactor
         )
-      ) %>%
+    ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_sda)
 
   return(port_data)
-
 }
 
 
@@ -122,13 +120,13 @@ startender <- function(data,
                        ref_geography) {
   output_data <- data %>%
     filter(
-      !is.na(!! sym(var)) &
+      !is.na(!!sym(var)) &
         .data$Year == year &
         .data$Scenario %in% ref_scenario &
         .data$Sector %in% ref_sector &
         .data$ScenarioGeography %in% ref_geography
     ) %>%
-    rename(CI = !! sym(var)) %>%
+    rename(CI = !!sym(var)) %>%
     distinct(
       .data$Investor.Name,
       .data$Portfolio.Name,

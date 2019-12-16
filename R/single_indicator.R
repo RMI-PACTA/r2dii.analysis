@@ -10,14 +10,12 @@ library(readxl)
 #################################################################
 #load sample data
 #################################################################
-folder <- "/Users/vincentjerosch-herold/Desktop/untitled folder/"
+file <- "/Users/vincentjerosch-herold/Desktop/untitled folder/single_indicator_sample_inputs.xlsx"
 
-setwd(folder)
-
-input_results <- read_xlsx("single_indicator_sample_results.xlsx", sheet = 1)
-input_audit <- read_xlsx("single_indicator_sample_audit.xlsx", sheet = 1)
-scenarios <- read_csv("scenario_relationships.csv")
-sector_weightings <- read_csv("tech_sector_weighting.csv")
+input_results <- read_xlsx(file, sheet = "sample_results")
+input_audit <- read_xlsx(file, sheet = "sample_audit")
+scenarios <- read_xlsx(file, sheet = "scenario_relationships")
+sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
 singel_indicator <- function(input_results = input_results, upper_temp_threshold = 10, lower_temp_threshold = 1, start_year = 2019, allocation = "PortfolioWeight") {
 
@@ -262,6 +260,7 @@ influencemap_weighting_methodology<- function(input_results = temp, input_audit 
       )
 
   output_results_port <- input_results_port %>%
+    select(-c(!!metric)) %>%
     rename(!!metric := metric_port)
 
 }

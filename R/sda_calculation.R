@@ -1,14 +1,24 @@
 #' TODO \@vintented
 #'
-#' @param market_data A dataframe with market results data.
-#' @param port_data A dataframe with portfolio results data.
-#' @param ref_sector A list of one or more sectors (with emissions factors) to calculate the SDA.
+#' @param market_data A dataframe with market results data (@\vintented TODO
+#'   Add `market_description` in r2dii.dataraw).
+#' @param port_data A dataframe with portfolio results data (@\vintented TODO
+#'   Add `port_description` in r2dii.dataraw).
+#' @param ref_sector A list of one or more sectors (with emissions factors) to
+#'   calculate the SDA.
 #' @param ref_scenario A list of one or more scenarios to use as the SDA target.
-#' @param ref_geography A list of one or more scenario geographies for each scenario.
-#' @param start_year The start year used in the SDA calculation as a numeric (i.e. start_year == 2020). By default the function will use the config. start year.
-#' @param target_year The end year used in the SDA calculation as a numeric (i.e. target_year == 2045). By default the function will use the last year in the current market data.
+#' @param ref_geography A list of one or more scenario geographies for each
+#'   scenario.
+#' @param start_year The start year used in the SDA calculation as a numeric
+#'   (i.e. start_year == 2020). By default the function will use the config.
+#'   start year.
+#' @param target_year The end year used in the SDA calculation as a numeric
+#'   (i.e. target_year == 2045). By default the function will use the last year
+#'   in the current market data.
 #'
-#' @return The SDA function returns the portfolio results dataframe with the "scenario sector emissions factor" column overwritten with the portfolio SDA calculation.
+#' @return The SDA function returns the portfolio results dataframe with the
+#'   "scenario sector emissions factor" column overwritten with the portfolio
+#'   SDA calculation.
 #'
 #' @export
 #'

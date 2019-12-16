@@ -15,22 +15,30 @@ sda_calculation(
 )
 }
 \arguments{
-\item{market_data}{TODO \@vintented}
+\item{market_data}{A dataframe with market results data.}
 
-\item{port_data}{TODO \@vintented}
+\item{port_data}{A dataframe with portfolio results data.}
 
-\item{ref_sector}{TODO \@vintented}
+\item{ref_sector}{A list of one or more sectors (with emissions factors) to
+calculate the SDA.}
 
-\item{ref_scenario}{TODO \@vintented}
+\item{ref_scenario}{A list of one or more scenarios to use as the SDA target.}
 
-\item{ref_geography}{TODO \@vintented}
+\item{ref_geography}{A list of one or more scenario geographies for each
+scenario.}
 
-\item{start_year}{TODO \@vintented}
+\item{start_year}{The start year used in the SDA calculation as a numeric
+(i.e. start_year == 2020). By default the function will use the config.
+start year.}
 
-\item{target_year}{TODO \@vintented}
+\item{target_year}{The end year used in the SDA calculation as a numeric
+(i.e. target_year == 2045). By default the function will use the last year
+in the current market data.}
 }
 \value{
-TODO \@vintented
+The SDA function returns the portfolio results dataframe with the
+"scenario sector emissions factor" column overwritten with the portfolio
+SDA calculation.
 }
 \description{
 TODO \@vintented

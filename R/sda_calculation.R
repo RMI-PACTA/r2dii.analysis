@@ -29,11 +29,20 @@
 #' )
 sda_calculation <- function(market_data,
                             port_data,
-                            ref_sector = c("Cement", "Steel", "Power", "Oil&Gas", "Coal", "Aviation", "FossilFuels", "Shipping"),
+                            ref_sector = c("Cement", "Steel", "Power", "Oil&Gas", "Coal", "Aviation", "FossilFuels", "Shipping", "Automotive"),
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
                             start_year = get_current_year(),
                             target_year = 2040) {
+
+  if(length(setdiff(ref_sector, port_data$Sector)) > 0L) {
+
+    print("The following sectors were dropped from the analysis...")
+
+    setdiff(ref_sector, port_data$Sector)
+
+  }
+
   # Prefill with common arguments
   startender2 <- purrr::partial(
     startender,

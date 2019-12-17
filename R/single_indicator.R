@@ -148,8 +148,7 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
 
   scenario_port_relation <- function(input = temp, metric_name = "factor", calculation_upper = scen_plan_prod_diff/scen_tech_prod_upper_bound, calculation_lower = scen_plan_prod_diff/scen_tech_prod_lower_bound) {
 
-    calculation_upper <- enquo(calculation_upper)
-    calculation_lower <- enquo(calculation_lower)
+
 
     #brown technologies
     #################################
@@ -158,17 +157,17 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
       mutate(
         metric = case_when(
           #brown technologies
-          plan_tech_prod > scen_tech_prod_reference & Technology %in% brown_technologies ~ !!calculation_upper,
-          plan_tech_prod < scen_tech_prod_reference & Technology %in% brown_technologies ~ !!calculation_lower,
+          plan_tech_prod > scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_upper }},
+          plan_tech_prod < scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_lower }},
           #green technologies
-          plan_tech_prod < scen_tech_prod_reference & Technology %not in% brown_technologies ~ !!calculation_upper,
-          plan_tech_prod > scen_tech_prod_reference & Technology %not in% brown_technologies ~ !!calculation_lower
+          plan_tech_prod < scen_tech_prod_reference & Technology %not in% brown_technologies ~ {{ calculation_upper }},
+          plan_tech_prod > scen_tech_prod_reference & Technology %not in% brown_technologies ~ {{ calculation_lower }}
         )
       )
 
 
     input <- input %>%
-      rename(!!metric_name := metric)
+      rename({{ metric_name }} := metric)
 
 
   }
@@ -213,9 +212,6 @@ temp <- singel_indicator(input_results = input_results,
 influencemap_weighting_methodology<- function(input_results = temp, input_audit = input_audit, metric = temperature) {
 
 
-  metric <- enquo(metric)
-
-
   #################################################################
   #preparing audit file to calculate $ sector exposure
   #################################################################
@@ -241,13 +237,13 @@ influencemap_weighting_methodology<- function(input_results = temp, input_audit 
     filter(!is.na(technology_weight)) %>%
     group_by(Investor.Name, Portfolio.Name, Sector) %>%
     mutate(
-      metric_sector = weighted.mean(!!metric, technology_weight, na.rm = T)
+      metric_sector = weighted.mean({{ metric }}, technology_weight, na.rm = T)
       )
 
   input_results_sector <- input_results %>%
     filter(is.na(technology_weight)) %>%
     mutate(
-      metric_sector = !!metric
+      metric_sector = {{ metric }}
     )
 
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
@@ -260,12 +256,14 @@ influencemap_weighting_methodology<- function(input_results = temp, input_audit 
       )
 
   output_results_port <- input_results_port %>%
-    select(-c(!!metric)) %>%
-    rename(!!metric := metric_port)
+    select(-c({{ metric }})) %>%
+    rename({{ metric }}:= metric_port)
 
 }
 
-temp_port <- influencemap_weighting_methodology(input_results = temp, input_audit = input_audit, metric = temperature)
+temp_port <- influencemap_weighting_methodology(input_results = temp,
+                                                input_audit = input_audit,
+                                                metric = temperature)
 
 
 mapped_sector_exposure <-  function(input_audit = input_audit) {

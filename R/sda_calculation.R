@@ -44,7 +44,7 @@ sda_calculation <- function(market_data,
   ci_port <- port_data %>%
     startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
   ci_market <- market_data %>%
-    startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
+    startender2(var = "Scen.Sec.EmissionsFactor", year = start_year)
   si <- market_data %>%
     startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)

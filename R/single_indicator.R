@@ -70,7 +70,7 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
   #################################################################
 
   scenario_relationships <- temp %>%
-    inner_join(scenarios, by = c("Sector", "Scenario")) %>%
+    inner_join(scenario_relationships, by = c("Sector", "Scenario")) %>%
     group_by(Investor.Name, Portfolio.Name, Sector) %>%
     filter(n_distinct(Scenario) == 3) %>% # should alway have three scenarios.
     distinct(relation, temp, asset_class, scen_tech_prod, Sector, Technology)

@@ -100,17 +100,17 @@ sda_calculation <- function(market_data,
     right_join(
       port_data,
       by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
-      suffix = c("", "_sda")
+      suffix = c("", "_no_sda")
     ) %>%
     mutate(
       Scen.Sec.EmissionsFactor =
         if_else(
-          !is.na(.data$Scen.Sec.EmissionsFactor_sda),
-          .data$Scen.Sec.EmissionsFactor_sda,
-          .data$Scen.Sec.EmissionsFactor
+          !is.na(.data$Scen.Sec.EmissionsFactor),
+          .data$Scen.Sec.EmissionsFactor,
+          .data$Scen.Sec.EmissionsFactor_no_sda
         )
     ) %>%
-    select(-.data$Scen.Sec.EmissionsFactor_sda)
+    select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
 startender <- function(data,

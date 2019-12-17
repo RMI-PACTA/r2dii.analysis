@@ -14,7 +14,7 @@ file <- "/Users/vincentjerosch-herold/Desktop/untitled folder/single_indicator_s
 
 input_results <- read_xlsx(file, sheet = "sample_results")
 input_audit <- read_xlsx(file, sheet = "sample_audit")
-scenarios <- read_xlsx(file, sheet = "scenario_relationships")
+scenario_relationships <- read_xlsx(file, sheet = "scenario_relationships")
 sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
 singel_indicator <- function(input_results = input_results, upper_temp_threshold = 10, lower_temp_threshold = 1, start_year = 2019, allocation = "PortfolioWeight") {

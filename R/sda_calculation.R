@@ -27,7 +27,7 @@
 #' )
 sda_calculation <- function(market_data,
                             port_data,
-                            ref_sector = c("Cement", "Steel", "Power", "Oil&Gas", "Coal", "Aviation", "FossilFuels", "Shipping", "Automotive"),
+                            ref_sector = get_ref_sector(),
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
                             start_year = get_current_year(),
@@ -118,6 +118,27 @@ sda_calculation <- function(market_data,
         )
     ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
+}
+
+#' Default value for the `ref_sector` argument to [sda_calculation()]
+#'
+#' @return A character vector.
+#' @export
+#'
+#' @examples
+#' get_ref_sector()
+get_ref_sector <- function() {
+  c(
+    "Cement",
+    "Steel",
+    "Power",
+    "Oil&Gas",
+    "Coal",
+    "Aviation",
+    "FossilFuels",
+    "Shipping",
+    "Automotive"
+  )
 }
 
 startender <- function(data,

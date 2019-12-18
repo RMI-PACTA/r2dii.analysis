@@ -7,8 +7,7 @@
 sda_calculation(
   market_data,
   port_data,
-  ref_sector = c("Cement", "Steel", "Power", "Oil&Gas", "Coal", "Aviation",
-    "FossilFuels", "Shipping", "Automotive"),
+  ref_sector = get_ref_sector(),
   ref_scenario = "B2DS",
   ref_geography = "Global",
   start_year = get_current_year(),

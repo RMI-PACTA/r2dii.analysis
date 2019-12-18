@@ -230,12 +230,11 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
     group_by(Investor.Name, Portfolio.Name, Sector, Asset.Type) %>%
     summarise(value_usd_sector = sum(ValueUSD, na.rm = T)) %>%
     group_by(Investor.Name, Portfolio.Name, Asset.Type) %>%
-    summarise(value_usd_Asset.Type = sum(ValueUSD, na.rm = T)) %>%
-
+    mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = T))
 
   input_results <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
-    inner_join(input_results, by = c("Sector", "Investor.Name", "Portfolio.Name"))
+    inner_join(input_results, by = c("Sector", "Investor.Name", "Portfolio.Name", "Asset.Type"))
 
   #################################################################
   # rolling everything up to the portfolio level using the

@@ -30,8 +30,15 @@ sda_calculation <- function(market_data,
                             ref_sector = get_ref_sector(),
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
-                            start_year = get_current_year(),
+                            start_year = r2dii.utils::START.YEAR(),
                             target_year = 2040) {
+  if (is.null(start_year)) {
+    stop(
+      "`start_year` can't be NULL.\n",
+      "Did you forget `start_year` in a configuration file or as an argument?",
+      call. = FALSE
+    )
+  }
 
   if(length(setdiff(ref_sector, port_data$Sector)) > 0L) {
 

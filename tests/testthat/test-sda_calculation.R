@@ -1,3 +1,31 @@
+library(r2dii.utils)
+
+# Avoid warning for using a toy configuration file
+setup(op <- options(r2dii_config = example_config("config_demo.yml")))
+teardown(on.exit(options(op)))
+
+test_that("sda_calculation fails gracefully if config has null start_year", {
+  config_with_some_start_year <- example_config("config_demo.yml")
+  expect_false(is.null(START.YEAR(file = config_with_some_start_year)))
+  expect_error(
+    withr::with_options(
+      list(r2dii_config = config_with_some_start_year),
+      sda_calculation(market, portfolio)
+    ),
+    NA
+  )
+
+  config_with_null_start_year <- example_config("config-toy.yml")
+  expect_true(is.null(START.YEAR(file = config_with_null_start_year)))
+  expect_error(
+    withr::with_options(
+      list(r2dii_config = config_with_null_start_year),
+      sda_calculation(market, portfolio)
+    ),
+    "start_year.*can't be NULL"
+  )
+})
+
 test_that("sda_calculation with `market` and `portfolio` returns a tibble", {
   expect_is(sda_calculation(market, portfolio), "tbl")
 })

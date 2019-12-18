@@ -30,11 +30,15 @@ Imports:
     magrittr,
     rlang (>= 0.1.2),
     purrr,
-    lubridate
+    lubridate,
+    r2dii.utils (>= 0.0.0.9001)
 Suggests: 
     roxygen2,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    withr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+Remotes: 
+    2DegreesInvesting/r2dii.utils

@@ -39,21 +39,21 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
       Plan.Alloc.WtTechProd > 0)
 
   temp <- temp %>%
-    distinct(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
+    distinct(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, asset_type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
 
   #################################################################
   # calculating the integral of delta
   #################################################################
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type) %>%
+    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, asset_type) %>%
     mutate(
       delta_plan_tech_prod = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
       delta_scen_tech_prod = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
     )
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type) %>%
+    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, asset_type) %>%
     summarise(
       integral_delta_plan_tech_prod = sum(delta_plan_tech_prod, na.rm = T),
       integral_delta_scen_tech_prod = sum(delta_scen_tech_prod, na.rm = T)
@@ -73,13 +73,13 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
     inner_join(scenario_relationships, by = c("Sector", "Scenario")) %>%
     group_by(Investor.Name, Portfolio.Name, Sector) %>%
     filter(n_distinct(Scenario) == 3) %>% # should alway have three scenarios.
-    distinct(relation, temp, Asset.Type, scen_tech_prod, Sector, Technology)
+    distinct(relation, temp, asset_type, scen_tech_prod, Sector, Technology)
 
 
   temp <- scenario_relationships %>%
     pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>% # spreading out the different relations.
-    inner_join(temp, by = c("Sector", "Technology", "Asset.Type", "Investor.Name", "Portfolio.Name")) %>%
-    distinct(Investor.Name, Portfolio.Name, Sector, Technology, Asset.Type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
+    inner_join(temp, by = c("Sector", "Technology", "asset_type", "Investor.Name", "Portfolio.Name")) %>%
+    distinct(Investor.Name, Portfolio.Name, Sector, Technology, asset_type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
 
   #################################################################
   # calculating the range between temperatures.
@@ -227,14 +227,14 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
-    group_by(Investor.Name, Portfolio.Name, Sector, Asset.Type) %>%
+    group_by(Investor.Name, Portfolio.Name, Sector, asset_type) %>%
     summarise(value_usd_sector = sum(ValueUSD, na.rm = T)) %>%
-    group_by(Investor.Name, Portfolio.Name, Asset.Type) %>%
-    mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = T))
+    group_by(Investor.Name, Portfolio.Name, asset_type) %>%
+    mutate(value_usd_asset_type = sum(value_usd_sector, na.rm = T))
 
   input_results <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
-    inner_join(input_results, by = c("Sector", "Investor.Name", "Portfolio.Name", "Asset.Type"))
+    inner_join(input_results, by = c("Sector", "Investor.Name", "Portfolio.Name", "asset_type"))
 
   #################################################################
   # rolling everything up to the portfolio level using the
@@ -243,7 +243,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   input_results_technology <- input_results %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(Investor.Name, Portfolio.Name, Asset.Type, Sector) %>%
+    group_by(Investor.Name, Portfolio.Name, asset_type, Sector) %>%
     mutate(
       metric_sector = weighted.mean({{ metric }}, technology_weight, na.rm = T)
     )
@@ -256,19 +256,19 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
 
-  input_results_Asset.Type <- input_results_sector %>%
-    group_by(Portfolio.Name, Investor.Name, Asset.Type) %>%
+  input_results_asset_type <- input_results_sector %>%
+    group_by(Portfolio.Name, Investor.Name, asset_type) %>%
     mutate(
       sector_value_weight = value_usd_sector * sector_weight,
-      metric_Asset.Type = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
+      metric_asset_type = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
     )
 
 
-  input_results_port <- input_results_Asset.Type %>%
+  input_results_port <- input_results_asset_type %>%
     group_by(Portfolio.Name, Investor.Name) %>%
     mutate(
-      financial_instument_value_weight = value_usd_Asset.Type,
-      metric_port = weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = T)
+      financial_instument_value_weight = value_usd_asset_type,
+      metric_port = weighted.mean(metric_asset_type, financial_instument_value_weight, na.rm = T)
     )
   output_results_port <- input_results_port %>%
     select(-c({{ metric }})) %>%
@@ -322,3 +322,19 @@ coverage <- mapped_sector_exposure(input_audit = input_audit)
 temp_metric <- temp_port %>%
   distinct(Investor.Name, Portfolio.Name, temperature) %>%
   inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
+
+range <- c(1.75, 2, 2.75, 3.5)
+
+temp_metric$temperature_range = NA
+
+for (y in nrow(temp_metric)) {
+
+  for (i in range) {
+
+    temp_metric <- temp_metric %>%
+      mutate(temperature_range = ifelse(range[(i)] < temperature & range[(i+1)] > temperature,  paste0(range[(i)], "-", range[(i+1)]), temperature_range),
+             temperature_range =  ifelse(min(range) > temperature, paste0("< ", min(range)), temperature_range),
+             temperature_range = ifelse(max(range) < temperature, paste0("> ", max(range)), temperature_range))
+
+  }
+}

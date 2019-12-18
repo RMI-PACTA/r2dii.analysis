@@ -227,8 +227,11 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
-    group_by(Investor.Name, Portfolio.Name, Sector) %>%
-    summarise(value_usd_sector = sum(ValueUSD, na.rm = T))
+    group_by(Investor.Name, Portfolio.Name, Sector, asset_type) %>%
+    summarise(value_usd_sector = sum(ValueUSD, na.rm = T)) %>%
+    group_by(Investor.Name, Portfolio.Name, asset_type) %>%
+    summarise(value_usd_asset_type = sum(ValueUSD, na.rm = T)) %>%
+
 
   input_results <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
@@ -241,7 +244,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   input_results_technology <- input_results %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(Investor.Name, Portfolio.Name, Sector) %>%
+    group_by(Investor.Name, Portfolio.Name, asset_class, Sector) %>%
     mutate(
       metric_sector = weighted.mean({{ metric }}, technology_weight, na.rm = T)
     )
@@ -254,13 +257,20 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
 
-  input_results_port <- input_results_sector %>%
-    group_by(Portfolio.Name, Investor.Name) %>%
+  input_results_asset_type <- input_results_sector %>%
+    group_by(Portfolio.Name, Investor.Name, asset_class) %>%
     mutate(
       sector_value_weight = value_usd_sector * sector_weight,
-      metric_port = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
+      metric_asset_type = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
     )
 
+
+  input_results_port <- input_results_asset_type %>%
+    group_by(Portfolio.Name, Investor.Name) %>%
+    mutate(
+      financial_instument_value_weight = value_usd_asset_type,
+      metric_port = weighted.mean(metric_asset_type, financial_instument_value_weight, na.rm = T)
+    )
   output_results_port <- input_results_port %>%
     select(-c({{ metric }})) %>%
     rename({{ metric }} := metric_port)

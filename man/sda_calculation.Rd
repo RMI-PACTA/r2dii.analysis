@@ -7,7 +7,8 @@
 sda_calculation(
   market_data,
   port_data,
-  ref_sector = c("Cement", "Steel"),
+  ref_sector = c("Cement", "Steel", "Power", "Oil&Gas", "Coal", "Aviation",
+    "FossilFuels", "Shipping", "Automotive"),
   ref_scenario = "B2DS",
   ref_geography = "Global",
   start_year = get_current_year(),
@@ -15,7 +16,7 @@ sda_calculation(
 )
 }
 \arguments{
-\item{market_data}{A dataframe with market results data.}
+\item{market_data}{A dataframe with market results.}
 
 \item{port_data}{A dataframe with portfolio results data.}
 

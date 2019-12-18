@@ -10,22 +10,24 @@ library(readxl)
 #################################################################
 #load sample data
 #################################################################
-file <- "/Users/vincentjerosch-herold/Desktop/untitled folder/single_indicator_sample_inputs.xlsx"
+# TO DO:
+# add files to the repo to avoid loading it locally & then remove the following lines:
+# file <- "/Users/vincentjerosch-herold/Desktop/untitled folder/single_indicator_sample_inputs.xlsx"
+file <- "C:/Users/Klaus/Dropbox (2° Investing)/2° Investing Team/People/Klaus/R-Code scripts/Single indicator/single_indicator_sample_inputs.xlsx"
 
 input_results <- read_xlsx(file, sheet = "sample_results")
 input_audit <- read_xlsx(file, sheet = "sample_audit")
 scenarios <- read_xlsx(file, sheet = "scenario_relationships")
 sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
-singel_indicator <- function(input_results = input_results, upper_temp_threshold = 10, lower_temp_threshold = 1, start_year = 2019, allocation = "PortfolioWeight") {
+brown_technologies_list <- c("Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE")
 
+singel_indicator <- function(input_results = input_results, upper_temp_threshold = 10, lower_temp_threshold = 1, start_year = 2019, allocation = "PortfolioWeight", brown_technologies = brown_technologies_list) {
 
   #################################################################
   #define things
   #################################################################
-
-  brown_technologies <- c("Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE")
-  `%not in%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
+   `%not in%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
 
   #################################################################
   #prepare and filter input data

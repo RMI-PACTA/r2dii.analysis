@@ -4,7 +4,9 @@ test_that("sda_calculation with `market` and `portfolio` returns a tibble", {
 
 test_that("sda_calculation outputs a known value", {
   expect_known_value(
-    sda_calculation(market, portfolio), "ref-sda_calculation"
+    sda_calculation(market, portfolio),
+    "ref-sda_calculation",
+    update = FALSE
 
   )
 })

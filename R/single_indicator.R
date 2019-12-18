@@ -323,18 +323,22 @@ temp_metric <- temp_port %>%
   distinct(Investor.Name, Portfolio.Name, temperature) %>%
   inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
 
-range <- c(1.75, 2, 2.75, 3.5)
+range_finder <- function(input_data = temp_metric, range = c(1.75, 2, 2.75, 3.5)) {
 
-temp_metric$temperature_range = NA
-
-for (y in nrow(temp_metric)) {
+  input_data$temperature_range = NA
 
   for (i in range) {
 
-    temp_metric <- temp_metric %>%
+    input_data <- input_data %>%
       mutate(temperature_range = ifelse(range[(i)] < temperature & range[(i+1)] > temperature,  paste0(range[(i)], "-", range[(i+1)]), temperature_range),
              temperature_range =  ifelse(min(range) > temperature, paste0("< ", min(range)), temperature_range),
              temperature_range = ifelse(max(range) < temperature, paste0("> ", max(range)), temperature_range))
 
   }
+
+  return(input_data)
+
 }
+
+temp_metric <- range_finder(input_data = temp_metric)
+

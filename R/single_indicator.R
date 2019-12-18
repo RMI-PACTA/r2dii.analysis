@@ -11,9 +11,9 @@ library(readxl)
 # load sample data
 #################################################################
 # TO DO:
-# add files to the repo to avoid loading it locally & then remove the following lines:
-# file <- "/Users/vincentjerosch-herold/Desktop/untitled folder/single_indicator_sample_inputs.xlsx"
-file <- "C:/Users/Klaus/Dropbox (2° Investing)/2° Investing Team/People/Klaus/R-Code scripts/Single indicator/single_indicator_sample_inputs.xlsx"
+# integrate the files to the repo to avoid loading it from a dropbox folder & then remove the following lines:
+# I, Klaus moved the file in the repo as an intermediate step to ensure version control!
+file <- "./data/single_indicator_sample_inputs.xlsx"
 
 input_results <- read_xlsx(file, sheet = "sample_results")
 input_audit <- read_xlsx(file, sheet = "sample_audit")
@@ -39,21 +39,21 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
       Plan.Alloc.WtTechProd > 0)
 
   temp <- temp %>%
-    distinct(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, asset_class, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
+    distinct(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
 
   #################################################################
   # calculating the integral of delta
   #################################################################
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, asset_class) %>%
+    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type) %>%
     mutate(
       delta_plan_tech_prod = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
       delta_scen_tech_prod = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
     )
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, asset_class) %>%
+    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type) %>%
     summarise(
       integral_delta_plan_tech_prod = sum(delta_plan_tech_prod, na.rm = T),
       integral_delta_scen_tech_prod = sum(delta_scen_tech_prod, na.rm = T)
@@ -73,13 +73,13 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
     inner_join(scenario_relationships, by = c("Sector", "Scenario")) %>%
     group_by(Investor.Name, Portfolio.Name, Sector) %>%
     filter(n_distinct(Scenario) == 3) %>% # should alway have three scenarios.
-    distinct(relation, temp, asset_class, scen_tech_prod, Sector, Technology)
+    distinct(relation, temp, Asset.Type, scen_tech_prod, Sector, Technology)
 
 
   temp <- scenario_relationships %>%
     pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>% # spreading out the different relations.
-    inner_join(temp, by = c("Sector", "Technology", "asset_class", "Investor.Name", "Portfolio.Name")) %>%
-    distinct(Investor.Name, Portfolio.Name, Sector, Technology, asset_class, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
+    inner_join(temp, by = c("Sector", "Technology", "Asset.Type", "Investor.Name", "Portfolio.Name")) %>%
+    distinct(Investor.Name, Portfolio.Name, Sector, Technology, Asset.Type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
 
   #################################################################
   # calculating the range between temperatures.
@@ -244,7 +244,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   input_results_technology <- input_results %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(Investor.Name, Portfolio.Name, asset_class, Sector) %>%
+    group_by(Investor.Name, Portfolio.Name, Asset.Type, Sector) %>%
     mutate(
       metric_sector = weighted.mean({{ metric }}, technology_weight, na.rm = T)
     )
@@ -258,7 +258,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
 
   input_results_Asset.Type <- input_results_sector %>%
-    group_by(Portfolio.Name, Investor.Name, asset_class) %>%
+    group_by(Portfolio.Name, Investor.Name, Asset.Type) %>%
     mutate(
       sector_value_weight = value_usd_sector * sector_weight,
       metric_Asset.Type = weighted.mean(metric_sector, sector_value_weight, na.rm = T)

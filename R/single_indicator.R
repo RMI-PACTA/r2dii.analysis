@@ -207,9 +207,10 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
 
 temp <- singel_indicator(
   input_results = input_results,
-  upper_temp_threshold = 10,
-  lower_temp_threshold = 1,
+  upper_temp_threshold = 6,
+  lower_temp_threshold = 1.5,
   start_year = 2019,
+  time_horizon = 5,
   allocation = "PortfolioWeight"
 )
 

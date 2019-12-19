@@ -44,8 +44,26 @@ SDA calculation.
 TODO \@vintented
 }
 \examples{
-sda_calculation(
-  r2dii.analysis::market,
-  r2dii.analysis::portfolio
-)
+# Access example configuration-files
+library(r2dii.utils)
+
+# Seting us a toy configuration file
+restore_options <- options(r2dii_config = example_config("config_demo.yml"))
+on.exit(restore_options)
+
+START.YEAR()
+# Uses `start_year` from the configuration file
+sda_calculation(market, portfolio)
+
+sda_calculation(market, portfolio, ref_sector = "Steel")
+
+# This configuration file lacks `start_year`
+options(r2dii_config = example_config("config-toy.yml"))
+START.YEAR()
+
+# Fails
+try(sda_calculation(market, portfolio))
+
+# Passes
+sda_calculation(market, portfolio, start_year = "2019")
 }

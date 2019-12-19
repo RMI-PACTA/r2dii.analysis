@@ -21,10 +21,28 @@
 #' @export
 #'
 #' @examples
-#' sda_calculation(
-#'   r2dii.analysis::market,
-#'   r2dii.analysis::portfolio
-#' )
+#' # Access example configuration-files
+#' library(r2dii.utils)
+#'
+#' # Seting us a toy configuration file
+#' restore_options <- options(r2dii_config = example_config("config_demo.yml"))
+#' on.exit(restore_options)
+#'
+#' START.YEAR()
+#' # Uses `start_year` from the configuration file
+#' sda_calculation(market, portfolio)
+#'
+#' sda_calculation(market, portfolio, ref_sector = "Steel")
+#'
+#' # This configuration file lacks `start_year`
+#' options(r2dii_config = example_config("config-toy.yml"))
+#' START.YEAR()
+#'
+#' # Fails
+#' try(sda_calculation(market, portfolio))
+#'
+#' # Passes
+#' sda_calculation(market, portfolio, start_year = "2019")
 sda_calculation <- function(market_data,
                             port_data,
                             ref_sector = get_ref_sector(),
@@ -33,14 +51,7 @@ sda_calculation <- function(market_data,
                             start_year = r2dii.utils::START.YEAR(),
                             target_year = 2040) {
   abort_if_null_start_year(start_year)
-
-  if(length(setdiff(ref_sector, port_data$Sector)) > 0L) {
-
-    print("The following sectors were dropped from the analysis...")
-
-    setdiff(ref_sector, port_data$Sector)
-
-  }
+  warn_if_missing_sectors(port_data, ref_sector)
 
   # Prefill with common arguments
   startender2 <- purrr::partial(
@@ -129,6 +140,20 @@ abort_if_null_start_year <- function(start_year) {
       call. = FALSE
     )
   }
+}
+
+warn_if_missing_sectors <- function(port_data, ref_sector) {
+  missing_ref_sector <- sort(setdiff(ref_sector, port_data$Sector))
+
+  if(length(missing_ref_sector) > 0L) {
+    warning(
+      "Can't calculate SDA for `ref_sector` values missing from `port_data`:\n",
+      paste0(missing_ref_sector, collapse = ", "), ".",
+      call. = FALSE
+    )
+  }
+
+  invisible(port_data)
 }
 
 #' Default value for the `ref_sector` argument to [sda_calculation()]

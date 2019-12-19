@@ -1,8 +1,20 @@
+library(dplyr)
 library(r2dii.utils)
 
 # Avoid warning for using a toy configuration file
 setup(op <- options(r2dii_config = example_config("config_demo.yml")))
 teardown(on.exit(options(op)))
+
+test_that("sda_calculation warns `ref_sector`s missing in `port_data`", {
+  expect_warning(
+    sda_calculation(
+      r2dii.analysis::market,
+      port_data = filter(portfolio, Sector == "Steel"),
+      ref_sector = c("Steel", "Power")
+    ),
+    "missing.*Power"
+  )
+})
 
 test_that("sda_calculation fails gracefully if config has null start_year", {
   config_with_some_start_year <- example_config("config_demo.yml")
@@ -10,7 +22,7 @@ test_that("sda_calculation fails gracefully if config has null start_year", {
   expect_error(
     withr::with_options(
       list(r2dii_config = config_with_some_start_year),
-      sda_calculation(market, portfolio)
+      sda_calculation(market, portfolio, ref_sector = "Steel")
     ),
     NA
   )
@@ -27,12 +39,12 @@ test_that("sda_calculation fails gracefully if config has null start_year", {
 })
 
 test_that("sda_calculation with `market` and `portfolio` returns a tibble", {
-  expect_is(sda_calculation(market, portfolio), "tbl")
+  expect_is(sda_calculation(market, portfolio, ref_sector = "Steel"), "tbl")
 })
 
 test_that("sda_calculation outputs a known value", {
   expect_known_value(
-    sda_calculation(market, portfolio),
+    sda_calculation(market, portfolio, ref_sector = "Steel"),
     "ref-sda_calculation",
     update = FALSE
 
@@ -72,5 +84,8 @@ sample_portfolio <- dplyr::tribble(
 )
 
 test_that("sda_calculation with another dataset returns a tibble", {
-  expect_is(sda_calculation(sample_market, sample_portfolio), "tbl")
+  expect_is(
+    sda_calculation(sample_market, sample_portfolio, , ref_sector = "Steel"),
+    "tbl"
+  )
 })

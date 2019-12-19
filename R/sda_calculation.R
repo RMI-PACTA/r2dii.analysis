@@ -2,11 +2,12 @@
 #'
 #' @param market_data A dataframe with market results.
 #' @param port_data A dataframe with portfolio results data.
-#' @param ref_sector A list of one or more sectors (with emissions factors) to
-#'   calculate the SDA.
-#' @param ref_scenario A list of one or more scenarios to use as the SDA target.
-#' @param ref_geography A list of one or more scenario geographies for each
-#'   scenario.
+#' @param ref_sector A character vector giving one or more sectors (with
+#'   emissions factors) to calculate the SDA.
+#' @param ref_scenario A character vector giving one or more scenarios to use as
+#'   the SDA target.
+#' @param ref_geography A character vector giving one or more scenario
+#'   geographies for each scenario.
 #' @param start_year The start year used in the SDA calculation as a numeric
 #'   (i.e. start_year == 2020). By default the function will use the config.
 #'   start year.
@@ -14,22 +15,21 @@
 #'   (i.e. target_year == 2045). By default the function will use the last year
 #'   in the current market data.
 #'
-#' @return The SDA function returns the portfolio results dataframe with the
-#'   "scenario sector emissions factor" column overwritten with the portfolio
-#'   SDA calculation.
+#' @return Returns a dataframe where the `Scen.Sec.EmissionsFactor` column
+#'   holds the result of the SDA calculation.
 #'
 #' @export
 #'
 #' @examples
-#' # Access example configuration-files
+#' # Use example configuration-files
 #' library(r2dii.utils)
 #'
-#' # Seting us a toy configuration file
+#' # Use a toy configuration file
 #' restore_options <- options(r2dii_config = example_config("config_demo.yml"))
 #' on.exit(restore_options)
 #'
+#' # Use `start_year` from the configuration file
 #' START.YEAR()
-#' # Uses `start_year` from the configuration file
 #' sda_calculation(market, portfolio)
 #'
 #' sda_calculation(market, portfolio, ref_sector = "Steel")

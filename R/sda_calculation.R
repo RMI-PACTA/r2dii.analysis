@@ -47,17 +47,20 @@
 #' sda_calculation(market, portfolio, start_year = "2019")
 sda_calculation <- function(market_data,
                             port_data,
-                            ref_sector = get_ref_sector(),
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
-                            start_year = r2dii.utils::START.YEAR(),
+                            ref_sector = NULL,
+                            start_year = NULL,
                             target_year = NULL) {
+  start_year <- start_year %||% r2dii.utils::START.YEAR()
   abort_null_start_year(start_year)
   abort_bad_year(start_year)
 
   target_year <- target_year %||% guess_target_year(market_data, port_data)
   abort_bad_year(target_year)
-  warn_if_missing_sectors(port_data, ref_sector)
+
+  ref_sector <- ref_sector %||% get_ref_sector()
+  warn_missing_sectors(port_data, ref_sector)
 
 
   # Prefill common arguments
@@ -163,7 +166,7 @@ abort_bad_year <- function(year) {
   invisible(year)
 }
 
-warn_if_missing_sectors <- function(port_data, ref_sector) {
+warn_missing_sectors <- function(port_data, ref_sector) {
   missing_ref_sector <- sort(setdiff(ref_sector, port_data$Sector))
 
   if(length(missing_ref_sector) > 0L) {

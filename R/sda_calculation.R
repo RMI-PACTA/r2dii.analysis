@@ -1,21 +1,26 @@
-#' TODO \@vintented
+#' Calculate portfolio targets using the Sectoral Decarbonisation Approach (SDA)
 #'
-#' @param market_data A dataframe with market results.
-#' @param port_data A dataframe with portfolio results data.
-#' @param ref_sector A character vector giving one or more sectors (with
-#'   emissions factors) to calculate the SDA.
+#' The Sectoral Decarbonisation Approach (SDA) is a method for setting corporate
+#' emission reduction targets in line with climate science.
+#'
+#' @param market_data A dataframe like [r2dii.analysis::market].
+#' @param port_data A dataframe like [r2dii.analysis::portfolio].
 #' @param ref_scenario A character vector giving one or more scenarios to use as
 #'   the SDA target.
 #' @param ref_geography A character vector giving one or more scenario
 #'   geographies for each scenario.
+#' @param ref_sector A character vector giving one or more sectors (with
+#'   emissions factors) to calculate the SDA. `NULL` defaults to all expected
+#'   sectors (see section See Also).
 #' @param start_year A length-1 numeric or character vector giving the start
-#'   year used in the SDA calculation as a numeric (i.e. start_year == 2020).
+#'   year used in the SDA calculation. `NULL` defaults to extracting the year
+#'   from a configuration file (see section See Also).
 #' @param target_year A length-1 numeric or character vector giving the end year
-#'   used in the SDA calculation as a numeric (i.e. target_year == 2045).
-#'   Defaults to the latest year found in the `Year` column of `market_data`
-#'   and `port_data`.
+#'   used in the SDA calculation. `NULL` defaults to the latest year found in the
+#'   `Year` column of `market_data` and `port_data`.
 #'
-#' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()]
+#' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()],
+#'   [get_ref_sector()].
 #'
 #' @return Returns a dataframe where the `Scen.Sec.EmissionsFactor` column
 #'   holds the result of the SDA calculation.

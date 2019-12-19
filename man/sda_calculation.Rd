@@ -7,20 +7,17 @@
 sda_calculation(
   market_data,
   port_data,
-  ref_sector = get_ref_sector(),
   ref_scenario = "B2DS",
   ref_geography = "Global",
-  start_year = r2dii.utils::START.YEAR(),
+  ref_sector = NULL,
+  start_year = NULL,
   target_year = NULL
 )
 }
 \arguments{
-\item{market_data}{A dataframe with market results.}
+\item{market_data}{A dataframe like \link[r2dii.analysis:market]{r2dii.analysis::market}.}
 
-\item{port_data}{A dataframe with portfolio results data.}
-
-\item{ref_sector}{A character vector giving one or more sectors (with
-emissions factors) to calculate the SDA.}
+\item{port_data}{A dataframe like \link[r2dii.analysis:portfolio]{r2dii.analysis::portfolio}.}
 
 \item{ref_scenario}{A character vector giving one or more scenarios to use as
 the SDA target.}
@@ -28,13 +25,17 @@ the SDA target.}
 \item{ref_geography}{A character vector giving one or more scenario
 geographies for each scenario.}
 
+\item{ref_sector}{A character vector giving one or more sectors (with
+emissions factors) to calculate the SDA. \code{NULL} defaults to all expected
+sectors (see section See Also).}
+
 \item{start_year}{A length-1 numeric or character vector giving the start
-year used in the SDA calculation as a numeric (i.e. start_year == 2020).}
+year used in the SDA calculation. \code{NULL} defaults to extracting the year
+from a configuration file (see section See Also).}
 
 \item{target_year}{A length-1 numeric or character vector giving the end year
-used in the SDA calculation as a numeric (i.e. target_year == 2045).
-Defaults to the latest year found in the \code{Year} column of \code{market_data}
-and \code{port_data}.}
+used in the SDA calculation. \code{NULL} defaults to the latest year found in the
+\code{Year} column of \code{market_data} and \code{port_data}.}
 }
 \value{
 Returns a dataframe where the \code{Scen.Sec.EmissionsFactor} column
@@ -68,5 +69,6 @@ try(sda_calculation(market, portfolio))
 sda_calculation(market, portfolio, start_year = "2019")
 }
 \seealso{
-\code{\link[r2dii.utils:get_config]{r2dii.utils::get_config()}}, \code{\link[r2dii.utils:START.YEAR]{r2dii.utils::START.YEAR()}}
+\code{\link[r2dii.utils:get_config]{r2dii.utils::get_config()}}, \code{\link[r2dii.utils:START.YEAR]{r2dii.utils::START.YEAR()}},
+\code{\link[=get_ref_sector]{get_ref_sector()}}.
 }

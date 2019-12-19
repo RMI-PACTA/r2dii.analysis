@@ -17,44 +17,59 @@ test_that("sda_portfolio_target errors gracefully with obviously wrong data", {
 
   bad_market <- rename(market, bad = .data$Year)
   expect_error(
-    suppressWarnings(sda_portfolio_target(bad_market, portfolio)),
+    sda_portfolio_target(bad_market, portfolio, target_year = "2040"),
     "must have.*Year"
   )
 
   bad_portfolio <- rename(portfolio, bad = .data$Plan.Sec.EmissionsFactor)
   expect_error(
-    sda_portfolio_target(market, bad_portfolio),
+    sda_portfolio_target(market, bad_portfolio, target_year = "2040"),
     "must have.*Plan.Sec.EmissionsFactor"
   )
 })
 
 test_that("sda_portfolio_target errors gracefully with wrong ref_scenario", {
   expect_error(
-    sda_portfolio_target(market, portfolio, ref_scenario = "bad"),
+    sda_portfolio_target(
+      market, portfolio, target_year = "2040",
+      ref_scenario = "bad"
+    ),
     "bad.*Must be one of"
   )
 
   expect_error(
-    sda_portfolio_target(market, portfolio, ref_scenario = c("B2DS", "other")),
+    sda_portfolio_target(
+      market, portfolio, target_year = "2040",
+      ref_scenario = c("B2DS", "other")
+    ),
     "length_1.*not TRUE"
   )
 })
 
 test_that("sda_portfolio_target errors gracefully with wrong ref_geography", {
   expect_error(
-    sda_portfolio_target(market, portfolio, ref_geography = "bad"),
+    sda_portfolio_target(
+      market, portfolio, target_year = "2040",
+      ref_geography = "bad"
+    ),
     "bad.*Must be one of"
   )
 
   expect_error(
-    sda_portfolio_target(market, portfolio, ref_geography = c("B2DS", "other")),
+    sda_portfolio_target(
+      market, portfolio, target_year = "2040",
+      ref_geography = c("B2DS", "other"),
+    ),
     "length_1.*not TRUE"
   )
 })
 
 test_that("sda_portfolio_target errors with bad ref_sector", {
   expect_error(
-    sda_portfolio_target(market, portfolio, ref_sector = "bad"), "is not TRUE"
+    sda_portfolio_target(
+      market, portfolio, target_year = "2040",
+      ref_sector = "bad"
+    ), "is not TRUE"
   )
 })
 
@@ -66,7 +81,10 @@ test_that("sda_portfolio_target errors with bad 'year' arguments", {
     ref_sector = "Steel"
   )
 
-  expect_error(sda_portfolio_target_partial(start_year = "bad"), "is not TRUE")
+  expect_error(
+    sda_portfolio_target_partial(start_year = "bad", target_year = "2040"),
+    "is not TRUE"
+  )
   expect_error(sda_portfolio_target_partial(target_year = "bad"), "is not TRUE")
 })
 
@@ -79,7 +97,8 @@ test_that("sda_portfolio_target takes 'year' arguments of length-1", {
   )
 
   expect_error(
-    sda_portfolio_target_partial(start_year = 2019:2020), "is not TRUE"
+    sda_portfolio_target_partial(start_year = 2019:2020, target_year = "2040"),
+    "is not TRUE"
   )
   expect_error(
     sda_portfolio_target_partial(target_year = 2040:2041), "is not TRUE"
@@ -91,10 +110,14 @@ test_that("sda_portfolio_target takes chr, num, or int 'year' arguments", {
     .f = sda_portfolio_target,
     market_data = market,
     port_data = portfolio,
-    ref_sector = "Steel"
+    ref_sector = "Steel",
+    target_year = "2040"
   )
-
-  expect_error(sda_portfolio_target_partial(start_year = TRUE), "is not TRUE")
+  lgl <- TRUE
+  expect_error(
+    sda_portfolio_target_partial(start_year = lgl),
+    "character.*numeric.*is not TRUE"
+  )
   expect_equal(
     sda_portfolio_target_partial(start_year = "2019"),
     sda_portfolio_target_partial(start_year = 2019),
@@ -104,7 +127,17 @@ test_that("sda_portfolio_target takes chr, num, or int 'year' arguments", {
     sda_portfolio_target_partial(start_year = 2019L),
   )
 
-  expect_error(sda_portfolio_target_partial(target_year = TRUE), "is not TRUE")
+  sda_portfolio_target_partial <- purrr::partial(
+    .f = sda_portfolio_target,
+    market_data = market,
+    port_data = portfolio,
+    ref_sector = "Steel"
+  )
+  lgl <- TRUE
+  expect_error(
+    sda_portfolio_target_partial(target_year = lgl),
+    "character.*numeric.*is not TRUE"
+  )
   expect_equal(
     sda_portfolio_target_partial(target_year = 2040),
     sda_portfolio_target_partial(target_year = 2040L)
@@ -132,7 +165,9 @@ test_that("sda_portfolio_target errors clearly if config has null start_year", {
   expect_error(
     withr::with_options(
       list(r2dii_config = config_with_some_start_year),
-      sda_portfolio_target(market, portfolio, ref_sector = "Steel")
+      sda_portfolio_target(
+        market, portfolio, ref_sector = "Steel", target_year = "2040"
+      )
     ),
     NA
   )
@@ -142,19 +177,28 @@ test_that("sda_portfolio_target errors clearly if config has null start_year", {
   expect_error(
     withr::with_options(
       list(r2dii_config = config_with_null_start_year),
-      sda_portfolio_target(market, portfolio)
+      sda_portfolio_target(market, portfolio, target_year = "2040")
     ),
     "start_year.*can't be NULL"
   )
 })
 
 test_that("sda_portfolio_target w/ `market` and `portfolio` returns a tibble", {
-  expect_is(sda_portfolio_target(market, portfolio, ref_sector = "Steel"), "tbl")
+  expect_is(
+    sda_portfolio_target(
+      market, portfolio, ref_sector = "Steel", target_year = "2040"
+    ),
+    "tbl"
+  )
 })
 
 test_that("sda_portfolio_target outputs a known value", {
   expect_known_value(
-    sda_portfolio_target(market, portfolio, ref_sector = "Steel"),
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = "Steel",
+      target_year = "2040"
+    ),
     "ref-sda_portfolio_target",
     update = FALSE
   )
@@ -195,7 +239,9 @@ sample_portfolio <- dplyr::tribble(
 test_that("sda_portfolio_target with another dataset returns a tibble", {
   expect_is(
     sda_portfolio_target(
-      sample_market, sample_portfolio, , ref_sector = "Steel"
+      sample_market, sample_portfolio,
+      ref_sector = "Steel",
+      target_year = "2040"
     ),
     "tbl"
   )

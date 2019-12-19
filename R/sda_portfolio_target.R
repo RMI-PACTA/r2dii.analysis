@@ -226,10 +226,8 @@ guess_target_year <- function(market_data, port_data) {
 }
 
 abort_bad_year <- function(market_data, port_data, year) {
-  stopifnot(
-    is.character(year) || is.numeric(year),
-    identical(length(year), 1L)
-  )
+  year_has_length_1 <- identical(length(year), 1L)
+  stopifnot(is.character(year) || is.numeric(year), year_has_length_1)
 
   is_valid_market_year <- any(year %in% unique(market_data$Year))
   is_valid_portfolio_year <- any(year %in% unique(port_data$Year))

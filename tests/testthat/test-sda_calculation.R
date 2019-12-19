@@ -135,7 +135,6 @@ test_that("sda_calculation outputs a known value", {
     sda_calculation(market, portfolio, ref_sector = "Steel"),
     "ref-sda_calculation",
     update = FALSE
-
   )
 })
 

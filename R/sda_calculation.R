@@ -105,10 +105,12 @@ sda_calculation <- function(market_data,
 
   distance <- ci_market %>%
     inner_join(
-      si, by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
+      si,
+      by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
     ) %>%
     inner_join(
-      ci_port, by = get_common_by(), suffix = c("_market", "_port")
+      ci_port,
+      by = get_common_by(), suffix = c("_market", "_port")
     ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
@@ -119,10 +121,10 @@ sda_calculation <- function(market_data,
         get_common_by(),
         "Investor.Name" = "Investor.Name_port",
         "Portfolio.Name" = "Portfolio.Name_port"
-        )
+      )
     ) %>%
     mutate(
-      P_market  = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
+      P_market = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
         (.data$CI_market - .data$SI),
       Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     ) %>%
@@ -175,7 +177,8 @@ check_sda_calculation <- function(market_data,
 
   check_ref(market_data, port_data, ref = ref_scenario, col = "Scenario")
   check_ref(
-    market_data, port_data, ref = ref_geography, col = "ScenarioGeography"
+    market_data, port_data,
+    ref = ref_geography, col = "ScenarioGeography"
   )
 
   abort_null_start_year(start_year)
@@ -228,7 +231,7 @@ abort_bad_year <- function(year) {
 warn_missing_sectors <- function(port_data, ref_sector) {
   missing_ref_sector <- sort(setdiff(ref_sector, port_data$Sector))
 
-  if(length(missing_ref_sector) > 0L) {
+  if (length(missing_ref_sector) > 0L) {
     warning(
       "Can't calculate SDA for `ref_sector` values missing from `port_data`:\n",
       paste0(missing_ref_sector, collapse = ", "), ".",
@@ -313,6 +316,3 @@ get_common_by <- function() {
     "ScenarioGeography"
   )
 }
-
-
-

@@ -52,6 +52,12 @@ test_that("sda_portfolio_target errors gracefully with wrong ref_geography", {
   )
 })
 
+test_that("sda_portfolio_target errors with bad ref_sector", {
+  expect_error(
+    sda_portfolio_target(market, portfolio, ref_sector = "bad"), "is not TRUE"
+  )
+})
+
 test_that("sda_portfolio_target errors with bad 'year' arguments", {
   sda_portfolio_target_partial <- purrr::partial(
     .f = sda_portfolio_target,

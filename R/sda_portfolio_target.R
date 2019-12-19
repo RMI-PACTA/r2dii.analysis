@@ -186,6 +186,7 @@ check_sda_portfolio_target <- function(market_data,
   abort_bad_year(market_data, port_data, start_year)
   abort_bad_year(market_data, port_data, target_year)
 
+  abort_bad_ref_sector(port_data, ref_sector)
   warn_missing_sectors(port_data, ref_sector)
 }
 
@@ -230,6 +231,13 @@ abort_bad_year <- function(market_data, port_data, year) {
   stopifnot(is_valid_market_year && is_valid_portfolio_year)
 
   invisible(year)
+}
+
+abort_bad_ref_sector <- function(port_data, ref_sector) {
+  is_valid_ref_sector <- any(ref_sector %in% port_data$Sector)
+  stopifnot(is_valid_ref_sector)
+
+  invisible(port_data)
 }
 
 warn_missing_sectors <- function(port_data, ref_sector) {

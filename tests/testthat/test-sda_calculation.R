@@ -5,10 +5,51 @@ library(r2dii.utils)
 setup(op <- options(r2dii_config = example_config("config_demo.yml")))
 teardown(on.exit(options(op)))
 
+test_that("sda_calculation takes 'year' arguments of length-1", {
+  sda_calculation_partial <- purrr::partial(
+    .f = sda_calculation,
+    market_data = market,
+    port_data = portfolio,
+    ref_sector = "Steel"
+  )
+
+  expect_error(sda_calculation_partial(start_year = 2019:2020), "is not TRUE")
+  expect_error(sda_calculation_partial(target_year = 2040:2041), "is not TRUE")
+})
+
+test_that("sda_calculation takes chr, num, or int 'year' arguments", {
+  sda_calculation_partial <- purrr::partial(
+    .f = sda_calculation,
+    market_data = market,
+    port_data = portfolio,
+    ref_sector = "Steel"
+  )
+
+  expect_error(sda_calculation_partial(start_year = TRUE), "is not TRUE")
+  expect_equal(
+    sda_calculation_partial(start_year = "2019"),
+    sda_calculation_partial(start_year = 2019),
+  )
+  expect_equal(
+    sda_calculation_partial(start_year = "2019"),
+    sda_calculation_partial(start_year = 2019L),
+  )
+
+  expect_error(sda_calculation_partial(target_year = TRUE), "is not TRUE")
+  expect_equal(
+    sda_calculation_partial(target_year = 2040),
+    sda_calculation_partial(target_year = 2040L)
+  )
+  expect_equal(
+    sda_calculation_partial(target_year = 2040),
+    sda_calculation_partial(target_year = "2040")
+  )
+})
+
 test_that("sda_calculation warns `ref_sector`s missing in `port_data`", {
   expect_warning(
     sda_calculation(
-      r2dii.analysis::market,
+      market,
       port_data = filter(portfolio, Sector == "Steel"),
       ref_sector = c("Steel", "Power")
     ),

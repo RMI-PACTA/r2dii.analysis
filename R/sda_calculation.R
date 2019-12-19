@@ -8,12 +8,13 @@
 #'   the SDA target.
 #' @param ref_geography A character vector giving one or more scenario
 #'   geographies for each scenario.
-#' @param start_year The start year used in the SDA calculation as a numeric
-#'   (i.e. start_year == 2020). By default the function will use the config.
-#'   start year.
-#' @param target_year The end year used in the SDA calculation as a numeric
-#'   (i.e. target_year == 2045). By default the function will use the last year
-#'   in the current market data.
+#' @param start_year A length-1 numeric or character vector giving the start
+#'   year used in the SDA calculation as a numeric (i.e. start_year == 2020).
+#' @param target_year A A length-1 numeric or character vector giving the end
+#'   year used in the SDA calculation as a numeric (i.e. target_year == 2045).
+#'   By default the function will use the last year in the current market data.
+#'
+#' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()]
 #'
 #' @return Returns a dataframe where the `Scen.Sec.EmissionsFactor` column
 #'   holds the result of the SDA calculation.
@@ -51,6 +52,12 @@ sda_calculation <- function(market_data,
                             start_year = r2dii.utils::START.YEAR(),
                             target_year = 2040) {
   abort_if_null_start_year(start_year)
+  stopifnot(
+    is.character(start_year) || is.numeric(start_year),
+    is.character(target_year) || is.numeric(target_year),
+    identical(length(start_year), 1L),
+    identical(length(target_year), 1L)
+  )
   warn_if_missing_sectors(port_data, ref_sector)
 
   # Prefill with common arguments
@@ -186,7 +193,7 @@ startender <- function(data,
   data %>%
     filter(
       !is.na(!!sym(var)) &
-        .data$Year == year &
+        as.character(.data$Year) == as.character(year) &
         .data$Scenario %in% ref_scenario &
         .data$Sector %in% ref_sector &
         .data$ScenarioGeography %in% ref_geography

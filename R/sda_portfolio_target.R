@@ -183,8 +183,8 @@ check_sda_portfolio_target <- function(market_data,
 
   abort_null_start_year(start_year)
 
-  abort_bad_year(start_year)
-  abort_bad_year(target_year)
+  abort_bad_year(market_data, port_data, start_year)
+  abort_bad_year(market_data, port_data, target_year)
 
   warn_missing_sectors(port_data, ref_sector)
 }
@@ -220,10 +220,14 @@ guess_target_year <- function(market_data, port_data) {
   max(max(as.integer(market_data$Year)), max(as.integer(port_data$Year)))
 }
 
-abort_bad_year <- function(year) {
+abort_bad_year <- function(market_data, port_data, year) {
   stopifnot(
     is.character(year) || is.numeric(year), identical(length(year), 1L)
   )
+
+  is_valid_market_year <- any(year %in% unique(market_data$Year))
+  is_valid_portfolio_year <- any(year %in% unique(port_data$Year))
+  stopifnot(is_valid_market_year && is_valid_portfolio_year)
 
   invisible(year)
 }

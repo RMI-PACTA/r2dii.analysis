@@ -218,6 +218,10 @@ abort_null_start_year <- function(start_year) {
 }
 
 guess_target_year <- function(market_data, port_data) {
+  warning(
+    "Guessing `target_year` as latest year in `market_data` and `port_data`.",
+    call. = FALSE
+  )
   max(max(as.integer(market_data$Year)), max(as.integer(port_data$Year)))
 }
 

@@ -32,13 +32,7 @@ sda_calculation <- function(market_data,
                             ref_geography = "Global",
                             start_year = r2dii.utils::START.YEAR(),
                             target_year = 2040) {
-  if (is.null(start_year)) {
-    stop(
-      "`start_year` can't be NULL.\n",
-      "Did you forget `start_year` in a configuration file or as an argument?",
-      call. = FALSE
-    )
-  }
+  abort_if_null_start_year(start_year)
 
   if(length(setdiff(ref_sector, port_data$Sector)) > 0L) {
 
@@ -125,6 +119,16 @@ sda_calculation <- function(market_data,
         )
     ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
+}
+
+abort_if_null_start_year <- function(start_year) {
+  if (is.null(start_year)) {
+    stop(
+      "`start_year` can't be NULL.\n",
+      "Did you forget `start_year` in a configuration file or as an argument?",
+      call. = FALSE
+    )
+  }
 }
 
 #' Default value for the `ref_sector` argument to [sda_calculation()]

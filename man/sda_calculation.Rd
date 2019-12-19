@@ -11,7 +11,7 @@ sda_calculation(
   ref_scenario = "B2DS",
   ref_geography = "Global",
   start_year = r2dii.utils::START.YEAR(),
-  target_year = 2040
+  target_year = NULL
 )
 }
 \arguments{
@@ -31,9 +31,10 @@ geographies for each scenario.}
 \item{start_year}{A length-1 numeric or character vector giving the start
 year used in the SDA calculation as a numeric (i.e. start_year == 2020).}
 
-\item{target_year}{A A length-1 numeric or character vector giving the end
-year used in the SDA calculation as a numeric (i.e. target_year == 2045).
-By default the function will use the last year in the current market data.}
+\item{target_year}{A length-1 numeric or character vector giving the end year
+used in the SDA calculation as a numeric (i.e. target_year == 2045).
+Defaults to the latest year found in the \code{Year} column of \code{market_data}
+and \code{port_data}.}
 }
 \value{
 Returns a dataframe where the \code{Scen.Sec.EmissionsFactor} column

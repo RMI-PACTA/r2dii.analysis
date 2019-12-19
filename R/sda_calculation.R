@@ -11,8 +11,9 @@
 #' @param start_year A length-1 numeric or character vector giving the start
 #'   year used in the SDA calculation as a numeric (i.e. start_year == 2020).
 #' @param target_year A length-1 numeric or character vector giving the end year
-#'   used in the SDA calculation as a numeric (i.e. target_year == 2045). By
-#'   default the function will use the last year in the current market data.
+#'   used in the SDA calculation as a numeric (i.e. target_year == 2045).
+#'   Defaults to the latest year found in the `Year` column of `market_data`
+#'   and `port_data`.
 #'
 #' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()]
 #'
@@ -50,11 +51,14 @@ sda_calculation <- function(market_data,
                             ref_scenario = "B2DS",
                             ref_geography = "Global",
                             start_year = r2dii.utils::START.YEAR(),
-                            target_year = 2040) {
+                            target_year = NULL) {
   abort_null_start_year(start_year)
   abort_bad_year(start_year)
+
+  target_year <- target_year %||% guess_target_year(market_data, port_data)
   abort_bad_year(target_year)
   warn_if_missing_sectors(port_data, ref_sector)
+
 
   # Prefill common arguments
   startender2 <- purrr::partial(
@@ -145,6 +149,10 @@ abort_null_start_year <- function(start_year) {
   }
 
   invisible(start_year)
+}
+
+guess_target_year <- function(market_data, port_data) {
+  max(max(as.integer(market_data$Year)), max(as.integer(port_data$Year)))
 }
 
 abort_bad_year <- function(year) {

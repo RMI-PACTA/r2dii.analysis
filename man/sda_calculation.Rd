@@ -28,12 +28,12 @@ the SDA target.}
 \item{ref_geography}{A character vector giving one or more scenario
 geographies for each scenario.}
 
-\item{start_year}{A numeric or character vector giving the start year used in
-the SDA calculation as a numeric (i.e. start_year == 2020).}
+\item{start_year}{A length-1 numeric or character vector giving the start
+year used in the SDA calculation as a numeric (i.e. start_year == 2020).}
 
-\item{target_year}{A numeric or character vector giving the end year used in
-the SDA calculation as a numeric (i.e. target_year == 2045). By default the
-function will use the last year in the current market data.}
+\item{target_year}{A A length-1 numeric or character vector giving the end
+year used in the SDA calculation as a numeric (i.e. target_year == 2045).
+By default the function will use the last year in the current market data.}
 }
 \value{
 Returns a dataframe where the \code{Scen.Sec.EmissionsFactor} column

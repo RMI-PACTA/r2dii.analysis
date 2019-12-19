@@ -10,9 +10,9 @@
 #'   geographies for each scenario.
 #' @param start_year A length-1 numeric or character vector giving the start
 #'   year used in the SDA calculation as a numeric (i.e. start_year == 2020).
-#' @param target_year A A length-1 numeric or character vector giving the end
-#'   year used in the SDA calculation as a numeric (i.e. target_year == 2045).
-#'   By default the function will use the last year in the current market data.
+#' @param target_year A length-1 numeric or character vector giving the end year
+#'   used in the SDA calculation as a numeric (i.e. target_year == 2045). By
+#'   default the function will use the last year in the current market data.
 #'
 #' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()]
 #'
@@ -51,16 +51,12 @@ sda_calculation <- function(market_data,
                             ref_geography = "Global",
                             start_year = r2dii.utils::START.YEAR(),
                             target_year = 2040) {
-  abort_if_null_start_year(start_year)
-  stopifnot(
-    is.character(start_year) || is.numeric(start_year),
-    is.character(target_year) || is.numeric(target_year),
-    identical(length(start_year), 1L),
-    identical(length(target_year), 1L)
-  )
+  abort_null_start_year(start_year)
+  abort_bad_year(start_year)
+  abort_bad_year(target_year)
   warn_if_missing_sectors(port_data, ref_sector)
 
-  # Prefill with common arguments
+  # Prefill common arguments
   startender2 <- purrr::partial(
     startender,
     ref_scenario = ref_scenario,
@@ -75,7 +71,7 @@ sda_calculation <- function(market_data,
     startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
-  # Prefill with common arguments
+  # Prefill common arguments
   view3 <- purrr::partial(
     view2,
     ref_scenario = ref_scenario,
@@ -139,7 +135,7 @@ sda_calculation <- function(market_data,
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
-abort_if_null_start_year <- function(start_year) {
+abort_null_start_year <- function(start_year) {
   if (is.null(start_year)) {
     stop(
       "`start_year` can't be NULL.\n",
@@ -147,6 +143,16 @@ abort_if_null_start_year <- function(start_year) {
       call. = FALSE
     )
   }
+
+  invisible(start_year)
+}
+
+abort_bad_year <- function(year) {
+  stopifnot(
+    is.character(year) || is.numeric(year), identical(length(year), 1L)
+  )
+
+  invisible(year)
 }
 
 warn_if_missing_sectors <- function(port_data, ref_sector) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sda_calculation.R
 \name{sda_calculation}
 \alias{sda_calculation}
-\title{TODO \@vintented}
+\title{Calculate portfolio targets using the Sectoral Decarbonisation Approach (SDA)}
 \usage{
 sda_calculation(
   market_data,
@@ -42,7 +42,8 @@ Returns a dataframe where the \code{Scen.Sec.EmissionsFactor} column
 holds the result of the SDA calculation.
 }
 \description{
-TODO \@vintented
+The Sectoral Decarbonisation Approach (SDA) is a method for setting corporate
+emission reduction targets in line with climate science.
 }
 \examples{
 # Use example configuration-files

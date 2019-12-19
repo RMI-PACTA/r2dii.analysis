@@ -2,8 +2,55 @@ library(dplyr)
 library(r2dii.utils)
 
 # Avoid warning for using a toy configuration file
-setup(op <- options(r2dii_config = example_config("config_demo.yml")))
-teardown(on.exit(options(op)))
+setup({
+  op <- options(r2dii_config = example_config("config_demo.yml"))
+  on.exit(options(op))
+})
+
+test_that("sda_calculation errors gracefully with obviously wrong data", {
+  expect_error(
+    sda_calculation(1, portfolio), "data.frame.* is not TRUE"
+  )
+  expect_error(
+    sda_calculation(market, 1), "data.frame.* is not TRUE"
+  )
+
+  bad_market <- rename(market, bad = .data$Year)
+  expect_error(
+    suppressWarnings(sda_calculation(bad_market, portfolio)),
+    "must have.*Year"
+  )
+
+  bad_portfolio <- rename(portfolio, bad = .data$Plan.Sec.EmissionsFactor)
+  expect_error(
+    sda_calculation(market, bad_portfolio),
+    "must have.*Plan.Sec.EmissionsFactor"
+  )
+})
+
+test_that("sda_calculation errors gracefully with wrong ref_scenario", {
+  expect_error(
+    sda_calculation(market, portfolio, ref_scenario = "bad"),
+    "bad.*Must be one of"
+  )
+
+  expect_error(
+    sda_calculation(market, portfolio, ref_scenario = c("B2DS", "other")),
+    "length_1.*not TRUE"
+  )
+})
+
+test_that("sda_calculation errors gracefully with wrong ref_geography", {
+  expect_error(
+    sda_calculation(market, portfolio, ref_geography = "bad"),
+    "bad.*Must be one of"
+  )
+
+  expect_error(
+    sda_calculation(market, portfolio, ref_geography = c("B2DS", "other")),
+    "length_1.*not TRUE"
+  )
+})
 
 test_that("sda_calculation takes 'year' arguments of length-1", {
   sda_calculation_partial <- purrr::partial(

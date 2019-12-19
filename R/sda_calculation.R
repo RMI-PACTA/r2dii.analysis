@@ -57,16 +57,21 @@ sda_calculation <- function(market_data,
                             ref_sector = NULL,
                             start_year = NULL,
                             target_year = NULL) {
-  start_year <- start_year %||% r2dii.utils::START.YEAR()
-  abort_null_start_year(start_year)
-  abort_bad_year(start_year)
-
-  target_year <- target_year %||% guess_target_year(market_data, port_data)
-  abort_bad_year(target_year)
+  stopifnot(is.data.frame(market_data), is.data.frame(port_data))
 
   ref_sector <- ref_sector %||% get_ref_sector()
-  warn_missing_sectors(port_data, ref_sector)
+  start_year <- start_year %||% r2dii.utils::START.YEAR()
+  target_year <- target_year %||% guess_target_year(market_data, port_data)
 
+  check_sda_calculation(
+    market_data = market_data,
+    port_data = port_data,
+    ref_scenario = ref_scenario,
+    ref_geography = ref_geography,
+    ref_sector = ref_sector,
+    start_year = start_year,
+    target_year = target_year
+  )
 
   # Prefill common arguments
   startender2 <- purrr::partial(
@@ -145,6 +150,55 @@ sda_calculation <- function(market_data,
         )
     ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
+}
+
+check_sda_calculation <- function(market_data,
+                                  port_data,
+                                  ref_scenario,
+                                  ref_geography,
+                                  ref_sector,
+                                  start_year,
+                                  target_year) {
+  crucial <- c(
+    "Allocation",
+    "Investor.Name",
+    "Plan.Sec.EmissionsFactor",
+    "Portfolio.Name",
+    "Scen.Sec.EmissionsFactor",
+    "Scenario",
+    "ScenarioGeography",
+    "Sector",
+    "Year"
+  )
+  r2dii.utils::check_crucial_names(market_data, crucial)
+  r2dii.utils::check_crucial_names(port_data, crucial)
+
+  check_ref(market_data, port_data, ref = ref_scenario, col = "Scenario")
+  check_ref(
+    market_data, port_data, ref = ref_geography, col = "ScenarioGeography"
+  )
+
+  abort_null_start_year(start_year)
+
+  abort_bad_year(start_year)
+  abort_bad_year(target_year)
+
+  warn_missing_sectors(port_data, ref_sector)
+}
+
+check_ref <- function(market_data, port_data, ref, col) {
+  ref_has_length_1 <- identical(length(ref), 1L)
+  stopifnot(ref_has_length_1)
+
+  valid <- sort(unique(c(market_data[[col]], port_data[[col]])))
+  is_valid <- any(ref %in% valid)
+  if (!is_valid) {
+    stop(
+      "Wrong 'ref_*' argument (", ref, "). Must be one of:\n",
+      paste0(valid, collapse = ", "),
+      call. = FALSE
+    )
+  }
 }
 
 abort_null_start_year <- function(start_year) {

@@ -340,5 +340,6 @@ range_finder <- function(input_data = temp_metric, range = c(1.75, 2, 2.75, 3.5)
 
 }
 
-temp_metric <- range_finder(input_data = temp_metric)
+range <- sort(unique(scenario_relationships$temp), decreasing = F)
+temp_metric <- range_finder(input_data = temp_metric, range = range)
 

@@ -37,33 +37,33 @@
 #'
 #' # Use `start_year` from the configuration file
 #' START.YEAR()
-#' sda_calculation(market, portfolio)
+#' sda_portfolio_target(market, portfolio)
 #'
-#' sda_calculation(market, portfolio, ref_sector = "Steel")
+#' sda_portfolio_target(market, portfolio, ref_sector = "Steel")
 #'
 #' # This configuration file lacks `start_year`
 #' options(r2dii_config = example_config("config-toy.yml"))
 #' START.YEAR()
 #'
 #' # Fails
-#' try(sda_calculation(market, portfolio))
+#' try(sda_portfolio_target(market, portfolio))
 #'
 #' # Passes
-#' sda_calculation(market, portfolio, start_year = "2019")
-sda_calculation <- function(market_data,
-                            port_data,
-                            ref_scenario = "B2DS",
-                            ref_geography = "Global",
-                            ref_sector = NULL,
-                            start_year = NULL,
-                            target_year = NULL) {
+#' sda_portfolio_target(market, portfolio, start_year = "2019")
+sda_portfolio_target <- function(market_data,
+                                 port_data,
+                                 ref_scenario = "B2DS",
+                                 ref_geography = "Global",
+                                 ref_sector = NULL,
+                                 start_year = NULL,
+                                 target_year = NULL) {
   stopifnot(is.data.frame(market_data), is.data.frame(port_data))
 
   ref_sector <- ref_sector %||% get_ref_sector()
   start_year <- start_year %||% r2dii.utils::START.YEAR()
   target_year <- target_year %||% guess_target_year(market_data, port_data)
 
-  check_sda_calculation(
+  check_sda_portfolio_target(
     market_data = market_data,
     port_data = port_data,
     ref_scenario = ref_scenario,
@@ -154,7 +154,7 @@ sda_calculation <- function(market_data,
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
-check_sda_calculation <- function(market_data,
+check_sda_portfolio_target <- function(market_data,
                                   port_data,
                                   ref_scenario,
                                   ref_geography,
@@ -242,7 +242,7 @@ warn_missing_sectors <- function(port_data, ref_sector) {
   invisible(port_data)
 }
 
-#' Default value for the `ref_sector` argument to [sda_calculation()]
+#' Default value for the `ref_sector` argument to [sda_portfolio_target()]
 #'
 #' @return A character vector.
 #' @export

@@ -7,95 +7,99 @@ setup({
   on.exit(options(op))
 })
 
-test_that("sda_calculation errors gracefully with obviously wrong data", {
+test_that("sda_portfolio_target errors gracefully with obviously wrong data", {
   expect_error(
-    sda_calculation(1, portfolio), "data.frame.* is not TRUE"
+    sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE"
   )
   expect_error(
-    sda_calculation(market, 1), "data.frame.* is not TRUE"
+    sda_portfolio_target(market, 1), "data.frame.* is not TRUE"
   )
 
   bad_market <- rename(market, bad = .data$Year)
   expect_error(
-    suppressWarnings(sda_calculation(bad_market, portfolio)),
+    suppressWarnings(sda_portfolio_target(bad_market, portfolio)),
     "must have.*Year"
   )
 
   bad_portfolio <- rename(portfolio, bad = .data$Plan.Sec.EmissionsFactor)
   expect_error(
-    sda_calculation(market, bad_portfolio),
+    sda_portfolio_target(market, bad_portfolio),
     "must have.*Plan.Sec.EmissionsFactor"
   )
 })
 
-test_that("sda_calculation errors gracefully with wrong ref_scenario", {
+test_that("sda_portfolio_target errors gracefully with wrong ref_scenario", {
   expect_error(
-    sda_calculation(market, portfolio, ref_scenario = "bad"),
+    sda_portfolio_target(market, portfolio, ref_scenario = "bad"),
     "bad.*Must be one of"
   )
 
   expect_error(
-    sda_calculation(market, portfolio, ref_scenario = c("B2DS", "other")),
+    sda_portfolio_target(market, portfolio, ref_scenario = c("B2DS", "other")),
     "length_1.*not TRUE"
   )
 })
 
-test_that("sda_calculation errors gracefully with wrong ref_geography", {
+test_that("sda_portfolio_target errors gracefully with wrong ref_geography", {
   expect_error(
-    sda_calculation(market, portfolio, ref_geography = "bad"),
+    sda_portfolio_target(market, portfolio, ref_geography = "bad"),
     "bad.*Must be one of"
   )
 
   expect_error(
-    sda_calculation(market, portfolio, ref_geography = c("B2DS", "other")),
+    sda_portfolio_target(market, portfolio, ref_geography = c("B2DS", "other")),
     "length_1.*not TRUE"
   )
 })
 
-test_that("sda_calculation takes 'year' arguments of length-1", {
-  sda_calculation_partial <- purrr::partial(
-    .f = sda_calculation,
+test_that("sda_portfolio_target takes 'year' arguments of length-1", {
+  sda_portfolio_target_partial <- purrr::partial(
+    .f = sda_portfolio_target,
     market_data = market,
     port_data = portfolio,
     ref_sector = "Steel"
   )
 
-  expect_error(sda_calculation_partial(start_year = 2019:2020), "is not TRUE")
-  expect_error(sda_calculation_partial(target_year = 2040:2041), "is not TRUE")
+  expect_error(
+    sda_portfolio_target_partial(start_year = 2019:2020), "is not TRUE"
+  )
+  expect_error(
+    sda_portfolio_target_partial(target_year = 2040:2041), "is not TRUE"
+  )
 })
 
-test_that("sda_calculation takes chr, num, or int 'year' arguments", {
-  sda_calculation_partial <- purrr::partial(
-    .f = sda_calculation,
+test_that("sda_portfolio_target takes chr, num, or int 'year' arguments", {
+  sda_portfolio_target_partial <- purrr::partial(
+    .f = sda_portfolio_target,
     market_data = market,
     port_data = portfolio,
     ref_sector = "Steel"
   )
 
-  expect_error(sda_calculation_partial(start_year = TRUE), "is not TRUE")
+  expect_error(sda_portfolio_target_partial(start_year = TRUE), "is not TRUE")
   expect_equal(
-    sda_calculation_partial(start_year = "2019"),
-    sda_calculation_partial(start_year = 2019),
+    sda_portfolio_target_partial(start_year = "2019"),
+    sda_portfolio_target_partial(start_year = 2019),
   )
   expect_equal(
-    sda_calculation_partial(start_year = "2019"),
-    sda_calculation_partial(start_year = 2019L),
+    sda_portfolio_target_partial(start_year = "2019"),
+    sda_portfolio_target_partial(start_year = 2019L),
   )
 
-  expect_error(sda_calculation_partial(target_year = TRUE), "is not TRUE")
+  expect_error(sda_portfolio_target_partial(target_year = TRUE), "is not TRUE")
   expect_equal(
-    sda_calculation_partial(target_year = 2040),
-    sda_calculation_partial(target_year = 2040L)
+    sda_portfolio_target_partial(target_year = 2040),
+    sda_portfolio_target_partial(target_year = 2040L)
   )
   expect_equal(
-    sda_calculation_partial(target_year = 2040),
-    sda_calculation_partial(target_year = "2040")
+    sda_portfolio_target_partial(target_year = 2040),
+    sda_portfolio_target_partial(target_year = "2040")
   )
 })
 
-test_that("sda_calculation warns `ref_sector`s missing in `port_data`", {
+test_that("sda_portfolio_target warns `ref_sector`s missing in `port_data`", {
   expect_warning(
-    sda_calculation(
+    sda_portfolio_target(
       market,
       port_data = filter(portfolio, Sector == "Steel"),
       ref_sector = c("Steel", "Power")
@@ -104,13 +108,13 @@ test_that("sda_calculation warns `ref_sector`s missing in `port_data`", {
   )
 })
 
-test_that("sda_calculation fails gracefully if config has null start_year", {
+test_that("sda_portfolio_target errors clearly if config has null start_year", {
   config_with_some_start_year <- example_config("config_demo.yml")
   expect_false(is.null(START.YEAR(file = config_with_some_start_year)))
   expect_error(
     withr::with_options(
       list(r2dii_config = config_with_some_start_year),
-      sda_calculation(market, portfolio, ref_sector = "Steel")
+      sda_portfolio_target(market, portfolio, ref_sector = "Steel")
     ),
     NA
   )
@@ -120,20 +124,20 @@ test_that("sda_calculation fails gracefully if config has null start_year", {
   expect_error(
     withr::with_options(
       list(r2dii_config = config_with_null_start_year),
-      sda_calculation(market, portfolio)
+      sda_portfolio_target(market, portfolio)
     ),
     "start_year.*can't be NULL"
   )
 })
 
-test_that("sda_calculation with `market` and `portfolio` returns a tibble", {
-  expect_is(sda_calculation(market, portfolio, ref_sector = "Steel"), "tbl")
+test_that("sda_portfolio_target w/ `market` and `portfolio` returns a tibble", {
+  expect_is(sda_portfolio_target(market, portfolio, ref_sector = "Steel"), "tbl")
 })
 
-test_that("sda_calculation outputs a known value", {
+test_that("sda_portfolio_target outputs a known value", {
   expect_known_value(
-    sda_calculation(market, portfolio, ref_sector = "Steel"),
-    "ref-sda_calculation",
+    sda_portfolio_target(market, portfolio, ref_sector = "Steel"),
+    "ref-sda_portfolio_target",
     update = FALSE
   )
 })
@@ -170,9 +174,11 @@ sample_portfolio <- dplyr::tribble(
   "Investor1", "Portfolio1", "B2DS", "Global", "PortfolioWeight", 2040, "Steel", NA, 0.3663936
 )
 
-test_that("sda_calculation with another dataset returns a tibble", {
+test_that("sda_portfolio_target with another dataset returns a tibble", {
   expect_is(
-    sda_calculation(sample_market, sample_portfolio, , ref_sector = "Steel"),
+    sda_portfolio_target(
+      sample_market, sample_portfolio, , ref_sector = "Steel"
+    ),
     "tbl"
   )
 })

@@ -3,8 +3,8 @@
 #' The Sectoral Decarbonisation Approach (SDA) is a method for setting corporate
 #' emission reduction targets in line with climate science.
 #'
-#' @param market_data A dataframe like [r2dii.analysis::market].
-#' @param port_data A dataframe like [r2dii.analysis::portfolio].
+#' @param market A dataframe like [r2dii.analysis::market].
+#' @param portfolio A dataframe like [r2dii.analysis::portfolio].
 #' @param ref_scenario A character vector giving one or more scenarios to use as
 #'   the SDA target.
 #' @param ref_geography A character vector giving one or more scenario
@@ -16,11 +16,12 @@
 #'   year used in the SDA calculation. `NULL` defaults to extracting the year
 #'   from a configuration file (see section See Also).
 #' @param target_year A length-1 numeric or character vector giving the end year
-#'   used in the SDA calculation. `NULL` defaults to the latest year found in the
-#'   `Year` column of `market_data` and `port_data`.
+#'   used in the SDA calculation. It must be a year present in all `ref_sectors`
+#'   of `market`. `NULL` defaults to the latest year shared across all sectors
+#'   given by `ref_sector` and found in `market`.
 #'
 #' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()],
-#'   [get_ref_sector()].
+#'   [sectors()].
 #'
 #' @return Returns a dataframe where the `Scen.Sec.EmissionsFactor` column
 #'   holds the result of the SDA calculation.
@@ -50,28 +51,19 @@
 #'
 #' # Passes
 #' sda_portfolio_target(market, portfolio, start_year = "2019")
-sda_portfolio_target <- function(market_data,
-                                 port_data,
+sda_portfolio_target <- function(market,
+                                 portfolio,
                                  ref_scenario = "B2DS",
                                  ref_geography = "Global",
                                  ref_sector = NULL,
                                  start_year = NULL,
                                  target_year = NULL) {
-  stopifnot(is.data.frame(market_data), is.data.frame(port_data))
-
-  ref_sector <- ref_sector %||% get_ref_sector()
-  start_year <- start_year %||% r2dii.utils::START.YEAR()
-  target_year <- target_year %||% guess_target_year(market_data, port_data)
-
-  check_sda_portfolio_target(
-    market_data = market_data,
-    port_data = port_data,
-    ref_scenario = ref_scenario,
-    ref_geography = ref_geography,
-    ref_sector = ref_sector,
-    start_year = start_year,
-    target_year = target_year
-  )
+  check_market_and_portfolio(market, portfolio)
+  check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
+  check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
+  ref_sector <- find_ref_sector(portfolio, ref_sector = ref_sector)
+  start_year <- find_start_year(market, portfolio, start_year)
+  target_year <- find_target_year(market, portfolio, target_year, ref_sector)
 
   # Prefill common arguments
   startender2 <- purrr::partial(
@@ -80,11 +72,11 @@ sda_portfolio_target <- function(market_data,
     ref_sector = ref_sector,
     ref_geography = ref_geography
   )
-  ci_port <- port_data %>%
+  ci_port <- portfolio %>%
     startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
-  ci_market <- market_data %>%
+  ci_market <- market %>%
     startender2(var = "Scen.Sec.EmissionsFactor", year = start_year)
-  si <- market_data %>%
+  si <- market %>%
     startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
@@ -95,10 +87,10 @@ sda_portfolio_target <- function(market_data,
     ref_sector = ref_sector,
     ref_geography = ref_geography
   )
-  port_to_market <- view3(market_data) %>%
+  port_to_market <- view3(market) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
     inner_join(
-      view3(port_data),
+      view3(portfolio),
       by = c(get_common_by(), "Year"),
       suffix = c("_port", "_market")
     )
@@ -139,7 +131,7 @@ sda_portfolio_target <- function(market_data,
       .data$Scen.Sec.EmissionsFactor
     ) %>%
     right_join(
-      port_data,
+      portfolio,
       by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
       suffix = c("", "_no_sda")
     ) %>%
@@ -154,13 +146,9 @@ sda_portfolio_target <- function(market_data,
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
-check_sda_portfolio_target <- function(market_data,
-                                  port_data,
-                                  ref_scenario,
-                                  ref_geography,
-                                  ref_sector,
-                                  start_year,
-                                  target_year) {
+check_market_and_portfolio <- function(market, portfolio) {
+  stopifnot(is.data.frame(market), is.data.frame(portfolio))
+
   crucial <- c(
     "Allocation",
     "Investor.Name",
@@ -172,29 +160,15 @@ check_sda_portfolio_target <- function(market_data,
     "Sector",
     "Year"
   )
-  r2dii.utils::check_crucial_names(market_data, crucial)
-  r2dii.utils::check_crucial_names(port_data, crucial)
-
-  check_ref(market_data, port_data, ref = ref_scenario, col = "Scenario")
-  check_ref(
-    market_data, port_data,
-    ref = ref_geography, col = "ScenarioGeography"
-  )
-
-  abort_null_start_year(start_year)
-
-  abort_bad_year(market_data, port_data, start_year)
-  abort_bad_year(market_data, port_data, target_year)
-
-  abort_bad_ref_sector(port_data, ref_sector)
-  warn_missing_sectors(port_data, ref_sector)
+  r2dii.utils::check_crucial_names(market, crucial)
+  r2dii.utils::check_crucial_names(portfolio, crucial)
 }
 
-check_ref <- function(market_data, port_data, ref, col) {
+check_ref <- function(market, portfolio, ref, col) {
   ref_has_length_1 <- identical(length(ref), 1L)
   stopifnot(ref_has_length_1)
 
-  valid <- sort(unique(c(market_data[[col]], port_data[[col]])))
+  valid <- sort(unique(c(market[[col]], portfolio[[col]])))
   is_valid <- any(ref %in% valid)
   if (!is_valid) {
     stop(
@@ -203,6 +177,38 @@ check_ref <- function(market_data, port_data, ref, col) {
       call. = FALSE
     )
   }
+}
+
+find_ref_sector <- function(portfolio, ref_sector) {
+  ref_sector <- ref_sector %||% sectors()
+
+  abort_bad_ref_sector(portfolio, ref_sector)
+  warn_missing_sectors(portfolio, ref_sector)
+
+  ref_sector
+}
+
+find_start_year <- function(market, portfolio, start_year) {
+  start_year <- start_year %||% r2dii.utils::START.YEAR()
+
+  abort_null_start_year(start_year)
+  abort_bad_year(market, portfolio, start_year)
+
+  start_year
+}
+
+find_target_year <- function(market,
+                             portfolio,
+                             target_year,
+                             ref_sector) {
+  target_year <- find_year_shared_across_sectors(
+    market,
+    target_year = target_year, ref_sector = ref_sector
+  )
+
+  abort_bad_year(market, portfolio, target_year)
+
+  target_year
 }
 
 abort_null_start_year <- function(start_year) {
@@ -217,46 +223,63 @@ abort_null_start_year <- function(start_year) {
   invisible(start_year)
 }
 
-guess_target_year <- function(market_data, port_data) {
-  message(
-    "Guessing `target_year` as latest year in `market_data` and `port_data`."
-  )
-  max(max(as.integer(market_data$Year)), max(as.integer(port_data$Year)))
+find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
+  # TODO: Test that market is actually filetred by ref_sector, and
+  # maybe filter it only once before this function?
+  market2 <- market %>%
+    filter(.data$Sector %in% ref_sector)
+
+  years_shared_across_sectors <- market2$Year %>%
+    split(market2$Sector) %>%
+    purrr::reduce(intersect)
+
+  if (is.null(target_year)) {
+    out <- max(years_shared_across_sectors)
+  } else {
+    target_year_has_length_1 <- identical(length(target_year), 1L)
+    stopifnot(target_year_has_length_1)
+    out <- intersect(target_year, years_shared_across_sectors)
+  }
+
+  some_target_year_is_shared_across_sectors <- length(out) > 0L
+  stopifnot(some_target_year_is_shared_across_sectors)
+
+  out
 }
 
-abort_bad_year <- function(market_data, port_data, year) {
+abort_bad_year <- function(market, portfolio, year) {
   year_has_length_1 <- identical(length(year), 1L)
   stopifnot(
     year_has_length_1,
     is.character(year) || is.numeric(year)
   )
 
-  is_valid_market_year <- any(year %in% unique(market_data$Year))
-  is_valid_portfolio_year <- any(year %in% unique(port_data$Year))
+  is_valid_market_year <- any(year %in% unique(market$Year))
+  is_valid_portfolio_year <- any(year %in% unique(portfolio$Year))
   stopifnot(is_valid_market_year && is_valid_portfolio_year)
 
   invisible(year)
 }
 
-abort_bad_ref_sector <- function(port_data, ref_sector) {
-  is_valid_ref_sector <- any(ref_sector %in% port_data$Sector)
+abort_bad_ref_sector <- function(portfolio, ref_sector) {
+  is_valid_ref_sector <- any(ref_sector %in% portfolio$Sector)
   stopifnot(is_valid_ref_sector)
 
-  invisible(port_data)
+  invisible(portfolio)
 }
 
-warn_missing_sectors <- function(port_data, ref_sector) {
-  missing_ref_sector <- sort(setdiff(ref_sector, port_data$Sector))
+warn_missing_sectors <- function(portfolio, ref_sector) {
+  missing_ref_sector <- sort(setdiff(ref_sector, portfolio$Sector))
 
   if (length(missing_ref_sector) > 0L) {
     warning(
-      "Can't calculate SDA for `ref_sector` values missing from `port_data`:\n",
+      "Can't calculate SDA for `ref_sector` values missing from `portfolio`:\n",
       paste0(missing_ref_sector, collapse = ", "), ".",
       call. = FALSE
     )
   }
 
-  invisible(port_data)
+  invisible(portfolio)
 }
 
 #' Default value for the `ref_sector` argument to [sda_portfolio_target()]
@@ -265,8 +288,8 @@ warn_missing_sectors <- function(port_data, ref_sector) {
 #' @export
 #'
 #' @examples
-#' get_ref_sector()
-get_ref_sector <- function() {
+#' sectors()
+sectors <- function() {
   c(
     "Cement",
     "Steel",

@@ -5,8 +5,8 @@
 \title{Calculate portfolio targets using the Sectoral Decarbonisation Approach (SDA)}
 \usage{
 sda_portfolio_target(
-  market_data,
-  port_data,
+  market,
+  portfolio,
   ref_scenario = "B2DS",
   ref_geography = "Global",
   ref_sector = NULL,
@@ -15,9 +15,9 @@ sda_portfolio_target(
 )
 }
 \arguments{
-\item{market_data}{A dataframe like \link[r2dii.analysis:market]{r2dii.analysis::market}.}
+\item{market}{A dataframe like \link[r2dii.analysis:market]{r2dii.analysis::market}.}
 
-\item{port_data}{A dataframe like \link[r2dii.analysis:portfolio]{r2dii.analysis::portfolio}.}
+\item{portfolio}{A dataframe like \link[r2dii.analysis:portfolio]{r2dii.analysis::portfolio}.}
 
 \item{ref_scenario}{A character vector giving one or more scenarios to use as
 the SDA target.}
@@ -34,8 +34,9 @@ year used in the SDA calculation. \code{NULL} defaults to extracting the year
 from a configuration file (see section See Also).}
 
 \item{target_year}{A length-1 numeric or character vector giving the end year
-used in the SDA calculation. \code{NULL} defaults to the latest year found in the
-\code{Year} column of \code{market_data} and \code{port_data}.}
+used in the SDA calculation. It must be a year present in all \code{ref_sectors}
+of \code{market}. \code{NULL} defaults to the latest year shared across all sectors
+given by \code{ref_sector} and found in \code{market}.}
 }
 \value{
 Returns a dataframe where the \code{Scen.Sec.EmissionsFactor} column
@@ -71,5 +72,5 @@ sda_portfolio_target(market, portfolio, start_year = "2019")
 }
 \seealso{
 \code{\link[r2dii.utils:get_config]{r2dii.utils::get_config()}}, \code{\link[r2dii.utils:START.YEAR]{r2dii.utils::START.YEAR()}},
-\code{\link[=get_ref_sector]{get_ref_sector()}}.
+\code{\link[=sectors]{sectors()}}.
 }

@@ -131,14 +131,14 @@ test_that("sda_portfolio_target takes chr, num, or int 'year' arguments", {
   )
 })
 
-test_that("sda_portfolio_target warns `ref_sector`s missing in `portfolio`", {
+test_that("sda_portfolio_target warns `ref_sector`s not in both datasets", {
   expect_warning(
     sda_portfolio_target(
       market,
       portfolio = filter(portfolio, Sector == "Steel"),
-      ref_sector = c("Steel", "Power")
+      ref_sector = c("Steel", "Power", "Other")
     ),
-    "missing.*Power"
+    "Skipping.*Other, Power."
   )
 })
 
@@ -257,5 +257,56 @@ test_that("sda_portfolio_target uses max target_year in all market-sector (#13)"
       target_year = "2020"  # market has Steel data for 2019, Power is unused
     ),
     NA
+  )
+})
+
+test_that("sda_portolio_target errors if ref_sector is missing from portfolio", {
+  market <- tribble(
+    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+    "Steel",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Steel",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- tribble(
+    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  expect_error(
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = c("Steel"),
+      start_year = "2019",
+      target_year = "2020"
+    ), "is_ref_sector_in_data is not TRUE"
+  )
+})
+
+test_that("sda_portolio_target errors if ref_sector is missing from market", {
+  market <- tribble(
+    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- tribble(
+    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+    "Steel",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Steel",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  expect_error(
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = c("Steel"),
+      start_year = "2019",
+      target_year = "2020"
+    ),
+    "is_ref_sector_in_data"
   )
 })

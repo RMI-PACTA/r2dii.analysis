@@ -9,9 +9,9 @@
 #'   the SDA target.
 #' @param ref_geography A character vector giving one or more scenario
 #'   geographies for each scenario.
-#' @param ref_sector A character vector giving one or more sectors (with
-#'   emissions factors) to calculate the SDA. `NULL` defaults to all expected
-#'   sectors (see section See Also).
+#' @param ref_sector A character vector giving one or more sectors present in
+#'   both `market` and `portfolio` data. `NULL` defaults to all expected sectors
+#'   (see section See Also).
 #' @param start_year A length-1 numeric or character vector giving the start
 #'   year used in the SDA calculation. `NULL` defaults to extracting the year
 #'   from a configuration file (see section See Also).
@@ -61,7 +61,7 @@ sda_portfolio_target <- function(market,
   check_market_and_portfolio(market, portfolio)
   check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
-  ref_sector <- find_ref_sector(portfolio, ref_sector = ref_sector)
+  ref_sector <- find_ref_sector(market, portfolio, ref_sector = ref_sector)
   start_year <- find_start_year(market, portfolio, start_year)
   target_year <- find_target_year(market, portfolio, target_year, ref_sector)
 
@@ -179,11 +179,13 @@ check_ref <- function(market, portfolio, ref, col) {
   }
 }
 
-find_ref_sector <- function(portfolio, ref_sector) {
+find_ref_sector <- function(market, portfolio, ref_sector) {
   ref_sector <- ref_sector %||% sectors()
 
+  abort_bad_ref_sector(market, ref_sector)
   abort_bad_ref_sector(portfolio, ref_sector)
-  warn_missing_sectors(portfolio, ref_sector)
+
+  warn_unused_sectors(market, portfolio, ref_sector)
 
   ref_sector
 }
@@ -192,7 +194,7 @@ find_start_year <- function(market, portfolio, start_year) {
   start_year <- start_year %||% r2dii.utils::START.YEAR()
 
   abort_null_start_year(start_year)
-  abort_bad_year(market, portfolio, start_year)
+  abort_bad_year(market, start_year)
 
   start_year
 }
@@ -202,11 +204,10 @@ find_target_year <- function(market,
                              target_year,
                              ref_sector) {
   target_year <- find_year_shared_across_sectors(
-    market,
-    target_year = target_year, ref_sector = ref_sector
+    market, target_year = target_year, ref_sector = ref_sector
   )
 
-  abort_bad_year(market, portfolio, target_year)
+  abort_bad_year(market, target_year)
 
   target_year
 }
@@ -224,8 +225,6 @@ abort_null_start_year <- function(start_year) {
 }
 
 find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
-  # TODO: Test that market is actually filetred by ref_sector, and
-  # maybe filter it only once before this function?
   market2 <- market %>%
     filter(.data$Sector %in% ref_sector)
 
@@ -247,34 +246,30 @@ find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
   out
 }
 
-abort_bad_year <- function(market, portfolio, year) {
+abort_bad_year <- function(data, year) {
   year_has_length_1 <- identical(length(year), 1L)
-  stopifnot(
-    year_has_length_1,
-    is.character(year) || is.numeric(year)
-  )
+  stopifnot(year_has_length_1, is.character(year) || is.numeric(year))
 
-  is_valid_market_year <- any(year %in% unique(market$Year))
-  is_valid_portfolio_year <- any(year %in% unique(portfolio$Year))
-  stopifnot(is_valid_market_year && is_valid_portfolio_year)
+  is_year_in_data <- any(year %in% unique(data$Year))
+  stopifnot(is_year_in_data)
 
   invisible(year)
 }
 
-abort_bad_ref_sector <- function(portfolio, ref_sector) {
-  is_valid_ref_sector <- any(ref_sector %in% portfolio$Sector)
-  stopifnot(is_valid_ref_sector)
-
-  invisible(portfolio)
+abort_bad_ref_sector <- function(data, ref_sector) {
+  is_ref_sector_in_data <- any(ref_sector %in% data$Sector)
+  stopifnot(is_ref_sector_in_data)
+  invisible(data)
 }
 
-warn_missing_sectors <- function(portfolio, ref_sector) {
-  missing_ref_sector <- sort(setdiff(ref_sector, portfolio$Sector))
+warn_unused_sectors <- function(market, portfolio, ref_sector) {
+  sectors_in_data <- intersect(market$Sector, portfolio$Sector)
+  unused_sectors <- sort(setdiff(ref_sector, sectors_in_data))
 
-  if (length(missing_ref_sector) > 0L) {
+  if (length(unused_sectors) > 0L) {
     warning(
-      "Can't calculate SDA for `ref_sector` values missing from `portfolio`:\n",
-      paste0(missing_ref_sector, collapse = ", "), ".",
+      "Skipping sectors not present in both `market` and `portfolio`:\n",
+      paste0(unused_sectors, collapse = ", "), ".",
       call. = FALSE
     )
   }

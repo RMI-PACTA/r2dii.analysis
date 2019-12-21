@@ -74,18 +74,18 @@ sda_portfolio_target <- function(market,
   message("* Using `target_year`:", target_year, ".")
 
   # Prefill common arguments
-  startender2 <- purrr::partial(
-    startender,
+  pick_distinct2 <- purrr::partial(
+    pick_distinct,
     ref_scenario = ref_scenario,
     ref_sector = ref_sector,
     ref_geography = ref_geography
   )
   ci_port <- portfolio %>%
-    startender2(var = "Plan.Sec.EmissionsFactor", year = start_year)
+    pick_distinct2(var = "Plan.Sec.EmissionsFactor", year = start_year)
   ci_market <- market %>%
-    startender2(var = "Scen.Sec.EmissionsFactor", year = start_year)
+    pick_distinct2(var = "Scen.Sec.EmissionsFactor", year = start_year)
   si <- market %>%
-    startender2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
+    pick_distinct2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
     rename(SI = .data$CI)
 
   # Prefill common arguments
@@ -292,21 +292,26 @@ sectors <- function() {
   )
 }
 
-startender <- function(data,
+pick_distinct <- function(data,
                        var,
                        year,
                        ref_scenario,
                        ref_sector,
                        ref_geography) {
-  data %>%
+  out <- data %>%
+    filter(!is.na(.data[[var]])) %>%
+    filter(as.character(.data$Year) == as.character(year)) %>%
     filter(
-      !is.na(!!sym(var)) &
-        as.character(.data$Year) == as.character(year) &
-        .data$Scenario %in% ref_scenario &
-        .data$Sector %in% ref_sector &
-        .data$ScenarioGeography %in% ref_geography
-    ) %>%
-    rename(CI = !!sym(var)) %>%
+      .data$Scenario %in% ref_scenario &
+      .data$Sector %in% ref_sector &
+      .data$ScenarioGeography %in% ref_geography
+    )
+
+  # Rename
+  out$CI <- out[[var]]
+  out[[var]] <- NULL
+
+  out %>%
     distinct(
       .data$Investor.Name,
       .data$Portfolio.Name,

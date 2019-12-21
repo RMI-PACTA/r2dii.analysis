@@ -61,9 +61,9 @@ sda_portfolio_target <- function(market,
   check_market_and_portfolio(market, portfolio)
   check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
-  ref_sector <- use_ref_sectors(market, portfolio, ref_sector = ref_sector)
-  start_year <- find_start_year(market, portfolio, start_year)
-  target_year <- find_best_target_year(
+  ref_sector <- validate_ref_sector(market, portfolio, ref_sector = ref_sector)
+  start_year <- validate_start_year(market, portfolio, start_year)
+  target_year <- validate_target_year(
     target_year, find_useful_years_by_sector(market, ref_sector = ref_sector)
   )
 
@@ -181,7 +181,7 @@ check_ref <- function(market, portfolio, ref, col) {
   }
 }
 
-use_ref_sectors <- function(market, portfolio, ref_sector) {
+validate_ref_sector <- function(market, portfolio, ref_sector) {
   ref_sector <- ref_sector %||% sectors()
   useful <- intersect(market$Sector, portfolio$Sector)
 
@@ -210,7 +210,7 @@ warn_unused_sector <- function(unused) {
   invisible(unused)
 }
 
-find_start_year <- function(market, portfolio, start_year) {
+validate_start_year <- function(market, portfolio, start_year) {
   start_year <- start_year %||% r2dii.utils::START.YEAR()
   abort_null_start_year(start_year)
   abort_bad_year(market, start_year)
@@ -231,7 +231,7 @@ abort_null_start_year <- function(start_year) {
 
 find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
   useful_years <- find_useful_years_by_sector(market, ref_sector = ref_sector)
-  find_best_target_year(target_year, useful_years)
+  validate_target_year(target_year, useful_years)
 }
 
 find_useful_years_by_sector <- function(market, ref_sector) {
@@ -240,7 +240,7 @@ find_useful_years_by_sector <- function(market, ref_sector) {
   purrr::reduce(years_by_sector, intersect)
 }
 
-find_best_target_year <- function(target_year, useful_years) {
+validate_target_year <- function(target_year, useful_years) {
   if (is.null(target_year)) {
     return(max(useful_years))
   }

@@ -310,3 +310,51 @@ test_that("sda_portolio_target errors if ref_sector is missing from market", {
     "is_ref_sector_in_data"
   )
 })
+
+test_that("sda_portolio_target passes w/ ref_scenario missing in `market`", {
+  market <- tribble(
+    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+        "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- tribble(
+    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+        "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  expect_error(
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = c("Steel"),
+      start_year = "2019",
+      target_year = "2020"
+    ),
+    NA
+  )
+})
+
+test_that("sda_portolio_target passes w/ ref_scenario missing in `portfolio`", {
+  market <- tribble(
+    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+        "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- tribble(
+    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+        "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  expect_error(
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = c("Steel"),
+      start_year = "2019",
+      target_year = "2020"
+    ),
+    NA
+  )
+})

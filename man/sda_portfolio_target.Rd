@@ -25,9 +25,9 @@ the SDA target.}
 \item{ref_geography}{A character vector giving one or more scenario
 geographies for each scenario.}
 
-\item{ref_sector}{A character vector giving one or more sectors (with
-emissions factors) to calculate the SDA. \code{NULL} defaults to all expected
-sectors (see section See Also).}
+\item{ref_sector}{A character vector giving one or more sectors present in
+both \code{market} and \code{portfolio} data. \code{NULL} defaults to all expected sectors
+(see section See Also).}
 
 \item{start_year}{A length-1 numeric or character vector giving the start
 year used in the SDA calculation. \code{NULL} defaults to extracting the year

@@ -61,11 +61,17 @@ sda_portfolio_target <- function(market,
   check_market_and_portfolio(market, portfolio)
   check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
+
   ref_sector <- validate_ref_sector(market, portfolio, ref_sector = ref_sector)
+  message("* Using `ref_sector`:", paste0(ref_sector, collapse = ", "), ".")
+
   start_year <- validate_start_year(market, portfolio, start_year)
+  message("* Using `start_year`:", start_year, ".")
+
   target_year <- validate_target_year(
     target_year, find_useful_years_by_sector(market, ref_sector = ref_sector)
   )
+  message("* Using `target_year`:", target_year, ".")
 
   # Prefill common arguments
   startender2 <- purrr::partial(

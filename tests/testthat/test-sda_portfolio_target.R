@@ -236,7 +236,7 @@ test_that("sda_portfolio_target uses max target_year in all market-sector (#13)"
       start_year = "2019",
       target_year = "2020"  # market data has no Power data for 2020
     ),
-    "some_target_year_is_shared_across_sectors is not TRUE"
+    "is_target_year_shared_across_sectors is not TRUE"
   )
 
   expect_error(

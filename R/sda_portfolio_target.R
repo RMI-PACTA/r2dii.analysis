@@ -63,7 +63,9 @@ sda_portfolio_target <- function(market,
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
   ref_sector <- use_ref_sectors(market, portfolio, ref_sector = ref_sector)
   start_year <- find_start_year(market, portfolio, start_year)
-  target_year <- find_target_year(market, portfolio, target_year, ref_sector)
+  target_year <- find_best_target_year(
+    target_year, find_useful_years_by_sector(market, ref_sector = ref_sector)
+  )
 
   # Prefill common arguments
   startender2 <- purrr::partial(
@@ -210,24 +212,9 @@ warn_unused_sector <- function(unused) {
 
 find_start_year <- function(market, portfolio, start_year) {
   start_year <- start_year %||% r2dii.utils::START.YEAR()
-
   abort_null_start_year(start_year)
   abort_bad_year(market, start_year)
-
   start_year
-}
-
-find_target_year <- function(market,
-                             portfolio,
-                             target_year,
-                             ref_sector) {
-  target_year <- find_year_shared_across_sectors(
-    market, target_year = target_year, ref_sector = ref_sector
-  )
-
-  abort_bad_year(market, target_year)
-
-  target_year
 }
 
 abort_null_start_year <- function(start_year) {
@@ -243,25 +230,29 @@ abort_null_start_year <- function(start_year) {
 }
 
 find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
-  market2 <- market %>%
-    filter(.data$Sector %in% ref_sector)
+  useful_years <- find_useful_years_by_sector(market, ref_sector = ref_sector)
+  find_best_target_year(target_year, useful_years)
+}
 
-  years_shared_across_sectors <- market2$Year %>%
-    split(market2$Sector) %>%
-    purrr::reduce(intersect)
+find_useful_years_by_sector <- function(market, ref_sector) {
+  picked_sectors <- filter(market, .data$Sector %in% ref_sector)
+  years_by_sector <- split(picked_sectors$Year, picked_sectors$Sector)
+  purrr::reduce(years_by_sector, intersect)
+}
 
+find_best_target_year <- function(target_year, useful_years) {
   if (is.null(target_year)) {
-    out <- max(years_shared_across_sectors)
-  } else {
-    target_year_has_length_1 <- identical(length(target_year), 1L)
-    stopifnot(target_year_has_length_1)
-    out <- intersect(target_year, years_shared_across_sectors)
+    return(max(useful_years))
   }
 
-  some_target_year_is_shared_across_sectors <- length(out) > 0L
-  stopifnot(some_target_year_is_shared_across_sectors)
+  target_year_has_length_1 <- identical(length(target_year), 1L)
+  stopifnot(target_year_has_length_1)
 
-  out
+  best_target_year <- intersect(target_year, useful_years)
+  is_target_year_shared_across_sectors <- length(best_target_year) > 0L
+  stopifnot(is_target_year_shared_across_sectors)
+
+  best_target_year
 }
 
 abort_bad_year <- function(data, year) {

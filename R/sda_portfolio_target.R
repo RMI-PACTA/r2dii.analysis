@@ -61,7 +61,7 @@ sda_portfolio_target <- function(market,
   check_market_and_portfolio(market, portfolio)
   check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
-  ref_sector <- find_ref_sector(market, portfolio, ref_sector = ref_sector)
+  ref_sector <- use_ref_sectors(market, portfolio, ref_sector = ref_sector)
   start_year <- find_start_year(market, portfolio, start_year)
   target_year <- find_target_year(market, portfolio, target_year, ref_sector)
 
@@ -179,15 +179,33 @@ check_ref <- function(market, portfolio, ref, col) {
   }
 }
 
-find_ref_sector <- function(market, portfolio, ref_sector) {
+use_ref_sectors <- function(market, portfolio, ref_sector) {
   ref_sector <- ref_sector %||% sectors()
+  useful <- intersect(market$Sector, portfolio$Sector)
 
-  abort_bad_ref_sector(market, ref_sector)
-  abort_bad_ref_sector(portfolio, ref_sector)
+  ref_sector_in_data <- intersect(ref_sector, useful)
+  using <- abort_cant_find(ref_sector_in_data)
 
-  warn_unused_sectors(market, portfolio, ref_sector)
+  warn_unused_sector(setdiff(ref_sector, useful))
+  using
+}
 
-  ref_sector
+abort_cant_find <- function(using) {
+  is_found <- length(using) > 0L
+  stopifnot(is_found)
+  invisible(using)
+}
+
+warn_unused_sector <- function(unused) {
+  if (length(unused) > 0L) {
+    warning(
+      "Skipping sectors not present in both `market` and `portfolio`:\n",
+      paste0(unused, collapse = ", "), ".",
+      call. = FALSE
+    )
+  }
+
+  invisible(unused)
 }
 
 find_start_year <- function(market, portfolio, start_year) {
@@ -254,27 +272,6 @@ abort_bad_year <- function(data, year) {
   stopifnot(is_year_in_data)
 
   invisible(year)
-}
-
-abort_bad_ref_sector <- function(data, ref_sector) {
-  is_ref_sector_in_data <- any(ref_sector %in% data$Sector)
-  stopifnot(is_ref_sector_in_data)
-  invisible(data)
-}
-
-warn_unused_sectors <- function(market, portfolio, ref_sector) {
-  sectors_in_data <- intersect(market$Sector, portfolio$Sector)
-  unused_sectors <- sort(setdiff(ref_sector, sectors_in_data))
-
-  if (length(unused_sectors) > 0L) {
-    warning(
-      "Skipping sectors not present in both `market` and `portfolio`:\n",
-      paste0(unused_sectors, collapse = ", "), ".",
-      call. = FALSE
-    )
-  }
-
-  invisible(portfolio)
 }
 
 #' Default value for the `ref_sector` argument to [sda_portfolio_target()]

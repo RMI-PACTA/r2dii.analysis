@@ -138,7 +138,7 @@ test_that("sda_portfolio_target warns `ref_sector`s not in both datasets", {
       portfolio = filter(portfolio, Sector == "Steel"),
       ref_sector = c("Steel", "Power", "Other")
     ),
-    "Skipping.*Other, Power."
+    "Skipping.*Power, Other."
   )
 })
 
@@ -281,7 +281,7 @@ test_that("sda_portolio_target errors if ref_sector is missing from portfolio", 
       ref_sector = c("Steel"),
       start_year = "2019",
       target_year = "2020"
-    ), "is_ref_sector_in_data is not TRUE"
+    ), "is_found is not TRUE"
   )
 })
 
@@ -307,7 +307,7 @@ test_that("sda_portolio_target errors if ref_sector is missing from market", {
       start_year = "2019",
       target_year = "2020"
     ),
-    "is_ref_sector_in_data"
+    "is_found is not TRUE"
   )
 })
 
@@ -358,3 +358,54 @@ test_that("sda_portolio_target passes w/ ref_scenario missing in `portfolio`", {
     NA
   )
 })
+
+test_that("sda_portolio_target passes w/ ref_geography missing in `market`", {
+  market <- tribble(
+    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+    "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+    "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- tribble(
+    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+    "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+    "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  expect_error(
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = c("Steel"),
+      start_year = "2019",
+      target_year = "2020",
+      ref_geography = "Global",
+    ),
+    NA
+  )
+})
+
+test_that("sda_portolio_target passes w/ ref_geography missing in `portfolio`", {
+  market <- tribble(
+    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+              "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- tribble(
+    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+                 "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+                 "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  expect_error(
+    sda_portfolio_target(
+      market, portfolio,
+      ref_sector = c("Steel"),
+      start_year = "2019",
+      target_year = "2020",
+      ref_geography = "Global",
+    ),
+    NA
+  )
+})
+

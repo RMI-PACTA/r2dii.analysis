@@ -22,7 +22,7 @@ sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
 brown_technologies_list <- c("Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE")
 
-singel_indicator <- function(input_results = input_results, upper_temp_threshold = 6, lower_temp_threshold = 1.5, start_year = 2019, time_horizon = 5, allocation = "PortfolioWeight", brown_technologies = brown_technologies_list) {
+single_indicator <- function(input_results = input_results, upper_temp_threshold = 6, lower_temp_threshold = 1.5, start_year = 2019, time_horizon = 5, allocation = "PortfolioWeight", brown_technologies = brown_technologies_list) {
 
   #################################################################
   # define things
@@ -205,7 +205,7 @@ singel_indicator <- function(input_results = input_results, upper_temp_threshold
 }
 
 
-temp <- singel_indicator(
+temp <- single_indicator(
   input_results = input_results,
   upper_temp_threshold = 6,
   lower_temp_threshold = 1.5,

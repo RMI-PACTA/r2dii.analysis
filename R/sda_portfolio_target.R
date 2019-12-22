@@ -73,35 +73,61 @@ sda_portfolio_target <- function(market,
   )
   message("* Using `target_year`:", target_year, ".")
 
-  # Prefill common arguments
-  pick_distinct2 <- purrr::partial(
-    pick_distinct,
-    ref_scenario = ref_scenario,
-    ref_sector = ref_sector,
-    ref_geography = ref_geography
+
+
+  these_vars1 <- vars(
+    .data$Allocation,
+    .data$CI,
+    .data$Investor.Name,
+    .data$Portfolio.Name,
+    .data$Scenario,
+    .data$ScenarioGeography,
+    .data$Sector
   )
+
   ci_port <- portfolio %>%
-    pick_distinct2(var = "Plan.Sec.EmissionsFactor", year = start_year)
+    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
+    filter(as.character(.data$Year) == as.character(start_year)) %>%
+    filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
+    rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
+    distinct(!!! these_vars1)
+
   ci_market <- market %>%
-    pick_distinct2(var = "Scen.Sec.EmissionsFactor", year = start_year)
+    filter(as.character(.data$Year) == as.character(start_year)) %>%
+    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
+    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
+    distinct(!!! these_vars1)
+
   si <- market %>%
-    pick_distinct2(var = "Scen.Sec.EmissionsFactor", year = target_year) %>%
+    filter(as.character(.data$Year) == as.character(target_year)) %>%
+    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
+    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
+    distinct(!!! these_vars1) %>%
     rename(SI = .data$CI)
 
-  # Prefill common arguments
-  view3 <- purrr::partial(
-    view2,
-    ref_scenario = ref_scenario,
-    ref_sector = ref_sector,
-    ref_geography = ref_geography
+
+
+  these_vars2 <- vars(
+    .data$Allocation,
+    .data$Investor.Name,
+    .data$Portfolio.Name,
+    .data$Scenario,
+    .data$ScenarioGeography,
+    .data$Sector,
+    .data$Scen.Sec.EmissionsFactor,
+    .data$Year
   )
-  port_to_market <- view3(market) %>%
-    select(-c(.data$Investor.Name, .data$Portfolio.Name)) %>%
-    inner_join(
-      view3(portfolio),
-      by = c(get_common_by(), "Year"),
-      suffix = c("_port", "_market")
-    )
+
+  lhs <- market %>%
+    distinct(!!! these_vars2) %>%
+    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
+    select(-c(.data$Investor.Name, .data$Portfolio.Name))
+  rhs <- portfolio %>%
+    distinct(!!! these_vars2)
+
+  port_to_market <- inner_join(
+    lhs, rhs, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
+  )
 
   distance <- ci_market %>%
     inner_join(
@@ -292,54 +318,9 @@ sectors <- function() {
   )
 }
 
-pick_distinct <- function(data,
-                       var,
-                       year,
-                       ref_scenario,
-                       ref_sector,
-                       ref_geography) {
-  out <- data %>%
-    filter(!is.na(.data[[var]])) %>%
-    filter(as.character(.data$Year) == as.character(year)) %>%
-    filter(
-      .data$Scenario %in% ref_scenario &
-      .data$Sector %in% ref_sector &
-      .data$ScenarioGeography %in% ref_geography
-    )
-
-  # Rename
-  out$CI <- out[[var]]
-  out[[var]] <- NULL
-
-  out %>%
-    distinct(
-      .data$Investor.Name,
-      .data$Portfolio.Name,
-      .data$CI,
-      .data$Scenario,
-      .data$ScenarioGeography,
-      .data$Sector,
-      .data$Allocation
-    )
-}
-
-view2 <- function(data, ref_scenario, ref_sector, ref_geography) {
+pick_good_rows <- function(data, year) {
   data %>%
-    filter(
-      .data$Scenario %in% ref_scenario &
-        .data$Sector %in% ref_sector &
-        .data$ScenarioGeography %in% ref_geography
-    ) %>%
-    distinct(
-      .data$Investor.Name,
-      .data$Portfolio.Name,
-      .data$Allocation,
-      .data$Sector,
-      .data$Scenario,
-      .data$ScenarioGeography,
-      .data$Year,
-      .data$Scen.Sec.EmissionsFactor
-    )
+    filter(as.character(.data$Year) == as.character(year))
 }
 
 get_common_by <- function() {
@@ -349,4 +330,16 @@ get_common_by <- function() {
     "Scenario",
     "ScenarioGeography"
   )
+}
+
+pick_ref_scenario_sector_and_geography <- function(data,
+                                                   ref_scenario,
+                                                   ref_sector,
+                                                   ref_geography) {
+  data %>%
+    filter(
+      .data$Scenario %in% ref_scenario &
+        .data$Sector %in% ref_sector &
+        .data$ScenarioGeography %in% ref_geography
+    )
 }

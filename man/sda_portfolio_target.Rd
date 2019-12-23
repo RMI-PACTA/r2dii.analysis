@@ -7,9 +7,9 @@
 sda_portfolio_target(
   market,
   portfolio,
-  ref_scenario = "B2DS",
-  ref_geography = "Global",
-  ref_sector = NULL,
+  scenario = "B2DS",
+  geography = "Global",
+  sector = NULL,
   start_year = NULL,
   target_year = NULL
 )
@@ -19,13 +19,13 @@ sda_portfolio_target(
 
 \item{portfolio}{A dataframe like \link[r2dii.analysis:portfolio]{r2dii.analysis::portfolio}.}
 
-\item{ref_scenario}{A character vector giving one or more scenarios to use as
+\item{scenario}{A character vector giving one or more scenarios to use as
 the SDA target.}
 
-\item{ref_geography}{A character vector giving one or more scenario
+\item{geography}{A character vector giving one or more scenario
 geographies for each scenario.}
 
-\item{ref_sector}{A character vector giving one or more sectors present in
+\item{sector}{A character vector giving one or more sectors present in
 both \code{market} and \code{portfolio} data. \code{NULL} defaults to all expected sectors
 (see section See Also).}
 
@@ -34,9 +34,9 @@ year used in the SDA calculation. \code{NULL} defaults to extracting the year
 from a configuration file (see section See Also).}
 
 \item{target_year}{A length-1 numeric or character vector giving the end year
-used in the SDA calculation. It must be a year present in all \code{ref_sectors}
+used in the SDA calculation. It must be a year present in all \code{sectors}
 of \code{market}. \code{NULL} defaults to the latest year shared across all sectors
-given by \code{ref_sector} and found in \code{market}.}
+given by \code{sector} and found in \code{market}.}
 }
 \value{
 Returns a dataframe where the     \code{Scen.Sec.EmissionsFactor} column
@@ -58,7 +58,7 @@ on.exit(restore_options)
 START.YEAR()
 sda_portfolio_target(market, portfolio)
 
-sda_portfolio_target(market, portfolio, ref_sector = "Steel")
+sda_portfolio_target(market, portfolio, sector = "Steel")
 
 # This configuration file lacks `start_year`
 options(r2dii_config = example_config("config-toy.yml"))

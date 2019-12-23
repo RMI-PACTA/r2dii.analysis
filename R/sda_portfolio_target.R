@@ -5,20 +5,20 @@
 #'
 #' @param market A dataframe like [r2dii.analysis::market].
 #' @param portfolio A dataframe like [r2dii.analysis::portfolio].
-#' @param ref_scenario A character vector giving one or more scenarios to use as
+#' @param scenario A character vector giving one or more scenarios to use as
 #'   the SDA target.
-#' @param ref_geography A character vector giving one or more scenario
+#' @param geography A character vector giving one or more scenario
 #'   geographies for each scenario.
-#' @param ref_sector A character vector giving one or more sectors present in
+#' @param sector A character vector giving one or more sectors present in
 #'   both `market` and `portfolio` data. `NULL` defaults to all expected sectors
 #'   (see section See Also).
 #' @param start_year A length-1 numeric or character vector giving the start
 #'   year used in the SDA calculation. `NULL` defaults to extracting the year
 #'   from a configuration file (see section See Also).
 #' @param target_year A length-1 numeric or character vector giving the end year
-#'   used in the SDA calculation. It must be a year present in all `ref_sectors`
+#'   used in the SDA calculation. It must be a year present in all `sectors`
 #'   of `market`. `NULL` defaults to the latest year shared across all sectors
-#'   given by `ref_sector` and found in `market`.
+#'   given by `sector` and found in `market`.
 #'
 #' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()],
 #'   [get_sectors()].
@@ -40,7 +40,7 @@
 #' START.YEAR()
 #' sda_portfolio_target(market, portfolio)
 #'
-#' sda_portfolio_target(market, portfolio, ref_sector = "Steel")
+#' sda_portfolio_target(market, portfolio, sector = "Steel")
 #'
 #' # This configuration file lacks `start_year`
 #' options(r2dii_config = example_config("config-toy.yml"))
@@ -53,20 +53,20 @@
 #' sda_portfolio_target(market, portfolio, start_year = "2019")
 sda_portfolio_target <- function(market,
                                  portfolio,
-                                 ref_scenario = "B2DS",
-                                 ref_geography = "Global",
-                                 ref_sector = NULL,
+                                 scenario = "B2DS",
+                                 geography = "Global",
+                                 sector = NULL,
                                  start_year = NULL,
                                  target_year = NULL) {
   check_market_portfolio(market, portfolio, crucial = get_crucial_vars())
-  check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
-  check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
+  check_ref(market, portfolio, ref = scenario, col = "Scenario")
+  check_ref(market, portfolio, ref = geography, col = "ScenarioGeography")
 
-  ref_sector <- validate_ref_sector(market, portfolio, ref_sector = ref_sector)
-  message("* Using `ref_sector`:", paste0(ref_sector, collapse = ", "), ".")
+  sector <- validate_sector(market, portfolio, sector = sector)
+  message("* Using `sector`:", paste0(sector, collapse = ", "), ".")
   start_year <- validate_start_year(market, portfolio, start_year)
   message("* Using `start_year`:", start_year, ".")
-  target_year <- validate_target_year_by_sector(market, target_year, ref_sector)
+  target_year <- validate_target_year_by_sector(market, target_year, sector)
   message("* Using `target_year`:", target_year, ".")
 
   distinct_vars <- c(get_common_vars(), "Scen.Sec.EmissionsFactor", "Year")
@@ -75,17 +75,17 @@ sda_portfolio_target <- function(market,
     market = market,
     portfolio = portfolio,
     distinct_vars = distinct_vars,
-    ref_scenario = ref_scenario,
-    ref_sector = ref_sector,
-    ref_geography = ref_geography
+    scenario = scenario,
+    sector = sector,
+    geography = geography
   )
 
   distance <- create_distance(
     market = market,
     portfolio = portfolio,
-    ref_scenario = ref_scenario,
-    ref_sector = ref_sector,
-    ref_geography = ref_geography,
+    scenario = scenario,
+    sector = sector,
+    geography = geography,
     start_year = start_year,
     target_year = target_year
   )
@@ -142,14 +142,14 @@ check_ref <- function(market, portfolio, ref, col) {
   }
 }
 
-validate_ref_sector <- function(market, portfolio, ref_sector) {
-  ref_sector <- ref_sector %||% get_sectors()
+validate_sector <- function(market, portfolio, sector) {
+  sector <- sector %||% get_sectors()
   useful <- intersect(market$Sector, portfolio$Sector)
 
-  ref_sector_in_data <- intersect(ref_sector, useful)
-  using <- abort_cant_find(ref_sector_in_data)
+  sector_in_data <- intersect(sector, useful)
+  using <- abort_cant_find(sector_in_data)
 
-  warn_unused_sector(setdiff(ref_sector, useful))
+  warn_unused_sector(setdiff(sector, useful))
   using
 }
 
@@ -190,19 +190,14 @@ abort_null_start_year <- function(start_year) {
   invisible(start_year)
 }
 
-find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
-  useful_years <- find_years_by_sector(market, ref_sector = ref_sector)
-  validate_target_year_by_sector(target_year, useful_years)
-}
-
-find_years_by_sector <- function(market, ref_sector) {
-  picked_sectors <- filter(market, .data$Sector %in% ref_sector)
+find_years_by_sector <- function(market, sector) {
+  picked_sectors <- filter(market, .data$Sector %in% sector)
   years_by_sector <- split(picked_sectors$Year, picked_sectors$Sector)
   purrr::reduce(years_by_sector, intersect)
 }
 
-validate_target_year_by_sector <- function(market, target_year, ref_sector) {
-  useful_years <- find_years_by_sector(market, ref_sector = ref_sector)
+validate_target_year_by_sector <- function(market, target_year, sector) {
+  useful_years <- find_years_by_sector(market, sector = sector)
 
   if (is.null(target_year)) {
     return(max(useful_years))
@@ -230,15 +225,15 @@ abort_bad_year <- function(data, year) {
 
 create_distance <- function(market,
                             portfolio,
-                            ref_scenario,
-                            ref_sector,
-                            ref_geography,
+                            scenario,
+                            sector,
+                            geography,
                             start_year,
                             target_year) {
   distinct_vars <- dplyr::vars(!!! syms(get_common_vars()), .data$CI)
 
   ci_port <- portfolio %>%
-    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
+    pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
     filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
@@ -272,12 +267,12 @@ create_distance <- function(market,
 create_port_to_market <- function(market,
                                   portfolio,
                                   distinct_vars,
-                                  ref_scenario,
-                                  ref_sector,
-                                  ref_geography) {
+                                  scenario,
+                                  sector,
+                                  geography) {
   lhs <- market %>%
     distinct(!!! syms(distinct_vars)) %>%
-    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
+    pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name))
 
   rhs <- portfolio %>%
@@ -288,7 +283,7 @@ create_port_to_market <- function(market,
   )
 }
 
-#' Default value for the `ref_sector` argument to [sda_portfolio_target()]
+#' Default value for the `sector` argument to [sda_portfolio_target()]
 #'
 #' @return A character vector.
 #' @export
@@ -335,14 +330,14 @@ get_crucial_vars <- function() {
   )
 }
 
-pick_ref_scenario_sector_and_geography <- function(data,
-                                                   ref_scenario,
-                                                   ref_sector,
-                                                   ref_geography) {
+pick_scenario_sector_and_geography <- function(data,
+                                                   scenario,
+                                                   sector,
+                                                   geography) {
   data %>%
     filter(
-      .data$Scenario %in% ref_scenario &
-        .data$Sector %in% ref_sector &
-        .data$ScenarioGeography %in% ref_geography
+      .data$Scenario %in% scenario &
+        .data$Sector %in% sector &
+        .data$ScenarioGeography %in% geography
     )
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sda_portfolio_target.R
 \name{get_sectors}
 \alias{get_sectors}
-\title{Default value for the \code{ref_sector} argument to \code{\link[=sda_portfolio_target]{sda_portfolio_target()}}}
+\title{Default value for the \code{sector} argument to \code{\link[=sda_portfolio_target]{sda_portfolio_target()}}}
 \usage{
 get_sectors()
 }
@@ -10,7 +10,7 @@ get_sectors()
 A character vector.
 }
 \description{
-Default value for the \code{ref_sector} argument to \code{\link[=sda_portfolio_target]{sda_portfolio_target()}}
+Default value for the \code{sector} argument to \code{\link[=sda_portfolio_target]{sda_portfolio_target()}}
 }
 \examples{
 get_sectors()

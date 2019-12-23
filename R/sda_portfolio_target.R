@@ -88,14 +88,14 @@ sda_portfolio_target <- function(market,
   common_vars2 <- dplyr::vars(
       !!! syms(get_common_vars()), .data$Scen.Sec.EmissionsFactor, .data$Year
     )
-  market_1 <- market %>%
-    distinct(!!! common_vars2) %>%
-    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
-    select(-c(.data$Investor.Name, .data$Portfolio.Name))
-  portfolio_1 <- portfolio %>%
-    distinct(!!! common_vars2)
-  port_to_market <- inner_join(
-    market_1, portfolio_1, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
+
+  port_to_market <- create_port_to_market(
+    market = market,
+    portfolio = portfolio,
+    common_vars2 = common_vars2,
+    ref_scenario = ref_scenario,
+    ref_sector = ref_sector,
+    ref_geography = ref_geography
   )
 
   porttomarket_distance <- inner_join(
@@ -273,6 +273,25 @@ create_distance <- function(market,
     by = get_common_by(), suffix = c("_market", "_port")
   ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
+}
+
+create_port_to_market <- function(market,
+                                  portfolio,
+                                  common_vars2,
+                                  ref_scenario,
+                                  ref_sector,
+                                  ref_geography) {
+  lhs <- market %>%
+    distinct(!!! common_vars2) %>%
+    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
+    select(-c(.data$Investor.Name, .data$Portfolio.Name))
+
+  rhs <- portfolio %>%
+    distinct(!!! common_vars2)
+
+  port_to_market <- inner_join(
+    lhs, rhs, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
+  )
 }
 
 #' Default value for the `ref_sector` argument to [sda_portfolio_target()]

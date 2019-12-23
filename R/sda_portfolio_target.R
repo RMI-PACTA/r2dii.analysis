@@ -90,23 +90,9 @@ sda_portfolio_target <- function(market,
     target_year = target_year
   )
 
-  porttomarket_distance <- inner_join(
-    port_to_market, distance,
-    by = c(
-      get_common_by(),
-      "Investor.Name" = "Investor.Name_port",
-      "Portfolio.Name" = "Portfolio.Name_port"
-    )
-  ) %>%
-    mutate(
-      P_market = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
-        (.data$CI_market - .data$SI),
-      Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
-    ) %>%
-    select(!!! distinct_vars)
-
   right_join(
-    porttomarket_distance, portfolio,
+    create_porttomarket_distance(port_to_market, distance, distinct_vars),
+    portfolio,
     by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
     suffix = c("", "_no_sda")
   ) %>%
@@ -281,6 +267,23 @@ create_port_to_market <- function(market,
   port_to_market <- inner_join(
     lhs, rhs, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
   )
+}
+
+create_porttomarket_distance <- function(port_to_market, distance, distinct_vars) {
+  porttomarket_distance <- inner_join(
+    port_to_market, distance,
+    by = c(
+      get_common_by(),
+      "Investor.Name" = "Investor.Name_port",
+      "Portfolio.Name" = "Portfolio.Name_port"
+    )
+  ) %>%
+    mutate(
+      P_market = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
+        (.data$CI_market - .data$SI),
+      Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
+    ) %>%
+    select(!!! distinct_vars)
 }
 
 #' Default value for the `sector` argument to [sda_portfolio_target()]

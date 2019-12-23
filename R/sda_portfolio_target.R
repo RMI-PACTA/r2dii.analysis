@@ -73,47 +73,21 @@ sda_portfolio_target <- function(market,
   )
   message("* Using `target_year`:", target_year, ".")
 
-
-
-  common_vars1 <- dplyr::vars(!!! syms(get_common_vars()), .data$CI)
-
-  ci_port <- portfolio %>%
-    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
-    filter(as.character(.data$Year) == as.character(start_year)) %>%
-    filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
-    rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
-    distinct(!!! common_vars1)
-
-  ci_market <- market %>%
-    filter(as.character(.data$Year) == as.character(start_year)) %>%
-    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
-    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
-    distinct(!!! common_vars1)
-
-  si <- market %>%
-    filter(as.character(.data$Year) == as.character(target_year)) %>%
-    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
-    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
-    distinct(!!! common_vars1) %>%
-    rename(SI = .data$CI)
+  distance <- create_distance(
+    market = market,
+    portfolio = portfolio,
+    ref_scenario = ref_scenario,
+    ref_sector = ref_sector,
+    ref_geography = ref_geography,
+    start_year = start_year,
+    target_year = target_year
+  )
 
 
 
   common_vars2 <- dplyr::vars(
       !!! syms(get_common_vars()), .data$Scen.Sec.EmissionsFactor, .data$Year
     )
-
-  cimarket_si <- inner_join(
-    ci_market, si,
-    by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
-  )
-
-  distance <- inner_join(
-    cimarket_si, ci_port,
-    by = get_common_by(), suffix = c("_market", "_port")
-  ) %>%
-    mutate(D_port = .data$CI_port - .data$SI)
-
   market_1 <- market %>%
     distinct(!!! common_vars2) %>%
     pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
@@ -258,6 +232,47 @@ abort_bad_year <- function(data, year) {
   stopifnot(is_year_in_data)
 
   invisible(year)
+}
+
+create_distance <- function(market,
+                            portfolio,
+                            ref_scenario,
+                            ref_sector,
+                            ref_geography,
+                            start_year,
+                            target_year) {
+  common_vars1 <- dplyr::vars(!!! syms(get_common_vars()), .data$CI)
+
+  ci_port <- portfolio %>%
+    pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
+    filter(as.character(.data$Year) == as.character(start_year)) %>%
+    filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
+    rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
+    distinct(!!! common_vars1)
+
+  ci_market <- market %>%
+    filter(as.character(.data$Year) == as.character(start_year)) %>%
+    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
+    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
+    distinct(!!! common_vars1)
+
+  si <- market %>%
+    filter(as.character(.data$Year) == as.character(target_year)) %>%
+    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
+    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
+    distinct(!!! common_vars1) %>%
+    rename(SI = .data$CI)
+
+  cimarket_si <- inner_join(
+    ci_market, si,
+    by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
+  )
+
+  distance <- inner_join(
+    cimarket_si, ci_port,
+    by = get_common_by(), suffix = c("_market", "_port")
+  ) %>%
+    mutate(D_port = .data$CI_port - .data$SI)
 }
 
 #' Default value for the `ref_sector` argument to [sda_portfolio_target()]

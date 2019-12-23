@@ -21,9 +21,9 @@
 #'   given by `ref_sector` and found in `market`.
 #'
 #' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()],
-#'   [sectors()].
+#'   [get_sectors()].
 #'
-#' @return Returns a dataframe where the `Scen.Sec.EmissionsFactor` column
+#' @return Returns a dataframe where the     `Scen.Sec.EmissionsFactor` column
 #'   holds the result of the SDA calculation.
 #'
 #' @export
@@ -58,7 +58,7 @@ sda_portfolio_target <- function(market,
                                  ref_sector = NULL,
                                  start_year = NULL,
                                  target_year = NULL) {
-  check_market_and_portfolio(market, portfolio)
+  check_market_and_portfolio(market, portfolio, crucial = get_crucial_vars())
   check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
 
@@ -75,56 +75,40 @@ sda_portfolio_target <- function(market,
 
 
 
-  these_vars1 <- vars(
-    .data$Allocation,
-    .data$CI,
-    .data$Investor.Name,
-    .data$Portfolio.Name,
-    .data$Scenario,
-    .data$ScenarioGeography,
-    .data$Sector
-  )
+  common_vars1 <- dplyr::vars(!!! syms(get_common_vars()), .data$CI)
 
   ci_port <- portfolio %>%
     pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
     filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
-    distinct(!!! these_vars1)
+    distinct(!!! common_vars1)
 
   ci_market <- market %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
     filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
-    distinct(!!! these_vars1)
+    distinct(!!! common_vars1)
 
   si <- market %>%
     filter(as.character(.data$Year) == as.character(target_year)) %>%
     filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
-    distinct(!!! these_vars1) %>%
+    distinct(!!! common_vars1) %>%
     rename(SI = .data$CI)
 
 
 
-  these_vars2 <- vars(
-    .data$Allocation,
-    .data$Investor.Name,
-    .data$Portfolio.Name,
-    .data$Scenario,
-    .data$ScenarioGeography,
-    .data$Sector,
-    .data$Scen.Sec.EmissionsFactor,
-    .data$Year
-  )
+  common_vars2 <- dplyr::vars(
+      !!! syms(get_common_vars()), .data$Scen.Sec.EmissionsFactor, .data$Year
+    )
 
   lhs <- market %>%
-    distinct(!!! these_vars2) %>%
+    distinct(!!! common_vars2) %>%
     pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name))
   rhs <- portfolio %>%
-    distinct(!!! these_vars2)
-
+    distinct(!!! common_vars2)
   port_to_market <- inner_join(
     lhs, rhs, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
   )
@@ -140,6 +124,8 @@ sda_portfolio_target <- function(market,
     ) %>%
     mutate(D_port = .data$CI_port - .data$SI)
 
+
+
   port_to_market %>%
     inner_join(
       distance,
@@ -152,25 +138,16 @@ sda_portfolio_target <- function(market,
     mutate(
       P_market = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
         (.data$CI_market - .data$SI),
-      Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
+          Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     ) %>%
-    select(
-      .data$Investor.Name,
-      .data$Portfolio.Name,
-      .data$Allocation,
-      .data$Sector,
-      .data$Scenario,
-      .data$ScenarioGeography,
-      .data$Year,
-      .data$Scen.Sec.EmissionsFactor
-    ) %>%
+    select(!!! common_vars2) %>%
     right_join(
       portfolio,
       by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
       suffix = c("", "_no_sda")
     ) %>%
     mutate(
-      Scen.Sec.EmissionsFactor =
+          Scen.Sec.EmissionsFactor =
         if_else(
           !is.na(.data$Scen.Sec.EmissionsFactor),
           .data$Scen.Sec.EmissionsFactor,
@@ -180,20 +157,8 @@ sda_portfolio_target <- function(market,
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
-check_market_and_portfolio <- function(market, portfolio) {
+check_market_and_portfolio <- function(market, portfolio, crucial) {
   stopifnot(is.data.frame(market), is.data.frame(portfolio))
-
-  crucial <- c(
-    "Allocation",
-    "Investor.Name",
-    "Plan.Sec.EmissionsFactor",
-    "Portfolio.Name",
-    "Scen.Sec.EmissionsFactor",
-    "Scenario",
-    "ScenarioGeography",
-    "Sector",
-    "Year"
-  )
   r2dii.utils::check_crucial_names(market, crucial)
   r2dii.utils::check_crucial_names(portfolio, crucial)
 }
@@ -214,7 +179,7 @@ check_ref <- function(market, portfolio, ref, col) {
 }
 
 validate_ref_sector <- function(market, portfolio, ref_sector) {
-  ref_sector <- ref_sector %||% sectors()
+  ref_sector <- ref_sector %||% get_sectors()
   useful <- intersect(market$Sector, portfolio$Sector)
 
   ref_sector_in_data <- intersect(ref_sector, useful)
@@ -303,8 +268,8 @@ abort_bad_year <- function(data, year) {
 #' @export
 #'
 #' @examples
-#' sectors()
-sectors <- function() {
+#' get_sectors()
+get_sectors <- function() {
   c(
     "Cement",
     "Steel",
@@ -318,17 +283,29 @@ sectors <- function() {
   )
 }
 
-pick_good_rows <- function(data, year) {
-  data %>%
-    filter(as.character(.data$Year) == as.character(year))
-}
-
 get_common_by <- function() {
   c(
     "Allocation",
     "Sector",
     "Scenario",
     "ScenarioGeography"
+  )
+}
+
+get_common_vars <- function() {
+  c(
+    get_common_by(),
+    "Investor.Name",
+    "Portfolio.Name"
+  )
+}
+
+get_crucial_vars <- function() {
+  crucial <- c(
+    get_common_vars(),
+    "Plan.Sec.EmissionsFactor",
+    "Scen.Sec.EmissionsFactor",
+    "Year"
   )
 }
 

@@ -39,7 +39,7 @@ of \code{market}. \code{NULL} defaults to the latest year shared across all sect
 given by \code{ref_sector} and found in \code{market}.}
 }
 \value{
-Returns a dataframe where the \code{Scen.Sec.EmissionsFactor} column
+Returns a dataframe where the     \code{Scen.Sec.EmissionsFactor} column
 holds the result of the SDA calculation.
 }
 \description{
@@ -72,5 +72,5 @@ sda_portfolio_target(market, portfolio, start_year = "2019")
 }
 \seealso{
 \code{\link[r2dii.utils:get_config]{r2dii.utils::get_config()}}, \code{\link[r2dii.utils:START.YEAR]{r2dii.utils::START.YEAR()}},
-\code{\link[=sectors]{sectors()}}.
+\code{\link[=get_sectors]{get_sectors()}}.
 }

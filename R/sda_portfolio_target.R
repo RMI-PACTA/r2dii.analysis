@@ -103,51 +103,49 @@ sda_portfolio_target <- function(market,
       !!! syms(get_common_vars()), .data$Scen.Sec.EmissionsFactor, .data$Year
     )
 
-  lhs <- market %>%
+  cimarket_si <- inner_join(
+    ci_market, si,
+    by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
+  )
+
+  distance <- inner_join(
+    cimarket_si, ci_port,
+    by = get_common_by(), suffix = c("_market", "_port")
+  ) %>%
+    mutate(D_port = .data$CI_port - .data$SI)
+
+  market_1 <- market %>%
     distinct(!!! common_vars2) %>%
     pick_ref_scenario_sector_and_geography(ref_scenario, ref_sector, ref_geography) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name))
-  rhs <- portfolio %>%
+  portfolio_1 <- portfolio %>%
     distinct(!!! common_vars2)
   port_to_market <- inner_join(
-    lhs, rhs, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
+    market_1, portfolio_1, by = c(get_common_by(), "Year"), suffix = c("_port", "_market")
   )
 
-  distance <- ci_market %>%
-    inner_join(
-      si,
-      by = c(get_common_by(), "Investor.Name", "Portfolio.Name")
-    ) %>%
-    inner_join(
-      ci_port,
-      by = get_common_by(), suffix = c("_market", "_port")
-    ) %>%
-    mutate(D_port = .data$CI_port - .data$SI)
-
-
-
-  port_to_market %>%
-    inner_join(
-      distance,
-      by = c(
-        get_common_by(),
-        "Investor.Name" = "Investor.Name_port",
-        "Portfolio.Name" = "Portfolio.Name_port"
-      )
-    ) %>%
+  porttomarket_distance <- inner_join(
+    port_to_market, distance,
+    by = c(
+      get_common_by(),
+      "Investor.Name" = "Investor.Name_port",
+      "Portfolio.Name" = "Portfolio.Name_port"
+    )
+  ) %>%
     mutate(
       P_market = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
         (.data$CI_market - .data$SI),
-          Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
+      Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     ) %>%
-    select(!!! common_vars2) %>%
-    right_join(
-      portfolio,
-      by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
-      suffix = c("", "_no_sda")
-    ) %>%
+    select(!!! common_vars2)
+
+  right_join(
+    porttomarket_distance, portfolio,
+    by = c(get_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
+    suffix = c("", "_no_sda")
+  ) %>%
     mutate(
-          Scen.Sec.EmissionsFactor =
+      Scen.Sec.EmissionsFactor =
         if_else(
           !is.na(.data$Scen.Sec.EmissionsFactor),
           .data$Scen.Sec.EmissionsFactor,

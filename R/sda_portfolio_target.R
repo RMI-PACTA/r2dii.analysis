@@ -58,22 +58,16 @@ sda_portfolio_target <- function(market,
                                  ref_sector = NULL,
                                  start_year = NULL,
                                  target_year = NULL) {
-  check_market_and_portfolio(market, portfolio, crucial = get_crucial_vars())
+  check_market_portfolio(market, portfolio, crucial = get_crucial_vars())
   check_ref(market, portfolio, ref = ref_scenario, col = "Scenario")
   check_ref(market, portfolio, ref = ref_geography, col = "ScenarioGeography")
 
   ref_sector <- validate_ref_sector(market, portfolio, ref_sector = ref_sector)
   message("* Using `ref_sector`:", paste0(ref_sector, collapse = ", "), ".")
-
   start_year <- validate_start_year(market, portfolio, start_year)
   message("* Using `start_year`:", start_year, ".")
-
-  target_year <- validate_target_year(
-    target_year, find_useful_years_by_sector(market, ref_sector = ref_sector)
-  )
+  target_year <- validate_target_year_by_sector(market, target_year, ref_sector)
   message("* Using `target_year`:", target_year, ".")
-
-
 
   distinct_vars <- c(get_common_vars(), "Scen.Sec.EmissionsFactor", "Year")
 
@@ -127,7 +121,7 @@ sda_portfolio_target <- function(market,
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
-check_market_and_portfolio <- function(market, portfolio, crucial) {
+check_market_portfolio <- function(market, portfolio, crucial) {
   stopifnot(is.data.frame(market), is.data.frame(portfolio))
   r2dii.utils::check_crucial_names(market, crucial)
   r2dii.utils::check_crucial_names(portfolio, crucial)
@@ -197,17 +191,19 @@ abort_null_start_year <- function(start_year) {
 }
 
 find_year_shared_across_sectors <- function(market, target_year, ref_sector) {
-  useful_years <- find_useful_years_by_sector(market, ref_sector = ref_sector)
-  validate_target_year(target_year, useful_years)
+  useful_years <- find_years_by_sector(market, ref_sector = ref_sector)
+  validate_target_year_by_sector(target_year, useful_years)
 }
 
-find_useful_years_by_sector <- function(market, ref_sector) {
+find_years_by_sector <- function(market, ref_sector) {
   picked_sectors <- filter(market, .data$Sector %in% ref_sector)
   years_by_sector <- split(picked_sectors$Year, picked_sectors$Sector)
   purrr::reduce(years_by_sector, intersect)
 }
 
-validate_target_year <- function(target_year, useful_years) {
+validate_target_year_by_sector <- function(market, target_year, ref_sector) {
+  useful_years <- find_years_by_sector(market, ref_sector = ref_sector)
+
   if (is.null(target_year)) {
     return(max(useful_years))
   }

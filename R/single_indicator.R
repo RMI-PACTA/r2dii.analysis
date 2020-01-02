@@ -25,11 +25,6 @@ brown_technologies_list <- c("Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap"
 single_indicator <- function(input_results = input_results, upper_temp_threshold = 6, lower_temp_threshold = 1.5, start_year = 2019, time_horizon = 5, allocation = "PortfolioWeight", brown_technologies = brown_technologies_list) {
 
   #################################################################
-  # define things
-  #################################################################
-  `%not in%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
-
-  #################################################################
   # prepare and filter input data
   #################################################################
   temp <- input_results %>%
@@ -106,7 +101,7 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   temp <- temp %>%
     mutate(
       scen_tech_prod_reference = ifelse(
-        scen_tech_prod_reference_temp > scen_tech_prod_lower_temp & Technology %not in% brown_technologies,
+        scen_tech_prod_reference_temp > scen_tech_prod_lower_temp & !Technology %in% brown_technologies,
         scen_tech_prod_reference_temp,
         scen_tech_prod_reference
       )
@@ -115,7 +110,7 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   temp <- temp %>%
     mutate(
       scen_tech_prod_lower = ifelse(
-        scen_tech_prod_reference_temp > scen_tech_prod_lower_temp & Technology %not in% brown_technologies,
+        scen_tech_prod_reference_temp > scen_tech_prod_lower_temp & !Technology %in% brown_technologies,
         scen_tech_prod_reference_temp,
         scen_tech_prod_lower
       )
@@ -162,8 +157,8 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
           plan_tech_prod > scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_upper }},
           plan_tech_prod < scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_lower }},
           # green technologies
-          plan_tech_prod < scen_tech_prod_reference & Technology %not in% brown_technologies ~ {{ calculation_upper }},
-          plan_tech_prod > scen_tech_prod_reference & Technology %not in% brown_technologies ~ {{ calculation_lower }}
+          plan_tech_prod < scen_tech_prod_reference & !Technology %in% brown_technologies ~ {{ calculation_upper }},
+          plan_tech_prod > scen_tech_prod_reference & !Technology %in% brown_technologies ~ {{ calculation_lower }}
         )
       )
 

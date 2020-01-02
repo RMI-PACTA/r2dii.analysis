@@ -223,7 +223,9 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
     group_by(Investor.Name, Portfolio.Name, Sector, Asset.Type) %>%
-    summarise(value_usd_sector = sum(ValueUSD, na.rm = T)) %>%
+    summarise(value_usd_sector = sum(ValueUSD, na.rm = T))
+
+  sector_exposure <- sector_exposure
     group_by(Investor.Name, Portfolio.Name, Asset.Type) %>%
     mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = T))
 
@@ -268,6 +270,9 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
   output_results_port <- input_results_port %>%
     select(-c({{ metric }})) %>%
     rename({{ metric }} := metric_port)
+
+  return(output_results_port)
+
 }
 
 temp_port <- influencemap_weighting_methodology(
@@ -305,9 +310,14 @@ mapped_sector_exposure <- function(input_audit = input_audit) {
   coverage <- coverage %>%
     filter(climate_rel_cat == T) %>%
     distinct(Investor.Name, Portfolio.Name, exposure_climate_sectors)
+
+  return(coverage)
+
 }
 
-coverage <- mapped_sector_exposure(input_audit = input_audit)
+coverage <- mapped_sector_exposure(
+  input_audit = input_audit
+  )
 
 
 #################################################################

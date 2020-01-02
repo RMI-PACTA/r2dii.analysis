@@ -27,16 +27,16 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   #################################################################
   # define things
   #################################################################
-   `%not in%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
+  `%not in%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
 
   #################################################################
   # prepare and filter input data
   #################################################################
   temp <- input_results %>%
     filter(Allocation == allocation &
-      ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
-      Year >= start_year & Year <= start_year + time_horizon &
-      Plan.Alloc.WtTechProd > 0)
+             ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
+             Year >= start_year & Year <= start_year + time_horizon &
+             Plan.Alloc.WtTechProd > 0)
 
   temp <- temp %>%
     distinct(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
@@ -325,25 +325,30 @@ temp_metric <- temp_port %>%
 
 range_finder <- function(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5)) {
 
+
+  #################################################################
+  #find the lower value in the interval range
+  #################################################################
   input_temp <- input_temp %>%
     mutate(
       interval = as.numeric(cut(temperature, breaks = range))
-      )
+    )
 
 
   output <- input_temp %>%
-    mutate(temperature_range =
-             ifelse(!is.na(interval),
-                    paste0(range[[interval]], "-", range[[interval+1]]),
-                    NA),
-           temperature_range =
-             ifelse(is.na(interval) & temperature > max(range),
-                    paste0(">", max(range)),
-                    temperature_range),
-           temperature_range =
-             ifelse(is.na(interval) & temperature < min(range),
-                    paste0("<", min(range)),
-                    temperature_range)
+    mutate(
+      temperature_range =
+        ifelse(!is.na(interval),
+               paste0(range[[interval]] + 0.01, "-", range[[interval+1]]),
+               NA),
+      temperature_range =
+        ifelse(is.na(interval) & temperature > max(range),
+               paste0(">", max(range)),
+               temperature_range),
+      temperature_range =
+        ifelse(is.na(interval) & temperature < min(range),
+               paste0("<", min(range)),
+               temperature_range)
     ) %>%
     select(-c(interval, temperature))
 

@@ -225,7 +225,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
     group_by(Investor.Name, Portfolio.Name, Sector, Asset.Type) %>%
     summarise(value_usd_sector = sum(ValueUSD, na.rm = T))
 
-  sector_exposure <- sector_exposure
+  sector_exposure <- sector_exposure %>%
     group_by(Investor.Name, Portfolio.Name, Asset.Type) %>%
     mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = T))
 

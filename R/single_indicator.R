@@ -28,27 +28,27 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   # prepare and filter input data
   #################################################################
   temp <- input_results %>%
-    filter(Allocation == allocation &
+    filter(Allocation %in% allocation &
              ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
              Year >= start_year & Year <= start_year + time_horizon &
              Plan.Alloc.WtTechProd > 0)
 
   temp <- temp %>%
-    distinct(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
+    distinct(Investor.Name, Portfolio.Name, Allocation, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
 
   #################################################################
   # calculating the integral of delta
   #################################################################
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type) %>%
+    group_by(Investor.Name, Portfolio.Name, Allocation, Scenario, Sector, Technology, Asset.Type) %>%
     mutate(
       delta_plan_tech_prod = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
       delta_scen_tech_prod = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
     )
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Scenario, Sector, Technology, Asset.Type) %>%
+    group_by(Investor.Name, Portfolio.Name, Allocation, Scenario, Sector, Technology, Asset.Type) %>%
     summarise(
       integral_delta_plan_tech_prod = sum(delta_plan_tech_prod, na.rm = T),
       integral_delta_scen_tech_prod = sum(delta_scen_tech_prod, na.rm = T)
@@ -74,7 +74,7 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   temp <- scenario_relationships %>%
     pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>% # spreading out the different relations.
     inner_join(temp, by = c("Sector", "Technology", "Asset.Type", "Investor.Name", "Portfolio.Name")) %>%
-    distinct(Investor.Name, Portfolio.Name, Sector, Technology, Asset.Type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
+    distinct(Investor.Name, Portfolio.Name, Sector, Allocation, Technology, Asset.Type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
 
   #################################################################
   # calculating the range between temperatures.
@@ -143,7 +143,10 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   # range.
   #################################################################
 
-  scenario_port_relation <- function(input = temp, metric_name = "factor", calculation_upper = scen_plan_prod_diff / scen_tech_prod_upper_bound, calculation_lower = scen_plan_prod_diff / scen_tech_prod_lower_bound) {
+  scenario_port_relation <- function(input = temp,
+                                     metric_name = "factor",
+                                     calculation_upper = scen_plan_prod_diff / scen_tech_prod_upper_bound,
+                                     calculation_lower = scen_plan_prod_diff / scen_tech_prod_lower_bound) {
 
 
 
@@ -187,7 +190,7 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
   )
 
   #################################################################
-  # the last step is to filter temperature above a certain threshold
+  # next filter temperature above a certain threshold
   #################################################################
   temp <- temp %>%
     mutate(
@@ -197,6 +200,16 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
         TRUE ~ temperature
       )
     )
+
+  #################################################################
+  # add back generic scenario and scenario geography column
+  #################################################################
+  temp <- temp %>%
+    mutate(
+      ScenarioGeography = "Global",
+      Scenario = "Aggregate"
+    )
+
 }
 
 
@@ -210,7 +223,9 @@ temp <- single_indicator(
 )
 
 
-influencemap_weighting_methodology <- function(input_results = temp, input_audit = input_audit, metric = temperature) {
+influencemap_weighting_methodology <- function(input_results = temp,
+                                               input_audit = input_audit,
+                                               metric = temperature) {
 
 
   #################################################################
@@ -240,7 +255,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
   input_results_technology <- input_results %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(Investor.Name, Portfolio.Name, Asset.Type, Sector) %>%
+    group_by(Investor.Name, Portfolio.Name, Asset.Type, Sector, Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       metric_sector = weighted.mean({{ metric }}, technology_weight, na.rm = T)
     )
@@ -254,7 +269,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
 
   input_results_Asset.Type <- input_results_sector %>%
-    group_by(Portfolio.Name, Investor.Name, Asset.Type) %>%
+    group_by(Portfolio.Name, Investor.Name, Asset.Type, Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       sector_value_weight = value_usd_sector * sector_weight,
       metric_Asset.Type = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
@@ -262,7 +277,7 @@ influencemap_weighting_methodology <- function(input_results = temp, input_audit
 
 
   input_results_port <- input_results_Asset.Type %>%
-    group_by(Portfolio.Name, Investor.Name) %>%
+    group_by(Portfolio.Name, Investor.Name, Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       financial_instument_value_weight = value_usd_Asset.Type,
       metric_port = weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = T)
@@ -325,7 +340,7 @@ coverage <- mapped_sector_exposure(
 #################################################################
 
 temp_metric <- temp_port %>%
-  distinct(Investor.Name, Portfolio.Name, temperature) %>%
+  distinct(Investor.Name, Portfolio.Name, Allocation, temperature) %>%
   inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
 
 range_finder <- function(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5)) {
@@ -355,11 +370,11 @@ range_finder <- function(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5)
                paste0("<", min(range)),
                temperature_range)
     ) %>%
-    select(-c(interval, temperature))
+    select(-c(interval))
 
   return(output)
 
 }
 
-temp_metric <- range_finder(input_data = temp_metric, range = range)
+temp_metric <- range_finder(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5))
 

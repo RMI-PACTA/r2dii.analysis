@@ -463,6 +463,18 @@ calculate_value_usd_with_fin_data <- function(portfolio){
   portfolio
 }
 
+calculate_number_of_shares <- function(portfolio){
+
+  portfolio <- portfolio %>%
+    mutate(number_of_shares =if_else(
+      asset_type == "Equity" & is.na(number_of_shares),
+      value_usd / unit_share_price,
+      number_of_shares))
+  portfolio
+}
+
+
+
 identify_fund_portfolio <- function(portfolio){
 
   fund_portfolio <- portfolio %>% filter(asset_type == "Funds")

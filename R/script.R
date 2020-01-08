@@ -6,6 +6,7 @@ library(tidyverse)
 
 source("R/util.R")
 source("R/prep_portfolio_input_check.R")
+source("R/weight_calculations.R")
 
 project_name <- "TEST"
 
@@ -90,6 +91,8 @@ portfolio_input_check <- function(){
 
   portfolio <- calculate_value_usd_with_fin_data(portfolio)
 
+  portfolio <- calculate_number_of_shares(portfolio)
+
   original_value_usd = sum(portfolio$value_usd, na.rm = T)
 
   # identify funds in the portfolio
@@ -111,12 +114,7 @@ portfolio_input_check <- function(){
   # summarise fund results
   # create summary of results
   #   use summary that already should exist
-  summarise_fund_info <- function(fund_data){
-
-
-
-
-  }
+  summarise_fund_info <- function(fund_data){}
   #   use summary data frame that's already created
   #   check for funds with no bbg info
   identify_missing_funds <- function(portfolio_total, fund_data){}
@@ -142,41 +140,51 @@ portfolio_overview <- portfolio_summary(portfolio_total)
 # these tend to confuse, without more specific information about what sector the asset level data is in
 # option to add in technology information from datastore?
 
-
-eq_portfolio <- weight_calculations(portfolio_total, port_type = "Equity")
-cb_portfolio <- weight_calculations(portfolio_total, port_type = "Bonds")
-
-
-# used for the total shares out
 company_financial_data <- read_csv(paste0(data_store_path, "balance_sheet_data.csv"))
+
 
 ald_cb <- readRDS(paste0(analysis_inputs_path, "Bonds-ALD-Scenario-DB.rda")) %>%
   mutate(mapped_ald = 1)
 ald_eq <- readRDS(paste0(analysis_inputs_path, "Equity-ALD-Scenario-DB.rda")) %>%
   mutate(mapped_ald = 1)
 
-convert_data_style <- function(df){
-  names(df) = tolower(names(df))
-  names(df) = gsub("[.]","_", names(df))
 
+ald_cb <- janitor::clean_names(ald_cb)
+ald_eq <- janitor::clean_names(ald_eq)
+
+
+
+# add in additional weighting methodologies in this function
+eq_portfolio <- weight_calculations(portfolio_total, port_type = "Equity")
+cb_portfolio <- weight_calculations(portfolio_total, port_type = "Bonds")
+
+
+# Use revenue methodology
+
+if(has_revenue_method){
+
+  sector_revenue <- read_csv(paste0(analysis_inputs_path, "revenue_by_sector.csv"))
+
+  sec_revenue <- sector_revenue %>%  select(ticker, bloomberg_id, tot_rev, sector, has_revenue_data) %>% mutate(tot_rev = tot_rev / 100)
+
+
+  # Merge in revenue data
+  eq_portfolio <- add_revenue_data(eq_portfolio, sec_revenue, port_type = "Equity")
+  cb_portfolio <- add_revenue_data(cb_portfolio, sec_revenue, port_type = "Bonds")
+
+  # calculate using revenue data
+  eq_portfolio <- calculate_revenue_values(eq_portfolio)
+  cb_portfolio <- calculate_revenue_values(cb_portfolio)
 
 }
 
-ald_cb <- convert_data_style(ald_cb)
-ald_eq <- convert_data_style(ald_eq)
 
+# remove traces of revenue data/add necessary columns when not using it
+eq_portfolio <- select_portfolio_cols(eq_portfolio)
+cb_portfolio <- select_portfolio_cols(cb_portfolio)
 
-
-  ### Revenue Data
-  # This needs to be an optional
-  revenue_data <- readRDS(paste0(analysis_inputs_path,"TotalRevenueList.rda"))
-
-
-
-
-
-
-
+# However there are still NAs in the portfolios (100% of the time when not using the revenue method)
+# Need to bring through the previous mapped_sector piece
 
 
 

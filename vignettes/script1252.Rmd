@@ -1,0 +1,36 @@
+---
+title: "script2"
+author: "Clare"
+date: "18/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r}
+rm(list=ls())
+
+library(r2dii)
+library(readr)
+library(tidyverse)
+
+library(r2dii.analysis)
+devtools::load_all(".")
+
+project_name <- "TEST"
+
+fs::dir_create(path_project_dirs(project_name))
+
+fs::dir_copy(
+  path_input_files(),
+  path_output_files(project_name),
+  overwrite = FALSE
+)
+
+fin_data <- readRDS(paste0("C:/Users/Clare/Dropbox(2","\u00B0","Investing)/PortCheck/00_Data/07_AnalysisInputs/2018Q4_FASECOLDA_2019/FinancialData_DataStore.rda"))
+
+
+```

@@ -376,5 +376,8 @@ range_finder <- function(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5)
 
 }
 
-temp_metric <- range_finder(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5))
+temp_metric <- range_finder(
+  input_temp = temp_metric,
+  range = c(1.75, 2, 2.75, 3.5)
+  )
 

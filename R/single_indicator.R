@@ -20,35 +20,68 @@ input_audit <- read_xlsx(file, sheet = "sample_audit")
 scenario_relationships <- read_xlsx(file, sheet = "scenario_relationships")
 sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
-brown_technologies_list <- c("Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE")
 
-single_indicator <- function(input_results = input_results, upper_temp_threshold = 6, lower_temp_threshold = 1.5, start_year = 2019, time_horizon = 5, allocation = "PortfolioWeight", brown_technologies = brown_technologies_list) {
+
+single_indicator <- function(input_results = results,
+                             upper_temp_threshold = 6,
+                             lower_temp_threshold = 1.5,
+                             start_year = 2019,
+                             time_horizon = 5,
+                             allocation = "PortfolioWeight",
+                             group_vars = c("Investor.Name", "Portfolio.Name", "Id")) {
+
+
+  brown_technologies <- c("Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE")
+
+  #################################################################
+  # a bit messy, but basically how we add "Ids" in
+  #################################################################
+  if (length(intersect("Id", group_vars)) == 1 & length(intersect(c("bloomberg_id", "CorpBondTicker", "Asset.Type"), names(temp))) == 3) {
+
+    temp <- temp %>%
+      mutate(
+        Id = case_when(
+          !is.na(bloomberg_id) & Asset.Type == "Equity" ~ bloomberg_id,
+          !is.na(CorpBondTicker) & Asset.Type == "Bonds" ~ CorpBondTicker
+        )
+      ) %>%
+      filter(!is.na(Id)) %>%
+      select(-c(bloomberg_id, CorpBondTicker))
+
+  } else {
+    group_vars <- setdiff(group_vars, "Id")
+
+  }
 
   #################################################################
   # prepare and filter input data
   #################################################################
   temp <- input_results %>%
+    ungroup() %>%
     filter(Allocation %in% allocation &
              ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
              Year >= start_year & Year <= start_year + time_horizon &
              Plan.Alloc.WtTechProd > 0)
 
+  temp <- check_group_vars(temp,
+                           group_vars)
+
   temp <- temp %>%
-    distinct(Investor.Name, Portfolio.Name, Allocation, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
+    distinct(!!! syms(group_vars), Allocation, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
 
   #################################################################
   # calculating the integral of delta
   #################################################################
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Allocation, Scenario, Sector, Technology, Asset.Type) %>%
+    group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology, Asset.Type) %>%
     mutate(
       delta_plan_tech_prod = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
       delta_scen_tech_prod = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
     )
 
   temp <- temp %>%
-    group_by(Investor.Name, Portfolio.Name, Allocation, Scenario, Sector, Technology, Asset.Type) %>%
+    group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology, Asset.Type) %>%
     summarise(
       integral_delta_plan_tech_prod = sum(delta_plan_tech_prod, na.rm = T),
       integral_delta_scen_tech_prod = sum(delta_scen_tech_prod, na.rm = T)
@@ -66,15 +99,15 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
 
   scenario_relationships <- temp %>%
     inner_join(scenario_relationships, by = c("Sector", "Scenario")) %>%
-    group_by(Investor.Name, Portfolio.Name, Sector) %>%
+    group_by(!!! syms(group_vars), Sector) %>%
     filter(n_distinct(Scenario) == 3) %>% # should alway have three scenarios.
     distinct(relation, temp, Asset.Type, scen_tech_prod, Sector, Technology)
 
 
   temp <- scenario_relationships %>%
     pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>% # spreading out the different relations.
-    inner_join(temp, by = c("Sector", "Technology", "Asset.Type", "Investor.Name", "Portfolio.Name")) %>%
-    distinct(Investor.Name, Portfolio.Name, Sector, Allocation, Technology, Asset.Type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
+    inner_join(temp, by = c("Sector", "Technology", "Asset.Type", group_vars)) %>%
+    distinct(!!! syms(group_vars), Sector, Allocation, Technology, Asset.Type, temp_lower, temp_reference, temp_upper, scen_tech_prod_lower, scen_tech_prod_reference, scen_tech_prod_upper, plan_tech_prod)
 
   #################################################################
   # calculating the range between temperatures.
@@ -215,11 +248,12 @@ single_indicator <- function(input_results = input_results, upper_temp_threshold
 
 temp <- single_indicator(
   input_results = input_results,
-  upper_temp_threshold = 6,
+  upper_temp_threshold = 10,
   lower_temp_threshold = 1.5,
   start_year = 2019,
   time_horizon = 5,
-  allocation = "PortfolioWeight"
+  allocation = "PortfolioWeight",
+  group_vars = c("Investor.Name", "Portfolio.Name", "Id")
 )
 
 

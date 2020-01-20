@@ -97,6 +97,7 @@ calculate_production <- function(temp,
 
 }
 
+#' @export
 single_indicator <- function(input_results,
                              upper_temp_threshold = 6,
                              lower_temp_threshold = 1.5,
@@ -274,6 +275,7 @@ single_indicator <- function(input_results,
 
 # FIXME: input_results is a data argument and should not have a default. `temp`
 # is out of scope
+#' @export
 influencemap_weighting_methodology <- function(input_results,
                                                input_audit,
                                                metric_name = "temperature",
@@ -330,6 +332,7 @@ influencemap_weighting_methodology <- function(input_results,
 }
 
 # FIXME: Remove default `input_audit`; it's out of scope
+#' @export
 mapped_sector_exposure <- function(input_audit) {
 
   # coverage assessment for the single indicator metric
@@ -360,6 +363,7 @@ mapped_sector_exposure <- function(input_audit) {
 
 # FIXME: If possible, rename to use the imperative-verb tidyverse style. e.g.
 # find_range()
+#' @export
 find_range <- function(input_temp,
                          range) {
 

@@ -1,11 +1,3 @@
-# FIXME: How to use package in a package?  :)
-# * Don't use tidyverse in packages but the specific packages you need
-# * Don't use library(pkg), instead use usethis::use_package("pkg")
-library(tidyverse)
-# FIXME: Avoid i/o. Write functions that expect dataframes.
-library(readxl)
-
-
 # TO DO
 # seperate function for influence map roll-up
 # exclude technology roll-up

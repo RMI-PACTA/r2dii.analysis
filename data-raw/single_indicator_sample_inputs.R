@@ -1,7 +1,6 @@
 # Source:
 # https://github.com/2DegreesInvesting/r2dii.analysis/pull/11/commits/
 #   4311f5d4d03a9512fc686cc69c2670964d75b2fc
-
 path <- here::here("data-raw", "single_indicator_sample_inputs.xlsx")
 
 sheets <- readxl::excel_sheets(path)

@@ -63,6 +63,7 @@ single_indicator <- function(input_results = results,
       intersect(
         c("bloomberg_id", "CorpBondTicker", "Asset.Type"),
         # FIXME: `temp` is undefined. Where should it come from?
+        # devtools::load_all(".") throws "Error ... object 'temp' not found"
         names(temp)
       )
     ) == 3

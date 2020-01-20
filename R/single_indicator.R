@@ -304,7 +304,7 @@ influencemap_weighting_methodology <- function(input_results,
   input_results_technology <- input_results %>%
     filter(!is.na(technology_weight)) %>%
     group_by(!!! syms(group_vars), Asset.Type, Sector, Allocation, ScenarioGeography, Scenario) %>%
-    mutate(metric_sector = weighted.mean(.data[[metric_name]], technology_weight, na.rm = TRUE))
+    mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], technology_weight, na.rm = TRUE))
 
   input_results_sector <- input_results %>%
     filter(is.na(technology_weight)) %>%
@@ -316,7 +316,7 @@ influencemap_weighting_methodology <- function(input_results,
     group_by(!!! syms(group_vars), Asset.Type, Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       sector_value_weight = value_usd_sector * sector_weight,
-      metric_Asset.Type = weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE)
+      metric_Asset.Type = stats::weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE)
     )
 
 
@@ -324,7 +324,7 @@ influencemap_weighting_methodology <- function(input_results,
     group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       financial_instument_value_weight = value_usd_Asset.Type,
-      metric_port = weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = TRUE)
+      metric_port = stats::weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = TRUE)
     )
 
   input_results_port <- input_results_port %>%

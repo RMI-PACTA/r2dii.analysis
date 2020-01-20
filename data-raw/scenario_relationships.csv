@@ -1,0 +1,13 @@
+Scenario,Sector,relation,temp
+CPS,Power,upper,3.5
+NPSRTS,Power,reference,2.75
+SDS,Power,lower,2
+NPSRTS,Automotive,upper,2.75
+SDS,Automotive,reference,2
+B2DS,Automotive,lower,1.75
+CPS,Oil&Gas,upper,3.5
+NPSRTS,Oil&Gas,reference,2.75
+SDS,Oil&Gas,lower,2
+CPS,Coal,upper,3.5
+NPSRTS,Coal,reference,2.75
+SDS,Coal,lower,2

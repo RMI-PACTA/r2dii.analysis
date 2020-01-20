@@ -23,9 +23,11 @@ License: GPL-3 + file LICENSE
 URL: https://github.com/2DegreesInvesting/r2dii.analysis
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.analysis/issues
+Depends:
+    R (>= 2.10)
+Suggests: 
+    testthat (>= 2.1.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
-Suggests: 
-    testthat (>= 2.1.0)

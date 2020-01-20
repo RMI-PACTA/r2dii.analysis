@@ -14,20 +14,56 @@ library(readxl)
 #################################################################
 # load sample data
 #################################################################
-# TO DO:
-# integrate the files to the repo to avoid loading it from a dropbox folder &
-# then remove the following lines: I, Klaus moved the file in the repo as an
-# intermediate step to ensure version control!
-# FIXME: Move to data-raw/. From there move to data/ with usethis::use_data()
-file <- "./data/single_indicator_sample_inputs.xlsx"
 
-input_results <- read_xlsx(file, sheet = "sample_results")
-input_audit <- read_xlsx(file, sheet = "sample_audit")
-scenario_relationships <- read_xlsx(file, sheet = "scenario_relationships")
-sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
-
-
-# finding the factor of the difference and the scenario production range.
+#' Find the factor of the difference and the scenario production range
+#'
+#' TO DO:
+#' integrate the files to the repo to avoid loading it from a dropbox folder &
+#' then remove the following lines: I, Klaus moved the file in the repo as an
+#' intermediate step to ensure version control!
+#'
+#' @examples
+#' FIXME: Move to data-raw/. From there move to data/ with usethis::use_data()
+#' file <- "./data/single_indicator_sample_inputs.xlsx"
+#'
+#' input_results <- read_xlsx(file, sheet = "sample_results")
+#' input_audit <- read_xlsx(file, sheet = "sample_audit")
+#' scenario_relationships <- read_xlsx(file, sheet = "scenario_relationships")
+#' sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
+#'
+#'
+#' temp <- single_indicator(
+#'   input_results = input_results,
+#'   upper_temp_threshold = 10,
+#'   lower_temp_threshold = 1.5,
+#'   start_year = 2019,
+#'   time_horizon = 5,
+#'   allocation = "PortfolioWeight",
+#'   group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")
+#' )
+#'
+#' temp_port <- influencemap_weighting_methodology(
+#'   input_results = temp,
+#'   input_audit = input_audit,
+#'   metric_name = "temperature",
+#'   group_vars = c("Investor.Name", "Portfolio.Name")
+#' )
+#'
+#' coverage <- mapped_sector_exposure(
+#'   input_audit = input_audit
+#' )
+#'
+#' connecting all of the dots
+#' temp_metric <- temp_port %>%
+#'   distinct(Investor.Name, Portfolio.Name, Allocation, temperature) %>%
+#'   inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
+#'
+#' # FIXME: Remove. Should probably be defined inside a function
+#' temp_metric <- find_range(
+#'   input_temp = temp_metric,
+#'   range = c(1.75, 2, 2.75, 3.5)
+#' )
+#' @noRd
 find_scenario_relation <- function(input,
                                    metric_name,
                                    calculation_upper,
@@ -256,17 +292,6 @@ single_indicator <- function(input_results,
     )
 }
 
-
-temp <- single_indicator(
-  input_results = input_results,
-  upper_temp_threshold = 10,
-  lower_temp_threshold = 1.5,
-  start_year = 2019,
-  time_horizon = 5,
-  allocation = "PortfolioWeight",
-  group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")
-)
-
 # FIXME: input_results is a data argument and should not have a default. `temp`
 # is out of scope
 influencemap_weighting_methodology <- function(input_results,
@@ -324,14 +349,6 @@ influencemap_weighting_methodology <- function(input_results,
     rename({{ metric_name }} := metric_port)
 }
 
-# FIXME: Remove `temp``
-temp_port <- influencemap_weighting_methodology(
-  input_results = temp,
-  input_audit = input_audit,
-  metric_name = "temperature",
-  group_vars = c("Investor.Name", "Portfolio.Name")
-)
-
 # FIXME: Remove default `input_audit`; it's out of scope
 mapped_sector_exposure <- function(input_audit) {
 
@@ -360,17 +377,6 @@ mapped_sector_exposure <- function(input_audit) {
     distinct(Investor.Name, Portfolio.Name, exposure_climate_sectors)
 
 }
-
-coverage <- mapped_sector_exposure(
-  input_audit = input_audit
-)
-
-
-
-# connecting all of the dots
-temp_metric <- temp_port %>%
-  distinct(Investor.Name, Portfolio.Name, Allocation, temperature) %>%
-  inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
 
 # FIXME: If possible, rename to use the imperative-verb tidyverse style. e.g.
 # find_range()
@@ -407,8 +413,3 @@ find_range <- function(input_temp,
   return(output)
 }
 
-# FIXME: Remove. Should probably be defined inside a function
-temp_metric <- find_range(
-  input_temp = temp_metric,
-  range = c(1.75, 2, 2.75, 3.5)
-)

@@ -97,9 +97,6 @@ calculate_production <- function(temp,
 
 }
 
-# FIXME: `input_results` is a data argument and should have no default
-# Defaults are appropriate for detail arguments only.
-# Also, where would the object `results` come from?
 single_indicator <- function(input_results,
                              upper_temp_threshold = 6,
                              lower_temp_threshold = 1.5,

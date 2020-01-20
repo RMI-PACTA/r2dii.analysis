@@ -32,10 +32,6 @@ sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 # FIXME: `input` is a data argument and should not have a default.
 find_scenario_relation <- function(input,
                                    metric_name,
-                                   # FIXME: This variables won't be in scope
-                                   # once you extract this function out to
-                                   # the top level. Thus, this should not be
-                                   # defaults
                                    calculation_upper,
                                    calculation_lower) {
 

@@ -27,21 +27,79 @@ scenario_relationships <- read_xlsx(file, sheet = "scenario_relationships")
 sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
 
+# finding the factor of the difference and the scenario production range.
+# FIXME: Extract scenario_port_relation out (to the top level)
+# FIXME: `input` is a data argument and should not have a default.
+find_scenario_relation <- function(input,
+                                   metric_name,
+                                   # FIXME: This variables won't be in scope
+                                   # once you extract this function out to
+                                   # the top level. Thus, this should not be
+                                   # defaults
+                                   calculation_upper,
+                                   calculation_lower,) {
+
+  input <- input %>%
+    mutate(
+      metric = case_when(
+        # brown technologies
+        plan_tech_prod > scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_upper }},
+        plan_tech_prod < scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_lower }},
+        # green technologies
+        plan_tech_prod < scen_tech_prod_reference & !Technology %in% brown_technologies ~ {{ calculation_upper }},
+        plan_tech_prod > scen_tech_prod_reference & !Technology %in% brown_technologies ~ {{ calculation_lower }}
+      )
+    )
+
+  input <- input %>%
+    rename({{ metric_name }} := metric)
+}
+
+#calculate relative or absolute production
+calculate_production <- function(temp,
+                                 method = "absolute") {
+
+  if (method == "relative" & method != "absolute") {
+    # calculating the integral of delta
+    temp <- temp %>%
+      group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology) %>%
+      mutate(
+        Plan.Alloc.WtTechProd = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
+        Scen.Alloc.WtTechProd = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
+      )
+  }
+
+  temp <- temp %>%
+    group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology) %>%
+    summarise(
+      Plan.Alloc.WtTechProd = sum(Plan.Alloc.WtTechProd, na.rm = TRUE),
+      Scen.Alloc.WtTechProd = sum(Scen.Alloc.WtTechProd, na.rm = TRUE)
+    )
+
+  temp <- temp %>%
+    rename(
+      scen_tech_prod = Scen.Alloc.WtTechProd,
+      plan_tech_prod = Plan.Alloc.WtTechProd
+    )
+
+}
+
 # FIXME: `input_results` is a data argument and should have no default
 # Defaults are appropriate for detail arguments only.
 # Also, where would the object `results` come from?
-single_indicator <- function(input_results = results,
+single_indicator <- function(input_results,
                              upper_temp_threshold = 6,
                              lower_temp_threshold = 1.5,
                              # FIXME: For how long will this be a good default?
                              start_year = 2019,
                              time_horizon = 5,
                              allocation = "PortfolioWeight",
+                             production_type = "absolute",
                              # FIXME: Work with clean column names
                              group_vars = c(
                                "Investor.Name",
                                "Portfolio.Name",
-                               "Id"
+                               "Asset.Type"
                              )) {
   # TODO: Check inputs here
   # TODO: Clean column names
@@ -58,32 +116,34 @@ single_indicator <- function(input_results = results,
   # FIXME: Refactor. Extract each condition as an object named to show intent
   # FIXME: Can you use identical() instead `==`? (identical() gives single T/F)
   # FIXME: Is `1` okay or you need `1L`?
-  if (length(intersect("Id", group_vars)) == 1 &
-    length(
-      intersect(
-        c("bloomberg_id", "CorpBondTicker", "Asset.Type"),
-        # FIXME: `temp` is undefined. Where should it come from?
-        names(temp)
-      )
-    ) == 3
-  ) {
-    temp <- temp %>%
-      mutate(
-        Id = case_when(
-          # FIXME: Clean data at the top, then refer to clean column names
-          # e.g. not Asset.Type but asset_type
-          # This applies to all code. Won't mention this again for simplicity.
-          # FIXME: Use the .data to refer to all columns in the data mask
-          # e.g. `.data$asset_type`
-          !is.na(bloomberg_id) & Asset.Type == "Equity" ~ bloomberg_id,
-          !is.na(CorpBondTicker) & Asset.Type == "Bonds" ~ CorpBondTicker
-        )
-      ) %>%
-      filter(!is.na(Id)) %>%
-      select(-c(bloomberg_id, CorpBondTicker))
-  } else {
-    group_vars <- setdiff(group_vars, "Id")
-  }
+  # TODO @mauro I think this over complicates. It is probably just easiest to add
+  # bloomberg_id and corp_bond_ticker as a grouping variable, which achieves the same result.
+  # if (length(intersect("Id", group_vars)) == 1 &
+  #   length(
+  #     intersect(
+  #       c("bloomberg_id", "CorpBondTicker", "Asset.Type"),
+  #       # FIXME: `temp` is undefined. Where should it come from?
+  #       names(temp)
+  #     )
+  #   ) == 3
+  # ) {
+  #   temp <- temp %>%
+  #     mutate(
+  #       Id = case_when(
+  #         # FIXME: Clean data at the top, then refer to clean column names
+  #         # e.g. not Asset.Type but asset_type
+  #         # This applies to all code. Won't mention this again for simplicity.
+  #         # FIXME: Use the .data to refer to all columns in the data mask
+  #         # e.g. `.data$asset_type`
+  #         !is.na(bloomberg_id) & Asset.Type == "Equity" ~ bloomberg_id,
+  #         !is.na(CorpBondTicker) & Asset.Type == "Bonds" ~ CorpBondTicker
+  #       )
+  #     ) %>%
+  #     filter(!is.na(Id)) %>%
+  #     select(-c(bloomberg_id, CorpBondTicker))
+  # } else {
+  #   group_vars <- setdiff(group_vars, "Id")
+  # }
 
   #################################################################
   # prepare and filter input data
@@ -98,67 +158,47 @@ single_indicator <- function(input_results = results,
     # e.g. `if (is_raining && is_cold) { wear_thick_raincoat() }`
     # `is_raining`, `is_cold`, and `wear_thick_raincoat` may be 100 linees each
     # but their name clearly express what those lines should do
-    filter(Allocation %in% allocation &
-      ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
-      Year >= start_year & Year <= start_year + time_horizon &
-      Plan.Alloc.WtTechProd > 0)
+      filter(Allocation %in% allocation &
+               ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
+               Year >= start_year & Year <= start_year + time_horizon &
+               Plan.Alloc.WtTechProd > 0)
 
-  temp <- check_group_vars(
-    temp,
-    group_vars
+
+  # temp <- check_group_vars(
+  #   temp,
+  #   group_vars
+  # )
+
+  temp <- temp %>%
+    distinct(!!! syms(group_vars), Allocation, Scenario, Sector, Technology, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
+
+  temp <- calculate_production(
+    temp = temp,
+    method = production_type #use absolute or relative
   )
 
-  temp <- temp %>%
-    distinct(!!!syms(group_vars), Allocation, Scenario, Sector, Technology, Asset.Type, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
-
-  #################################################################
-  # calculating the integral of delta
-  #################################################################
-  # TODO: Any section you can write a heading for should probabbly be extracted
-  # in its own, meaningfully named, function. e.g. calculate_integral_of_delta()
-  temp <- temp %>%
-    group_by(!!!syms(group_vars), Allocation, Scenario, Sector, Technology, Asset.Type) %>%
-    mutate(
-      delta_plan_tech_prod = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
-      delta_scen_tech_prod = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
-    )
-
-  temp <- temp %>%
-    group_by(!!!syms(group_vars), Allocation, Scenario, Sector, Technology, Asset.Type) %>%
-    summarise(
-      # FIXME: Use the full form TRUE and FALSE (style guideline)
-      integral_delta_plan_tech_prod = sum(delta_plan_tech_prod, na.rm = T),
-      integral_delta_scen_tech_prod = sum(delta_scen_tech_prod, na.rm = T)
-    )
-
-  temp <- temp %>%
-    rename(
-      scen_tech_prod = integral_delta_scen_tech_prod,
-      plan_tech_prod = integral_delta_plan_tech_prod
-    )
-
-  #################################################################
   # adding scenario data
-  #################################################################
-
   scenario_relationships <- temp %>%
     inner_join(scenario_relationships, by = c("Sector", "Scenario")) %>%
-    group_by(!!!syms(group_vars), Sector) %>%
-    # TODO: Capture expectations in assertions (e.g. stopifnot()) or tests
-    filter(n_distinct(Scenario) == 3) %>% # should alway have three scenarios.
-    distinct(relation, temp, Asset.Type, scen_tech_prod, Sector, Technology)
+    ungroup()
+
+  scenario_relationships <- scenario_relationships %>%
+    distinct(!!! syms(group_vars), relation, temp, scen_tech_prod, Sector, Technology) %>%
+    filter(scen_tech_prod > 0)
+  # TODO: Capture expectations in assertions (e.g. stopifnot()) or tests
+
+
 
 
   temp <- scenario_relationships %>%
     # spreading out the different relations.
     pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>%
-    inner_join(temp, by = c("Sector", "Technology", "Asset.Type", group_vars)) %>%
+    inner_join(temp, by = c("Sector", "Technology", group_vars)) %>%
     distinct(
       !!!syms(group_vars),
       Sector,
       Allocation,
       Technology,
-      Asset.Type,
       temp_lower,
       temp_reference,
       temp_upper,
@@ -168,10 +208,7 @@ single_indicator <- function(input_results = results,
       plan_tech_prod
     )
 
-  #################################################################
   # calculating the range between temperatures.
-  #################################################################
-
   temp <- temp %>%
     group_by(Sector) %>%
     mutate(
@@ -180,115 +217,34 @@ single_indicator <- function(input_results = results,
     ) %>%
     ungroup()
 
-  #################################################################
-  # reversing the scenarios in case reference is more ambitious
-  #################################################################
-
-  temp <- temp %>%
-    mutate(
-      scen_tech_prod_reference_temp = scen_tech_prod_reference,
-      scen_tech_prod_lower_temp = scen_tech_prod_lower
-    )
-
-  temp <- temp %>%
-    mutate(
-      scen_tech_prod_reference = ifelse(
-        scen_tech_prod_reference_temp > scen_tech_prod_lower_temp & !Technology %in% brown_technologies,
-        scen_tech_prod_reference_temp,
-        scen_tech_prod_reference
-      )
-    )
-
-  temp <- temp %>%
-    mutate(
-      scen_tech_prod_lower = ifelse(
-        scen_tech_prod_reference_temp > scen_tech_prod_lower_temp & !Technology %in% brown_technologies,
-        scen_tech_prod_reference_temp,
-        scen_tech_prod_lower
-      )
-    )
-
-  temp <- temp %>%
-    select(-c(scen_tech_prod_reference_temp, scen_tech_prod_lower_temp))
-
-  #################################################################
-  # finding the production range between scenarios for each
-  # technology
-  #################################################################
-
+  # finding the production range between scenarios for each technology
   temp <- temp %>%
     mutate(scen_tech_prod_upper_bound = scen_tech_prod_reference - scen_tech_prod_upper)
 
   temp <- temp %>%
     mutate(scen_tech_prod_lower_bound = scen_tech_prod_reference - scen_tech_prod_lower)
 
-  #################################################################
-  # finding the production difference of the portfolio relative to
-  # the reference (median) scenario
-  #################################################################
-
+  # finding the production difference of the portfolio relative to the reference (median) scenario
   temp <- temp %>%
     mutate(scen_plan_prod_diff = scen_tech_prod_reference - plan_tech_prod)
 
-  #################################################################
-  # finding the factor of the difference and the scenario production
-  # range.
-  #################################################################
-  # FIXME: Extract scenario_port_relation out (to the top level)
-  # FIXME: `input` is a data argument and should not have a default.
-  scenario_port_relation <- function(input = temp,
-                                     metric_name = "factor",
-                                     # FIXME: This variables won't be in scope
-                                     # once you extract this function out to
-                                     # the top level. Thus, this should not be
-                                     # defaults
-                                     calculation_upper = scen_plan_prod_diff / scen_tech_prod_upper_bound,
-                                     calculation_lower = scen_plan_prod_diff / scen_tech_prod_lower_bound) {
-
-
-
-    # brown technologies
-    #################################
-
-    input <- input %>%
-      mutate(
-        metric = case_when(
-          # brown technologies
-          plan_tech_prod > scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_upper }},
-          plan_tech_prod < scen_tech_prod_reference & Technology %in% brown_technologies ~ {{ calculation_lower }},
-          # green technologies
-          plan_tech_prod < scen_tech_prod_reference & !Technology %in% brown_technologies ~ {{ calculation_upper }},
-          plan_tech_prod > scen_tech_prod_reference & !Technology %in% brown_technologies ~ {{ calculation_lower }}
-        )
-      )
-
-
-    input <- input %>%
-      rename({{ metric_name }} := metric)
-  }
-
-  temp <- scenario_port_relation(
+  # finding the factor of the difference and the scenario production range.
+  temp <- find_scenario_relation(
     input = temp,
     metric_name = "factor",
     calculation_upper = scen_plan_prod_diff / scen_tech_prod_upper_bound,
     calculation_lower = scen_plan_prod_diff / scen_tech_prod_lower_bound
   )
 
-
-  #################################################################
   # calculating temperature
-  #################################################################
-
-  temp <- scenario_port_relation(
+  temp <- find_scenario_relation(
     input = temp,
     metric_name = "temperature",
     calculation_upper = temp_reference + (temp_upper_range * factor),
     calculation_lower = temp_reference - (temp_lower_range * factor)
   )
 
-  #################################################################
   # next filter temperature above a certain threshold
-  #################################################################
   temp <- temp %>%
     mutate(
       temperature = case_when(
@@ -298,9 +254,7 @@ single_indicator <- function(input_results = results,
       )
     )
 
-  #################################################################
   # add back generic scenario and scenario geography column
-  #################################################################
   temp <- temp %>%
     mutate(
       ScenarioGeography = "Global",
@@ -316,91 +270,78 @@ temp <- single_indicator(
   start_year = 2019,
   time_horizon = 5,
   allocation = "PortfolioWeight",
-  group_vars = c("Investor.Name", "Portfolio.Name", "Id")
+  group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")
 )
 
 # FIXME: input_results is a data argument and should not have a default. `temp`
 # is out of scope
-influencemap_weighting_methodology <- function(input_results = temp,
-                                               input_audit = input_audit,
-                                               metric = temperature) {
+influencemap_weighting_methodology <- function(input_results,
+                                               input_audit,
+                                               metric_name = "temperature",
+                                               group_vars = c("Investor.Name", "Portfolio.Name")) {
 
 
-  #################################################################
   # preparing audit file to calculate $ sector exposure
-  #################################################################
-
   input_results <- input_results %>%
     inner_join(sector_weightings, by = c("Sector", "Technology"))
 
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
     group_by(Investor.Name, Portfolio.Name, Sector, Asset.Type) %>%
-    summarise(value_usd_sector = sum(ValueUSD, na.rm = T))
+    summarise(value_usd_sector = sum(ValueUSD, na.rm = TRUE))
 
   sector_exposure <- sector_exposure %>%
     group_by(Investor.Name, Portfolio.Name, Asset.Type) %>%
-    mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = T))
+    mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = TRUE))
 
   input_results <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
     inner_join(input_results, by = c("Sector", "Investor.Name", "Portfolio.Name", "Asset.Type"))
 
-  #################################################################
-  # rolling everything up to the portfolio level using the
-  # InfluenceMap Methdology
-  #################################################################
-
+  # rolling everything up to the portfolio level using the InfluenceMap Methdology
   input_results_technology <- input_results %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(Investor.Name, Portfolio.Name, Asset.Type, Sector, Allocation, ScenarioGeography, Scenario) %>%
-    mutate(
-      metric_sector = weighted.mean({{ metric }}, technology_weight, na.rm = T)
-    )
+    group_by(!!! syms(group_vars), Asset.Type, Sector, Allocation, ScenarioGeography, Scenario) %>%
+    mutate(metric_sector = weighted.mean(.data[[metric_name]], technology_weight, na.rm = TRUE))
 
   input_results_sector <- input_results %>%
     filter(is.na(technology_weight)) %>%
-    mutate(
-      metric_sector = {{ metric }}
-    )
+    mutate(metric_sector = .data[[metric_name]])
 
   input_results_sector <- bind_rows(input_results_technology, input_results_sector)
 
   input_results_Asset.Type <- input_results_sector %>%
-    group_by(Portfolio.Name, Investor.Name, Asset.Type, Allocation, ScenarioGeography, Scenario) %>%
+    group_by(!!! syms(group_vars), Asset.Type, Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       sector_value_weight = value_usd_sector * sector_weight,
-      metric_Asset.Type = weighted.mean(metric_sector, sector_value_weight, na.rm = T)
+      metric_Asset.Type = weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE)
     )
 
 
   input_results_port <- input_results_Asset.Type %>%
-    group_by(Portfolio.Name, Investor.Name, Allocation, ScenarioGeography, Scenario) %>%
+    group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
     mutate(
       financial_instument_value_weight = value_usd_Asset.Type,
-      metric_port = weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = T)
+      metric_port = weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = TRUE)
     )
-  output_results_port <- input_results_port %>%
-    select(-c({{ metric }})) %>%
-    rename({{ metric }} := metric_port)
-  # FIXME: Reserve return() for early returns (style guideline)
-  return(output_results_port)
+
+  input_results_port <- input_results_port %>%
+    select(-c(.data[[metric_name]])) %>%
+    rename({{ metric_name }} := metric_port)
 }
 
 # FIXME: Remove `temp``
 temp_port <- influencemap_weighting_methodology(
   input_results = temp,
   input_audit = input_audit,
-  metric = temperature
+  metric_name = "temperature",
+  group_vars = c("Investor.Name", "Portfolio.Name")
 )
 
 # FIXME: Remove default `input_audit`; it's out of scope
-mapped_sector_exposure <- function(input_audit = input_audit) {
+mapped_sector_exposure <- function(input_audit) {
 
-  #################################################################
   # coverage assessment for the single indicator metric
-  #################################################################
-
   coverage <- input_audit %>%
     mutate(
       climate_rel_cat = ifelse(mapped_sector != "Other", T, F)
@@ -424,7 +365,6 @@ mapped_sector_exposure <- function(input_audit = input_audit) {
     filter(climate_rel_cat == T) %>%
     distinct(Investor.Name, Portfolio.Name, exposure_climate_sectors)
 
-  return(coverage)
 }
 
 coverage <- mapped_sector_exposure(
@@ -432,22 +372,18 @@ coverage <- mapped_sector_exposure(
 )
 
 
-#################################################################
-# connecting all of the dots
-#################################################################
 
+# connecting all of the dots
 temp_metric <- temp_port %>%
   distinct(Investor.Name, Portfolio.Name, Allocation, temperature) %>%
   inner_join(coverage, by = c("Investor.Name", "Portfolio.Name"))
 
 # FIXME: If possible, rename to use the imperative-verb tidyverse style. e.g.
 # find_range()
-range_finder <- function(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5)) {
+find_range <- function(input_temp,
+                         range) {
 
-
-  #################################################################
   # find the lower value in the interval range
-  #################################################################
   input_temp <- input_temp %>%
     mutate(
       interval = as.numeric(cut(temperature, breaks = range))
@@ -478,7 +414,7 @@ range_finder <- function(input_temp = temp_metric, range = c(1.75, 2, 2.75, 3.5)
 }
 
 # FIXME: Remove. Should probably be defined inside a function
-temp_metric <- range_finder(
+temp_metric <- find_range(
   input_temp = temp_metric,
   range = c(1.75, 2, 2.75, 3.5)
 )

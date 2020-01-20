@@ -37,7 +37,7 @@ find_scenario_relation <- function(input,
                                    # the top level. Thus, this should not be
                                    # defaults
                                    calculation_upper,
-                                   calculation_lower,) {
+                                   calculation_lower) {
 
   input <- input %>%
     mutate(

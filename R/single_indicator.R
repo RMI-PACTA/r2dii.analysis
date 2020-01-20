@@ -273,8 +273,6 @@ single_indicator <- function(input_results,
     )
 }
 
-# FIXME: input_results is a data argument and should not have a default. `temp`
-# is out of scope
 #' @export
 influencemap_weighting_methodology <- function(input_results,
                                                input_audit,
@@ -331,7 +329,6 @@ influencemap_weighting_methodology <- function(input_results,
     rename({{ metric_name }} := metric_port)
 }
 
-# FIXME: Remove default `input_audit`; it's out of scope
 #' @export
 mapped_sector_exposure <- function(input_audit) {
 
@@ -361,11 +358,8 @@ mapped_sector_exposure <- function(input_audit) {
 
 }
 
-# FIXME: If possible, rename to use the imperative-verb tidyverse style. e.g.
-# find_range()
 #' @export
-find_range <- function(input_temp,
-                         range) {
+find_range <- function(input_temp, range) {
 
   # find the lower value in the interval range
   input_temp <- input_temp %>%

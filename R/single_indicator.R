@@ -28,7 +28,6 @@ sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
 
 
 # finding the factor of the difference and the scenario production range.
-# FIXME: Extract scenario_port_relation out (to the top level)
 find_scenario_relation <- function(input,
                                    metric_name,
                                    calculation_upper,

@@ -15,15 +15,6 @@
 #' intermediate step to ensure version control!
 #'
 #' @examples
-#' FIXME: Move to data-raw/. From there move to data/ with usethis::use_data()
-#' file <- "./data/single_indicator_sample_inputs.xlsx"
-#'
-#' input_results <- read_xlsx(file, sheet = "sample_results")
-#' input_audit <- read_xlsx(file, sheet = "sample_audit")
-#' scenario_relationships <- read_xlsx(file, sheet = "scenario_relationships")
-#' sector_weightings <- read_xlsx(file, sheet = "tech_sector_weighting")
-#'
-#'
 #' temp <- single_indicator(
 #'   input_results = input_results,
 #'   upper_temp_threshold = 10,

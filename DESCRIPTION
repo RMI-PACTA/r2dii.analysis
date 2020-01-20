@@ -26,8 +26,12 @@ BugReports:
 Depends:
     R (>= 2.10)
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    roxygen2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+Imports: 
+    magrittr,
+    rlang (>= 0.1.2)

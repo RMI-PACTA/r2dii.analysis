@@ -36,4 +36,5 @@ Imports:
     magrittr,
     rlang (>= 0.1.2),
     dplyr,
-    stats
+    stats,
+    tidyr

@@ -77,8 +77,8 @@ calculate_production <- function(temp,
     temp <- temp %>%
       group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology) %>%
       mutate(
-        Plan.Alloc.WtTechProd = lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
-        Scen.Alloc.WtTechProd = lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
+        Plan.Alloc.WtTechProd = dplyr::lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
+        Scen.Alloc.WtTechProd = dplyr::lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
       )
   }
 
@@ -205,7 +205,7 @@ single_indicator <- function(input_results,
 
   temp <- scenario_relationships %>%
     # spreading out the different relations.
-    pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>%
+    tidyr::pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>%
     inner_join(temp, by = c("Sector", "Technology", group_vars)) %>%
     distinct(
       !!!syms(group_vars),

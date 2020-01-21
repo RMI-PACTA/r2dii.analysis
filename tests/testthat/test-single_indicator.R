@@ -13,7 +13,8 @@ test_that("single_indicator with provided example throws no error", {
       start_year = 2019,
       time_horizon = 5,
       allocation = "PortfolioWeight",
-      group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")
+      group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type"),
+      scenario_relationships = r2dii.analysis::scenario_relationships
     ),
     NA
   )

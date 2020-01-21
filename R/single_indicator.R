@@ -114,7 +114,8 @@ single_indicator <- function(input_results,
                                "Investor.Name",
                                "Portfolio.Name",
                                "Asset.Type"
-                             )) {
+                             ),
+                             scenario_relationships) {
   # TODO: Check inputs here
   # TODO: Clean column names
   # TODO: Clean grouping variables

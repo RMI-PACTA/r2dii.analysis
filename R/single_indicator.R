@@ -243,7 +243,8 @@ single_indicator <- function(input_results,
 influencemap_weighting_methodology <- function(input_results,
                                                input_audit,
                                                metric_name = "temperature",
-                                               group_vars = c("Investor.Name", "Portfolio.Name")) {
+                                               group_vars = c("Investor.Name", "Portfolio.Name"),
+                                               sector_weightings) {
 
 
   # preparing audit file to calculate $ sector exposure

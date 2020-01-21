@@ -317,11 +317,9 @@ mapped_sector_exposure <- function(input_audit) {
     ) %>%
     ungroup()
 
-
-  coverage <- coverage %>%
+  coverage %>%
     filter(climate_rel_cat == T) %>%
     distinct(Investor.Name, Portfolio.Name, exposure_climate_sectors)
-
 }
 
 #' @export

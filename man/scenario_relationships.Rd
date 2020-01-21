@@ -9,6 +9,6 @@
 scenario_relationships
 }
 \description{
-Sample daset for \code{single_indicator()} and friends
+TODO \@vintented please document
 }
 \keyword{datasets}

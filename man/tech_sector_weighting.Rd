@@ -9,6 +9,6 @@
 tech_sector_weighting
 }
 \description{
-Sample daset for \code{single_indicator()} and friends
+TODO \@vintented please document
 }
 \keyword{datasets}

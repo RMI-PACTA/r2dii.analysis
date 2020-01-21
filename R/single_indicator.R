@@ -21,6 +21,7 @@
 #'   lower_temp_threshold = 1.5,
 #'   start_year = 2019,
 #'   time_horizon = 5,
+#'   production_type = "absolute",
 #'   allocation = "PortfolioWeight",
 #'   group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")
 #' )
@@ -120,43 +121,6 @@ single_indicator <- function(input_results,
     "Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE"
   )
 
-  #################################################################
-  # a bit messy, but basically how we add "Ids" in
-  #################################################################
-  # TODO: Extract into a function with a name that shows intent,e.g. add_id()
-  # FIXME: Refactor. Extract each condition as an object named to show intent
-  # FIXME: Can you use identical() instead `==`? (identical() gives single T/F)
-  # FIXME: Is `1` okay or you need `1L`?
-  # TODO @mauro I think this over complicates. It is probably just easiest to add
-  # bloomberg_id and corp_bond_ticker as a grouping variable, which achieves the same result.
-  # if (length(intersect("Id", group_vars)) == 1 &
-  #   length(
-  #     intersect(
-  #       c("bloomberg_id", "CorpBondTicker", "Asset.Type"),
-  #       # FIXME: `temp` is undefined. Where should it come from?
-  #       names(temp)
-  #     )
-  #   ) == 3
-  # ) {
-  #   temp <- temp %>%
-  #     mutate(
-  #       Id = case_when(
-  #         # FIXME: Clean data at the top, then refer to clean column names
-  #         # e.g. not Asset.Type but asset_type
-  #         # This applies to all code. Won't mention this again for simplicity.
-  #         # FIXME: Use the .data to refer to all columns in the data mask
-  #         # e.g. `.data$asset_type`
-  #         !is.na(bloomberg_id) & Asset.Type == "Equity" ~ bloomberg_id,
-  #         !is.na(CorpBondTicker) & Asset.Type == "Bonds" ~ CorpBondTicker
-  #       )
-  #     ) %>%
-  #     filter(!is.na(Id)) %>%
-  #     select(-c(bloomberg_id, CorpBondTicker))
-  # } else {
-  #   group_vars <- setdiff(group_vars, "Id")
-  # }
-
-  #################################################################
   # prepare and filter input data
   #################################################################
   # FIXME: Rename `temp` each time with a name that more clearly reflect
@@ -169,10 +133,10 @@ single_indicator <- function(input_results,
     # e.g. `if (is_raining && is_cold) { wear_thick_raincoat() }`
     # `is_raining`, `is_cold`, and `wear_thick_raincoat` may be 100 linees each
     # but their name clearly express what those lines should do
-      filter(Allocation %in% allocation &
-               ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
-               Year >= start_year & Year <= start_year + time_horizon &
-               Plan.Alloc.WtTechProd > 0)
+    filter(Allocation %in% allocation &
+             ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
+             Year >= start_year & Year <= start_year + time_horizon &
+             Plan.Alloc.WtTechProd > 0)
 
 
   # temp <- check_group_vars(
@@ -189,19 +153,16 @@ single_indicator <- function(input_results,
   )
 
   # adding scenario data
-  scenario_relationships <- temp %>%
+  scenario_temp <- temp %>%
     inner_join(scenario_relationships, by = c("Sector", "Scenario")) %>%
     ungroup()
 
-  scenario_relationships <- scenario_relationships %>%
+  scenario_temp <- scenario_temp %>%
     distinct(!!! syms(group_vars), relation, temp, scen_tech_prod, Sector, Technology) %>%
     filter(scen_tech_prod > 0)
   # TODO: Capture expectations in assertions (e.g. stopifnot()) or tests
 
-
-
-
-  temp <- scenario_relationships %>%
+  temp <- scenario_temp %>%
     # spreading out the different relations.
     tidyr::pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>%
     inner_join(temp, by = c("Sector", "Technology", group_vars)) %>%

@@ -51,7 +51,8 @@
 find_scenario_relation <- function(input,
                                    metric_name,
                                    calculation_upper,
-                                   calculation_lower) {
+                                   calculation_lower,
+                                   brown_technologies) {
 
   input <- input %>%
     mutate(
@@ -207,7 +208,8 @@ single_indicator <- function(input_results,
     input = temp,
     metric_name = "factor",
     calculation_upper = scen_plan_prod_diff / scen_tech_prod_upper_bound,
-    calculation_lower = scen_plan_prod_diff / scen_tech_prod_lower_bound
+    calculation_lower = scen_plan_prod_diff / scen_tech_prod_lower_bound,
+    brown_technologies = brown_technologies
   )
 
   # calculating temperature
@@ -215,7 +217,8 @@ single_indicator <- function(input_results,
     input = temp,
     metric_name = "temperature",
     calculation_upper = temp_reference + (temp_upper_range * factor),
-    calculation_lower = temp_reference - (temp_lower_range * factor)
+    calculation_lower = temp_reference - (temp_lower_range * factor),
+    brown_technologies = brown_technologies
   )
 
   # next filter temperature above a certain threshold

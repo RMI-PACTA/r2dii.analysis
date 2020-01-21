@@ -232,7 +232,7 @@ single_indicator <- function(input_results,
     )
 
   # add back generic scenario and scenario geography column
-  temp <- temp %>%
+  temp %>%
     mutate(
       ScenarioGeography = "Global",
       Scenario = "Aggregate"

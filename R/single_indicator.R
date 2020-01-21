@@ -71,7 +71,8 @@ find_scenario_relation <- function(input,
 
 #calculate relative or absolute production
 calculate_production <- function(temp,
-                                 method = "absolute") {
+                                 method = "absolute",
+                                 group_vars) {
 
   if (method == "relative" & method != "absolute") {
     # calculating the integral of delta
@@ -149,7 +150,8 @@ single_indicator <- function(input_results,
 
   temp <- calculate_production(
     temp = temp,
-    method = production_type #use absolute or relative
+    method = production_type, #use absolute or relative
+    group_vars = group_vars
   )
 
   # adding scenario data

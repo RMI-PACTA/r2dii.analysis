@@ -14,7 +14,7 @@
 #'
 #' @return
 #' @export
-influencemap_weighting_methodology <- function(input_results,
+apply_influencemap_portfolio_weighting <- function(input_results,
                                                input_audit,
                                                metric_name = "temperature",
                                                group_vars = c("Investor.Name", "Portfolio.Name"),
@@ -76,7 +76,7 @@ influencemap_weighting_methodology <- function(input_results,
 #'
 #' @return
 #' @export
-mapped_sector_exposure <- function(input_audit) {
+map_sector_exposure <- function(input_audit) {
 
   # coverage assessment for the single indicator metric
   coverage <- input_audit %>%
@@ -155,7 +155,7 @@ find_range <- function(input_temp, range) {
 #'
 #' @return
 #' @export
-single_indicator <- function(input_results,
+calculate_temperature_indicator <- function(input_results,
                              upper_temp_threshold = 6,
                              lower_temp_threshold = 1.5,
                              # FIXME: For how long will this be a good default?

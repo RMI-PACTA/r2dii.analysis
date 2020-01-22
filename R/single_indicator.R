@@ -15,57 +15,57 @@
 #' @return
 #' @export
 apply_influencemap_portfolio_weighting <- function(input_results,
-                                               input_audit,
-                                               metric_name = "temperature",
-                                               group_vars = c("Investor.Name", "Portfolio.Name"),
-                                               sector_weightings) {
+                                                   input_audit,
+                                                   metric_name = "temperature",
+                                                   group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type"),
+                                                   sector_weightings) {
 
 
-  # preparing audit file to calculate $ sector exposure
-  input_results <- input_results %>%
+  results_sector_weightings <- input_results %>%
     inner_join(sector_weightings, by = c("Sector", "Technology"))
 
+  # preparing audit file to calculate $ sector exposure
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
-    group_by(Investor.Name, Portfolio.Name, Sector, Asset.Type) %>%
+    group_by(!!! syms(group_vars), Sector) %>%
     summarise(value_usd_sector = sum(ValueUSD, na.rm = TRUE))
 
   sector_exposure <- sector_exposure %>%
-    group_by(Investor.Name, Portfolio.Name, Asset.Type) %>%
+    group_by(!!! syms(group_vars)) %>%
     mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = TRUE))
 
-  input_results <- sector_exposure %>%
+  results_audit <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
-    inner_join(input_results, by = c("Sector", "Investor.Name", "Portfolio.Name", "Asset.Type"))
+    inner_join(results_sector_weightings, by = c("Sector", "Investor.Name", "Portfolio.Name", "Asset.Type"))
 
   # rolling everything up to the portfolio level using the InfluenceMap Methdology
-  input_results_technology <- input_results %>%
+  results_technology <- results_audit %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(!!! syms(group_vars), Asset.Type, Sector, Allocation, ScenarioGeography, Scenario) %>%
+    group_by(!!! syms(group_vars), Sector, Allocation, ScenarioGeography, Scenario) %>%
     mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], technology_weight, na.rm = TRUE))
 
-  input_results_sector <- input_results %>%
+  results_sector <- results_audit %>%
     filter(is.na(technology_weight)) %>%
     mutate(metric_sector = .data[[metric_name]])
 
-  input_results_sector <- bind_rows(input_results_technology, input_results_sector)
+  results_sector <- bind_rows(results_technology, results_sector)
 
-  input_results_Asset.Type <- input_results_sector %>%
-    group_by(!!! syms(group_vars), Asset.Type, Allocation, ScenarioGeography, Scenario) %>%
-    mutate(
-      sector_value_weight = value_usd_sector * sector_weight,
-      metric_Asset.Type = stats::weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE)
-    )
-
-
-  input_results_port <- input_results_Asset.Type %>%
+  results_asset_type <- results_sector %>%
     group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
     mutate(
-      financial_instument_value_weight = value_usd_Asset.Type,
-      metric_port = stats::weighted.mean(metric_Asset.Type, financial_instument_value_weight, na.rm = TRUE)
+      sector_value_weight = value_usd_sector * sector_weight,
+      metric_asset_type = stats::weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE)
     )
 
-  input_results_port <- input_results_port %>%
+
+  results_port <- results_asset_type %>%
+    group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
+    mutate(
+      financial_instument_value_weight = value_usd_asset_type,
+      metric_port = stats::weighted.mean(metric_asset_type, financial_instument_value_weight, na.rm = TRUE)
+    )
+
+  results_port <- results_port %>%
     select(-c(.data[[metric_name]])) %>%
     rename({{ metric_name }} := metric_port)
 }
@@ -156,20 +156,20 @@ find_range <- function(input_temp, range) {
 #' @return
 #' @export
 calculate_temperature_indicator <- function(input_results,
-                             upper_temp_threshold = 6,
-                             lower_temp_threshold = 1.5,
-                             # FIXME: For how long will this be a good default?
-                             start_year = 2019,
-                             time_horizon = 5,
-                             allocation = "PortfolioWeight",
-                             production_type = "absolute",
-                             # FIXME: Work with clean column names
-                             group_vars = c(
-                               "Investor.Name",
-                               "Portfolio.Name",
-                               "Asset.Type"
-                             ),
-                             scenario_relationships) {
+                                            upper_temp_threshold = 6,
+                                            lower_temp_threshold = 1.5,
+                                            # FIXME: For how long will this be a good default?
+                                            start_year = 2019,
+                                            time_horizon = 5,
+                                            allocation = "PortfolioWeight",
+                                            production_type = "absolute",
+                                            # FIXME: Work with clean column names
+                                            group_vars = c(
+                                              "Investor.Name",
+                                              "Portfolio.Name",
+                                              "Asset.Type"
+                                            ),
+                                            scenario_relationships) {
   # TODO: Check inputs here
   # TODO: Clean column names
   # TODO: Clean grouping variables
@@ -287,7 +287,7 @@ calculate_temperature_indicator <- function(input_results,
     )
 
   # add back generic scenario and scenario geography column
-  temp %>%
+  temp <- temp %>%
     mutate(
       ScenarioGeography = "Global",
       Scenario = "Aggregate"

@@ -32,42 +32,47 @@ apply_influencemap_portfolio_weighting <- function(input_results,
 
   sector_exposure <- sector_exposure %>%
     group_by(!!! syms(group_vars)) %>%
-    mutate(value_usd_Asset.Type = sum(value_usd_sector, na.rm = TRUE))
+    mutate(group_vars_weight = sum(value_usd_sector, na.rm = TRUE))
 
   results_audit <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
-    inner_join(results_sector_weightings, by = c("Sector", "Investor.Name", "Portfolio.Name", "Asset.Type"))
+    inner_join(results_sector_weightings, by = c("Sector", group_vars))
 
-  # rolling everything up to the portfolio level using the InfluenceMap Methdology
+  #for sectors with meaningful technology breakdowns
+  results_audit <- results_audit %>%
+    mutate(technology_production_weight = plan_tech_prod * technology_weight)
+
   results_technology <- results_audit %>%
     filter(!is.na(technology_weight)) %>%
     group_by(!!! syms(group_vars), Sector, Allocation, ScenarioGeography, Scenario) %>%
-    mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], technology_weight, na.rm = TRUE))
+    mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], technology_production_weight, na.rm = TRUE))
 
+  #for sectors without meaningful technology breakdowns
   results_sector <- results_audit %>%
     filter(is.na(technology_weight)) %>%
-    mutate(metric_sector = .data[[metric_name]])
+    group_by(!!! syms(group_vars), Sector, Allocation, ScenarioGeography, Scenario) %>%
+    mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], plan_tech_prod, na.rm = TRUE))
 
+  # join different approaches together
   results_sector <- bind_rows(results_technology, results_sector)
 
-  results_asset_type <- results_sector %>%
-    group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
-    mutate(
-      sector_value_weight = value_usd_sector * sector_weight,
-      metric_asset_type = stats::weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE)
-    )
+  # weight by sectors to grouping vars level
+  results_sector <- results_sector %>%
+    mutate(sector_value_weight = value_usd_sector * sector_weight)
 
-
-  results_port <- results_asset_type %>%
+  results_group_vars <- results_sector %>%
     group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
-    mutate(
-      financial_instument_value_weight = value_usd_asset_type,
-      metric_port = stats::weighted.mean(metric_asset_type, financial_instument_value_weight, na.rm = TRUE)
-    )
+    mutate(metric_group_vars = stats::weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE))
+
+  # finally calculate weighting mean at portfolio level
+  results_port <- results_group_vars %>%
+    group_by(Investor.Name, Portfolio.Name, Allocation, ScenarioGeography, Scenario) %>%
+    mutate(metric_port = stats::weighted.mean(metric_group_vars, group_vars_weight, na.rm = TRUE))
 
   results_port <- results_port %>%
     select(-c(.data[[metric_name]])) %>%
-    rename({{ metric_name }} := metric_port)
+    rename_at(vars(metric_port, metric_group_vars, metric_sector), funs(paste0("temperature_", .)))
+
 }
 
 #' TODO \@vintented

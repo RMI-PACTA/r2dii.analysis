@@ -17,12 +17,12 @@
 apply_influencemap_portfolio_weighting <- function(input_results,
                                                    input_audit,
                                                    metric_name = "temperature",
-                                                   group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type"),
-                                                   sector_weightings) {
+                                                   group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")) {
 
+  load("data/sector_weightings.rda")
 
   results_sector_weightings <- input_results %>%
-    inner_join(sector_weightings, by = c("Sector", "Technology"))
+    inner_join(tech_sector_weighting, by = c("Sector", "Technology"))
 
   # preparing audit file to calculate $ sector exposure
   sector_exposure <- input_audit %>%
@@ -114,16 +114,20 @@ map_sector_exposure <- function(input_audit) {
 #'
 #' @return
 #' @export
-find_range <- function(input_temp, range) {
+find_range <- function(input_results,
+                       metric_name,
+                       range) {
 
   # find the lower value in the interval range
-  input_temp <- input_temp %>%
-    mutate(
-      interval = as.numeric(cut(temperature, breaks = range))
-    )
+  results_range <- input_results %>%
+    ungroup() %>%
+    mutate(interval = as.numeric(cut(.data[[metric_name]], breaks = range)))
 
+  results_range <- results_range %>%
+    mutate(temperature_range = paste0(range[[as.numeric(paste0(interval))]] + 0.01)) %>%
+    select(-interval)
 
-  output <- input_temp %>%
+  results_range <- results_range %>%
     mutate(
       temperature_range =
         ifelse(!is.na(interval),
@@ -142,8 +146,6 @@ find_range <- function(input_temp, range) {
         )
     ) %>%
     select(-c(interval))
-
-  return(output)
 }
 
 #' TODO \@vintented
@@ -178,6 +180,8 @@ calculate_temperature_indicator <- function(input_results,
   # TODO: Check inputs here
   # TODO: Clean column names
   # TODO: Clean grouping variables
+
+  load("data/scenario_relationships.rda")
 
   brown_technologies <- c(
     "Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE"
@@ -221,8 +225,13 @@ calculate_temperature_indicator <- function(input_results,
     ungroup()
 
   scenario_temp <- scenario_temp %>%
-    distinct(!!! syms(group_vars), relation, temp, scen_tech_prod, Sector, Technology) %>%
-    filter(scen_tech_prod > 0)
+    distinct(!!! syms(group_vars), relation, temp, scen_tech_prod, Sector, Technology)
+
+  scenario_temp <- scenario_temp %>%
+    group_by(!!! syms(group_vars)) %>%
+    mutate(scen_count = n_distinct(relation)) %>%
+    filter(scen_count == 3) %>%
+    select(-scen_count)
   # TODO: Capture expectations in assertions (e.g. stopifnot()) or tests
 
   temp <- scenario_temp %>%

@@ -1,100 +1,121 @@
 library(tidyverse)
 library(reprex)
 
-
-input_results = sample_results_t
-upper_temp_threshold = 6
-lower_temp_threshold = 1.5
-start_year = 2019
-time_horizon = 2
-allocation = "PortfolioWeight"
-production_type = "absolute"
-group_vars = c(
-  "Investor.Name",
-  "Portfolio.Name",
-  "Asset.Type"
+sample_audit <- tibble::tribble(
+  ~Investor.Name, ~Portfolio.Name, ~mapped_sector, ~Asset.Type,   ~ValueUSD,
+  "Investor 1",   "Portfolio 1",   "Automotive",    "Equity",  9232082760,
+  "Investor 1",   "Portfolio 1",   "Power",    "Equity",  9000000
 )
 
-sample_audit <- tibble::tribble(
-                  ~Investor.Name, ~Portfolio.Name, ~mapped_sector, ~Asset.Type,   ~ValueUSD,
-                    "Investor 1",   "Portfolio 1",   "Automotive",     "Bonds",  6367081739,
-                    "Investor 1",   "Portfolio 1",   "Automotive",    "Equity",  9232082760,
-                    "Investor 1",   "Portfolio 1",     "Aviation",     "Bonds",   778498174,
-                    "Investor 1",   "Portfolio 1",     "Aviation",    "Equity",  1332915952,
-                    "Investor 1",   "Portfolio 1", "Cement&Steel",     "Bonds",  5901164912,
-                    "Investor 1",   "Portfolio 1", "Cement&Steel",    "Equity",  9374011798,
-                    "Investor 1",   "Portfolio 1",         "Coal",     "Bonds",  2067796157,
-                    "Investor 1",   "Portfolio 1",         "Coal",    "Equity",  5843238075,
-                    "Investor 1",   "Portfolio 1",      "Oil&Gas",     "Bonds",  9155273820,
-                    "Investor 1",   "Portfolio 1",      "Oil&Gas",    "Equity", 15591090390,
-                    "Investor 1",   "Portfolio 1",        "Other",     "Bonds", 2.55032e+11,
-                    "Investor 1",   "Portfolio 1",        "Other",    "Equity", 3.10931e+11,
-                    "Investor 1",   "Portfolio 1",       "Others",     "Bonds",    46128806,
-                    "Investor 1",   "Portfolio 1",       "Others",    "Equity",    37032865,
-                    "Investor 1",   "Portfolio 1",        "Power",     "Bonds",  9386880315,
-                    "Investor 1",   "Portfolio 1",        "Power",    "Equity", 12699834038,
-                    "Investor 1",   "Portfolio 1",     "Shipping",     "Bonds",   263884127,
-                    "Investor 1",   "Portfolio 1",     "Shipping",    "Equity",   135339639
-                  )
-
-sample_results_t <- tibble::tribble(
-                    ~Investor.Name, ~Portfolio.Name, ~Scenario,       ~Allocation,        ~ScenarioGeography,      ~Sector,     ~Technology, ~Asset.Type, ~Year, ~Scen.Alloc.WtTechProd, ~Plan.Alloc.WtTechProd, ~Trajectory.Alignment, ~Trajectory.Deviation,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",      "Electric",     "Bonds",  2019,             3327.76889,             3327.76889,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",        "Hybrid",     "Bonds",  2019,             7810.34415,             7810.34415,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",           "ICE",     "Bonds",  2019,            320085.6997,            320085.6997,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",      "Electric",     "Bonds",  2020,            15938.43748,             5991.01396,          -0.624115352,          -0.624115352,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",        "Hybrid",     "Bonds",  2020,            22691.85832,             9746.77591,          -0.570472556,          -0.570472556,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",           "ICE",     "Bonds",  2020,             260495.146,            319355.6634,          -0.225956293,           0.225956293,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",       "CoalCap",     "Bonds",  2019,              168.31284,              168.31284,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",        "GasCap",     "Bonds",  2019,              171.61067,              171.61067,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",      "HydroCap",     "Bonds",  2019,              206.40172,              206.40172,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",    "NuclearCap",     "Bonds",  2019,              298.52739,              298.52739,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",        "OilCap",     "Bonds",  2019,               26.01953,               26.01953,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power", "RenewablesCap",     "Bonds",  2019,               95.58361,               95.58361,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",       "CoalCap",     "Bonds",  2020,              159.30301,              172.90833,          -0.085405286,           0.085405286,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",        "GasCap",     "Bonds",  2020,              174.13826,              187.89415,          -0.078994069,           0.078994069,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",      "HydroCap",     "Bonds",  2020,              208.35003,              208.84726,           0.002386503,           0.002386503,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",    "NuclearCap",     "Bonds",  2020,              296.86186,              304.65331,           0.026246031,           0.026246031,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power",        "OilCap",     "Bonds",  2020,               25.12819,               26.01953,           0.035471872,           0.035471872,
-                      "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight", "GlobalAggregate",      "Power", "RenewablesCap",     "Bonds",  2020,              115.33216,              107.97356,          -0.063803537,          -0.063803537,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",       "CoalCap",     "Bonds",  2019,              168.31284,              168.31284,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",        "GasCap",     "Bonds",  2019,              171.61067,              171.61067,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",      "HydroCap",     "Bonds",  2019,              206.40172,              206.40172,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",    "NuclearCap",     "Bonds",  2019,              298.52739,              298.52739,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",        "OilCap",     "Bonds",  2019,               26.01953,               26.01953,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power", "RenewablesCap",     "Bonds",  2019,               95.58361,               95.58361,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",       "CoalCap",     "Bonds",  2020,              168.04879,              172.90833,          -0.028917437,           0.028917437,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",        "GasCap",     "Bonds",  2020,              177.09782,              187.89415,          -0.060962494,           0.060962494,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",      "HydroCap",     "Bonds",  2020,              207.33512,              208.84726,           0.007293197,           0.007293197,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",    "NuclearCap",     "Bonds",  2020,              292.64852,              304.65331,           0.041021194,           0.041021194,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power",        "OilCap",     "Bonds",  2020,               25.08618,               26.01953,           0.037205828,           0.037205828,
-                      "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight", "GlobalAggregate",      "Power", "RenewablesCap",     "Bonds",  2020,               110.4335,              107.97356,          -0.022275304,          -0.022275304,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",          "Global", "Automotive",      "Electric",     "Bonds",  2019,             3327.76889,             3327.76889,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",          "Global", "Automotive",        "Hybrid",     "Bonds",  2019,             7810.34415,             7810.34415,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",          "Global", "Automotive",           "ICE",     "Bonds",  2019,            320085.6997,            320085.6997,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",          "Global", "Automotive",      "Electric",     "Bonds",  2020,             3594.79091,             5991.01396,           0.666582037,           0.666582037,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",          "Global", "Automotive",        "Hybrid",     "Bonds",  2020,             14499.0997,             9746.77591,           -0.32776682,           -0.32776682,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",          "Global", "Automotive",           "ICE",     "Bonds",  2020,            321870.0381,            319355.6634,            0.00781177,           -0.00781177,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",       "CoalCap",     "Bonds",  2019,              168.31284,              168.31284,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",        "GasCap",     "Bonds",  2019,              171.61067,              171.61067,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",      "HydroCap",     "Bonds",  2019,              206.40172,              206.40172,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",    "NuclearCap",     "Bonds",  2019,              298.52739,              298.52739,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",        "OilCap",     "Bonds",  2019,               26.01953,               26.01953,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power", "RenewablesCap",     "Bonds",  2019,               95.58361,               95.58361,                     0,                     0,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",       "CoalCap",     "Bonds",  2020,              165.95516,              172.90833,          -0.041897851,           0.041897851,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",        "GasCap",     "Bonds",  2020,              176.02716,              187.89415,          -0.067415702,           0.067415702,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",      "HydroCap",     "Bonds",  2020,              207.32225,              208.84726,           0.007355718,           0.007355718,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",    "NuclearCap",     "Bonds",  2020,              292.66924,              304.65331,           0.040947475,           0.040947475,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power",        "OilCap",     "Bonds",  2020,               25.08236,               26.01953,           0.037363713,           0.037363713,
-                      "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight", "GlobalAggregate",      "Power", "RenewablesCap",     "Bonds",  2020,              114.43981,              107.97356,           -0.05650349,           -0.05650349
-                    )
+sample_results <- tibble::tribble(
+  ~Investor.Name, ~Portfolio.Name, ~Scenario,       ~Allocation, ~ScenarioGeography,      ~Sector,     ~Technology, ~Asset.Type, ~Year, ~Scen.Alloc.WtTechProd, ~Plan.Alloc.WtTechProd, ~Trajectory.Alignment, ~Trajectory.Deviation,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2019,             706.930655,             706.930655,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2019,            1470.743875,            1470.743875,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2019,            63876.87817,            63876.87817,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2020,            3221.822522,            1355.866636,            -0.5791616,            -0.5791616,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2020,            4438.500794,            1712.821428,          -0.614099105,          -0.614099105,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2020,            51984.88005,            63715.20756,          -0.225648833,           0.225648833,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2021,            3767.862356,            2176.228222,          -0.422423641,          -0.422423641,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2021,            6160.306542,            1802.532293,          -0.707395682,          -0.707395682,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2021,            51011.34073,            63830.71251,          -0.251304349,           0.251304349,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2019,            116.6525386,            116.6525386,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2019,            269.6698767,            269.6698767,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2019,            232.8800937,            232.8800937,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2019,            116.0075844,            116.0075844,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2019,            28.13481867,            28.13481867,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2019,              194.86255,              194.86255,                     0,                     0,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2020,            105.4440023,            117.3498622,          -0.112911684,           0.112911684,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2020,            271.9095323,            284.0902211,          -0.044796844,           0.044796844,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2020,            234.8331245,            233.6997547,          -0.004826277,          -0.004826277,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2020,            115.3491503,            117.1959365,           0.016010402,           0.016010402,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2020,            26.32470632,            28.13483184,           0.068761471,           0.068761471,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2020,            213.0801716,            233.3274378,           0.095021822,           0.095021822,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2021,            94.46408664,            117.4049853,          -0.242853125,           0.242853125,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2021,            274.2804054,            291.7305933,          -0.063621708,           0.063621708,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2021,            236.4099468,             239.465056,            0.01292293,            0.01292293,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2021,            114.8347861,            117.2010447,           0.020605765,           0.020605765,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2021,            24.50423628,            28.13483184,           0.148161955,           0.148161955,
+    "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2021,            229.0041531,            244.9723856,           0.069729008,           0.069729008,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2019,            116.6525386,            116.6525386,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2019,            269.6698767,            269.6698767,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2019,            232.8800937,            232.8800937,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2019,            116.0075844,            116.0075844,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2019,            28.13481867,            28.13481867,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2019,              194.86255,              194.86255,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2020,            114.8839584,            117.3498622,            -0.0214643,             0.0214643,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2020,            275.0620125,            284.0902211,          -0.032822448,           0.032822448,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2020,            234.0625011,            233.6997547,          -0.001549784,          -0.001549784,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2020,            113.7213785,            117.1959365,           0.030553253,           0.030553253,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2020,            26.58936285,            28.13483184,           0.058123581,           0.058123581,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2020,            208.5099164,            233.3274378,           0.119023219,           0.119023219,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2021,            113.1153782,            117.4049853,          -0.037922405,           0.037922405,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2021,            280.4541483,            291.7305933,          -0.040207802,           0.040207802,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2021,            235.2449086,             239.465056,           0.017939378,           0.017939378,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2021,            111.4351725,            117.2010447,           0.051741941,           0.051741941,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2021,            25.04390704,            28.13483184,           0.123420231,           0.123420231,
+    "Investor 1",   "Portfolio 1",     "CPS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2021,            222.1572827,            244.9723856,           0.102697974,           0.102697974,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2019,             706.930655,             706.930655,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2019,            1470.743875,            1470.743875,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2019,            63876.87817,            63876.87817,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2020,            760.1817186,            1355.866636,            0.78360858,            0.78360858,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2020,            2804.653877,            1712.821428,          -0.389293116,          -0.389293116,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2020,            64232.72117,            63715.20756,           0.008056853,          -0.008056853,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2021,            797.0242196,            2176.228222,           1.730441771,           1.730441771,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2021,            4431.021262,            1802.532293,          -0.593201615,          -0.593201615,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2021,            64719.76135,            63830.71251,           0.013736899,          -0.013736899,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2019,            116.6525386,            116.6525386,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2019,            269.6698767,            269.6698767,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2019,            232.8800937,            232.8800937,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2019,            116.0075844,            116.0075844,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2019,            28.13481867,            28.13481867,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2019,              194.86255,              194.86255,                     0,                     0,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2020,            112.8284081,            117.3498622,          -0.040073721,           0.040073721,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2020,             273.999542,            284.0902211,          -0.036827357,           0.036827357,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2020,            233.9944091,            233.6997547,          -0.001259237,          -0.001259237,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2020,            113.7077179,            117.1959365,           0.030677062,           0.030677062,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2020,            26.56128136,            28.13483184,           0.059242265,           0.059242265,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2020,            212.2053808,            233.3274378,           0.099535916,           0.099535916,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2021,            109.0042776,            117.4049853,          -0.077067689,           0.077067689,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2021,            278.3292073,            291.7305933,          -0.048149406,           0.048149406,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2021,            235.1087245,             239.465056,           0.018529008,           0.018529008,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2021,            111.4078514,            117.2010447,           0.051999866,           0.051999866,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2021,            24.98774404,            28.13483184,           0.125945255,           0.125945255,
+    "Investor 1",   "Portfolio 1",  "NPSRTS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2021,            229.5482117,            244.9723856,           0.067193614,           0.067193614,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2019,             706.930655,             706.930655,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2019,            1470.743875,            1470.743875,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2019,            63876.87817,            63876.87817,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2020,             2363.29258,            1355.866636,           -0.42628067,           -0.42628067,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2020,            3841.135149,            1712.821428,          -0.554084571,          -0.554084571,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2020,            54865.18084,            63715.20756,          -0.161304977,           0.161304977,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",      "Electric",    "Equity",  2021,            2563.934942,            2176.228222,          -0.151215506,          -0.151215506,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",        "Hybrid",    "Equity",  2021,            5634.454539,            1802.532293,          -0.680087526,          -0.680087526,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",           "Global", "Automotive",           "ICE",    "Equity",  2021,            54549.26632,            63830.71251,          -0.170147956,           0.170147956,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2019,            116.6525386,            116.6525386,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2019,            269.6698767,            269.6698767,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2019,            232.8800937,            232.8800937,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2019,            116.0075844,            116.0075844,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2019,            28.13481867,            28.13481867,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2019,              194.86255,              194.86255,                     0,                     0,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2020,             110.428017,            117.3498622,          -0.062681966,           0.062681966,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2020,            271.1505622,            284.0902211,          -0.047721306,           0.047721306,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2020,            234.3848457,            233.6997547,          -0.002922932,          -0.002922932,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2020,            114.2785561,            117.1959365,           0.025528678,           0.025528678,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2020,            26.36058381,            28.13483184,           0.067306856,           0.067306856,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2020,            218.5521323,            233.3274378,           0.067605406,           0.067605406,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",       "CoalCap",    "Equity",  2021,            104.2034954,            117.4049853,          -0.126689511,           0.126689511,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "GasCap",    "Equity",  2021,            272.6312477,            291.7305933,            -0.0700556,             0.0700556,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",      "HydroCap",    "Equity",  2021,            235.8895977,             239.465056,           0.015157338,           0.015157338,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",    "NuclearCap",    "Equity",  2021,            112.5495278,            117.2010447,           0.041328623,           0.041328623,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power",        "OilCap",    "Equity",  2021,            24.58634895,            28.13483184,           0.144327362,           0.144327362,
+    "Investor 1",   "Portfolio 1",     "SDS", "PortfolioWeight",  "GlobalAggregate",      "Power", "RenewablesCap",    "Equity",  2021,            242.2417145,            244.9723856,           0.011272506,           0.011272506
+  )
 
 temperature_indicator_results <- calculate_temperature_indicator(
-  input_results = sample_results_t,
+  input_results = sample_results,
   upper_temp_threshold = 6,
   lower_temp_threshold = 1.5,
   start_year = 2019,
-  time_horizon = 2,
+  time_horizon = 3,
   allocation = "PortfolioWeight",
   production_type = "absolute",
   group_vars = c(
@@ -112,17 +133,19 @@ influencemap_results <- apply_influencemap_portfolio_weighting(
     "Investor.Name",
     "Portfolio.Name",
     "Asset.Type"
-    )
+  )
 )
 
 range_results <- find_range(
   input_results = influencemap_results,
   metric_name = "temperature_metric_group_vars",
-  range = c(1.75, 2, 2.75, 3.5)
-  )
+  range = c(
+    1.75, 2, 2.75, 3.5
+    )
+)
 
 range_results %>%
   distinct(
     Investor.Name, Portfolio.Name, temperature_range
-    )
+  )
 

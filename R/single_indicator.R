@@ -17,17 +17,27 @@
 apply_influencemap_portfolio_weighting <- function(input_results,
                                                    input_audit,
                                                    metric_name = "temperature",
-                                                   group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type")) {
+                                                   group_vars = c(
+                                                     "Investor.Name",
+                                                     "Portfolio.Name",
+                                                     "Asset.Type")
+                                                   ) {
 
   load("data/sector_weightings.rda")
 
   results_sector_weightings <- input_results %>%
-    inner_join(tech_sector_weighting, by = c("Sector", "Technology"))
+    inner_join(
+      tech_sector_weighting,
+      by = c("Sector", "Technology")
+      )
 
   # preparing audit file to calculate $ sector exposure
   sector_exposure <- input_audit %>%
     rename(Sector = mapped_sector) %>%
-    group_by(!!! syms(group_vars), Sector) %>%
+    group_by(
+      !!! syms(group_vars),
+      Sector
+    ) %>%
     summarise(value_usd_sector = sum(ValueUSD, na.rm = TRUE))
 
   sector_exposure <- sector_exposure %>%
@@ -36,7 +46,10 @@ apply_influencemap_portfolio_weighting <- function(input_results,
 
   results_audit <- sector_exposure %>%
     filter(Sector != "Other" & !is.na(Sector)) %>%
-    inner_join(results_sector_weightings, by = c("Sector", group_vars))
+    inner_join(
+      results_sector_weightings,
+      by = c("Sector", group_vars)
+      )
 
   #for sectors with meaningful technology breakdowns
   results_audit <- results_audit %>%
@@ -44,13 +57,25 @@ apply_influencemap_portfolio_weighting <- function(input_results,
 
   results_technology <- results_audit %>%
     filter(!is.na(technology_weight)) %>%
-    group_by(!!! syms(group_vars), Sector, Allocation, ScenarioGeography, Scenario) %>%
+    group_by(
+      !!! syms(group_vars),
+      Sector,
+      Allocation,
+      ScenarioGeography,
+      Scenario
+      ) %>%
     mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], technology_production_weight, na.rm = TRUE))
 
   #for sectors without meaningful technology breakdowns
   results_sector <- results_audit %>%
     filter(is.na(technology_weight)) %>%
-    group_by(!!! syms(group_vars), Sector, Allocation, ScenarioGeography, Scenario) %>%
+    group_by(
+      !!! syms(group_vars),
+      Sector,
+      Allocation,
+      ScenarioGeography,
+      Scenario
+      ) %>%
     mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], plan_tech_prod, na.rm = TRUE))
 
   # join different approaches together
@@ -61,12 +86,23 @@ apply_influencemap_portfolio_weighting <- function(input_results,
     mutate(sector_value_weight = value_usd_sector * sector_weight)
 
   results_group_vars <- results_sector %>%
-    group_by(!!! syms(group_vars), Allocation, ScenarioGeography, Scenario) %>%
+    group_by(
+      !!! syms(group_vars),
+      Allocation,
+      ScenarioGeography,
+      Scenario
+      ) %>%
     mutate(metric_group_vars = stats::weighted.mean(metric_sector, sector_value_weight, na.rm = TRUE))
 
   # finally calculate weighting mean at portfolio level
   results_port <- results_group_vars %>%
-    group_by(Investor.Name, Portfolio.Name, Allocation, ScenarioGeography, Scenario) %>%
+    group_by(
+      Investor.Name,
+      Portfolio.Name,
+      Allocation,
+      ScenarioGeography,
+      Scenario
+      ) %>%
     mutate(metric_port = stats::weighted.mean(metric_group_vars, group_vars_weight, na.rm = TRUE))
 
   results_port <- results_port %>%
@@ -90,13 +126,20 @@ map_sector_exposure <- function(input_audit) {
     )
 
   coverage <- coverage %>%
-    group_by(Investor.Name, Portfolio.Name) %>%
+    group_by(
+      Investor.Name,
+      Portfolio.Name
+      ) %>%
     mutate(
       ValueUSD_port = sum(ValueUSD, na.rm = T)
     )
 
   coverage <- coverage %>%
-    group_by(Investor.Name, Portfolio.Name, climate_rel_cat) %>%
+    group_by(
+      Investor.Name,
+      Portfolio.Name,
+      climate_rel_cat
+      ) %>%
     mutate(
       exposure_climate_sectors = sum(ValueUSD, na.rm = T) / ValueUSD_port
     ) %>%
@@ -104,7 +147,11 @@ map_sector_exposure <- function(input_audit) {
 
   coverage %>%
     filter(climate_rel_cat == T) %>%
-    distinct(Investor.Name, Portfolio.Name, exposure_climate_sectors)
+    distinct(
+      Investor.Name,
+      Portfolio.Name,
+      exposure_climate_sectors
+      )
 }
 
 #' TODO \@vintented
@@ -175,7 +222,7 @@ calculate_temperature_indicator <- function(input_results,
                                               "Portfolio.Name",
                                               "Asset.Type"
                                             )
-                                            ) {
+) {
   # TODO: Check inputs here
   # TODO: Clean column names
   # TODO: Clean grouping variables
@@ -220,7 +267,7 @@ calculate_temperature_indicator <- function(input_results,
       Year,
       Scen.Alloc.WtTechProd,
       Plan.Alloc.WtTechProd
-      )
+    )
 
   temp <- calculate_production(
     temp = temp,
@@ -241,13 +288,13 @@ calculate_temperature_indicator <- function(input_results,
       scen_tech_prod,
       Sector,
       Technology
-      )
+    )
 
   scenario_temp <- scenario_temp %>%
     group_by(
       !!! syms(group_vars),
       Sector
-      ) %>%
+    ) %>%
     filter(n_distinct(relation) == 3)
 
   temp <- scenario_temp %>%
@@ -345,7 +392,7 @@ calculate_production <- function(temp,
         Scenario,
         Sector,
         Technology
-        ) %>%
+      ) %>%
       mutate(
         Plan.Alloc.WtTechProd = dplyr::lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
         Scen.Alloc.WtTechProd = dplyr::lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
@@ -359,7 +406,7 @@ calculate_production <- function(temp,
       Scenario,
       Sector,
       Technology
-      ) %>%
+    ) %>%
     summarise(
       Plan.Alloc.WtTechProd = sum(Plan.Alloc.WtTechProd, na.rm = TRUE),
       Scen.Alloc.WtTechProd = sum(Scen.Alloc.WtTechProd, na.rm = TRUE)

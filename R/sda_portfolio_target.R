@@ -96,16 +96,7 @@ sda_portfolio_target <- function(market,
     by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
     suffix = c("", "_no_sda")
   ) %>%
-    mutate(
-      Scen.Sec.EmissionsFactor =
-        if_else(
-          !is.na(.data$Scen.Sec.EmissionsFactor),
-          .data$Scen.Sec.EmissionsFactor,
-          .data$Scen.Sec.EmissionsFactor_no_sda
-        )
-    ) %>%
-    select(-.data$Scen.Sec.EmissionsFactor_no_sda) %>%
-    remove_plan_sec_emissionsfactor_after_target_year(target_year = target_year)
+    select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
 check_market_portfolio <- function(market, portfolio, crucial) {

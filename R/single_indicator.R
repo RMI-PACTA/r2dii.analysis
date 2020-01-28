@@ -199,10 +199,13 @@ calculate_temperature_indicator <- function(input_results,
     # e.g. `if (is_raining && is_cold) { wear_thick_raincoat() }`
     # `is_raining`, `is_cold`, and `wear_thick_raincoat` may be 100 linees each
     # but their name clearly express what those lines should do
-    filter(Allocation %in% allocation &
-             ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") | (ScenarioGeography == "Global" & Sector != "Power")) &
-             Year >= start_year & Year <= start_year + time_horizon &
-             Plan.Alloc.WtTechProd > 0)
+    filter(
+      Allocation %in% allocation &
+        ((ScenarioGeography == "GlobalAggregate" & Sector == "Power") |
+           (ScenarioGeography == "Global" & Sector != "Power")) &
+        Year >= start_year & Year <= start_year + time_horizon &
+        Plan.Alloc.WtTechProd > 0
+    )
 
 
   # temp <- check_group_vars(
@@ -211,7 +214,14 @@ calculate_temperature_indicator <- function(input_results,
   # )
 
   temp <- temp %>%
-    distinct(!!! syms(group_vars), Allocation, Scenario, Sector, Technology, Year, Scen.Alloc.WtTechProd, Plan.Alloc.WtTechProd)
+    distinct(
+      !!! syms(group_vars),
+      Allocation, Scenario,
+      Sector, Technology,
+      Year,
+      Scen.Alloc.WtTechProd,
+      Plan.Alloc.WtTechProd
+      )
 
   temp <- calculate_production(
     temp = temp,
@@ -225,17 +235,23 @@ calculate_temperature_indicator <- function(input_results,
     ungroup()
 
   scenario_temp <- scenario_temp %>%
-    distinct(!!! syms(group_vars), relation, temp, scen_tech_prod, Sector, Technology)
+    distinct(
+      !!! syms(group_vars),
+      relation,
+      temp,
+      scen_tech_prod,
+      Sector,
+      Technology
+      )
 
   scenario_temp <- scenario_temp %>%
-    group_by(!!! syms(group_vars)) %>%
-    mutate(scen_count = n_distinct(relation)) %>%
-    filter(scen_count == 3) %>%
-    select(-scen_count)
-  # TODO: Capture expectations in assertions (e.g. stopifnot()) or tests
+    group_by(
+      !!! syms(group_vars),
+      Sector
+      ) %>%
+    filter(n_distinct(relation) == 3)
 
   temp <- scenario_temp %>%
-    # spreading out the different relations.
     tidyr::pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>%
     inner_join(temp, by = c("Sector", "Technology", group_vars)) %>%
     distinct(

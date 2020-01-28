@@ -1,6 +1,20 @@
 library(tidyverse)
 library(reprex)
 
+
+input_results = sample_results_t
+upper_temp_threshold = 6
+lower_temp_threshold = 1.5
+start_year = 2019
+time_horizon = 2
+allocation = "PortfolioWeight"
+production_type = "absolute"
+group_vars = c(
+  "Investor.Name",
+  "Portfolio.Name",
+  "Asset.Type"
+)
+
 sample_audit <- tibble::tribble(
                   ~Investor.Name, ~Portfolio.Name, ~mapped_sector, ~Asset.Type,   ~ValueUSD,
                     "Investor 1",   "Portfolio 1",   "Automotive",     "Bonds",  6367081739,
@@ -23,7 +37,7 @@ sample_audit <- tibble::tribble(
                     "Investor 1",   "Portfolio 1",     "Shipping",    "Equity",   135339639
                   )
 
-sample_results <- tibble::tribble(
+sample_results_t <- tibble::tribble(
                     ~Investor.Name, ~Portfolio.Name, ~Scenario,       ~Allocation,        ~ScenarioGeography,      ~Sector,     ~Technology, ~Asset.Type, ~Year, ~Scen.Alloc.WtTechProd, ~Plan.Alloc.WtTechProd, ~Trajectory.Alignment, ~Trajectory.Deviation,
                       "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",      "Electric",     "Bonds",  2019,             3327.76889,             3327.76889,                     0,                     0,
                       "Investor 1",   "Portfolio 1",    "B2DS", "PortfolioWeight",          "Global", "Automotive",        "Hybrid",     "Bonds",  2019,             7810.34415,             7810.34415,                     0,                     0,
@@ -76,7 +90,7 @@ sample_results <- tibble::tribble(
                     )
 
 temperature_indicator_results <- calculate_temperature_indicator(
-  input_results = sample_results,
+  input_results = sample_results_t,
   upper_temp_threshold = 6,
   lower_temp_threshold = 1.5,
   start_year = 2019,

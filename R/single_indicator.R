@@ -165,18 +165,17 @@ find_range <- function(input_results,
 calculate_temperature_indicator <- function(input_results,
                                             upper_temp_threshold = 6,
                                             lower_temp_threshold = 1.5,
-                                            # FIXME: For how long will this be a good default?
-                                            start_year = 2019,
-                                            time_horizon = 5,
-                                            allocation = "PortfolioWeight",
+                                            start_year = NULL,
+                                            time_horizon = NULL,
+                                            allocation = NULL,
                                             production_type = "absolute",
                                             # FIXME: Work with clean column names
                                             group_vars = c(
                                               "Investor.Name",
                                               "Portfolio.Name",
                                               "Asset.Type"
-                                            ),
-                                            scenario_relationships) {
+                                            )
+                                            ) {
   # TODO: Check inputs here
   # TODO: Clean column names
   # TODO: Clean grouping variables
@@ -340,7 +339,13 @@ calculate_production <- function(temp,
   if (method == "relative" & method != "absolute") {
     # calculating the integral of delta
     temp <- temp %>%
-      group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology) %>%
+      group_by(
+        !!! syms(group_vars),
+        Allocation,
+        Scenario,
+        Sector,
+        Technology
+        ) %>%
       mutate(
         Plan.Alloc.WtTechProd = dplyr::lead(Plan.Alloc.WtTechProd, n = 1L) - Plan.Alloc.WtTechProd, # first step is to calculate the integral of the delta over the 5 year time horizon
         Scen.Alloc.WtTechProd = dplyr::lead(Scen.Alloc.WtTechProd, n = 1L) - Scen.Alloc.WtTechProd # for both the portfolio and the scenario aligned production
@@ -348,7 +353,13 @@ calculate_production <- function(temp,
   }
 
   temp <- temp %>%
-    group_by(!!! syms(group_vars), Allocation, Scenario, Sector, Technology) %>%
+    group_by(
+      !!! syms(group_vars),
+      Allocation,
+      Scenario,
+      Sector,
+      Technology
+      ) %>%
     summarise(
       Plan.Alloc.WtTechProd = sum(Plan.Alloc.WtTechProd, na.rm = TRUE),
       Scen.Alloc.WtTechProd = sum(Scen.Alloc.WtTechProd, na.rm = TRUE)

@@ -104,7 +104,8 @@ sda_portfolio_target <- function(market,
           .data$Scen.Sec.EmissionsFactor_no_sda
         )
     ) %>%
-    select(-.data$Scen.Sec.EmissionsFactor_no_sda)
+    select(-.data$Scen.Sec.EmissionsFactor_no_sda) %>%
+    remove_plan_sec_emissionsfactor_after_target_year(target_year = target_year)
 }
 
 check_market_portfolio <- function(market, portfolio, crucial) {
@@ -343,4 +344,9 @@ pick_scenario_sector_and_geography <- function(data,
         .data$Sector %in% sector &
         .data$ScenarioGeography %in% geography
     )
+}
+
+remove_plan_sec_emissionsfactor_after_target_year <- function(out, target_year) {
+  out[out$Year > target_year, "Plan.Sec.EmissionsFactor"] <- NA_real_
+  out
 }

@@ -96,14 +96,6 @@ sda_portfolio_target <- function(market,
     by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
     suffix = c("", "_no_sda")
   ) %>%
-    mutate(
-      Scen.Sec.EmissionsFactor =
-        if_else(
-          !is.na(.data$Scen.Sec.EmissionsFactor),
-          .data$Scen.Sec.EmissionsFactor,
-          .data$Scen.Sec.EmissionsFactor_no_sda
-        )
-    ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
 }
 
@@ -258,6 +250,10 @@ create_port_to_market <- function(market,
                                   geography) {
   lhs <- market %>%
     distinct(!!! syms(distinct_vars)) %>%
+    filter(
+      as.character(.data$Year) >= as.character(start_year) &
+        as.character(.data$Year) <= as.character(target_year)
+      ) %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name))
 

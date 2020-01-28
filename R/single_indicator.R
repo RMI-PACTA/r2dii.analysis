@@ -167,27 +167,22 @@ find_range <- function(input_results,
 
   # find the lower value in the interval range
   results_range <- input_results %>%
-    ungroup() %>%
     mutate(interval = as.numeric(cut(.data[[metric_name]], breaks = range)))
-
-  results_range <- results_range %>%
-    mutate(temperature_range = paste0(range[[as.numeric(paste0(interval))]] + 0.01)) %>%
-    select(-interval)
 
   results_range <- results_range %>%
     mutate(
       temperature_range =
         ifelse(!is.na(interval),
-               paste0(range[[interval]] + 0.01, "-", range[[interval + 1]]),
+               paste0(range[interval] + 0.01, "-", range[(interval + 1)]),
                NA
         ),
       temperature_range =
-        ifelse(is.na(interval) & temperature > max(range),
+        ifelse(is.na(interval) & .data[[metric_name]] > max(range),
                paste0(">", max(range)),
                temperature_range
         ),
       temperature_range =
-        ifelse(is.na(interval) & temperature < min(range),
+        ifelse(is.na(interval) & .data[[metric_name]] < min(range),
                paste0("<", min(range)),
                temperature_range
         )
@@ -381,7 +376,8 @@ calculate_temperature_indicator <- function(input_results,
 #' @noRd
 calculate_production <- function(temp,
                                  method = "absolute",
-                                 group_vars) {
+                                 group_vars = group_vars
+                                 ) {
 
   if (method == "relative" & method != "absolute") {
     # calculating the integral of delta
@@ -451,3 +447,6 @@ find_scenario_relation <- function(input,
   input <- input %>%
     rename({{ metric_name }} := metric)
 }
+
+
+

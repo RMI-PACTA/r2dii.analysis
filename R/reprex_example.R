@@ -145,7 +145,10 @@ range_results <- find_range(
 )
 
 range_results %>%
+  ungroup() %>%
   distinct(
     Investor.Name, Portfolio.Name, temperature_range
   )
+
+
 

@@ -413,3 +413,25 @@ test_that("sda_portolio_target passes w/ geography missing in `portfolio`", {
   )
 })
 
+test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
+  market <- tribble(
+    ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
+              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+  )
+
+  portfolio <- market
+
+  out <- sda_portfolio_target(
+    market, portfolio,
+    sector = "Steel",
+    geography = "Global",
+    start_year = "2021",
+    target_year = "2022"
+  )
+
+  expect_equal(out$Year, c(2021, 2022, 2023))
+  expect_equal(out$Plan.Sec.EmissionsFactor, c(1.11, 1.11, c(NA_real_)))
+})
+

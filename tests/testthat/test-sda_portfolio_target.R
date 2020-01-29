@@ -21,14 +21,14 @@ test_that("sda_portfolio_target errors gracefully with obviously wrong data", {
 
   bad_market <- rename(market, bad = .data$Year)
   expect_error(
-    sda_portfolio_target(bad_market, portfolio),
-    "must have.*Year"
+    class = "missing_names",
+    sda_portfolio_target(bad_market, portfolio)
   )
 
   bad_portfolio <- rename(portfolio, bad = .data$Plan.Sec.EmissionsFactor)
   expect_error(
-    sda_portfolio_target(market, bad_portfolio),
-    "must have.*Plan.Sec.EmissionsFactor"
+    class = "missing_names",
+    sda_portfolio_target(market, bad_portfolio)
   )
 })
 

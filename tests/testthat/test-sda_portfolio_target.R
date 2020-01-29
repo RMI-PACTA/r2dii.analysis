@@ -7,10 +7,6 @@ setup({
   on.exit(options(op))
 })
 
-# TODO: Confirm with @vintented first:
-# "Expect that `market` and `portfolio` are identical, except for
-# `Plan.Sec.EmissionsFactor` `Scen.Sec.EmissionsFactor`
-
 test_that("sda_portfolio_target errors gracefully with obviously wrong data", {
   expect_error(
     sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE"

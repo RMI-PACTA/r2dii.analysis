@@ -344,3 +344,8 @@ pick_scenario_sector_and_geography <- function(data,
         .data$ScenarioGeography %in% geography
     )
 }
+
+remove_plan_sec_emissionsfactor_after_target_year <- function(out, target_year) {
+  out[out$Year > target_year, "Plan.Sec.EmissionsFactor"] <- NA_real_
+  out
+}

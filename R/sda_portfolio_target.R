@@ -77,7 +77,9 @@ sda_portfolio_target <- function(market,
     distinct_vars = distinct_vars,
     scenario = scenario,
     sector = sector,
-    geography = geography
+    geography = geography,
+    start_year = start_year,
+    target_year = target_year
   )
 
   distance <- create_distance(
@@ -247,7 +249,9 @@ create_port_to_market <- function(market,
                                   distinct_vars,
                                   scenario,
                                   sector,
-                                  geography) {
+                                  geography,
+                                  start_year,
+                                  target_year) {
   lhs <- market %>%
     distinct(!!! syms(distinct_vars)) %>%
     filter(

@@ -210,26 +210,26 @@ create_distance <- function(market,
                             geography,
                             start_year,
                             target_year) {
-  distinct_vars <- dplyr::vars(!!! syms(get_sda_common_vars()), .data$CI)
+  distinct_vars <- dplyr::vars(!!!syms(get_sda_common_vars()), .data$CI)
 
   ci_port <- portfolio %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
     filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
-    distinct(!!! distinct_vars)
+    distinct(!!!distinct_vars)
 
   ci_market <- market %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
     filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
-    distinct(!!! distinct_vars)
+    distinct(!!!distinct_vars)
 
   si <- market %>%
     filter(as.character(.data$Year) == as.character(target_year)) %>%
     filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
     rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
-    distinct(!!! distinct_vars) %>%
+    distinct(!!!distinct_vars) %>%
     rename(SI = .data$CI)
 
   cimarket_si <- inner_join(
@@ -253,19 +253,20 @@ create_port_to_market <- function(market,
                                   start_year,
                                   target_year) {
   lhs <- market %>%
-    distinct(!!! syms(distinct_vars)) %>%
+    distinct(!!!syms(distinct_vars)) %>%
     filter(
       as.character(.data$Year) >= as.character(start_year) &
         as.character(.data$Year) <= as.character(target_year)
-      ) %>%
+    ) %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name))
 
   rhs <- portfolio %>%
-    distinct(!!! syms(distinct_vars))
+    distinct(!!!syms(distinct_vars))
 
   port_to_market <- inner_join(
-    lhs, rhs, by = c(get_sda_common_by(), "Year"), suffix = c("_port", "_market")
+    lhs, rhs,
+    by = c(get_sda_common_by(), "Year"), suffix = c("_port", "_market")
   )
 }
 
@@ -283,7 +284,7 @@ create_porttomarket_distance <- function(port_to_market, distance, distinct_vars
         (.data$CI_market - .data$SI),
       Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
     ) %>%
-    select(!!! distinct_vars)
+    select(!!!distinct_vars)
 }
 
 #' Default value for the `sector` argument to [sda_portfolio_target()]
@@ -334,9 +335,9 @@ get_sda_crucial_vars <- function() {
 }
 
 pick_scenario_sector_and_geography <- function(data,
-                                                   scenario,
-                                                   sector,
-                                                   geography) {
+                                               scenario,
+                                               sector,
+                                               geography) {
   data %>%
     filter(
       .data$Scenario %in% scenario &

@@ -9,6 +9,6 @@
 tech_sector_weighting
 }
 \description{
-TODO \@vintented please document
+TODO vintented please document
 }
 \keyword{datasets}

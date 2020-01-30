@@ -9,6 +9,6 @@
 sample_results
 }
 \description{
-TODO \@vintented please document
+TODO vintented please document
 }
 \keyword{datasets}

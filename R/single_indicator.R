@@ -4,7 +4,7 @@
 # * exclude technology roll-up
 # * finish sample data
 
-#' TODO \@vintented
+#' TODO vintented
 #'
 #' @param input_results
 #' @param input_audit
@@ -111,7 +111,7 @@ apply_influencemap_portfolio_weighting <- function(input_results,
 
 }
 
-#' TODO \@vintented
+#' TODO vintented
 #'
 #' @param input_audit
 #'
@@ -154,7 +154,7 @@ map_sector_exposure <- function(input_audit) {
       )
 }
 
-#' TODO \@vintented
+#' TODO vintented
 #'
 #' @param input_temp
 #' @param range
@@ -190,7 +190,7 @@ find_range <- function(input_results,
     select(-c(interval))
 }
 
-#' TODO \@vintented
+#' TODO Add title
 #'
 #' @param input_results
 #' @param upper_temp_threshold
@@ -216,8 +216,7 @@ calculate_temperature_indicator <- function(input_results,
                                               "Investor.Name",
                                               "Portfolio.Name",
                                               "Asset.Type"
-                                            )
-) {
+                                            )) {
   # TODO: Check inputs here
   # TODO: Clean column names
   # TODO: Clean grouping variables
@@ -365,7 +364,7 @@ calculate_temperature_indicator <- function(input_results,
     )
 }
 
-# TODO @vintented please document params
+# TODO vintented please document params
 #' Calculate relative or absolute production
 #'
 #' @param temp
@@ -416,7 +415,7 @@ calculate_production <- function(temp,
 
 }
 
-#' TODO \@vintented
+#' TODO vintented
 #'
 #' @param input
 #' @param metric_name

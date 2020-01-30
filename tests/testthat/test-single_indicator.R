@@ -1,7 +1,7 @@
 library(dplyr)
 
-test_that("single_indicator and friends yield known values", {
-  out_single_indicator <- single_indicator(
+test_that("calculate_temperature_indicator and friends yield known values", {
+  out_calculate_temperature_indicator <- calculate_temperature_indicator(
     input_results = r2dii.analysis::sample_results,
     upper_temp_threshold = 10,
     lower_temp_threshold = 1.5,
@@ -13,15 +13,15 @@ test_that("single_indicator and friends yield known values", {
   )
 
   expect_known_value(
-    out_single_indicator,
-    "ref-single_indicator",
+    out_calculate_temperature_indicator,
+    "ref-calculate_temperature_indicator",
     update = FALSE
   )
 
 
 
   out_influencemap_weighting_methodology <- influencemap_weighting_methodology(
-    input_results = out_single_indicator,
+    input_results = out_calculate_temperature_indicator,
     input_audit = r2dii.analysis::sample_audit,
     metric_name = "temperature",
     group_vars = c("Investor.Name", "Portfolio.Name"),

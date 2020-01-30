@@ -2,9 +2,9 @@
 % Please edit documentation in R/single_indicator.R
 \name{find_range}
 \alias{find_range}
-\title{TODO \@vintented}
+\title{TODO vintented}
 \usage{
-find_range(input_temp, range)
+find_range(input_results, metric_name, range)
 }
 \arguments{
 \item{range}{}
@@ -13,5 +13,5 @@ find_range(input_temp, range)
 
 }
 \description{
-TODO \@vintented
+TODO vintented
 }

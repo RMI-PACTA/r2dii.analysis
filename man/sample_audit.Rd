@@ -4,11 +4,11 @@
 \name{sample_audit}
 \alias{sample_audit}
 \title{Sample daset for \code{single_indicator()} and friends}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 314039 rows and 5 columns.}
+\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 18 rows and 5 columns.}
 \usage{
 sample_audit
 }
 \description{
-TODO \@vintented please document
+TODO vintented please document
 }
 \keyword{datasets}

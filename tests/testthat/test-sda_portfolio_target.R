@@ -180,40 +180,40 @@ test_that("sda_portfolio_target with another dataset returns a tibble", {
   # styler: off
   sample_market <- dplyr::tribble(
     ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,      ~Allocation,    ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2019, "Steel",                      1.11,                 1.1063532,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2020, "Steel",                      1.11,                 1.0608054,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2021, "Steel",                      1.11,                 1.0152576,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2022, "Steel",                      1.11,                 0.9697098,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2023, "Steel",                      1.11,                 0.924162,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2024, "Steel",                      1.11,                 0.8786143,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2025, "Steel",                      1.11,                 0.8330665,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2026, "Steel",                        NA,                 0.7955433,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2027, "Steel",                        NA,                 0.7580202,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2028, "Steel",                        NA,                 0.7204971,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2029, "Steel",                        NA,                  0.682974,
-    "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2040, "Steel",                        NA,                 0.3663936,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2019, "Steel",                      1.11,                 1.1063532,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2020, "Steel",                      1.11,                 1.0608054,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2021, "Steel",                      1.11,                 1.0152576,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2022, "Steel",                      1.11,                 0.9697098,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2023, "Steel",                      1.11,                 0.924162,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2024, "Steel",                      1.11,                 0.8786143,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2025, "Steel",                      1.11,                 0.8330665,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2026, "Steel",                        NA,                 0.7955433,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2027, "Steel",                        NA,                 0.7580202,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2028, "Steel",                        NA,                 0.7204971,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2029, "Steel",                        NA,                  0.682974,
+          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2040, "Steel",                        NA,                 0.3663936,
   )
 
   sample_portfolio <- dplyr::tribble(
     ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2019, "Steel",                       1.8,                 1.1063532,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2020, "Steel",                       1.8,                 1.0608054,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2021, "Steel",                       1.8,                 1.0152576,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2022, "Steel",                       1.8,                 0.9697098,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2023, "Steel",                       1.8,                 0.924162,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2024, "Steel",                       1.8,                 0.8786143,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2025, "Steel",                       1.8,                 0.8330665,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2026, "Steel",                        NA,                 0.7955433,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2027, "Steel",                        NA,                 0.7580202,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2028, "Steel",                        NA,                 0.7204971,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2029, "Steel",                        NA,                  0.682974,
-    "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2040, "Steel",                        NA,                 0.3663936,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2019, "Steel",                       1.8,                 1.1063532,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2020, "Steel",                       1.8,                 1.0608054,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2021, "Steel",                       1.8,                 1.0152576,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2022, "Steel",                       1.8,                 0.9697098,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2023, "Steel",                       1.8,                 0.924162,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2024, "Steel",                       1.8,                 0.8786143,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2025, "Steel",                       1.8,                 0.8330665,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2026, "Steel",                        NA,                 0.7955433,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2027, "Steel",                        NA,                 0.7580202,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2028, "Steel",                        NA,                 0.7204971,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2029, "Steel",                        NA,                  0.682974,
+       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2040, "Steel",                        NA,                 0.3663936,
   )
   # styler: on
 
   expect_is(
     sda_portfolio_target(
-      sample_market, sample_portfolio, ,
+      sample_market, sample_portfolio, ,  # FIXME
       sector = "Steel"
     ),
     "tbl"
@@ -291,6 +291,7 @@ test_that("sda_portolio_target errors if sector is missing from portfolio", {
 })
 
 test_that("sda_portolio_target errors if sector is missing from market", {
+  # styler: off
   market <- tribble(
     ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
     "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
@@ -304,6 +305,7 @@ test_that("sda_portolio_target errors if sector is missing from market", {
     "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
     "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
   )
+  # styler: on
 
   expect_error(
     sda_portfolio_target(
@@ -320,14 +322,14 @@ test_that("sda_portolio_target passes w/ scenario missing in `market`", {
   # styler: off
   market <- tribble(
     ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
   )
 
   portfolio <- tribble(
     ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+       "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+       "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
   )
   # styler: on
 
@@ -343,17 +345,19 @@ test_that("sda_portolio_target passes w/ scenario missing in `market`", {
 })
 
 test_that("sda_portolio_target passes w/ scenario missing in `portfolio`", {
+  # styler: off
   market <- tribble(
     ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+       "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+       "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
   )
 
   portfolio <- tribble(
     ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
+        "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
   )
+  # styler: on
 
   expect_error(
     sda_portfolio_target(
@@ -370,14 +374,14 @@ test_that("sda_portolio_target passes w/ geography missing in `market`", {
   # styler: off
   market <- tribble(
     ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-    "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+                 "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+                 "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
   )
 
   portfolio <- tribble(
     ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
   )
   # styler: on
 
@@ -397,14 +401,14 @@ test_that("sda_portolio_target passes w/ geography missing in `portfolio`", {
   # styler: off
   market <- tribble(
     ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+              "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
   )
 
   portfolio <- tribble(
     ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-    "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+                 "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
+                 "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
   )
   # styler: on
 
@@ -424,18 +428,18 @@ test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
   # styler: off
   market <- tribble(
     ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.10,
-    "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.05,
-    "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 0.95,
+              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.10,
+              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.05,
+              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 0.95,
   )
-  # styler: on
 
   portfolio <- tribble(
     ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.10,
-    "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.05,
-    "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 0.95,
+              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.10,
+              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.05,
+              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 0.95,
   )
+  # styler: on
 
   out <- sda_portfolio_target(
     market, portfolio,

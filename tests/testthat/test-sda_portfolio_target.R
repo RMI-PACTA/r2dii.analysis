@@ -213,7 +213,7 @@ test_that("sda_portfolio_target with another dataset returns a tibble", {
 
   expect_is(
     sda_portfolio_target(
-      sample_market, sample_portfolio, ,  # FIXME
+      sample_market, sample_portfolio,
       sector = "Steel"
     ),
     "tbl"
@@ -237,7 +237,7 @@ test_that("sda_portfolio_target uses max target_year in all market-sector (#13)"
       market, portfolio,
       sector = c("Steel", "Power"),
       start_year = "2019",
-      target_year = "2020"  # market data has no Power data for 2020
+      target_year = "2020" # market data has no Power data for 2020
     ),
     "is_target_year_shared_across_sectors is not TRUE"
   )
@@ -247,7 +247,7 @@ test_that("sda_portfolio_target uses max target_year in all market-sector (#13)"
       market, portfolio,
       sector = c("Steel", "Power"),
       start_year = "2019",
-      target_year = "2019"  # market has both Steel and Power data for 2019
+      target_year = "2019" # market has both Steel and Power data for 2019
     ),
     NA
   )
@@ -257,7 +257,7 @@ test_that("sda_portfolio_target uses max target_year in all market-sector (#13)"
       market, portfolio,
       sector = c("Steel"),
       start_year = "2019",
-      target_year = "2020"  # market has Steel data for 2019, Power is unused
+      target_year = "2020" # market has Steel data for 2019, Power is unused
     ),
     NA
   )
@@ -452,4 +452,3 @@ test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
   expect_equal(out$Year, c(2021, 2022, 2023))
   expect_equal(out$Scen.Sec.EmissionsFactor, c(1.7, 1.05, c(NA_real_)))
 })
-

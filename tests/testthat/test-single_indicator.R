@@ -9,7 +9,7 @@ test_that("calculate_temperature_indicator and friends yield known values", {
     time_horizon = 5,
     allocation = "PortfolioWeight",
     group_vars = c("Investor.Name", "Portfolio.Name", "Asset.Type"),
-    scenario_relationships = r2dii.analysis::scenario_relationships
+    scenario_relationships = r2dii.analysis::tech_scenario_relationships
   )
 
   expect_known_value(

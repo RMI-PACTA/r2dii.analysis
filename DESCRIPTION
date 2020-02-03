@@ -1,6 +1,6 @@
 Package: r2dii.analysis
 Title: TODO What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Clare",
              family = "Murray",
@@ -23,9 +23,22 @@ License: GPL-3 + file LICENSE
 URL: https://github.com/2DegreesInvesting/r2dii.analysis
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.analysis/issues
+Depends:
+    R (>= 2.10)
+Imports: 
+    dplyr,
+    magrittr,
+    rlang (>= 0.1.2),
+    purrr,
+    lubridate,
+    r2dii.utils (>= 0.0.0.9001)
+Suggests: 
+    roxygen2,
+    testthat (>= 2.1.0),
+    withr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
-Suggests: 
-    testthat (>= 2.1.0)
+RoxygenNote: 7.0.2
+Remotes: 
+    2DegreesInvesting/r2dii.utils

@@ -34,19 +34,29 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ## Example
 
 ```{r example, error=TRUE}
+# Use example configuration-files
+library(r2dii.utils)
 library(r2dii.analysis)
 packageVersion("r2dii.analysis")
 
-market
+# Use a toy configuration file
+restore_options <- options(r2dii_config = example_config("config_demo.yml"))
+on.exit(restore_options)
 
-portfolio
+# Use `start_year` from the configuration file
+START.YEAR()
 
-sda_calculation(
-  market = market,
-  port = portfolio,
-  ref_sectors = c("Cement", "Steel"),
-  ref_scenario = "B2DS",
-  start_year = 2019,
-  target_year = 2040
-)
-```
+sda_portfolio_target(market, portfolio)
+
+sda_portfolio_target(market, portfolio, sector = "Steel")
+
+# This configuration file lacks `start_year`
+options(r2dii_config = example_config("config-toy.yml"))
+START.YEAR()
+
+# Fails
+try(sda_portfolio_target(market, portfolio))
+
+# Passes
+sda_portfolio_target(market, portfolio, start_year = "2019")
+``

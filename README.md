@@ -27,55 +27,31 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ## Example
 
 ``` r
+# Use example configuration-files
+library(r2dii.utils)
 library(r2dii.analysis)
 packageVersion("r2dii.analysis")
-#> [1] '0.0.0.9002'
 
-market
-#> # A tibble: 24 x 9
-#>    Investor.Name Portfolio.Name Scenario ScenarioGeograp… Allocation  Year
-#>    <chr>         <chr>          <chr>    <chr>            <chr>      <int>
-#>  1 Market        GlobalMarket   B2DS     Global           Portfolio…  2019
-#>  2 Market        GlobalMarket   B2DS     Global           Portfolio…  2020
-#>  3 Market        GlobalMarket   B2DS     Global           Portfolio…  2021
-#>  4 Market        GlobalMarket   B2DS     Global           Portfolio…  2022
-#>  5 Market        GlobalMarket   B2DS     Global           Portfolio…  2023
-#>  6 Market        GlobalMarket   B2DS     Global           Portfolio…  2024
-#>  7 Market        GlobalMarket   B2DS     Global           Portfolio…  2025
-#>  8 Market        GlobalMarket   B2DS     Global           Portfolio…  2026
-#>  9 Market        GlobalMarket   B2DS     Global           Portfolio…  2027
-#> 10 Market        GlobalMarket   B2DS     Global           Portfolio…  2028
-#> # … with 14 more rows, and 3 more variables: Sector <chr>,
-#> #   Plan.Sec.EmissionsFactor <dbl>, Scen.Sec.EmissionsFactor <dbl>
+# Use a toy configuration file
+restore_options <- options(r2dii_config = example_config("config_demo.yml"))
+on.exit(restore_options)
 
-portfolio
-#> # A tibble: 24 x 9
-#>    Investor.Name Portfolio.Name Scenario ScenarioGeograp… Allocation  Year
-#>    <chr>         <chr>          <chr>    <chr>            <chr>      <int>
-#>  1 Investor1     Portfolio1     B2DS     Global           Portfolio…  2019
-#>  2 Investor1     Portfolio1     B2DS     Global           Portfolio…  2020
-#>  3 Investor1     Portfolio1     B2DS     Global           Portfolio…  2021
-#>  4 Investor1     Portfolio1     B2DS     Global           Portfolio…  2022
-#>  5 Investor1     Portfolio1     B2DS     Global           Portfolio…  2023
-#>  6 Investor1     Portfolio1     B2DS     Global           Portfolio…  2024
-#>  7 Investor1     Portfolio1     B2DS     Global           Portfolio…  2025
-#>  8 Investor1     Portfolio1     B2DS     Global           Portfolio…  2026
-#>  9 Investor1     Portfolio1     B2DS     Global           Portfolio…  2027
-#> 10 Investor1     Portfolio1     B2DS     Global           Portfolio…  2028
-#> # … with 14 more rows, and 3 more variables: Sector <chr>,
-#> #   Plan.Sec.EmissionsFactor <dbl>, Scen.Sec.EmissionsFactor <dbl>
+# Use `start_year` from the configuration file
+START.YEAR()
 
-sda_calculation(
-  market = market,
-  port = portfolio,
-  ref_sectors = c("Cement", "Steel"),
-  ref_scenario = "B2DS",
-  start_year = 2019,
-  target_year = 2040
-)
-#> Warning in sda_calculation(market = market, port = portfolio, ref_sectors =
-#> c("Cement", : partial argument match of 'market' to 'market_data'
-#> Warning in sda_calculation(market = market, port = portfolio, ref_sectors =
-#> c("Cement", : partial argument match of 'port' to 'port_data'
-#> Error in sda_calculation(market = market, port = portfolio, ref_sectors = c("Cement", : unused argument (ref_sectors = c("Cement", "Steel"))
+sda_portfolio_target(market, portfolio)
+
+sda_portfolio_target(market, portfolio, sector = "Steel")
+
+# This configuration file lacks `start_year`
+options(r2dii_config = example_config("config-toy.yml"))
+START.YEAR()
+
+# Fails
+try(sda_portfolio_target(market, portfolio))
+
+# Passes
+sda_portfolio_target(market, portfolio, start_year = "2019")
+``
+#> Error: attempt to use zero-length variable name
 ```

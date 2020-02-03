@@ -6,13 +6,12 @@
 
 #' TODO vintented
 #'
-#' @param input_results
-#' @param input_audit
-#' @param metric_name
-#' @param group_vars
-#' @param sector_weightings
+#' @param input_results A dataframe like [r2dii.analysis::sample_results].
+#' @param input_audit A dataframe like [r2dii.analysis::sample_audit].
+#' @param metric_name The name of the ouput metric (i.e. deviation or temperature).
+#' @param group_vars A set of grouping variables that define the granularity of the metric.
 #'
-#' @return
+#' @return Returns a dataframe with the the sector, group_vars, and portfolio reweighted metrics.
 #' @export
 apply_influencemap_portfolio_weighting <- function(input_results,
                                                    input_audit,
@@ -113,9 +112,9 @@ apply_influencemap_portfolio_weighting <- function(input_results,
 
 #' TODO vintented
 #'
-#' @param input_audit
+#' @param input_audit A dataframe like [r2dii.analysis::sample_audit].
 #'
-#' @return
+#' @return Returns a dataframe with the value_usd invested in each sector within a portfolio.
 #' @export
 map_sector_exposure <- function(input_audit) {
 
@@ -156,8 +155,10 @@ map_sector_exposure <- function(input_audit) {
 
 #' TODO vintented
 #'
-#' @param input_temp
-#' @param range
+#' @param input_temp A dataframe with a column with a column that provides
+#' a numeric temperature indicator at varying granularities.
+#' @param range A list of numeric values that define the range that a
+#' temperature indicators lies within.
 #'
 #' @return
 #' @export
@@ -192,15 +193,17 @@ find_range <- function(input_results,
 
 #' TODO Add title
 #'
-#' @param input_results
-#' @param upper_temp_threshold
-#' @param lower_temp_threshold
-#' @param start_year
-#' @param time_horizon
-#' @param allocation
-#' @param production_type
-#' @param group_vars
-#' @param scenario_relationships
+#' @param input_results A dataframe like [r2dii.analysis::sample_results].
+#' @param upper_temp_threshold A numeric value that defines the upper temperature
+#' threshold to cut outlier values.
+#' @param lower_temp_threshold A numeric value that defines the lower temperature
+#' threshold to cut outlier values.
+#' @param start_year A numeric value that defines the start year of the analysis.
+#' @param time_horizon A numeric values that defines the time horizon of the analysis.
+#' @param allocation A character value or list of characters that define the portfolio approach to use.
+#' @param production_type A character value (absolute or reletive) that defines
+#'  whether to use the stock or flow production for a technology.
+#' @param group_vars A set of grouping variables that define the granularity of the metric.
 #'
 #' @return
 #' @export
@@ -367,9 +370,10 @@ calculate_temperature_indicator <- function(input_results,
 # TODO vintented please document params
 #' Calculate relative or absolute production
 #'
-#' @param temp
-#' @param method
-#' @param group_vars
+#' @param temp A dataframe like [r2dii.analysis::sample_results].
+#' @param method A character value (absolute or reletive) that defines
+#' whether to use the stock or flow production for a technology.
+#' @param group_vars A set of grouping variables that define the granularity of the metric.
 #'
 #' @keywords internal
 #' @noRd

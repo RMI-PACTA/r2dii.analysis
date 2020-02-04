@@ -11,7 +11,7 @@ test_that("fake_portfolio adds a row", {
     Scen.Sec.EmissionsFactor = 1:3,
   )
   expect_equal(
-    fake_portfolio(Year = 1L:3L,  Scen.Sec.EmissionsFactor = 1:3),
+    fake_portfolio(Year = 1L:3L, Scen.Sec.EmissionsFactor = 1:3),
     expected
   )
 })

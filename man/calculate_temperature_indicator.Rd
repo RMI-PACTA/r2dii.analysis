@@ -16,7 +16,24 @@ calculate_temperature_indicator(
 )
 }
 \arguments{
-\item{scenario_relationships}{}
+\item{input_results}{A dataframe like \link[r2dii.analysis:sample_results]{r2dii.analysis::sample_results}.}
+
+\item{upper_temp_threshold}{A numeric value that defines the upper temperature
+threshold to cut outlier values.}
+
+\item{lower_temp_threshold}{A numeric value that defines the lower temperature
+threshold to cut outlier values.}
+
+\item{start_year}{A numeric value that defines the start year of the analysis.}
+
+\item{time_horizon}{A numeric values that defines the time horizon of the analysis.}
+
+\item{allocation}{A character value or list of characters that define the portfolio approach to use.}
+
+\item{production_type}{A character value (absolute or reletive) that defines
+whether to use the stock or flow production for a technology.}
+
+\item{group_vars}{A set of grouping variables that define the granularity of the metric.}
 }
 \value{
 

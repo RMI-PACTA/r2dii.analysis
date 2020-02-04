@@ -7,7 +7,11 @@
 find_range(input_results, metric_name, range)
 }
 \arguments{
-\item{range}{}
+\item{range}{A list of numeric values that define the range that a
+temperature indicators lies within.}
+
+\item{input_temp}{A dataframe with a column with a column that provides
+a numeric temperature indicator at varying granularities.}
 }
 \value{
 

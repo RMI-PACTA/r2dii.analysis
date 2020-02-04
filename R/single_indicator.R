@@ -22,7 +22,7 @@ apply_influencemap_portfolio_weighting <- function(input_results,
                                                      "Asset.Type")
                                                    ) {
 
-  load("data/sector_weightings.rda")
+  r2dii.analysis::tech_sector_weighting
 
   results_sector_weightings <- input_results %>%
     inner_join(
@@ -224,7 +224,7 @@ calculate_temperature_indicator <- function(input_results,
   # TODO: Clean column names
   # TODO: Clean grouping variables
 
-  load("data/scenario_relationships.rda")
+  r2dii.analysis::scenario_relationships
 
   brown_technologies <- c(
     "Oil", "Gas", "Coal", "CoalCap", "OilCap", "GasCap", "ICE"

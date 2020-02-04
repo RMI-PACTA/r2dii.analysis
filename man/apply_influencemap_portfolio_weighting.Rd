@@ -12,10 +12,16 @@ apply_influencemap_portfolio_weighting(
 )
 }
 \arguments{
-\item{sector_weightings}{}
+\item{input_results}{A dataframe like \link[r2dii.analysis:sample_results]{r2dii.analysis::sample_results}.}
+
+\item{input_audit}{A dataframe like \link[r2dii.analysis:sample_audit]{r2dii.analysis::sample_audit}.}
+
+\item{metric_name}{The name of the ouput metric (i.e. deviation or temperature).}
+
+\item{group_vars}{A set of grouping variables that define the granularity of the metric.}
 }
 \value{
-
+Returns a dataframe with the the sector, group_vars, and portfolio reweighted metrics.
 }
 \description{
 TODO vintented

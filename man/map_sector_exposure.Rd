@@ -7,10 +7,10 @@
 map_sector_exposure(input_audit)
 }
 \arguments{
-\item{input_audit}{}
+\item{input_audit}{A dataframe like \link[r2dii.analysis:sample_audit]{r2dii.analysis::sample_audit}.}
 }
 \value{
-
+Returns a dataframe with the value_usd invested in each sector within a portfolio.
 }
 \description{
 TODO vintented

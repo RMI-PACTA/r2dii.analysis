@@ -425,21 +425,8 @@ test_that("sda_portolio_target passes w/ geography missing in `portfolio`", {
 })
 
 test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
-  # styler: off
-  market <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.10,
-              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.05,
-              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 0.95,
-  )
-
-  portfolio <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.10,
-              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.05,
-              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 0.95,
-  )
-  # styler: on
+  portfolio <- fake_portfolio(Year = 2021:2023, Scen.Sec.EmissionsFactor = 1:3)
+  market <- portfolio
 
   out <- sda_portfolio_target(
     market, portfolio,
@@ -450,5 +437,5 @@ test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
   )
 
   expect_equal(out$Year, c(2021, 2022, 2023))
-  expect_equal(out$Scen.Sec.EmissionsFactor, c(1.7, 1.05, c(NA_real_)))
+  expect_equal(out$Scen.Sec.EmissionsFactor[[3]], NA_real_)
 })

@@ -31,7 +31,8 @@ Imports:
     rlang (>= 0.1.2),
     purrr,
     lubridate,
-    r2dii.utils (>= 0.0.0.9001)
+    r2dii.utils (>= 0.0.0.9001),
+    tibble
 Suggests: 
     roxygen2,
     testthat (>= 2.1.0),

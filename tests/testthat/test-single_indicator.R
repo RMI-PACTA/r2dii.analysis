@@ -19,7 +19,7 @@ test_that("calculate_temperature_indicator and friends yield known values", {
 
 
 
-  out_influencemap_weighting_methodology <- influencemap_weighting_methodology(
+  out_influencemap_weighting_methodology <- apply_influencemap_portfolio_weighting(
     input_results = out_calculate_temperature_indicator,
     input_audit = r2dii.analysis::sample_audit,
     metric_name = "temperature",

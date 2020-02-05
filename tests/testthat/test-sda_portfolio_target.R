@@ -1,21 +1,13 @@
 library(dplyr)
 library(r2dii.utils)
 
-# Avoid warning for using a toy configuration file
-setup({
-  op <- options(r2dii_config = example_config("config_demo.yml"))
-  on.exit(options(op))
-})
+fake_market <- fake_portfolio <- fake_portfolio(2021:2022)
 
-test_that("sda_portfolio_target errors gracefully with obviously wrong data", {
-  expect_error(
-    sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE"
-  )
-  expect_error(
-    sda_portfolio_target(market, 1), "data.frame.* is not TRUE"
-  )
+test_that("errors gracefully with obviously wrong data", {
+  expect_error(sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE")
+  expect_error(sda_portfolio_target(fake_market, 1), "data.frame.* is not TRUE")
 
-  bad_market <- rename(market, bad = .data$Year)
+  bad_market <- rename(fake_market, bad = .data$Year)
   expect_error(
     class = "missing_names",
     sda_portfolio_target(bad_market, portfolio)
@@ -24,14 +16,14 @@ test_that("sda_portfolio_target errors gracefully with obviously wrong data", {
   bad_portfolio <- rename(portfolio, bad = .data$Plan.Sec.EmissionsFactor)
   expect_error(
     class = "missing_names",
-    sda_portfolio_target(market, bad_portfolio)
+    sda_portfolio_target(fake_market, bad_portfolio)
   )
 })
 
-test_that("sda_portfolio_target errors gracefully with wrong scenario", {
+test_that("errors gracefully with bad scenario", {
   expect_error(
     sda_portfolio_target(
-      market, portfolio,
+      fake_market, fake_portfolio,
       sector = "Steel",
       scenario = "bad"
     ),
@@ -40,7 +32,7 @@ test_that("sda_portfolio_target errors gracefully with wrong scenario", {
 
   expect_error(
     sda_portfolio_target(
-      market, portfolio,
+      fake_market, fake_portfolio,
       sector = "Steel",
       scenario = c("B2DS", "other")
     ),
@@ -48,10 +40,10 @@ test_that("sda_portfolio_target errors gracefully with wrong scenario", {
   )
 })
 
-test_that("sda_portfolio_target errors gracefully with wrong geography", {
+test_that("errors gracefully with bad geography", {
   expect_error(
     sda_portfolio_target(
-      market, portfolio,
+      fake_market, fake_portfolio,
       sector = "Steel",
       geography = "bad"
     ),
@@ -60,7 +52,7 @@ test_that("sda_portfolio_target errors gracefully with wrong geography", {
 
   expect_error(
     sda_portfolio_target(
-      market, portfolio,
+      fake_market, fake_portfolio,
       sector = "Steel",
       geography = c("B2DS", "other")
     ),
@@ -68,93 +60,124 @@ test_that("sda_portfolio_target errors gracefully with wrong geography", {
   )
 })
 
-test_that("sda_portfolio_target errors with bad sector", {
+test_that("errors with bad sector", {
   expect_error(
-    sda_portfolio_target(market, portfolio, sector = "bad"), "is not TRUE"
+    sda_portfolio_target(fake_market, fake_portfolio, sector = "bad"),
+    "is not TRUE"
   )
 })
 
-test_that("sda_portfolio_target errors with bad 'year' arguments", {
-  sda_portfolio_target_partial <- purrr::partial(
-    .f = sda_portfolio_target,
-    market = market,
-    portfolio = portfolio,
-    sector = "Steel"
-  )
-
-  expect_error(sda_portfolio_target_partial(start_year = "bad"), "is not TRUE")
-  expect_error(sda_portfolio_target_partial(target_year = "bad"), "is not TRUE")
-})
-
-test_that("sda_portfolio_target takes 'year' arguments of length-1", {
-  sda_portfolio_target_partial <- purrr::partial(
-    .f = sda_portfolio_target,
-    market = market,
-    portfolio = portfolio,
-    sector = "Steel"
+test_that("errors with bad 'year' arguments", {
+  expect_error(
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = "bad"
+    ),
+    "is not TRUE"
   )
 
   expect_error(
-    sda_portfolio_target_partial(start_year = 2019:2020), "is not TRUE"
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = "2021",
+      target_year = "bad"
+    ),
+    "is not TRUE"
+  )
+})
+
+test_that("errors if 'year' arguments are not of length-1", {
+  expect_error(
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021:2022
+    ),
+    "is not TRUE"
   )
   expect_error(
-    sda_portfolio_target_partial(target_year = 2040:2041), "is not TRUE"
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021,
+      target_year = 2040:2041
+    ),
+    "is not TRUE"
   )
 })
 
-test_that("sda_portfolio_target takes chr, num, or int 'year' arguments", {
-  sda_portfolio_target_partial <- purrr::partial(
-    .f = sda_portfolio_target,
-    market = market,
-    portfolio = portfolio,
-    sector = "Steel"
+test_that("takes chr, num, or int 'year' arguments", {
+  expected <- sda_portfolio_target(
+    fake_market, fake_portfolio,
+    sector = "Steel",
+    start_year = 2021L,
+    target_year = 2022L,
   )
 
-  expect_error(sda_portfolio_target_partial(start_year = TRUE), "is not TRUE")
   expect_equal(
-    sda_portfolio_target_partial(start_year = "2019"),
-    sda_portfolio_target_partial(start_year = 2019),
-  )
-  expect_equal(
-    sda_portfolio_target_partial(start_year = "2019"),
-    sda_portfolio_target_partial(start_year = 2019L),
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = "2021",
+      target_year = "2022",
+    ),
+    expected
   )
 
-  expect_error(sda_portfolio_target_partial(target_year = TRUE), "is not TRUE")
   expect_equal(
-    sda_portfolio_target_partial(target_year = 2040),
-    sda_portfolio_target_partial(target_year = 2040L)
-  )
-  expect_equal(
-    sda_portfolio_target_partial(target_year = 2040),
-    sda_portfolio_target_partial(target_year = "2040")
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021,
+      target_year = 2022,
+    ),
+    expected
   )
 })
 
-test_that("sda_portfolio_target warns `sector`s not in both datasets", {
+test_that("uses start_year from configuration file", {
+  start_year <- r2dii.utils::START.YEAR(example_config("config_demo.yml"))
+  market <- portfolio <- fake_portfolio(Year = c(start_year, start_year + 1))
+
+  expect_error_free(
+    sda_portfolio_target(
+      market, portfolio,
+      start_year = start_year,
+      sector = "Steel"
+    )
+  )
+})
+
+test_that("warns `sector`s not in both datasets", {
   expect_warning(
     sda_portfolio_target(
-      market,
-      portfolio = filter(portfolio, Sector == "Steel"),
+      fake_market, fake_portfolio,
+      start_year = 2021,
+      target_year = 2022,
       sector = c("Steel", "Power", "Other")
     ),
     "Skipping.*Power, Other."
   )
 })
 
-test_that("sda_portfolio_target errors clearly if config has null start_year", {
+test_that("errors clearly if config has null start_year", {
   config_with_some_start_year <- example_config("config_demo.yml")
+
   expect_false(is.null(START.YEAR(file = config_with_some_start_year)))
-  expect_error(
+
+  expect_error_free(
     withr::with_options(
       list(r2dii_config = config_with_some_start_year),
       sda_portfolio_target(market, portfolio, sector = "Steel")
-    ),
-    NA
+    )
   )
 
   config_with_null_start_year <- example_config("config-toy.yml")
+
   expect_true(is.null(START.YEAR(file = config_with_null_start_year)))
+
   expect_error(
     withr::with_options(
       list(r2dii_config = config_with_null_start_year),
@@ -164,291 +187,148 @@ test_that("sda_portfolio_target errors clearly if config has null start_year", {
   )
 })
 
-test_that("sda_portfolio_target w/ `market` and `portfolio` returns a tibble", {
-  expect_is(sda_portfolio_target(market, portfolio, sector = "Steel"), "tbl")
-})
-
-test_that("sda_portfolio_target outputs a known value", {
+test_that("outputs a known value", {
   expect_known_value(
-    sda_portfolio_target(market, portfolio, sector = "Steel"),
+    sda_portfolio_target(market, portfolio, sector = "Steel", start_year = 2019),
     "ref-sda_portfolio_target",
     update = FALSE
   )
 })
 
-test_that("sda_portfolio_target with another dataset returns a tibble", {
-  # styler: off
-  sample_market <- dplyr::tribble(
-    ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,      ~Allocation,    ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2019, "Steel",                      1.11,                 1.1063532,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2020, "Steel",                      1.11,                 1.0608054,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2021, "Steel",                      1.11,                 1.0152576,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2022, "Steel",                      1.11,                 0.9697098,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2023, "Steel",                      1.11,                 0.924162,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2024, "Steel",                      1.11,                 0.8786143,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2025, "Steel",                      1.11,                 0.8330665,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2026, "Steel",                        NA,                 0.7955433,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2027, "Steel",                        NA,                 0.7580202,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2028, "Steel",                        NA,                 0.7204971,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2029, "Steel",                        NA,                  0.682974,
-          "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",    2040, "Steel",                        NA,                 0.3663936,
-  )
-
-  sample_portfolio <- dplyr::tribble(
-    ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Year, ~Sector, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2019, "Steel",                       1.8,                 1.1063532,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2020, "Steel",                       1.8,                 1.0608054,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2021, "Steel",                       1.8,                 1.0152576,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2022, "Steel",                       1.8,                 0.9697098,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2023, "Steel",                       1.8,                 0.924162,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2024, "Steel",                       1.8,                 0.8786143,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2025, "Steel",                       1.8,                 0.8330665,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2026, "Steel",                        NA,                 0.7955433,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2027, "Steel",                        NA,                 0.7580202,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2028, "Steel",                        NA,                 0.7204971,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2029, "Steel",                        NA,                  0.682974,
-       "Investor1",    "Portfolio1",    "B2DS",           "Global", "PortfolioWeight",  2040, "Steel",                        NA,                 0.3663936,
-  )
-  # styler: on
-
-  expect_is(
-    sda_portfolio_target(
-      sample_market, sample_portfolio,
-      sector = "Steel"
-    ),
-    "tbl"
-  )
-})
-
-test_that("sda_portfolio_target uses max target_year in all market-sector (#13)", {
+test_that("uses max target_year in all market-sector (#13)", {
   # https://github.com/2DegreesInvesting/r2dii.analysis/issues/13
-  # styler: off
-  market <- tribble(
-    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Steel",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Steel",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.0608054,
+  market <- portfolio <- fake_portfolio(
+    Sector = c("Steel", "Steel", "Power"),
+    Year = c(2019, 2020, 2019)
   )
-  # styler: on
-  portfolio <- market
 
   expect_error(
     sda_portfolio_target(
       market, portfolio,
       sector = c("Steel", "Power"),
-      start_year = "2019",
-      target_year = "2020" # market data has no Power data for 2020
+      start_year = 2019,
+      target_year = 2020 # market data has no Power data for 2020
     ),
     "is_target_year_shared_across_sectors is not TRUE"
   )
 
-  expect_error(
+  expect_error_free(
     sda_portfolio_target(
       market, portfolio,
       sector = c("Steel", "Power"),
-      start_year = "2019",
-      target_year = "2019" # market has both Steel and Power data for 2019
-    ),
-    NA
+      start_year = 2019,
+      target_year = 2019 # market has both Steel and Power data for 2019
+    )
   )
 
-  expect_error(
+  expect_error_free(
     sda_portfolio_target(
       market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020" # market has Steel data for 2019, Power is unused
-    ),
-    NA
+      sector = "Steel",
+      start_year = 2019,
+      target_year = 2020 # market has Steel data for 2019, Power is unused
+    )
   )
 })
 
-test_that("sda_portolio_target errors if sector is missing from portfolio", {
-  # styler: off
-  market <- tribble(
-    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Steel",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Steel",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-
-  portfolio <- tribble(
-    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-  # styler: on
+test_that("errors if sector is missing from `portfolio`", {
+  fake_portfolio$Sector <- NULL
 
   expect_error(
+    class = "missing_names",
     sda_portfolio_target(
-      market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020"
-    ), "is_found is not TRUE"
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2020,
+      target_year = 2021
+    )
   )
 })
 
-test_that("sda_portolio_target errors if sector is missing from market", {
-  # styler: off
-  market <- tribble(
-    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-
-  portfolio <- tribble(
-    ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~Scenario, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-    "Steel",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Steel",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2019,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-    "Power",  2020,       "Market",  "GlobalMarket",    "B2DS",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-  # styler: on
+test_that("errors if sector is missing from market", {
+  fake_market$Sector <- NULL
 
   expect_error(
+    class = "missing_names",
     sda_portfolio_target(
-      market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020"
-    ),
-    "is_found is not TRUE"
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2020,
+      target_year = 2021
+    )
   )
 })
 
-test_that("sda_portolio_target passes w/ scenario missing in `market`", {
-  # styler: off
-  market <- tribble(
-    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-        "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-        "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
+test_that("passes w/ bad scenario in `portfolio`", {
+  fake_portfolio$Scenario <- "bad"
 
-  portfolio <- tribble(
-    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-       "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-       "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-  # styler: on
-
-  expect_error(
+  expect_error_free(
     sda_portfolio_target(
-      market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020"
-    ),
-    NA
-  )
-})
-
-test_that("sda_portolio_target passes w/ scenario missing in `portfolio`", {
-  # styler: off
-  market <- tribble(
-    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-       "B2DS", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-       "B2DS", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-
-  portfolio <- tribble(
-    ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name, ~ScenarioGeography,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-        "bad", "Steel",  2019,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-        "bad", "Steel",  2020,       "Market",  "GlobalMarket",           "Global", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-  # styler: on
-
-  expect_error(
-    sda_portfolio_target(
-      market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020"
-    ),
-    NA
-  )
-})
-
-test_that("sda_portolio_target passes w/ geography missing in `market`", {
-  # styler: off
-  market <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-                 "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-                 "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-
-  portfolio <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-              "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-              "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-  # styler: on
-
-  expect_error(
-    sda_portfolio_target(
-      market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020",
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021,
+      target_year = 2022,
       geography = "Global",
-    ),
-    NA
+    )
   )
 })
 
-test_that("sda_portolio_target passes w/ geography missing in `portfolio`", {
-  # styler: off
-  market <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-              "Global",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-              "Global",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
+test_that("passes w/ bad scenario in `market`", {
+  fake_market$Scenario <- "bad"
 
-  portfolio <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector, ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-                 "bad",    "B2DS", "Steel",  2019,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-                 "bad",    "B2DS", "Steel",  2020,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.1063532,
-  )
-  # styler: on
-
-  expect_error(
+  expect_error_free(
     sda_portfolio_target(
-      market, portfolio,
-      sector = c("Steel"),
-      start_year = "2019",
-      target_year = "2020",
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021,
+      target_year = 2022,
       geography = "Global",
-    ),
-    NA
+    )
+  )
+})
+
+test_that("passes w/ bad geography in `market`", {
+  fake_market$ScenarioGeography <- "bad"
+
+  expect_error_free(
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021,
+      target_year = 2022,
+      geography = "Global",
+    )
+  )
+})
+
+test_that("passes w/ bad geography in `portfolio`", {
+  fake_portfolio$ScenarioGeography <- "bad"
+
+  expect_error_free(
+    sda_portfolio_target(
+      fake_market, fake_portfolio,
+      sector = "Steel",
+      start_year = 2021,
+      target_year = 2022,
+      geography = "Global",
+    )
   )
 })
 
 test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
-  # styler: off
-  market <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.10,
-              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 1.05,
-              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.11,                 0.95,
+  portfolio <- market <- fake_portfolio(
+    Year = 2021:2023,
+    Scen.Sec.EmissionsFactor = 1:3
   )
-
-  portfolio <- tribble(
-    ~ScenarioGeography, ~Scenario, ~Sector,  ~Year, ~Investor.Name, ~Portfolio.Name,       ~Allocation, ~Plan.Sec.EmissionsFactor, ~Scen.Sec.EmissionsFactor,
-              "Global",    "B2DS", "Steel",  2021L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.10,
-              "Global",    "B2DS", "Steel",  2022L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 1.05,
-              "Global",    "B2DS", "Steel",  2023L,       "Market",  "GlobalMarket", "PortfolioWeight",                      1.7,                 0.95,
-  )
-  # styler: on
 
   out <- sda_portfolio_target(
     market, portfolio,
     sector = "Steel",
     geography = "Global",
-    start_year = "2021",
-    target_year = "2022"
+    start_year = 2021,
+    target_year = 2022
   )
 
   expect_equal(out$Year, c(2021, 2022, 2023))
-  expect_equal(out$Scen.Sec.EmissionsFactor, c(1.7, 1.05, c(NA_real_)))
+  expect_equal(out$Scen.Sec.EmissionsFactor[[3]], NA_real_)
 })

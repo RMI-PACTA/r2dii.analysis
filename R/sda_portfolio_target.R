@@ -115,8 +115,7 @@ check_ref <- function(market, portfolio, ref, col) {
   is_valid <- any(ref %in% valid)
   if (!is_valid) {
     stop(
-      "Wrong 'ref_*' argument (", ref, "). Must be one of:\n",
-      paste0(valid, collapse = ", "),
+      "Can't use ", ref, ". Must be one of:\n", paste0(valid, collapse = ", "),
       call. = FALSE
     )
   }

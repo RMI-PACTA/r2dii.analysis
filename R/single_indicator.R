@@ -104,7 +104,7 @@ apply_influencemap_portfolio_weighting <- function(input_results,
       ) %>%
     mutate(metric_port = stats::weighted.mean(metric_group_vars, group_vars_weight, na.rm = TRUE))
 
-  results_port <- results_port %>%
+  results_port %>%
     select(-c(.data[[metric_name]])) %>%
     rename_at(vars(metric_port, metric_group_vars, metric_sector), funs(paste0("temperature_", .)))
 
@@ -170,7 +170,7 @@ find_range <- function(input_results,
   results_range <- input_results %>%
     mutate(interval = as.numeric(cut(.data[[metric_name]], breaks = range)))
 
-  results_range <- results_range %>%
+  results_range %>%
     mutate(
       temperature_range =
         ifelse(!is.na(interval),

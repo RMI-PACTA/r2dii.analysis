@@ -1,6 +1,6 @@
 Package: r2dii.analysis
 Title: TODO What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Clare",
              family = "Murray",
@@ -25,17 +25,25 @@ BugReports:
     https://github.com/2DegreesInvesting/r2dii.analysis/issues
 Depends:
     R (>= 2.10)
+Imports: 
+    dplyr,
+    lubridate,
+    magrittr,
+    magrittr,
+    purrr,
+    r2dii.utils (>= 0.0.0.9001),
+    rlang (>= 0.1.2),
+    stats,
+    tibble,
+    tidyr
 Suggests: 
-    testthat (>= 2.1.0),
+    rmarkdown,
     roxygen2,
-    rmarkdown
+    testthat (>= 2.1.0),
+    withr
+Remotes: 
+    2DegreesInvesting/r2dii.utils
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
-Imports: 
-    magrittr,
-    rlang (>= 0.1.2),
-    dplyr,
-    stats,
-    tidyr

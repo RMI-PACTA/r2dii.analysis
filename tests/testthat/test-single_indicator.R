@@ -23,7 +23,7 @@ test_that("calculate_temperature_indicator and friends yield known values", {
     input_results = out_calculate_temperature_indicator,
     input_audit = r2dii.analysis::sample_audit,
     metric_name = "temperature",
-    group_vars = c("Investor.Name", "Portfolio.Name"),
+    group_vars = c("Investor.Name", "Portfolio.Name")
   )
 
   expect_known_value(

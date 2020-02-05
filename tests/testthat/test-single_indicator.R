@@ -55,7 +55,11 @@ test_that("calculate_temperature_indicator and friends yield known values", {
     by = c("Investor.Name", "Portfolio.Name")
   )
 
-  out_find_range <- find_range(joint, range = c(1.75, 2, 2.75, 3.5))
+  out_find_range <- find_range(
+    joint,
+    range = c(1.75, 2, 2.75, 3.5),
+    metric_name = "temperature_metric_group_vars"
+    )
 
   expect_known_value(
     out_find_range,

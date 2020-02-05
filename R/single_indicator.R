@@ -157,7 +157,7 @@ map_sector_exposure <- function(input_audit) {
 #'
 #' @param input_temp A dataframe with a column with a column that provides
 #' a numeric temperature indicator at varying granularities.
-#' @param metric_range
+#' @param metric_name A character name that specifies a dataframe column with numeric values.
 #' @param range A list of numeric values that define the range that a
 #' temperature indicators lies within.
 #'
@@ -361,7 +361,7 @@ calculate_temperature_indicator <- function(input_results,
     )
 
   # add back generic scenario and scenario geography column
-  temp <- temp %>%
+  temp %>%
     mutate(
       ScenarioGeography = "Global",
       Scenario = "Aggregate"
@@ -412,7 +412,7 @@ calculate_production <- function(temp,
       Scen.Alloc.WtTechProd = sum(Scen.Alloc.WtTechProd, na.rm = TRUE)
     )
 
-  temp <- temp %>%
+  temp %>%
     rename(
       scen_tech_prod = Scen.Alloc.WtTechProd,
       plan_tech_prod = Plan.Alloc.WtTechProd
@@ -439,7 +439,7 @@ find_scenario_relation <- function(input,
       )
     )
 
-  input <- input %>%
+  input %>%
     rename({{ metric_name }} := metric)
 }
 

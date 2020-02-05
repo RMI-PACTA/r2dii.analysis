@@ -34,13 +34,13 @@ test_that("calculate_temperature_indicator and friends yield known values", {
 
 
 
-  out_mapped_sector_exposure <- mapped_sector_exposure(
+  out_map_sector_exposure <- map_sector_exposure(
     input_audit = r2dii.analysis::sample_audit
   )
 
   expect_known_value(
-    out_mapped_sector_exposure,
-    "ref-mapped_sector_exposure",
+    out_map_sector_exposure,
+    "ref-map_sector_exposure",
     update = FALSE
   )
 
@@ -51,7 +51,7 @@ test_that("calculate_temperature_indicator and friends yield known values", {
     distinct(Investor.Name, Portfolio.Name, Allocation, temperature)
 
   joint <- inner_join(
-    out_influencemap_weighting_methodology2, out_mapped_sector_exposure,
+    out_influencemap_weighting_methodology2, out_map_sector_exposure,
     by = c("Investor.Name", "Portfolio.Name")
   )
 

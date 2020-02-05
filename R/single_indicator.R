@@ -419,15 +419,6 @@ calculate_production <- function(temp,
 
 }
 
-#' TODO vintented
-#'
-#' @param input
-#' @param metric_name
-#' @param calculation_upper
-#' @param calculation_lower
-#' @param brown_technologies
-#'
-#' @keywords internal
 #' @noRd
 find_scenario_relation <- function(input,
                                    metric_name,

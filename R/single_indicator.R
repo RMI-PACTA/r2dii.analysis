@@ -287,7 +287,7 @@ calculate_temperature_indicator <- function(input_results,
       !!! syms(group_vars),
       Sector
     ) %>%
-    filter(n_distinct(relation) == 3)
+    filter(dplyr::n_distinct(relation) == 3)
 
   temp <- scenario_temp %>%
     tidyr::pivot_wider(names_from = relation, values_from = c(scen_tech_prod, temp)) %>%

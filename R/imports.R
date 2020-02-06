@@ -1,7 +1,7 @@
 #' @importFrom dplyr filter bind_rows case_when distinct group_by group_vars
 #' @importFrom dplyr inner_join mutate rename select summarise ungroup
 #' @importFrom dplyr distinct filter if_else inner_join mutate rename right_join
-#' @importFrom rlang %||% syms
+#' @importFrom rlang %||%
 NULL
 
 # FIXME: This is a hack. Best practice is to use e.g. .data$Allocation

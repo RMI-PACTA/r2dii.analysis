@@ -175,7 +175,7 @@ influencemap_results <- apply_influencemap_portfolio_weighting(
 
 range_results <- find_range(
   input_results = influencemap_results,
-  metric_name = "temperature_metric_group_vars",
+  metric_name = "temperature_metric_port",
   range = c(
     1.75, 2, 2.75, 3.5
     )

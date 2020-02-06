@@ -62,7 +62,7 @@ test_that("calculate_temperature_indicator and friends yield known values", {
   expect_known_value(
     out_find_range,
     "ref-out_find_range",
-    update = FALSE
+    update = TRUE
   )
 })
 

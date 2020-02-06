@@ -106,7 +106,7 @@ apply_influencemap_portfolio_weighting <- function(input_results,
 
   results_port %>%
     select(-c(.data[[metric_name]])) %>%
-    rename_at(vars(metric_port, metric_group_vars, metric_sector), funs(paste0("temperature_", .)))
+    rename_at(vars(metric_port, metric_group_vars, metric_sector), .funs = ~ paste0("temperature_", .x))
 
 }
 

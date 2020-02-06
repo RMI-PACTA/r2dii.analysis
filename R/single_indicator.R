@@ -155,7 +155,7 @@ map_sector_exposure <- function(input_audit) {
 #' @param range A list of numeric values that define the range that a
 #' temperature indicators lies within.
 #'
-#' @return
+#' @return A data.frame.
 #' @export
 find_range <- function(input_results,
                        metric_name,

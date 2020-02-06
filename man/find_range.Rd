@@ -16,7 +16,7 @@ a numeric temperature indicator at varying granularities.}
 temperature indicators lies within.}
 }
 \value{
-
+A data.frame.
 }
 \description{
 TODO vintented

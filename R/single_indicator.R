@@ -120,18 +120,14 @@ map_sector_exposure <- function(input_audit) {
 
   # coverage assessment for the single indicator metric
   coverage <- input_audit %>%
-    mutate(
-      climate_rel_cat = ifelse(mapped_sector != "Other", T, F)
-    )
+    mutate(climate_rel_cat = ifelse(mapped_sector != "Other", T, F))
 
   coverage <- coverage %>%
     group_by(
       Investor.Name,
       Portfolio.Name
       ) %>%
-    mutate(
-      ValueUSD_port = sum(ValueUSD, na.rm = T)
-    )
+    mutate(ValueUSD_port = sum(ValueUSD, na.rm = T))
 
   coverage <- coverage %>%
     group_by(
@@ -139,9 +135,7 @@ map_sector_exposure <- function(input_audit) {
       Portfolio.Name,
       climate_rel_cat
       ) %>%
-    mutate(
-      exposure_climate_sectors = sum(ValueUSD, na.rm = T) / ValueUSD_port
-    ) %>%
+    mutate(exposure_climate_sectors = sum(ValueUSD, na.rm = T) / ValueUSD_port) %>%
     ungroup()
 
   coverage %>%

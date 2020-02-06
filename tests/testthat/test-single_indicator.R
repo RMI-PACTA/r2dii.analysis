@@ -44,11 +44,9 @@ test_that("calculate_temperature_indicator and friends yield known values", {
     update = FALSE
   )
 
-
-
   out_influencemap_weighting_methodology2 <-
     out_influencemap_weighting_methodology  %>%
-    distinct(Investor.Name, Portfolio.Name, Allocation, temperature)
+    distinct(Investor.Name, Portfolio.Name, Allocation, temperature_metric_port)
 
   joint <- inner_join(
     out_influencemap_weighting_methodology2, out_map_sector_exposure,
@@ -58,7 +56,7 @@ test_that("calculate_temperature_indicator and friends yield known values", {
   out_find_range <- find_range(
     joint,
     range = c(1.75, 2, 2.75, 3.5),
-    metric_name = "temperature"
+    metric_name = "temperature_metric_port"
     )
 
   expect_known_value(

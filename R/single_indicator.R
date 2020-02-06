@@ -63,7 +63,7 @@ apply_influencemap_portfolio_weighting <- function(input_results,
       ScenarioGeography,
       Scenario
       ) %>%
-    mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], technology_production_weight, na.rm = TRUE))
+    mutate(metric_sector = stats::weighted.mean(.data[[metric_name]], .data$technology_production_weight, na.rm = TRUE))
 
   #for sectors without meaningful technology breakdowns
   results_sector <- results_audit %>%

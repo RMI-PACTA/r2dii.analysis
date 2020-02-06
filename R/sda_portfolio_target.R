@@ -344,3 +344,4 @@ pick_scenario_sector_and_geography <- function(data,
         .data$ScenarioGeography %in% geography
     )
 }
+

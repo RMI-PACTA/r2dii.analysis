@@ -149,7 +149,7 @@ map_sector_exposure <- function(input_audit) {
 
 #' TODO vintented
 #'
-#' @param input_temp A dataframe with a column with a column that provides
+#' @param input_results A dataframe with a column with a column that provides
 #' a numeric temperature indicator at varying granularities.
 #' @param metric_name A character name that specifies a dataframe column with numeric values.
 #' @param range A list of numeric values that define the range that a

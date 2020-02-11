@@ -6,7 +6,7 @@ test_that("fake_portfolio adds a row", {
     year = 1:3L,
     investor_name = "Market",
     portfolio_name = "GlobalMarket",
-    Allocation = "PortfolioWeight",
+    allocation = "PortfolioWeight",
     plan_sec_emissions_factor = 1,
     scen_sec_emissions_factor = 1:3,
   )

@@ -332,7 +332,7 @@ get_sectors <- function() {
 
 get_sda_common_by <- function() {
   c(
-    "Allocation",
+    "allocation",
     "Sector",
     "Scenario",
     "ScenarioGeography"

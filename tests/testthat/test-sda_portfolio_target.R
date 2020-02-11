@@ -30,6 +30,9 @@ portfolio <- dplyr::rename(portfolio, investor_name = .data$Investor.Name)
 market <- dplyr::rename(market, portfolio_name = .data$Portfolio.Name)
 portfolio <- dplyr::rename(portfolio, portfolio_name = .data$Portfolio.Name)
 
+market <- dplyr::rename(market, allocation = .data$Allocation)
+portfolio <- dplyr::rename(portfolio, allocation = .data$Allocation)
+
 
 
 test_that("errors gracefully with obviously wrong data", {

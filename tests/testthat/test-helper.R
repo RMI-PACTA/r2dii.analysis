@@ -5,7 +5,7 @@ test_that("fake_portfolio adds a row", {
     Sector = "Steel",
     year = 1:3L,
     investor_name = "Market",
-    Portfolio.Name = "GlobalMarket",
+    portfolio_name = "GlobalMarket",
     Allocation = "PortfolioWeight",
     plan_sec_emissions_factor = 1,
     scen_sec_emissions_factor = 1:3,

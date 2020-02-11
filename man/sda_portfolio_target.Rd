@@ -39,7 +39,7 @@ of \code{market}. \code{NULL} defaults to the latest year shared across all sect
 given by \code{sector} and found in \code{market}.}
 }
 \value{
-Returns a dataframe where the     \code{Scen.Sec.EmissionsFactor} column
+Returns a dataframe where the \code{scen_sec_emissions_factor} column
 holds the result of the SDA calculation.
 }
 \description{

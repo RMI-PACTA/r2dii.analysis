@@ -6,7 +6,7 @@ fake_portfolio <- function(Year = NULL,
                            Portfolio.Name = NULL,
                            Allocation = NULL,
                            plan_sec_emissions_factor = NULL,
-                           Scen.Sec.EmissionsFactor = NULL,
+                           scen_sec_emissions_factor = NULL,
                            ...) {
   tibble::tibble(
     ScenarioGeography = ScenarioGeography %||% "Global",
@@ -17,7 +17,7 @@ fake_portfolio <- function(Year = NULL,
     Portfolio.Name = Portfolio.Name %||% "GlobalMarket",
     Allocation = Allocation %||% "PortfolioWeight",
     plan_sec_emissions_factor = plan_sec_emissions_factor %||% 1.0,
-    Scen.Sec.EmissionsFactor = Scen.Sec.EmissionsFactor %||% 1.0,
+    scen_sec_emissions_factor = scen_sec_emissions_factor %||% 1.0,
     ...
   )
 }

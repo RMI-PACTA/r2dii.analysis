@@ -23,7 +23,7 @@
 #' @seealso [r2dii.utils::get_config()], [r2dii.utils::START.YEAR()],
 #'   [get_sectors()].
 #'
-#' @return Returns a dataframe where the     `Scen.Sec.EmissionsFactor` column
+#' @return Returns a dataframe where the `scen_sec_emissions_factor` column
 #'   holds the result of the SDA calculation.
 #'
 #' @export
@@ -69,6 +69,18 @@ sda_portfolio_target <- function(market,
     portfolio$Plan.Sec.EmissionsFactor <- NULL
   }
 
+  if (hasName(market, "Scen.Sec.EmissionsFactor")) {
+    market$scen_sec_emissions_factor <- market$Scen.Sec.EmissionsFactor
+    market$Scen.Sec.EmissionsFactor <- NULL
+  }
+  if (hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
+    portfolio$scen_sec_emissions_factor <- portfolio$Scen.Sec.EmissionsFactor
+    portfolio$Scen.Sec.EmissionsFactor <- NULL
+  }
+
+
+
+
   crucial <- get_sda_crucial_vars()
   r2dii.utils::check_crucial_names(market, crucial)
   r2dii.utils::check_crucial_names(portfolio, crucial)
@@ -83,7 +95,7 @@ sda_portfolio_target <- function(market,
   target_year <- validate_target_year_by_sector(market, target_year, sector)
   message("* Using `target_year`:", target_year, ".")
 
-  distinct_vars <- c(get_sda_common_vars(), "Scen.Sec.EmissionsFactor", "Year")
+  distinct_vars <- c(get_sda_common_vars(), "scen_sec_emissions_factor", "Year")
 
   port_to_market <- create_port_to_market(
     market = market,
@@ -106,13 +118,16 @@ sda_portfolio_target <- function(market,
     target_year = target_year
   )
 
+
+
+
   right_join(
     create_porttomarket_distance(port_to_market, distance, distinct_vars),
     portfolio,
     by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
     suffix = c("", "_no_sda")
   ) %>%
-    select(-.data$Scen.Sec.EmissionsFactor_no_sda)
+    select(-.data$scen_sec_emissions_factor_no_sda)
 }
 
 check_ref <- function(market, portfolio, ref, col) {
@@ -228,14 +243,14 @@ create_distance <- function(market,
 
   ci_market <- market %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
-    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
-    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
+    filter(!is.na(.data[["scen_sec_emissions_factor"]])) %>%
+    rename(CI = .data$scen_sec_emissions_factor) %>%
     distinct(!!!distinct_vars)
 
   si <- market %>%
     filter(as.character(.data$Year) == as.character(target_year)) %>%
-    filter(!is.na(.data[["Scen.Sec.EmissionsFactor"]])) %>%
-    rename(CI = .data$Scen.Sec.EmissionsFactor) %>%
+    filter(!is.na(.data[["scen_sec_emissions_factor"]])) %>%
+    rename(CI = .data$scen_sec_emissions_factor) %>%
     distinct(!!!distinct_vars) %>%
     rename(SI = .data$CI)
 
@@ -278,7 +293,7 @@ create_port_to_market <- function(market,
 }
 
 create_porttomarket_distance <- function(port_to_market, distance, distinct_vars) {
-  porttomarket_distance <- inner_join(
+  inner_join(
     port_to_market, distance,
     by = c(
       get_sda_common_by(),
@@ -287,9 +302,9 @@ create_porttomarket_distance <- function(port_to_market, distance, distinct_vars
     )
   ) %>%
     mutate(
-      P_market = (.data$Scen.Sec.EmissionsFactor_market - .data$SI) /
+      P_market = (.data$scen_sec_emissions_factor_market - .data$SI) /
         (.data$CI_market - .data$SI),
-      Scen.Sec.EmissionsFactor = (.data$D_port * 1 * .data$P_market) + .data$SI
+      scen_sec_emissions_factor = (.data$D_port * 1 * .data$P_market) + .data$SI
     ) %>%
     select(!!!distinct_vars)
 }
@@ -336,7 +351,7 @@ get_sda_crucial_vars <- function() {
   c(
     get_sda_common_vars(),
     "plan_sec_emissions_factor",
-    "Scen.Sec.EmissionsFactor",
+    "scen_sec_emissions_factor",
     "Year"
   )
 }

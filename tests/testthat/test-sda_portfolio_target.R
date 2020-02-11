@@ -12,6 +12,15 @@ if (hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
   portfolio$Plan.Sec.EmissionsFactor <- NULL
 }
 
+if (hasName(market, "Scen.Sec.EmissionsFactor")) {
+  market$scen_sec_emissions_factor <- market$Scen.Sec.EmissionsFactor
+  market$Scen.Sec.EmissionsFactor <- NULL
+}
+if (hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
+  portfolio$scen_sec_emissions_factor <- portfolio$Scen.Sec.EmissionsFactor
+  portfolio$Scen.Sec.EmissionsFactor <- NULL
+}
+
 
 
 
@@ -331,7 +340,7 @@ test_that("passes w/ bad geography in `portfolio`", {
 test_that("outputs plan_sec_emissions_factor = NA after target_year (#19)", {
   portfolio <- market <- fake_portfolio(
     Year = 2021:2023,
-    Scen.Sec.EmissionsFactor = 1:3
+    scen_sec_emissions_factor = 1:3
   )
 
   out <- sda_portfolio_target(
@@ -343,5 +352,5 @@ test_that("outputs plan_sec_emissions_factor = NA after target_year (#19)", {
   )
 
   expect_equal(out$Year, c(2021, 2022, 2023))
-  expect_equal(out$Scen.Sec.EmissionsFactor[[3]], NA_real_)
+  expect_equal(out$scen_sec_emissions_factor[[3]], NA_real_)
 })

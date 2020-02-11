@@ -23,6 +23,8 @@ if (hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
 
 market <- dplyr::rename(market, year = .data$Year)
 portfolio <- dplyr::rename(portfolio, year = .data$Year)
+market <- dplyr::rename(market, investor_name = .data$Investor.Name)
+portfolio <- dplyr::rename(portfolio, investor_name = .data$Investor.Name)
 
 
 

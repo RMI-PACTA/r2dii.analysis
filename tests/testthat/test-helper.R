@@ -4,7 +4,7 @@ test_that("fake_portfolio adds a row", {
     Scenario = "B2DS",
     Sector = "Steel",
     year = 1:3L,
-    Investor.Name = "Market",
+    investor_name = "Market",
     Portfolio.Name = "GlobalMarket",
     Allocation = "PortfolioWeight",
     plan_sec_emissions_factor = 1,

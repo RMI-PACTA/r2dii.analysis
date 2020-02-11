@@ -124,7 +124,7 @@ sda_portfolio_target <- function(market,
   right_join(
     create_porttomarket_distance(port_to_market, distance, distinct_vars),
     portfolio,
-    by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name", "year"),
+    by = c(get_sda_common_by(), "investor_name", "Portfolio.Name", "year"),
     suffix = c("", "_no_sda")
   ) %>%
     select(-.data$scen_sec_emissions_factor_no_sda)
@@ -256,7 +256,7 @@ create_distance <- function(market,
 
   cimarket_si <- inner_join(
     ci_market, si,
-    by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name")
+    by = c(get_sda_common_by(), "investor_name", "Portfolio.Name")
   )
 
   inner_join(
@@ -281,7 +281,7 @@ create_port_to_market <- function(market,
         as.character(.data$year) <= as.character(target_year)
     ) %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
-    select(-c(.data$Investor.Name, .data$Portfolio.Name))
+    select(-c(.data$investor_name, .data$Portfolio.Name))
 
   rhs <- portfolio %>%
     distinct(!!!syms(distinct_vars))
@@ -297,7 +297,7 @@ create_porttomarket_distance <- function(port_to_market, distance, distinct_vars
     port_to_market, distance,
     by = c(
       get_sda_common_by(),
-      "Investor.Name" = "Investor.Name_port",
+      "investor_name" = "investor_name_port",
       "Portfolio.Name" = "Portfolio.Name_port"
     )
   ) %>%
@@ -342,7 +342,7 @@ get_sda_common_by <- function() {
 get_sda_common_vars <- function() {
   c(
     get_sda_common_by(),
-    "Investor.Name",
+    "investor_name",
     "Portfolio.Name"
   )
 }

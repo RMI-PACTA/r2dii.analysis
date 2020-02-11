@@ -86,7 +86,7 @@ sda_portfolio_target <- function(market,
   r2dii.utils::check_crucial_names(portfolio, crucial)
 
   check_ref(market, portfolio, ref = scenario, col = "scenario")
-  check_ref(market, portfolio, ref = geography, col = "ScenarioGeography")
+  check_ref(market, portfolio, ref = geography, col = "scenario_geography")
 
   sector <- validate_sector(market, portfolio, sector = sector)
   message("* Using `sector`: ", paste0(sector, collapse = ", "), ".")
@@ -335,7 +335,7 @@ get_sda_common_by <- function() {
     "allocation",
     "sector",
     "scenario",
-    "ScenarioGeography"
+    "scenario_geography"
   )
 }
 
@@ -364,6 +364,6 @@ pick_scenario_sector_and_geography <- function(data,
     filter(
       .data$scenario %in% scenario &
         .data$sector %in% sector &
-        .data$ScenarioGeography %in% geography
+        .data$scenario_geography %in% geography
     )
 }

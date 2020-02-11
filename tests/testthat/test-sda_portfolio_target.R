@@ -39,6 +39,9 @@ portfolio <- dplyr::rename(portfolio, sector = .data$Sector)
 market <- dplyr::rename(market,       scenario = .data$Scenario)
 portfolio <- dplyr::rename(portfolio, scenario = .data$Scenario)
 
+market <- dplyr::rename(market,       scenario_geography = .data$ScenarioGeography)
+portfolio <- dplyr::rename(portfolio, scenario_geography = .data$ScenarioGeography)
+
 
 
 test_that("errors gracefully with obviously wrong data", {
@@ -326,7 +329,7 @@ test_that("passes w/ bad scenario in `market`", {
 })
 
 test_that("passes w/ bad geography in `market`", {
-  fake_market$ScenarioGeography <- "bad"
+  fake_market$scenario_geography <- "bad"
 
   expect_error_free(
     sda_portfolio_target(
@@ -340,7 +343,7 @@ test_that("passes w/ bad geography in `market`", {
 })
 
 test_that("passes w/ bad geography in `portfolio`", {
-  fake_portfolio$ScenarioGeography <- "bad"
+  fake_portfolio$scenario_geography <- "bad"
 
   expect_error_free(
     sda_portfolio_target(

@@ -3,7 +3,7 @@
 
 read_and_sanitize <- function(path, sheet) {
   out <- readxl::read_excel(path, sheet = sheet)
-  out$Year <- as.integer(out$Year)
+  out$year <- as.integer(out$year)
   out
 }
 

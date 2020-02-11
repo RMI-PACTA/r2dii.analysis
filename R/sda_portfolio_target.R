@@ -95,7 +95,7 @@ sda_portfolio_target <- function(market,
   target_year <- validate_target_year_by_sector(market, target_year, sector)
   message("* Using `target_year`:", target_year, ".")
 
-  distinct_vars <- c(get_sda_common_vars(), "scen_sec_emissions_factor", "Year")
+  distinct_vars <- c(get_sda_common_vars(), "scen_sec_emissions_factor", "year")
 
   port_to_market <- create_port_to_market(
     market = market,
@@ -124,7 +124,7 @@ sda_portfolio_target <- function(market,
   right_join(
     create_porttomarket_distance(port_to_market, distance, distinct_vars),
     portfolio,
-    by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name", "Year"),
+    by = c(get_sda_common_by(), "Investor.Name", "Portfolio.Name", "year"),
     suffix = c("", "_no_sda")
   ) %>%
     select(-.data$scen_sec_emissions_factor_no_sda)
@@ -194,7 +194,7 @@ abort_null_start_year <- function(start_year) {
 
 find_years_by_sector <- function(market, sector) {
   picked_sectors <- filter(market, .data$Sector %in% sector)
-  years_by_sector <- split(picked_sectors$Year, picked_sectors$Sector)
+  years_by_sector <- split(picked_sectors$year, picked_sectors$Sector)
   purrr::reduce(years_by_sector, intersect)
 }
 
@@ -219,7 +219,7 @@ abort_bad_year <- function(data, year) {
   year_has_length_1 <- identical(length(year), 1L)
   stopifnot(year_has_length_1, is.character(year) || is.numeric(year))
 
-  is_year_in_data <- any(year %in% unique(data$Year))
+  is_year_in_data <- any(year %in% unique(data$year))
   stopifnot(is_year_in_data)
 
   invisible(year)
@@ -236,19 +236,19 @@ create_distance <- function(market,
 
   ci_port <- portfolio %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
-    filter(as.character(.data$Year) == as.character(start_year)) %>%
+    filter(as.character(.data$year) == as.character(start_year)) %>%
     filter(!is.na(.data[["plan_sec_emissions_factor"]])) %>%
     rename(CI = .data$plan_sec_emissions_factor) %>%
     distinct(!!!distinct_vars)
 
   ci_market <- market %>%
-    filter(as.character(.data$Year) == as.character(start_year)) %>%
+    filter(as.character(.data$year) == as.character(start_year)) %>%
     filter(!is.na(.data[["scen_sec_emissions_factor"]])) %>%
     rename(CI = .data$scen_sec_emissions_factor) %>%
     distinct(!!!distinct_vars)
 
   si <- market %>%
-    filter(as.character(.data$Year) == as.character(target_year)) %>%
+    filter(as.character(.data$year) == as.character(target_year)) %>%
     filter(!is.na(.data[["scen_sec_emissions_factor"]])) %>%
     rename(CI = .data$scen_sec_emissions_factor) %>%
     distinct(!!!distinct_vars) %>%
@@ -277,8 +277,8 @@ create_port_to_market <- function(market,
   lhs <- market %>%
     distinct(!!!syms(distinct_vars)) %>%
     filter(
-      as.character(.data$Year) >= as.character(start_year) &
-        as.character(.data$Year) <= as.character(target_year)
+      as.character(.data$year) >= as.character(start_year) &
+        as.character(.data$year) <= as.character(target_year)
     ) %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     select(-c(.data$Investor.Name, .data$Portfolio.Name))
@@ -288,7 +288,7 @@ create_port_to_market <- function(market,
 
   port_to_market <- inner_join(
     lhs, rhs,
-    by = c(get_sda_common_by(), "Year"), suffix = c("_port", "_market")
+    by = c(get_sda_common_by(), "year"), suffix = c("_port", "_market")
   )
 }
 
@@ -352,7 +352,7 @@ get_sda_crucial_vars <- function() {
     get_sda_common_vars(),
     "plan_sec_emissions_factor",
     "scen_sec_emissions_factor",
-    "Year"
+    "year"
   )
 }
 

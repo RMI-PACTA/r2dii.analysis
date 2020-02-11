@@ -21,7 +21,8 @@ if (hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
   portfolio$Scen.Sec.EmissionsFactor <- NULL
 }
 
-
+market <- dplyr::rename(market, year = .data$Year)
+portfolio <- dplyr::rename(portfolio, year = .data$Year)
 
 
 
@@ -29,7 +30,7 @@ test_that("errors gracefully with obviously wrong data", {
   expect_error(sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE")
   expect_error(sda_portfolio_target(fake_market, 1), "data.frame.* is not TRUE")
 
-  bad_market <- rename(fake_market, bad = .data$Year)
+  bad_market <- rename(fake_market, bad = .data$year)
   expect_error(
     class = "missing_names",
     sda_portfolio_target(bad_market, portfolio)
@@ -161,7 +162,7 @@ test_that("takes chr, num, or int 'year' arguments", {
 
 test_that("uses start_year from configuration file", {
   start_year <- r2dii.utils::START.YEAR(example_config("config_demo.yml"))
-  market <- portfolio <- fake_portfolio(Year = c(start_year, start_year + 1))
+  market <- portfolio <- fake_portfolio(year = c(start_year, start_year + 1))
 
   expect_error_free(
     sda_portfolio_target(
@@ -221,7 +222,7 @@ test_that("uses max target_year in all market-sector (#13)", {
   # https://github.com/2DegreesInvesting/r2dii.analysis/issues/13
   market <- portfolio <- fake_portfolio(
     Sector = c("Steel", "Steel", "Power"),
-    Year = c(2019, 2020, 2019)
+    year = c(2019, 2020, 2019)
   )
 
   expect_error(
@@ -339,7 +340,7 @@ test_that("passes w/ bad geography in `portfolio`", {
 
 test_that("outputs plan_sec_emissions_factor = NA after target_year (#19)", {
   portfolio <- market <- fake_portfolio(
-    Year = 2021:2023,
+    year = 2021:2023,
     scen_sec_emissions_factor = 1:3
   )
 
@@ -351,6 +352,6 @@ test_that("outputs plan_sec_emissions_factor = NA after target_year (#19)", {
     target_year = 2022
   )
 
-  expect_equal(out$Year, c(2021, 2022, 2023))
+  expect_equal(out$year, c(2021, 2022, 2023))
   expect_equal(out$scen_sec_emissions_factor[[3]], NA_real_)
 })

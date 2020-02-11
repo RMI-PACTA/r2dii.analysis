@@ -2,7 +2,7 @@ test_that("fake_portfolio adds a row", {
   expected <- tibble::tibble(
     ScenarioGeography = "Global",
     Scenario = "B2DS",
-    Sector = "Steel",
+    sector = "Steel",
     year = 1:3L,
     investor_name = "Market",
     portfolio_name = "GlobalMarket",

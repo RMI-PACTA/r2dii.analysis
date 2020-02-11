@@ -89,11 +89,11 @@ sda_portfolio_target <- function(market,
   check_ref(market, portfolio, ref = geography, col = "ScenarioGeography")
 
   sector <- validate_sector(market, portfolio, sector = sector)
-  message("* Using `sector`:", paste0(sector, collapse = ", "), ".")
+  message("* Using `sector`: ", paste0(sector, collapse = ", "), ".")
   start_year <- validate_start_year(market, portfolio, start_year)
-  message("* Using `start_year`:", start_year, ".")
+  message("* Using `start_year`: ", start_year, ".")
   target_year <- validate_target_year_by_sector(market, target_year, sector)
-  message("* Using `target_year`:", target_year, ".")
+  message("* Using `target_year`: ", target_year, ".")
 
   distinct_vars <- c(get_sda_common_vars(), "scen_sec_emissions_factor", "year")
 
@@ -146,7 +146,7 @@ check_ref <- function(market, portfolio, ref, col) {
 
 validate_sector <- function(market, portfolio, sector) {
   sector <- sector %||% get_sectors()
-  useful <- intersect(market$Sector, portfolio$Sector)
+  useful <- intersect(market$sector, portfolio$sector)
 
   sector_in_data <- intersect(sector, useful)
   using <- abort_cant_find(sector_in_data)
@@ -192,14 +192,14 @@ abort_null_start_year <- function(start_year) {
   invisible(start_year)
 }
 
-find_years_by_sector <- function(market, sector) {
-  picked_sectors <- filter(market, .data$Sector %in% sector)
-  years_by_sector <- split(picked_sectors$year, picked_sectors$Sector)
-  purrr::reduce(years_by_sector, intersect)
+find_years_by_sector <- function(market, sectors) {
+  picked_sectors <- filter(market, .data$sector %in% sectors)
+  split(picked_sectors$year, picked_sectors$sector) %>%
+    purrr::reduce(intersect)
 }
 
 validate_target_year_by_sector <- function(market, target_year, sector) {
-  useful_years <- find_years_by_sector(market, sector = sector)
+  useful_years <- market %>% find_years_by_sector(sector)
 
   if (is.null(target_year)) {
     return(max(useful_years))
@@ -333,7 +333,7 @@ get_sectors <- function() {
 get_sda_common_by <- function() {
   c(
     "allocation",
-    "Sector",
+    "sector",
     "Scenario",
     "ScenarioGeography"
   )
@@ -363,7 +363,7 @@ pick_scenario_sector_and_geography <- function(data,
   data %>%
     filter(
       .data$Scenario %in% scenario &
-        .data$Sector %in% sector &
+        .data$sector %in% sector &
         .data$ScenarioGeography %in% geography
     )
 }

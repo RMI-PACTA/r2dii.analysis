@@ -33,6 +33,9 @@ portfolio <- dplyr::rename(portfolio, portfolio_name = .data$Portfolio.Name)
 market <- dplyr::rename(market, allocation = .data$Allocation)
 portfolio <- dplyr::rename(portfolio, allocation = .data$Allocation)
 
+market <- dplyr::rename(market,       sector = .data$Sector)
+portfolio <- dplyr::rename(portfolio, sector = .data$Sector)
+
 
 
 test_that("errors gracefully with obviously wrong data", {
@@ -230,7 +233,7 @@ test_that("outputs a known value", {
 test_that("uses max target_year in all market-sector (#13)", {
   # https://github.com/2DegreesInvesting/r2dii.analysis/issues/13
   market <- portfolio <- fake_portfolio(
-    Sector = c("Steel", "Steel", "Power"),
+    sector = c("Steel", "Steel", "Power"),
     year = c(2019, 2020, 2019)
   )
 
@@ -264,7 +267,7 @@ test_that("uses max target_year in all market-sector (#13)", {
 })
 
 test_that("errors if sector is missing from `portfolio`", {
-  fake_portfolio$Sector <- NULL
+  fake_portfolio$sector <- NULL
 
   expect_error(
     class = "missing_names",
@@ -278,7 +281,7 @@ test_that("errors if sector is missing from `portfolio`", {
 })
 
 test_that("errors if sector is missing from market", {
-  fake_market$Sector <- NULL
+  fake_market$sector <- NULL
 
   expect_error(
     class = "missing_names",

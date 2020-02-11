@@ -36,6 +36,9 @@ portfolio <- dplyr::rename(portfolio, allocation = .data$Allocation)
 market <- dplyr::rename(market,       sector = .data$Sector)
 portfolio <- dplyr::rename(portfolio, sector = .data$Sector)
 
+market <- dplyr::rename(market,       scenario = .data$Scenario)
+portfolio <- dplyr::rename(portfolio, scenario = .data$Scenario)
+
 
 
 test_that("errors gracefully with obviously wrong data", {
@@ -295,7 +298,7 @@ test_that("errors if sector is missing from market", {
 })
 
 test_that("passes w/ bad scenario in `portfolio`", {
-  fake_portfolio$Scenario <- "bad"
+  fake_portfolio$scenario <- "bad"
 
   expect_error_free(
     sda_portfolio_target(
@@ -309,7 +312,7 @@ test_that("passes w/ bad scenario in `portfolio`", {
 })
 
 test_that("passes w/ bad scenario in `market`", {
-  fake_market$Scenario <- "bad"
+  fake_market$scenario <- "bad"
 
   expect_error_free(
     sda_portfolio_target(

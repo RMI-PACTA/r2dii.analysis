@@ -1,6 +1,6 @@
 fake_portfolio <- function(year = NULL,
                            ScenarioGeography = NULL,
-                           Scenario = NULL,
+                           scenario = NULL,
                            sector = NULL,
                            investor_name = NULL,
                            portfolio_name = NULL,
@@ -10,7 +10,7 @@ fake_portfolio <- function(year = NULL,
                            ...) {
   tibble::tibble(
     ScenarioGeography = ScenarioGeography %||% "Global",
-    Scenario = Scenario %||% "B2DS",
+    scenario = scenario %||% "B2DS",
     sector = sector %||% "Steel",
     year = year %||% 2021L,
     investor_name = investor_name %||% "Market",

@@ -325,7 +325,7 @@ get_sda_common_vars <- function() {
 }
 
 get_sda_crucial_vars <- function() {
-  crucial <- c(
+  c(
     get_sda_common_vars(),
     "Plan.Sec.EmissionsFactor",
     "Scen.Sec.EmissionsFactor",

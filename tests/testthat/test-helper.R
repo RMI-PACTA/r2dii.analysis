@@ -7,7 +7,7 @@ test_that("fake_portfolio adds a row", {
     Investor.Name = "Market",
     Portfolio.Name = "GlobalMarket",
     Allocation = "PortfolioWeight",
-    Plan.Sec.EmissionsFactor = 1,
+    plan_sec_emissions_factor = 1,
     Scen.Sec.EmissionsFactor = 1:3,
   )
   expect_equal(

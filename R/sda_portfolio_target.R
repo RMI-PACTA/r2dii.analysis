@@ -58,7 +58,21 @@ sda_portfolio_target <- function(market,
                                  sector = NULL,
                                  start_year = NULL,
                                  target_year = NULL) {
-  check_market_portfolio(market, portfolio, crucial = get_sda_crucial_vars())
+  stopifnot(is.data.frame(market), is.data.frame(portfolio))
+
+  if (hasName(market, "Plan.Sec.EmissionsFactor")) {
+    market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
+    market$Plan.Sec.EmissionsFactor <- NULL
+  }
+  if (hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
+    portfolio$plan_sec_emissions_factor <- portfolio$Plan.Sec.EmissionsFactor
+    portfolio$Plan.Sec.EmissionsFactor <- NULL
+  }
+
+  crucial <- get_sda_crucial_vars()
+  r2dii.utils::check_crucial_names(market, crucial)
+  r2dii.utils::check_crucial_names(portfolio, crucial)
+
   check_ref(market, portfolio, ref = scenario, col = "Scenario")
   check_ref(market, portfolio, ref = geography, col = "ScenarioGeography")
 
@@ -99,12 +113,6 @@ sda_portfolio_target <- function(market,
     suffix = c("", "_no_sda")
   ) %>%
     select(-.data$Scen.Sec.EmissionsFactor_no_sda)
-}
-
-check_market_portfolio <- function(market, portfolio, crucial) {
-  stopifnot(is.data.frame(market), is.data.frame(portfolio))
-  r2dii.utils::check_crucial_names(market, crucial)
-  r2dii.utils::check_crucial_names(portfolio, crucial)
 }
 
 check_ref <- function(market, portfolio, ref, col) {
@@ -214,8 +222,8 @@ create_distance <- function(market,
   ci_port <- portfolio %>%
     pick_scenario_sector_and_geography(scenario, sector, geography) %>%
     filter(as.character(.data$Year) == as.character(start_year)) %>%
-    filter(!is.na(.data[["Plan.Sec.EmissionsFactor"]])) %>%
-    rename(CI = .data$Plan.Sec.EmissionsFactor) %>%
+    filter(!is.na(.data[["plan_sec_emissions_factor"]])) %>%
+    rename(CI = .data$plan_sec_emissions_factor) %>%
     distinct(!!!distinct_vars)
 
   ci_market <- market %>%
@@ -327,7 +335,7 @@ get_sda_common_vars <- function() {
 get_sda_crucial_vars <- function() {
   c(
     get_sda_common_vars(),
-    "Plan.Sec.EmissionsFactor",
+    "plan_sec_emissions_factor",
     "Scen.Sec.EmissionsFactor",
     "Year"
   )

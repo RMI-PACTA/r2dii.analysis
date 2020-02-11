@@ -3,6 +3,19 @@ library(r2dii.utils)
 
 fake_market <- fake_portfolio <- fake_portfolio(2021:2022)
 
+if (hasName(market, "Plan.Sec.EmissionsFactor")) {
+  market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
+  market$Plan.Sec.EmissionsFactor <- NULL
+}
+if (hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
+  portfolio$plan_sec_emissions_factor <- portfolio$Plan.Sec.EmissionsFactor
+  portfolio$Plan.Sec.EmissionsFactor <- NULL
+}
+
+
+
+
+
 test_that("errors gracefully with obviously wrong data", {
   expect_error(sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE")
   expect_error(sda_portfolio_target(fake_market, 1), "data.frame.* is not TRUE")
@@ -13,7 +26,7 @@ test_that("errors gracefully with obviously wrong data", {
     sda_portfolio_target(bad_market, portfolio)
   )
 
-  bad_portfolio <- rename(portfolio, bad = .data$Plan.Sec.EmissionsFactor)
+  bad_portfolio <- rename(portfolio, bad = .data$plan_sec_emissions_factor)
   expect_error(
     class = "missing_names",
     sda_portfolio_target(fake_market, bad_portfolio)
@@ -315,7 +328,7 @@ test_that("passes w/ bad geography in `portfolio`", {
   )
 })
 
-test_that("outputs Plan.Sec.EmissionsFactor = NA after target_year (#19)", {
+test_that("outputs plan_sec_emissions_factor = NA after target_year (#19)", {
   portfolio <- market <- fake_portfolio(
     Year = 2021:2023,
     Scen.Sec.EmissionsFactor = 1:3

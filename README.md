@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> TODO Add description
+# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Tools for Climate Scenario Analysis
 
 <!-- badges: start -->
 
@@ -10,7 +10,8 @@
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 <!-- badges: end -->
 
-The goal of r2dii.analysis is to TODO add goal.
+The goal of r2dii.analysis is to provide a suite of metrics and analysis
+tools commonly used for climate scenario analysis.
 
 ## Installation
 

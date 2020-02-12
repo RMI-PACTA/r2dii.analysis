@@ -1,5 +1,5 @@
 Package: r2dii.analysis
-Title: TODO What the Package Does (One Line, Title Case)
+Title: Tools for Climate Scenario Analysis
 Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Clare",
@@ -15,10 +15,17 @@ Authors@R:
              role = "aut",
              email = "maurolepore@gmail.com",
              comment = c(ORCID = "0000-0002-1986-7988")),
+      person(given = "Jackson",
+             family = "Hoffart",
+             role = "aut",
+             email = "jackson@2degrees-investing.org",
+             comment = c(ORCID = "0000-0002-8600-5042")),
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: TODO Add description.
+Description: Provides a suite of metrics and analysis tools
+    commonly used for climate scenario analysis. For more
+    information visit <https://2degrees-investing.org/>.
 License: GPL-3 + file LICENSE
 URL: https://github.com/2DegreesInvesting/r2dii.analysis
 BugReports: 
@@ -35,6 +42,8 @@ Imports:
     tibble
 Suggests: 
     roxygen2,
+    r2dii.dataraw (>= 0.0.2.9000),
+    r2dii.match (>= 0.0.0.9004),
     testthat (>= 2.1.0),
     withr
 Encoding: UTF-8

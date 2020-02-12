@@ -28,6 +28,7 @@ matched_loanbook <- match_name(loanbook_demo, ald_demo) \%>\%
   prioritize()
 
 join_portfolio_ald_scenario(matched_loanbook,
-                            ald = ald_demo,
-                            scenario = scenario_demo)
+  ald = ald_demo,
+  scenario = scenario_demo
+)
 }

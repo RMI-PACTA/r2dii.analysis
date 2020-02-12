@@ -36,7 +36,7 @@ join_portfolio_ald_scenario <- function(match_result,
   match_result %>%
     left_join(ald, by = c("name_ald" = "name_company", "sector_ald" = "sector")) %>%
     inner_join(scenario, by = c("sector_ald" = "sector", "technology" = "technology", "year" = "year")) %>%
-    dplyr::select(dplyr::one_of(interesting_scenario_columns()))
+    select(suppressWarnings(one_of(interesting_scenario_columns())))
 }
 
 interesting_scenario_columns <- function() {

@@ -16,15 +16,15 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
     )
   }
 
-  expect_error_class_missing_names(invalid(fake_matched(), "name_ald"))
-  expect_error_class_missing_names(invalid(fake_matched(), "sector_ald"))
+  expect_error_class_missing_names(match_result = invalid(fake_matched(), "name_ald"))
+  expect_error_class_missing_names(match_result = invalid(fake_matched(), "sector_ald"))
 
-  expect_error_class_missing_names(invalid(fake_ald(), "name_company"))
-  expect_error_class_missing_names(invalid(fake_ald(), "sector"))
-  expect_error_class_missing_names(invalid(fake_ald(), "technology"))
-  expect_error_class_missing_names(invalid(fake_ald(), "year"))
+  expect_error_class_missing_names(ald = invalid(fake_ald(), "name_company"))
+  expect_error_class_missing_names(ald = invalid(fake_ald(), "sector"))
+  expect_error_class_missing_names(ald = invalid(fake_ald(), "technology"))
+  expect_error_class_missing_names(ald = invalid(fake_ald(), "year"))
 
-  expect_error_class_missing_names(invalid(fake_scenario(), "sector"))
-  expect_error_class_missing_names(invalid(fake_scenario(), "technology"))
-  expect_error_class_missing_names(invalid(fake_scenario(), "year"))
+  expect_error_class_missing_names(scenario = invalid(fake_scenario(), "sector"))
+  expect_error_class_missing_names(scenario = invalid(fake_scenario(), "technology"))
+  expect_error_class_missing_names(scenario = invalid(fake_scenario(), "year"))
 })

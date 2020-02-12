@@ -1,4 +1,5 @@
 library(r2dii.dataraw)
+library(r2dii.match)
 
 test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   bad <- function(data, x) dplyr::rename(data, bad = x)
@@ -23,4 +24,16 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   expect_error_missing_names(scenario = bad(fake_scenario(), "sector"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "technology"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "year"))
+})
+
+test_that("outputs the same as @jdhoffa's initial example", {
+  expect_error_free(
+    out <- join_portfolio_ald_scenario(
+      prioritize(match_name(loanbook_demo, ald_demo)),
+      ald = ald_demo,
+      scenario = scenario_demo
+    )
+  )
+
+  expect_known_value(out, "ref-join_portfolio_ald_scenario", update = FALSE)
 })

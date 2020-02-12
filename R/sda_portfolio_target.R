@@ -60,6 +60,11 @@ sda_portfolio_target <- function(market,
                                  target_year = NULL) {
   stopifnot(is.data.frame(market), is.data.frame(portfolio))
 
+  old_market <- market
+  old_portfolio <- portfolio
+  market <- r2dii.utils::clean_column_names(market)
+  portfolio <- r2dii.utils::clean_column_names(portfolio)
+
   if (hasName(market, "Plan.Sec.EmissionsFactor")) {
     market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
     market$Plan.Sec.EmissionsFactor <- NULL
@@ -118,16 +123,15 @@ sda_portfolio_target <- function(market,
     target_year = target_year
   )
 
-
-
-
-  right_join(
+  out <- right_join(
     create_porttomarket_distance(port_to_market, distance, distinct_vars),
     portfolio,
     by = c(get_sda_common_by(), "investor_name", "portfolio_name", "year"),
     suffix = c("", "_no_sda")
   ) %>%
     select(-.data$scen_sec_emissions_factor_no_sda)
+
+  out %>% r2dii.utils::unclean_column_names(unclean = old_market)
 }
 
 check_ref <- function(market, portfolio, ref, col) {

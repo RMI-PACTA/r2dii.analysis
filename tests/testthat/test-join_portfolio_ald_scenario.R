@@ -28,23 +28,21 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
 
 test_that("outputs the same as @jdhoffa's initial example", {
   expect_error_free(
-    out <- join_portfolio_ald_scenario(
+    join_portfolio_ald_scenario(
       prioritize(match_name(loanbook_demo, ald_demo)),
       ald = ald_demo,
       scenario = scenario_demo
     ) %>%
       dplyr::select(interesting_scenario_columns())
   )
-
-  expect_known_value(out, "ref-join_portfolio_ald_scenario", update = FALSE)
 })
 
-test_that("works with fake_*() data", {
-  expect_error_free(
-    join_portfolio_ald_scenario(
-      fake_matched(),
-      ald = fake_ald(),
-      scenario = fake_scenario()
-    )
+test_that("with fake data outputs known value", {
+  out <- join_portfolio_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(),
+    scenario = fake_scenario()
   )
+
+  expect_known_value(out, "ref-join_portfolio_ald_scenario", update = FALSE)
 })

@@ -25,6 +25,10 @@ join_portfolio_ald_scenario <- function(match_result,
                                         ald,
                                         scenario) {
 
+  check_crucial_names(match_result, c("name_ald", "sector_ald"))
+  check_crucial_names(ald, c("name_company", "sector", "technology", "year"))
+  check_crucial_names(scenario, c("sector", "technology", "year"))
+
   interesting_columns <- c("id_loan", "loan_size_outstanding", "loan_size_credit_limit", "id_2dii", "level",
                            "sector", "technology", "name", "name_ald", "year",
                            "production","production_unit", "emission_factor", "plant_location",

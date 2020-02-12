@@ -373,3 +373,38 @@ test_that("outputs plan_sec_emissions_factor = NA after target_year (#19)", {
   expect_equal(out$year, c(2021, 2022, 2023))
   expect_equal(out$scen_sec_emissions_factor[[3]], NA_real_)
 })
+
+test_that("with unclean market outpus unclean names", {
+  market <- portfolio <- fake_portfolio(2019:2020)
+  market <- dplyr::rename(market, Year = .data$year)
+  out <- sda_portfolio_target(
+    market, portfolio,
+    start_year = 2019, sector = "Steel"
+  )
+
+  expect_true(hasName(out, "Year"))
+})
+
+test_that("with clean market outpus clean names", {
+  market <- portfolio <- fake_portfolio(2019:2020)
+  out <- sda_portfolio_target(
+    market, portfolio,
+    start_year = 2019, sector = "Steel"
+  )
+
+  expect_true(hasName(out, "year"))
+  expect_false(hasName(out, "Year"))
+  expect_true(hasName(out, "sector"))
+  expect_false(hasName(out, "Sector"))
+})
+
+test_that("with clean market and unclean portfolio, outpus clean market", {
+  market <- portfolio <- fake_portfolio(2019:2020)
+  market <- dplyr::rename(market, Year = .data$year)
+  out <- sda_portfolio_target(
+    market, portfolio,
+    start_year = 2019, sector = "Steel"
+  )
+
+  expect_true(hasName(out, "Year"))
+})

@@ -3,20 +3,20 @@ library(r2dii.utils)
 
 fake_market <- fake_portfolio <- fake_portfolio(2021:2022)
 
-if (hasName(market, "Plan.Sec.EmissionsFactor")) {
+if (utils::hasName(market, "Plan.Sec.EmissionsFactor")) {
   market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
   market$Plan.Sec.EmissionsFactor <- NULL
 }
-if (hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
+if (utils::hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
   portfolio$plan_sec_emissions_factor <- portfolio$Plan.Sec.EmissionsFactor
   portfolio$Plan.Sec.EmissionsFactor <- NULL
 }
 
-if (hasName(market, "Scen.Sec.EmissionsFactor")) {
+if (utils::hasName(market, "Scen.Sec.EmissionsFactor")) {
   market$scen_sec_emissions_factor <- market$Scen.Sec.EmissionsFactor
   market$Scen.Sec.EmissionsFactor <- NULL
 }
-if (hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
+if (utils::hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
   portfolio$scen_sec_emissions_factor <- portfolio$Scen.Sec.EmissionsFactor
   portfolio$Scen.Sec.EmissionsFactor <- NULL
 }
@@ -382,7 +382,7 @@ test_that("with unclean market outpus unclean names", {
     start_year = 2019, sector = "Steel"
   )
 
-  expect_true(hasName(out, "Year"))
+  expect_true(utils::hasName(out, "Year"))
 })
 
 test_that("with clean market outpus clean names", {
@@ -392,10 +392,10 @@ test_that("with clean market outpus clean names", {
     start_year = 2019, sector = "Steel"
   )
 
-  expect_true(hasName(out, "year"))
-  expect_false(hasName(out, "Year"))
-  expect_true(hasName(out, "sector"))
-  expect_false(hasName(out, "Sector"))
+  expect_true(utils::hasName(out, "year"))
+  expect_false(utils::hasName(out, "Year"))
+  expect_true(utils::hasName(out, "sector"))
+  expect_false(utils::hasName(out, "Sector"))
 })
 
 test_that("with clean market and unclean portfolio, outpus clean market", {
@@ -406,5 +406,5 @@ test_that("with clean market and unclean portfolio, outpus clean market", {
     start_year = 2019, sector = "Steel"
   )
 
-  expect_true(hasName(out, "Year"))
+  expect_true(utils::hasName(out, "Year"))
 })

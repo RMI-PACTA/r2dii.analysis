@@ -65,20 +65,20 @@ sda_portfolio_target <- function(market,
   market <- r2dii.utils::clean_column_names(market)
   portfolio <- r2dii.utils::clean_column_names(portfolio)
 
-  if (hasName(market, "Plan.Sec.EmissionsFactor")) {
+  if (utils::hasName(market, "Plan.Sec.EmissionsFactor")) {
     market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
     market$Plan.Sec.EmissionsFactor <- NULL
   }
-  if (hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
+  if (utils::hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
     portfolio$plan_sec_emissions_factor <- portfolio$Plan.Sec.EmissionsFactor
     portfolio$Plan.Sec.EmissionsFactor <- NULL
   }
 
-  if (hasName(market, "Scen.Sec.EmissionsFactor")) {
+  if (utils::hasName(market, "Scen.Sec.EmissionsFactor")) {
     market$scen_sec_emissions_factor <- market$Scen.Sec.EmissionsFactor
     market$Scen.Sec.EmissionsFactor <- NULL
   }
-  if (hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
+  if (utils::hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
     portfolio$scen_sec_emissions_factor <- portfolio$Scen.Sec.EmissionsFactor
     portfolio$Scen.Sec.EmissionsFactor <- NULL
   }

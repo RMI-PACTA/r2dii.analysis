@@ -1,13 +1,16 @@
 #' Join a matched-loanbook object to the ald and scenario
 #'
-#'  `join_portfolio_ald_scenario()` is a simple wrapper of several calls to `join()` functions, forming the
-#'  master dataset to be used in later steps of the analysis.
+#' `join_portfolio_ald_scenario()` is a simple wrapper of several calls to
+#' `join()` functions, forming the master dataset to be used in later steps of
+#' the analysis.
 #'
-#' @param match_result A dataframe like the output of [r2dii.match::prioritize()]
-#' @param ald An asset level dataframe like [r2dii.dataraw::ald_demo]
-#' @param scenario A scenario dataframe like [r2dii.dataraw::scenario_demo]
+#' @param match_result A dataframe like the output of
+#'   [r2dii.match::prioritize()].
+#' @param ald An asset level dataframe like [r2dii.dataraw::ald_demo].
+#' @param scenario A scenario dataframe like [r2dii.dataraw::scenario_demo].
 #'
-#' @return Returns a fully joined dataframe, linking portfolio, ald and scenario.
+#' @return Returns a fully joined dataframe, linking portfolio, ald and
+#'   scenario.
 #' @export
 #'
 #' @examples
@@ -24,6 +27,7 @@
 join_portfolio_ald_scenario <- function(match_result,
                                         ald,
                                         scenario) {
+
   check_crucial_names(match_result, c("name_ald", "sector_ald"))
   check_crucial_names(ald, c("name_company", "sector", "technology", "year"))
   check_crucial_names(scenario, c("sector", "technology", "year"))

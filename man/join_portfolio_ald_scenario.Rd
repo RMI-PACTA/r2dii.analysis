@@ -7,18 +7,21 @@
 join_portfolio_ald_scenario(match_result, ald, scenario)
 }
 \arguments{
-\item{match_result}{A dataframe like the output of \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}}
+\item{match_result}{A dataframe like the output of
+\code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
-\item{ald}{An asset level dataframe like \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}}
+\item{ald}{An asset level dataframe like \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.}
 
-\item{scenario}{A scenario dataframe like \link[r2dii.dataraw:scenario_demo]{r2dii.dataraw::scenario_demo}}
+\item{scenario}{A scenario dataframe like \link[r2dii.dataraw:scenario_demo]{r2dii.dataraw::scenario_demo}.}
 }
 \value{
-Returns a fully joined dataframe, linking portfolio, ald and scenario.
+Returns a fully joined dataframe, linking portfolio, ald and
+scenario.
 }
 \description{
-\code{join_portfolio_ald_scenario()} is a simple wrapper of several calls to \code{join()} functions, forming the
-master dataset to be used in later steps of the analysis.
+\code{join_portfolio_ald_scenario()} is a simple wrapper of several calls to
+\code{join()} functions, forming the master dataset to be used in later steps of
+the analysis.
 }
 \examples{
 library(r2dii.dataraw)

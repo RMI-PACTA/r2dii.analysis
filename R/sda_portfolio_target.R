@@ -86,7 +86,7 @@ sda_portfolio_target <- function(market,
 
 
 
-
+  # TODO: Extract check_this_function()
   crucial <- get_sda_crucial_vars()
   r2dii.utils::check_crucial_names(market, crucial)
   r2dii.utils::check_crucial_names(portfolio, crucial)

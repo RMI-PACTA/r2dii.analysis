@@ -3,16 +3,12 @@ library(r2dii.dataraw)
 test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   bad <- function(data, x) dplyr::rename(data, bad = x)
 
-  expect_error_missing_names <- function(match_result = NULL,
-                                               ald = NULL,
-                                               scenario = NULL) {
+  expect_error_missing_names <- function(match_result = fake_matched(),
+                                         ald = fake_ald(),
+                                         scenario = fake_scenario()) {
     expect_error(
       class = "missing_names",
-      join_portfolio_ald_scenario(
-        match_result %||% fake_matched(),
-        ald %||% fake_ald(),
-        scenario %||% fake_scenario()
-      )
+      join_portfolio_ald_scenario(match_result, ald, scenario)
     )
   }
 

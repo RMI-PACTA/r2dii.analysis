@@ -30,32 +30,31 @@ join_portfolio_ald_scenario <- function(match_result,
   check_portfolio_ald_scenario(match_result, ald, scenario)
 
   match_result %>%
-    join_ald(ald) %>%
-    join_scenario(scenario) %>%
+    left_join(ald, by = ald_columns()) %>%
+    inner_join(scenario, by = scenario_columns()) %>%
     select(suppressWarnings(one_of(interesting_scenario_columns())))
 }
 
 check_portfolio_ald_scenario <- function(match_result, ald, scenario) {
-  check_crucial_names(match_result, c("name_ald", "sector_ald"))
-  check_crucial_names(ald, c("name_company", "sector", "technology", "year"))
-  check_crucial_names(scenario, c("sector", "technology", "year"))
+  check_crucial_names(match_result, names(ald_columns()))
+  check_crucial_names(ald, c("name_company", unname(scenario_columns())))
+  check_crucial_names(scenario, scenario_columns())
 
   invisible(match_result)
 }
 
-join_ald <- function(data, ald) {
-  left_join(
-    data, ald,
-    by = c("name_ald" = "name_company", "sector_ald" = "sector")
+ald_columns <- function() {
+  c(
+    name_ald = "name_company",
+    sector_ald = "sector"
   )
 }
 
-join_scenario <- function(data, scenario) {
-  inner_join(
-    data, scenario,
-    by = c(
-      "sector_ald" = "sector", "technology" = "technology", "year" = "year"
-    )
+scenario_columns <- function() {
+  c(
+    sector_ald = "sector",
+    technology = "technology",
+    year = "year"
   )
 }
 
@@ -66,11 +65,9 @@ interesting_scenario_columns <- function() {
     "loan_size_credit_limit",
     "id_2dii",
     "level",
-    "sector",
-    "technology",
+    scenario_columns(),
     "name",
     "name_ald",
-    "year",
     "production",
     "production_unit",
     "emission_factor",

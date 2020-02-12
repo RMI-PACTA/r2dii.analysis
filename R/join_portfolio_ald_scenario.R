@@ -34,7 +34,7 @@ join_portfolio_ald_scenario <- function(match_result,
 
   match_result %>%
     join_ald(ald) %>%
-    inner_join(scenario, by = c("sector_ald" = "sector", "technology" = "technology", "year" = "year")) %>%
+    join_scenario(scenario) %>%
     select(suppressWarnings(one_of(interesting_scenario_columns())))
 }
 
@@ -42,6 +42,15 @@ join_ald <- function(data, ald) {
   left_join(
     data, ald,
     by = c("name_ald" = "name_company", "sector_ald" = "sector")
+  )
+}
+
+join_scenario <- function(data, scenario) {
+  inner_join(
+    data, scenario,
+    by = c(
+      "sector_ald" = "sector", "technology" = "technology", "year" = "year"
+    )
   )
 }
 

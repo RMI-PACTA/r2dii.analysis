@@ -27,15 +27,20 @@
 join_portfolio_ald_scenario <- function(match_result,
                                         ald,
                                         scenario) {
-
-  check_crucial_names(match_result, c("name_ald", "sector_ald"))
-  check_crucial_names(ald, c("name_company", "sector", "technology", "year"))
-  check_crucial_names(scenario, c("sector", "technology", "year"))
+  check_portfolio_ald_scenario(match_result, ald, scenario)
 
   match_result %>%
     join_ald(ald) %>%
     join_scenario(scenario) %>%
     select(suppressWarnings(one_of(interesting_scenario_columns())))
+}
+
+check_portfolio_ald_scenario <- function(match_result, ald, scenario) {
+  check_crucial_names(match_result, c("name_ald", "sector_ald"))
+  check_crucial_names(ald, c("name_company", "sector", "technology", "year"))
+  check_crucial_names(scenario, c("sector", "technology", "year"))
+
+  invisible(match_result)
 }
 
 join_ald <- function(data, ald) {

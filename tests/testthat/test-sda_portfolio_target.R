@@ -3,6 +3,7 @@ library(r2dii.utils)
 
 fake_market <- fake_portfolio <- fake_portfolio(2021:2022)
 
+# FIXME: Remove this
 if (utils::hasName(market, "Plan.Sec.EmissionsFactor")) {
   market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
   market$Plan.Sec.EmissionsFactor <- NULL

@@ -65,6 +65,7 @@ sda_portfolio_target <- function(market,
   market <- r2dii.utils::clean_column_names(market)
   portfolio <- r2dii.utils::clean_column_names(portfolio)
 
+  # FIXME: Remove this
   if (utils::hasName(market, "Plan.Sec.EmissionsFactor")) {
     market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
     market$Plan.Sec.EmissionsFactor <- NULL

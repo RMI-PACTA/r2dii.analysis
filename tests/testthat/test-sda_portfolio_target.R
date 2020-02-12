@@ -14,7 +14,7 @@ test_that("errors gracefully with obviously wrong data", {
   )
 
   bad_portfolio <- portfolio %>%
-    janitor::clean_names() %>%
+    r2dii.utils::clean_column_names() %>%
     rename(bad = .data$plan_sec_emissions_factor)
   expect_error(
     class = "missing_names",

@@ -26,17 +26,6 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   expect_error_missing_names(scenario = bad(fake_scenario(), "year"))
 })
 
-test_that("outputs the same as @jdhoffa's initial example", {
-  expect_error_free(
-    join_portfolio_ald_scenario(
-      prioritize(match_name(loanbook_demo, ald_demo)),
-      ald = ald_demo,
-      scenario = scenario_demo
-    ) %>%
-      dplyr::select(interesting_scenario_columns())
-  )
-})
-
 test_that("with fake data outputs known value", {
   out <- join_portfolio_ald_scenario(
     fake_matched(),

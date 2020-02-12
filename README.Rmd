@@ -3,7 +3,7 @@ output: github_document
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -33,7 +33,7 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 
 ## Example
 
-```{r example, error=TRUE}
+```{r, error=TRUE}
 # Use example configuration-files
 library(r2dii.utils)
 library(r2dii.analysis)
@@ -55,8 +55,8 @@ options(r2dii_config = example_config("config-toy.yml"))
 START.YEAR()
 
 # Fails
-try(sda_portfolio_target(market, portfolio))
+sda_portfolio_target(market, portfolio, sector = "Steel")
 
 # Passes
-sda_portfolio_target(market, portfolio, start_year = "2019")
-``
+sda_portfolio_target(market, portfolio, sector = "Steel", start_year = "2019")
+```

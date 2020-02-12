@@ -46,3 +46,41 @@ test_that("with fake data outputs known value", {
 
   expect_known_value(out, "ref-join_portfolio_ald_scenario", update = FALSE)
 })
+
+test_that("outputs expected names", {
+  minimum_names <- c(
+    "id_loan",
+    "id_2dii",
+    "level",
+    "sector",
+    "technology",
+    "year",
+    "name_ald"
+  )
+
+  expect_named(
+    expected = minimum_names,
+    join_portfolio_ald_scenario(
+      fake_matched(),
+      ald = fake_ald(),
+      scenario = fake_scenario())
+  )
+
+  expect_named(
+    expected = minimum_names,
+    join_portfolio_ald_scenario(
+      fake_matched(unknown_column = "any"),
+      ald = fake_ald(),
+      scenario = fake_scenario()
+    )
+  )
+
+  expect_named(
+    expected = c(minimum_names, "production"),
+    join_portfolio_ald_scenario(
+      fake_matched(production = "any"),
+      ald = fake_ald(),
+      scenario = fake_scenario()
+    )
+  )
+})

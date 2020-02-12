@@ -65,13 +65,7 @@ sda_portfolio_target <- function(market,
   market <- r2dii.utils::clean_column_names(market)
   portfolio <- r2dii.utils::clean_column_names(portfolio)
 
-  # TODO: Extract check_this_function()
-  crucial <- get_sda_crucial_vars()
-  r2dii.utils::check_crucial_names(market, crucial)
-  r2dii.utils::check_crucial_names(portfolio, crucial)
-
-  check_ref(market, portfolio, ref = scenario, col = "scenario")
-  check_ref(market, portfolio, ref = geography, col = "scenario_geography")
+  check_names_sector_and_geography(market, portfolio, scenario, geography)
 
   sector <- validate_sector(market, portfolio, sector = sector)
   message("* Using `sector`: ", paste0(sector, collapse = ", "), ".")
@@ -112,6 +106,20 @@ sda_portfolio_target <- function(market,
     select(-.data$scen_sec_emissions_factor_no_sda)
 
   out %>% r2dii.utils::unclean_column_names(unclean = old_market)
+}
+
+check_names_sector_and_geography <- function(market,
+                                             portfolio,
+                                             scenario,
+                                             geography) {
+  crucial <- get_sda_crucial_vars()
+  r2dii.utils::check_crucial_names(market, crucial)
+  r2dii.utils::check_crucial_names(portfolio, crucial)
+
+  check_ref(market, portfolio, ref = scenario, col = "scenario")
+  check_ref(market, portfolio, ref = geography, col = "scenario_geography")
+
+  invisible()
 }
 
 check_ref <- function(market, portfolio, ref, col) {

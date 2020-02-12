@@ -3,48 +3,6 @@ library(r2dii.utils)
 
 fake_market <- fake_portfolio <- fake_portfolio(2021:2022)
 
-# FIXME: Remove this
-if (utils::hasName(market, "Plan.Sec.EmissionsFactor")) {
-  market$plan_sec_emissions_factor <- market$Plan.Sec.EmissionsFactor
-  market$Plan.Sec.EmissionsFactor <- NULL
-}
-if (utils::hasName(portfolio, "Plan.Sec.EmissionsFactor")) {
-  portfolio$plan_sec_emissions_factor <- portfolio$Plan.Sec.EmissionsFactor
-  portfolio$Plan.Sec.EmissionsFactor <- NULL
-}
-
-if (utils::hasName(market, "Scen.Sec.EmissionsFactor")) {
-  market$scen_sec_emissions_factor <- market$Scen.Sec.EmissionsFactor
-  market$Scen.Sec.EmissionsFactor <- NULL
-}
-if (utils::hasName(portfolio, "Scen.Sec.EmissionsFactor")) {
-  portfolio$scen_sec_emissions_factor <- portfolio$Scen.Sec.EmissionsFactor
-  portfolio$Scen.Sec.EmissionsFactor <- NULL
-}
-
-market <- dplyr::rename(market, year = .data$Year)
-portfolio <- dplyr::rename(portfolio, year = .data$Year)
-
-market <- dplyr::rename(market, investor_name = .data$Investor.Name)
-portfolio <- dplyr::rename(portfolio, investor_name = .data$Investor.Name)
-
-market <- dplyr::rename(market, portfolio_name = .data$Portfolio.Name)
-portfolio <- dplyr::rename(portfolio, portfolio_name = .data$Portfolio.Name)
-
-market <- dplyr::rename(market, allocation = .data$Allocation)
-portfolio <- dplyr::rename(portfolio, allocation = .data$Allocation)
-
-market <- dplyr::rename(market,       sector = .data$Sector)
-portfolio <- dplyr::rename(portfolio, sector = .data$Sector)
-
-market <- dplyr::rename(market,       scenario = .data$Scenario)
-portfolio <- dplyr::rename(portfolio, scenario = .data$Scenario)
-
-market <- dplyr::rename(market,       scenario_geography = .data$ScenarioGeography)
-portfolio <- dplyr::rename(portfolio, scenario_geography = .data$ScenarioGeography)
-
-
-
 test_that("errors gracefully with obviously wrong data", {
   expect_error(sda_portfolio_target(1, portfolio), "data.frame.* is not TRUE")
   expect_error(sda_portfolio_target(fake_market, 1), "data.frame.* is not TRUE")
@@ -55,7 +13,9 @@ test_that("errors gracefully with obviously wrong data", {
     sda_portfolio_target(bad_market, portfolio)
   )
 
-  bad_portfolio <- rename(portfolio, bad = .data$plan_sec_emissions_factor)
+  bad_portfolio <- portfolio %>%
+    janitor::clean_names() %>%
+    rename(bad = .data$plan_sec_emissions_factor)
   expect_error(
     class = "missing_names",
     sda_portfolio_target(fake_market, bad_portfolio)

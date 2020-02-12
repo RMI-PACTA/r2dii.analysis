@@ -1,17 +1,17 @@
 test_that("fake_portfolio adds a row", {
   expected <- tibble::tibble(
-    ScenarioGeography = "Global",
-    Scenario = "B2DS",
-    Sector = "Steel",
-    Year = 1:3L,
-    Investor.Name = "Market",
-    Portfolio.Name = "GlobalMarket",
-    Allocation = "PortfolioWeight",
-    Plan.Sec.EmissionsFactor = 1,
-    Scen.Sec.EmissionsFactor = 1:3,
+    scenario_geography = "Global",
+    scenario = "B2DS",
+    sector = "Steel",
+    year = 1:3L,
+    investor_name = "Market",
+    portfolio_name = "GlobalMarket",
+    allocation = "PortfolioWeight",
+    plan_sec_emissions_factor = 1,
+    scen_sec_emissions_factor = 1:3,
   )
   expect_equal(
-    fake_portfolio(Year = 1L:3L, Scen.Sec.EmissionsFactor = 1:3),
+    fake_portfolio(year = 1L:3L, scen_sec_emissions_factor = 1:3),
     expected
   )
 })

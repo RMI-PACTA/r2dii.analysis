@@ -32,11 +32,17 @@ join_portfolio_ald_scenario <- function(match_result,
   check_crucial_names(ald, c("name_company", "sector", "technology", "year"))
   check_crucial_names(scenario, c("sector", "technology", "year"))
 
-
   match_result %>%
-    left_join(ald, by = c("name_ald" = "name_company", "sector_ald" = "sector")) %>%
+    join_ald(ald) %>%
     inner_join(scenario, by = c("sector_ald" = "sector", "technology" = "technology", "year" = "year")) %>%
     select(suppressWarnings(one_of(interesting_scenario_columns())))
+}
+
+join_ald <- function(data, ald) {
+  left_join(
+    data, ald,
+    by = c("name_ald" = "name_company", "sector_ald" = "sector")
+  )
 }
 
 interesting_scenario_columns <- function() {

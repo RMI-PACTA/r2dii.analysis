@@ -40,9 +40,23 @@ join_portfolio_ald_scenario <- function(match_result,
 
 interesting_scenario_columns <- function() {
   c(
-    "id_loan", "loan_size_outstanding", "loan_size_credit_limit", "id_2dii", "level",
-    "sector", "technology", "name", "name_ald", "year",
-    "production", "production_unit", "emission_factor", "plant_location",
-    "scenario", "region", "value", "units"
+    "id_loan",
+    "loan_size_outstanding",
+    "loan_size_credit_limit",
+    "id_2dii",
+    "level",
+    "sector",
+    "technology",
+    "name",
+    "name_ald",
+    "year",
+    "production",
+    "production_unit",
+    "emission_factor",
+    "plant_location",
+    "scenario",
+    "region",
+    "value",
+    "units"
   )
 }

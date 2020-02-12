@@ -8,9 +8,11 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
                                                scenario = NULL) {
     expect_error(
       class = "missing_names",
-      join_portfolio_ald_scenario(match_result %||% fake_matched(),
-                                  ald %||% fake_ald(),
-                                  scenario %||% fake_scenario())
+      join_portfolio_ald_scenario(
+        match_result %||% fake_matched(),
+        ald %||% fake_ald(),
+        scenario %||% fake_scenario()
+      )
     )
   }
 
@@ -25,5 +27,4 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   expect_error_class_missing_names(invalid(fake_scenario(), "sector"))
   expect_error_class_missing_names(invalid(fake_scenario(), "technology"))
   expect_error_class_missing_names(invalid(fake_scenario(), "year"))
-
 })

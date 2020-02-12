@@ -70,9 +70,9 @@ fake_ald <- function(name_company = NULL,
 #' See `fake_matched()`
 #' @noRd
 fake_scenario <- function(sector = NULL,
-                     technology = NULL,
-                     year = NULL,
-                     ...) {
+                          technology = NULL,
+                          year = NULL,
+                          ...) {
   tibble::tibble(
     sector = sector %||% "automotive",
     technology = technology %||% "ice",

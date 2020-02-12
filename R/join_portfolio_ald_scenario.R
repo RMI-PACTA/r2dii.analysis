@@ -24,9 +24,7 @@
 #'   ald = ald_demo,
 #'   scenario = scenario_demo
 #' )
-join_portfolio_ald_scenario <- function(match_result,
-                                        ald,
-                                        scenario) {
+join_portfolio_ald_scenario <- function(match_result, ald, scenario) {
   check_portfolio_ald_scenario(match_result, ald, scenario)
 
   match_result %>%

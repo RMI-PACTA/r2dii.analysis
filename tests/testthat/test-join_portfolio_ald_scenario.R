@@ -1,9 +1,9 @@
 library(r2dii.dataraw)
 
 test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
-  invalid <- function(data, x) dplyr::rename(data, bad = x)
+  bad <- function(data, x) dplyr::rename(data, bad = x)
 
-  expect_error_class_missing_names <- function(match_result = NULL,
+  expect_error_missing_names <- function(match_result = NULL,
                                                ald = NULL,
                                                scenario = NULL) {
     expect_error(
@@ -16,15 +16,15 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
     )
   }
 
-  expect_error_class_missing_names(match_result = invalid(fake_matched(), "name_ald"))
-  expect_error_class_missing_names(match_result = invalid(fake_matched(), "sector_ald"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "name_ald"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "sector_ald"))
 
-  expect_error_class_missing_names(ald = invalid(fake_ald(), "name_company"))
-  expect_error_class_missing_names(ald = invalid(fake_ald(), "sector"))
-  expect_error_class_missing_names(ald = invalid(fake_ald(), "technology"))
-  expect_error_class_missing_names(ald = invalid(fake_ald(), "year"))
+  expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
+  expect_error_missing_names(ald = bad(fake_ald(), "sector"))
+  expect_error_missing_names(ald = bad(fake_ald(), "technology"))
+  expect_error_missing_names(ald = bad(fake_ald(), "year"))
 
-  expect_error_class_missing_names(scenario = invalid(fake_scenario(), "sector"))
-  expect_error_class_missing_names(scenario = invalid(fake_scenario(), "technology"))
-  expect_error_class_missing_names(scenario = invalid(fake_scenario(), "year"))
+  expect_error_missing_names(scenario = bad(fake_scenario(), "sector"))
+  expect_error_missing_names(scenario = bad(fake_scenario(), "technology"))
+  expect_error_missing_names(scenario = bad(fake_scenario(), "year"))
 })

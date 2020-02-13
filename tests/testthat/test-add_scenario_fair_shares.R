@@ -15,4 +15,3 @@ test_that("w/ scenario with missing names errors gracefully", {
   expect_error_missing_names(scenario = bad(fake_scenario(), "value"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "units"))
 })
-

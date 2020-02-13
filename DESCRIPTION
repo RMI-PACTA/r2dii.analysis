@@ -45,7 +45,8 @@ Suggests:
     r2dii.match (>= 0.0.0.9004),
     roxygen2,
     testthat (>= 2.1.0),
-    withr
+    withr,
+    covr
 Remotes: 
     2degreesinvesting/r2dii.dataraw,
     2degreesinvesting/r2dii.match,

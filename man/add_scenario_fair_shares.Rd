@@ -19,11 +19,11 @@ and the additional columns:
 \item \code{tfsr} - The "Technology Fair Share Ratio", used to calculate scenario
 efforts for high-carbon technologies. The portfolio efforts are calculated
 as: \eqn{p(t) = p(0) * tfsr}, where \code{p(0)} is the technology-level value at
-\code{startyear}.
+\code{start_year}.
 \item \code{mfsp} - The "Market Fair Share Percentage", used to calculate scenario
 efforts for low-carbon technologies. The portfolio efforts are calculated
 as \eqn{p(t) = p(0) + (P(0) + mfsp}, where where \code{p(0)} and \code{P(0)} is are
-the technology level and sector-level value at \code{startyear}.
+the technology level and sector-level value at \code{start_year}.
 }
 }
 \description{
@@ -31,7 +31,8 @@ Add fair share calculations to a scenario
 }
 \examples{
 library(r2dii.dataraw)
+scenario <- r2dii.dataraw::scenario_demo
 
-scenario_fair_share(scenario, startyear = 2020)
+add_scenario_fair_shares(scenario, start_year = 2020)
 
 }

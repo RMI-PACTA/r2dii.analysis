@@ -9,18 +9,19 @@
 #'   * `tfsr` - The "Technology Fair Share Ratio", used to calculate scenario
 #'   efforts for high-carbon technologies. The portfolio efforts are calculated
 #'   as: \eqn{p(t) = p(0) * tfsr}, where `p(0)` is the technology-level value at
-#'   `startyear`.
+#'   `start_year`.
 #'   * `mfsp` - The "Market Fair Share Percentage", used to calculate scenario
 #'   efforts for low-carbon technologies. The portfolio efforts are calculated
 #'   as \eqn{p(t) = p(0) + (P(0) + mfsp}, where where `p(0)` and `P(0)` is are
-#'   the technology level and sector-level value at `startyear`.
+#'   the technology level and sector-level value at `start_year`.
+#'
 #' @export
 #'
 #' @examples
 #' library(r2dii.dataraw)
+#' scenario <- r2dii.dataraw::scenario_demo
 #'
-#' scenario_fair_share(scenario, startyear = 2020)
-#'
+#' add_scenario_fair_shares(scenario, start_year = 2020)
 add_scenario_fair_shares <- function(scenario, start_year) {
 
   crucial_columns <- c("scenario",

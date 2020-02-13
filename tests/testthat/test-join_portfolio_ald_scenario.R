@@ -52,7 +52,8 @@ test_that("outputs expected names", {
     join_portfolio_ald_scenario(
       fake_matched(),
       ald = fake_ald(),
-      scenario = fake_scenario())
+      scenario = fake_scenario()
+    )
   )
 
   expect_named(

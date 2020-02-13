@@ -23,14 +23,15 @@
 #'
 #' add_scenario_fair_shares(scenario, start_year = 2020)
 add_scenario_fair_shares <- function(scenario, start_year) {
-
-  crucial_columns <- c("scenario",
-                       "sector",
-                       "technology",
-                       "region",
-                       "year",
-                       "value",
-                       "units")
+  crucial_columns <- c(
+    "scenario",
+    "sector",
+    "technology",
+    "region",
+    "year",
+    "value",
+    "units"
+  )
 
   check_crucial_names(scenario, crucial_columns)
 
@@ -47,7 +48,7 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 
 add_technology_fair_share_ratio <- function(scenario) {
   scenario %>%
-    dplyr::group_by(!!! syms(c(common_fs_groups(), "technology"))) %>%
+    dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(tfsr = .data$value / first(.data$value)) %>%
     dplyr::ungroup()
@@ -56,11 +57,11 @@ add_technology_fair_share_ratio <- function(scenario) {
 add_market_fair_share_percentage <- function(scenario) {
   scenario %>%
     dplyr::group_by(
-      !!! syms(c(common_fs_groups(), "year"))
+      !!!syms(c(common_fs_groups(), "year"))
     ) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(sector_total_by_year = sum(.data$value)) %>%
-    dplyr::group_by(!!! syms(c(common_fs_groups(), "technology"))) %>%
+    dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
     dplyr::mutate(
       mfsp = (.data$value - first(.data$value)) /
         first(.data$sector_total_by_year)

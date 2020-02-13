@@ -50,8 +50,8 @@ add_technology_fair_share_ratio <- function(scenario) {
     dplyr::group_by(
       .data$scenario,
       .data$sector,
-      .data$technology,
-      .data$region
+      .data$region,
+      .data$technology
     ) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(tfsr = .data$value / first(.data$value)) %>%
@@ -71,8 +71,8 @@ add_market_fair_share_percentage <- function(scenario) {
     dplyr::group_by(
       .data$scenario,
       .data$sector,
-      .data$technology,
-      .data$region
+      .data$region,
+      .data$technology
     ) %>%
     dplyr::mutate(mfsp = (.data$value - first(.data$value)) / first(.data$sector_total_by_year)) %>%
     dplyr::select(-.data$sector_total_by_year)

@@ -6,7 +6,8 @@ name: Pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
+    container: colinfay/r-ci-tidyverse:3.6.0
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@master
@@ -14,7 +15,6 @@ jobs:
       - name: Install dependencies
         run: |
           Rscript -e 'install.packages("remotes")' \
-                  -e 'install.packages("ps")' \
                   -e 'remotes::install_deps(dependencies = TRUE)' \
                   -e 'remotes::install_github("jimhester/pkgdown@github-actions-deploy")'
       - name: Install package

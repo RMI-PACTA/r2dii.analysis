@@ -56,9 +56,7 @@ add_technology_fair_share_ratio <- function(scenario) {
 
 add_market_fair_share_percentage <- function(scenario) {
   scenario %>%
-    dplyr::group_by(
-      !!!syms(c(common_fs_groups(), "year"))
-    ) %>%
+    dplyr::group_by(!!!syms(c(common_fs_groups(), "year"))) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(sector_total_by_year = sum(.data$value)) %>%
     dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%

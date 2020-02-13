@@ -6,11 +6,13 @@ name: Pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
+      - name: Install libcurl
+        run: sudo apt-get install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
           Rscript -e 'install.packages("remotes")' \

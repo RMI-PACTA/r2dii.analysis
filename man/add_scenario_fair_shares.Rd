@@ -34,5 +34,4 @@ library(r2dii.dataraw)
 scenario <- r2dii.dataraw::scenario_demo
 
 add_scenario_fair_shares(scenario, start_year = 2020)
-
 }

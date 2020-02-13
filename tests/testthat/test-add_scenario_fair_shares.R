@@ -4,6 +4,14 @@ test_that("with fake_scenario and start_year = 2020 passes with no error", {
   )
 })
 
+test_that("outputs known value (temporary regression test for refactoring)", {
+  expect_known_value(
+    add_scenario_fair_shares(r2dii.dataraw::scenario_demo, start_year = 2020),
+    "ref-add_scenario_fair_shares",
+    update = FALSE
+  )
+})
+
 test_that("w/ scenario with missing names errors gracefully", {
   skip("Broken test. Skip until good data passes with no error")
   bad <- function(data, x) dplyr::rename(data, bad = x)

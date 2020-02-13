@@ -1,3 +1,7 @@
+test_that("with fake_scenario and start_year = 2020 passes with no error", {
+  expect_no_error(add_scenario_fair_shares(scenario, start_year = 2020))
+})
+
 test_that("w/ scenario with missing names errors gracefully", {
   bad <- function(data, x) dplyr::rename(data, bad = x)
 

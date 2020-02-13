@@ -7,3 +7,6 @@
 ^codecov\.yml$
 ^\.github/workflows/pr-commands\.yaml$
 ^\.github/workflows/pkgdown\.yaml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

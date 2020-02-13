@@ -4,7 +4,7 @@ test_that("w/ scenario with missing names errors gracefully", {
   expect_error_missing_names <- function(scenario = fake_scenario()) {
     expect_error(
       class = "missing_names",
-      add_scenario_fair_shares(scenario, startyear = 2020)
+      add_scenario_fair_shares(scenario, start_year = 2020)
     )
   }
 
@@ -15,3 +15,4 @@ test_that("w/ scenario with missing names errors gracefully", {
   expect_error_missing_names(scenario = bad(fake_scenario(), "value"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "units"))
 })
+

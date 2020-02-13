@@ -13,6 +13,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@master
       - name: Install dependencies
         run: |
+          install.packages("ps")
           install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_github("jimhester/pkgdown@github-actions-deploy2")

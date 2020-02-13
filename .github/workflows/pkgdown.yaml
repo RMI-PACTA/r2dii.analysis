@@ -6,7 +6,8 @@ name: Pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
+    container: colinfay/r-ci-tidyverse:3.6.0
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@master

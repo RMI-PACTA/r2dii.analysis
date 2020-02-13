@@ -38,9 +38,8 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
-  scenario <- dplyr::filter(scenario, .data$year >= start_year)
-
   scenario %>%
+    dplyr::filter(.data$year >= start_year) %>%
     add_technology_fair_share_ratio() %>%
     add_market_fair_share_percentage() %>%
     dplyr::group_by(!!!old_groups)

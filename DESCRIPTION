@@ -37,16 +37,19 @@ Imports:
     lubridate,
     magrittr,
     purrr,
-    r2dii.utils (>= 0.0.0.9001),
+    r2dii.utils (>= 0.0.0.9003),
     rlang (>= 0.1.2),
     tibble
 Suggests: 
-    r2dii.dataraw (>= 0.0.2.9000),
+    r2dii.dataraw (>= 0.0.2.9001),
     r2dii.match (>= 0.0.0.9004),
     roxygen2,
     testthat (>= 2.1.0),
-    withr
+    withr,
+    covr
 Remotes: 
+    2degreesinvesting/r2dii.dataraw,
+    2degreesinvesting/r2dii.match,
     2DegreesInvesting/r2dii.utils
 Encoding: UTF-8
 LazyData: true

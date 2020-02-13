@@ -343,7 +343,7 @@ test_that("with unclean market outpus unclean names", {
     start_year = 2019, sector = "Steel"
   )
 
-  expect_true(utils::hasName(out, "Year"))
+  expect_true(has_name(out, "Year"))
 })
 
 test_that("with clean market outpus clean names", {
@@ -353,10 +353,10 @@ test_that("with clean market outpus clean names", {
     start_year = 2019, sector = "Steel"
   )
 
-  expect_true(utils::hasName(out, "year"))
-  expect_false(utils::hasName(out, "Year"))
-  expect_true(utils::hasName(out, "sector"))
-  expect_false(utils::hasName(out, "Sector"))
+  expect_true(has_name(out, "year"))
+  expect_false(has_name(out, "Year"))
+  expect_true(has_name(out, "sector"))
+  expect_false(has_name(out, "Sector"))
 })
 
 test_that("with clean market and unclean portfolio, outpus clean market", {
@@ -367,5 +367,5 @@ test_that("with clean market and unclean portfolio, outpus clean market", {
     start_year = 2019, sector = "Steel"
   )
 
-  expect_true(utils::hasName(out, "Year"))
+  expect_true(has_name(out, "Year"))
 })

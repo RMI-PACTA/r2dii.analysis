@@ -6,7 +6,7 @@ name: Pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@master

@@ -36,6 +36,8 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
+  check_units(scenario)
+
   scenario <- dplyr::filter(scenario, year >= start_year)
 
   scenario %>%

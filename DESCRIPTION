@@ -2,17 +2,9 @@ Package: r2dii.analysis
 Title: Tools for Climate Scenario Analysis
 Version: 0.0.0.9004
 Authors@R: 
-    c(person(given = "Clare",
-             family = "Murray",
-             role = c("aut", "cre"),
-             email = "clare@2degrees-investing.org"),
-      person(given = "Klaus",
-             family = "Hogedorn",
-             role = "aut",
-             email = "klaus@2degrees-investing.org"),
-      person(given = "Mauro",
+    c(person(given = "Mauro",
              family = "Lepore",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "maurolepore@gmail.com",
              comment = c(ORCID = "0000-0002-1986-7988")),
       person(given = "Jackson",
@@ -20,6 +12,18 @@ Authors@R:
              role = "aut",
              email = "jackson@2degrees-investing.org",
              comment = c(ORCID = "0000-0002-8600-5042")),
+      person(given = "Vincent",
+             family = "Jerosch-Herold",
+             role = "aut",
+             email = "vincent@2degrees-investing.org"),
+      person(given = "Clare",
+             family = "Murray",
+             role = "aut",
+             email = "clare@2degrees-investing.org"),
+      person(given = "Klaus",
+             family = "Hogedorn",
+             role = "aut",
+             email = "klaus@2degrees-investing.org"),
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
@@ -41,12 +45,12 @@ Imports:
     rlang (>= 0.1.2),
     tibble
 Suggests: 
+    covr,
     r2dii.dataraw (>= 0.0.2.9001),
     r2dii.match (>= 0.0.0.9004),
     roxygen2,
     testthat (>= 2.1.0),
-    withr,
-    covr
+    withr
 Remotes: 
     2degreesinvesting/r2dii.dataraw,
     2degreesinvesting/r2dii.match,

@@ -1,5 +1,5 @@
-#' @importFrom dplyr distinct filter if_else inner_join mutate rename right_join left_join
-#' @importFrom dplyr select one_of first
+#' @importFrom dplyr distinct filter first if_else inner_join left_join mutate
+#' @importFrom dplyr  rename right_join select one_of
 #' @importFrom rlang %||%
 #' @importFrom r2dii.utils check_crucial_names
 NULL

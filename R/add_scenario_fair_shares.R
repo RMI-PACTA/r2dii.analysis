@@ -54,7 +54,7 @@ common_fs_groups <- function() {
 check_consistent_units <- function(scenario) {
   units <- scenario %>%
     dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
-    dplyr::summarise(are_consistent = (length(unique(units)) == 1))
+    dplyr::summarise(are_consistent = (length(unique(units)) == 1L))
 
   if (all(units$are_consistent)) {
     return(invisible(scenario))

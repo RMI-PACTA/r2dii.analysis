@@ -81,7 +81,7 @@ check_consistent_units <- function(scenario) {
 
   if(!ok){
     where_inconsistent_units <-
-      dplyr::filter(checked_consistent_units, check_single_units == FALSE) %>%
+      dplyr::filter(checked_consistent_units, .data$check_single_units == FALSE) %>%
       dplyr::ungroup()
 
     rlang::abort(

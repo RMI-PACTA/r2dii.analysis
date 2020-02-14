@@ -39,7 +39,7 @@ test_that("w/ scenario with inconsistent units errors gracefully", {
     units = c("aa", "bb")
   )
   expect_error(
-    class = "inconsistent units",
+    class = "inconsistent_units",
     add_scenario_fair_shares(bad_scenario)
   )
 })

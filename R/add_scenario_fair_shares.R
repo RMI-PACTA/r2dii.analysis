@@ -85,7 +85,7 @@ check_consistent_units <- function(scenario) {
       dplyr::ungroup()
 
     rlang::abort(
-      "inconsistent units",
+      "inconsistent_units",
       message = glue::glue(
         "`scenario` must have consistent `units` per each `technology` group.
         Technologies with inconsistent units: {commas(where_inconsistent_units$technology)}"

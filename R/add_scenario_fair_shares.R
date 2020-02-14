@@ -23,6 +23,9 @@
 #'
 #' add_scenario_fair_shares(scenario, start_year = 2020)
 add_scenario_fair_shares <- function(scenario, start_year) {
+  old_groups <- dplyr::groups(scenario)
+  scenario <- dplyr::ungroup(scenario)
+
   crucial_columns <- c(
     "scenario",
     "sector",
@@ -35,8 +38,7 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 
   check_crucial_names(scenario, crucial_columns)
 
-  old_groups <- dplyr::groups(scenario)
-  scenario <- dplyr::ungroup(scenario)
+  check_consistent_units(scenario)
 
   scenario %>%
     dplyr::filter(.data$year >= start_year) %>%
@@ -68,4 +70,27 @@ add_market_fair_share_percentage <- function(scenario) {
 
 common_fs_groups <- function() {
   c("scenario", "sector", "region")
+}
+
+check_consistent_units <- function(scenario) {
+  checked_consistent_units <- scenario %>%
+    group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
+    summarise(check_single_units = (length(unique(units)) == 1) )
+
+  ok <- all(checked_consistent_units$check_single_units)
+
+  if(!ok){
+    where_inconsistent_units <-
+      filter(checked_consistent_units, check_single_units == FALSE) %>%
+      ungroup()
+
+    rlang::abort(
+      "inconsistent units",
+      message = glue::glue(
+        "`scenario` must have consistent `units` per each `technology` group.
+        Technologies with inconsistent units: {commas(where_inconsistent_units$technology)}"
+      )
+    )
+  }
+
 }

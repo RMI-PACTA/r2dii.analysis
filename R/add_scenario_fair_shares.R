@@ -26,17 +26,6 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
-  crucial_fs_columns <- function() {
-    c(
-      common_fs_groups(),
-      "technology",
-      "year",
-      "value",
-      "units"
-    )
-  }
-
-
   scenario %>%
     check_crucial_names(crucial_fs_columns()) %>%
     check_consistent_units()
@@ -69,6 +58,16 @@ add_market_fair_share_percentage <- function(scenario) {
     dplyr::select(-.data$sector_total_by_year)
 }
 
+crucial_fs_columns <- function() {
+  c(
+    common_fs_groups(),
+    "technology",
+    "year",
+    "value",
+    "units"
+  )
+}
+
 common_fs_groups <- function() {
   c("scenario", "sector", "region")
 }
@@ -96,3 +95,5 @@ check_consistent_units <- function(scenario) {
     )
   )
 }
+
+

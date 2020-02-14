@@ -56,10 +56,8 @@ test_that("tfsr is calculated as expected", {
     value = c(1500, 300, 12)
   )
 
-  expected_tfsr <- c(1, 0.2, 0.008)
-
   output <- add_scenario_fair_shares(scenario, 2020)
-
+  expected_tfsr <- c(1, 0.2, 0.008)
   expect_equal(output$tfsr, expected_tfsr)
 })
 

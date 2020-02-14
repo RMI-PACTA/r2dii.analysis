@@ -38,8 +38,14 @@ test_that("w/ scenario with inconsistent units errors gracefully", {
     technology = "ice",
     units = c("aa", "bb")
   )
+
   expect_error(
     class = "inconsistent_units",
+    add_scenario_fair_shares(bad_scenario)
+  )
+
+  verify_output(
+    test_path("output", "inconsistent_units.txt"),
     add_scenario_fair_shares(bad_scenario)
   )
 })

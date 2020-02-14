@@ -36,9 +36,9 @@ add_scenario_fair_shares <- function(scenario, start_year) {
     "units"
   )
 
-  check_crucial_names(scenario, crucial_columns)
-
-  check_consistent_units(scenario)
+  scenario %>%
+    check_crucial_names(crucial_columns) %>%
+    check_consistent_units()
 
   scenario %>%
     dplyr::filter(.data$year >= start_year) %>%

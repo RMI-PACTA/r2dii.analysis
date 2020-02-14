@@ -18,10 +18,10 @@
 #' @export
 #'
 #' @examples
-#' library(r2dii.dataraw)
-#' scenario <- r2dii.dataraw::scenario_demo
-#'
-#' add_scenario_fair_shares(scenario, start_year = 2020)
+#' if (requireNamespace("r2dii.dataraw", quietly = TRUE)) {
+#'   scenario <- r2dii.dataraw::scenario_demo
+#'   add_scenario_fair_shares(scenario, start_year = 2020)
+#' }
 add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)

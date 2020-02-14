@@ -24,14 +24,18 @@ scenario.
 the analysis.
 }
 \examples{
-library(r2dii.dataraw)
-library(r2dii.match)
+installed <- requireNamespace("r2dii.dataraw", quietly = TRUE) &&
+  requireNamespace("r2dii.match", quietly = TRUE)
+if (installed) {
+  library(r2dii.dataraw)
+  library(r2dii.match)
 
-matched_loanbook <- match_name(loanbook_demo, ald_demo) \%>\%
-  prioritize()
+  matched_loanbook <- match_name(loanbook_demo, ald_demo) \%>\%
+    prioritize()
 
-join_portfolio_ald_scenario(matched_loanbook,
-  ald = ald_demo,
-  scenario = scenario_demo
-)
+  join_portfolio_ald_scenario(matched_loanbook,
+    ald = ald_demo,
+    scenario = scenario_demo
+  )
+}
 }

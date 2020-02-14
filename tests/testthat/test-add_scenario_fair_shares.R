@@ -4,7 +4,7 @@ test_that("w/ fake_scenario and start_year = 2020 passes with no error", {
   )
 })
 
-test_that("outputs known value (temporary regression test for refactoring)", {
+test_that("outputs known value", {
   expect_known_value(
     add_scenario_fair_shares(fake_scenario(), start_year = 2020),
     "ref-add_scenario_fair_shares",

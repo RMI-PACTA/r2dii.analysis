@@ -68,19 +68,17 @@ test_that("mfsp is calculated as expected", {
     value = c(8000, 3000, 120, 2000, 3000, 6000)
   )
 
-  expected_mfsp_ice <- c(0, -0.5, -0.788)
-
-  expected_mfsp_electric <- c(0, 0.1, 0.4)
-
   output <- add_scenario_fair_shares(scenario, 2020)
 
-  output_ice <- dplyr::filter(output, technology == "ice") %>%
+  expected_mfsp_ice <- c(0, -0.5, -0.788)
+  output_ice <- output %>%
+    dplyr::filter(technology == "ice") %>%
     dplyr::arrange(year)
-
-  output_electric <- dplyr::filter(output, technology == "electric") %>%
-    dplyr::arrange(year)
-
   expect_equal(output_ice$mfsp, expected_mfsp_ice)
 
+  expected_mfsp_electric <- c(0, 0.1, 0.4)
+  output_electric <- output %>%
+    dplyr::filter(technology == "electric") %>%
+    dplyr::arrange(year)
   expect_equal(output_electric$mfsp, expected_mfsp_electric)
 })

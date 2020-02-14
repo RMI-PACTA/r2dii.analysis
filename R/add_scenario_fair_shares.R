@@ -75,11 +75,11 @@ common_fs_groups <- function() {
 check_consistent_units <- function(scenario) {
   checked_consistent_units <- scenario %>%
     dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
-    dplyr::summarise(check_single_units = (length(unique(units)) == 1) )
+    dplyr::summarise(check_single_units = (length(unique(units)) == 1))
 
   ok <- all(checked_consistent_units$check_single_units)
 
-  if(!ok){
+  if (!ok) {
     where_inconsistent_units <-
       dplyr::filter(checked_consistent_units, .data$check_single_units == FALSE) %>%
       dplyr::ungroup()
@@ -92,5 +92,4 @@ check_consistent_units <- function(scenario) {
       )
     )
   }
-
 }

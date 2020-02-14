@@ -31,35 +31,38 @@ test_that("w/ scenario with missing names errors gracefully", {
 })
 
 test_that("w/ scenario with inconsistent units errors gracefully", {
-  bad_scenario <- fake_scenario(scenario = "sds",
-                                sector = "automotive",
-                                region = "global",
-                                technology = "ice",
-                                units = c("aa", "bb"))
+  bad_scenario <- fake_scenario(
+    scenario = "sds",
+    sector = "automotive",
+    region = "global",
+    technology = "ice",
+    units = c("aa", "bb")
+  )
   expect_error(
     class = "inconsistent units",
     add_scenario_fair_shares(bad_scenario)
   )
-
 })
 
-test_that("tfsr is calculated as expected",{
-  scenario <- fake_scenario(year = c(2020,2021,2022),
-                            value = c(1500,300,12))
+test_that("tfsr is calculated as expected", {
+  scenario <- fake_scenario(
+    year = c(2020, 2021, 2022),
+    value = c(1500, 300, 12)
+  )
 
-  expected_tfsr <- c(1,0.2,0.008)
+  expected_tfsr <- c(1, 0.2, 0.008)
 
   output <- add_scenario_fair_shares(scenario, 2020)
 
   expect_equal(output$tfsr, expected_tfsr)
-
-
 })
 
 test_that("mfsp is calculated as expected", {
-  scenario <- fake_scenario(year = c(2020,2021,2022,2020,2021,2022),
-                            technology = c("ice", "ice", "ice", "electric", "electric", "electric"),
-                            value = c(8000,3000,120, 2000, 3000, 6000))
+  scenario <- fake_scenario(
+    year = c(2020, 2021, 2022, 2020, 2021, 2022),
+    technology = c("ice", "ice", "ice", "electric", "electric", "electric"),
+    value = c(8000, 3000, 120, 2000, 3000, 6000)
+  )
 
   expected_mfsp_ice <- c(0, -0.5, -0.788)
 
@@ -76,5 +79,4 @@ test_that("mfsp is calculated as expected", {
   expect_equal(output_ice$mfsp, expected_mfsp_ice)
 
   expect_equal(output_electric$mfsp, expected_mfsp_electric)
-
 })

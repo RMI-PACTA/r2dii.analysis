@@ -44,7 +44,11 @@ test_that("outputs expected names", {
     "sector",
     "technology",
     "year",
-    "name_ald"
+    "name_ald",
+    "scenario",
+    "region",
+    "value",
+    "units"
   )
 
   expect_named(
@@ -67,6 +71,7 @@ test_that("outputs expected names", {
 
   expect_named(
     expected = c(minimum_names, "production"),
+    ignore.order = TRUE,
     join_portfolio_ald_scenario(
       fake_matched(production = "any"),
       ald = fake_ald(),

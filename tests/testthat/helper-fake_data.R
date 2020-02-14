@@ -82,9 +82,9 @@ fake_scenario <- function(scenario = NULL,
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
     region = region %||% "global",
-    value = value %||% "1",
+    value = value %||% c(2,1),
     units = units %||% "cars produced",
-    year = year %||% 2025,
+    year = year %||% c(2020, 2025),
     ...
   )
 }

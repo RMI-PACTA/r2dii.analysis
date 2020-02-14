@@ -27,9 +27,7 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   scenario <- dplyr::ungroup(scenario)
 
   crucial_columns <- c(
-    "scenario",
-    "sector",
-    "region",
+    common_fs_groups(),
     "technology",
     "year",
     "value",

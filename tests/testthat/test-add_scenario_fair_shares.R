@@ -44,3 +44,39 @@ test_that("w/ scenario with inconsistent units errors gracefully", {
   )
 
 })
+
+test_that("tfsr is calculated as expected",{
+  scenario <- fake_scenario(year = c(2020,2021,2022),
+                            value = c(1500,300,12))
+
+  expected_tfsr <- c(1,0.2,0.008)
+
+  output <- add_scenario_fair_shares(scenario, 2020)
+
+  expect_equal(output$tfsr, expected_tfsr)
+
+
+})
+
+test_that("mfsp is calculated as expected", {
+  scenario <- fake_scenario(year = c(2020,2021,2022,2020,2021,2022),
+                            technology = c("ice", "ice", "ice", "electric", "electric", "electric"),
+                            value = c(8000,3000,120, 2000, 3000, 6000))
+
+  expected_mfsp_ice <- c(0, -0.5, -0.788)
+
+  expected_mfsp_electric <- c(0, 0.1, 0.4)
+
+  output <- add_scenario_fair_shares(scenario, 2020)
+
+  output_ice <- dplyr::filter(output, technology == "ice") %>%
+    dplyr::arrange(year)
+
+  output_electric <- dplyr::filter(output, technology == "electric") %>%
+    dplyr::arrange(year)
+
+  expect_equal(output_ice$mfsp, expected_mfsp_ice)
+
+  expect_equal(output_electric$mfsp, expected_mfsp_electric)
+
+})

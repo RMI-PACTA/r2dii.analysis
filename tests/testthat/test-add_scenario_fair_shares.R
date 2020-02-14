@@ -13,14 +13,14 @@ test_that("outputs known value", {
 })
 
 test_that("w/ scenario with missing names errors gracefully", {
-  bad <- function(data, x) dplyr::rename(data, bad = x)
-
   expect_error_missing_names <- function(scenario) {
     expect_error(
       class = "missing_names",
       add_scenario_fair_shares(scenario, start_year = 2020)
     )
   }
+
+  bad <- function(data, x) dplyr::rename(data, bad = x)
 
   expect_error_missing_names(bad(fake_scenario(), "scenario"))
   expect_error_missing_names(bad(fake_scenario(), "sector"))

@@ -26,16 +26,19 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
-  crucial_columns <- c(
-    common_fs_groups(),
-    "technology",
-    "year",
-    "value",
-    "units"
-  )
+  crucial_fs_columns <- function() {
+    c(
+      common_fs_groups(),
+      "technology",
+      "year",
+      "value",
+      "units"
+    )
+  }
+
 
   scenario %>%
-    check_crucial_names(crucial_columns) %>%
+    check_crucial_names(crucial_fs_columns()) %>%
     check_consistent_units()
 
   scenario %>%

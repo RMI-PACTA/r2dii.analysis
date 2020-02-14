@@ -29,8 +29,8 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   crucial_columns <- c(
     "scenario",
     "sector",
-    "technology",
     "region",
+    "technology",
     "year",
     "value",
     "units"

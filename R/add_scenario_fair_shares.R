@@ -78,19 +78,20 @@ check_consistent_units <- function(scenario) {
     dplyr::summarise(check_single_units = (length(unique(units)) == 1))
 
   ok <- all(checked_consistent_units$check_single_units)
-
-  if (!ok) {
-    where_inconsistent_units <- checked_consistent_units %>%
-      dplyr::filter(.data$check_single_units == FALSE) %>%
-      dplyr::ungroup()
-
-    rlang::abort(
-      "inconsistent_units",
-      message = glue::glue(
-        "`scenario` must have consistent `units` per each `technology` group.
-        Technologies with inconsistent units: \\
-        {commas(where_inconsistent_units$technology)}"
-      )
-    )
+  if (ok) {
+    return(invisible(scenario))
   }
+
+  where_inconsistent_units <- checked_consistent_units %>%
+    dplyr::filter(.data$check_single_units == FALSE) %>%
+    dplyr::ungroup()
+
+  rlang::abort(
+    "inconsistent_units",
+    message = glue::glue(
+      "`scenario` must have consistent `units` per each `technology` group.
+      Technologies with inconsistent units: \\
+      {commas(where_inconsistent_units$technology)}"
+    )
+  )
 }

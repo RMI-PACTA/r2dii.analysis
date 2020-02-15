@@ -82,3 +82,13 @@ test_that("mfsp is calculated as expected", {
     dplyr::arrange(year)
   expect_equal(output_electric$mfsp, expected_mfsp_electric)
 })
+
+test_that("preserves groups from known and unknown columns", {
+  by_known <- dplyr::group_by(fake_scenario(), scenario)
+  out <- add_scenario_fair_shares(by_known, start_year = 2020)
+  expect_equal(dplyr::group_vars(out), "scenario")
+
+  by_unknown <- dplyr::group_by(fake_scenario(unknown = "a"), unknown)
+  out <- add_scenario_fair_shares(by_unknown, start_year = 2020)
+  expect_equal(dplyr::group_vars(out), "unknown")
+})

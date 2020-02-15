@@ -92,3 +92,44 @@ test_that("preserves groups from known and unknown columns", {
   out <- add_scenario_fair_shares(by_unknown, start_year = 2020)
   expect_equal(dplyr::group_vars(out), "unknown")
 })
+
+test_that("w/ bad scenario errors gracefully", {
+  expect_error(
+    add_scenario_fair_shares(as.list(fake_scenario()), start_year = 2020),
+    "data.frame*not*TRUE"
+  )
+})
+
+test_that("w/ NA `start_year` outputs 0-row tibble", {
+  expect_error_free(
+    add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
+  )
+})
+
+test_that("w/ bad typeof `start_year` errors gracefully", {
+  expect_error(
+    add_scenario_fair_shares(fake_scenario(), start_year = "a"),
+    "start_year"
+  )
+})
+
+test_that("w/ bad length of `start_year` errors gracefully", {
+  expect_error(
+    add_scenario_fair_shares(fake_scenario(), start_year = 2020:2021),
+    "start_year"
+  )
+})
+
+test_that("w/ `start_year` of 0L errors gracefully", {
+  expect_error(
+    add_scenario_fair_shares(fake_scenario(), start_year = 0L),
+    "start_year"
+  )
+})
+
+test_that("w/ `start_year` of 0L errors gracefully", {
+  expect_error(
+    add_scenario_fair_shares(fake_scenario(), start_year = NULL),
+    "start_year"
+  )
+})

@@ -103,8 +103,10 @@ test_that("w/ bad scenario errors gracefully", {
 test_that("w/ NA `start_year` outputs 0-row tibble", {
   expect_warning(
     class = "start_year_is_missing",
-    add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
+    out <- add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
   )
+  expect_is(out, "tbl_df")
+  expect_equal(nrow(out), 0L)
 })
 
 test_that("w/ bad typeof `start_year` errors gracefully", {

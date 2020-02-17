@@ -128,6 +128,13 @@ test_that("w/ `start_year` of 0L errors gracefully", {
   )
 })
 
+test_that("w/ `start_year` not round, warns rounding", {
+  expect_error(
+    add_scenario_fair_shares(fake_scenario(), start_year = 2020.1),
+    class = "bad_start_year"
+  )
+})
+
 test_that("w/ `start_year` of 0L errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = NULL),

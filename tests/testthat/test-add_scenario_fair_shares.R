@@ -41,12 +41,12 @@ test_that("w/ scenario with inconsistent units errors gracefully", {
 
   expect_error(
     class = "inconsistent_units",
-    add_scenario_fair_shares(bad_scenario)
+    add_scenario_fair_shares(bad_scenario, 2020)
   )
 
   verify_output(
     test_path("output", "inconsistent_units.txt"),
-    add_scenario_fair_shares(bad_scenario)
+    add_scenario_fair_shares(bad_scenario, 2020)
   )
 })
 
@@ -96,34 +96,34 @@ test_that("preserves groups from known and unknown columns", {
 test_that("w/ bad scenario errors gracefully", {
   expect_error(
     add_scenario_fair_shares(as.list(fake_scenario()), start_year = 2020),
-    "data.frame*not*TRUE"
+    "data.frame.* is not TRUE"
   )
 })
 
-test_that("w/ NA `start_year` outputs 0-row tibble", {
-  expect_error_free(
-    add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
-  )
-})
+# test_that("w/ NA `start_year` outputs 0-row tibble", {
+#   expect_error_free(
+#     add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
+#   )
+# })
 
 test_that("w/ bad typeof `start_year` errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = "a"),
-    "start_year"
+    "is.numeric.* is not TRUE"
   )
 })
 
 test_that("w/ bad length of `start_year` errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = 2020:2021),
-    "start_year"
+    class = "bad_start_year"
   )
 })
 
 test_that("w/ `start_year` of 0L errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = 0L),
-    "start_year"
+    class = "bad_start_year"
   )
 })
 

@@ -23,6 +23,10 @@
 #'   add_scenario_fair_shares(scenario, start_year = 2020)
 #' }
 add_scenario_fair_shares <- function(scenario, start_year) {
+  stopifnot(is.data.frame(scenario), is.numeric(start_year))
+
+  check_start_year(start_year)
+
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
@@ -67,6 +71,21 @@ check_consistent_units <- function(scenario) {
       "`scenario` must have consistent `units` per each `technology` group.
       Technologies with inconsistent units: {commas(bad$technology)}"
     )
+  )
+}
+
+check_start_year <- function(start_year) {
+  start_year_ok <- all(length(start_year) == 1,
+                       start_year %% 1 == 0,
+                       start_year >0)
+
+  if (start_year_ok){
+    return(invisible(start_year))
+  }
+
+  rlang::abort(
+    class = "bad_start_year",
+    message = "`start_year` must be a integer of length 1."
   )
 }
 

@@ -100,13 +100,17 @@ test_that("w/ bad scenario errors gracefully", {
   )
 })
 
-test_that("w/ NA `start_year` outputs 0-row tibble", {
+test_that("w/ NA `start_year` outputs 0-row tibble preserving groups", {
   expect_warning(
     class = "start_year_is_missing",
-    out <- add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
+    out <- fake_scenario() %>%
+      dplyr::group_by(.data$scenario) %>%
+      add_scenario_fair_shares(start_year = NA_integer_)
   )
+
   expect_is(out, "tbl_df")
   expect_equal(nrow(out), 0L)
+  expect_equal(dplyr::group_vars(out), "scenario")
 })
 
 test_that("w/ bad typeof `start_year` errors gracefully", {

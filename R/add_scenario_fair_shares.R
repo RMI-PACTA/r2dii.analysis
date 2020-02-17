@@ -26,11 +26,13 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 
   stopifnot(is.data.frame(scenario), is.numeric(start_year))
 
+  old_groups <- dplyr::groups(scenario)
+  scenario <- dplyr::ungroup(scenario)
+
   checked_start_year <- check_start_year(start_year)
   if (is.na(checked_start_year)) {
-    return(
-      named_tibble(names = minimum_names_of_add_scenario_fair_share(scenario))
-    )
+    out <- named_tibble(names = minimum_names_of_add_scenario_fair_share(scenario))
+    return(dplyr::group_by(out, !!!old_groups))
   }
 
   if (start_year %% 1 != 0L) {
@@ -41,9 +43,6 @@ add_scenario_fair_shares <- function(scenario, start_year) {
     )
   }
 
-
-  old_groups <- dplyr::groups(scenario)
-  scenario <- dplyr::ungroup(scenario)
 
   scenario %>%
     check_crucial_names(crucial_fs_columns()) %>%

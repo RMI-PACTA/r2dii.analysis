@@ -26,15 +26,12 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 
   stopifnot(is.data.frame(scenario), is.numeric(start_year))
 
-  # FIXME: START_YEAR MUST BE OF LENGTH 1. IT'S CHECK3D AGAIN LATER. SEE WHAT TO DO.
-  if (is.na(start_year)) {
-    warning("Input start year is NA.", call. = FALSE)
+  checked_start_year <- check_start_year(start_year)
+  if (is.na(checked_start_year)) {
     return(
       named_tibble(names = minimum_names_of_add_scenario_fair_share(scenario))
     )
   }
-
-  check_start_year(start_year)
 
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
@@ -84,18 +81,22 @@ check_consistent_units <- function(scenario) {
 }
 
 check_start_year <- function(start_year) {
-  start_year_ok <- all(length(start_year) == 1,
-                       start_year %% 1 == 0,
-                       start_year >0)
-
-  if (start_year_ok){
-    return(invisible(start_year))
+  if (!is.na(start_year) &&
+      (length(start_year) != 1 || start_year <= 0L)) {
+    rlang::abort(
+      class = "bad_start_year",
+      message = "`start_year` must be a positive integer of length 1."
+    )
   }
 
-  rlang::abort(
-    class = "bad_start_year",
-    message = "`start_year` must be a integer of length 1."
-  )
+  if (is.na(start_year)) {
+    rlang::warn(
+      class = "start_year_is_missing",
+      message = "`start_year` is NA."
+    )
+  }
+
+  invisible(start_year)
 }
 
 add_technology_fair_share_ratio <- function(scenario) {

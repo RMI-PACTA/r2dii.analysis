@@ -29,10 +29,24 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
-  checked_start_year <- check_start_year(start_year)
-  if (is.na(checked_start_year)) {
-    out <- named_tibble(names = minimum_names_of_add_scenario_fair_share(scenario))
-    return(dplyr::group_by(out, !!!old_groups))
+  # checked_start_year <- check_start_year(start_year)
+  if (!is.na(start_year) &&
+      (length(start_year) != 1 || start_year <= 0L)) {
+    rlang::abort(
+      class = "bad_start_year",
+      message = "`start_year` must be a positive integer of length 1."
+    )
+  }
+
+  if (is.na(start_year)) {
+    rlang::warn(
+      class = "start_year_is_missing",
+      message = "`start_year` is NA."
+    )
+
+    out <- named_tibble(names = minimum_names_add_scenario_fair_share(scenario))
+    out <- dplyr::group_by(out, !!!old_groups)
+    return(out)
   }
 
   if (start_year %% 1 != 0L) {
@@ -88,6 +102,7 @@ check_consistent_units <- function(scenario) {
   )
 }
 
+# FIXME: Remove dead code
 check_start_year <- function(start_year) {
   if (!is.na(start_year) &&
       (length(start_year) != 1 || start_year <= 0L)) {
@@ -130,9 +145,9 @@ add_market_fair_share_percentage <- function(scenario) {
 
 named_tibble <- function(names) {
   dplyr::slice(tibble::as_tibble(set_names(as.list(names))), 0L)
-  }
+}
 
-minimum_names_of_add_scenario_fair_share <- function(scenario) {
+minimum_names_add_scenario_fair_share <- function(scenario) {
   unique(c(names(scenario), names_added_by_add_scenario_fair_share()))
 }
 

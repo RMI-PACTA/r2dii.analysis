@@ -26,11 +26,12 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 
   stopifnot(is.data.frame(scenario), is.numeric(start_year))
 
+  # FIXME: START_YEAR MUST BE OF LENGTH 1. IT'S CHECK3D AGAIN LATER. SEE WHAT TO DO.
   if (is.na(start_year)) {
     warning("Input start year is NA.", call. = FALSE)
-    out <-
+    return(
       named_tibble(names = minimum_names_of_add_scenario_fair_share(scenario))
-    return(out)
+    )
   }
 
   check_start_year(start_year)

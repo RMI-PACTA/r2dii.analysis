@@ -130,7 +130,7 @@ test_that("w/ `start_year` of 0L errors gracefully", {
   )
 })
 
-test_that("w/ `start_year` not round, warns rounding", {
+test_that("w/ decimal `start_year` warns rounding", {
   expect_warning(
     add_scenario_fair_shares(fake_scenario(), start_year = 2020.1),
     class = "start_year_not_round"

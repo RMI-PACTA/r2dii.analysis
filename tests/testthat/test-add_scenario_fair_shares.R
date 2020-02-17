@@ -100,11 +100,12 @@ test_that("w/ bad scenario errors gracefully", {
   )
 })
 
-# test_that("w/ NA `start_year` outputs 0-row tibble", {
-#   expect_error_free(
-#     add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
-#   )
-# })
+test_that("w/ NA `start_year` outputs 0-row tibble", {
+  expect_warning(
+    add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_),
+    "Input.*NA"
+  )
+})
 
 test_that("w/ bad typeof `start_year` errors gracefully", {
   expect_error(

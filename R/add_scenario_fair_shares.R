@@ -23,7 +23,14 @@
 #'   add_scenario_fair_shares(scenario, start_year = 2020)
 #' }
 add_scenario_fair_shares <- function(scenario, start_year) {
+
   stopifnot(is.data.frame(scenario), is.numeric(start_year))
+
+  if (is.na(start_year)) {
+    warning("Input start year is NA.", call. = FALSE)
+    named_tibble(names = minimum_names_of_add_scenario_fair_share(scenario)) %>%
+      return()
+  }
 
   check_start_year(start_year)
 
@@ -108,4 +115,18 @@ add_market_fair_share_percentage <- function(scenario) {
         first(.data$sector_total_by_year)
     ) %>%
     dplyr::select(-.data$sector_total_by_year)
+}
+
+named_tibble <- function(names) {
+  dplyr::slice(tibble::as_tibble(set_names(as.list(names))), 0L)
+  }
+
+minimum_names_of_add_scenario_fair_share <- function(scenario) {
+  unique(c(names(scenario), names_added_by_add_scenario_fair_share()))
+}
+
+names_added_by_add_scenario_fair_share <- function(){
+c("tfsr",
+  "mfsp"
+  )
 }

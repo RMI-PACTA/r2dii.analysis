@@ -1,4 +1,4 @@
-> add_scenario_fair_shares(bad_scenario, 2020)
+> add_fair_share(bad_scenario, 2020)
 Error: `scenario` must have consistent `units` per each `technology` group.
 Technologies with inconsistent units: ice
 

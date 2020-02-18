@@ -1,13 +1,13 @@
 test_that("w/ fake_scenario and start_year = 2020 passes with no error", {
   expect_error_free(
-    add_scenario_fair_shares(fake_scenario(), start_year = 2020)
+    add_fair_share(fake_scenario(), start_year = 2020)
   )
 })
 
 test_that("outputs known value", {
   expect_known_value(
-    add_scenario_fair_shares(fake_scenario(), start_year = 2020),
-    "ref-add_scenario_fair_shares",
+    add_fair_share(fake_scenario(), start_year = 2020),
+    "ref-add_fair_share",
     update = FALSE
   )
 })
@@ -16,7 +16,7 @@ test_that("w/ scenario with missing names errors gracefully", {
   expect_error_missing_names <- function(scenario) {
     expect_error(
       class = "missing_names",
-      add_scenario_fair_shares(scenario, start_year = 2020)
+      add_fair_share(scenario, start_year = 2020)
     )
   }
 
@@ -41,12 +41,12 @@ test_that("w/ scenario with inconsistent units errors gracefully", {
 
   expect_error(
     class = "inconsistent_units",
-    add_scenario_fair_shares(bad_scenario, 2020)
+    add_fair_share(bad_scenario, 2020)
   )
 
   verify_output(
     test_path("output", "inconsistent_units.txt"),
-    add_scenario_fair_shares(bad_scenario, 2020)
+    add_fair_share(bad_scenario, 2020)
   )
 })
 
@@ -56,7 +56,7 @@ test_that("tfsr is calculated as expected", {
     value = c(1500, 300, 12)
   )
 
-  output <- add_scenario_fair_shares(scenario, 2020)
+  output <- add_fair_share(scenario, 2020)
   expected_tfsr <- c(1, 0.2, 0.008)
   expect_equal(output$tfsr, expected_tfsr)
 })
@@ -68,7 +68,7 @@ test_that("mfsp is calculated as expected", {
     value = c(8000, 3000, 120, 2000, 3000, 6000)
   )
 
-  output <- add_scenario_fair_shares(scenario, 2020)
+  output <- add_fair_share(scenario, 2020)
 
   expected_mfsp_ice <- c(0, -0.5, -0.788)
   output_ice <- output %>%
@@ -85,17 +85,17 @@ test_that("mfsp is calculated as expected", {
 
 test_that("preserves groups from known and unknown columns", {
   by_known <- dplyr::group_by(fake_scenario(), scenario)
-  out <- add_scenario_fair_shares(by_known, start_year = 2020)
+  out <- add_fair_share(by_known, start_year = 2020)
   expect_equal(dplyr::group_vars(out), "scenario")
 
   by_unknown <- dplyr::group_by(fake_scenario(unknown = "a"), unknown)
-  out <- add_scenario_fair_shares(by_unknown, start_year = 2020)
+  out <- add_fair_share(by_unknown, start_year = 2020)
   expect_equal(dplyr::group_vars(out), "unknown")
 })
 
 test_that("w/ bad scenario errors gracefully", {
   expect_error(
-    add_scenario_fair_shares(as.list(fake_scenario()), start_year = 2020),
+    add_fair_share(as.list(fake_scenario()), start_year = 2020),
     "data.frame.* is not TRUE"
   )
 })
@@ -105,7 +105,7 @@ test_that("w/ NA `start_year` outputs 0-row tibble preserving groups", {
     class = "missing_start_year",
     out <- fake_scenario() %>%
       dplyr::group_by(.data$scenario) %>%
-      add_scenario_fair_shares(start_year = NA_integer_)
+      add_fair_share(start_year = NA_integer_)
   )
 
   expect_is(out, "tbl_df")
@@ -116,43 +116,43 @@ test_that("w/ NA `start_year` outputs 0-row tibble preserving groups", {
 test_that("w/ NA start_year outputs same columns as with non-NA start_year", {
   year_na <- expect_warning(
     class = "missing_start_year",
-    add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
+    add_fair_share(fake_scenario(), start_year = NA_integer_)
   )
-  year_2020 <- add_scenario_fair_shares(fake_scenario(), start_year = 2020)
+  year_2020 <- add_fair_share(fake_scenario(), start_year = 2020)
 
   expect_equal(names(year_na), names(year_2020))
 })
 test_that("w/ bad typeof `start_year` errors gracefully", {
   expect_error(
-    add_scenario_fair_shares(fake_scenario(), start_year = "a"),
+    add_fair_share(fake_scenario(), start_year = "a"),
     "is.numeric.* is not TRUE"
   )
 })
 
 test_that("w/ bad length of `start_year` errors gracefully", {
   expect_error(
-    add_scenario_fair_shares(fake_scenario(), start_year = 2020:2021),
+    add_fair_share(fake_scenario(), start_year = 2020:2021),
     class = "invalid_start_year"
   )
 })
 
 test_that("w/ `start_year` of 0L errors gracefully", {
   expect_error(
-    add_scenario_fair_shares(fake_scenario(), start_year = 0L),
+    add_fair_share(fake_scenario(), start_year = 0L),
     class = "invalid_start_year"
   )
 })
 
 test_that("w/ decimal `start_year` warns rounding", {
   expect_warning(
-    add_scenario_fair_shares(fake_scenario(), start_year = 2020.1),
+    add_fair_share(fake_scenario(), start_year = 2020.1),
     class = "not_round_start_year"
   )
 })
 
 test_that("w/ `start_year` of 0L errors gracefully", {
   expect_error(
-    add_scenario_fair_shares(fake_scenario(), start_year = NULL),
+    add_fair_share(fake_scenario(), start_year = NULL),
     "start_year"
   )
 })

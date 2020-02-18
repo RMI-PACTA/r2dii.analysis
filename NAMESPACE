@@ -3,7 +3,7 @@
 export("%>%")
 export(":=")
 export(.data)
-export(add_scenario_fair_shares)
+export(add_fair_share)
 export(as_label)
 export(as_name)
 export(enquo)

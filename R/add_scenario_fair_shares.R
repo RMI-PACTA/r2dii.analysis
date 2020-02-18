@@ -20,9 +20,9 @@
 #' @examples
 #' if (requireNamespace("r2dii.dataraw", quietly = TRUE)) {
 #'   scenario <- r2dii.dataraw::scenario_demo
-#'   add_scenario_fair_shares(scenario, start_year = 2020)
+#'   add_fair_share(scenario, start_year = 2020)
 #' }
-add_scenario_fair_shares <- function(scenario, start_year) {
+add_fair_share <- function(scenario, start_year) {
   stopifnot(is.data.frame(scenario), is.numeric(start_year))
 
   old_groups <- dplyr::groups(scenario)

@@ -37,11 +37,9 @@ add_scenario_fair_shares <- function(scenario, start_year) {
       message = "`start_year` is NA."
     )
 
-    out <- minimum_names_add_scenario_fair_share(scenario) %>%
-      named_tibble() %>%
-      dplyr::group_by(!!!old_groups)
 
-    return(out)
+
+    return(cero_row_fair_share_tibble(scenario, old_groups))
   }
 
   if (start_year %% 1 != 0L) {
@@ -72,6 +70,12 @@ abort_if_start_year_is_invalid <- function(start_year) {
   }
 
   invisible(start_year)
+}
+
+cero_row_fair_share_tibble <- function(scenario, old_groups) {
+  minimum_names_add_scenario_fair_share(scenario) %>%
+    named_tibble() %>%
+    dplyr::group_by(!!!old_groups)
 }
 
 crucial_fs_columns <- function() {

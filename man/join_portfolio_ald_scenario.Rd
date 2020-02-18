@@ -33,9 +33,11 @@ if (installed) {
   matched_loanbook <- match_name(loanbook_demo, ald_demo) \%>\%
     prioritize()
 
+  scenario_with_fair_shares <- add_scenario_fair_shares(scenario_demo, 2020)
+
   join_portfolio_ald_scenario(matched_loanbook,
     ald = ald_demo,
-    scenario = scenario_demo
+    scenario = scenario_with_fair_shares
   )
 }
 }

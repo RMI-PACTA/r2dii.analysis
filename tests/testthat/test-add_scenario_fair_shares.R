@@ -102,7 +102,7 @@ test_that("w/ bad scenario errors gracefully", {
 
 test_that("w/ NA `start_year` outputs 0-row tibble preserving groups", {
   expect_warning(
-    class = "start_year_missing",
+    class = "missing_start_year",
     out <- fake_scenario() %>%
       dplyr::group_by(.data$scenario) %>%
       add_scenario_fair_shares(start_year = NA_integer_)
@@ -115,7 +115,7 @@ test_that("w/ NA `start_year` outputs 0-row tibble preserving groups", {
 
 test_that("w/ NA start_year outputs same columns as with non-NA start_year", {
   year_na <- expect_warning(
-    class = "start_year_missing",
+    class = "missing_start_year",
     add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
   )
   year_2020 <- add_scenario_fair_shares(fake_scenario() , start_year = 2020)
@@ -146,7 +146,7 @@ test_that("w/ `start_year` of 0L errors gracefully", {
 test_that("w/ decimal `start_year` warns rounding", {
   expect_warning(
     add_scenario_fair_shares(fake_scenario(), start_year = 2020.1),
-    class = "start_year_not_round"
+    class = "not_round_start_year"
   )
 })
 

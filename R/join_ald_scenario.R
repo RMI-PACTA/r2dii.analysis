@@ -17,19 +17,20 @@
 #' @examples
 #' installed <- requireNamespace("r2dii.dataraw", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE)
-#' if (installed) {
-#'   library(r2dii.dataraw)
-#'   library(r2dii.match)
+#' if (!installed) stop("Please install r2dii.match and r2dii.dataraw")
+#'
+#' library(r2dii.dataraw)
+#' library(r2dii.match)
 #'
 #' # Example of valid matches after `r2dii.match::match_name()` and manual edits
 #' path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
-#' valid_matches <- readr::read_csv(path)
+#' valid_matches <- tibble::as_tibble(read.csv(path, stringsAsFactors = FALSE))
 #'
-#'   valid_matches %>%
-#'     join_ald_scenario(
-#'       ald = ald_demo, scenario = add_fair_share_columns(scenario_demo, 2020)
-#'     )
-#' }
+#' valid_matches %>%
+#'   join_ald_scenario(
+#'     ald = ald_demo,
+#'     scenario = add_fair_share_columns(scenario_demo, 2020)
+#'   )
 join_ald_scenario <- function(valid_matches, ald, scenario) {
   check_portfolio_ald_scenario(valid_matches, ald, scenario)
 

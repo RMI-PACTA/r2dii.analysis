@@ -8,7 +8,8 @@ join_portfolio_ald_scenario(match_result, ald, scenario)
 }
 \arguments{
 \item{match_result}{A dataframe like the output of
-\code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
+\code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}, after you validate it. If you don't
+validate this dataset FIXME jdhoffa: BAD THINGS CAN HAPPEN.}
 
 \item{ald}{An asset level dataframe like \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.}
 

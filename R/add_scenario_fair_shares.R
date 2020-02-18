@@ -23,31 +23,19 @@
 #'   add_scenario_fair_shares(scenario, start_year = 2020)
 #' }
 add_scenario_fair_shares <- function(scenario, start_year) {
-
   stopifnot(is.data.frame(scenario), is.numeric(start_year))
 
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
   abort_if_start_year_is_invalid(start_year)
-
   if (is.na(start_year)) {
-    rlang::warn(
-      class = "start_year_is_missing",
-      message = "`start_year` is NA."
-    )
-
-
-
+    warn("`start_year` is NA.", class = "start_year_missing")
     return(cero_row_fair_share_tibble(scenario, old_groups))
   }
-
   if (start_year %% 1 != 0L) {
     start_year <- round(start_year)
-    rlang::warn(
-      class = "start_year_not_round",
-      message = "Rounding `start_year` to {start_year}."
-    )
+    warn("Rounding `start_year`: {start_year}.", class = "start_year_not_round")
   }
 
   scenario %>%

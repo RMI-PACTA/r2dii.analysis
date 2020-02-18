@@ -16,19 +16,25 @@ library(r2dii.analysis)
 ```
 
 ## Matching
-For analysis of a lending portfolio, `r2dii.analysis` picks up where `r2dii.match` leaves off. The following assumes that the `loanbook` has already been matched and validated against the `ald`. If this is not the case, please [click here for more info](https://2degreesinvesting.github.io/r2dii.match/). 
+
+For analysis of a lending portfolio, `r2dii.analysis` picks up where `r2dii.match` leaves off. The following assumes that the `loanbook` has already been matched and validated against the `ald`. If this is not the case, please [click here for more info](https://2degreesinvesting.github.io/r2dii.match/).
+
 ```{r}
 matched_loanbook <- match_name(loanbook = loanbook_demo, ald = ald_demo) %>%
   prioritize()
 ```
 
 ## Scenario Fair Shares
-First, we must calculate the scenario fair shares. To do so: 
+
+First, we must calculate the scenario fair shares. To do so:
+
 ```{r}
-scenario_with_fair_shares <- add_scenario_fair_shares(scenario_demo)
+scenario_with_fair_shares <- scenario_demo %>% 
+  add_scenario_fair_shares(start_year = 2020)
 ```
 
-With the scenario fair shares calculated, we can join the `matched_loanbook`, `ald` and `scenario`: 
+With the scenario fair shares calculated, we can join the `matched_loanbook`, `ald` and `scenario`:
+
 ```{r}
 join_portfolio_ald_scenario(
   match_result = matched_loanbook,

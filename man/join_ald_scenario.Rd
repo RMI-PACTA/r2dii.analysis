@@ -31,8 +31,9 @@ if (installed) {
   library(r2dii.dataraw)
   library(r2dii.match)
 
-  # Pretending you validated this dataset
-  valid_matches <- prioritize(match_name(loanbook_demo, ald_demo))
+# Example of valid matches after `r2dii.match::match_name()` and manual edits
+path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
+valid_matches <- readr::read_csv(path)
 
   valid_matches \%>\%
     join_ald_scenario(

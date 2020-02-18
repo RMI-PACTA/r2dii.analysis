@@ -44,7 +44,7 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 }
 
 abort_invalid_start_year <- function(start_year) {
-  if (!is.na(start_year) && (length(start_year) != 1 || start_year <= 0L)) {
+  if (!all(is.na(start_year)) && (length(start_year) != 1 || start_year <= 0L)) {
     rlang::abort(
       class = "invalid_start_year",
       message = "`start_year` must be of length 1 and greater than cero."

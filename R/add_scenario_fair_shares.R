@@ -28,12 +28,18 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
-  if (!is.na(start_year) && (length(start_year) != 1 || start_year <= 0L)) {
-    rlang::abort(
-      class = "start_year_is_invalid",
-      message = "`start_year` must be of length 1 and greater than cero."
-    )
+  abort_invalid_start_year <- function(start_year) {
+    if (!is.na(start_year) && (length(start_year) != 1 || start_year <= 0L)) {
+      rlang::abort(
+        class = "invalid_start_year",
+        message = "`start_year` must be of length 1 and greater than cero."
+      )
+    }
+
+    invisible(start_year)
   }
+  abort_invalid_start_year(start_year)
+
   if (is.na(start_year)) {
     warn("`start_year` is NA.", class = "start_year_missing")
     return(cero_row_fair_share_tibble(scenario, old_groups))

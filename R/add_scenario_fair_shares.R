@@ -1,8 +1,8 @@
-#' Add fair share calculations to a scenario
+#' Add "fair share" columns to a `scenario` dataset
 #'
 #' @param scenario A scenario dataframe like [r2dii.dataraw::scenario_demo].
 #' @param start_year The start year of the analysis, crucial for calculating the
-#'   correct initial sector total
+#'   correct initial sector total.
 #'
 #' @return A dataframe with the same groups (if any) and columns as `scenario`,
 #'   and the additional columns:

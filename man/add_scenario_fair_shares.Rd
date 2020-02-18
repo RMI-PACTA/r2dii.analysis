@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_scenario_fair_shares.R
 \name{add_scenario_fair_shares}
 \alias{add_scenario_fair_shares}
-\title{Add fair share calculations to a scenario}
+\title{Add "fair share" columns to a \code{scenario} dataset}
 \usage{
 add_scenario_fair_shares(scenario, start_year)
 }
@@ -10,7 +10,7 @@ add_scenario_fair_shares(scenario, start_year)
 \item{scenario}{A scenario dataframe like \link[r2dii.dataraw:scenario_demo]{r2dii.dataraw::scenario_demo}.}
 
 \item{start_year}{The start year of the analysis, crucial for calculating the
-correct initial sector total}
+correct initial sector total.}
 }
 \value{
 A dataframe with the same groups (if any) and columns as \code{scenario},
@@ -27,7 +27,7 @@ the technology level and sector-level value at \code{start_year}.
 }
 }
 \description{
-Add fair share calculations to a scenario
+Add "fair share" columns to a \code{scenario} dataset
 }
 \examples{
 if (requireNamespace("r2dii.dataraw", quietly = TRUE)) {

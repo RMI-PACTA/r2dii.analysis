@@ -4,10 +4,10 @@
 \alias{join_ald_scenario}
 \title{Join a matched-loanbook object to the ald and scenario}
 \usage{
-join_ald_scenario(validated_match, ald, scenario)
+join_ald_scenario(valid_matches, ald, scenario)
 }
 \arguments{
-\item{validated_match}{A dataframe like the output of
+\item{valid_matches}{A dataframe like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}, after you validate it. If you don't
 validate this dataset FIXME jdhoffa: BAD THINGS CAN HAPPEN.}
 
@@ -32,9 +32,9 @@ if (installed) {
   library(r2dii.match)
 
   # Pretending you validated this dataset
-  validated_match <- prioritize(match_name(loanbook_demo, ald_demo))
+  valid_matches <- prioritize(match_name(loanbook_demo, ald_demo))
 
-  validated_match \%>\%
+  valid_matches \%>\%
     join_ald_scenario(
       ald = ald_demo, scenario = add_fair_share_columns(scenario_demo, 2020)
     )

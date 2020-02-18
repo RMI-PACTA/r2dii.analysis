@@ -30,6 +30,4 @@ $$\dfrac{s_j(t)-s_j(t_0)}{S(t_0)}$$
 These fair shares can be calculated for an arbitrary scenario using: 
 ```{r}
 add_scenario_fair_shares(scenario_demo)
-
 ```
-

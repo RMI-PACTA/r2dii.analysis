@@ -118,7 +118,7 @@ test_that("w/ NA start_year outputs same columns as with non-NA start_year", {
     class = "missing_start_year",
     add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
   )
-  year_2020 <- add_scenario_fair_shares(fake_scenario() , start_year = 2020)
+  year_2020 <- add_scenario_fair_shares(fake_scenario(), start_year = 2020)
 
   expect_equal(names(year_na), names(year_2020))
 })

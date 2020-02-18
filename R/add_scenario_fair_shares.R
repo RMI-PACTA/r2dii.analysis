@@ -134,8 +134,9 @@ minimum_names_add_scenario_fair_share <- function(scenario) {
   unique(c(names(scenario), names_added_by_add_scenario_fair_share()))
 }
 
-names_added_by_add_scenario_fair_share <- function(){
-c("tfsr",
-  "mfsp"
+names_added_by_add_scenario_fair_share <- function() {
+  c(
+    "tfsr",
+    "mfsp"
   )
 }

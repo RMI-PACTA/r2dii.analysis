@@ -77,6 +77,8 @@ interesting_scenario_columns <- function() {
     "scenario",
     "region",
     "value",
+    "tfsr",
+    "mfsp",
     "units"
   )
 }

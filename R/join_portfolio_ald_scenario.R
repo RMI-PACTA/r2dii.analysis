@@ -4,7 +4,7 @@
 #' `join()` functions, forming the master dataset to be used in later steps of
 #' the analysis.
 #'
-#' @param match_result A dataframe like the output of
+#' @param validated_match A dataframe like the output of
 #'   [r2dii.match::prioritize()], after you validate it. If you don't
 #'   validate this dataset FIXME jdhoffa: BAD THINGS CAN HAPPEN.
 #' @param ald An asset level dataframe like [r2dii.dataraw::ald_demo].
@@ -29,21 +29,21 @@
 #'       ald = ald_demo, scenario = add_fair_share_columns(scenario_demo, 2020)
 #'     )
 #' }
-join_portfolio_ald_scenario <- function(match_result, ald, scenario) {
-  check_portfolio_ald_scenario(match_result, ald, scenario)
+join_portfolio_ald_scenario <- function(validated_match, ald, scenario) {
+  check_portfolio_ald_scenario(validated_match, ald, scenario)
 
-  match_result %>%
+  validated_match %>%
     left_join(ald, by = ald_columns()) %>%
     inner_join(scenario, by = scenario_columns()) %>%
     select(suppressWarnings(one_of(interesting_scenario_columns())))
 }
 
-check_portfolio_ald_scenario <- function(match_result, ald, scenario) {
-  check_crucial_names(match_result, names(ald_columns()))
+check_portfolio_ald_scenario <- function(validated_match, ald, scenario) {
+  check_crucial_names(validated_match, names(ald_columns()))
   check_crucial_names(ald, c("name_company", unname(scenario_columns())))
   check_crucial_names(scenario, scenario_columns())
 
-  invisible(match_result)
+  invisible(validated_match)
 }
 
 ald_columns <- function() {

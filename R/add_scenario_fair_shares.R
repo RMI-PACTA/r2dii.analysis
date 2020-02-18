@@ -96,7 +96,10 @@ check_consistent_units <- function(scenario) {
 round_start_year <- function(start_year) {
   if (start_year %% 1 != 0L) {
     start_year <- round(start_year)
-    warn("Rounding `start_year`: {start_year}.", class = "not_round_start_year")
+    rlang::warn(
+      class = "not_round_start_year",
+      message = "Rounding `start_year`: {start_year}.",
+    )
   }
 
   start_year

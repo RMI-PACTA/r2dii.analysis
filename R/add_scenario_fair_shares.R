@@ -30,19 +30,14 @@ add_scenario_fair_shares <- function(scenario, start_year) {
 
   abort_invalid_start_year(start_year)
   if (is.na(start_year)) {
-    warn("`start_year` is NA.", class = "missing_start_year")
+    rlang::warn("`start_year` is NA.", class = "missing_start_year")
     return(cero_row_fair_share_tibble(scenario, old_groups))
   }
-  if (start_year %% 1 != 0L) {
-    start_year <- round(start_year)
-    warn("Rounding `start_year`: {start_year}.", class = "not_round_start_year")
-  }
-  scenario %>%
-    check_crucial_names(crucial_fs_columns()) %>%
-    check_consistent_units()
+  check_crucial_names(scenario, crucial_fs_columns())
+  check_consistent_units(scenario)
 
   scenario %>%
-    dplyr::filter(.data$year >= start_year) %>%
+    dplyr::filter(.data$year >= round_start_year(start_year)) %>%
     add_technology_fair_share_ratio() %>%
     add_market_fair_share_percentage() %>%
     dplyr::group_by(!!!old_groups)
@@ -96,6 +91,15 @@ check_consistent_units <- function(scenario) {
       Technologies with inconsistent units: {commas(bad$technology)}"
     )
   )
+}
+
+round_start_year <- function(start_year) {
+  if (start_year %% 1 != 0L) {
+    start_year <- round(start_year)
+    warn("Rounding `start_year`: {start_year}.", class = "not_round_start_year")
+  }
+
+  start_year
 }
 
 add_technology_fair_share_ratio <- function(scenario) {

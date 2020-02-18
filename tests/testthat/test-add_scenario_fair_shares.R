@@ -123,14 +123,14 @@ test_that("w/ bad typeof `start_year` errors gracefully", {
 test_that("w/ bad length of `start_year` errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = 2020:2021),
-    class = "bad_start_year"
+    class = "start_year_is_invalid"
   )
 })
 
 test_that("w/ `start_year` of 0L errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = 0L),
-    class = "bad_start_year"
+    class = "start_year_is_invalid"
   )
 })
 

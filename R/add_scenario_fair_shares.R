@@ -29,14 +29,7 @@ add_scenario_fair_shares <- function(scenario, start_year) {
   old_groups <- dplyr::groups(scenario)
   scenario <- dplyr::ungroup(scenario)
 
-  # checked_start_year <- check_start_year(start_year)
-  if (!is.na(start_year) &&
-      (length(start_year) != 1 || start_year <= 0L)) {
-    rlang::abort(
-      class = "bad_start_year",
-      message = "`start_year` must be a positive integer of length 1."
-    )
-  }
+  abort_if_start_year_is_invalid(start_year)
 
   if (is.na(start_year)) {
     rlang::warn(
@@ -70,6 +63,17 @@ add_scenario_fair_shares <- function(scenario, start_year) {
     dplyr::group_by(!!!old_groups)
 }
 
+abort_if_start_year_is_invalid <- function(start_year) {
+  if (!is.na(start_year) && (length(start_year) != 1 || start_year <= 0L)) {
+    rlang::abort(
+      class = "start_year_is_invalid",
+      message = "`start_year` must be a positive integer of length 1."
+    )
+  }
+
+  invisible(start_year)
+}
+
 crucial_fs_columns <- function() {
   c(
     common_fs_groups(),
@@ -101,26 +105,6 @@ check_consistent_units <- function(scenario) {
       Technologies with inconsistent units: {commas(bad$technology)}"
     )
   )
-}
-
-# FIXME: Remove dead code
-check_start_year <- function(start_year) {
-  if (!is.na(start_year) &&
-      (length(start_year) != 1 || start_year <= 0L)) {
-    rlang::abort(
-      class = "bad_start_year",
-      message = "`start_year` must be a positive integer of length 1."
-    )
-  }
-
-  if (is.na(start_year)) {
-    rlang::warn(
-      class = "start_year_is_missing",
-      message = "`start_year` is NA."
-    )
-  }
-
-  invisible(start_year)
 }
 
 add_technology_fair_share_ratio <- function(scenario) {

@@ -30,14 +30,12 @@ if (installed) {
   library(r2dii.dataraw)
   library(r2dii.match)
 
-  matched_loanbook <- match_name(loanbook_demo, ald_demo) \%>\%
-    prioritize()
+  # Pretending you validated this dataset
+  validated_match <- prioritize(match_name(loanbook_demo, ald_demo))
 
-  scenario_with_fair_shares <- add_fair_share_columns(scenario_demo, 2020)
-
-  join_portfolio_ald_scenario(matched_loanbook,
-    ald = ald_demo,
-    scenario = scenario_with_fair_shares
-  )
+  validated_match \%>\%
+    join_portfolio_ald_scenario(
+      ald = ald_demo, scenario = add_fair_share_columns(scenario_demo, 2020)
+    )
 }
 }

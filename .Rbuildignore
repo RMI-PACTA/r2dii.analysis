@@ -11,3 +11,5 @@
 ^docs$
 ^pkgdown$
 ^\.github/workflows/render-readme\.yaml$
+^vignettes/Bank-Workflow\.Rmd$
+^vignettes/Scenario-Fair-Shares\.Rmd$

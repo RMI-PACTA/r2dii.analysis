@@ -113,6 +113,15 @@ test_that("w/ NA `start_year` outputs 0-row tibble preserving groups", {
   expect_equal(dplyr::group_vars(out), "scenario")
 })
 
+test_that("w/ NA start_year outputs same columns as with non-NA start_year", {
+  year_na <- expect_warning(
+    class = "start_year_is_missing",
+    add_scenario_fair_shares(fake_scenario(), start_year = NA_integer_)
+  )
+  year_2020 <- add_scenario_fair_shares(fake_scenario() , start_year = 2020)
+
+  expect_equal(names(year_na), names(year_2020))
+})
 test_that("w/ bad typeof `start_year` errors gracefully", {
   expect_error(
     add_scenario_fair_shares(fake_scenario(), start_year = "a"),

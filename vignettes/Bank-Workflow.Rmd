@@ -36,7 +36,7 @@ scenario_with_fair_shares <- scenario_demo %>%
 With the scenario fair shares calculated, we can join the `matched_loanbook`, `ald` and `scenario`:
 
 ```{r}
-join_portfolio_ald_scenario(
+join_ald_scenario(
   match_result = matched_loanbook,
   ald = ald_demo,
   scenario = scenario_with_fair_shares

@@ -1,6 +1,6 @@
 #' Join a matched-loanbook object to the ald and scenario
 #'
-#' `join_portfolio_ald_scenario()` is a simple wrapper of several calls to
+#' `join_ald_scenario()` is a simple wrapper of several calls to
 #' `join()` functions, forming the master dataset to be used in later steps of
 #' the analysis.
 #'
@@ -25,11 +25,11 @@
 #'   validated_match <- prioritize(match_name(loanbook_demo, ald_demo))
 #'
 #'   validated_match %>%
-#'     join_portfolio_ald_scenario(
+#'     join_ald_scenario(
 #'       ald = ald_demo, scenario = add_fair_share_columns(scenario_demo, 2020)
 #'     )
 #' }
-join_portfolio_ald_scenario <- function(validated_match, ald, scenario) {
+join_ald_scenario <- function(validated_match, ald, scenario) {
   check_portfolio_ald_scenario(validated_match, ald, scenario)
 
   validated_match %>%

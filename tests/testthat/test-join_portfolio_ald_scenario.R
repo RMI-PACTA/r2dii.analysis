@@ -9,7 +9,7 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
                                          scenario = fake_scenario()) {
     expect_error(
       class = "missing_names",
-      join_portfolio_ald_scenario(match_result, ald, scenario)
+      join_ald_scenario(match_result, ald, scenario)
     )
   }
 
@@ -27,13 +27,13 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
 })
 
 test_that("with fake data outputs known value", {
-  out <- join_portfolio_ald_scenario(
+  out <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
     scenario = fake_scenario()
   )
 
-  expect_known_value(out, "ref-join_portfolio_ald_scenario", update = FALSE)
+  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
 })
 
 test_that("outputs expected names", {
@@ -53,7 +53,7 @@ test_that("outputs expected names", {
 
   expect_named(
     expected = minimum_names,
-    join_portfolio_ald_scenario(
+    join_ald_scenario(
       fake_matched(),
       ald = fake_ald(),
       scenario = fake_scenario()
@@ -62,7 +62,7 @@ test_that("outputs expected names", {
 
   expect_named(
     expected = minimum_names,
-    join_portfolio_ald_scenario(
+    join_ald_scenario(
       fake_matched(unknown_column = "any"),
       ald = fake_ald(),
       scenario = fake_scenario()
@@ -72,7 +72,7 @@ test_that("outputs expected names", {
   expect_named(
     expected = c(minimum_names, "production"),
     ignore.order = TRUE,
-    join_portfolio_ald_scenario(
+    join_ald_scenario(
       fake_matched(production = "any"),
       ald = fake_ald(),
       scenario = fake_scenario()

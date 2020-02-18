@@ -44,19 +44,20 @@ add_scenario_fair_shares <- function(scenario, start_year) {
       message = "`start_year` is NA."
     )
 
-    out <- named_tibble(names = minimum_names_add_scenario_fair_share(scenario))
-    out <- dplyr::group_by(out, !!!old_groups)
+    out <- minimum_names_add_scenario_fair_share(scenario) %>%
+      named_tibble() %>%
+      dplyr::group_by(!!!old_groups)
+
     return(out)
   }
 
   if (start_year %% 1 != 0L) {
     start_year <- round(start_year)
     rlang::warn(
-      class = "`start_year_not_round",
+      class = "start_year_not_round",
       message = "Rounding `start_year` to {start_year}."
     )
   }
-
 
   scenario %>%
     check_crucial_names(crucial_fs_columns()) %>%

@@ -1,10 +1,10 @@
-#' Join a matched-loanbook object to the ald and scenario
+#' Join a data-loanbook object to the ald and scenario
 #'
 #' `join_ald_scenario()` is a simple wrapper of several calls to
 #' `join()` functions, forming the master dataset to be used in later steps of
 #' the analysis.
 #'
-#' @param valid_matches A dataframe like the output of
+#' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.dataraw::ald_demo].
 #' @param scenario A scenario dataframe like [r2dii.dataraw::scenario_demo].
@@ -30,10 +30,10 @@
 #'     ald = ald_demo,
 #'     scenario = add_fair_share_columns(scenario_demo, 2020)
 #'   )
-join_ald_scenario <- function(valid_matches, ald, scenario) {
-  check_portfolio_ald_scenario(valid_matches, ald, scenario)
+join_ald_scenario <- function(data, ald, scenario) {
+  check_portfolio_ald_scenario(data, ald, scenario)
 
-  valid_matches %>%
+  data %>%
     left_join(ald, by = ald_columns()) %>%
     inner_join(scenario, by = scenario_columns()) %>%
     select(suppressWarnings(one_of(interesting_scenario_columns())))

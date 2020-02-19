@@ -2,12 +2,12 @@
 % Please edit documentation in R/join_ald_scenario.R
 \name{join_ald_scenario}
 \alias{join_ald_scenario}
-\title{Join a matched-loanbook object to the ald and scenario}
+\title{Join a data-loanbook object to the ald and scenario}
 \usage{
-join_ald_scenario(valid_matches, ald, scenario)
+join_ald_scenario(data, ald, scenario)
 }
 \arguments{
-\item{valid_matches}{A dataframe like the output of
+\item{data}{A dataframe like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
 \item{ald}{An asset level dataframe like \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.}

@@ -5,8 +5,7 @@
 #' the analysis.
 #'
 #' @param valid_matches A dataframe like the output of
-#'   [r2dii.match::prioritize()], after you validate it. If you don't
-#'   validate this dataset FIXME jdhoffa: BAD THINGS CAN HAPPEN.
+#'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.dataraw::ald_demo].
 #' @param scenario A scenario dataframe like [r2dii.dataraw::scenario_demo].
 #'

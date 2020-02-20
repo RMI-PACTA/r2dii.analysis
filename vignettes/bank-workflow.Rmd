@@ -24,7 +24,24 @@ For analysis of a lending portfolio, `r2dii.analysis` picks up where `r2dii.matc
 path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
 valid_matches <- tibble::as_tibble(read.csv(path, stringsAsFactors = FALSE))
 
-valid_matches %>% 
-  join_ald_scenario(ald = ald_demo, scenario = scenario_demo)
+valid_matches
 ```
 
+## Scenario Fair Shares
+
+First, we must calculate the scenario fair shares. To do so:
+
+```{r}
+scenario_with_fair_shares <- scenario_demo %>% 
+  add_fair_share_columns(start_year = 2020)
+```
+
+With the scenario fair shares calculated, we can join the `valid_matches`, `ald` and `scenario`:
+
+```{r}
+valid_matches %>% 
+  join_ald_scenario(
+    ald = ald_demo, 
+    scenario = scenario_with_fair_shares
+  )
+```

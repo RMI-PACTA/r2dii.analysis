@@ -38,6 +38,6 @@ valid_matches <- tibble::as_tibble(read.csv(path, stringsAsFactors = FALSE))
 valid_matches \%>\%
   join_ald_scenario(
     ald = ald_demo,
-    scenario = scenario_demo
+    scenario = add_fair_share_columns(scenario_demo, 2020)
   )
 }

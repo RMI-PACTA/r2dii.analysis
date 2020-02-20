@@ -28,7 +28,7 @@
 #' valid_matches %>%
 #'   join_ald_scenario(
 #'     ald = ald_demo,
-#'     scenario = scenario_demo
+#'     scenario = add_fair_share_columns(scenario_demo, 2020)
 #'   )
 join_ald_scenario <- function(data, ald, scenario) {
   check_portfolio_ald_scenario(data, ald, scenario)

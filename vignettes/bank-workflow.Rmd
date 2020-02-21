@@ -29,19 +29,10 @@ valid_matches
 
 ## Scenario Fair Shares
 
-First, we must calculate the scenario fair shares. To do so:
-
-```{r}
-scenario_with_fair_shares <- scenario_demo %>% 
-  add_fair_share_columns(start_year = 2020)
-```
-
-With the scenario fair shares calculated, we can join the `valid_matches`, `ald` and `scenario`:
+We can now join the datasets `ald` and `scenario`, then add fare share columns.
 
 ```{r}
 valid_matches %>% 
-  join_ald_scenario(
-    ald = ald_demo, 
-    scenario = scenario_with_fair_shares
-  )
+  join_ald_scenario(ald = ald_demo, scenario = scenario_demo) %>% 
+  add_fair_share_columns(start_year = 2020)
 ```

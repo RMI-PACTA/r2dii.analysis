@@ -37,45 +37,28 @@ test_that("with fake data outputs known value", {
 })
 
 test_that("outputs expected names", {
-  minimum_names <- c(
-    "id_loan",
-    "id_2dii",
-    "level",
-    "sector",
-    "technology",
-    "year",
-    "name_ald",
-    "scenario",
-    "region",
-    "value",
-    "units"
+  expected <- setdiff(
+    c(names(fake_matched()), names(fake_ald()), names(fake_scenario())),
+    "name_company"
   )
 
-  expect_named(
-    expected = minimum_names,
-    join_ald_scenario(
-      fake_matched(),
-      ald = fake_ald(),
-      scenario = fake_scenario()
-    )
+  out <- join_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(),
+    scenario = fake_scenario()
+  )
+  expect_equal(
+    sort(unique(names(out))),
+    sort(unique(expected))
   )
 
-  expect_named(
-    expected = minimum_names,
-    join_ald_scenario(
-      fake_matched(unknown_column = "any"),
-      ald = fake_ald(),
-      scenario = fake_scenario()
-    )
+  out2 <- join_ald_scenario(
+    fake_matched(new_column = "anything"),
+    ald = fake_ald(),
+    scenario = fake_scenario()
   )
-
-  expect_named(
-    expected = c(minimum_names, "production"),
-    ignore.order = TRUE,
-    join_ald_scenario(
-      fake_matched(production = "any"),
-      ald = fake_ald(),
-      scenario = fake_scenario()
-    )
+  expect_equal(
+    sort(unique(c(names(out2)), "new_column")),
+    sort(c(unique(expected), "new_column"))
   )
 })

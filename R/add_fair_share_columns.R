@@ -121,9 +121,9 @@ add_market_fair_share_percentage <- function(scenario) {
     dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
     dplyr::mutate(
       mfsp = (.data$value - first(.data$value)) /
-        first(.data$sector_total_by_year)
-    ) %>%
-    dplyr::select(-.data$sector_total_by_year)
+        first(.data$sector_total_by_year),
+      sector_total_by_year = NULL
+    )
 }
 
 named_tibble <- function(names) {

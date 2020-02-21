@@ -7,8 +7,8 @@ path <- here::here("inst", "extdata", "valid_matches.csv")
 readr::write_csv(valid_matches, path)
 
 crucial_names <- function() {
-  c("name_ald",
+  c(
+    "name_ald",
     "sector_ald"
   )
 }
-

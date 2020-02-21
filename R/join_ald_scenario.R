@@ -35,8 +35,7 @@ join_ald_scenario <- function(data, ald, scenario) {
 
   data %>%
     left_join(ald, by = ald_columns()) %>%
-    inner_join(scenario, by = scenario_columns()) %>%
-    select(suppressWarnings(one_of(interesting_scenario_columns())))
+    inner_join(scenario, by = scenario_columns())
 }
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
@@ -59,28 +58,5 @@ scenario_columns <- function() {
     sector_ald = "sector",
     technology = "technology",
     year = "year"
-  )
-}
-
-interesting_scenario_columns <- function() {
-  c(
-    "id_loan",
-    "loan_size_outstanding",
-    "loan_size_credit_limit",
-    "id_2dii",
-    "level",
-    scenario_columns(),
-    "name",
-    "name_ald",
-    "production",
-    "production_unit",
-    "emission_factor",
-    "plant_location",
-    "scenario",
-    "region",
-    "value",
-    "tfsr",
-    "mfsp",
-    "units"
   )
 }

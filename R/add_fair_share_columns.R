@@ -107,6 +107,7 @@ round_start_year <- function(start_year) {
 
 add_technology_fair_share_ratio <- function(scenario) {
   scenario %>%
+    dplyr::ungroup() %>%
     dplyr::group_by(!!!syms(c(common_fs_groups(), "technology"))) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(tfsr = .data$value / first(.data$value)) %>%
@@ -115,6 +116,7 @@ add_technology_fair_share_ratio <- function(scenario) {
 
 add_market_fair_share_percentage <- function(scenario) {
   scenario %>%
+    dplyr::ungroup() %>%
     dplyr::group_by(!!!syms(c(common_fs_groups(), "year"))) %>%
     dplyr::arrange(.data$year, .by_group = TRUE) %>%
     dplyr::mutate(sector_total_by_year = sum(.data$value)) %>%
@@ -123,7 +125,8 @@ add_market_fair_share_percentage <- function(scenario) {
       mfsp = (.data$value - first(.data$value)) /
         first(.data$sector_total_by_year),
       sector_total_by_year = NULL
-    )
+    ) %>%
+    dplyr::ungroup()
 }
 
 named_tibble <- function(names) {

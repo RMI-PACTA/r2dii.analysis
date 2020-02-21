@@ -3,4 +3,5 @@ pkgdown: 1.4.1.9000
 pkgdown_sha: f6ed7d2a46a2ff5622852972f716e37a7c0baf6d
 articles:
   bank-workflow: bank-workflow.html
+  scenario-fair-shares: scenario-fair-shares.html
 

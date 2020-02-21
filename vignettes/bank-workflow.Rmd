@@ -17,12 +17,12 @@ library(r2dii.analysis)
 
 ## Matching
 
-For analysis of a lending portfolio, `r2dii.analysis` picks up where `r2dii.match` leaves off. The following assumes that the `loanbook` has already been matched and validated against the `ald`. If this is not the case, please [click here for more info](https://2degreesinvesting.github.io/r2dii.match/).
+For analysis of a lending portfolio, `r2dii.analysis` picks up where `r2dii.match` leaves off. The following assumes that the `loanbook` has already been matched and validated against the `ald` (how to [validate matches](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii.match.html#validate-matches)).
 
 ```{r}
-# Reading example data after `r2dii.match::match_name()` and manual edits
-path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
-valid_matches <- tibble::as_tibble(read.csv(path, stringsAsFactors = FALSE))
+valid_matches <- match_name(loanbook_demo, ald_demo) %>% 
+  # WARNING: Remember to validate the output of match_name() before prioritize()
+  prioritize()
 
 valid_matches
 ```

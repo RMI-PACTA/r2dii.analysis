@@ -31,13 +31,10 @@ if (!installed) stop("Please install r2dii.match and r2dii.dataraw")
 library(r2dii.dataraw)
 library(r2dii.match)
 
-# Example of valid matches after `r2dii.match::match_name()` and manual edits
-path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
-valid_matches <- tibble::as_tibble(read.csv(path, stringsAsFactors = FALSE))
+valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
+  # WARNING: Remember to validate matches (see `?prioritize`)
+  prioritize()
 
 valid_matches \%>\%
-  join_ald_scenario(
-    ald = ald_demo,
-    scenario = scenario_demo
-  )
+  join_ald_scenario(ald = ald_demo, scenario = scenario_demo)
 }

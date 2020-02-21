@@ -21,22 +21,18 @@
 #' library(r2dii.dataraw)
 #' library(r2dii.match)
 #'
-#' # Example of valid matches after `r2dii.match::match_name()` and manual edits
-#' path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
-#' valid_matches <- tibble::as_tibble(read.csv(path, stringsAsFactors = FALSE))
+#' valid_matches <- match_name(loanbook_demo, ald_demo) %>%
+#'   # WARNING: Remember to validate matches (see `?prioritize`)
+#'   prioritize()
 #'
 #' valid_matches %>%
-#'   join_ald_scenario(
-#'     ald = ald_demo,
-#'     scenario = scenario_demo
-#'   )
+#'   join_ald_scenario(ald = ald_demo, scenario = scenario_demo)
 join_ald_scenario <- function(data, ald, scenario) {
   check_portfolio_ald_scenario(data, ald, scenario)
 
   data %>%
     left_join(ald, by = ald_columns()) %>%
-    inner_join(scenario, by = scenario_columns()) %>%
-    select(suppressWarnings(one_of(interesting_scenario_columns())))
+    inner_join(scenario, by = scenario_columns())
 }
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
@@ -59,28 +55,5 @@ scenario_columns <- function() {
     sector_ald = "sector",
     technology = "technology",
     year = "year"
-  )
-}
-
-interesting_scenario_columns <- function() {
-  c(
-    "id_loan",
-    "loan_size_outstanding",
-    "loan_size_credit_limit",
-    "id_2dii",
-    "level",
-    scenario_columns(),
-    "name",
-    "name_ald",
-    "production",
-    "production_unit",
-    "emission_factor",
-    "plant_location",
-    "scenario",
-    "region",
-    "value",
-    "tfsr",
-    "mfsp",
-    "units"
   )
 }

@@ -59,6 +59,6 @@ test_that("outputs expected names", {
   )
   expect_equal(
     sort(unique(c(names(out2)), "new_column")),
-    sort(c(unique(expected), "new_column"))
+    sort(unique(c(expected, "new_column")))
   )
 })

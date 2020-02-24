@@ -4,15 +4,9 @@
 \alias{sda_portfolio_target}
 \title{Calculate portfolio targets using the Sectoral Decarbonisation Approach (SDA)}
 \usage{
-sda_portfolio_target(
-  market,
-  portfolio,
-  scenario = "B2DS",
-  geography = "Global",
-  sector = NULL,
-  start_year = NULL,
-  target_year = NULL
-)
+sda_portfolio_target(market, portfolio, scenario = "B2DS",
+  geography = "Global", sector = NULL, start_year = NULL,
+  target_year = NULL)
 }
 \arguments{
 \item{market}{A dataframe like \link[r2dii.analysis:market]{r2dii.analysis::market}.}

@@ -35,30 +35,30 @@ test_that("with data lacking crucial columns errors with informative message", {
 
   expect_error(
     class = "missing_names",
-    add_weighted_production(bad(master, "sector"))
+    add_loan_weighted_production(bad(master, "sector"))
   )
 
   expect_error(
     class = "missing_names",
-    add_weighted_production(bad(master, "loan_size_outstanding"))
+    add_loan_weighted_production(bad(master, "loan_size_outstanding"))
   )
 
   expect_error(
-    add_weighted_production(
+    add_loan_weighted_production(
       bad(master, "loan_size_credit_limit"),
       use_loan_size_credit_limit = TRUE
     )
   )
 })
 
-test_that("add_weighted_production outputs a dataframe", {
-  expect_is(add_weighted_production(master), "tbl_df")
+test_that("add_loan_weighted_production outputs a dataframe", {
+  expect_is(add_loan_weighted_production(master), "tbl_df")
 })
 
 test_that("with grouped data returns same groups as input", {
   out <- master %>%
     dplyr::group_by(.data$sector) %>%
-    add_weighted_production()
+    add_loan_weighted_production()
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
@@ -66,13 +66,15 @@ test_that("with grouped data returns same groups as input", {
 test_that("FIXME: test is sensitive. defaults to using `loan_size_outstanding`", {
 
   expect_error_free(
-    add_weighted_production(master)
+    add_loan_weighted_production(master)
   )
   expect_error_free(
-    add_weighted_production(master, use_loan_size_credit_limit = TRUE)
+    add_loan_weighted_production(master, use_loan_size_credit_limit = TRUE)
   )
 })
 
-test_that("outputs new column `weighted_production`", {
-  expect_true(has_name(add_weighted_production(master), "weighted_production"))
+test_that("outputs new column `loan_weighted_production`", {
+  expect_true(
+    has_name(add_loan_weighted_production(master), "loan_weighted_production")
+  )
 })

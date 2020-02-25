@@ -63,16 +63,6 @@ test_that("with grouped data returns same groups as input", {
   expect_equal(dplyr::group_vars(out), "sector")
 })
 
-test_that("FIXME: test is sensitive. defaults to using `loan_size_outstanding`", {
-
-  expect_error_free(
-    add_loan_weighted_production(fake_master())
-  )
-  expect_error_free(
-    add_loan_weighted_production(fake_master(), use_loan_size_credit_limit = TRUE)
-  )
-})
-
 test_that("outputs new column `loan_weighted_production`", {
   expect_true(
     has_name(add_loan_weighted_production(fake_master()), "loan_weighted_production")
@@ -80,12 +70,14 @@ test_that("outputs new column `loan_weighted_production`", {
 })
 
 test_that("with known input returns expected output", {
-  out <- fake_master(
+  data <- fake_master(
     id_loan = c("a", "b"),
     loan_size_outstanding = c(1L, 49L),
     technology = c("ice", "electric"),
     production = c(100L, 25L),
-  ) %>%
+  )
+
+  out <- data %>%
     add_loan_weighted_production() %>%
     # Most interesting columns
     dplyr::select(id_loan, technology, loan_weighted_production)
@@ -99,4 +91,17 @@ test_that("with known input returns expected output", {
   # styler: on
 
   expect_equal(out, expected)
+})
+
+test_that("is sensitive to `use_loan_size_credit_limit`", {
+  data <- r2dii.dataraw::loanbook_demo %>%
+    r2dii.match::match_name(r2dii.dataraw::ald_demo) %>%
+    r2dii.match::prioritize() %>%
+    join_ald_scenario(r2dii.dataraw::ald_demo, r2dii.dataraw::scenario_demo)
+
+  out1 <- add_loan_weighted_production(data, use_loan_size_credit_limit = FALSE)
+  out2 <- add_loan_weighted_production(data, use_loan_size_credit_limit = TRUE)
+  expect_false(
+    identical(out1$loan_weighted_production, out2$loan_weighted_production)
+  )
 })

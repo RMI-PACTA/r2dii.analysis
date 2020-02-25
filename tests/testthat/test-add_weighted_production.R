@@ -78,3 +78,28 @@ test_that("outputs new column `loan_weighted_production`", {
     has_name(add_loan_weighted_production(master), "loan_weighted_production")
   )
 })
+
+test_that("with known input returns expected output", {
+  # styler: off
+  data <- tibble::tribble(
+    ~id_loan, ~loan_size_outstanding,      ~sector, ~technology, ~production,
+    "loan a",                     1L, "automotive",       "ice",        100L,
+    "loan b",                    49L, "automotive",  "electric",         25L,
+  )
+
+  out <- data %>%
+    # Add other crucial columns
+    dplyr::mutate(year = 2020, loan_size_credit_limit = c(100L, 100L)) %>%
+    add_loan_weighted_production() %>%
+    # Most interesting columns
+    dplyr::select(id_loan, technology, loan_weighted_production)
+
+  expected <- tibble::tribble(
+    ~id_loan, ~technology, ~loan_weighted_production,
+    "loan a",       "ice",                         2,
+    "loan b",  "electric",                      24.5,
+  )
+  # styler: on
+
+  expect_equal(out, expected)
+})

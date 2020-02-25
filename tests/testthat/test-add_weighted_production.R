@@ -35,12 +35,12 @@ test_that("with data lacking crucial columns errors with informative message", {
 
   expect_error(
     class = "missing_names",
-    add_loan_weighted_production(bad(master, "sector"))
+    add_loan_weighted_production(bad(fake_master(), "sector"))
   )
 
   expect_error(
     class = "missing_names",
-    add_loan_weighted_production(bad(master, "loan_size_outstanding"))
+    add_loan_weighted_production(bad(fake_master(), "loan_size_outstanding"))
   )
 
   expect_error(
@@ -52,11 +52,11 @@ test_that("with data lacking crucial columns errors with informative message", {
 })
 
 test_that("add_loan_weighted_production outputs a dataframe", {
-  expect_is(add_loan_weighted_production(master), "tbl_df")
+  expect_is(add_loan_weighted_production(fake_master()), "tbl_df")
 })
 
 test_that("with grouped data returns same groups as input", {
-  out <- master %>%
+  out <- fake_master() %>%
     dplyr::group_by(.data$sector) %>%
     add_loan_weighted_production()
 
@@ -66,38 +66,35 @@ test_that("with grouped data returns same groups as input", {
 test_that("FIXME: test is sensitive. defaults to using `loan_size_outstanding`", {
 
   expect_error_free(
-    add_loan_weighted_production(master)
+    add_loan_weighted_production(fake_master())
   )
   expect_error_free(
-    add_loan_weighted_production(master, use_loan_size_credit_limit = TRUE)
+    add_loan_weighted_production(fake_master(), use_loan_size_credit_limit = TRUE)
   )
 })
 
 test_that("outputs new column `loan_weighted_production`", {
   expect_true(
-    has_name(add_loan_weighted_production(master), "loan_weighted_production")
+    has_name(add_loan_weighted_production(fake_master()), "loan_weighted_production")
   )
 })
 
 test_that("with known input returns expected output", {
-  # styler: off
-  data <- tibble::tribble(
-    ~id_loan, ~loan_size_outstanding,      ~sector, ~technology, ~production,
-    "loan a",                     1L, "automotive",       "ice",        100L,
-    "loan b",                    49L, "automotive",  "electric",         25L,
-  )
-
-  out <- data %>%
-    # Add other crucial columns
-    dplyr::mutate(year = 2020, loan_size_credit_limit = c(100L, 100L)) %>%
+  out <- fake_master(
+    id_loan = c("a", "b"),
+    loan_size_outstanding = c(1L, 49L),
+    technology = c("ice", "electric"),
+    production = c(100L, 25L),
+  ) %>%
     add_loan_weighted_production() %>%
     # Most interesting columns
     dplyr::select(id_loan, technology, loan_weighted_production)
 
+  # styler: off
   expected <- tibble::tribble(
     ~id_loan, ~technology, ~loan_weighted_production,
-    "loan a",       "ice",                         2,
-    "loan b",  "electric",                      24.5,
+         "a",       "ice",                         2,
+         "b",  "electric",                      24.5,
   )
   # styler: on
 

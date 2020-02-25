@@ -114,3 +114,25 @@ fake_portfolio <- function(year = NULL,
     ...
   )
 }
+
+#' See `fake_matched()`
+#' @noRd
+fake_master <- function(sector = NULL,
+                        id_loan = NULL,
+                        loan_size_outstanding = NULL,
+                        loan_size_credit_limit = NULL,
+                        production = NULL,
+                        year = NULL,
+                        technology = NULL,
+                        ...) {
+  tibble::tibble(
+    sector =   sector %||% "automotive",
+    id_loan =   id_loan %||% "L151",
+    loan_size_outstanding =  loan_size_outstanding %||%  1,
+    loan_size_credit_limit =  loan_size_credit_limit %||%  2,
+    production =  production %||%  1,
+    year =  year %||%  2020,
+    technology =   technology %||% "ice",
+    ...
+  )
+}

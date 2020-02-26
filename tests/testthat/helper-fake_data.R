@@ -128,10 +128,10 @@ fake_master <- function(sector = NULL,
   tibble::tibble(
     sector =   sector %||% "automotive",
     id_loan =   id_loan %||% "L151",
-    loan_size_outstanding =  loan_size_outstanding %||%  1,
-    loan_size_credit_limit =  loan_size_credit_limit %||%  2,
-    production =  production %||%  1,
-    year =  year %||%  2020,
+    loan_size_outstanding =  loan_size_outstanding %||% 1,
+    loan_size_credit_limit =  loan_size_credit_limit %||% 2,
+    production =  production %||% 1,
+    year =  year %||% 2020,
     technology =   technology %||% "ice",
     ...
   )

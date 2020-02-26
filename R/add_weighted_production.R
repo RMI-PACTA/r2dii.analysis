@@ -51,31 +51,25 @@ add_loan_weighted_production <- function(data, use_loan_size_credit_limit = FALS
 
   data %>%
     dplyr::ungroup() %>%
-
     dplyr::group_by(.data$sector) %>%
     dplyr::mutate(loan_size_by_sector = sum(.data[[loan_size]])) %>%
     dplyr::ungroup() %>%
-
     dplyr::group_by(.data$id_loan) %>%
     dplyr::mutate(
       loan_size_by_sector_w = .data[[loan_size]] / .data$loan_size_by_sector
     ) %>%
     dplyr::ungroup() %>%
-
     dplyr::mutate(
-     production_proxy_w = .data$loan_size_by_sector_w * .data$production
+      production_proxy_w = .data$loan_size_by_sector_w * .data$production
     ) %>%
     dplyr::ungroup() %>%
-
     dplyr::group_by(.data$sector, .data$technology, .data$year) %>%
     mutate(loan_weighted_production = sum(.data$production_proxy_w)) %>%
     dplyr::ungroup() %>%
-
     dplyr::select(
       -.data$loan_size_by_sector,
       -.data$loan_size_by_sector_w,
       -.data$production_proxy_w
     ) %>%
-
     dplyr::group_by(!!!old_groups)
 }

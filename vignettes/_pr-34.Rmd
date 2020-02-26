@@ -88,7 +88,7 @@ tribble(~loan_weighted_production, 56.25, 15, 3.75, 18.75, 6.25, 31.25)
 
 ## A simplified version of the current implementation
 
-This is the core of add_loan_weighted_production()` (excluding some bells and whistles, such as checks and the ability to use the column `loan_size_credit_limit`).
+This is the core of `add_loan_weighted_production()` (excluding some bells and whistles, such as checks and the ability to use the column `loan_size_credit_limit`).
 
 ```r
   data %>%
@@ -108,7 +108,7 @@ This is the core of add_loan_weighted_production()` (excluding some bells and wh
 
 ## Walking through the code bit by bit
 
-I fail to see how Jackson arrived to the expected output. I'll try to walk through the code bit by bit. Hopefully this will reveal where is.
+I fail to see how Jackson arrived to the expected output. I'll try to walk through the code bit by bit. Hopefully this will reveal where the problem is.
 
 
 

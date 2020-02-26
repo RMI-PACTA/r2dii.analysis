@@ -51,25 +51,27 @@ add_loan_weighted_production <- function(data, use_loan_size_credit_limit = FALS
 
   data %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::mutate(loan_size_by_sector = sum(.data[[loan_size]])) %>%
+
+    dplyr::group_by(.data$id_loan, .data$sector) %>%
+    dplyr::mutate(sum_by_loan_by_sector = sum(.data[[loan_size]])) %>%
     dplyr::ungroup() %>%
-    dplyr::group_by(.data$id_loan) %>%
+
     dplyr::mutate(
-      loan_size_by_sector_w = .data[[loan_size]] / .data$loan_size_by_sector
+      weight_by_loan_by_sector = .data[[loan_size]] / .data$sum_by_loan_by_sector,
+      weighted_production = .data$weight_by_loan_by_sector * .data$production,
+      # Remove temporary variables
+      weight_by_loan_by_sector = NULL,
+      sum_by_loan_by_sector = NULL
     ) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(
-      production_proxy_w = .data$loan_size_by_sector_w * .data$production
-    ) %>%
-    dplyr::ungroup() %>%
+
+     # FIXME: Do we need to group by id_loan too?
     dplyr::group_by(.data$sector, .data$technology, .data$year) %>%
-    mutate(loan_weighted_production = sum(.data$production_proxy_w)) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(
-      -.data$loan_size_by_sector,
-      -.data$loan_size_by_sector_w,
-      -.data$production_proxy_w
+    mutate(
+      loan_weighted_production = sum(.data$weighted_production),
+      # Remove temporary variables
+      weighted_production = NULL
     ) %>%
+    dplyr::ungroup() %>%
+
     dplyr::group_by(!!!old_groups)
 }

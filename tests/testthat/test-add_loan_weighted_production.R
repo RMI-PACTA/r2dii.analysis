@@ -69,30 +69,6 @@ test_that("outputs new column `loan_weighted_production`", {
   )
 })
 
-test_that("with known input returns expected output", {
-  data <- fake_master(
-    id_loan = c("a", "b"),
-    loan_size_outstanding = c(1L, 49L),
-    technology = c("ice", "electric"),
-    production = c(100L, 25L),
-  )
-
-  out <- data %>%
-    add_loan_weighted_production() %>%
-    # Most interesting columns
-    dplyr::select(id_loan, technology, loan_weighted_production)
-
-  # styler: off
-  expected <- tibble::tribble(
-    ~id_loan, ~technology, ~loan_weighted_production,
-         "a",       "ice",                         2,
-         "b",  "electric",                      24.5,
-  )
-  # styler: on
-
-  expect_equal(out, expected)
-})
-
 test_that("is sensitive to `use_loan_size_credit_limit`", {
   data <- r2dii.dataraw::loanbook_demo %>%
     r2dii.match::match_name(r2dii.dataraw::ald_demo) %>%
@@ -100,8 +76,13 @@ test_that("is sensitive to `use_loan_size_credit_limit`", {
     join_ald_scenario(r2dii.dataraw::ald_demo, r2dii.dataraw::scenario_demo)
 
   out1 <- add_loan_weighted_production(data, use_loan_size_credit_limit = FALSE)
+  expect_known_output(out1, "ref-add_loan_weighted_production_outstanding")
+
   out2 <- add_loan_weighted_production(data, use_loan_size_credit_limit = TRUE)
+  expect_known_output(out2, "ref-add_loan_weighted_production_credit-limit")
+
   expect_false(
     identical(out1$loan_weighted_production, out2$loan_weighted_production)
   )
 })
+

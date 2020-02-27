@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -18,163 +20,100 @@ library(tidyverse)
 library(r2dii.match)
 ```
 
-## [Jackson's expectations](https://github.com/2DegreesInvesting/r2dii.analysis/pull/34#issuecomment-591337315)
-
 ```{r}
 data <- tribble(
-  ~id_loan, ~loan_size_outstanding, ~loan_size_credit_limit, ~production,      ~sector, ~technology, ~year,
-      "L1",                    40L,                     75L,        150L, "automotive",       "ice", 2020L,
-      "L1",                    40L,                     75L,         40L, "automotive",    "hybrid", 2020L,
-      "L1",                    40L,                     75L,         10L, "automotive",  "electric", 2020L,
-      "L1",                    40L,                     75L,         50L, "automotive",  "electric", 2021L,
-      "L2",                    10L,                    125L,         10L, "automotive",  "electric", 2020L,
-      "L2",                    10L,                    125L,         50L, "automotive",  "electric", 2021L
+  ~sector, ~technology, ~id_loan, ~loan_size_outstanding, ~production, ~year,
+     "sa",         "ta",     "i1",                    40L,         10L, 2020L,
+     "sa",         "ta",     "i2",                    10L,         30L, 2020L,
+     "sa",         "tb",     "i1",                    40L,         20L, 2020L,
+     "sa",         "tb",     "i2",                    10L,         40L, 2020L,
   )
 ```
 
+> Loan 1 is 40, Loan 2 is 10. The sum here should be 50
+>
+> -- [Jackson](https://github.com/2DegreesInvesting/r2dii.analysis/pull/34#issuecomment-591640186)
 
-```r
-add_loan_weighted_production(data) %>% 
-  select(loan_weighted_production)
-#> # A tibble: 6 x 1
-#>   loan_weighted_production
-#>                      <dbl>
-#> 1                    33.3 
-#> 2                     8.89
-#> 3                     2.78
-#> 4                    13.9 
-#> 5                     2.78
-#> 6                    13.9
-
-# expected output outstanding
-tribble(~loan_weighted_production, 120L, 32L, 8L, 40L, 2L, 10L)
-
-#> # A tibble: 6 x 1
-#>   loan_weighted_production
-#>                      <int>
-#> 1                      120
-#> 2                       32
-#> 3                        8
-#> 4                       40
-#> 5                        2
-#> 6                       10
-
-
-add_loan_weighted_production(data, loan_size_outstanding = TRUE) %>%
-  select(loan_weighted_production)
-#> # A tibble: 6 x 1
-#>   loan_weighted_production
-#>                      <dbl>
-#> 1                    20.5 
-#> 2                     5.45
-#> 3                     3.64
-#> 4                    18.2 
-#> 5                     3.64
-#> 6                    18.2
-
-# expected output credit limit
-tribble(~loan_weighted_production, 56.25, 15, 3.75, 18.75, 6.25, 31.25)
-
-#> # A tibble: 6 x 1
-#>   loan_weighted_production
-#>                      <dbl>
-#> 1                    56.2 
-#> 2                    15   
-#> 3                     3.75
-#> 4                    18.8 
-#> 5                     6.25
-#> 6                    31.2
-```
-
-## A simplified version of the current implementation
-
-This is the core of `add_loan_weighted_production()` (excluding some bells and whistles, such as checks and the ability to use the column `loan_size_credit_limit`).
-
-```r
-  data %>%
-    
-    group_by(.data$id_loan, .data$sector) %>%
-    mutate(sum_by_loan_by_sector = sum(.data$loan_size_outstanding)) %>%
-    ungroup() %>%
-
-    mutate(
-      weight_by_loan_by_sector = .data$loan_size_outstanding / .data$sum_by_loan_by_sector,
-      weighted_production = .data$production * .data$weight_by_loan_by_sector
-    ) %>%
-
-    group_by(.data$sector, .data$technology, .data$year) %>%
-    mutate(loan_weighted_production = sum(.data$weighted_production))
-```
-
-## Walking through the code bit by bit
-
-I fail to see how Jackson arrived to the expected output. I'll try to walk through the code bit by bit. Hopefully this will reveal where the problem is.
-
-
-
-* First sum loan size values for each loan in each sector.
+* Compute the size of all loans in a sector. Beware of duplicated values of `loan_size*`.
 
 ```{r}
-sum_by_loan_by_sector <- data %>% 
-  group_by(.data$id_loan, .data$sector) %>%
-  mutate(sum_by_loan_by_sector = sum(.data$loan_size_outstanding)) %>%
-  ungroup()
+distinct_loans_by_sector <- data %>%  
+  group_by(.data$sector) %>% 
+  distinct(id_loan, loan_size_outstanding)
 
-sum_by_loan_by_sector %>% 
-  select(id_loan, loan_size_outstanding, sum_by_loan_by_sector)
+distinct_loans_by_sector
 ```
 
-So far this makes sense to me. For example, I focus on `sum_by_loan_by_sector` and see that the value `20` comes from `10 + 10` in `loan_size_outstanding`.
+```{r echo=FALSE}
+# check_unique_loan_size_values_per_id_loan
+dups <- distinct_loans_by_sector %>% 
+  group_by(.data$sector, .data$id_loan) %>% 
+  mutate(is_duplicated = any(duplicated(id_loan))) %>% 
+  ungroup() %>% 
+  filter(is_duplicated)
 
+if (nrow(dups) > 0L) {
+  rlang::abort(
+    class = "multiple_loan_size_values_by_id_loan",
+    glue::glue(
+      "Every `id_loan` by `sector` must have unique `loan_size*` values."
+    )
+  )
+}
 
-
-* Now let's calculate `weighted_production`, via the intermediate variable `weigh_by_loan_by_sector`.
+# TODO: Find out how to print the `dups` dataframe in the error message (maybe
+# its head).
+```
 
 ```{r}
-weighted_production <- sum_by_loan_by_sector %>% 
+loans_size_by_sector <- distinct_loans_by_sector %>% 
+  summarize(loans_size = sum(.data$loan_size_outstanding))
+
+loans_size_by_sector
+```
+
+* Add summary to original data
+
+```{r}
+data2 <- left_join(data, loans_size_by_sector, by = "sector")
+
+data2
+```
+
+* Compute `loan_production_weighted_by_size_in_sector` (via the intermediate variable `loan_weight_by_size_in_sector`).
+
+```{r}
+result <- data2 %>% 
   mutate(
-    weight_by_loan_by_sector = .data$loan_size_outstanding / .data$sum_by_loan_by_sector,
-    weighted_production = .data$production * .data$weight_by_loan_by_sector
+    loan_weight_by_size_in_sector = 
+      .data$loan_size_outstanding / .data$loans_size,
+    loan_production_weighted_by_size_in_sector = 
+      .data$production * .data$loan_weight_by_size_in_sector
   )
 
-weighted_production %>% 
-  select(id_loan, loan_size_outstanding, sum_by_loan_by_sector, weight_by_loan_by_sector, production, weighted_production)
+result %>% glimpse()
 ```
-This also makes sense. For example, I focus on the last line and see that `loan_size_outstanding = 10` divided by `sum_loan_by_sector = 20` results in `weight_by_loan_by_sector = 0.5`; then `production = 50` times `weight_by_loan_by_sector = 0.50` results in `weight_production = 25`.
 
+I think this output is most informative and flexible. We could wrap it in, say, `add_loan_production_weighted_by_size_in_sector()`.
 
-
-* Finally, I sum `weighted_production` for each sector, technology and year.
+The user may be interested in a specific summary, which granularity depends only on which variables they include in the call to `group_by()`, for example:
 
 ```{r}
-loan_weighted_production <- weighted_production %>% 
-  # FIXME: Jackson, do we need to also group by `id_loan`?
+result %>% 
   group_by(.data$sector, .data$technology, .data$year) %>%
-  mutate(loan_weighted_production = sum(.data$weighted_production))
-
-loan_weighted_production %>% 
-    select(id_loan, sector, technology, year, weighted_production, loan_weighted_production)
+  summarize(
+    weighted_production = sum(.data$loan_production_weighted_by_size_in_sector)
+  )
 ```
 
-The distinct groups are these:
+We may also wrap the two lines above, or replace the call to `summarize()` with a call to `mutate()` (which duplicates `weighted_production` values):
 
 ```{r}
-loan_weighted_production %>% 
-  distinct(sector, technology, year)
+result %>% 
+  group_by(.data$sector, .data$technology, .data$year) %>%
+  mutate(
+    weighted_production = sum(.data$loan_production_weighted_by_size_in_sector)
+  ) %>% 
+  glimpse()
 ```
 
-There are four cases to consider:
-
-* Row 1: `technology` is "ice" only for `year` `2020` so I expect `weighted_production` to equal `loan_weighted_production` (i.e. `37.5 = sum(37.5)`.
-
-* Row 2: Similarly, there is only one row where `technology` is "hybrid" so I expect `weighted_production` and `loan_weighted_production` to have the same value (i.e. `10 = sum(10)`).
-
-* Rows 3 and 5: There are two rows where `technology` is "electric" and `year` is `2020`, and I expect `loan_weighted_production = 7.5` to be the sum of `weighted_production = 2.5` and `weighted_production = 5.0`. 
-
-* Rows 4 and 6: There are two rows where `technology` is "electric" and `year` is `2021`. This is similar to the case above, and I expect `loan_weighted_production = 37.5` to be the sum of `weighted_production = 12.5` and `weighted_production = 25` .
-
-
-
-## Conclusion
-
-Jackson expected something different to what the current implementation does. Likely part of the problem comes from the last grouping -- which currently doesn't include `id_loan`.

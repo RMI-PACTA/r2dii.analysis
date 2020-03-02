@@ -6,7 +6,7 @@ test_that("with data lacking crucial columns errors with informative message", {
 
     expect_error(
       class = "missing_names",
-      add_weighted_loan_production(data, use_credit_limit = use_credit_limit)
+      summarize_weighted_production(data, use_credit_limit = use_credit_limit)
     )
   }
 
@@ -22,7 +22,7 @@ test_that("with data lacking crucial columns errors with informative message", {
 test_that("with bad but unused loan_size_column is error free", {
   bad_unused <- dplyr::rename(fake_master(), bad = "loan_size_credit_limit")
   expect_error_free(
-    add_weighted_loan_production(bad_unused, use_credit_limit = FALSE)
+    summarize_weighted_production(bad_unused, use_credit_limit = FALSE)
   )
 
   bad_unused <- dplyr::rename(fake_master(), bad = "loan_size_outstanding")
@@ -34,7 +34,7 @@ test_that("with bad but unused loan_size_column is error free", {
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     dplyr::group_by(.data$sector) %>%
-    add_weighted_loan_production()
+    summarize_weighted_production()
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
@@ -47,9 +47,9 @@ test_that("with known input outputs as expected", {
     loan_size_outstanding = c( 40,   10,   40,   10),
     production            = c( 10,   30,   20,   40),
   )
-  out1 <- add_weighted_loan_production(data)
-  out1$weighted_loan_production
-  expect_equal(out1$weighted_loan_production, c(8, 6, 16, 8))
+  out1 <- summarize_weighted_production(data)
+  out1$weighted_production
+  expect_equal(out1$weighted_production, c(14, 24))
 
   # Is sensitive to `use_credit_limit`
   # Reversing loan_size and production outputs reverse result
@@ -59,20 +59,20 @@ test_that("with known input outputs as expected", {
     loan_size_credit_limit = c( 10,   40,   10,   40),
     production            =  c( 40,   20,   30,   10),
   )
-  out2 <- add_weighted_loan_production(data2, use_credit_limit = TRUE)
-  expect_equal(out2$weighted_loan_production, c(8, 16, 6, 8))
+  out2 <- summarize_weighted_production(data2, use_credit_limit = TRUE)
+  expect_equal(out2$weighted_production, c(24, 14))
   # styler: on
 })
 
 test_that("with duplicated loan_size by id_loan throws erro", {
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
-    add_weighted_loan_production(fake_master(loan_size_outstanding = 1:2))
+    summarize_weighted_production(fake_master(loan_size_outstanding = 1:2))
   )
 
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
-    add_weighted_loan_production(
+    summarize_weighted_production(
       fake_master(loan_size_credit_limit = 1:2), use_credit_limit = TRUE)
   )
 })

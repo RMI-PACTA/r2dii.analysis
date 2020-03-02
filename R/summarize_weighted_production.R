@@ -34,7 +34,12 @@ summarize_weighted_production <- function(data, use_credit_limit = FALSE) {
 }
 
 add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
-  stopifnot(!is.na(use_credit_limit), is.logical(use_credit_limit))
+  stopifnot(
+    is.data.frame(data),
+    !is.na(use_credit_limit),
+    is.logical(use_credit_limit)
+  )
+
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
   )
@@ -54,7 +59,6 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
 
   distinct_loans_by_sector <- data %>%
     dplyr::ungroup() %>%
-    # FIXME: Do we need to group by year?
     dplyr::group_by(.data$sector) %>%
     dplyr::distinct(.data$id_loan, .data[[loan_size]]) %>%
     check_unique_loan_size_values_per_id_loan()

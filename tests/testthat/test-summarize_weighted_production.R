@@ -105,3 +105,30 @@ test_that("with bad use_credit_limit errors with informative message", {
     "logical.*not*.TRUE"
   )
 })
+
+test_that("with multiple years oututs as expected", {
+  # styler: off
+  data <- fake_master(
+    technology =            c("ta", "ta"),
+    id_loan    =            c("i1", "i2"),
+    loan_size_outstanding = c(40,   10),
+    production            = c(10,   30),
+  )
+  # styler: on
+
+  data2 <- dplyr::bind_rows(data, data)
+  data2$year <- c(2020, 2020, 2021, 2021)
+
+  expect_equal(
+    summarize_weighted_production(data2)$year,
+    c(2020, 2021)
+  )
+  expect_equal(
+    summarize_weighted_production(data2)$weighted_production,
+    c(14, 14)
+  )
+})
+
+test_that("with bad `data` errors with informative message", {
+   expect_error(summarize_weighted_production("bad"), "data.frame.*not.*TRUE")
+})

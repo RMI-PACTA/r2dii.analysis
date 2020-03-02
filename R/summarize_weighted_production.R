@@ -4,6 +4,7 @@
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
 #'   `loan_size_credit_limit` instead.
+#' @param ... Variables to group by.
 #'
 #' @seealso [join_ald_scenario()].
 #'
@@ -22,10 +23,10 @@
 #' summarize_weighted_production(master)
 #'
 #' summarize_weighted_production(master, use_credit_limit = TRUE)
-summarize_weighted_production <- function(data, use_credit_limit = FALSE) {
+summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   data %>%
     add_weighted_loan_production(use_credit_limit = use_credit_limit) %>%
-    dplyr::group_by(.data$sector, .data$technology, .data$year) %>%
+    dplyr::group_by(.data$sector, .data$technology, .data$year, ...) %>%
     dplyr::summarize(
       weighted_production = sum(.data$weighted_loan_production)
     ) %>%

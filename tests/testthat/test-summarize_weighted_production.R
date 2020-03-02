@@ -132,3 +132,19 @@ test_that("with grouped data returns same groups as input", {
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
+
+test_that("can group by `plant_location`", {
+  data <- fake_master(plant_location = c("a", "b"))
+  out <- summarize_weighted_production(data, plant_location)
+  expect_equal(nrow(out), 2L)
+})
+
+test_that("preserves groups passed to ...", {
+  data <- fake_master(plant_location = c("a", "b")) %>%
+    dplyr::group_by(plant_location)
+
+  out <- summarize_weighted_production(data, plant_location)
+  expect_equal(nrow(out), 2L)
+
+  expect_equal(dplyr::group_vars(out), "plant_location")
+})

@@ -4,10 +4,12 @@
 \alias{summarize_weighted_production}
 \title{Summarize production based on the weight of each loan per sector per year}
 \usage{
-summarize_weighted_production(data, use_credit_limit = FALSE)
+summarize_weighted_production(data, ..., use_credit_limit = FALSE)
 }
 \arguments{
 \item{data}{A "data.frame" like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
+
+\item{...}{Variables to group by.}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
 the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column

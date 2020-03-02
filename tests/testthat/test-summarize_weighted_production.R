@@ -1,5 +1,31 @@
 library(r2dii.dataraw)
 
+test_that("with bad `data` errors with informative message", {
+  expect_error(summarize_weighted_production("bad"), "data.frame.*not.*TRUE")
+})
+
+test_that("with bad use_credit_limit errors with informative message", {
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = "bad"),
+    "logical.*not*.TRUE"
+  )
+
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = 1),
+    "logical.*not*.TRUE"
+  )
+
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = NA),
+    "is.na"
+  )
+
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = NULL),
+    "logical.*not*.TRUE"
+  )
+})
+
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name, use_credit_limit = FALSE) {
     data <- dplyr::rename(fake_master(), bad = name)
@@ -31,12 +57,17 @@ test_that("with bad but unused loan_size_column is error free", {
   )
 })
 
-test_that("with grouped data returns same groups as input", {
-  out <- fake_master() %>%
-    dplyr::group_by(.data$sector) %>%
-    summarize_weighted_production()
+test_that("with duplicated loan_size by id_loan throws error", {
+  expect_error(
+    class = "multiple_loan_size_values_by_id_loan",
+    summarize_weighted_production(fake_master(loan_size_outstanding = 1:2))
+  )
 
-  expect_equal(dplyr::group_vars(out), "sector")
+  expect_error(
+    class = "multiple_loan_size_values_by_id_loan",
+    summarize_weighted_production(
+      fake_master(loan_size_credit_limit = 1:2), use_credit_limit = TRUE)
+  )
 })
 
 test_that("with known input outputs as expected", {
@@ -64,45 +95,10 @@ test_that("with known input outputs as expected", {
   # styler: on
 })
 
-test_that("with duplicated loan_size by id_loan throws erro", {
-  expect_error(
-    class = "multiple_loan_size_values_by_id_loan",
-    summarize_weighted_production(fake_master(loan_size_outstanding = 1:2))
-  )
-
-  expect_error(
-    class = "multiple_loan_size_values_by_id_loan",
-    summarize_weighted_production(
-      fake_master(loan_size_credit_limit = 1:2), use_credit_limit = TRUE)
-  )
-})
-
 test_that("outputs expected names", {
   expect_named(
     summarize_weighted_production(fake_master()),
     c("sector", "technology", "year", "weighted_production")
-  )
-})
-
-test_that("with bad use_credit_limit errors with informative message", {
-  expect_error(
-    summarize_weighted_production(fake_master(), use_credit_limit = "bad"),
-    "logical.*not*.TRUE"
-  )
-
-  expect_error(
-    summarize_weighted_production(fake_master(), use_credit_limit = 1),
-    "logical.*not*.TRUE"
-  )
-
-  expect_error(
-    summarize_weighted_production(fake_master(), use_credit_limit = NA),
-    "is.na"
-  )
-
-  expect_error(
-    summarize_weighted_production(fake_master(), use_credit_limit = NULL),
-    "logical.*not*.TRUE"
   )
 })
 
@@ -129,6 +125,10 @@ test_that("with multiple years oututs as expected", {
   )
 })
 
-test_that("with bad `data` errors with informative message", {
-   expect_error(summarize_weighted_production("bad"), "data.frame.*not.*TRUE")
+test_that("with grouped data returns same groups as input", {
+  out <- fake_master() %>%
+    dplyr::group_by(.data$sector) %>%
+    summarize_weighted_production()
+
+  expect_equal(dplyr::group_vars(out), "sector")
 })

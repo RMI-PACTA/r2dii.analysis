@@ -148,3 +148,4 @@ test_that("preserves groups passed to ...", {
 
   expect_equal(dplyr::group_vars(out), "plant_location")
 })
+

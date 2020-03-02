@@ -34,6 +34,7 @@ summarize_weighted_production <- function(data, use_credit_limit = FALSE) {
 }
 
 add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
+  stopifnot(!is.na(use_credit_limit), is.logical(use_credit_limit))
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
   )

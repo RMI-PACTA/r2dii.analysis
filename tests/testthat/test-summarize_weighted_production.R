@@ -83,3 +83,25 @@ test_that("outputs expected names", {
     c("sector", "technology", "year", "weighted_production")
   )
 })
+
+test_that("with bad use_credit_limit errors with informative message", {
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = "bad"),
+    "logical.*not*.TRUE"
+  )
+
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = 1),
+    "logical.*not*.TRUE"
+  )
+
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = NA),
+    "is.na"
+  )
+
+  expect_error(
+    summarize_weighted_production(fake_master(), use_credit_limit = NULL),
+    "logical.*not*.TRUE"
+  )
+})

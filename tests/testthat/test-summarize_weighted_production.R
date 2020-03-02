@@ -76,3 +76,10 @@ test_that("with duplicated loan_size by id_loan throws erro", {
       fake_master(loan_size_credit_limit = 1:2), use_credit_limit = TRUE)
   )
 })
+
+test_that("outputs expected names", {
+  expect_named(
+    summarize_weighted_production(fake_master()),
+    c("sector", "technology", "year", "weighted_production")
+  )
+})

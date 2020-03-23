@@ -8,6 +8,8 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
+[![R build
+status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
 <!-- badges: end -->
 
 The goal of r2dii.analysis is to provide a suite of metrics and analysis
@@ -31,8 +33,9 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 # Use example configuration-files
 library(r2dii.utils)
 library(r2dii.analysis)
+#> Error in library(r2dii.analysis): there is no package called 'r2dii.analysis'
 packageVersion("r2dii.analysis")
-#> [1] '0.0.0.9004'
+#> Error in packageVersion("r2dii.analysis"): there is no package called 'r2dii.analysis'
 
 # Use a toy configuration file
 restore_options <- options(r2dii_config = example_config("config_demo.yml"))
@@ -43,46 +46,10 @@ START.YEAR()
 #> [1] 2019
 
 sda_portfolio_target(market, portfolio)
-#> Warning: Skipping sectors not present in both `market` and `portfolio`:
-#> Cement, Power, Oil&Gas, Coal, Aviation, FossilFuels, Shipping, Automotive.
-#> * Using `sector`: Steel.
-#> * Using `start_year`: 2019.
-#> * Using `target_year`: 2040.
-#> # A tibble: 24 x 9
-#>    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
-#>    <chr>      <chr>  <chr>    <chr>            <chr>         <chr>         
-#>  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor <dbl>,
-#> #   Year <int>, Plan.Sec.EmissionsFactor <dbl>
+#> Error in sda_portfolio_target(market, portfolio): could not find function "sda_portfolio_target"
 
 sda_portfolio_target(market, portfolio, sector = "Steel")
-#> * Using `sector`: Steel.
-#> * Using `start_year`: 2019.
-#> * Using `target_year`: 2040.
-#> # A tibble: 24 x 9
-#>    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
-#>    <chr>      <chr>  <chr>    <chr>            <chr>         <chr>         
-#>  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor <dbl>,
-#> #   Year <int>, Plan.Sec.EmissionsFactor <dbl>
+#> Error in sda_portfolio_target(market, portfolio, sector = "Steel"): could not find function "sda_portfolio_target"
 
 # This configuration file lacks `start_year`
 options(r2dii_config = example_config("config-toy.yml"))
@@ -91,28 +58,9 @@ START.YEAR()
 
 # Fails
 sda_portfolio_target(market, portfolio, sector = "Steel")
-#> * Using `sector`: Steel.
-#> Error: `start_year` can't be NULL.
-#> Did you forget `start_year` in a configuration file or as an argument?
+#> Error in sda_portfolio_target(market, portfolio, sector = "Steel"): could not find function "sda_portfolio_target"
 
 # Passes
 sda_portfolio_target(market, portfolio, sector = "Steel", start_year = "2019")
-#> * Using `sector`: Steel.
-#> * Using `start_year`: 2019.
-#> * Using `target_year`: 2040.
-#> # A tibble: 24 x 9
-#>    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
-#>    <chr>      <chr>  <chr>    <chr>            <chr>         <chr>         
-#>  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor <dbl>,
-#> #   Year <int>, Plan.Sec.EmissionsFactor <dbl>
+#> Error in sda_portfolio_target(market, portfolio, sector = "Steel", start_year = "2019"): could not find function "sda_portfolio_target"
 ```

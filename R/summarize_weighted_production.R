@@ -13,12 +13,12 @@
 #'   `sector`, `technology`, `year`, and `weighted_production`.
 #'
 #' @examples
-#' library(r2dii.dataraw)
+#' library(r2dii.data)
 #'
-#' master <- r2dii.dataraw::loanbook_demo %>%
-#'   r2dii.match::match_name(r2dii.dataraw::ald_demo) %>%
+#' master <- r2dii.data::loanbook_demo %>%
+#'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
 #'   r2dii.match::prioritize() %>%
-#'   join_ald_scenario(r2dii.dataraw::ald_demo, r2dii.dataraw::scenario_demo)
+#'   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo)
 #'
 #' summarize_weighted_production(master)
 #'

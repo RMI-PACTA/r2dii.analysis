@@ -1,4 +1,4 @@
-library(r2dii.dataraw)
+library(r2dii.data)
 
 test_that("with bad `data` errors with informative message", {
   expect_error(summarize_weighted_production("bad"), "data.frame.*not.*TRUE")

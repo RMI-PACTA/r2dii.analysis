@@ -23,12 +23,12 @@ A tibble with the same groups as the input (if any) and columns:
 Summarize production based on the weight of each loan per sector per year
 }
 \examples{
-library(r2dii.dataraw)
+library(r2dii.data)
 
-master <- r2dii.dataraw::loanbook_demo \%>\%
-  r2dii.match::match_name(r2dii.dataraw::ald_demo) \%>\%
+master <- r2dii.data::loanbook_demo \%>\%
+  r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
   r2dii.match::prioritize() \%>\%
-  join_ald_scenario(r2dii.dataraw::ald_demo, r2dii.dataraw::scenario_demo)
+  join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo)
 
 summarize_weighted_production(master)
 

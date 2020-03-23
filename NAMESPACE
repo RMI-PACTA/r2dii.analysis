@@ -3,7 +3,6 @@
 export("%>%")
 export(":=")
 export(.data)
-export(add_fair_share_columns)
 export(as_label)
 export(as_name)
 export(enquo)

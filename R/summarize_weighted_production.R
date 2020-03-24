@@ -54,8 +54,7 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
     "year"
   )
   check_crucial_names(data, crucial)
-
-  purrr::walk(crucial, ~ check_crucial_nas(data, .x))
+  purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
 
   old_groups <- dplyr::groups(data)
   data <- dplyr::ungroup(data)
@@ -98,14 +97,11 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
   invisible(data)
 }
 
-check_crucial_nas <- function(data, column) {
-  if (any(is.na(data[, column]))) {
+check_column_has_no_na <- function(data, column) {
+  if (anyNA(data[[column]])) {
     rlang::abort(
       class = "column_has_na",
-      # TODO: Print which column contains `NA`
-      glue::glue(
-        "Column `{column}` must not contain any `NA`s."
-      )
+      glue::glue("Column `{column}` must not contain any `NA`s.")
     )
   }
 

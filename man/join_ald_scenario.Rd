@@ -10,9 +10,9 @@ join_ald_scenario(data, ald, scenario)
 \item{data}{A dataframe like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
-\item{ald}{An asset level dataframe like \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.}
+\item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{scenario}{A scenario dataframe like \link[r2dii.dataraw:scenario_demo]{r2dii.dataraw::scenario_demo}.}
+\item{scenario}{A scenario dataframe like \link[r2dii.scenario:scenario_demo]{r2dii.scenario::scenario_demo}.}
 }
 \value{
 Returns a fully joined dataframe, linking portfolio, ald and
@@ -24,11 +24,11 @@ scenario.
 the analysis.
 }
 \examples{
-installed <- requireNamespace("r2dii.dataraw", quietly = TRUE) &&
+installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.dataraw")
+if (!installed) stop("Please install r2dii.match and r2dii.data")
 
-library(r2dii.dataraw)
+library(r2dii.data)
 library(r2dii.match)
 
 valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
@@ -36,5 +36,5 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   prioritize()
 
 valid_matches \%>\%
-  join_ald_scenario(ald = ald_demo, scenario = scenario_demo)
+  join_ald_scenario(ald = ald_demo, scenario = r2dii.scenario::scenario_demo)
 }

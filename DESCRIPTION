@@ -38,28 +38,31 @@ Depends:
     R (>= 2.10)
 Imports: 
     dplyr,
+    ellipsis,
+    glue,
     lubridate,
     magrittr,
     purrr,
+    r2dii.data (>= 0.0.2.9000),
     r2dii.utils (>= 0.0.0.9003),
     rlang (>= 0.1.2),
     tibble,
-    glue
+    r2dii.scenario (>= 0.0.0.9000)
 Suggests: 
     covr,
-    r2dii.dataraw (>= 0.0.2.9001),
     r2dii.match (>= 0.0.0.9004),
-    roxygen2,
-    testthat (>= 2.1.0),
-    withr,
     rmarkdown,
-    spelling
-Remotes: 
-    2degreesinvesting/r2dii.dataraw,
+    roxygen2,
+    spelling,
+    testthat (>= 2.1.0),
+    withr
+Remotes:  
+    2degreesinvesting/r2dii.data,
     2degreesinvesting/r2dii.match,
-    2DegreesInvesting/r2dii.utils
+    2DegreesInvesting/r2dii.utils,
+    2degreesinvesting/r2dii.scenario
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
-Language: en-US

@@ -13,3 +13,6 @@
 ^\.github/workflows/render-readme\.yaml$
 ^vignettes/Bank-Workflow\.Rmd$
 ^vignettes/Scenario-Fair-Shares\.Rmd$
+^vignettes/articles$
+^vignettes/_pr-34\.Rmd$
+^vignettes/_pr-34\.md$

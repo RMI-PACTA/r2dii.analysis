@@ -48,10 +48,10 @@ test_that("with data lacking crucial columns errors with informative message", {
 test_that("with data having NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs <- function(name, use_credit_limit = FALSE) {
     data <- fake_master(
-      technology =            c("ta", "ta", "tb", "tb"),
-      id_loan    =            c("i1", "i2", "i1", "i2"),
-      loan_size_outstanding = c( 40,   10,   40,   10),
-      production            = c( 10,   30,   20,   40),
+      technology = c("ta", "ta", "tb", "tb"),
+      id_loan = c("i1", "i2", "i1", "i2"),
+      loan_size_outstanding = c(40, 10, 40, 10),
+      production = c(10, 30, 20, 40),
     )
 
     data[1, name] <- NA
@@ -91,7 +91,9 @@ test_that("with duplicated loan_size by id_loan throws error", {
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
     summarize_weighted_production(
-      fake_master(loan_size_credit_limit = 1:2), use_credit_limit = TRUE)
+      fake_master(loan_size_credit_limit = 1:2),
+      use_credit_limit = TRUE
+    )
   )
 })
 
@@ -173,4 +175,3 @@ test_that("preserves groups passed to ...", {
 
   expect_equal(dplyr::group_vars(out), "plant_location")
 })
-

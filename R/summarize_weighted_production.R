@@ -98,14 +98,14 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
   invisible(data)
 }
 
-check_crucial_NAs <- function(data, crucial){
-  for (column in crucial){
+check_crucial_NAs <- function(data, crucial) {
+  for (column in crucial) {
     check_column_for_NAs(data, column)
   }
 }
 
-check_column_for_NAs <- function(data, column){
-  if (any(is.na(data[,column]))){
+check_column_for_NAs <- function(data, column) {
+  if (any(is.na(data[, column]))) {
     rlang::abort(
       class = "column_has_NAs",
       # TODO: Print which column contains `NA`

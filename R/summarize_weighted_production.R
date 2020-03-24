@@ -55,6 +55,8 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
   )
   check_crucial_names(data, crucial)
 
+  check_crucial_NAs(data, crucial)
+
   old_groups <- dplyr::groups(data)
   data <- dplyr::ungroup(data)
 
@@ -89,6 +91,26 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
       # TODO: Print `dups` in the error message (maybe its head).
       glue::glue(
         "Every `id_loan` by `sector` must have unique `loan_size*` values."
+      )
+    )
+  }
+
+  invisible(data)
+}
+
+check_crucial_NAs <- function(data, crucial){
+  for (column in crucial){
+    check_column_for_NAs(data, column)
+  }
+}
+
+check_column_for_NAs <- function(data, column){
+  if (any(is.na(data[,column]))){
+    rlang::abort(
+      class = "column_has_NAs",
+      # TODO: Print which column contains `NA`
+      glue::glue(
+        "Column `{column}` must not contain any `NA`s."
       )
     )
   }

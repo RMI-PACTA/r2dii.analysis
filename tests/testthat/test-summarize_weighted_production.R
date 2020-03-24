@@ -45,6 +45,31 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("year")
 })
 
+test_that("with data having NAs in crucial columns errors with informative message", {
+  expect_error_crucial_NAs <- function(name, use_credit_limit = FALSE) {
+    data <- fake_master(
+      technology =            c("ta", "ta", "tb", "tb"),
+      id_loan    =            c("i1", "i2", "i1", "i2"),
+      loan_size_outstanding = c( 40,   10,   40,   10),
+      production            = c( 10,   30,   20,   40),
+    )
+
+    data[1, name] <- NA
+    expect_error(
+      class = "column_has_NAs",
+      summarize_weighted_production(data, use_credit_limit = use_credit_limit)
+    )
+  }
+
+  expect_error_crucial_NAs("id_loan")
+  expect_error_crucial_NAs("loan_size_outstanding")
+  expect_error_crucial_NAs("loan_size_credit_limit", use_credit_limit = TRUE)
+  expect_error_crucial_NAs("production")
+  expect_error_crucial_NAs("sector")
+  expect_error_crucial_NAs("technology")
+  expect_error_crucial_NAs("year")
+})
+
 test_that("with bad but unused loan_size_column is error free", {
   bad_unused <- dplyr::rename(fake_master(), bad = "loan_size_credit_limit")
   expect_error_free(
@@ -102,7 +127,7 @@ test_that("outputs expected names", {
   )
 })
 
-test_that("with multiple years oututs as expected", {
+test_that("with multiple years outputs as expected", {
   # styler: off
   data <- fake_master(
     technology =            c("ta", "ta"),

@@ -9,16 +9,19 @@ summarize_portfolio_production(data, ..., use_credit_limit = FALSE)
 \arguments{
 \item{data}{A "data.frame" like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
 
-\item{...}{Variables to group by.}
+\item{...}{
+  Arguments passed on to \code{\link[=summarize_weighted_production]{summarize_weighted_production}}
+  \describe{
+    \item{\code{}}{}
+  }}
 
-\item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to
-using the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
+\item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
+the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \code{loan_size_credit_limit} instead.}
 }
 \value{
 A tibble with the same groups as the input (if any) and columns:
 \code{sector}, \code{technology}, \code{year}, and \code{weighted_production}.
-\code{weighted_production} results are aggregated to the portfolio-level.
 }
 \description{
 A simpler wrapper used to calculate the loan-weighted production for each
@@ -35,4 +38,7 @@ master <- r2dii.data::loanbook_demo \%>\%
 summarize_portfolio_production(master)
 
 summarize_portfolio_production(master, use_credit_limit = TRUE)
+}
+\seealso{
+\code{\link[=join_ald_scenario]{join_ald_scenario()}}.
 }

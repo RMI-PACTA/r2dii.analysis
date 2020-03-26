@@ -3,15 +3,9 @@
 #' A simpler wrapper used to calculate the loan-weighted production for each
 #' matched company, and aggregate to the portfolio level.
 #'
-#' @param data A "data.frame" like the output of [join_ald_scenario()].
-#' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to
-#' using the column `loan_size_outstanding`. Set to `TRUE` to use the column
-#' `loan_size_credit_limit` instead.
-#' @param ... Variables to group by.
+#' @inherit summarize_weighted_production
+#' @inheritDotParams summarize_weighted_production
 #'
-#' @return A tibble with the same groups as the input (if any) and columns:
-#'   `sector`, `technology`, `year`, and `weighted_production`.
-#'   `weighted_production` results are aggregated to the portfolio-level.
 #' @export
 #'
 #' @examples
@@ -25,7 +19,9 @@
 #' summarize_portfolio_production(master)
 #'
 #' summarize_portfolio_production(master, use_credit_limit = TRUE)
-summarize_portfolio_production <- function(data, ..., use_credit_limit = FALSE) {
+summarize_portfolio_production <- function(data,
+                                           ...,
+                                           use_credit_limit = FALSE) {
   check_crucial_names(data, "scenario")
 
   summarize_weighted_production(

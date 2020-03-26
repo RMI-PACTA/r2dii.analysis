@@ -7,7 +7,8 @@
 add_portfolio_target(data)
 }
 \arguments{
-\item{data}{A "data.frame" like the output of \code{\link[=summarize_portfolio_production]{summarize_portfolio_production()}}.}
+\item{data}{A "data.frame" like the output of
+\code{\link[=summarize_portfolio_production]{summarize_portfolio_production()}}.}
 }
 \value{
 A tibble with the same groups as the input (if any) and columns:

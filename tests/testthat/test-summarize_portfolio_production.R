@@ -13,4 +13,8 @@ test_that("with known input outputs as expected", {
 
   out <- summarize_portfolio_production(data)
   expect_equal(out$weighted_production, c(14, 14, 24, 24))
+  expect_known_output(
+    out, "ref-summarize_portfolio_production-output", print = TRUE
+  )
 })
+

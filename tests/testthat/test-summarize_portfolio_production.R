@@ -1,6 +1,6 @@
 test_that("with known input outputs as expected", {
   data <- fake_master(
-    name = c("company a", "company b", "company a", "company b", "company a", "company b", "company a", "company b"),
+    name = paste("company", c("a", "b", "a", "b", "a", "b", "a", "b")),
     technology = c("ta", "ta", "tb", "tb", "ta", "ta", "tb", "tb"),
     id_loan = c("i1", "i2", "i1", "i2", "i1", "i2", "i1", "i2"),
     loan_size_outstanding = c(40, 10, 40, 10, 40, 10, 40, 10),

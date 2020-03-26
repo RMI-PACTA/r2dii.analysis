@@ -11,14 +11,24 @@
 #' @export
 #'
 #' @examples
-add_portfolio_target <- function(data, start_year){
-  stopifnot(
-    is.data.frame(data),
-    !is.na(start_year),
-    is.numeric(start_year)
-  )
+#' library(r2dii.data)
+#'
+#' scenario_with_fair_shares <- r2dii.scenario::scenario_demo %>%
+#'   r2dii.scenario::add_market_share_columns(start_year = 2020)
+#'
+#' master <- r2dii.data::loanbook_demo %>%
+#'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
+#'   r2dii.match::prioritize() %>%
+#'   join_ald_scenario(r2dii.data::ald_demo, scenario_with_fair_shares)
+#'
+#' portfolio_production <- summarize_portfolio_production(master, tmsr, smsp)
+#'
+#' add_portfolio_target(portfolio_production)
 
-  check_start_year_in_years(data, start_year)
+add_portfolio_target <- function(data){
+  stopifnot(
+    is.data.frame(data)
+  )
 
   crucial <- c(
     "weighted_production",
@@ -31,25 +41,15 @@ add_portfolio_target <- function(data, start_year){
 
   # TODO: There STILL must be a better way to do this
   initial_sector_summaries <- data %>%
-    dplyr::group_by(sector, scenario, year) %>%
-    dplyr::summarise(sector_weighted_production = sum(weighted_production)) %>%
-    dplyr::mutate(initial_sector_production = first(sector_weighted_production)) %>%
-    dplyr::select(-sector_weighted_production)
+    dplyr::group_by(.data$sector, .data$scenario, .data$year) %>%
+    dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
+    dplyr::mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
+    dplyr::select(-.data$sector_weighted_production)
 
   data %>%
-    r2dii.scenario::add_market_share_columns(data, start_year = start_year) %>%
-    dplyr::left_join(intial_sector_summaries, by=c("sector", "scenario", "year")) %>%
-    dplyr::mutate(tmsr_target_weighted_production = initial_tech_production * tmsr,
-           smsp_target_weighted_production = initial_tech_production + (initial_sector_production*smsp)) %>%
-    dplyr::select(-c(tmsr,smsp, initial_tech_production, initial_sector_production))
-}
-
-check_start_year_in_years <- function(data, start_year){
-  if (!(start_year %in% data$year)){
-    rlang::abort(
-      class = "start_year_in_range",
-      glue::glue("`start_year` must be in the range of column `year`.")
-    )
-  }
-  invisible(data)
+    dplyr::left_join(initial_sector_summaries, by=c("sector", "scenario", "year")) %>%
+    dplyr::mutate(initial_tech_production = first(.data$weighted_production)) %>%
+    dplyr::mutate(tmsr_target_weighted_production = .data$initial_tech_production * .data$tmsr,
+           smsp_target_weighted_production = .data$initial_tech_production + (.data$initial_sector_production*.data$smsp)) %>%
+    dplyr::select(-c(.data$tmsr,.data$smsp, .data$initial_tech_production, .data$initial_sector_production))
 }

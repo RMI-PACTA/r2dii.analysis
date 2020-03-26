@@ -28,11 +28,10 @@
 #'
 summarize_company_production <- function(data, ..., use_credit_limit = FALSE){
   crucial <- c(
-    "scenario",
     "name")
 
   check_crucial_names(data, crucial)
 
   data %>%
-    summarize_weighted_production(name, scenario, ...)
+    summarize_weighted_production(.data$name, ...)
 }

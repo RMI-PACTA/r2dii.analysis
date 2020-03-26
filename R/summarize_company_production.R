@@ -25,10 +25,10 @@
 #' summarize_company_production(master)
 #'
 #' summarize_company_production(master, use_credit_limit = TRUE)
-#'
-summarize_company_production <- function(data, ..., use_credit_limit = FALSE){
+summarize_company_production <- function(data, ..., use_credit_limit = FALSE) {
   crucial <- c(
-    "name")
+    "name"
+  )
 
   check_crucial_names(data, crucial)
 

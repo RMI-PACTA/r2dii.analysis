@@ -25,9 +25,7 @@
 #' summarize_portfolio_production(master)
 #'
 #' summarize_portfolio_production(master, use_credit_limit = TRUE)
-#'
-summarize_portfolio_production <- function(data, ..., use_credit_limit = FALSE){
-
+summarize_portfolio_production <- function(data, ..., use_credit_limit = FALSE) {
   crucial <- c(
     "scenario"
   )

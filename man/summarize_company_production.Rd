@@ -35,5 +35,4 @@ master <- r2dii.data::loanbook_demo \%>\%
 summarize_company_production(master)
 
 summarize_company_production(master, use_credit_limit = TRUE)
-
 }

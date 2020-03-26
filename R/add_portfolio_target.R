@@ -24,8 +24,7 @@
 #' portfolio_production <- summarize_portfolio_production(master, tmsr, smsp)
 #'
 #' add_portfolio_target(portfolio_production)
-
-add_portfolio_target <- function(data){
+add_portfolio_target <- function(data) {
   stopifnot(
     is.data.frame(data)
   )
@@ -47,9 +46,11 @@ add_portfolio_target <- function(data){
     dplyr::select(-.data$sector_weighted_production)
 
   data %>%
-    dplyr::left_join(initial_sector_summaries, by=c("sector", "scenario", "year")) %>%
+    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario", "year")) %>%
     dplyr::mutate(initial_tech_production = first(.data$weighted_production)) %>%
-    dplyr::mutate(tmsr_target_weighted_production = .data$initial_tech_production * .data$tmsr,
-           smsp_target_weighted_production = .data$initial_tech_production + (.data$initial_sector_production*.data$smsp)) %>%
-    dplyr::select(-c(.data$tmsr,.data$smsp, .data$initial_tech_production, .data$initial_sector_production))
+    dplyr::mutate(
+      tmsr_target_weighted_production = .data$initial_tech_production * .data$tmsr,
+      smsp_target_weighted_production = .data$initial_tech_production + (.data$initial_sector_production * .data$smsp)
+    ) %>%
+    dplyr::select(-c(.data$tmsr, .data$smsp, .data$initial_tech_production, .data$initial_sector_production))
 }

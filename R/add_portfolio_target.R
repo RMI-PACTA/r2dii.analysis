@@ -4,7 +4,8 @@
 #' calculated using either the technology market share ratio `tmsr` or sector
 #' market share percentage `smsp`.
 #'
-#' @param data A "data.frame" like the output of [summarize_portfolio_production()].
+#' @param data A "data.frame" like the output of
+#'   [summarize_portfolio_production()].
 #'
 #' @return A tibble with the same groups as the input (if any) and columns:
 #'   `tmsr_target_weighted_production` and `smsp_target_weighted_production`.
@@ -25,15 +26,15 @@
 #'
 #' add_portfolio_target(portfolio_production)
 add_portfolio_target <- function(data) {
-  stopifnot(
-    is.data.frame(data)
-  )
+  stopifnot(is.data.frame(data))
 
   crucial <- c(
     "weighted_production",
     "sector",
     "scenario",
-    "year"
+    "year",
+    # ASK @jdhoffa: This comes from `data`, right?
+    "tmsr"
   )
 
   check_crucial_names(data, crucial)

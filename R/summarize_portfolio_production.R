@@ -26,12 +26,11 @@
 #'
 #' summarize_portfolio_production(master, use_credit_limit = TRUE)
 summarize_portfolio_production <- function(data, ..., use_credit_limit = FALSE) {
-  crucial <- c(
-    "scenario"
+  check_crucial_names(data, "scenario")
+
+  summarize_weighted_production(
+    data,
+    .data$scenario, ...,
+    use_credit_limit = use_credit_limit
   )
-
-  check_crucial_names(data, crucial)
-
-  data %>%
-    summarize_weighted_production(.data$scenario, ...)
 }

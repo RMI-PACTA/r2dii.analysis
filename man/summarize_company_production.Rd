@@ -2,7 +2,7 @@
 % Please edit documentation in R/summarize_company_production.R
 \name{summarize_company_production}
 \alias{summarize_company_production}
-\title{Summarize the portfolio-weighted produciton at company level}
+\title{Summarize the portfolio-weighted production at company level}
 \usage{
 summarize_company_production(data, ..., use_credit_limit = FALSE)
 }

@@ -1,4 +1,4 @@
-#' Summarize the portfolio-weighted produciton at company level
+#' Summarize the portfolio-weighted production at company level
 #'
 #' A simpler wrapper used to calculate the loan-weighted production for each
 #' matched company, and aggregate to the company level.

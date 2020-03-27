@@ -1,7 +1,0 @@
-# A tibble: 4 x 5
-  sector     technology  year scenario weighted_production
-  <chr>      <chr>      <dbl> <chr>                  <dbl>
-1 automotive ta          2020 a                         14
-2 automotive ta          2020 b                         14
-3 automotive tb          2020 a                         24
-4 automotive tb          2020 b                         24

@@ -24,14 +24,20 @@ summarize_company_production <- function(data,
                                          use_credit_limit = FALSE) {
   crucial <- c(
     "name",
-    "scenario"
+    "scenario",
+    "tmsr",
+    "smsp"
   )
 
   check_crucial_names(data, crucial)
 
   summarize_weighted_production(
     data,
-    .data$name, .data$scenario, ...,
+    .data$name,
+    .data$scenario,
+    .data$tmsr,
+    .data$smsp,
+    ...,
     use_credit_limit = use_credit_limit
     )
 }

@@ -22,11 +22,20 @@
 summarize_portfolio_production <- function(data,
                                            ...,
                                            use_credit_limit = FALSE) {
-  check_crucial_names(data, "scenario")
+  crucial <- c(
+    "scenario",
+    "tmsr",
+    "smsp"
+  )
+
+  check_crucial_names(data, crucial)
 
   summarize_weighted_production(
     data,
-    .data$scenario, ...,
+    .data$scenario,
+    .data$tmsr,
+    .data$smsp,
+    ...,
     use_credit_limit = use_credit_limit
   )
 }

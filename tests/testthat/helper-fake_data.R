@@ -68,7 +68,7 @@ fake_ald <- function(name_company = NULL,
     name_company = name_company %||% "shaanxi auto",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
-    year = year %||% c(2020,2025),
+    year = year %||% 2025,
     production = production %||% 1,
     plant_location = plant_location %||% "BF",
     ...
@@ -90,9 +90,9 @@ fake_scenario <- function(scenario = NULL,
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
     region = region %||% "global",
-    year = year %||% c(2020, 2025),
-    tmsr = tmsr %||% c(1, 0.5),
-    smsp = smsp %||% c(0, -0.08),
+    year = year %||% 2025,
+    tmsr = tmsr %||% 0.5,
+    smsp = smsp %||% -0.08,
     ...
   )
 }
@@ -146,13 +146,13 @@ fake_master <- function(id_loan = NULL,
     sector =   sector %||% "automotive",
     name_ald = name_ald %||% "shaanxi auto",
     technology =   technology %||% "ice",
-    year =  year %||% c(2020,2025),
+    year =  year %||% 2025,
     production =  production %||% 1,
     plant_location = plant_location %||% "BF",
     scenario = scenario %||% "sds",
     region = region %||% "global",
-    tmsr = tmsr %||% c(1,0.5),
-    smsp = smsp %||% c(0, -0.08),
+    tmsr = tmsr %||% 0.5,
+    smsp = smsp %||% -0.08,
     ...
   )
 }

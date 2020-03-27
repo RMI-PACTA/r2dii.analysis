@@ -73,18 +73,18 @@ fake_scenario <- function(scenario = NULL,
                           sector = NULL,
                           technology = NULL,
                           region = NULL,
-                          value = NULL,
-                          units = NULL,
                           year = NULL,
+                          tmsr = NULL,
+                          smsp = NULL,
                           ...) {
   tibble::tibble(
     scenario = scenario %||% "sds",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
     region = region %||% "global",
-    value = value %||% c(2, 1),
-    units = units %||% "cars produced",
     year = year %||% c(2020, 2025),
+    tmsr = tmsr %||% c(1, 0.5),
+    smsp = smsp %||% c(0, -0.08),
     ...
   )
 }
@@ -136,3 +136,4 @@ fake_master <- function(sector = NULL,
     ...
   )
 }
+

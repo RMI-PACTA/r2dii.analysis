@@ -3,15 +3,9 @@
 #' A simpler wrapper used to calculate the loan-weighted production for each
 #' matched company, and aggregate to the company level.
 #'
-#' @param data A "data.frame" like the output of [join_ald_scenario()].
-#' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to
-#' using the column `loan_size_outstanding`. Set to `TRUE` to use the column
-#' `loan_size_credit_limit` instead.
-#' @param ... Variables to group by.
+#' @inherit summarize_weighted_production
+#' @inheritDotParams summarize_weighted_production
 #'
-#' @return A tibble with the same groups as the input (if any) and columns:
-#'   `sector`, `technology`, `year`, and `weighted_production`.
-#'   `weighted_production` results are aggregated to the company-level.
 #' @export
 #'
 #' @examples
@@ -20,18 +14,24 @@
 #' master <- r2dii.data::loanbook_demo %>%
 #'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
 #'   r2dii.match::prioritize() %>%
-#'   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo)
+#'   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
 #'
 #' summarize_company_production(master)
 #'
 #' summarize_company_production(master, use_credit_limit = TRUE)
-summarize_company_production <- function(data, ..., use_credit_limit = FALSE) {
+summarize_company_production <- function(data,
+                                         ...,
+                                         use_credit_limit = FALSE) {
   crucial <- c(
-    "name"
+    "name",
+    "scenario"
   )
 
   check_crucial_names(data, crucial)
 
-  data %>%
-    summarize_weighted_production(.data$name, ...)
+  summarize_weighted_production(
+    data,
+    .data$name, .data$scenario, ...,
+    use_credit_limit = use_credit_limit
+    )
 }

@@ -46,8 +46,8 @@ $$\dfrac{s_j(t)-s_j(t_0)}{S(t_0)}$$
 
 ## Calculation
 
-These fair shares can be calculated for an arbitrary scenario using:
+These fair shares are pre-calculated, and can be seen by calling: 
 
 ```{r}
-r2dii.scenario::add_market_share_columns(r2dii.scenario::scenario_demo, start_year = 2020)
+r2dii.scenario::scenario_demo_2020
 ```

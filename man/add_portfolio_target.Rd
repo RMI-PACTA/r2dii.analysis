@@ -22,13 +22,10 @@ market share percentage \code{smsp}.
 \examples{
 library(r2dii.data)
 
-scenario_with_fair_shares <- r2dii.scenario::scenario_demo \%>\%
-  r2dii.scenario::add_market_share_columns(start_year = 2020)
-
 master <- r2dii.data::loanbook_demo \%>\%
   r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
   r2dii.match::prioritize() \%>\%
-  join_ald_scenario(r2dii.data::ald_demo, scenario_with_fair_shares)
+  join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
 
 portfolio_production <- summarize_portfolio_production(master, tmsr, smsp)
 

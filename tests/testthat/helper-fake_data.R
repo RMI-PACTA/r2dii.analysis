@@ -32,6 +32,8 @@
 #' fake_matched(id = "a", )
 #' @noRd
 fake_matched <- function(id_loan = NULL,
+                         loan_size_outstanding = NULL,
+                         loan_size_credit_limit = NULL,
                          id_2dii = NULL,
                          level = NULL,
                          score = NULL,
@@ -41,6 +43,8 @@ fake_matched <- function(id_loan = NULL,
                          ...) {
   tibble::tibble(
     id_loan = id_loan %||% "L162",
+    loan_size_outstanding =  loan_size_outstanding %||% 1,
+    loan_size_credit_limit =  loan_size_credit_limit %||% 2,
     id_2dii = id_2dii %||% "UP1",
     level = level %||% "ultimate_parent",
     score = score %||% 1,
@@ -57,12 +61,16 @@ fake_ald <- function(name_company = NULL,
                      sector = NULL,
                      technology = NULL,
                      year = NULL,
+                     production = NULL,
+                     plant_location = NULL,
                      ...) {
   tibble::tibble(
     name_company = name_company %||% "shaanxi auto",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
-    year = year %||% 2025,
+    year = year %||% c(2020,2025),
+    production = production %||% 1,
+    plant_location = plant_location %||% "BF",
     ...
   )
 }
@@ -117,22 +125,34 @@ fake_portfolio <- function(year = NULL,
 
 #' See `fake_matched()`
 #' @noRd
-fake_master <- function(sector = NULL,
-                        id_loan = NULL,
+fake_master <- function(id_loan = NULL,
                         loan_size_outstanding = NULL,
                         loan_size_credit_limit = NULL,
-                        production = NULL,
-                        year = NULL,
+                        sector = NULL,
+                        name_ald = NULL,
                         technology = NULL,
+                        year = NULL,
+                        production = NULL,
+                        plant_location = NULL,
+                        scenario = NULL,
+                        region = NULL,
+                        tmsr = NULL,
+                        smsp = NULL,
                         ...) {
   tibble::tibble(
-    sector =   sector %||% "automotive",
-    id_loan =   id_loan %||% "L151",
+    id_loan =   id_loan %||% "L162",
     loan_size_outstanding =  loan_size_outstanding %||% 1,
     loan_size_credit_limit =  loan_size_credit_limit %||% 2,
-    production =  production %||% 1,
-    year =  year %||% 2020,
+    sector =   sector %||% "automotive",
+    name_ald = name_ald %||% "shaanxi auto",
     technology =   technology %||% "ice",
+    year =  year %||% c(2020,2025),
+    production =  production %||% 1,
+    plant_location = plant_location %||% "BF",
+    scenario = scenario %||% "sds",
+    region = region %||% "global",
+    tmsr = tmsr %||% c(1,0.5),
+    smsp = smsp %||% c(0, -0.08),
     ...
   )
 }

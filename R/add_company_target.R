@@ -26,15 +26,8 @@
 add_company_target <- function(data) {
   stopifnot(is.data.frame(data))
 
-  crucial <- c(
-    "weighted_production",
-    "name_ald",
-    "sector",
-    "scenario",
-    "year",
-    "tmsr",
-    "smsp"
-  )
+  by_company <- c("sector", "scenario", "year", "name_ald")
+  crucial <- c(by_company, "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
   purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
@@ -44,14 +37,14 @@ add_company_target <- function(data) {
 
   # TODO: There STILL must be a better way to do this
   initial_sector_summaries <- data %>%
-    dplyr::group_by(.data$sector, .data$scenario, .data$year, .data$name_ald) %>%
+    dplyr::group_by(!!!rlang::syms(by_company)) %>%
     dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
     dplyr::mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
     dplyr::select(-.data$sector_weighted_production)
 
   data %>%
-    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario", "year", "name_ald")) %>%
-    dplyr::group_by(.data$sector, .data$scenario, .data$year, .data$name_ald) %>%
+    dplyr::left_join(initial_sector_summaries, by = by_company) %>%
+    dplyr::group_by(!!!rlang::syms(by_company)) %>%
     dplyr::mutate(initial_tech_production = first(.data$weighted_production)) %>%
     dplyr::mutate(
       tmsr_target_weighted_production = .data$initial_tech_production * .data$tmsr,

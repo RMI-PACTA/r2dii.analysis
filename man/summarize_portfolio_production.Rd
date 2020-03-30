@@ -28,16 +28,17 @@ A simpler wrapper used to calculate the loan-weighted production for each
 matched company, and aggregate to the portfolio level.
 }
 \examples{
-library(r2dii.data)
-
-master <- r2dii.data::loanbook_demo \%>\%
-  r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
-  r2dii.match::prioritize() \%>\%
-  join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
-
-summarize_portfolio_production(master)
-
-summarize_portfolio_production(master, use_credit_limit = TRUE)
+# FIXME: Revert when scenario_demo_2020 is available
+# library(r2dii.data)
+#
+# master <- r2dii.data::loanbook_demo \%>\%
+#   r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
+#   r2dii.match::prioritize() \%>\%
+#   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
+#
+# summarize_portfolio_production(master)
+#
+# summarize_portfolio_production(master, use_credit_limit = TRUE)
 }
 \seealso{
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.

@@ -12,16 +12,17 @@
 #' @export
 #'
 #' @examples
-#' library(r2dii.data)
-#'
-#' master <- r2dii.data::loanbook_demo %>%
-#'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
-#'   r2dii.match::prioritize() %>%
-#'   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
-#'
-#' company_production <- summarize_company_production(master, tmsr, smsp)
-#'
-#' add_company_target(company_production)
+#' # FIXME: Disabled until scenario_demo_2020 is available
+#' # library(r2dii.data)
+#' #
+#' # master <- r2dii.data::loanbook_demo %>%
+#' #   r2dii.match::match_name(r2dii.data::ald_demo) %>%
+#' #   r2dii.match::prioritize() %>%
+#' #   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
+#' #
+#' # company_production <- summarize_company_production(master, tmsr, smsp)
+#' #
+#' # add_company_target(company_production)
 add_company_target <- function(data) {
   stopifnot(is.data.frame(data))
 

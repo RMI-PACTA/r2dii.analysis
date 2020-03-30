@@ -39,6 +39,15 @@ add_company_target <- function(data) {
   initial_sector_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(by_company)) %>%
     dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
+    # TODO: Answer this question with a test:
+    # sum() returns a single number. Why is first() useful?
+    # Although I don't understand the goal, the word "initial" of the name
+    # `initial_sector_production` suggests you intend to arrange() by ascending
+    # `year` then pick the first row -- where `year` is the earliest. If so you
+    # could use first group_by(), then mutate(), then
+    # filter(dplyr::row_number() == 1L), which leaves you the earliest year for
+    # each group, and all the columns in the dataset (so you don't need to
+    # join `data` to recover columns).
     dplyr::mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
     dplyr::select(-.data$sector_weighted_production)
 

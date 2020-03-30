@@ -39,5 +39,5 @@ summarize_company_production <- function(data,
     .data$smsp,
     ...,
     use_credit_limit = use_credit_limit
-    )
+  )
 }

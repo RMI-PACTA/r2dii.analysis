@@ -156,4 +156,3 @@ fake_master <- function(id_loan = NULL,
     ...
   )
 }
-

@@ -1,31 +1,32 @@
 test_that("with bad `data` errors with informative message", {
-  expect_error(add_portfolio_target("bad"), "data.frame.*not.*TRUE")
+  expect_error(add_company_target("bad"), "data.frame.*not.*TRUE")
 })
 
 test_that("outputs a tibble", {
-  out <- summarize_portfolio_production(fake_master()) %>%
-    add_portfolio_target()
+  out <- summarize_company_production(fake_master()) %>%
+    add_company_target()
   expect_is(out, "tbl_df")
 })
 
 test_that("with fake data outputs known value", {
-  out <- summarize_portfolio_production(fake_master()) %>%
-    add_portfolio_target()
+  out <- summarize_company_production(fake_master()) %>%
+    add_company_target()
 
-  expect_known_value(out, "ref-add_portfolio_target", update = FALSE)
+  expect_known_value(out, "ref-add_company_target", update = FALSE)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
-    data <- dplyr::rename(summarize_portfolio_production(fake_master()), bad = name)
+    data <- dplyr::rename(summarize_company_production(fake_master()), bad = name)
 
     expect_error(
       class = "missing_names",
-      add_portfolio_target(data)
+      add_company_target(data)
     )
   }
 
   expect_error_missing_names("weighted_production")
+  expect_error_missing_names("name_ald")
   expect_error_missing_names("sector")
   expect_error_missing_names("scenario")
   expect_error_missing_names("year")
@@ -41,16 +42,17 @@ test_that("with data having NAs in crucial columns errors with informative messa
       loan_size_outstanding = c(40, 10, 40, 10),
       production = c(10, 30, 20, 40),
     ) %>%
-      summarize_portfolio_production()
+      summarize_company_production()
 
     data[1, name] <- NA
     expect_error(
       class = "column_has_na",
-      add_portfolio_target(data)
+      add_company_target(data)
     )
   }
 
   expect_error_crucial_NAs("weighted_production")
+  expect_error_crucial_NAs("name_ald")
   expect_error_crucial_NAs("sector")
   expect_error_crucial_NAs("scenario")
   expect_error_crucial_NAs("year")
@@ -60,12 +62,12 @@ test_that("with data having NAs in crucial columns errors with informative messa
 
 test_that("outputs expected names", {
   out <- fake_master() %>%
-    summarize_portfolio_production() %>%
-    add_portfolio_target()
+    summarize_company_production() %>%
+    add_company_target()
 
   expect_named(
     out,
-    c("sector", "technology", "year", "scenario", "weighted_production", "tmsr_target_weighted_production", "smsp_target_weighted_production")
+    c("sector", "technology", "year", "name_ald", "scenario", "weighted_production", "tmsr_target_weighted_production", "smsp_target_weighted_production")
   )
 })
 

@@ -3,6 +3,7 @@
 export("%>%")
 export(":=")
 export(.data)
+export(add_company_target)
 export(add_portfolio_target)
 export(as_label)
 export(as_name)

@@ -25,7 +25,8 @@
 #' # add_portfolio_target(portfolio_production)
 add_portfolio_target <- function(data) {
   stopifnot(is.data.frame(data))
-
+  # TODO: Refactor similar to by_company in add_company_target
+  by_porfolio <- c("sector", "scenario", "year")
   crucial <- c(
     "weighted_production",
     "sector",
@@ -44,6 +45,9 @@ add_portfolio_target <- function(data) {
   # TODO: There STILL must be a better way to do this
   initial_sector_summaries <- data %>%
     dplyr::group_by(.data$sector, .data$scenario, .data$year) %>%
+    # TODO: See comments in add_company_target() where I ask why we need first()
+    # and suspect you want mutate(data, row_number() == 1L) -- see
+    # https://dplyr.tidyverse.org/reference/ranking.html
     dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
     dplyr::mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
     dplyr::select(-.data$sector_weighted_production)

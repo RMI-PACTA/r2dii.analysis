@@ -29,16 +29,9 @@
 #' add_portfolio_target(portfolio_production)
 add_portfolio_target <- function(data) {
   stopifnot(is.data.frame(data))
-  # TODO: Refactor similar to by_company in add_company_target
-  by_porfolio <- c("sector", "scenario", "year")
-  crucial <- c(
-    "weighted_production",
-    "sector",
-    "scenario",
-    "year",
-    "tmsr",
-    "smsp"
-  )
+
+  by_portfolio <- c("sector", "scenario", "year")
+  crucial <- c(by_portfolio, "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
   purrr::walk(crucial, ~ check_column_has_no_na(data, .x))

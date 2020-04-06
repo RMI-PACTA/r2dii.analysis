@@ -20,12 +20,17 @@ calculated using either the technology market share ratio \code{tmsr} or sector
 market share percentage \code{smsp}.
 }
 \examples{
-library(r2dii.data)
+installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
+  requireNamespace("r2dii.match", quietly = TRUE)
+if (!installed) stop("Please install r2dii.match and r2dii.data")
 
-master <- r2dii.data::loanbook_demo \%>\%
-  r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
-  r2dii.match::prioritize() \%>\%
-  join_ald_scenario(r2dii.data::ald_demo, r2dii.data::scenario_demo_2020)
+library(r2dii.data)
+library(r2dii.match)
+
+master <- loanbook_demo \%>\%
+  match_name(ald_demo) \%>\%
+  prioritize() \%>\%
+  join_ald_scenario(ald_demo, scenario_demo_2020)
 
 company_production <- summarize_company_production(master, tmsr, smsp)
 

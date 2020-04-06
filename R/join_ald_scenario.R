@@ -7,9 +7,7 @@
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.data::ald_demo].
-#' @param scenario A scenario dataframe like
-#'   `r2dii.scenario::scenario_demo_2020` FIXME: Restore link when
-#'   scenario_demo_2020 is available.
+#' @param scenario A scenario dataframe like [r2dii.scenario::scenario_demo_2020].
 #'
 #' @return Returns a fully joined dataframe, linking portfolio, ald and
 #'   scenario.
@@ -27,9 +25,8 @@
 #'   # WARNING: Remember to validate matches (see `?prioritize`)
 #'   prioritize()
 #'
-#' # FIXME: Revert this when scenario_demo_2020 is available
-#' # valid_matches %>%
-#' #  join_ald_scenario(ald = ald_demo, scenario = r2dii.scenario::scenario_demo_2020)
+#' valid_matches %>%
+#'   join_ald_scenario(ald = ald_demo, scenario = r2dii.scenario::scenario_demo_2020)
 join_ald_scenario <- function(data, ald, scenario) {
   check_portfolio_ald_scenario(data, ald, scenario)
 

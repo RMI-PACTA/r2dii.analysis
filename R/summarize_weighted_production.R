@@ -13,17 +13,16 @@
 #'   `sector`, `technology`, `year`, and `weighted_production`.
 #'
 #' @examples
-#' # FIXME: Revert once scenario_demo_2020 is available
-#' # library(r2dii.data)
-#' #
-#' # master <- r2dii.data::loanbook_demo %>%
-#' #   r2dii.match::match_name(r2dii.data::ald_demo) %>%
-#' #   r2dii.match::prioritize() %>%
-#' #   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
-#' #
-#' # summarize_weighted_production(master)
-#' #
-#' # summarize_weighted_production(master, use_credit_limit = TRUE)
+#' library(r2dii.data)
+#'
+#' master <- r2dii.data::loanbook_demo %>%
+#'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
+#'   r2dii.match::prioritize() %>%
+#'   join_ald_scenario(r2dii.data::ald_demo, r2dii.scenario::scenario_demo_2020)
+#'
+#' summarize_weighted_production(master)
+#'
+#' summarize_weighted_production(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   data %>%
     add_weighted_loan_production(use_credit_limit = use_credit_limit) %>%

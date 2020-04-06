@@ -62,3 +62,32 @@ test_that("outputs expected names", {
     sort(unique(c(expected, "new_column")))
   )
 })
+
+test_that("excludes `plant_location`s outside a region", {
+  # TODO: Move to R/
+  pick_plant_location_in_region <- function(data) {
+    dplyr::inner_join(data, r2dii.data::region_isos,
+      by = c("region", "plant_location" = "isos")
+    )
+  }
+
+  these_regions <- c("oecd_europe", "oecd_europe", "china", "china")
+  this_scenario <- dplyr::bind_rows(
+    fake_scenario(region = "oecd_europe"),
+    fake_scenario(region = "china")
+  )
+  out <- join_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(plant_location = c("de", "fr", "cn", "us")),
+    scenario = this_scenario
+  ) %>%
+    # TODO: Move inside `join_ald_scenario()`
+    pick_plant_location_in_region()
+
+  valid_isos_in_these_regions <- r2dii.data::region_isos %>%
+    dplyr::filter(region %in% unique(out$region)) %>%
+    dplyr::pull(isos) %>%
+    unique()
+
+  expect_true(all(unique(out$plant_location) %in% valid_isos_in_these_regions))
+})

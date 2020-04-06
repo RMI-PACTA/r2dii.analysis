@@ -12,7 +12,7 @@ join_ald_scenario(data, ald, scenario)
 
 \item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{scenario}{A scenario dataframe like \link[r2dii.scenario:scenario_demo_2020]{r2dii.scenario::scenario_demo_2020}.}
+\item{scenario}{A scenario dataframe like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
 }
 \value{
 Returns a fully joined dataframe, linking portfolio, ald and
@@ -36,5 +36,5 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   prioritize()
 
 valid_matches \%>\%
-  join_ald_scenario(ald = ald_demo, scenario = r2dii.scenario::scenario_demo_2020)
+  join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
 }

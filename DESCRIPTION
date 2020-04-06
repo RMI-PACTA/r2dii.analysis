@@ -46,8 +46,7 @@ Imports:
     r2dii.data (>= 0.0.2.9000),
     r2dii.utils (>= 0.0.0.9003),
     rlang (>= 0.1.2),
-    tibble,
-    r2dii.scenario (>= 0.0.0.9000)
+    tibble
 Suggests: 
     covr,
     r2dii.match (>= 0.0.0.9004),
@@ -59,8 +58,7 @@ Suggests:
 Remotes:  
     2degreesinvesting/r2dii.data,
     2degreesinvesting/r2dii.match,
-    2DegreesInvesting/r2dii.utils,
-    2degreesinvesting/r2dii.scenario
+    2DegreesInvesting/r2dii.utils
 Encoding: UTF-8
 Language: en-US
 LazyData: true

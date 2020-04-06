@@ -49,5 +49,5 @@ $$\dfrac{s_j(t)-s_j(t_0)}{S(t_0)}$$
 These fair shares are pre-calculated, and can be seen by calling: 
 
 ```{r}
-r2dii.scenario::scenario_demo_2020
+r2dii.data::scenario_demo_2020
 ```

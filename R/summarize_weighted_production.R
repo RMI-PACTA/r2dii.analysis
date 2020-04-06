@@ -101,4 +101,3 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
 
   invisible(data)
 }
-

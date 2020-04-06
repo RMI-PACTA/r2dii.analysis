@@ -66,4 +66,3 @@ add_company_target <- function(data) {
     dplyr::select(-c(.data$tmsr, .data$smsp, .data$initial_tech_production, .data$initial_sector_production)) %>%
     dplyr::group_by(!!!old_groups)
 }
-

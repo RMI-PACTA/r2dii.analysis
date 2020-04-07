@@ -36,5 +36,5 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   prioritize()
 
 valid_matches \%>\%
-  join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
+  join_ald_scenario(ald = ald_demo, scenario = r2dii.data::scenario_demo_2020)
 }

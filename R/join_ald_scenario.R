@@ -26,7 +26,7 @@
 #'   prioritize()
 #'
 #' valid_matches %>%
-#'   join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
+#'   join_ald_scenario(ald = ald_demo, scenario = r2dii.data::scenario_demo_2020)
 join_ald_scenario <- function(data, ald, scenario) {
   check_portfolio_ald_scenario(data, ald, scenario)
 

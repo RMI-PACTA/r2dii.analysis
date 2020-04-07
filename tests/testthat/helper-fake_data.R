@@ -19,9 +19,9 @@
 #' code wants to inspect the data being tested, they need to jump to the
 #' function definition or call them interactively.
 #'
-#' @seealso [[r2dii.analysis::portfolio ], [r2dii.data::loanbook_demo]]
+#' @seealso [r2dii.analysis::portfolio ], [r2dii.data::loanbook_demo]
 #'
-#' @return A dataframe
+#' @return A data.frame
 #'
 #' @examples
 #' fake_matched()

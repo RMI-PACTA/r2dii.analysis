@@ -33,6 +33,6 @@ We can now join the datasets `ald` and `scenario`, then add fare share columns.
 
 ```{r}
 valid_matches %>% 
-  join_ald_scenario(ald = ald_demo, scenario = r2dii.scenario::scenario_demo) %>% 
+  join_ald_scenario(ald = ald_demo, scenario = r2dii.data::scenario_demo_2020) %>% 
   r2dii.scenario::add_market_share_columns(start_year = 2020)
 ```

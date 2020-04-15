@@ -12,7 +12,7 @@ test_that("with fake data outputs known value", {
   out <- summarize_portfolio_production(fake_master()) %>%
     add_portfolio_target()
 
-  expect_known_value(out, "ref-add_portfolio_target", update = FALSE)
+  expect_known_value(out, "ref-add_portfolio_target", update = T)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {

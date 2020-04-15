@@ -12,7 +12,7 @@ test_that("with fake data outputs known value", {
   out <- summarize_company_production(fake_master()) %>%
     add_company_target()
 
-  expect_known_value(out, "ref-add_company_target", update = FALSE)
+  expect_known_value(out, "ref-add_company_target", update = T)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
@@ -84,3 +84,22 @@ test_that("with grouped data returns same groups as input", {
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
+
+test_that("with known input outputs as expected", {
+  # styler: off
+  data <- fake_master(
+    technology = c("ta", "tb", "ta", "tb", "ta", "tb", "ta", "tb"),
+    year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
+    name_ald = c("comp1", "comp1", "comp1", "comp1", "comp2", "comp2", "comp2", "comp2"),
+    scenario = "sds",
+    tmsr = c(1, 1, 1.85, 0.6, 1, 1, 1.85, 0.6),
+    smsp = c(0, 0, 0.34, -0.2, 0, 0, 0.34, -0.2),
+    weighted_production = c(20, 60, 40, 40, 180, 190, 200, 200)
+  )
+  out1 <- add_company_target(data)
+
+  expect_equal(out1$tmsr_target_weighted_production, c(20, 60, 37, 36, 180, 190, 333, 114))
+  expect_equal(out1$smsp_target_weighted_production, c(20, 60, 47.2, 44, 180, 190, 305.8, 116))
+
+})
+

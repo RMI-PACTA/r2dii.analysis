@@ -30,8 +30,8 @@
 add_company_target <- function(data) {
   stopifnot(is.data.frame(data))
 
-  by_company <- c("sector", "scenario", "year", "name_ald")
-  crucial <- c(by_company, "weighted_production", "tmsr", "smsp")
+  by_company <- c("sector",  "scenario", "year", "name_ald")
+  crucial <- c(by_company, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
   purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
@@ -43,26 +43,28 @@ add_company_target <- function(data) {
   initial_sector_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(by_company)) %>%
     dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
-    # TODO: Answer this question with a test:
-    # sum() returns a single number. Why is first() useful?
-    # Although I don't understand the goal, the word "initial" of the name
-    # `initial_sector_production` suggests you intend to arrange() by ascending
-    # `year` then pick the first row -- where `year` is the earliest. If so you
-    # could use first group_by(), then mutate(), then
-    # filter(dplyr::row_number() == 1L), which leaves you the earliest year for
-    # each group, and all the columns in the dataset (so you don't need to
-    # join `data` to recover columns).
-    dplyr::mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
-    dplyr::select(-.data$sector_weighted_production)
+    dplyr::arrange(year) %>%
+    dplyr::group_by(name_ald) %>%
+    dplyr::filter(dplyr::row_number() == 1L) %>%
+    dplyr::rename(initial_sector_production = sector_weighted_production) %>%
+    select(-year)
+
+  initial_technology_summaries <- data %>%
+    dplyr::group_by(!!!rlang::syms(c(by_company,"technology"))) %>%
+    dplyr::summarise(technology_weighted_production = sum(.data$weighted_production)) %>%
+    dplyr::arrange(year) %>%
+    dplyr::group_by(name_ald, technology) %>%
+    dplyr::filter(dplyr::row_number() == 1L) %>%
+    dplyr::rename(initial_technology_production = technology_weighted_production) %>%
+    select(-year)
 
   data %>%
-    dplyr::left_join(initial_sector_summaries, by = by_company) %>%
-    dplyr::group_by(!!!rlang::syms(by_company)) %>%
-    dplyr::mutate(initial_tech_production = first(.data$weighted_production)) %>%
+    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario", "name_ald")) %>%
+    dplyr::left_join(initial_technology_summaries, by = c("sector", "scenario", "technology", "name_ald")) %>%
     dplyr::mutate(
-      tmsr_target_weighted_production = .data$initial_tech_production * .data$tmsr,
-      smsp_target_weighted_production = .data$initial_tech_production + (.data$initial_sector_production * .data$smsp)
+      tmsr_target_weighted_production = .data$initial_technology_production * .data$tmsr,
+      smsp_target_weighted_production = .data$initial_technology_production + (.data$initial_sector_production * .data$smsp)
     ) %>%
-    dplyr::select(-c(.data$tmsr, .data$smsp, .data$initial_tech_production, .data$initial_sector_production)) %>%
+    dplyr::select(-c(.data$tmsr, .data$smsp, .data$initial_technology_production, .data$initial_sector_production)) %>%
     dplyr::group_by(!!!old_groups)
 }

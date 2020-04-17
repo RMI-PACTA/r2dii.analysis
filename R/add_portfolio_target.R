@@ -30,8 +30,8 @@
 add_portfolio_target <- function(data) {
   stopifnot(is.data.frame(data))
 
-  by_portfolio <- c("sector", "scenario", "year")
-  crucial <- c(by_portfolio, "weighted_production", "tmsr", "smsp")
+  by_portfolio <- c("sector",  "scenario", "year")
+  crucial <- c(by_portfolio, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
   purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
@@ -41,22 +41,29 @@ add_portfolio_target <- function(data) {
 
   # TODO: There STILL must be a better way to do this
   initial_sector_summaries <- data %>%
-    dplyr::group_by(.data$sector, .data$scenario, .data$year) %>%
-    # TODO: See comments in add_company_target() where I ask why we need first()
-    # and suspect you want mutate(data, row_number() == 1L) -- see
-    # https://dplyr.tidyverse.org/reference/ranking.html
+    dplyr::group_by(!!!rlang::syms(by_portfolio)) %>%
     dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
-    dplyr::mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
-    dplyr::select(-.data$sector_weighted_production)
+    dplyr::arrange(year) %>%
+    dplyr::filter(dplyr::row_number() == 1L) %>%
+    dplyr::rename(initial_sector_production = sector_weighted_production) %>%
+    select(-year)
+
+  initial_technology_summaries <- data %>%
+    dplyr::group_by(!!!rlang::syms(c(by_portfolio,"technology"))) %>%
+    dplyr::summarise(technology_weighted_production = sum(.data$weighted_production)) %>%
+    dplyr::arrange(year) %>%
+    dplyr::group_by(technology) %>%
+    dplyr::filter(dplyr::row_number() == 1L) %>%
+    dplyr::rename(initial_technology_production = technology_weighted_production) %>%
+    select(-year)
 
   data %>%
-    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario", "year")) %>%
-    dplyr::group_by(.data$sector, .data$scenario, .data$year) %>%
-    dplyr::mutate(initial_tech_production = first(.data$weighted_production)) %>%
+    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario")) %>%
+    dplyr::left_join(initial_technology_summaries, by = c("sector", "scenario", "technology")) %>%
     dplyr::mutate(
-      tmsr_target_weighted_production = .data$initial_tech_production * .data$tmsr,
-      smsp_target_weighted_production = .data$initial_tech_production + (.data$initial_sector_production * .data$smsp)
+      tmsr_target_weighted_production = .data$initial_technology_production * .data$tmsr,
+      smsp_target_weighted_production = .data$initial_technology_production + (.data$initial_sector_production * .data$smsp)
     ) %>%
-    dplyr::select(-c(.data$tmsr, .data$smsp, .data$initial_tech_production, .data$initial_sector_production)) %>%
+    dplyr::select(-c(.data$tmsr, .data$smsp, .data$initial_technology_production, .data$initial_sector_production)) %>%
     dplyr::group_by(!!!old_groups)
 }

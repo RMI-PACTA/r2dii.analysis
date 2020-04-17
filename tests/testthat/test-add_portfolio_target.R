@@ -77,3 +77,21 @@ test_that("with grouped data returns same groups as input", {
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
+
+test_that("with known input outputs as expected", {
+  # styler: off
+  data <- fake_master(
+    technology = c("ta", "tb", "ta", "tb"),
+    year = c(2020, 2020, 2021, 2021),
+    name_ald = c("comp1", "comp1", "comp1", "comp1"),
+    scenario = "sds",
+    tmsr = c(1, 1, 1.85, 0.6),
+    smsp = c(0, 0, 0.34, -0.2),
+    weighted_production = c(200, 250, 240, 240)
+  )
+  out1 <- add_portfolio_target(data)
+
+  expect_equal(out1$tmsr_target_weighted_production, c(200, 250, 370, 150))
+  expect_equal(out1$smsp_target_weighted_production, c(200, 250, 353, 160))
+
+})

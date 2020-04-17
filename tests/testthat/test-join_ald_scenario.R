@@ -33,7 +33,7 @@ test_that("with fake data outputs known value", {
     scenario = fake_scenario()
   )
 
-  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
+  expect_known_value(out, "ref-join_ald_scenario", update = TRUE)
 })
 
 test_that("outputs expected names", {
@@ -64,13 +64,6 @@ test_that("outputs expected names", {
 })
 
 test_that("excludes `plant_location`s outside a region", {
-  # TODO: Move to R/
-  pick_plant_location_in_region <- function(data) {
-    dplyr::inner_join(data, r2dii.data::region_isos,
-      by = c("region", "plant_location" = "isos")
-    )
-  }
-
   these_regions <- c("oecd_europe", "oecd_europe", "china", "china")
   this_scenario <- dplyr::bind_rows(
     fake_scenario(region = "oecd_europe"),
@@ -80,9 +73,7 @@ test_that("excludes `plant_location`s outside a region", {
     fake_matched(),
     ald = fake_ald(plant_location = c("de", "fr", "cn", "us")),
     scenario = this_scenario
-  ) %>%
-    # TODO: Move inside `join_ald_scenario()`
-    pick_plant_location_in_region()
+  )
 
   valid_isos_in_these_regions <- r2dii.data::region_isos %>%
     dplyr::filter(region %in% unique(out$region)) %>%

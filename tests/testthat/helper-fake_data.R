@@ -57,12 +57,14 @@ fake_ald <- function(name_company = NULL,
                      sector = NULL,
                      technology = NULL,
                      year = NULL,
+                     plant_location = NULL,
                      ...) {
   tibble::tibble(
     name_company = name_company %||% "shaanxi auto",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
     year = year %||% 2025,
+    plant_location = plant_location %||% "ID",
     ...
   )
 }

@@ -33,7 +33,7 @@ test_that("with fake data outputs known value", {
     scenario = fake_scenario()
   )
 
-  expect_known_value(out, "ref-join_ald_scenario", update = TRUE)
+  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
 })
 
 test_that("outputs expected names", {

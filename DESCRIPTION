@@ -52,7 +52,7 @@ Suggests:
     r2dii.match,
     r2dii.scenario (>= 0.0.0.9003),
     spelling,
-    testthat,
+    testthat (>= 2.1.0),
     withr
 Remotes: 
     2degreesinvesting/r2dii.data,

@@ -93,7 +93,7 @@ test_that("with known input outputs as expected", {
   data <- fake_master(
     technology = c("ta", "tb", "ta", "tb"),
     year = c(2020, 2020, 2021, 2021),
-    name_ald = c("comp1", "comp1", "comp1", "comp1"),
+    name_ald = paste0("comp", rep(1, 4)),
     scenario = "sds",
     tmsr = c(1, 1, 1.85, 0.6),
     smsp = c(0, 0, 0.34, -0.2),

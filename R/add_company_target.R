@@ -32,7 +32,7 @@ add_company_target <- function(data) {
   crucial <- c(by_company, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
-  purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
+  purrr::walk(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
   data <- dplyr::ungroup(data)

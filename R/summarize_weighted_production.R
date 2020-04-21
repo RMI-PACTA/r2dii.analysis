@@ -56,7 +56,7 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
     "year"
   )
   check_crucial_names(data, crucial)
-  purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
+  purrr::walk(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
   data <- dplyr::ungroup(data)

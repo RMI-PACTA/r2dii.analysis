@@ -20,19 +20,25 @@ calculated using either the technology market share ratio \code{tmsr} or sector
 market share percentage \code{smsp}.
 }
 \examples{
-installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-  requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.data")
+master <- tibble::tibble(
+  id_loan = c("i1", "i2", "i1", "i2"),
+  loan_size_outstanding = c(40, 10, 40, 10),
+  loan_size_credit_limit = c(2, 2, 2, 2),
+  sector = c("automotive", "automotive","automotive","automotive"),
+  name_ald = c("shaanxi auto","shaanxi auto","shaanxi auto", "shaanxi auto"),
+  technology = c("ta", "ta", "tb", "tb"),
+  year = c(2025, 2025, 2025, 2025),
+  production = c(10, 30, 20, 40),
+  plant_location = c("BF", "BF", "BF", "BF"),
+  scenario = c("sds", "sds", "sds", "sds"),
+  region = c("global", "global", "global", "global"),
+  tmsr = c(0.5, 0.5, 0.5, 0.5),
+  smsp = c(-0.08, -0.08, -0.08, -0.08)
+)
+master
 
-library(r2dii.data)
-library(r2dii.match)
-
-master <- loanbook_demo \%>\%
-  match_name(ald_demo) \%>\%
-  prioritize() \%>\%
-  join_ald_scenario(ald_demo, scenario_demo_2020)
-
-portfolio_production <- summarize_portfolio_production(master, tmsr, smsp)
+portfolio_production <- summarize_portfolio_production(master)
+portfolio_production
 
 add_portfolio_target(portfolio_production)
 }

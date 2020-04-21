@@ -12,7 +12,7 @@ test_that("with fake data outputs known value", {
   out <- summarize_company_production(fake_master()) %>%
     add_company_target()
 
-  expect_known_value(out, "ref-add_company_target", update = T)
+  expect_known_value(out, "ref-add_company_target", update = TRUE)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {

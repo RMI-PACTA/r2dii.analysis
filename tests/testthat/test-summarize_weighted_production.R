@@ -56,7 +56,7 @@ test_that("with data having NAs in crucial columns errors with informative messa
 
     data[1, name] <- NA
     expect_error(
-      class = "column_has_na",
+      class = "some_value_is_missing",
       summarize_weighted_production(data, use_credit_limit = use_credit_limit)
     )
   }

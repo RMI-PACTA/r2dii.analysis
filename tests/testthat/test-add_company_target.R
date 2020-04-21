@@ -47,7 +47,7 @@ test_that("with NAs in crucial columns errors with informative message", {
 
     data[1, name] <- NA
     expect_error(
-      class = "column_has_na",
+      class = "some_value_is_missing",
       add_company_target(data)
     )
   }

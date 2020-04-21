@@ -102,4 +102,3 @@ test_that("with known input outputs as expected", {
   expect_equal(out1$smsp_target_weighted_production, c(20, 60, 47.2, 44, 180, 190, 305.8, 116))
 
 })
-

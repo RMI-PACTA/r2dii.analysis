@@ -61,7 +61,7 @@ add_portfolio_target <- function(data) {
     dplyr::group_by(.data$technology) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
     dplyr::rename(initial_technology_production = .data$technology_weighted_production) %>%
-    select(-year)
+    select(-.data$year)
 
   data %>%
     dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario")) %>%

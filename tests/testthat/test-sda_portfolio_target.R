@@ -191,7 +191,12 @@ test_that("errors clearly if config has null start_year", {
 
 test_that("outputs a known value", {
   expect_known_value(
-    sda_portfolio_target(market, portfolio, sector = "Steel", start_year = 2019),
+    sda_portfolio_target(
+      market,
+      portfolio,
+      sector = "Steel",
+      start_year = 2019
+    ),
     "ref-sda_portfolio_target",
     update = FALSE
   )

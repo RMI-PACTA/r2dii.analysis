@@ -284,7 +284,9 @@ create_port_to_market <- function(market,
   )
 }
 
-create_porttomarket_distance <- function(port_to_market, distance, distinct_vars) {
+create_porttomarket_distance <- function(port_to_market,
+                                         distance,
+                                         distinct_vars) {
   inner_join(
     port_to_market, distance,
     by = c(

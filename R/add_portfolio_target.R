@@ -12,7 +12,6 @@
 #' @export
 #'
 #' @examples
-
 #' master <- tibble::tibble(
 #'   id_loan = c("i1", "i2", "i1", "i2"),
 #'   loan_size_outstanding = c(40, 10, 40, 10),

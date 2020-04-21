@@ -18,7 +18,8 @@ test_that("with fake data outputs known value", {
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
     data <- dplyr::rename(
-      summarize_portfolio_production(fake_master()), bad = name
+      summarize_portfolio_production(fake_master()),
+      bad = name
     )
 
     expect_error(

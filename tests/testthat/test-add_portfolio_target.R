@@ -17,7 +17,9 @@ test_that("with fake data outputs known value", {
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
-    data <- dplyr::rename(summarize_portfolio_production(fake_master()), bad = name)
+    data <- dplyr::rename(
+      summarize_portfolio_production(fake_master()), bad = name
+    )
 
     expect_error(
       class = "missing_names",
@@ -33,7 +35,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("smsp")
 })
 
-test_that("with data having NAs in crucial columns errors with informative message", {
+test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs <- function(name) {
     data <- fake_master(
       technology = c("ta", "ta", "tb", "tb"),
@@ -65,7 +67,15 @@ test_that("outputs expected names", {
 
   expect_named(
     out,
-    c("sector", "technology", "year", "scenario", "weighted_production", "tmsr_target_weighted_production", "smsp_target_weighted_production")
+    c(
+      "sector",
+      "technology",
+      "year",
+      "scenario",
+      "weighted_production",
+      "tmsr_target_weighted_production",
+      "smsp_target_weighted_production"
+    )
   )
 })
 
@@ -93,5 +103,4 @@ test_that("with known input outputs as expected", {
 
   expect_equal(out1$tmsr_target_weighted_production, c(200, 250, 370, 150))
   expect_equal(out1$smsp_target_weighted_production, c(200, 250, 353, 160))
-
 })

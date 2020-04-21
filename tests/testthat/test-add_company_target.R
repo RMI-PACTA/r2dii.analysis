@@ -90,7 +90,8 @@ test_that("with known input outputs as expected", {
   data <- fake_master(
     technology = c("ta", "tb", "ta", "tb", "ta", "tb", "ta", "tb"),
     year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
-    name_ald = c("comp1", "comp1", "comp1", "comp1", "comp2", "comp2", "comp2", "comp2"),
+    name_ald =
+      c("comp1", "comp1", "comp1", "comp1", "comp2", "comp2", "comp2", "comp2"),
     scenario = "sds",
     tmsr = c(1, 1, 1.85, 0.6, 1, 1, 1.85, 0.6),
     smsp = c(0, 0, 0.34, -0.2, 0, 0, 0.34, -0.2),
@@ -98,7 +99,13 @@ test_that("with known input outputs as expected", {
   )
   out1 <- add_company_target(data)
 
-  expect_equal(out1$tmsr_target_weighted_production, c(20, 60, 37, 36, 180, 190, 333, 114))
-  expect_equal(out1$smsp_target_weighted_production, c(20, 60, 47.2, 44, 180, 190, 305.8, 116))
+  expect_equal(
+    out1$tmsr_target_weighted_production,
+    c(20, 60, 37, 36, 180, 190, 333, 114)
+  )
+  expect_equal(
+    out1$smsp_target_weighted_production,
+    c(20, 60, 47.2, 44, 180, 190, 305.8, 116)
+  )
 
 })

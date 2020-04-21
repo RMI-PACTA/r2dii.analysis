@@ -38,7 +38,9 @@ join_ald_scenario <- function(data, ald, scenario) {
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
   check_crucial_names(valid_matches, names(ald_columns()))
-  check_crucial_names(ald, c("name_company", "plant_location", unname(scenario_columns())))
+  check_crucial_names(
+    ald, c("name_company", "plant_location", unname(scenario_columns()))
+  )
   check_crucial_names(scenario, scenario_columns())
 
   invisible(valid_matches)

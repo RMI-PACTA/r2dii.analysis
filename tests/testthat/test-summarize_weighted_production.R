@@ -45,7 +45,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("year")
 })
 
-test_that("with data having NAs in crucial columns errors with informative message", {
+test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs <- function(name, use_credit_limit = FALSE) {
     data <- fake_master(
       technology = c("ta", "ta", "tb", "tb"),

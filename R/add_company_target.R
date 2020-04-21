@@ -45,24 +45,23 @@ add_company_target <- function(data) {
   old_groups <- dplyr::groups(data)
   data <- dplyr::ungroup(data)
 
-  # TODO: There STILL must be a better way to do this
   initial_sector_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(by_company)) %>%
     dplyr::summarise(sector_weighted_production = sum(.data$weighted_production)) %>%
-    dplyr::arrange(year) %>%
-    dplyr::group_by(name_ald) %>%
+    dplyr::arrange(.data$year) %>%
+    dplyr::group_by(.data$name_ald) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
-    dplyr::rename(initial_sector_production = sector_weighted_production) %>%
-    select(-year)
+    dplyr::rename(initial_sector_production = .data$sector_weighted_production) %>%
+    dplyr::select(-.data$year)
 
   initial_technology_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(c(by_company,"technology"))) %>%
     dplyr::summarise(technology_weighted_production = sum(.data$weighted_production)) %>%
-    dplyr::arrange(year) %>%
-    dplyr::group_by(name_ald, technology) %>%
+    dplyr::arrange(.data$year) %>%
+    dplyr::group_by(.data$name_ald, .data$technology) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
-    dplyr::rename(initial_technology_production = technology_weighted_production) %>%
-    select(-year)
+    dplyr::rename(initial_technology_production = .data$technology_weighted_production) %>%
+    select(-.data$year)
 
   data %>%
     dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario", "name_ald")) %>%

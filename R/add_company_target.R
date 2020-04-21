@@ -16,8 +16,8 @@
 #'   id_loan = c("i1", "i2", "i1", "i2"),
 #'   loan_size_outstanding = c(40, 10, 40, 10),
 #'   loan_size_credit_limit = c(2, 2, 2, 2),
-#'   sector = c("automotive", "automotive","automotive","automotive"),
-#'   name_ald = c("shaanxi auto","shaanxi auto","shaanxi auto", "shaanxi auto"),
+#'   sector = c("automotive", "automotive", "automotive", "automotive"),
+#'   name_ald = c("shaanxi auto", "shaanxi auto", "shaanxi auto", "shaanxi auto"),
 #'   technology = c("ta", "ta", "tb", "tb"),
 #'   year = c(2025, 2025, 2025, 2025),
 #'   production = c(10, 30, 20, 40),
@@ -36,7 +36,7 @@
 add_company_target <- function(data) {
   stopifnot(is.data.frame(data))
 
-  by_company <- c("sector",  "scenario", "year", "name_ald")
+  by_company <- c("sector", "scenario", "year", "name_ald")
   crucial <- c(by_company, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
@@ -55,7 +55,7 @@ add_company_target <- function(data) {
     dplyr::select(-.data$year)
 
   initial_technology_summaries <- data %>%
-    dplyr::group_by(!!!rlang::syms(c(by_company,"technology"))) %>%
+    dplyr::group_by(!!!rlang::syms(c(by_company, "technology"))) %>%
     dplyr::summarise(technology_weighted_production = sum(.data$weighted_production)) %>%
     dplyr::arrange(.data$year) %>%
     dplyr::group_by(.data$name_ald, .data$technology) %>%

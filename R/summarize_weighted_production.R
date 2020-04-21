@@ -14,19 +14,19 @@
 #'
 #' @examples
 #' master <- tibble::tibble(
-#'  id_loan = c("i1", "i2", "i1", "i2"),
-#'  loan_size_outstanding = c(40, 10, 40, 10),
-#'  loan_size_credit_limit = c(2, 2, 2, 2),
-#'  sector = c("automotive", "automotive","automotive","automotive"),
-#'  name_ald = c("shaanxi auto","shaanxi auto","shaanxi auto", "shaanxi auto"),
-#'  technology = c("ta", "ta", "tb", "tb"),
-#'  year = c(2025, 2025, 2025, 2025),
-#'  production = c(10, 30, 20, 40),
-#'  plant_location = c("BF", "BF", "BF", "BF"),
-#'  scenario = c("sds", "sds", "sds", "sds"),
-#'  region = c("global", "global", "global", "global"),
-#'  tmsr = c(0.5, 0.5, 0.5, 0.5),
-#'  smsp = c(-0.08, -0.08, -0.08, -0.08)
+#'   id_loan = c("i1", "i2", "i1", "i2"),
+#'   loan_size_outstanding = c(40, 10, 40, 10),
+#'   loan_size_credit_limit = c(2, 2, 2, 2),
+#'   sector = c("automotive", "automotive", "automotive", "automotive"),
+#'   name_ald = c("shaanxi auto", "shaanxi auto", "shaanxi auto", "shaanxi auto"),
+#'   technology = c("ta", "ta", "tb", "tb"),
+#'   year = c(2025, 2025, 2025, 2025),
+#'   production = c(10, 30, 20, 40),
+#'   plant_location = c("BF", "BF", "BF", "BF"),
+#'   scenario = c("sds", "sds", "sds", "sds"),
+#'   region = c("global", "global", "global", "global"),
+#'   tmsr = c(0.5, 0.5, 0.5, 0.5),
+#'   smsp = c(-0.08, -0.08, -0.08, -0.08)
 #' )
 #' master
 #'

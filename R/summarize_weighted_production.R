@@ -13,22 +13,14 @@
 #'   `sector`, `technology`, `year`, and `weighted_production`.
 #'
 #' @examples
-#' master <- tibble::tibble(
-#'   id_loan = c("i1", "i2", "i1", "i2"),
-#'   loan_size_outstanding = c(40, 10, 40, 10),
-#'   loan_size_credit_limit = c(2, 2, 2, 2),
-#'   sector = c("automotive", "automotive", "automotive", "automotive"),
-#'   name_ald = c("shaanxi auto", "shaanxi auto", "shaanxi auto", "shaanxi auto"),
-#'   technology = c("ta", "ta", "tb", "tb"),
-#'   year = c(2025, 2025, 2025, 2025),
-#'   production = c(10, 30, 20, 40),
-#'   plant_location = c("BF", "BF", "BF", "BF"),
-#'   scenario = c("sds", "sds", "sds", "sds"),
-#'   region = c("global", "global", "global", "global"),
-#'   tmsr = c(0.5, 0.5, 0.5, 0.5),
-#'   smsp = c(-0.08, -0.08, -0.08, -0.08)
-#' )
-#' master
+#' library(r2dii.analysis)
+#' library(r2dii.data)
+#' library(r2dii.match)
+#'
+#' master <- r2dii.data::loanbook_demo %>%
+#'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
+#'   r2dii.match::prioritize() %>%
+#'   join_ald_scenario(r2dii.data::ald_demo, r2dii.data::scenario_demo_2020)
 #'
 #' summarize_weighted_production(master)
 #'

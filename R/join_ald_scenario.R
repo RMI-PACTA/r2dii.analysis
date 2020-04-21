@@ -60,7 +60,7 @@ scenario_columns <- function() {
 }
 
 pick_plant_location_in_region <- function(data) {
-  data %>% dplyr::mutate(plant_location = tolower(plant_location)) %>%
+  data %>% dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
     dplyr::inner_join(r2dii.data::region_isos,
                       by = c("region", "plant_location" = "isos")
                       )

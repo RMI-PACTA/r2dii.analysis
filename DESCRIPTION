@@ -51,8 +51,6 @@ Suggests:
     r2dii.data (>= 0.0.3.9000),
     r2dii.match,
     r2dii.scenario (>= 0.0.0.9003),
-    rmarkdown,
-    roxygen2,
     spelling,
     testthat (>= 2.1.0),
     withr

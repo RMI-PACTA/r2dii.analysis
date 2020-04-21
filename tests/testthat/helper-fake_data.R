@@ -19,9 +19,9 @@
 #' code wants to inspect the data being tested, they need to jump to the
 #' function definition or call them interactively.
 #'
-#' @seealso [[r2dii.analysis::portfolio ], [r2dii.data::loanbook_demo]]
+#' @seealso [r2dii.analysis::portfolio ], [r2dii.data::loanbook_demo]
 #'
-#' @return A dataframe
+#' @return A data.frame
 #'
 #' @examples
 #' fake_matched()
@@ -32,6 +32,8 @@
 #' fake_matched(id = "a", )
 #' @noRd
 fake_matched <- function(id_loan = NULL,
+                         loan_size_outstanding = NULL,
+                         loan_size_credit_limit = NULL,
                          id_2dii = NULL,
                          level = NULL,
                          score = NULL,
@@ -41,6 +43,8 @@ fake_matched <- function(id_loan = NULL,
                          ...) {
   tibble::tibble(
     id_loan = id_loan %||% "L162",
+    loan_size_outstanding =  loan_size_outstanding %||% 1,
+    loan_size_credit_limit =  loan_size_credit_limit %||% 2,
     id_2dii = id_2dii %||% "UP1",
     level = level %||% "ultimate_parent",
     score = score %||% 1,
@@ -57,6 +61,7 @@ fake_ald <- function(name_company = NULL,
                      sector = NULL,
                      technology = NULL,
                      year = NULL,
+                     production = NULL,
                      plant_location = NULL,
                      ...) {
   tibble::tibble(
@@ -64,7 +69,8 @@ fake_ald <- function(name_company = NULL,
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
     year = year %||% 2025,
-    plant_location = plant_location %||% "ID",
+    production = production %||% 1,
+    plant_location = plant_location %||% "BF",
     ...
   )
 }
@@ -75,18 +81,18 @@ fake_scenario <- function(scenario = NULL,
                           sector = NULL,
                           technology = NULL,
                           region = NULL,
-                          value = NULL,
-                          units = NULL,
                           year = NULL,
+                          tmsr = NULL,
+                          smsp = NULL,
                           ...) {
   tibble::tibble(
     scenario = scenario %||% "sds",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
     region = region %||% "global",
-    value = value %||% c(2, 1),
-    units = units %||% "cars produced",
-    year = year %||% c(2020, 2025),
+    year = year %||% 2025,
+    tmsr = tmsr %||% 0.5,
+    smsp = smsp %||% -0.08,
     ...
   )
 }
@@ -119,22 +125,34 @@ fake_portfolio <- function(year = NULL,
 
 #' See `fake_matched()`
 #' @noRd
-fake_master <- function(sector = NULL,
-                        id_loan = NULL,
+fake_master <- function(id_loan = NULL,
                         loan_size_outstanding = NULL,
                         loan_size_credit_limit = NULL,
-                        production = NULL,
-                        year = NULL,
+                        sector = NULL,
+                        name_ald = NULL,
                         technology = NULL,
+                        year = NULL,
+                        production = NULL,
+                        plant_location = NULL,
+                        scenario = NULL,
+                        region = NULL,
+                        tmsr = NULL,
+                        smsp = NULL,
                         ...) {
   tibble::tibble(
-    sector =   sector %||% "automotive",
-    id_loan =   id_loan %||% "L151",
+    id_loan =   id_loan %||% "L162",
     loan_size_outstanding =  loan_size_outstanding %||% 1,
     loan_size_credit_limit =  loan_size_credit_limit %||% 2,
-    production =  production %||% 1,
-    year =  year %||% 2020,
+    sector =   sector %||% "automotive",
+    name_ald = name_ald %||% "shaanxi auto",
     technology =   technology %||% "ice",
+    year =  year %||% 2025,
+    production =  production %||% 1,
+    plant_location = plant_location %||% "BF",
+    scenario = scenario %||% "sds",
+    region = region %||% "global",
+    tmsr = tmsr %||% 0.5,
+    smsp = smsp %||% -0.08,
     ...
   )
 }

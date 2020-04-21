@@ -13,7 +13,9 @@
 #'   `sector`, `technology`, `year`, and `weighted_production`.
 #'
 #' @examples
+#' library(r2dii.analysis)
 #' library(r2dii.data)
+#' library(r2dii.match)
 #'
 #' master <- r2dii.data::loanbook_demo %>%
 #'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
@@ -54,7 +56,7 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
     "year"
   )
   check_crucial_names(data, crucial)
-  purrr::walk(crucial, ~ check_column_has_no_na(data, .x))
+  purrr::walk(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
   data <- dplyr::ungroup(data)
@@ -91,17 +93,6 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
       glue::glue(
         "Every `id_loan` by `sector` must have unique `loan_size*` values."
       )
-    )
-  }
-
-  invisible(data)
-}
-
-check_column_has_no_na <- function(data, column) {
-  if (anyNA(data[[column]])) {
-    rlang::abort(
-      class = "column_has_na",
-      glue::glue("Column `{column}` must not contain any `NA`s.")
     )
   }
 

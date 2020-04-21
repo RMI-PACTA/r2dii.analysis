@@ -25,8 +25,8 @@ $$p_{i}^{tfsr}(t) = p_{i}(t_0) * \dfrac{s_i(t)}{s_i(t_0)}$$
 where:
 
 * $s_i(t)$ is the scenario production for technology $i$ at time $t$,
-* $p_{i,j}(t_0)$ is the production allocated to the portfolio for some technology, $i$ at time $t_0$, and
-* $p_{i,j}^{tfsr}(t)$ is the portfolio-specific target production for that technology.
+* $p_{i}(t_0)$ is the production allocated to the portfolio for some technology, $i$ at time $t_0$, and
+* $p_{i}^{tfsr}(t)$ is the portfolio-specific target production for that technology.
 
 We define the "Technology Fair Share Ratio" as:
 
@@ -34,7 +34,7 @@ $$\dfrac{s_i(t)}{s_i(t_0)}$$
 
 2. Market Fair Share:
 
-$$p_{i,j}^{mfsp}(t) = p_{i,j}(t_0) +P_i(t_0) * \left( \dfrac{s_j(t)-s_j(t_0)}{S(t_0)}\right)$$
+$$p_{i}^{mfsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)$$
 where:
 
 * $P_i(t_0)$ is the portfolio's total production in the sector at $t_0$, and
@@ -42,12 +42,12 @@ where:
 
 We define the "Market Fair Share Percentage" as:
 
-$$\dfrac{s_j(t)-s_j(t_0)}{S(t_0)}$$
+$$\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}$$
 
 ## Calculation
 
-These fair shares can be calculated for an arbitrary scenario using:
+These fair shares are pre-calculated, and can be seen by calling: 
 
 ```{r}
-r2dii.scenario::add_market_share_columns(r2dii.data::scenario_demo_2020, start_year = 2020)
+r2dii.data::scenario_demo_2020
 ```

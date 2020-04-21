@@ -33,7 +33,7 @@ test_that("with fake data outputs known value", {
     scenario = fake_scenario()
   )
 
-  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
+  expect_known_value(out, "ref-join_ald_scenario", update = TRUE)
 })
 
 test_that("outputs expected names", {
@@ -81,4 +81,20 @@ test_that("excludes `plant_location`s outside a region", {
     unique()
 
   expect_true(all(unique(out$plant_location) %in% valid_isos_in_these_regions))
+})
+
+test_that("case insensitive to input `plant_location`", {
+  out1 <- join_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(plant_location = c("de")),
+    scenario = fake_scenario(region = "oecd_europe")
+  )
+
+  out2 <- join_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(plant_location = c("DE")),
+    scenario = fake_scenario(region = "oecd_europe")
+  )
+
+  expect_equal(out1, out2)
 })

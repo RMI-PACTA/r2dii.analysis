@@ -26,7 +26,7 @@
 #'   prioritize()
 #'
 #' valid_matches %>%
-#'   join_ald_scenario(ald = ald_demo, scenario = r2dii.data::scenario_demo_2020)
+#'   join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
 join_ald_scenario <- function(data, ald, scenario) {
   check_portfolio_ald_scenario(data, ald, scenario)
 
@@ -38,7 +38,9 @@ join_ald_scenario <- function(data, ald, scenario) {
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
   check_crucial_names(valid_matches, names(ald_columns()))
-  check_crucial_names(ald, c("name_company", "plant_location", unname(scenario_columns())))
+  check_crucial_names(
+    ald, c("name_company", "plant_location", unname(scenario_columns()))
+  )
   check_crucial_names(scenario, scenario_columns())
 
   invisible(valid_matches)
@@ -60,7 +62,9 @@ scenario_columns <- function() {
 }
 
 pick_plant_location_in_region <- function(data) {
-  dplyr::inner_join(data, r2dii.data::region_isos,
-    by = c("region", "plant_location" = "isos")
-  )
+  data %>%
+    dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
+    dplyr::inner_join(r2dii.data::region_isos,
+      by = c("region", "plant_location" = "isos")
+    )
 }

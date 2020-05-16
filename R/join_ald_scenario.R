@@ -62,9 +62,13 @@ scenario_columns <- function() {
 }
 
 pick_plant_location_in_region <- function(data) {
+  # Track provenance to avoid clash in the column name "source"
+  region_isos <- r2dii.data::region_isos %>%
+    dplyr::rename(source_region_isos = .data$source)
+
   data %>%
     dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
-    dplyr::inner_join(r2dii.data::region_isos,
+    dplyr::inner_join(region_isos,
       by = c("region", "plant_location" = "isos")
     )
 }

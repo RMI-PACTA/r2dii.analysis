@@ -38,7 +38,13 @@ test_that("with fake data outputs known value", {
 
 test_that("outputs expected names", {
   expected <- setdiff(
-    c(names(fake_matched()), names(fake_ald()), names(fake_scenario())),
+    c(
+      names(fake_matched()),
+      names(fake_ald()),
+      names(fake_scenario()),
+      # Comes from region_isos which is used internally
+      "source_region_isos"
+    ),
     "name_company"
   )
 

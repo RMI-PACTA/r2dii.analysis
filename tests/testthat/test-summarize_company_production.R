@@ -30,3 +30,12 @@ test_that("with known input outputs as expected", {
   expect_equal(out2$weighted_production, c(24, 14))
   # styler: on
 })
+
+test_that("works with demo data", {
+  master <- r2dii.data::loanbook_demo %>%
+    r2dii.match::match_name(r2dii.data::ald_demo) %>%
+    r2dii.match::prioritize() %>%
+    join_ald_scenario(r2dii.data::ald_demo, r2dii.data::scenario_demo_2020)
+
+  expect_error_free(summarize_company_production(master))
+})

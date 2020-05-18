@@ -27,10 +27,11 @@
 #'   prioritize()
 #'
 #' valid_matches %>%
-#'   join_ald_scenario(ald = ald_demo,
-#'                     scenario = scenario_demo_2020,
-#'                     region_isos = region_isos_demo)
-
+#'   join_ald_scenario(
+#'     ald = ald_demo,
+#'     scenario = scenario_demo_2020,
+#'     region_isos = region_isos_demo
+#'   )
 join_ald_scenario <- function(data,
                               ald,
                               scenario,
@@ -39,7 +40,7 @@ join_ald_scenario <- function(data,
 
   # Track provenance to avoid clash in the column name "source"
   region_isos <- region_isos %>%
-  dplyr::rename(scenario_source = .data$source)
+    dplyr::rename(scenario_source = .data$source)
 
   data %>%
     left_join(ald, by = ald_columns()) %>%

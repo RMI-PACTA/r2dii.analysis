@@ -27,7 +27,10 @@
 #'   prioritize()
 #'
 #' valid_matches %>%
-#'   join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
+#'   join_ald_scenario(ald = ald_demo,
+#'                     scenario = scenario_demo_2020,
+#'                     region_isos = region_isos_demo)
+
 join_ald_scenario <- function(data,
                               ald,
                               scenario,

@@ -48,13 +48,11 @@ Suggests:
     covr,
     r2dii.data (>= 0.0.3.9000),
     r2dii.match,
-    r2dii.scenario (>= 0.0.0.9003),
     spelling,
     testthat (>= 2.1.0),
     withr
 Remotes: 
     2degreesinvesting/r2dii.data,
-    2degreesinvesting/r2dii.scenario,
     2DegreesInvesting/r2dii.utils
 Encoding: UTF-8
 Language: en-US

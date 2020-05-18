@@ -10,6 +10,8 @@
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 [![R build
 status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
+[![R build
+status](https://github.com/2degreesinvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.analysis/actions)
 <!-- badges: end -->
 
 Warning:
@@ -71,9 +73,11 @@ scenario regions.
 
 ``` r
 loanbook_joined_to_ald_scenario <- valid_matches %>% 
-  join_ald_scenario(ald_demo, 
-                    scenario_demo_2020, 
-                    region_isos_demo)
+  join_ald_scenario(
+    ald = ald_demo, 
+    scenario = scenario_demo_2020, 
+    region_isos = region_isos_demo
+  )
 ```
 
 This dataset is used by all subsequent steps.

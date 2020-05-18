@@ -74,9 +74,11 @@ scenario data. This step also subsets assets in the relevant scenario regions.
 
 ```{r}
 loanbook_joined_to_ald_scenario <- valid_matches %>% 
-  join_ald_scenario(ald_demo, 
-                    scenario_demo_2020, 
-                    region_isos_demo)
+  join_ald_scenario(
+    ald = ald_demo, 
+    scenario = scenario_demo_2020, 
+    region_isos = region_isos_demo
+  )
 ```
 
 This dataset is used by all subsequent steps. 

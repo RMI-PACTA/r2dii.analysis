@@ -24,6 +24,8 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   expect_error_missing_names(scenario = bad(fake_scenario(), "sector"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "technology"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "year"))
+
+  expect_error_missing_names(scenario = bad(fake_scenario(), "scenario_source"))
 })
 
 test_that("is sensitive to region_isos", {

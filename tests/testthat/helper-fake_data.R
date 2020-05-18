@@ -84,6 +84,7 @@ fake_scenario <- function(scenario = NULL,
                           year = NULL,
                           tmsr = NULL,
                           smsp = NULL,
+                          scenario_source = NULL,
                           ...) {
   tibble::tibble(
     scenario = scenario %||% "sds",
@@ -93,6 +94,7 @@ fake_scenario <- function(scenario = NULL,
     year = year %||% 2025,
     tmsr = tmsr %||% 0.5,
     smsp = smsp %||% -0.08,
+    scenario_source = scenario_source %||% "demo_2020",
     ...
   )
 }

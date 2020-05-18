@@ -4,7 +4,7 @@
 \alias{join_ald_scenario}
 \title{Join a data-loanbook object to the ald and scenario}
 \usage{
-join_ald_scenario(data, ald, scenario)
+join_ald_scenario(data, ald, scenario, region_isos = r2dii.data::region_isos)
 }
 \arguments{
 \item{data}{A dataframe like the output of
@@ -13,6 +13,8 @@ join_ald_scenario(data, ald, scenario)
 \item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{scenario}{A scenario dataframe like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
+
+\item{region_isos}{A dataframe like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
 }
 \value{
 Returns a fully joined dataframe, linking portfolio, ald and
@@ -36,5 +38,7 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   prioritize()
 
 valid_matches \%>\%
-  join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
+  join_ald_scenario(ald = ald_demo,
+                    scenario = scenario_demo_2020,
+                    region_isos = region_isos_demo)
 }

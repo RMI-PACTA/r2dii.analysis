@@ -8,6 +8,7 @@
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.data::ald_demo].
 #' @param scenario A scenario dataframe like [r2dii.data::scenario_demo_2020].
+#' @param region_isos A dataframe like [r2dii.data::region_isos] (default).
 #'
 #' @return Returns a fully joined dataframe, linking portfolio, ald and
 #'   scenario.
@@ -26,14 +27,29 @@
 #'   prioritize()
 #'
 #' valid_matches %>%
-#'   join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
-join_ald_scenario <- function(data, ald, scenario) {
+#'   join_ald_scenario(
+#'     ald = ald_demo,
+#'     scenario = scenario_demo_2020,
+#'     region_isos = region_isos_demo
+#'   )
+join_ald_scenario <- function(data,
+                              ald,
+                              scenario,
+                              region_isos = r2dii.data::region_isos) {
   check_portfolio_ald_scenario(data, ald, scenario)
+
+  # Track provenance to avoid clash in the column name "source"
+  region_isos <- region_isos %>%
+    dplyr::rename(scenario_source = .data$source)
 
   data %>%
     left_join(ald, by = ald_columns()) %>%
-    inner_join(scenario, by = scenario_columns()) %>%
-    pick_plant_location_in_region()
+    dplyr::inner_join(scenario, by = scenario_columns()) %>%
+    dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
+    dplyr::inner_join(
+      region_isos,
+      by = c("region", "plant_location" = "isos", "scenario_source")
+    )
 }
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
@@ -41,7 +57,7 @@ check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
   check_crucial_names(
     ald, c("name_company", "plant_location", unname(scenario_columns()))
   )
-  check_crucial_names(scenario, scenario_columns())
+  check_crucial_names(scenario, c(scenario_columns(), "scenario_source"))
 
   invisible(valid_matches)
 }
@@ -59,16 +75,4 @@ scenario_columns <- function() {
     technology = "technology",
     year = "year"
   )
-}
-
-pick_plant_location_in_region <- function(data) {
-  # Track provenance to avoid clash in the column name "source"
-  region_isos <- r2dii.data::region_isos %>%
-    dplyr::rename(source_region_isos = .data$source)
-
-  data %>%
-    dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
-    dplyr::inner_join(region_isos,
-      by = c("region", "plant_location" = "isos")
-    )
 }

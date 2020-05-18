@@ -16,3 +16,4 @@
 ^vignettes/articles$
 ^vignettes/_pr-34\.Rmd$
 ^vignettes/_pr-34\.md$
+^\.github$

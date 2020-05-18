@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Tools for Climate Scenario Analysis
+# r2dii.analysis <a href='https://github.com/2DegreesInvesting/r2dii.match'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
 
 <!-- badges: start -->
 
@@ -12,8 +12,15 @@ status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-pro
 status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
 <!-- badges: end -->
 
-The goal of r2dii.analysis is to provide a suite of metrics and analysis
-tools commonly used for climate scenario analysis.
+These tools implement in R a fundamental part of the software PACTA
+(Paris Agreement Capital Transition Assessment), which is a free tool
+that calculates the alignment between financial portfolios and climate
+scenarios (<https://2degrees-investing.org/>). Financial institutions
+use PACTA to study how their capital allocation impacts the climate.
+This package matches data from financial portfolios to asset level data
+from market-intelligence databases (e.g. power plant capacities,
+emission factors, etc.). This is the first step to assess if a financial
+portfolio aligns with climate goals.
 
 ## Installation
 
@@ -30,91 +37,47 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 ## Example
 
 ``` r
-# Use example configuration-files
-library(r2dii.utils)
+# r2dii.data is changing rapidly; ensure you have the latest version
+# remotes::update_packages("r2dii.data", upgrade = "ask")
+library(r2dii.data)
+library(r2dii.match)
 library(r2dii.analysis)
-packageVersion("r2dii.analysis")
-#> [1] '0.0.0.9004'
+```
 
-# Use a toy configuration file
-restore_options <- options(r2dii_config = example_config("config_demo.yml"))
-on.exit(restore_options)
+### `r2dii.analysis` picks up where `r2dii.match` leaves off.
 
-# Use `start_year` from the configuration file
-START.YEAR()
-#> [1] 2019
+First, identify matches between your loanbook and the asset level data.
 
-sda_portfolio_target(market, portfolio)
-#> Warning: Skipping sectors not present in both `market` and `portfolio`:
-#> Cement, Power, Oil&Gas, Coal, Aviation, FossilFuels, Shipping, Automotive.
-#> * Using `sector`: Steel.
-#> * Using `start_year`: 2019.
-#> * Using `target_year`: 2040.
-#> # A tibble: 24 x 9
-#>    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
-#>    <chr>      <chr>  <chr>    <chr>            <chr>         <chr>         
-#>  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor <dbl>,
-#> #   Year <int>, Plan.Sec.EmissionsFactor <dbl>
+``` r
+valid_matches <- match_name(loanbook_demo, ald_demo) %>%
+  prioritize()
+```
 
-sda_portfolio_target(market, portfolio, sector = "Steel")
-#> * Using `sector`: Steel.
-#> * Using `start_year`: 2019.
-#> * Using `target_year`: 2040.
-#> # A tibble: 24 x 9
-#>    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
-#>    <chr>      <chr>  <chr>    <chr>            <chr>         <chr>         
-#>  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor <dbl>,
-#> #   Year <int>, Plan.Sec.EmissionsFactor <dbl>
+### Join a validated matched loanbook object to asset and scenario data
 
-# This configuration file lacks `start_year`
-options(r2dii_config = example_config("config-toy.yml"))
-START.YEAR()
-#> NULL
+Next, join your loanbook, to these validated matches, and to the
+relevant scenario data. This step also subsets assets in the relevant
+scenario regions.
 
-# Fails
-sda_portfolio_target(market, portfolio, sector = "Steel")
-#> * Using `sector`: Steel.
-#> Error: `start_year` can't be NULL.
-#> Did you forget `start_year` in a configuration file or as an argument?
+``` r
+loanbook_joined_to_ald_scenario <- valid_matches %>% 
+  join_ald_scenario(ald_demo, 
+                    scenario_demo_2020, 
+                    region_isos_demo)
+```
 
-# Passes
-sda_portfolio_target(market, portfolio, sector = "Steel", start_year = "2019")
-#> * Using `sector`: Steel.
-#> * Using `start_year`: 2019.
-#> * Using `target_year`: 2040.
-#> # A tibble: 24 x 9
-#>    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
-#>    <chr>      <chr>  <chr>    <chr>            <chr>         <chr>         
-#>  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#>  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#> # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor <dbl>,
-#> #   Year <int>, Plan.Sec.EmissionsFactor <dbl>
+This dataset is used by all subsequent steps. \#\#\# Calculate company
+and/ or portfolio level targets Scenario targets can be calculated per
+company:
+
+``` r
+company_target <- summarize_company_production(loanbook_joined_to_ald_scenario) %>% 
+  add_company_target()
+```
+
+…or for the whole portfolio:
+
+``` r
+portfolio_target <- summarize_portfolio_production(loanbook_joined_to_ald_scenario) %>% 
+  add_portfolio_target()
 ```

@@ -3,11 +3,12 @@ output: github_document
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-"
+  fig.path = "man/figures/README-",
+  out.width = "100%"
 )
 ```
 
@@ -72,12 +73,14 @@ This dataset is used by all subsequent steps.
 ### Calculate company and/ or portfolio level targets
 Scenario targets can be calculated per company:
 ```{r}
-company_target <- summarize_company_production(loanbook_joined_to_ald_scenario) %>% 
+loanbook_joined_to_ald_scenario %>% 
+  summarize_company_production() %>% 
   add_company_target()
 ```
 
 ...or for the whole portfolio:
 ```{r}
-portfolio_target <- summarize_portfolio_production(loanbook_joined_to_ald_scenario) %>% 
+loanbook_joined_to_ald_scenario %>% 
+  summarize_portfolio_production() %>% 
   add_portfolio_target()
 ```

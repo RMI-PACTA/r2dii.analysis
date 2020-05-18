@@ -124,9 +124,11 @@
 <a href="#join-a-validated-matched-loanbook-object-to-asset-and-scenario-data" class="anchor"></a>Join a validated matched loanbook object to asset and scenario data</h3>
 <p>Next, join your loanbook, to these validated matches, and to the relevant scenario data. This step also subsets assets in the relevant scenario regions.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>loanbook_joined_to_ald_scenario &lt;-<span class="st"> </span>valid_matches <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(ald_demo, </span>
-<span id="cb4-3"><a href="#cb4-3"></a>                    scenario_demo_<span class="dv">2020</span>, </span>
-<span id="cb4-4"><a href="#cb4-4"></a>                    region_isos_demo)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">ald =</span> ald_demo, </span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>, </span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  )</span></code></pre></div>
 <p>This dataset is used by all subsequent steps.</p>
 </div>
 <div id="calculate-company-and-or-portfolio-level-targets" class="section level3">

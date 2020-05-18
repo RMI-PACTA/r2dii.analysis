@@ -12,6 +12,16 @@ status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-pro
 status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
 <!-- badges: end -->
 
+Warning:
+
+> An experimental package is in the very early stages of development.
+> The API will be changing frequently as we rapidly iterate and explore
+> variations in search of the best fit. Experimental packages will make
+> API breaking changes without deprecation, so you are generally best
+> off waiting until the package is more mature before you use it.
+
+– <https://www.tidyverse.org/lifecycle/#experimental>
+
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
@@ -38,7 +48,7 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 
 ``` r
 # r2dii.data is changing rapidly; ensure you have the latest version
-# remotes::update_packages("r2dii.data", upgrade = "ask")
+# devtools::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)
@@ -66,9 +76,11 @@ loanbook_joined_to_ald_scenario <- valid_matches %>%
                     region_isos_demo)
 ```
 
-This dataset is used by all subsequent steps. \#\#\# Calculate company
-and/ or portfolio level targets Scenario targets can be calculated per
-company:
+This dataset is used by all subsequent steps.
+
+### Calculate company and/ or portfolio level targets
+
+Scenario targets can be calculated per company:
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 

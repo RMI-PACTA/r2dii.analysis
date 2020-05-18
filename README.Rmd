@@ -20,6 +20,12 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
 <!-- badges: end -->
 
+Warning:
+
+> An experimental package is in the very early stages of development. The API will be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental packages will make API breaking changes without deprecation, so you are generally best off waiting until the package is more mature before you use it.
+
+-- <https://www.tidyverse.org/lifecycle/#experimental>
+
 These tools implement in R a fundamental part of
 the software PACTA (Paris Agreement Capital Transition Assessment),
 which is a free tool that calculates the alignment between financial
@@ -46,13 +52,14 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
 
 ```{r}
 # r2dii.data is changing rapidly; ensure you have the latest version
-# remotes::update_packages("r2dii.data", upgrade = "ask")
+# devtools::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-### `r2dii.analysis` picks up where `r2dii.match` leaves off. 
+### `r2dii.analysis` picks up where `r2dii.match` leaves off.
+
 First, identify matches between your loanbook and the asset level data. 
 ```{r}
 valid_matches <- match_name(loanbook_demo, ald_demo) %>%
@@ -60,8 +67,10 @@ valid_matches <- match_name(loanbook_demo, ald_demo) %>%
 ```
 
 ### Join a validated matched loanbook object to asset and scenario data
+
 Next, join your loanbook, to these validated matches, and to the relevant 
 scenario data. This step also subsets assets in the relevant scenario regions. 
+
 ```{r}
 loanbook_joined_to_ald_scenario <- valid_matches %>% 
   join_ald_scenario(ald_demo, 
@@ -70,8 +79,11 @@ loanbook_joined_to_ald_scenario <- valid_matches %>%
 ```
 
 This dataset is used by all subsequent steps. 
+
 ### Calculate company and/ or portfolio level targets
+
 Scenario targets can be calculated per company:
+
 ```{r}
 loanbook_joined_to_ald_scenario %>% 
   summarize_company_production() %>% 
@@ -79,6 +91,7 @@ loanbook_joined_to_ald_scenario %>%
 ```
 
 ...or for the whole portfolio:
+
 ```{r}
 loanbook_joined_to_ald_scenario %>% 
   summarize_portfolio_production() %>% 

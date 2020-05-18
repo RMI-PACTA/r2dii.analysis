@@ -38,5 +38,7 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   prioritize()
 
 valid_matches \%>\%
-  join_ald_scenario(ald = ald_demo, scenario = scenario_demo_2020)
+  join_ald_scenario(ald = ald_demo,
+                    scenario = scenario_demo_2020,
+                    region_isos = region_isos_demo)
 }

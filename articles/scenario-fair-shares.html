@@ -92,9 +92,8 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.dataraw)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; Loading required package: r2dii.utils</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
 <div id="scenario-fair-shares" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scenario-fair-shares" class="anchor"></a>Scenario Fair Shares</h2>
@@ -108,16 +107,16 @@
 <li>
 <span class="math inline">\(s_i(t)\)</span> is the scenario production for technology <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span>,</li>
 <li>
-<span class="math inline">\(p_{i,j}(t_0)\)</span> is the production allocated to the portfolio for some technology, <span class="math inline">\(i\)</span> at time <span class="math inline">\(t_0\)</span>, and</li>
+<span class="math inline">\(p_{i}(t_0)\)</span> is the production allocated to the portfolio for some technology, <span class="math inline">\(i\)</span> at time <span class="math inline">\(t_0\)</span>, and</li>
 <li>
-<span class="math inline">\(p_{i,j}^{tfsr}(t)\)</span> is the portfolio-specific target production for that technology.</li>
+<span class="math inline">\(p_{i}^{tfsr}(t)\)</span> is the portfolio-specific target production for that technology.</li>
 </ul>
 <p>We define the “Technology Fair Share Ratio” as:</p>
 <p><span class="math display">\[\dfrac{s_i(t)}{s_i(t_0)}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Market Fair Share:</li>
 </ol>
-<p><span class="math display">\[p_{i,j}^{mfsp}(t) = p_{i,j}(t_0) +P_i(t_0) * \left( \dfrac{s_j(t)-s_j(t_0)}{S(t_0)}\right)\]</span> where:</p>
+<p><span class="math display">\[p_{i}^{mfsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)\]</span> where:</p>
 <ul>
 <li>
 <span class="math inline">\(P_i(t_0)\)</span> is the portfolio’s total production in the sector at <span class="math inline">\(t_0\)</span>, and</li>
@@ -125,26 +124,26 @@
 <span class="math inline">\(S(t_0)\)</span> is the scenario total production at <span class="math inline">\(t_0\)</span>.</li>
 </ul>
 <p>We define the “Market Fair Share Percentage” as:</p>
-<p><span class="math display">\[\dfrac{s_j(t)-s_j(t_0)}{S(t_0)}\]</span></p>
+<p><span class="math display">\[\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\]</span></p>
 </div>
 <div id="calculation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#calculation" class="anchor"></a>Calculation</h2>
-<p>These fair shares can be calculated for an arbitrary scenario using:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="../reference/add_fair_share_columns.html">add_fair_share_columns</a></span>(scenario_demo, <span class="dt">start_year =</span> <span class="dv">2020</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; # A tibble: 1,323 x 9</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;    scenario sector     technology region  year  value units         tfsr    mfsp</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;  1 cps      automotive electric   global  2020  0.836 cars produc…  1    0      </span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;  2 cps      automotive hybrid     global  2020 12.8   cars produc…  1    0      </span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;  3 cps      automotive ice        global  2020 79.9   cars produc…  1    0      </span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;  4 cps      automotive electric   global  2021  0.937 cars produc…  1.12 0.00108</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;  5 cps      automotive hybrid     global  2021 14.3   cars produc…  1.12 0.0165 </span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;  6 cps      automotive ice        global  2021 81.7   cars produc…  1.02 0.0188 </span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;  7 cps      automotive electric   global  2022  1.04  cars produc…  1.24 0.00213</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt;  8 cps      automotive hybrid     global  2022 15.8   cars produc…  1.24 0.0326 </span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt;  9 cps      automotive ice        global  2022 83.4   cars produc…  1.04 0.0378 </span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; 10 cps      automotive electric   global  2023  1.13  cars produc…  1.35 0.00316</span></span>
+<p>These fair shares are pre-calculated, and can be seen by calling:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>r2dii.data<span class="op">::</span>scenario_demo_<span class="dv">2020</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; # A tibble: 1,323 x 8</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;    scenario sector     technology region  year  tmsr    smsp scenario_source</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;  1 cps      automotive electric   global  2020  1    0       demo_2020      </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;  2 cps      automotive hybrid     global  2020  1    0       demo_2020      </span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;  3 cps      automotive ice        global  2020  1    0       demo_2020      </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;  4 cps      automotive electric   global  2021  1.12 0.00108 demo_2020      </span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;  5 cps      automotive hybrid     global  2021  1.12 0.0165  demo_2020      </span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;  6 cps      automotive ice        global  2021  1.02 0.0188  demo_2020      </span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;  7 cps      automotive electric   global  2022  1.24 0.00213 demo_2020      </span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt;  8 cps      automotive hybrid     global  2022  1.24 0.0326  demo_2020      </span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt;  9 cps      automotive ice        global  2022  1.04 0.0378  demo_2020      </span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; 10 cps      automotive electric   global  2023  1.35 0.00316 demo_2020      </span></span>
 <span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; # … with 1,313 more rows</span></span></code></pre></div>
 </div>
   </div>

@@ -131,9 +131,15 @@ emission reduction targets in line with climate science." />
 emission reduction targets in line with climate science.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sda_portfolio_target</span>(<span class='no'>market</span>, <span class='no'>portfolio</span>, <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='st'>"B2DS"</span>,
-  <span class='kw'>geography</span> <span class='kw'>=</span> <span class='st'>"Global"</span>, <span class='kw'>sector</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start_year</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>target_year</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>sda_portfolio_target</span>(
+  <span class='no'>market</span>,
+  <span class='no'>portfolio</span>,
+  <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='st'>"B2DS"</span>,
+  <span class='kw'>geography</span> <span class='kw'>=</span> <span class='st'>"Global"</span>,
+  <span class='kw'>sector</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>start_year</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>target_year</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,8 +215,8 @@ holds the result of the SDA calculation.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
 #&gt; </span><span style='color: #555555;'> 9</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
 #&gt; </span><span style='color: #555555;'>10</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Plan.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   Year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Plan.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
 <span class='fu'>sda_portfolio_target</span>(<span class='no'>market</span>, <span class='no'>portfolio</span>, <span class='kw'>sector</span> <span class='kw'>=</span> <span class='st'>"Steel"</span>)</div><div class='output co'>#&gt; <span class='message'>* Using `sector`: Steel.</span></div><div class='output co'>#&gt; <span class='message'>* Using `start_year`: 2019.</span></div><div class='output co'>#&gt; <span class='message'>* Using `target_year`: 2040.</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 24 x 9</span><span>
 #&gt;    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
@@ -224,8 +230,8 @@ holds the result of the SDA calculation.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
 #&gt; </span><span style='color: #555555;'> 9</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
 #&gt; </span><span style='color: #555555;'>10</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Plan.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   Year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Plan.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
 <span class='co'># This configuration file lacks `start_year`</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>r2dii_config</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/r2dii.utils/man/default_config.html'>example_config</a></span>(<span class='st'>"config-toy.yml"</span>))
 <span class='fu'><a href='https://rdrr.io/pkg/r2dii.utils/man/FINANCIAL.TIMESTAMP.html'>START.YEAR</a></span>()</div><div class='output co'>#&gt; NULL</div><div class='input'>
@@ -248,8 +254,8 @@ holds the result of the SDA calculation.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
 #&gt; </span><span style='color: #555555;'> 9</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
 #&gt; </span><span style='color: #555555;'>10</span><span> Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    
-#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Plan.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   Year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, Plan.Sec.EmissionsFactor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

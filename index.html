@@ -83,12 +83,18 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="-tools-for-climate-scenario-analysis" class="section level1">
+<div id="r2diianalysis-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#-tools-for-climate-scenario-analysis" class="anchor"></a><img src="https://i.imgur.com/3jITMq8.png" align="right" height="40"> Tools for Climate Scenario Analysis</h1></div>
+<a href="#r2diianalysis-" class="anchor"></a>r2dii.analysis <a href="https://github.com/2DegreesInvesting/r2dii.match"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
+</h1></div>
 <!-- badges: start -->
 
-<p>The goal of r2dii.analysis is to provide a suite of metrics and analysis tools commonly used for climate scenario analysis.</p>
+<p>Warning:</p>
+<blockquote>
+<p>An experimental package is in the very early stages of development. The API will be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental packages will make API breaking changes without deprecation, so you are generally best off waiting until the package is more mature before you use it.</p>
+</blockquote>
+<p>– <a href="https://www.tidyverse.org/lifecycle/#experimental" class="uri">https://www.tidyverse.org/lifecycle/#experimental</a></p>
+<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -101,93 +107,70 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Use example configuration-files</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.utils)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/packageDescription.html">packageVersion</a></span>(<span class="st">"r2dii.analysis"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; [1] '0.0.0.9004'</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># Use a toy configuration file</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>restore_options &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">r2dii_config =</span> <span class="kw"><a href="https://rdrr.io/pkg/r2dii.utils/man/default_config.html">example_config</a></span>(<span class="st">"config_demo.yml"</span>))</span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="kw"><a href="https://rdrr.io/r/base/on.exit.html">on.exit</a></span>(restore_options)</span>
-<span id="cb2-10"><a href="#cb2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co"># Use `start_year` from the configuration file</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="kw"><a href="https://rdrr.io/pkg/r2dii.utils/man/FINANCIAL.TIMESTAMP.html">START.YEAR</a></span>()</span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; [1] 2019</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="kw"><a href="reference/sda_portfolio_target.html">sda_portfolio_target</a></span>(market, portfolio)</span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; Warning: Skipping sectors not present in both `market` and `portfolio`:</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; Cement, Power, Oil&amp;Gas, Coal, Aviation, FossilFuels, Shipping, Automotive.</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; * Using `sector`: Steel.</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; * Using `start_year`: 2019.</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt; * Using `target_year`: 2040.</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; # A tibble: 24 x 9</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;         </span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt;  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt;  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt;  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt;  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt;  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt;  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt;  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt;  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt;  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-34"><a href="#cb2-34"></a><span class="co">#&gt; # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor &lt;dbl&gt;,</span></span>
-<span id="cb2-35"><a href="#cb2-35"></a><span class="co">#&gt; #   Year &lt;int&gt;, Plan.Sec.EmissionsFactor &lt;dbl&gt;</span></span>
-<span id="cb2-36"><a href="#cb2-36"></a></span>
-<span id="cb2-37"><a href="#cb2-37"></a><span class="kw"><a href="reference/sda_portfolio_target.html">sda_portfolio_target</a></span>(market, portfolio, <span class="dt">sector =</span> <span class="st">"Steel"</span>)</span>
-<span id="cb2-38"><a href="#cb2-38"></a><span class="co">#&gt; * Using `sector`: Steel.</span></span>
-<span id="cb2-39"><a href="#cb2-39"></a><span class="co">#&gt; * Using `start_year`: 2019.</span></span>
-<span id="cb2-40"><a href="#cb2-40"></a><span class="co">#&gt; * Using `target_year`: 2040.</span></span>
-<span id="cb2-41"><a href="#cb2-41"></a><span class="co">#&gt; # A tibble: 24 x 9</span></span>
-<span id="cb2-42"><a href="#cb2-42"></a><span class="co">#&gt;    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name</span></span>
-<span id="cb2-43"><a href="#cb2-43"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;         </span></span>
-<span id="cb2-44"><a href="#cb2-44"></a><span class="co">#&gt;  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-45"><a href="#cb2-45"></a><span class="co">#&gt;  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-46"><a href="#cb2-46"></a><span class="co">#&gt;  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-47"><a href="#cb2-47"></a><span class="co">#&gt;  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-48"><a href="#cb2-48"></a><span class="co">#&gt;  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-49"><a href="#cb2-49"></a><span class="co">#&gt;  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-50"><a href="#cb2-50"></a><span class="co">#&gt;  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-51"><a href="#cb2-51"></a><span class="co">#&gt;  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-52"><a href="#cb2-52"></a><span class="co">#&gt;  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-53"><a href="#cb2-53"></a><span class="co">#&gt; 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-54"><a href="#cb2-54"></a><span class="co">#&gt; # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor &lt;dbl&gt;,</span></span>
-<span id="cb2-55"><a href="#cb2-55"></a><span class="co">#&gt; #   Year &lt;int&gt;, Plan.Sec.EmissionsFactor &lt;dbl&gt;</span></span>
-<span id="cb2-56"><a href="#cb2-56"></a></span>
-<span id="cb2-57"><a href="#cb2-57"></a><span class="co"># This configuration file lacks `start_year`</span></span>
-<span id="cb2-58"><a href="#cb2-58"></a><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">r2dii_config =</span> <span class="kw"><a href="https://rdrr.io/pkg/r2dii.utils/man/default_config.html">example_config</a></span>(<span class="st">"config-toy.yml"</span>))</span>
-<span id="cb2-59"><a href="#cb2-59"></a><span class="kw"><a href="https://rdrr.io/pkg/r2dii.utils/man/FINANCIAL.TIMESTAMP.html">START.YEAR</a></span>()</span>
-<span id="cb2-60"><a href="#cb2-60"></a><span class="co">#&gt; NULL</span></span>
-<span id="cb2-61"><a href="#cb2-61"></a></span>
-<span id="cb2-62"><a href="#cb2-62"></a><span class="co"># Fails</span></span>
-<span id="cb2-63"><a href="#cb2-63"></a><span class="kw"><a href="reference/sda_portfolio_target.html">sda_portfolio_target</a></span>(market, portfolio, <span class="dt">sector =</span> <span class="st">"Steel"</span>)</span>
-<span id="cb2-64"><a href="#cb2-64"></a><span class="co">#&gt; * Using `sector`: Steel.</span></span>
-<span id="cb2-65"><a href="#cb2-65"></a><span class="co">#&gt; Error: `start_year` can't be NULL.</span></span>
-<span id="cb2-66"><a href="#cb2-66"></a><span class="co">#&gt; Did you forget `start_year` in a configuration file or as an argument?</span></span>
-<span id="cb2-67"><a href="#cb2-67"></a></span>
-<span id="cb2-68"><a href="#cb2-68"></a><span class="co"># Passes</span></span>
-<span id="cb2-69"><a href="#cb2-69"></a><span class="kw"><a href="reference/sda_portfolio_target.html">sda_portfolio_target</a></span>(market, portfolio, <span class="dt">sector =</span> <span class="st">"Steel"</span>, <span class="dt">start_year =</span> <span class="st">"2019"</span>)</span>
-<span id="cb2-70"><a href="#cb2-70"></a><span class="co">#&gt; * Using `sector`: Steel.</span></span>
-<span id="cb2-71"><a href="#cb2-71"></a><span class="co">#&gt; * Using `start_year`: 2019.</span></span>
-<span id="cb2-72"><a href="#cb2-72"></a><span class="co">#&gt; * Using `target_year`: 2040.</span></span>
-<span id="cb2-73"><a href="#cb2-73"></a><span class="co">#&gt; # A tibble: 24 x 9</span></span>
-<span id="cb2-74"><a href="#cb2-74"></a><span class="co">#&gt;    Allocation Sector Scenario ScenarioGeograp… Investor.Name Portfolio.Name</span></span>
-<span id="cb2-75"><a href="#cb2-75"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;         </span></span>
-<span id="cb2-76"><a href="#cb2-76"></a><span class="co">#&gt;  1 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-77"><a href="#cb2-77"></a><span class="co">#&gt;  2 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-78"><a href="#cb2-78"></a><span class="co">#&gt;  3 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-79"><a href="#cb2-79"></a><span class="co">#&gt;  4 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-80"><a href="#cb2-80"></a><span class="co">#&gt;  5 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-81"><a href="#cb2-81"></a><span class="co">#&gt;  6 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-82"><a href="#cb2-82"></a><span class="co">#&gt;  7 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-83"><a href="#cb2-83"></a><span class="co">#&gt;  8 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-84"><a href="#cb2-84"></a><span class="co">#&gt;  9 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-85"><a href="#cb2-85"></a><span class="co">#&gt; 10 Portfolio… Steel  B2DS     Global           Investor1     Portfolio1    </span></span>
-<span id="cb2-86"><a href="#cb2-86"></a><span class="co">#&gt; # … with 14 more rows, and 3 more variables: Scen.Sec.EmissionsFactor &lt;dbl&gt;,</span></span>
-<span id="cb2-87"><a href="#cb2-87"></a><span class="co">#&gt; #   Year &lt;int&gt;, Plan.Sec.EmissionsFactor &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># devtools::update_packages("r2dii.data", upgrade = "ask")</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
+<div id="r2diianalysis-picks-up-where-r2diimatch-leaves-off" class="section level3">
+<h3 class="hasAnchor">
+<a href="#r2diianalysis-picks-up-where-r2diimatch-leaves-off" class="anchor"></a><code>r2dii.analysis</code> picks up where <code>r2dii.match</code> leaves off.</h3>
+<p>First, identify matches between your loanbook and the asset level data.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>valid_matches &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html">match_name</a></span>(loanbook_demo, ald_demo) <span class="op">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/prioritize.html">prioritize</a></span>()</span></code></pre></div>
+</div>
+<div id="join-a-validated-matched-loanbook-object-to-asset-and-scenario-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#join-a-validated-matched-loanbook-object-to-asset-and-scenario-data" class="anchor"></a>Join a validated matched loanbook object to asset and scenario data</h3>
+<p>Next, join your loanbook, to these validated matches, and to the relevant scenario data. This step also subsets assets in the relevant scenario regions.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>loanbook_joined_to_ald_scenario &lt;-<span class="st"> </span>valid_matches <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(ald_demo, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>                    scenario_demo_<span class="dv">2020</span>, </span>
+<span id="cb4-4"><a href="#cb4-4"></a>                    region_isos_demo)</span></code></pre></div>
+<p>This dataset is used by all subsequent steps.</p>
+</div>
+<div id="calculate-company-and-or-portfolio-level-targets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#calculate-company-and-or-portfolio-level-targets" class="anchor"></a>Calculate company and/ or portfolio level targets</h3>
+<p>Scenario targets can be calculated per company:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_company_production.html">summarize_company_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw"><a href="reference/add_company_target.html">add_company_target</a></span>()</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; # A tibble: 9,444 x 8</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;  1 autom… electric    2020 shangha… cps                 5140.            5140.</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;  2 autom… electric    2020 shangha… sds                 5140.            5140.</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;  3 autom… electric    2020 shangha… sps                 5140.            5140.</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  4 autom… electric    2020 sichuan… cps                 5985.            5985.</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  5 autom… electric    2020 sichuan… sds                 5985.            5985.</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  6 autom… electric    2020 sichuan… sps                 5985.            5985.</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  7 autom… electric    2020 singula… cps                 8674.            8674.</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  8 autom… electric    2020 singula… sds                 8674.            8674.</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  9 autom… electric    2020 singula… sps                 8674.            8674.</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 10 autom… electric    2020 south-e… cps                14409.           14409.</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; # … with 9,434 more rows, and 1 more variable:</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; #   smsp_target_weighted_production &lt;dbl&gt;</span></span></code></pre></div>
+<p>…or for the whole portfolio:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_portfolio_production.html">summarize_portfolio_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw"><a href="reference/add_portfolio_target.html">add_portfolio_target</a></span>()</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; # A tibble: 684 x 7</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;    sector technology  year scenario weighted_produc… tmsr_target_wei…</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  1 autom… electric    2020 cps               148935.          148935.</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;  2 autom… electric    2020 sds               148935.          148935.</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;  3 autom… electric    2020 sps               148935.          148935.</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;  4 autom… electric    2021 cps               150875.          166850.</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  5 autom… electric    2021 sds               150875.          172982.</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  6 autom… electric    2021 sps               150875.          170433.</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  7 autom… electric    2022 cps               152816.          184388.</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  8 autom… electric    2022 sds               152816.          197029.</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  9 autom… electric    2022 sps               152816.          191931.</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 10 autom… electric    2023 cps               154757.          201599.</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; # … with 674 more rows, and 1 more variable:</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; #   smsp_target_weighted_production &lt;dbl&gt;</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </div>

@@ -92,10 +92,9 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.dataraw)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; Loading required package: r2dii.utils</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
 <div id="matching" class="section level2">
 <h2 class="hasAnchor">
 <a href="#matching" class="anchor"></a>Matching</h2>
@@ -132,38 +131,37 @@
 <div id="scenario-fair-shares" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scenario-fair-shares" class="anchor"></a>Scenario Fair Shares</h2>
-<p>We can now join the datasets <code>ald</code> and <code>scenario</code>, then add fare share columns.</p>
+<p>We can now join the datasets <code>ald</code> and <code>scenario</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>valid_matches <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw"><a href="../reference/join_ald_scenario.html">join_ald_scenario</a></span>(<span class="dt">ald =</span> ald_demo, <span class="dt">scenario =</span> scenario_demo) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw"><a href="../reference/add_fair_share_columns.html">add_fair_share_columns</a></span>(<span class="dt">start_year =</span> <span class="dv">2020</span>)</span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; # A tibble: 16,395 x 44</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt;  1 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt;  2 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt;  3 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;  4 L162    C188             South-East Auto… &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;  5 L163    C192             Streetscooter    &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  6 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  7 L166    C196             Suzuki Motor Co… &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;  8 L169    C201             Tata Group       &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;  9 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; 10 L173    C207             Toyota Motor Co… &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; # … with 16,385 more rows, and 39 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, technology &lt;chr&gt;, production_unit &lt;chr&gt;,</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#&gt; #   year &lt;dbl&gt;, production &lt;dbl&gt;, emission_factor &lt;dbl&gt;,</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;,</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a><span class="co">#&gt; #   is_ultimate_owner &lt;lgl&gt;, is_ultimate_listed_owner &lt;lgl&gt;,</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a><span class="co">#&gt; #   ald_timestamp &lt;chr&gt;, scenario &lt;chr&gt;, region &lt;chr&gt;, value &lt;dbl&gt;,</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="co">#&gt; #   units &lt;chr&gt;, tfsr &lt;dbl&gt;, mfsp &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw"><a href="../reference/join_ald_scenario.html">join_ald_scenario</a></span>(<span class="dt">ald =</span> ald_demo, <span class="dt">scenario =</span> r2dii.data<span class="op">::</span>scenario_demo_<span class="dv">2020</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; # A tibble: 9,945 x 44</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt;  2 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt;  3 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt;  4 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;  5 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;  6 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  7 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  8 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;  9 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt; 10 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; # … with 9,935 more rows, and 39 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, technology &lt;chr&gt;, production_unit &lt;chr&gt;,</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#&gt; #   year &lt;dbl&gt;, production &lt;dbl&gt;, emission_factor &lt;dbl&gt;,</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;,</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#&gt; #   is_ultimate_owner &lt;lgl&gt;, is_ultimate_listed_owner &lt;lgl&gt;,</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="co">#&gt; #   ald_timestamp &lt;chr&gt;, scenario &lt;chr&gt;, region &lt;chr&gt;, tmsr &lt;dbl&gt;, smsp &lt;dbl&gt;,</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="co">#&gt; #   scenario_source &lt;chr&gt;, source_region_isos &lt;chr&gt;</span></span></code></pre></div>
 </div>
   </div>
 

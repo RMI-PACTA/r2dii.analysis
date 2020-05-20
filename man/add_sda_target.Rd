@@ -23,7 +23,7 @@ calculated using the sectoral-decarbonisation approach.
 }
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-requireNamespace("r2dii.match", quietly = TRUE)
+  requireNamespace("r2dii.match", quietly = TRUE)
 if (!installed) stop("Please install r2dii.match and r2dii.data")
 
 library(r2dii.data)

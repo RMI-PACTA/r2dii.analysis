@@ -19,6 +19,7 @@ TODO \@vintented: Add description
 }
 \seealso{
 Other demo datasets: 
+\code{\link{co2_intensity_scenario}},
 \code{\link{market}}
 }
 \concept{demo datasets}

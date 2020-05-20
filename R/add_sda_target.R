@@ -63,9 +63,9 @@ add_sda_target <- function(data, ald, co2_intensity_scenario){
     dplyr::full_join(formatted_co2_intensity, by = c("year", "sector")) %>%
     dplyr::group_by(.data$sector) %>%
     dplyr::arrange(.data$year) %>%
-    dplyr::mutate(initial_portfolio_factor = first(weighted_emission_factor),
-                  d = initial_portfolio_factor - last(target_weighted_emission_factor),
-                  portfolio_target_emission_factor = (d * py) + last(scenario_emission_factor)) %>%
+    dplyr::mutate(initial_portfolio_factor = dplyr::first(weighted_emission_factor),
+                  d = initial_portfolio_factor - dplyr::last(target_weighted_emission_factor),
+                  portfolio_target_emission_factor = (d * py) + dplyr::last(scenario_emission_factor)) %>%
     dplyr::select(.data$sector,
                   .data$year,
                   .data$weighted_emission_factor,
@@ -95,19 +95,19 @@ add_py_and_g_to_scenario <- function(co2_intensity_scenario){
   co2_intensity_scenario %>%
     dplyr::group_by(.data$sector) %>%
     dplyr::arrange(.data$year) %>%
-    dplyr::mutate(g = emission_factor/first(emission_factor),
-                  py = (emission_factor - last(emission_factor)) / (first(emission_factor) - last(emission_factor)))
+    dplyr::mutate(g = emission_factor/dplyr::first(emission_factor),
+                  py = (emission_factor - dplyr::last(emission_factor)) / (dplyr::first(emission_factor) - dplyr::last(emission_factor)))
 }
 
 calculate_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g,
                                                   ald_sda_market_benchmark){
   co2_intensity_scenario_with_py_and_g %>%
-    dplyr::filter(dplyr::row_number() == 1L | dplyr::row_number() == n()) %>%
+    dplyr::filter(dplyr::row_number() == 1L | dplyr::row_number() == dplyr::n()) %>%
     dplyr::select(-emission_factor,-py) %>%
     dplyr::left_join(ald_sda_market_benchmark, by = c("sector", "year")) %>%
     dplyr::group_by(.data$sector) %>%
     dplyr::arrange(.data$year) %>%
-    dplyr::mutate(target_weighted_emission_factor = first(.data$production_weighted_emission_factor) * .data$g) %>%
+    dplyr::mutate(target_weighted_emission_factor = dplyr::first(.data$production_weighted_emission_factor) * .data$g) %>%
     dplyr::select(.data$sector, .data$year, .data$emission_factor_unit, .data$target_weighted_emission_factor)
 }
 

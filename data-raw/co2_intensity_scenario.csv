@@ -1,0 +1,23 @@
+scenario_source,scenario,sector,region,year,emission_factor_unit,emission_factor
+demo_2020,demo,cement,global,2020,tons of CO2 per ton of Cement,0.7
+demo_2020,demo,cement,global,2021,tons of CO2 per ton of Cement,0.64
+demo_2020,demo,cement,global,2022,tons of CO2 per ton of Cement,0.58
+demo_2020,demo,cement,global,2023,tons of CO2 per ton of Cement,0.52
+demo_2020,demo,cement,global,2024,tons of CO2 per ton of Cement,0.46
+demo_2020,demo,cement,global,2025,tons of CO2 per ton of Cement,0.4
+demo_2020,demo,cement,global,2030,tons of CO2 per ton of Cement,0.39
+demo_2020,demo,cement,global,2035,tons of CO2 per ton of Cement,0.38
+demo_2020,demo,cement,global,2040,tons of CO2 per ton of Cement,0.25
+demo_2020,demo,cement,global,2045,tons of CO2 per ton of Cement,0.2
+demo_2020,demo,cement,global,2050,tons of CO2 per ton of Cement,0.1
+demo_2020,demo,steel,global,2020,tons of CO2 per ton of Steel,2
+demo_2020,demo,steel,global,2021,tons of CO2 per ton of Steel,1.9
+demo_2020,demo,steel,global,2022,tons of CO2 per ton of Steel,1.8
+demo_2020,demo,steel,global,2023,tons of CO2 per ton of Steel,1.7
+demo_2020,demo,steel,global,2024,tons of CO2 per ton of Steel,1.6
+demo_2020,demo,steel,global,2025,tons of CO2 per ton of Steel,1.5
+demo_2020,demo,steel,global,2030,tons of CO2 per ton of Steel,1.433333333
+demo_2020,demo,steel,global,2035,tons of CO2 per ton of Steel,1.366666667
+demo_2020,demo,steel,global,2040,tons of CO2 per ton of Steel,0.5
+demo_2020,demo,steel,global,2045,tons of CO2 per ton of Steel,0.25
+demo_2020,demo,steel,global,2050,tons of CO2 per ton of Steel,0.2

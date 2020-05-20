@@ -9,5 +9,5 @@ test_that("with fake data outputs known value", {
     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
   )
 
-  expect_known_value(out, "ref-add_portfolio_target", update = F)
+  expect_known_value(out, "ref-add_sda_target", update = FALSE)
 })

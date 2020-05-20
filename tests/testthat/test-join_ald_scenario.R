@@ -54,7 +54,7 @@ test_that("with fake data outputs known value", {
     region_isos = r2dii.data::region_isos_demo
   )
 
-  expect_known_value(out, "ref-join_ald_scenario", update = TRUE)
+  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
 })
 
 test_that("outputs expected names", {

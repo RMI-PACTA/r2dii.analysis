@@ -1,0 +1,8 @@
+dataset,column,typeof,definition
+co2_intensity_scenario,scenario_source,character,The source publication from which the scenario was taken
+co2_intensity_scenario,scenario,character,The name of the scenario
+co2_intensity_scenario,sector,character,The sector to which the scenario prescribes a pathway
+co2_intensity_scenario,region,character,The region to which the pathway is relevant
+co2_intensity_scenario,year,integer,The year at which the pathway value is prescribed
+co2_intensity_scenario,emission_factor_unit,character,The units that the emission factor is measured in
+co2_intensity_scenario,emission_factor,double,Target sector level emission factor perscribed by the scenario

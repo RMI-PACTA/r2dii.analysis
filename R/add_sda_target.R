@@ -29,7 +29,6 @@
 #'     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
 #'   )
 add_sda_target <- function(data, ald, co2_intensity_scenario) {
-
   start_year <- co2_intensity_scenario %>%
     dplyr::select(.data$sector, .data$year) %>%
     dplyr::group_by(.data$sector) %>%
@@ -82,23 +81,21 @@ add_sda_target <- function(data, ald, co2_intensity_scenario) {
       values_to = "emission_factor_value"
     ) %>%
     dplyr::filter(!is.na(.data$emission_factor_value))
-
 }
 
 calculate_sda_market_benchmark <- function(market, co2_intensity_scenario) {
-
   market %>%
     dplyr::group_by(.data$sector, .data$year) %>%
     dplyr::summarise(
       sector_total_production = sum(.data$production),
-      production_weighted_emission_factor = list(.data$production * .data$emission_factor)) %>%
+      production_weighted_emission_factor = list(.data$production * .data$emission_factor)
+    ) %>%
     tidyr::unnest(cols = .data$production_weighted_emission_factor) %>%
     dplyr::group_by(.data$sector, .data$year) %>%
     dplyr::summarise(
       production_weighted_emission_factor =
         sum(.data$production_weighted_emission_factor / .data$sector_total_production)
     )
-
 }
 
 add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
@@ -124,7 +121,6 @@ calculate_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py
 }
 
 add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
-
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
   )

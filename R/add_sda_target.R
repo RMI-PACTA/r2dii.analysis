@@ -91,8 +91,8 @@ calculate_sda_market_benchmark <- function(market, co2_intensity_scenario) {
     dplyr::group_by(.data$sector, .data$year) %>%
     dplyr::summarise(
       sector_total_production = sum(.data$production),
-      production_weighted_emission_factor = .data$production * .data$emission_factor
-    ) %>%
+      production_weighted_emission_factor = list(.data$production * .data$emission_factor)) %>%
+    tidyr::unnest(cols = .data$production_weighted_emission_factor) %>%
     dplyr::group_by(.data$sector, .data$year) %>%
     dplyr::summarise(
       production_weighted_emission_factor =

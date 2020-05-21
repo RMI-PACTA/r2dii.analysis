@@ -37,7 +37,7 @@ BugReports:
 Depends:
     R (>= 3.4)
 Imports: 
-    dplyr (>= 0.8.99.9003),
+    dplyr,
     glue,
     magrittr,
     purrr,
@@ -54,8 +54,7 @@ Suggests:
     withr
 Remotes: 
     2degreesinvesting/r2dii.data,
-    2DegreesInvesting/r2dii.utils,
-    tidyverse/dplyr
+    2DegreesInvesting/r2dii.utils
 Encoding: UTF-8
 Language: en-US
 LazyData: true

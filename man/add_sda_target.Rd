@@ -12,10 +12,11 @@ add_sda_target(data, ald, co2_intensity_scenario)
 
 \item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{co2_intensity_scenario}{A scenario dataframe like \link[r2dii.analysis:co2_intensity_scenario]{r2dii.analysis::co2_intensity_scenario}.}
+\item{co2_intensity_scenario}{A scenario dataframe like
+\link[r2dii.analysis:co2_intensity_scenario]{r2dii.analysis::co2_intensity_scenario}.}
 }
 \value{
-A tibble with portfolio-level emission_factor targets
+A tibble with portfolio-level emission_factor targets.
 }
 \description{
 This function calculates the portfolio-level emission factor targets, as

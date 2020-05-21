@@ -6,9 +6,10 @@
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.data::ald_demo].
-#' @param co2_intensity_scenario A scenario dataframe like [r2dii.analysis::co2_intensity_scenario].
+#' @param co2_intensity_scenario A scenario dataframe like
+#'   [r2dii.analysis::co2_intensity_scenario].
 #'
-#' @return  A tibble with portfolio-level emission_factor targets
+#' @return  A tibble with portfolio-level emission_factor targets.
 #' @export
 #'
 #' @examples
@@ -30,94 +31,108 @@
 #'   )
 add_sda_target <- function(data, ald, co2_intensity_scenario) {
   start_year <- co2_intensity_scenario %>%
-    dplyr::select(.data$sector, .data$year) %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::summarise(start_year = min(.data$year))
+    select(.data$sector, .data$year) %>%
+    group_by(.data$sector) %>%
+    summarize(start_year = min(.data$year))
 
   ald <- ald %>%
-    dplyr::left_join(start_year, by = "sector") %>%
-    dplyr::filter(.data$year >= .data$start_year) %>%
-    dplyr::filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
-    dplyr::select(-.data$start_year)
+    left_join(start_year, by = "sector") %>%
+    filter(.data$year >= .data$start_year) %>%
+    filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
+    select(-.data$start_year)
 
 
-  ald_sda_market_benchmark <- calculate_sda_market_benchmark(ald, co2_intensity_scenario)
+  ald_sda_market_benchmark <- calculate_sda_market_benchmark(
+    ald, co2_intensity_scenario
+  )
 
   co2_scenario_with_py_and_g <- co2_intensity_scenario %>%
     add_py_and_g_to_scenario()
 
   target_benchmark_emission_factor <- co2_scenario_with_py_and_g %>%
     calculate_sda_market_benchmark_target(ald_sda_market_benchmark) %>%
-    dplyr::select(-.data$emission_factor_unit)
+    select(-.data$emission_factor_unit)
 
   formatted_co2_intensity <- co2_scenario_with_py_and_g %>%
-    dplyr::select(.data$sector, .data$year, .data$emission_factor, .data$py) %>%
-    dplyr::rename(scenario_emission_factor = .data$emission_factor)
+    select(.data$sector, .data$year, .data$emission_factor, .data$py) %>%
+    rename(scenario_emission_factor = .data$emission_factor)
 
   loanbook_with_weighted_emission_factors <- data %>%
     calculate_weighted_emission_factor(ald)
 
   loanbook_with_weighted_emission_factors %>%
-    dplyr::full_join(target_benchmark_emission_factor, by = c("year", "sector")) %>%
-    dplyr::full_join(formatted_co2_intensity, by = c("year", "sector")) %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::arrange(.data$year) %>%
-    dplyr::mutate(
-      initial_portfolio_factor = dplyr::first(.data$weighted_emission_factor),
-      d = .data$initial_portfolio_factor - dplyr::last(.data$target_weighted_emission_factor),
-      portfolio_target_emission_factor = (.data$d * .data$py) + dplyr::last(.data$scenario_emission_factor)
+    full_join(
+      target_benchmark_emission_factor, by = c("year", "sector")
     ) %>%
-    dplyr::select(
+    full_join(formatted_co2_intensity, by = c("year", "sector")) %>%
+    group_by(.data$sector) %>%
+    arrange(.data$year) %>%
+    mutate(
+      initial_portfolio_factor = first(.data$weighted_emission_factor),
+      d = .data$initial_portfolio_factor -
+        last(.data$target_weighted_emission_factor),
+      portfolio_target_emission_factor = (.data$d * .data$py) +
+        last(.data$scenario_emission_factor)
+    ) %>%
+    select(
       .data$sector,
       .data$year,
       .data$weighted_emission_factor,
       .data$portfolio_target_emission_factor,
       .data$scenario_emission_factor
     ) %>%
-    dplyr::filter(!is.na(.data$portfolio_target_emission_factor)) %>%
+    filter(!is.na(.data$portfolio_target_emission_factor)) %>%
     tidyr::pivot_longer(
       cols = tidyr::ends_with("factor"),
       names_to = "emission_factor_name",
       values_to = "emission_factor_value"
     ) %>%
-    dplyr::filter(!is.na(.data$emission_factor_value))
+    filter(!is.na(.data$emission_factor_value))
 }
 
 calculate_sda_market_benchmark <- function(market, co2_intensity_scenario) {
   market %>%
-    dplyr::group_by(.data$sector, .data$year) %>%
-    dplyr::summarise(
+    group_by(.data$sector, .data$year) %>%
+    summarize(
       sector_total_production = sum(.data$production),
-      production_weighted_emission_factor = list(.data$production * .data$emission_factor)
+      production_weighted_emission_factor = list(
+        .data$production * .data$emission_factor
+      )
     ) %>%
     tidyr::unnest(cols = .data$production_weighted_emission_factor) %>%
-    dplyr::group_by(.data$sector, .data$year) %>%
-    dplyr::summarise(
-      production_weighted_emission_factor =
-        sum(.data$production_weighted_emission_factor / .data$sector_total_production)
+    group_by(.data$sector, .data$year) %>%
+    summarize(
+      production_weighted_emission_factor = sum(
+        .data$production_weighted_emission_factor /
+          .data$sector_total_production
+      )
     )
 }
 
 add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
+  # styler: off
   co2_intensity_scenario %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::arrange(.data$year) %>%
-    dplyr::mutate(
-      g = .data$emission_factor / dplyr::first(.data$emission_factor),
-      py = (.data$emission_factor - dplyr::last(.data$emission_factor)) / (dplyr::first(.data$emission_factor) - dplyr::last(.data$emission_factor))
+    group_by(.data$sector) %>%
+    arrange(.data$year) %>%
+    mutate(
+      g =   .data$emission_factor / first(.data$emission_factor),
+      py = (.data$emission_factor - last( .data$emission_factor)) /
+        ( first(.data$emission_factor) -
+           last(.data$emission_factor))
     )
+  # styler: on
 }
 
 calculate_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g,
                                                   ald_sda_market_benchmark) {
   co2_intensity_scenario_with_py_and_g %>%
-    dplyr::filter(dplyr::row_number() == 1L | dplyr::row_number() == dplyr::n()) %>%
-    dplyr::select(-.data$emission_factor, -.data$py) %>%
-    dplyr::left_join(ald_sda_market_benchmark, by = c("sector", "year")) %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::arrange(.data$year) %>%
-    dplyr::mutate(target_weighted_emission_factor = dplyr::first(.data$production_weighted_emission_factor) * .data$g) %>%
-    dplyr::select(.data$sector, .data$year, .data$emission_factor_unit, .data$target_weighted_emission_factor)
+    filter(row_number() == 1L | row_number() == n()) %>%
+    select(-.data$emission_factor, -.data$py) %>%
+    left_join(ald_sda_market_benchmark, by = c("sector", "year")) %>%
+    group_by(.data$sector) %>%
+    arrange(.data$year) %>%
+    mutate(target_weighted_emission_factor = first(.data$production_weighted_emission_factor) * .data$g) %>%
+    select(.data$sector, .data$year, .data$emission_factor_unit, .data$target_weighted_emission_factor)
 }
 
 add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
@@ -126,16 +141,16 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
   )
 
   distinct_loans_by_sector <- data %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::distinct(.data$id_loan, .data[[loan_size]])
+    ungroup() %>%
+    group_by(.data$sector) %>%
+    distinct(.data$id_loan, .data[[loan_size]])
 
   total_size_by_sector <- distinct_loans_by_sector %>%
-    dplyr::summarize(total_size = sum(.data[[loan_size]]))
+    summarize(total_size = sum(.data[[loan_size]]))
 
   data %>%
-    dplyr::left_join(total_size_by_sector, by = "sector") %>%
-    dplyr::mutate(
+    left_join(total_size_by_sector, by = "sector") %>%
+    mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
       weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
     )
@@ -144,8 +159,8 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
 summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FALSE) {
   data %>%
     add_weighted_loan_emission_factor(use_credit_limit = use_credit_limit) %>%
-    dplyr::group_by(.data$sector, .data$year, ...) %>%
-    dplyr::summarize(
+    group_by(.data$sector, .data$year, ...) %>%
+    summarize(
       weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
     )
 }

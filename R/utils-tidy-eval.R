@@ -24,7 +24,7 @@
 #'   That's unlike \code{\link[rlang]{as_label}()} which also returns
 #'   a single string but supports any kind of R object as input,
 #'   including quoted function calls and vectors. Its purpose is to
-#'   summarise that object into a single label. That label is often
+#'   summarize that object into a single label. That label is often
 #'   suitable as a default name.
 #'
 #'   If you don't know what a quoted expression contains (for instance

@@ -32,7 +32,7 @@ test_that("is sensitive to region_isos", {
   out1 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = "weo2019"),
+    scenario = fake_scenario(scenario_source = "weo_2019"),
     region_isos = r2dii.data::region_isos
   )
 
@@ -135,7 +135,7 @@ test_that("oputps a number of rows equal to matches by `scenario_source`", {
   matching_0 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = "weo2019"),
+    scenario = fake_scenario(scenario_source = "weo_2019"),
     region_isos = r2dii.data::region_isos_demo
   )
   expect_equal(nrow(matching_0), 0L)
@@ -143,8 +143,17 @@ test_that("oputps a number of rows equal to matches by `scenario_source`", {
   matching_1 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = c("weo2019", "demo_2020")),
+    scenario = fake_scenario(scenario_source = c("weo_2019", "demo_2020")),
     region_isos = r2dii.data::region_isos_demo
+  )
+
+  expect_equal(nrow(matching_1), 1L)
+
+  matching_1 <- join_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(),
+    scenario = fake_scenario(scenario_source = "weo_2019"),
+    region_isos = r2dii.data::region_isos
   )
 
   expect_equal(nrow(matching_1), 1L)

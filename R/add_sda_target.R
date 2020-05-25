@@ -34,9 +34,13 @@
 #'   )
 add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit = FALSE) {
 
-  crucial_portfolio <- c(1)
-  crucial_ald <- c("sector", "year", "emission_factor", "production")
+  crucial_portfolio <- c("loan_size_outstanding", "loan_size_credit_limit", "name_ald", "sector_ald")
+  crucial_ald <- c("name_company", "sector", "year", "emission_factor", "production")
   crucial_scenario <- c("sector", "year", "emission_factor")
+
+  check_crucial_names(data, crucial_portfolio)
+  check_crucial_names(ald, crucial_ald)
+  check_crucial_names(co2_intensity_scenario, crucial_scenario)
 
 
   start_year <- co2_intensity_scenario %>%

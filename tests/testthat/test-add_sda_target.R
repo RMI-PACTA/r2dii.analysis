@@ -1,6 +1,16 @@
 library(r2dii.data)
 library(r2dii.match)
 
+test_that("with bad `data` errors with informative message", {
+  expect_error(add_sda_target("bad", fake_ald(), fake_co2_scenario()), "data.frame.*not.*TRUE")
+  expect_error(add_sda_target(fake_matched(), "bad", fake_co2_scenario()), "data.frame.*not.*TRUE")
+  expect_error(add_sda_target(fake_matched(), fake_ald(), "bad"), "data.frame.*not.*TRUE")
+  expect_error(add_sda_target(fake_matched(),
+                              ald = fake_ald(),
+                              co2_intensity_scenario = fake_co2_scenario(),
+                              use_credit_limit = "bad"), "logical.*not.*TRUE")
+  })
+
 test_that("w/ match_result, ald or scenario with missing names errors gracefully", {
   bad <- function(data, x) dplyr::rename(data, bad = x)
 
@@ -39,27 +49,10 @@ test_that("with fake data outputs known value", {
       sector = "cement",
       technology = "cement",
       year = c(2020, 2021, 2022),
-      emission_factor = c(0.6, 0.7, 0.8)
+      emission_factor = c(1, 2, 3)
     ),
-    co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
-  )
-
-  expect_known_value(out, "ref-add_sda_target", update = FALSE)
-})
-
-test_that("with fake data outputs known value", {
-  out <- add_sda_target(
-    fake_matched(
-      sector = "cement",
-      sector_ald = "cement"
-    ),
-    ald = fake_ald(
-      sector = "cement",
-      technology = "cement",
-      year = c(2020, 2021, 2022),
-      emission_factor = c(0.6, 0.7, 0.8)
-    ),
-    co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
+    co2_intensity_scenario = fake_co2_scenario(year = c(2020,2050),
+                                               emission_factor = c(0.6, 0.2))
   )
 
   expect_known_value(out, "ref-add_sda_target", update = FALSE)

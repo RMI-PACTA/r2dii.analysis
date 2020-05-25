@@ -106,6 +106,7 @@ fake_co2_scenario <- function(scenario = NULL,
                               region = NULL,
                               year = NULL,
                               emission_factor = NULL,
+                              emission_factor_unit = NULL,
                               scenario_source = NULL,
                               ...) {
   tibble::tibble(
@@ -114,6 +115,7 @@ fake_co2_scenario <- function(scenario = NULL,
     region = region %||% "global",
     year = year %||% 2025,
     emission_factor = emission_factor %||% 0.6,
+    emission_factor_unit = emission_factor_unit %||% "tons of CO2 per ton of cement",
     scenario_source = scenario_source %||% "demo_2020",
     ...
   )

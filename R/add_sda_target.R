@@ -33,7 +33,10 @@
 #'     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
 #'   )
 add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit = FALSE) {
-  stopifnot(is.data.frame(data))
+  stopifnot(is.data.frame(data),
+            is.data.frame(ald),
+            is.data.frame(co2_intensity_scenario),
+            is.logical(use_credit_limit))
 
   crucial_portfolio <- c("loan_size_outstanding",
                          "loan_size_credit_limit",
@@ -53,7 +56,6 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
   check_crucial_names(data, crucial_portfolio)
   check_crucial_names(ald, crucial_ald)
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
-
 
   start_year <- co2_intensity_scenario %>%
     dplyr::select(.data$sector, .data$year) %>%

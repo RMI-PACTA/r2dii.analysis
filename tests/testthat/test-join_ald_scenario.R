@@ -131,7 +131,7 @@ test_that("case insensitive to input `plant_location`", {
   expect_equal(out1, out2)
 })
 
-test_that("oputps a number of rows equal to matches by `scenario_source`", {
+test_that("outputs a number of rows equal to matches by `scenario_source`", {
   matching_0 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),

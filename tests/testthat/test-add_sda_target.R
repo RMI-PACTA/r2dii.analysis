@@ -27,7 +27,6 @@ test_that("w/ match_result, ald or scenario with missing names errors gracefully
   expect_error_missing_names(scenario = bad(fake_co2_scenario(), "sector"))
   expect_error_missing_names(scenario = bad(fake_co2_scenario(), "year"))
   expect_error_missing_names(scenario = bad(fake_co2_scenario(), "emission_factor"))
-
 })
 
 test_that("with fake data outputs known value", {
@@ -67,59 +66,78 @@ test_that("with fake data outputs known value", {
 })
 
 test_that("with known input outputs as expected", {
-  valid_matches <- fake_matched(id_loan = c(1,2),
-                                id_2dii = c(1,2),
-                                sector = c("cement", "steel"),
-                                sector_ald = c("cement", "steel"),
-                                name_ald = c("cement_company", "steel_company"))
-  ald <- fake_ald(name_company = c("cement_company", "steel_company"),
-                  sector = c("cement", "steel"),
-                  technology = NA,
-                  year = 2020,
-                  emission_factor = c(0.6, 1.6))
+  valid_matches <- fake_matched(
+    id_loan = c(1, 2),
+    id_2dii = c(1, 2),
+    sector = c("cement", "steel"),
+    sector_ald = c("cement", "steel"),
+    name_ald = c("cement_company", "steel_company")
+  )
+  ald <- fake_ald(
+    name_company = c("cement_company", "steel_company"),
+    sector = c("cement", "steel"),
+    technology = NA,
+    year = 2020,
+    emission_factor = c(0.6, 1.6)
+  )
 
-  co2_intensity_scenario = fake_co2_scenario(scenario = "demo_2020",
-                                         sector = c("cement",
-                                                    "cement",
-                                                    "cement",
-                                                    "steel",
-                                                    "steel",
-                                                    "steel"),
-                                         region = "global",
-                                         technology = NA,
-                                         tmsr = NA,
-                                         smsp = NA,
-                                         year = c(2020,
-                                                  2030,
-                                                  2050,
-                                                  2020,
-                                                  2030,
-                                                  2050),
-                                         emission_factor = c(0.53835,
-                                                             0.43039,
-                                                             0.16897,
-                                                             1.43731,
-                                                             0.87454,
-                                                             0.26055),
-                                         emission_factor_unit = NA)
+  co2_intensity_scenario <- fake_co2_scenario(
+    scenario = "demo_2020",
+    sector = c(
+      "cement",
+      "cement",
+      "cement",
+      "steel",
+      "steel",
+      "steel"
+    ),
+    region = "global",
+    technology = NA,
+    tmsr = NA,
+    smsp = NA,
+    year = c(
+      2020,
+      2030,
+      2050,
+      2020,
+      2030,
+      2050
+    ),
+    emission_factor = c(
+      0.53835,
+      0.43039,
+      0.16897,
+      1.43731,
+      0.87454,
+      0.26055
+    ),
+    emission_factor_unit = NA
+  )
 
-out <- valid_matches %>%
-  add_sda_target(ald,
-                 co2_intensity_scenario) %>%
-  dplyr::filter(emission_factor_name == "portfolio_target_emission_factor",
-                year == 2030)
+  out <- valid_matches %>%
+    add_sda_target(
+      ald,
+      co2_intensity_scenario
+    ) %>%
+    dplyr::filter(
+      emission_factor_name == "portfolio_target_emission_factor",
+      year == 2030
+    )
 
-out_cement <- out %>%
-  dplyr::filter(sector == "cement")
+  out_cement <- out %>%
+    dplyr::filter(sector == "cement")
 
-out_steel <- out %>%
-  dplyr::filter(sector == "steel")
+  out_steel <- out %>%
+    dplyr::filter(sector == "steel")
 
-expect_equal(round(out_cement$emission_factor_value,3),
-             0.460)
+  expect_equal(
+    round(out_cement$emission_factor_value, 3),
+    0.460
+  )
 
 
-expect_equal(round(out_steel$emission_factor_value,3),
-             0.944)
-
+  expect_equal(
+    round(out_steel$emission_factor_value, 3),
+    0.944
+  )
 })

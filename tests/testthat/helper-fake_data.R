@@ -102,12 +102,12 @@ fake_scenario <- function(scenario = NULL,
 }
 
 fake_co2_scenario <- function(scenario = NULL,
-                          sector = NULL,
-                          region = NULL,
-                          year = NULL,
-                          emission_factor = NULL,
-                          scenario_source = NULL,
-                          ...) {
+                              sector = NULL,
+                              region = NULL,
+                              year = NULL,
+                              emission_factor = NULL,
+                              scenario_source = NULL,
+                              ...) {
   tibble::tibble(
     scenario = scenario %||% "b2ds",
     sector = sector %||% "cement",

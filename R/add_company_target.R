@@ -1,4 +1,4 @@
-#' Add company-level targets
+#' Add company-level production targets
 #'
 #' This function calculates the company-level production targets, as
 #' calculated using either the technology market share ratio `tmsr` or sector

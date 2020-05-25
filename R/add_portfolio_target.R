@@ -1,4 +1,4 @@
-#' Add portfolio-level targets
+#' Add portfolio-level production targets
 #'
 #' This function calculates the portfolio-level production targets, as
 #' calculated using either the technology market share ratio `tmsr` or sector

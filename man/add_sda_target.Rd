@@ -2,9 +2,9 @@
 % Please edit documentation in R/add_sda_target.R
 \name{add_sda_target}
 \alias{add_sda_target}
-\title{Add portfolio level SDA target}
+\title{Add portfolio level SDA emissions factor targets}
 \usage{
-add_sda_target(data, ald, co2_intensity_scenario)
+add_sda_target(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 }
 \arguments{
 \item{data}{A dataframe like the output of
@@ -14,13 +14,17 @@ add_sda_target(data, ald, co2_intensity_scenario)
 
 \item{co2_intensity_scenario}{A scenario dataframe like
 \link[r2dii.analysis:co2_intensity_scenario]{r2dii.analysis::co2_intensity_scenario}.}
+
+\item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
+the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
+\code{loan_size_credit_limit} instead.}
 }
 \value{
 A tibble with portfolio-level emission_factor targets.
 }
 \description{
-This function calculates the portfolio-level emission factor targets, as
-calculated using the sectoral-decarbonisation approach.
+This function calculates the portfolio-level emissions factor targets, as
+calculated using the sectoral-decarbonization approach.
 }
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&

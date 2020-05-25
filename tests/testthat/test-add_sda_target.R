@@ -1,6 +1,35 @@
 library(r2dii.data)
 library(r2dii.match)
 
+test_that("w/ match_result, ald or scenario with missing names errors gracefully", {
+  bad <- function(data, x) dplyr::rename(data, bad = x)
+
+  expect_error_missing_names <- function(match_result = fake_matched(),
+                                         ald = fake_ald(),
+                                         scenario = fake_co2_scenario()) {
+    expect_error(
+      class = "missing_names",
+      add_sda_target(match_result, ald, scenario)
+    )
+  }
+
+  expect_error_missing_names(match_result = bad(fake_matched(), "loan_size_outstanding"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "loan_size_credit_limit"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "name_ald"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "sector_ald"))
+
+  expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
+  expect_error_missing_names(ald = bad(fake_ald(), "sector"))
+  expect_error_missing_names(ald = bad(fake_ald(), "year"))
+  expect_error_missing_names(ald = bad(fake_ald(), "emission_factor"))
+  expect_error_missing_names(ald = bad(fake_ald(), "production"))
+
+  expect_error_missing_names(scenario = bad(fake_co2_scenario(), "sector"))
+  expect_error_missing_names(scenario = bad(fake_co2_scenario(), "year"))
+  expect_error_missing_names(scenario = bad(fake_co2_scenario(), "emission_factor"))
+
+})
+
 test_that("with fake data outputs known value", {
   out <- add_sda_target(
     fake_matched(
@@ -49,7 +78,7 @@ test_that("with known input outputs as expected", {
                   year = 2020,
                   emission_factor = c(0.6, 1.6))
 
-  co2_intensity_scenario = fake_scenario(scenario = "demo_2020",
+  co2_intensity_scenario = fake_co2_scenario(scenario = "demo_2020",
                                          sector = c("cement",
                                                     "cement",
                                                     "cement",

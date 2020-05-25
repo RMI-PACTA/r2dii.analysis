@@ -84,6 +84,7 @@ fake_scenario <- function(scenario = NULL,
                           year = NULL,
                           tmsr = NULL,
                           smsp = NULL,
+                          emission_factor = NULL,
                           scenario_source = NULL,
                           ...) {
   tibble::tibble(
@@ -94,6 +95,7 @@ fake_scenario <- function(scenario = NULL,
     year = year %||% 2025,
     tmsr = tmsr %||% 0.5,
     smsp = smsp %||% -0.08,
+    emission_factor = emission_factor %||% NA,
     scenario_source = scenario_source %||% "demo_2020",
     ...
   )

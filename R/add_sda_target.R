@@ -1,7 +1,7 @@
 #' Add portfolio level SDA emissions factor targets
 #'
-#' This function calculates the portfolio-level emissions factor targets, as
-#' calculated using the sectoral-decarbonization approach.
+#' This function calculates the portfolio-level emissions factor targets using
+#' the sectoral-decarbonization approach.
 #'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
@@ -33,10 +33,22 @@
 #'     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
 #'   )
 add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit = FALSE) {
+  stopifnot(is.data.frame(data))
 
-  crucial_portfolio <- c("loan_size_outstanding", "loan_size_credit_limit", "name_ald", "sector_ald")
-  crucial_ald <- c("name_company", "sector", "year", "emission_factor", "production")
-  crucial_scenario <- c("sector", "year", "emission_factor")
+  crucial_portfolio <- c("loan_size_outstanding",
+                         "loan_size_credit_limit",
+                         "name_ald",
+                         "sector_ald")
+
+  crucial_ald <- c("name_company",
+                   "sector",
+                   "year",
+                   "emission_factor",
+                   "production")
+
+  crucial_scenario <- c("sector",
+                        "year",
+                        "emission_factor")
 
   check_crucial_names(data, crucial_portfolio)
   check_crucial_names(ald, crucial_ald)
@@ -44,26 +56,25 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
 
 
   start_year <- co2_intensity_scenario %>%
-    select(.data$sector, .data$year) %>%
-    group_by(.data$sector) %>%
-    summarize(start_year = min(.data$year))
+    dplyr::select(.data$sector, .data$year) %>%
+    dplyr::group_by(.data$sector) %>%
+    dplyr::summarize(start_year = min(.data$year))
 
   ald <- ald %>%
-    left_join(start_year, by = "sector") %>%
-    filter(.data$year >= .data$start_year) %>%
-    filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
-    select(-.data$start_year)
+    dplyr::left_join(start_year, by = "sector") %>%
+    dplyr::filter(.data$year >= .data$start_year) %>%
+    dplyr::filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
+    dplyr::select(-.data$start_year)
 
 
-  ald_sda_market_benchmark <- calculate_sda_market_benchmark(
+  ald_sda_market_benchmark <- add_sda_market_benchmark(
     ald, co2_intensity_scenario
   )
 
-  co2_scenario_with_py_and_g <- co2_intensity_scenario %>%
-    add_py_and_g_to_scenario()
+  co2_scenario_with_py_and_g <- add_py_and_g_to_scenario(co2_intensity_scenario)
 
   target_benchmark_emission_factor <- co2_scenario_with_py_and_g %>%
-    calculate_sda_market_benchmark_target(ald_sda_market_benchmark)
+    add_sda_market_benchmark_target(ald_sda_market_benchmark)
 
   formatted_co2_intensity <- co2_scenario_with_py_and_g %>%
     select(.data$sector, .data$year, .data$emission_factor, .data$py) %>%
@@ -103,7 +114,7 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
     filter(!is.na(.data$emission_factor_value))
 }
 
-calculate_sda_market_benchmark <- function(market, co2_intensity_scenario) {
+add_sda_market_benchmark <- function(market, co2_intensity_scenario) {
   market %>%
     group_by(.data$sector, .data$year) %>%
     summarize(
@@ -131,7 +142,7 @@ add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
     )
 }
 
-calculate_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g,
+add_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g,
                                                   ald_sda_market_benchmark) {
   co2_intensity_scenario_with_py_and_g %>%
     filter(row_number() == 1L | row_number() == n()) %>%

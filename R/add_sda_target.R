@@ -69,14 +69,12 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
     dplyr::select(-.data$start_year)
 
 
-  ald_sda_market_benchmark <- add_sda_market_benchmark(
-    ald, co2_intensity_scenario
-  )
+  ald_market_average <- calculate_market_average(ald)
 
   co2_scenario_with_py_and_g <- add_py_and_g_to_scenario(co2_intensity_scenario)
 
   target_benchmark_emission_factor <- co2_scenario_with_py_and_g %>%
-    add_sda_market_benchmark_target(ald_sda_market_benchmark)
+    add_sda_market_benchmark_target(ald_market_average)
 
   formatted_co2_intensity <- co2_scenario_with_py_and_g %>%
     select(.data$sector, .data$year, .data$emission_factor, .data$py) %>%
@@ -116,7 +114,7 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
     filter(!is.na(.data$emission_factor_value))
 }
 
-add_sda_market_benchmark <- function(market, co2_intensity_scenario) {
+calculate_market_average <- function(market) {
   market %>%
     group_by(.data$sector, .data$year) %>%
     summarize(
@@ -164,7 +162,17 @@ add_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g
     )
 }
 
-add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
+calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
+  data %>%
+    inner_join(ald, by = ald_columns()) %>%
+    add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit) %>%
+    group_by(.data$sector, .data$year) %>%
+    summarize(
+      weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
+    )
+}
+
+add_loan_weighted_emission_factor <- function(data, use_credit_limit) {
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
   )
@@ -183,23 +191,6 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
       loan_weight = .data[[loan_size]] / .data$total_size,
       weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
     )
-}
-
-summarize_weighted_emission_factor <- function(data,
-                                               ...,
-                                               use_credit_limit = FALSE) {
-  data %>%
-    add_weighted_loan_emission_factor(use_credit_limit = use_credit_limit) %>%
-    group_by(.data$sector, .data$year, ...) %>%
-    summarize(
-      weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
-    )
-}
-
-calculate_weighted_emission_factor <- function(data, ald, use_credit_limit = FALSE) {
-  data %>%
-    inner_join(ald, by = ald_columns()) %>%
-    summarize_weighted_emission_factor(use_credit_limit = use_credit_limit)
 }
 
 ald_columns <- function() {

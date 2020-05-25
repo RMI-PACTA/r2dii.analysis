@@ -8,6 +8,9 @@
 #' @param ald An asset level dataframe like [r2dii.data::ald_demo].
 #' @param co2_intensity_scenario A scenario dataframe like
 #'   [r2dii.analysis::co2_intensity_scenario].
+#' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
+#'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
+#'   `loan_size_credit_limit` instead.
 #'
 #' @return  A tibble with portfolio-level emission_factor targets.
 #' @export
@@ -29,7 +32,13 @@
 #'     ald = ald_demo,
 #'     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
 #'   )
-add_sda_target <- function(data, ald, co2_intensity_scenario) {
+add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit = FALSE) {
+
+  crucial_portfolio <- c(1)
+  crucial_ald <- c("sector", "year", "emission_factor", "production")
+  crucial_scenario <- c("sector", "year", "emission_factor")
+
+
   start_year <- co2_intensity_scenario %>%
     select(.data$sector, .data$year) %>%
     group_by(.data$sector) %>%
@@ -50,15 +59,14 @@ add_sda_target <- function(data, ald, co2_intensity_scenario) {
     add_py_and_g_to_scenario()
 
   target_benchmark_emission_factor <- co2_scenario_with_py_and_g %>%
-    calculate_sda_market_benchmark_target(ald_sda_market_benchmark) %>%
-    select(-.data$emission_factor_unit)
+    calculate_sda_market_benchmark_target(ald_sda_market_benchmark)
 
   formatted_co2_intensity <- co2_scenario_with_py_and_g %>%
     select(.data$sector, .data$year, .data$emission_factor, .data$py) %>%
     rename(scenario_emission_factor = .data$emission_factor)
 
   loanbook_with_weighted_emission_factors <- data %>%
-    calculate_weighted_emission_factor(ald)
+    calculate_weighted_emission_factor(ald, use_credit_limit = use_credit_limit)
 
   loanbook_with_weighted_emission_factors %>%
     full_join(
@@ -171,10 +179,10 @@ summarize_weighted_emission_factor <- function(data,
     )
 }
 
-calculate_weighted_emission_factor <- function(data, ald) {
+calculate_weighted_emission_factor <- function(data, ald, use_credit_limit = FALSE) {
   data %>%
     inner_join(ald, by = ald_columns()) %>%
-    summarize_weighted_emission_factor()
+    summarize_weighted_emission_factor(use_credit_limit = use_credit_limit)
 }
 
 ald_columns <- function() {

@@ -6,10 +6,11 @@ test_that("with bad `data` errors with informative message", {
   expect_error(add_sda_target(fake_matched(), "bad", fake_co2_scenario()), "data.frame.*not.*TRUE")
   expect_error(add_sda_target(fake_matched(), fake_ald(), "bad"), "data.frame.*not.*TRUE")
   expect_error(add_sda_target(fake_matched(),
-                              ald = fake_ald(),
-                              co2_intensity_scenario = fake_co2_scenario(),
-                              use_credit_limit = "bad"), "logical.*not.*TRUE")
-  })
+    ald = fake_ald(),
+    co2_intensity_scenario = fake_co2_scenario(),
+    use_credit_limit = "bad"
+  ), "logical.*not.*TRUE")
+})
 
 test_that("w/ match_result, ald or scenario with missing names errors gracefully", {
   bad <- function(data, x) dplyr::rename(data, bad = x)
@@ -51,11 +52,13 @@ test_that("with fake data outputs known value", {
       year = c(2020, 2021, 2022),
       emission_factor = c(1, 2, 3)
     ),
-    co2_intensity_scenario = fake_co2_scenario(year = c(2020,2050),
-                                               emission_factor = c(0.6, 0.2))
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050),
+      emission_factor = c(0.6, 0.2)
+    )
   )
 
-  expect_known_value(out, "ref-add_sda_target", update = FALSE )
+  expect_known_value(out, "ref-add_sda_target", update = FALSE)
 })
 
 test_that("with known input outputs as expected", {

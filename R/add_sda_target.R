@@ -32,26 +32,36 @@
 #'     ald = ald_demo,
 #'     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
 #'   )
-add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit = FALSE) {
-  stopifnot(is.data.frame(data),
-            is.data.frame(ald),
-            is.data.frame(co2_intensity_scenario),
-            is.logical(use_credit_limit))
+add_sda_target <- function(data,
+                           ald,
+                           co2_intensity_scenario, use_credit_limit = FALSE) {
+  stopifnot(
+    is.data.frame(data),
+    is.data.frame(ald),
+    is.data.frame(co2_intensity_scenario),
+    is.logical(use_credit_limit)
+  )
 
-  crucial_portfolio <- c("loan_size_outstanding",
-                         "loan_size_credit_limit",
-                         "name_ald",
-                         "sector_ald")
+  crucial_portfolio <- c(
+    "loan_size_outstanding",
+    "loan_size_credit_limit",
+    "name_ald",
+    "sector_ald"
+  )
 
-  crucial_ald <- c("name_company",
-                   "sector",
-                   "year",
-                   "emission_factor",
-                   "production")
+  crucial_ald <- c(
+    "name_company",
+    "sector",
+    "year",
+    "emission_factor",
+    "production"
+  )
 
-  crucial_scenario <- c("sector",
-                        "year",
-                        "emission_factor")
+  crucial_scenario <- c(
+    "sector",
+    "year",
+    "emission_factor"
+  )
 
   check_crucial_names(data, crucial_portfolio)
   check_crucial_names(ald, crucial_ald)
@@ -67,7 +77,6 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
     dplyr::filter(.data$year >= .data$start_year) %>%
     dplyr::filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
     dplyr::select(-.data$start_year)
-
 
   ald_market_average <- calculate_market_average(ald)
 
@@ -143,7 +152,7 @@ add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
 }
 
 add_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g,
-                                                  ald_sda_market_benchmark) {
+                                            ald_sda_market_benchmark) {
   co2_intensity_scenario_with_py_and_g %>%
     filter(row_number() == 1L | row_number() == n()) %>%
     select(-.data$emission_factor, -.data$py) %>%

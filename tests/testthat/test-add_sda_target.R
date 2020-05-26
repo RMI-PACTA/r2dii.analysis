@@ -2,17 +2,30 @@ library(r2dii.data)
 library(r2dii.match)
 
 test_that("with bad `data` errors with informative message", {
-  expect_error(add_sda_target("bad", fake_ald(), fake_co2_scenario()), "data.frame.*not.*TRUE")
-  expect_error(add_sda_target(fake_matched(), "bad", fake_co2_scenario()), "data.frame.*not.*TRUE")
-  expect_error(add_sda_target(fake_matched(), fake_ald(), "bad"), "data.frame.*not.*TRUE")
-  expect_error(add_sda_target(fake_matched(),
-    ald = fake_ald(),
-    co2_intensity_scenario = fake_co2_scenario(),
-    use_credit_limit = "bad"
-  ), "logical.*not.*TRUE")
+  expect_error(
+    add_sda_target("bad", fake_ald(), fake_co2_scenario()),
+    "data.frame.*not.*TRUE"
+  )
+  expect_error(
+    add_sda_target(fake_matched(), "bad", fake_co2_scenario()),
+    "data.frame.*not.*TRUE"
+  )
+  expect_error(
+    add_sda_target(fake_matched(), fake_ald(), "bad"),
+    "data.frame.*not.*TRUE"
+  )
+  expect_error(
+    add_sda_target(
+      fake_matched(),
+      ald = fake_ald(),
+      co2_intensity_scenario = fake_co2_scenario(),
+      use_credit_limit = "bad"
+    ),
+    "logical.*not.*TRUE",
+  )
 })
 
-test_that("w/ match_result, ald or scenario with missing names errors gracefully", {
+test_that("w/ missing crucial names errors gracefully", {
   bad <- function(data, x) dplyr::rename(data, bad = x)
 
   expect_error_missing_names <- function(match_result = fake_matched(),
@@ -24,10 +37,11 @@ test_that("w/ match_result, ald or scenario with missing names errors gracefully
     )
   }
 
-  expect_error_missing_names(match_result = bad(fake_matched(), "loan_size_outstanding"))
-  expect_error_missing_names(match_result = bad(fake_matched(), "loan_size_credit_limit"))
-  expect_error_missing_names(match_result = bad(fake_matched(), "name_ald"))
-  expect_error_missing_names(match_result = bad(fake_matched(), "sector_ald"))
+  mch <- fake_matched()
+  expect_error_missing_names(match_result = bad(mch, "loan_size_outstanding"))
+  expect_error_missing_names(match_result = bad(mch, "loan_size_credit_limit"))
+  expect_error_missing_names(match_result = bad(mch, "name_ald"))
+  expect_error_missing_names(match_result = bad(mch, "sector_ald"))
 
   expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
   expect_error_missing_names(ald = bad(fake_ald(), "sector"))
@@ -35,9 +49,10 @@ test_that("w/ match_result, ald or scenario with missing names errors gracefully
   expect_error_missing_names(ald = bad(fake_ald(), "emission_factor"))
   expect_error_missing_names(ald = bad(fake_ald(), "production"))
 
-  expect_error_missing_names(scenario = bad(fake_co2_scenario(), "sector"))
-  expect_error_missing_names(scenario = bad(fake_co2_scenario(), "year"))
-  expect_error_missing_names(scenario = bad(fake_co2_scenario(), "emission_factor"))
+  scen <- fake_co2_scenario()
+  expect_error_missing_names(scenario = bad(scen, "sector"))
+  expect_error_missing_names(scenario = bad(scen, "year"))
+  expect_error_missing_names(scenario = bad(scen, "emission_factor"))
 })
 
 test_that("with fake data outputs known value", {

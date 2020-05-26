@@ -1,5 +1,6 @@
 library(r2dii.data)
 library(r2dii.match)
+library(dplyr)
 
 test_that("with bad `data` errors with informative message", {
   expect_error(
@@ -26,7 +27,7 @@ test_that("with bad `data` errors with informative message", {
 })
 
 test_that("w/ missing crucial names errors gracefully", {
-  bad <- function(data, x) dplyr::rename(data, bad = dplyr::one_of(x))
+  bad <- function(data, x) rename(data, bad = one_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
                                          ald = fake_ald(),
@@ -98,30 +99,15 @@ test_that("with known input outputs as expected", {
     emission_factor = c(0.53835, 0.43039, 0.16897, 1.43731, 0.87454, 0.26055),
   )
 
-  out <- valid_matches %>%
-    add_sda_target(
-      ald,
-      co2_intensity_scenario
-    ) %>%
-    dplyr::filter(
+  out <- add_sda_target(valid_matches, ald, co2_intensity_scenario) %>%
+    filter(
       emission_factor_name == "portfolio_target_emission_factor",
       year == 2030
     )
 
-  out_cement <- out %>%
-    dplyr::filter(sector == "cement")
+  out_cement <- filter(out, sector == "cement")
+  expect_equal(round(out_cement$emission_factor_value, 3), 0.460)
 
-  out_steel <- out %>%
-    dplyr::filter(sector == "steel")
-
-  expect_equal(
-    round(out_cement$emission_factor_value, 3),
-    0.460
-  )
-
-
-  expect_equal(
-    round(out_steel$emission_factor_value, 3),
-    0.944
-  )
+  out_steel <- filter(out, sector == "steel")
+  expect_equal(round(out_steel$emission_factor_value, 3), 0.944)
 })

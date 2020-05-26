@@ -13,7 +13,7 @@ add_sda_target(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 \item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{co2_intensity_scenario}{A scenario dataframe like
-\link[r2dii.analysis:co2_intensity_scenario]{r2dii.analysis::co2_intensity_scenario}.}
+\link[r2dii.data:co2_intensity_scenario_demo]{r2dii.data::co2_intensity_scenario_demo}.}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
 the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
@@ -41,6 +41,6 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
 valid_matches \%>\%
   add_sda_target(
     ald = ald_demo,
-    co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
+    co2_intensity_scenario = r2dii.data::co2_intensity_scenario_demo
   )
 }

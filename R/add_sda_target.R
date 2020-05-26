@@ -7,7 +7,7 @@
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.data::ald_demo].
 #' @param co2_intensity_scenario A scenario dataframe like
-#'   [r2dii.analysis::co2_intensity_scenario].
+#'   [r2dii.data::co2_intensity_scenario_demo].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
 #'   `loan_size_credit_limit` instead.
@@ -30,7 +30,7 @@
 #' valid_matches %>%
 #'   add_sda_target(
 #'     ald = ald_demo,
-#'     co2_intensity_scenario = r2dii.analysis::co2_intensity_scenario
+#'     co2_intensity_scenario = r2dii.data::co2_intensity_scenario_demo
 #'   )
 add_sda_target <- function(data,
                            ald,

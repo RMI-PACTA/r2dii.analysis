@@ -26,7 +26,7 @@ test_that("with bad `data` errors with informative message", {
 })
 
 test_that("w/ missing crucial names errors gracefully", {
-  bad <- function(data, x) dplyr::rename(data, bad = x)
+  bad <- function(data, x) dplyr::rename(data, bad = dplyr::one_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
                                          ald = fake_ald(),

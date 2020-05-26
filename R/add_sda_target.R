@@ -92,7 +92,7 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
     group_by(.data$sector) %>%
     arrange(.data$year) %>%
     mutate(
-      initial_portfolio_factor = first(.data$weighted_emission_factor),
+      initial_portfolio_factor = first(.data$portfolio_weighted_emission_factor),
       d = .data$initial_portfolio_factor -
         last(.data$target_weighted_emission_factor),
       portfolio_target_emission_factor = (.data$d * .data$py) +
@@ -101,7 +101,7 @@ add_sda_target <- function(data, ald, co2_intensity_scenario, use_credit_limit =
     select(
       .data$sector,
       .data$year,
-      .data$weighted_emission_factor,
+      .data$portfolio_weighted_emission_factor,
       .data$portfolio_target_emission_factor,
       .data$scenario_emission_factor
     ) %>%
@@ -168,7 +168,7 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
     add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit) %>%
     group_by(.data$sector, .data$year) %>%
     summarize(
-      weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
+      portfolio_weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
     )
 }
 

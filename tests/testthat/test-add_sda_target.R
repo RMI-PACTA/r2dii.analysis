@@ -77,6 +77,9 @@ test_that("with fake data outputs known value", {
   )
 
   expect_known_value(out, "ref-add_sda_target", update = FALSE)
+  expect_known_output(
+    out, "ref-add_sda_target-output", print = TRUE, update = FALSE
+  )
 })
 
 test_that("with known input outputs as expected", {

@@ -3,25 +3,6 @@ library(r2dii.match)
 library(dplyr)
 library(glue)
 
-test_that("watch it happen", {
-  out <- add_sda_target(
-    fake_matched(
-      sector = "cement",
-      sector_ald = "cement"
-    ),
-    ald = fake_ald(
-      sector = "cement",
-      technology = "cement",
-      year = c(2020, 2021, 2022),
-      emission_factor = c(1, 2, 3)
-    ),
-    co2_intensity_scenario = fake_co2_scenario(
-      year = c(2020, 2050),
-      emission_factor = c(0.6, 0.2)
-    )
-  )
-})
-
 test_that("with fake data outputs known value", {
   out <- add_sda_target(
     fake_matched(

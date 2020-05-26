@@ -1,6 +1,7 @@
 library(r2dii.data)
 library(r2dii.match)
 library(dplyr)
+library(glue)
 
 test_that("with bad `data` errors with informative message", {
   expect_error(
@@ -79,22 +80,23 @@ test_that("with fake data outputs known value", {
 })
 
 test_that("with known input outputs as expected", {
+  sectors <- c("cement", "steel")
+
   valid_matches <- fake_matched(
-    id_loan = c(1, 2),
-    id_2dii = c(1, 2),
-    sector = c("cement", "steel"),
-    sector_ald = c("cement", "steel"),
-    name_ald = c("cement_company", "steel_company")
+    sector = sectors,
+    sector_ald = sectors,
+    name_ald = glue("{sectors}_company")
   )
+
   ald <- fake_ald(
-    name_company = c("cement_company", "steel_company"),
-    sector = c("cement", "steel"),
-    technology = NA,
+    name_company = glue("{sectors}_company"),
+    sector = sectors,
     year = 2020,
     emission_factor = c(0.6, 1.6)
   )
+
   co2_intensity_scenario <- fake_co2_scenario(
-    sector = c(rep("cement", 3), rep("steel", 3)),
+    sector = rep(sectors, each = 3),
     year = rep(c(2020, 2030, 2050), 2),
     emission_factor = c(0.53835, 0.43039, 0.16897, 1.43731, 0.87454, 0.26055),
   )

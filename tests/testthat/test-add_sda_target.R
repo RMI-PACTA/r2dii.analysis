@@ -92,38 +92,10 @@ test_that("with known input outputs as expected", {
     year = 2020,
     emission_factor = c(0.6, 1.6)
   )
-
   co2_intensity_scenario <- fake_co2_scenario(
-    scenario = "demo_2020",
-    sector = c(
-      "cement",
-      "cement",
-      "cement",
-      "steel",
-      "steel",
-      "steel"
-    ),
-    region = "global",
-    technology = NA,
-    tmsr = NA,
-    smsp = NA,
-    year = c(
-      2020,
-      2030,
-      2050,
-      2020,
-      2030,
-      2050
-    ),
-    emission_factor = c(
-      0.53835,
-      0.43039,
-      0.16897,
-      1.43731,
-      0.87454,
-      0.26055
-    ),
-    emission_factor_unit = NA
+    sector = c(rep("cement", 3), rep("steel", 3)),
+    year = rep(c(2020, 2030, 2050), 2),
+    emission_factor = c(0.53835, 0.43039, 0.16897, 1.43731, 0.87454, 0.26055),
   )
 
   out <- valid_matches %>%

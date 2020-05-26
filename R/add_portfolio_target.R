@@ -41,7 +41,7 @@ add_portfolio_target <- function(data) {
   initial_sector_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(by_portfolio)) %>%
     dplyr::summarize(
-      sector_weighted_production = sum(.data$weighted_production, na.rm = FALSE)
+      sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
     dplyr::group_by(.data$sector, .data$scenario) %>%
@@ -54,9 +54,7 @@ add_portfolio_target <- function(data) {
   initial_technology_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(c(by_portfolio, "technology"))) %>%
     dplyr::summarize(
-      technology_weighted_production = sum(
-        .data$weighted_production, na.rm = FALSE
-      )
+      technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
     dplyr::group_by(.data$sector, .data$technology, .data$scenario) %>%

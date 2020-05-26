@@ -130,12 +130,12 @@ calculate_market_average <- function(market) {
     summarize(
       sector_total_production = sum(.data$production),
       # Alias production_weighted_emission_factor
-      x. = list(.data$production * .data$emission_factor)
+      .x = list(.data$production * .data$emission_factor)
     ) %>%
-    tidyr::unnest(cols = .data$x.) %>%
+    tidyr::unnest(cols = .data$.x) %>%
     group_by(.data$sector, .data$year) %>%
-    summarize(x. = sum(.data$x. / .data$sector_total_production)) %>%
-    rename(production_weighted_emission_factor = .data$x.)
+    summarize(.x = sum(.data$.x / .data$sector_total_production)) %>%
+    rename(production_weighted_emission_factor = .data$.x)
 }
 
 add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
@@ -144,10 +144,10 @@ add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
     arrange(.data$year) %>%
     mutate(
     # styler: off
-      x. =  .data$emission_factor,  # For short so the pattern is clearer
-      g =   .data$x. / first(.data$x.),
-      py = (.data$x. -  last(.data$x.)) / (first(.data$x.) - last(.data$x.)),
-      x. = NULL
+      .x =  .data$emission_factor,  # For short so the pattern is clearer
+      g =   .data$.x / first(.data$.x),
+      py = (.data$.x -  last(.data$.x)) / (first(.data$.x) - last(.data$.x)),
+      .x = NULL
       # styler: on
     )
 }

@@ -46,6 +46,7 @@ add_sda_target <- function(data,
     "loan_size_outstanding",
     "loan_size_credit_limit",
     "name_ald",
+    "sector",
     "sector_ald"
   )
 

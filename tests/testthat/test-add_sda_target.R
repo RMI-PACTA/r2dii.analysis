@@ -42,6 +42,7 @@ test_that("w/ missing crucial names errors gracefully", {
   expect_error_missing_names(match_result = bad(mch, "loan_size_credit_limit"))
   expect_error_missing_names(match_result = bad(mch, "name_ald"))
   expect_error_missing_names(match_result = bad(mch, "sector_ald"))
+  expect_error_missing_names(match_result = bad(mch, "sector"))
 
   expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
   expect_error_missing_names(ald = bad(fake_ald(), "sector"))

@@ -55,7 +55,7 @@ test_that("with fake data outputs known value", {
                                                emission_factor = c(0.6, 0.2))
   )
 
-  expect_known_value(out, "ref-add_sda_target", update = FALSE)
+  expect_known_value(out, "ref-add_sda_target", update = FALSE )
 })
 
 test_that("with known input outputs as expected", {

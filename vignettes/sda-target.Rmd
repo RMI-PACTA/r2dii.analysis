@@ -48,7 +48,7 @@ We apply this factor to the sector intensity in the base year based on the botto
 $$I_{PACTA}^{in}(t_{2050}) = g(t_{2050}) * I_{ALD}^{in}(t_0)$$
 yielding the adjusted target equation: 
 $$I^{Target}(t) = d^{Co} * p_{y} (t) * I_{PACTA}^{in}(t_{2050})$$
-The difference in data universes between 2dII’s data base and the IEA’s would make it unfair to compare portfolios to scenarios on the basis that there may be assets missing in the 2DII database. So, by using 2DII’s asset level data base to calculate a new portfolio sector intensity target then comparability is restored with the scenario.
+The difference in data universes between 2DII’s data base and the IEA’s would make it unfair to compare portfolios to scenarios on the basis that there may be assets missing in the 2DII database. So, by using 2DII’s asset level data base to calculate a new portfolio sector intensity target then comparability is restored with the scenario.
 The portfolio’s carbon intensity target is obtained by the weighted sum of all of the companies’ intensities at the base year. The weight is applied as the financial exposure the bank has to those companies. This can either be calculated from debt outstanding or credit limit.
 
 ## Claculating SDA Targets

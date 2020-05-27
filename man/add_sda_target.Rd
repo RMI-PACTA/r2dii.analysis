@@ -10,17 +10,18 @@ add_sda_target(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 \item{data}{A dataframe like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
-\item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
+\item{ald}{An asset-level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{co2_intensity_scenario}{A scenario dataframe like
 \link[r2dii.data:co2_intensity_scenario_demo]{r2dii.data::co2_intensity_scenario_demo}.}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
-the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
-\code{loan_size_credit_limit} instead.}
+the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the column
+\code{loan_size_credit_limit}.}
 }
 \value{
-A tibble with portfolio-level emission_factor targets.
+A tibble with targets of CO2 emissions at the portfolio level, and
+for multiple metrics of CO2 emissions (see column \code{emission_factor_name}).
 }
 \description{
 This function calculates targets of CO2 emissions at the portfolio-level. It
@@ -38,9 +39,15 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   # WARNING: Remember to validate matches (see `?prioritize`)
   prioritize()
 
-valid_matches \%>\%
+out <- valid_matches \%>\%
   add_sda_target(
     ald = ald_demo,
-    co2_intensity_scenario = r2dii.data::co2_intensity_scenario_demo
+    co2_intensity_scenario = co2_intensity_scenario_demo
   )
+
+# The output includes multiple metrics of CO2 emissions
+out
+
+# Split view by metric
+split(out, out$emission_factor_name)
 }

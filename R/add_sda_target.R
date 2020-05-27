@@ -5,14 +5,16 @@
 #'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
-#' @param ald An asset level dataframe like [r2dii.data::ald_demo].
+#' @param ald An asset-level dataframe like [r2dii.data::ald_demo].
 #' @param co2_intensity_scenario A scenario dataframe like
 #'   [r2dii.data::co2_intensity_scenario_demo].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
-#'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
-#'   `loan_size_credit_limit` instead.
+#'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
+#'   `loan_size_credit_limit`.
 #'
-#' @return  A tibble with portfolio-level emission_factor targets.
+#' @return  A tibble with targets of CO2 emissions at the portfolio level, and
+#'   for multiple metrics of CO2 emissions (see column `emission_factor_name`).
+#'
 #' @export
 #'
 #' @examples
@@ -27,11 +29,17 @@
 #'   # WARNING: Remember to validate matches (see `?prioritize`)
 #'   prioritize()
 #'
-#' valid_matches %>%
+#' out <- valid_matches %>%
 #'   add_sda_target(
 #'     ald = ald_demo,
-#'     co2_intensity_scenario = r2dii.data::co2_intensity_scenario_demo
+#'     co2_intensity_scenario = co2_intensity_scenario_demo
 #'   )
+#'
+#' # The output includes multiple metrics of CO2 emissions
+#' out
+#'
+#' # Split view by metric
+#' split(out, out$emission_factor_name)
 add_sda_target <- function(data,
                            ald,
                            co2_intensity_scenario, use_credit_limit = FALSE) {

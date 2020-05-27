@@ -67,18 +67,34 @@ The portfolio's carbon intensity target is obtained by the weighted sum of all o
 
 ## Calculating SDA Targets
 
-SDA Targets can be calculated directly on a matched loanbook dataset, by calling: 
+To calculate SDA targets you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 
-```{r setup}
+* Use packages.
+
+```{r}
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)
+```
 
-# match loanbook to ald first
-valid_matches <- match_name(loanbook_demo, ald_demo) %>% 
+* Match the loanbook to asset level data.
+
+```{r}
+loanbook <- r2dii.data::loanbook_demo
+ald <- r2dii.data::ald_demo
+
+matched <- match_name(loanbook, ald) %>% 
   # WARNING: Remember to validate the output of match_name() before prioritize()
   prioritize()
 
-valid_matches %>% 
-  add_sda_target(ald_demo, co2_intensity_scenario_demo)
+matched
 ```
+
+* Calculate SDA targets of CO2 emissions.
+
+```{r}
+co2 <- r2dii.data::co2_intensity_scenario_demo
+
+add_sda_target(matched, ald, co2)
+```
+

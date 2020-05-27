@@ -35,14 +35,12 @@ used for climate scenario analysis. For more information visit
 
 ## Installation
 
-Install the development version of r2dii.analysis with something like
-this:
+Install the development version of r2dii.analysis with:
 
 ``` r
 # install.packages("devtools")
 
-# To install from a private repo, see ?usethis::browse_github_token()
-devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
+devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
 ## Example
@@ -55,7 +53,7 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-### `r2dii.analysis` picks up where `r2dii.match` leaves off.
+### `r2dii.analysis` picks up where `r2dii.match` leaves off
 
 First, identify matches between your loanbook and the asset level data.
 

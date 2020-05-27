@@ -29,10 +29,9 @@ These tools implement in R a fundamental part of the software PACTA
 that calculates the alignment between financial portfolios and climate
 scenarios (<https://2degrees-investing.org/>). Financial institutions
 use PACTA to study how their capital allocation impacts the climate.
-This package matches data from financial portfolios to asset level data
-from market-intelligence databases (e.g. power plant capacities,
-emission factors, etc.). This is the first step to assess if a financial
-portfolio aligns with climate goals.
+This package provides a suite of metrics and analysis tools commonly
+used for climate scenario analysis. For more information visit
+<https://2degrees-investing.org/>.
 
 ## Installation
 
@@ -92,7 +91,7 @@ loanbook_joined_to_ald_scenario %>%
   add_company_target()
 #> # A tibble: 9,444 x 8
 #>    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…
-#>    <chr>  <chr>      <dbl> <chr>    <chr>               <dbl>            <dbl>
+#>    <chr>  <chr>      <int> <chr>    <chr>               <dbl>            <dbl>
 #>  1 autom… electric    2020 shangha… cps                 5140.            5140.
 #>  2 autom… electric    2020 shangha… sds                 5140.            5140.
 #>  3 autom… electric    2020 shangha… sps                 5140.            5140.
@@ -115,7 +114,7 @@ loanbook_joined_to_ald_scenario %>%
   add_portfolio_target()
 #> # A tibble: 684 x 7
 #>    sector technology  year scenario weighted_produc… tmsr_target_wei…
-#>    <chr>  <chr>      <dbl> <chr>               <dbl>            <dbl>
+#>    <chr>  <chr>      <int> <chr>               <dbl>            <dbl>
 #>  1 autom… electric    2020 cps               148935.          148935.
 #>  2 autom… electric    2020 sds               148935.          148935.
 #>  3 autom… electric    2020 sps               148935.          148935.

@@ -32,11 +32,8 @@ the software PACTA (Paris Agreement Capital Transition Assessment),
 which is a free tool that calculates the alignment between financial
 portfolios and climate scenarios (<https://2degrees-investing.org/>).
 Financial institutions use PACTA to study how their capital
-allocation impacts the climate. This package matches data from
-financial portfolios to asset level data from market-intelligence
-databases (e.g. power plant capacities, emission factors, etc.). This
-is the first step to assess if a financial portfolio aligns with
-climate goals.
+allocation impacts the climate. This package provides a suite of metrics
+and analysis tools commonly used for climate scenario analysis. For more information visit <https://2degrees-investing.org/>.
 
 ## Installation
 
@@ -61,7 +58,8 @@ library(r2dii.analysis)
 
 ### `r2dii.analysis` picks up where `r2dii.match` leaves off.
 
-First, identify matches between your loanbook and the asset level data. 
+First, identify matches between your loanbook and the asset level data.
+
 ```{r}
 valid_matches <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()

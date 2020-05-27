@@ -45,31 +45,56 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis")
 
 ## Example
 
+  - Use `library()` to attach the packages you need.
+
+<!-- end list -->
+
 ``` r
-# r2dii.data is changing rapidly; ensure you have the latest version
-# devtools::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-### `r2dii.analysis` picks up where `r2dii.match` leaves off
+  - Use `r2dii.match::match_name()` to identify matches between your
+    loanbook and the asset level data.
 
-First, identify matches between your loanbook and the asset level data.
+<!-- end list -->
 
 ``` r
-valid_matches <- match_name(loanbook_demo, ald_demo) %>%
+matched <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()
 ```
 
-### Join a validated matched loanbook object to asset and scenario data
+  - Use `add_sda_target()` to calculate SDA targets of CO2 emissions.
 
-Next, join your loanbook, to these validated matches, and to the
-relevant scenario data. This step also subsets assets in the relevant
-scenario regions.
+<!-- end list -->
 
 ``` r
-loanbook_joined_to_ald_scenario <- valid_matches %>% 
+add_sda_target(matched, ald_demo, co2_intensity_scenario_demo)
+#> # A tibble: 28 x 4
+#> # Groups:   sector [1]
+#>    sector  year emission_factor_name               emission_factor_value
+#>    <chr>  <dbl> <chr>                                              <dbl>
+#>  1 cement  2020 portfolio_weighted_emission_factor                 0.664
+#>  2 cement  2020 portfolio_target_emission_factor                   0.669
+#>  3 cement  2020 scenario_emission_factor                           0.7  
+#>  4 cement  2021 portfolio_weighted_emission_factor                 0.665
+#>  5 cement  2021 portfolio_target_emission_factor                   0.612
+#>  6 cement  2021 scenario_emission_factor                           0.64 
+#>  7 cement  2022 portfolio_weighted_emission_factor                 0.666
+#>  8 cement  2022 portfolio_target_emission_factor                   0.555
+#>  9 cement  2022 scenario_emission_factor                           0.580
+#> 10 cement  2023 portfolio_weighted_emission_factor                 0.667
+#> # … with 18 more rows
+```
+
+  - Use `join_ald_scenario()` to join the matched dataset to the
+    relevant scenario data, and to pick assets in the relevant regions.
+
+<!-- end list -->
+
+``` r
+loanbook_joined_to_ald_scenario <- matched %>% 
   join_ald_scenario(
     ald = ald_demo, 
     scenario = scenario_demo_2020, 
@@ -77,11 +102,10 @@ loanbook_joined_to_ald_scenario <- valid_matches %>%
   )
 ```
 
-This dataset is used by all subsequent steps.
+  - Use `summarize_company_production()` then `add_company_target()` to
+    calculate senario-targets for each company.
 
-### Calculate company and/ or portfolio level targets
-
-Scenario targets can be calculated per company:
+<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 
@@ -104,7 +128,10 @@ loanbook_joined_to_ald_scenario %>%
 #> #   smsp_target_weighted_production <dbl>
 ```
 
-…or for the whole portfolio:
+  - Use `summarize_portfolio_production()` then `add_portfolio_target()`
+    to calculate senario-targets for the whole portfolio:
+
+<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 

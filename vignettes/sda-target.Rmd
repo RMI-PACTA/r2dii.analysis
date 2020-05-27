@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## SDA Target Defintiion
+## SDA Target Definition
 
 The Sectoral Decarbonization Approach (SDA) is a method for setting corporate emission reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative ([SBTI](https://sciencebasedtargets.org/)), an international initiative on science-based target setting for companies initiated by [CDP](https://www.cdp.net/en), the [United Nations Global Compact](https://www.unglobalcompact.org/), the World Resources Institute ([WRI](https://www.wri.org/)), and the Worldwide Fund for Nature ([WWF](https://www.worldwildlife.org/)). 
 
@@ -49,7 +49,7 @@ $$I^{Target}(t) = d^{Co} * p_{y} (t) * I^{Sc}(t_{2050})$$
 
 **Adjustment 1. Adjust base year Sector Intensity  to ensure consistent scope across company and benchmark**
 
-In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. This is a global economy top-down approach which applies an absolute emissions value in the year 2050 and then coverts this to yearly emission intensities. However, a discrepancy arises between the IEA and PACTA's approach to calculating the global base year and start year of analysis. This is caused by PACTA using bottom-up intensity data from asset-level data. Hence to reflect this difference, a rate of change, $g(t)$ iis taken from the average sector CO2-intensity per unit of production in a specific year, $t$, compared to the base year, $t_0$. This ensures consistency in calculating CO2 intensity targets at any given time as the average sector intensity is calculated on a rolling basis based of real asset data. Any changes in sector intensity on a year to year basis will be reflected in the company intensity reduction target.
+In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. This is a global economy top-down approach which applies an absolute emissions value in the year 2050 and then coverts this to yearly emission intensities. However, a discrepancy arises between the IEA and PACTA's approach to calculating the global base year and start year of analysis. This is caused by PACTA using bottom-up intensity data from asset-level data. Hence to reflect this difference, a rate of change, $g(t)$ is taken from the average sector CO2-intensity per unit of production in a specific year, $t$, compared to the base year, $t_0$. This ensures consistency in calculating CO2 intensity targets at any given time as the average sector intensity is calculated on a rolling basis based of real asset data. Any changes in sector intensity on a year to year basis will be reflected in the company intensity reduction target.
 
 We define this factor: 
 

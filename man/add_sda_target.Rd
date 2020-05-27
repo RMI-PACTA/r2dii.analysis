@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_sda_target.R
 \name{add_sda_target}
 \alias{add_sda_target}
-\title{Add targets of CO2 emissions at the portolio level, using the SDA approach}
+\title{Add targets of CO2 emissions at the portfolio level, using the SDA approach}
 \usage{
 add_sda_target(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 }

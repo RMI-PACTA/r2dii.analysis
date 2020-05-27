@@ -64,5 +64,5 @@ valid_matches <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()
 
 valid_matches %>% 
-  add_sda_target(ald_demo, co2_intensity_scenario)
+  add_sda_target(ald_demo, co2_intensity_scenario_demo)
 ```

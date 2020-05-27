@@ -1,4 +1,4 @@
-#' Add portfolio level SDA emissions factor targets
+#' Add targets of CO2 emissions at the portolio level, using the SDA approach
 #'
 #' This function calculates emissions-factor targets at the portfolio-level. It
 #' uses the sectoral-decarbonization approach.

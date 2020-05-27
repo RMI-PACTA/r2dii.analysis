@@ -23,8 +23,8 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 A tibble with portfolio-level emission_factor targets.
 }
 \description{
-This function calculates the portfolio-level emissions factor targets using
-the sectoral-decarbonization approach.
+This function calculates emissions-factor targets at the portfolio-level. It
+uses the sectoral-decarbonization approach.
 }
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&

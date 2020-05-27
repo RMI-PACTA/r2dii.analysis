@@ -1,7 +1,7 @@
 #' Add portfolio level SDA emissions factor targets
 #'
-#' This function calculates the portfolio-level emissions factor targets using
-#' the sectoral-decarbonization approach.
+#' This function calculates emissions-factor targets at the portfolio-level. It
+#' uses the sectoral-decarbonization approach.
 #'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].

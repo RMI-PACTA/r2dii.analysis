@@ -46,7 +46,6 @@ add_sda_target <- function(data,
     "loan_size_outstanding",
     "loan_size_credit_limit",
     "name_ald",
-    "sector",
     "sector_ald"
   )
 
@@ -176,10 +175,11 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
   data %>%
     inner_join(ald, by = ald_columns()) %>%
     add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit) %>%
-    group_by(.data$sector, .data$year) %>%
+    group_by(.data$sector_ald, .data$year) %>%
     summarize(
       portfolio_weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
-    )
+    ) %>%
+    dplyr::rename(sector = sector_ald)
 }
 
 add_loan_weighted_emission_factor <- function(data, use_credit_limit) {
@@ -189,14 +189,14 @@ add_loan_weighted_emission_factor <- function(data, use_credit_limit) {
 
   distinct_loans_by_sector <- data %>%
     ungroup() %>%
-    group_by(.data$sector) %>%
+    group_by(.data$sector_ald) %>%
     distinct(.data$id_loan, .data[[loan_size]])
 
   total_size_by_sector <- distinct_loans_by_sector %>%
     summarize(total_size = sum(.data[[loan_size]]))
 
   data %>%
-    left_join(total_size_by_sector, by = "sector") %>%
+    left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
       weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight

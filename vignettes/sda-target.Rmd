@@ -15,12 +15,12 @@ The Sectoral Decarbonization Approach (SDA) is a method for setting corporate em
 
 The following explains how this methodology is applied to homogeneous sectors (i.e. sectors with no technology-level scenario pathways). 
 
-The distance, $d$, between the company’s carbon intensity at a given base year,  $I^{Co}(t_0)$, and the target average market intensity in 2050, $I^{in}(t_{2050})$ is calculated. The target intensity in 2050 is taken from a climate scenario:
+The distance, $d$, between the company's carbon intensity at a given base year,  $I^{Co}(t_0)$, and the target average market intensity in 2050, $I^{in}(t_{2050})$ is calculated. The target intensity in 2050 is taken from a climate scenario:
 
 $$d^{Co} = I^{Co}(t_0) - I^{in}(t_{2050})$$
-The company’s market share parameter, $m_y$, is calculated. The company’s expected future activity, $P^{Co}(t)$ is divided by the sector’s future activity, $P^{Sc}(t)$ to reflect the expected forward-looking market share of the company. This is given as a ratio to the company’s base year market share, derived from its activity, $P^{Co}(t_0)$ divided by the sector’s activity in the same year, $P^{Sc}(t_0)$. In both cases the former is calculated per company, and the latter is determined from the climate scenario:
+The company's market share parameter, $m_y$, is calculated. The company's expected future activity, $P^{Co}(t)$ is divided by the sector's future activity, $P^{Sc}(t)$ to reflect the expected forward-looking market share of the company. This is given as a ratio to the company's base year market share, derived from its activity, $P^{Co}(t_0)$ divided by the sector's activity in the same year, $P^{Sc}(t_0)$. In both cases the former is calculated per company, and the latter is determined from the climate scenario:
 $$m_y (t) = \dfrac{P^{Co}(t_0) / P^{Sc}(t_0)}{P^{Co}(t) / P^{Sc}(t)}$$
-It should be noted that this parameter does not capture the change in the market share of the company but rather the inverse. This is useful as it equates to a decreasing parameter when the company’s market share is increasing. This equates to larger reduction efforts when the companies market share is increasing over time. 
+It should be noted that this parameter does not capture the change in the market share of the company but rather the inverse. This is useful as it equates to a decreasing parameter when the company's market share is increasing. This equates to larger reduction efforts when the companies market share is increasing over time. 
 
 The sector decarbonization factor, $p_y$, is then calculated. This variable captures the remaining effort needed from the market to meet the target in 2050, per year. Under the SDA assumptions the CO2 intensity for all companies in a sector converge in 2050. Thus, 100% of the expected decarbonization efforts are still to be met at the base year and 0% should be left at 2050. $p_y$ is defined as:
 $$ p_y = \frac{I^{in}(t) - I^{Sc}(t_{2050})}{I^{in}(t_0) - I^{Sc}(t_{2050})}$$
@@ -39,7 +39,7 @@ Under this assumption, our target calculation reduces to:
 $$I^{Target}(t) = d^{Co} * p_{y} (t) * I^{Sc}(t_{2050})$$
 
 **Adjustment 1. Adjust base year Sector Intensity  to ensure consistent scope across company and benchmark**
-In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. This is a global economy top-down approach which applies an absolute emissions value in the year 2050 and then coverts this to yearly emission intensities. However, a discrepancy arises between the IEA and PACTA’s approach to calculating the global base year and start year of analysis. This is caused by PACTA using bottom-up intensity data from asset-level data. Hence to reflect this difference, a rate of change, $g(t)$ iis taken from the average sector CO2-intensity per unit of production in a specific year, $t$, compared to the base year, $t_0$. This ensures consistency in calculating CO2 intensity targets at any given time as the average sector intensity is calculated on a rolling basis based of real asset data. Any changes in sector intensity on a year to year basis will be reflected in the company intensity reduction target.
+In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. This is a global economy top-down approach which applies an absolute emissions value in the year 2050 and then coverts this to yearly emission intensities. However, a discrepancy arises between the IEA and PACTA's approach to calculating the global base year and start year of analysis. This is caused by PACTA using bottom-up intensity data from asset-level data. Hence to reflect this difference, a rate of change, $g(t)$ iis taken from the average sector CO2-intensity per unit of production in a specific year, $t$, compared to the base year, $t_0$. This ensures consistency in calculating CO2 intensity targets at any given time as the average sector intensity is calculated on a rolling basis based of real asset data. Any changes in sector intensity on a year to year basis will be reflected in the company intensity reduction target.
 
 We define this factor: 
 
@@ -48,10 +48,10 @@ We apply this factor to the sector intensity in the base year based on the botto
 $$I_{PACTA}^{in}(t_{2050}) = g(t_{2050}) * I_{ALD}^{in}(t_0)$$
 yielding the adjusted target equation: 
 $$I^{Target}(t) = d^{Co} * p_{y} (t) * I_{PACTA}^{in}(t_{2050})$$
-The difference in data universes between 2DII’s data base and the IEA’s would make it unfair to compare portfolios to scenarios on the basis that there may be assets missing in the 2DII database. So, by using 2DII’s asset level data base to calculate a new portfolio sector intensity target then comparability is restored with the scenario.
-The portfolio’s carbon intensity target is obtained by the weighted sum of all of the companies’ intensities at the base year. The weight is applied as the financial exposure the bank has to those companies. This can either be calculated from debt outstanding or credit limit.
+The difference in data universes between 2DII's data base and the IEA's would make it unfair to compare portfolios to scenarios on the basis that there may be assets missing in the 2DII database. So, by using 2DII's asset level data base to calculate a new portfolio sector intensity target then comparability is restored with the scenario.
+The portfolio's carbon intensity target is obtained by the weighted sum of all of the companies' intensities at the base year. The weight is applied as the financial exposure the bank has to those companies. This can either be calculated from debt outstanding or credit limit.
 
-## Claculating SDA Targets
+## Calculating SDA Targets
 SDA Targets can be calculated directly on a matched loanbook dataset, by calling: 
 ```{r setup}
 library(r2dii.data)

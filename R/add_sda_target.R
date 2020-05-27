@@ -1,7 +1,8 @@
 #' Add targets of CO2 emissions at the portolio level, using the SDA approach
 #'
 #' This function calculates targets of CO2 emissions at the portfolio-level. It
-#' uses the sectoral-decarbonization approach (SDA).
+#' uses the [sectoral-decarbonization approach
+#' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html).
 #'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].

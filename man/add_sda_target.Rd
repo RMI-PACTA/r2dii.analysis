@@ -25,7 +25,7 @@ for multiple metrics of CO2 emissions (see column \code{emission_factor_name}).
 }
 \description{
 This function calculates targets of CO2 emissions at the portfolio-level. It
-uses the sectoral-decarbonization approach (SDA).
+uses the \href{https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}.
 }
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&

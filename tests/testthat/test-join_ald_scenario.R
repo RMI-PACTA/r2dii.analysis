@@ -166,3 +166,16 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
   )
   expect_equal(nrow(matching_2), 2L)
 })
+
+test_that("without `sector` throws no error", {
+  # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
+  without_sector <- dplyr::select(fake_matched(), -sector)
+  expect_error_free(
+    join_ald_scenario(
+      without_sector,
+      ald = fake_ald(),
+      scenario = fake_scenario(),
+      region_isos = r2dii.data::region_isos_demo
+    )
+  )
+})

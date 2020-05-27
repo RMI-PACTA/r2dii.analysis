@@ -113,3 +113,44 @@ test_that("with known input outputs as expected", {
   out_steel <- filter(out, sector == "steel")
   expect_equal(round(out_steel$emission_factor_value, 3), 0.944)
 })
+
+test_that("without `sector` throws no error", {
+  # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
+  without_sector <- dplyr::select(fake_matched(), -sector)
+  expect_error_free(
+    add_sda_target(
+      without_sector,
+      ald = fake_ald(),
+      co2_intensity_scenario = fake_co2_scenario()
+    )
+  )
+})
+
+test_that("properly weights emissions factors", {
+  companies <- c("a","b")
+
+  out <- add_sda_target(
+    fake_matched(
+      id_loan = c(1,2),
+      name_ald = companies,
+      sector_ald = "cement"
+    ),
+    ald = fake_ald(
+      name_company = companies,
+      sector = "cement",
+      technology = "cement",
+      year = 2020,
+      emission_factor = c(1, 2)
+    ),
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050),
+      emission_factor = c(0.6, 0.2)
+    )
+  )
+
+  initial_data <- out %>%
+    dplyr::filter(year == 2020,
+                  emission_factor_name == "portfolio_weighted_emission_factor")
+
+  expect_equal(initial_data$emission_factor_value, 1.5)
+})

@@ -6,7 +6,6 @@ library(glue)
 test_that("with fake data outputs known value", {
   out <- add_sda_target(
     fake_matched(
-      sector = "cement",
       sector_ald = "cement"
     ),
     ald = fake_ald(
@@ -81,12 +80,10 @@ test_that("w/ missing crucial names errors gracefully", {
   expect_error_missing_names(scenario = bad(scen, "emission_factor"))
 })
 
-
 test_that("with known input outputs as expected", {
   sectors <- c("cement", "steel")
 
   valid_matches <- fake_matched(
-    sector = sectors,
     sector_ald = sectors,
     name_ald = glue("{sectors}_company")
   )

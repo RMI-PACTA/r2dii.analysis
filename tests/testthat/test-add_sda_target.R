@@ -149,8 +149,46 @@ test_that("properly weights emissions factors", {
   )
 
   initial_data <- out %>%
-    dplyr::filter(year == 2020,
-                  emission_factor_name == "portfolio_weighted_emission_factor")
+    dplyr::filter(
+      year == 2020,
+      emission_factor_name == "portfolio_weighted_emission_factor"
+    )
 
   expect_equal(initial_data$emission_factor_value, 1.5)
 })
+
+test_that("outputs 3 metrics of CO2 emissions", {
+  out <- add_sda_target(
+    fake_matched(sector_ald = "cement"),
+    ald = fake_ald(
+      sector = "cement",
+      technology = "cement",
+      year = c(2020, 2021, 2022),
+      emission_factor = c(1, 2, 3)
+    ),
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050), emission_factor = c(0.6, 0.2)
+    )
+  )
+
+  expect_length(unique(out$emission_factor_name), 3L)
+})
+
+test_that("outputs expected names", {
+  out <- add_sda_target(
+    fake_matched(sector_ald = "cement"),
+    ald = fake_ald(
+      sector = "cement",
+      technology = "cement",
+      year = c(2020, 2021, 2022),
+      emission_factor = c(1, 2, 3)
+    ),
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050), emission_factor = c(0.6, 0.2)
+    )
+  )
+
+  exp <- c("sector", "year", "emission_factor_name", "emission_factor_value")
+  expect_named(out, exp)
+})
+

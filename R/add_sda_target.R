@@ -179,7 +179,7 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
     summarize(
       portfolio_weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
     ) %>%
-    dplyr::rename(sector = sector_ald)
+    dplyr::rename(sector = .data$sector_ald)
 }
 
 add_loan_weighted_emission_factor <- function(data, use_credit_limit) {

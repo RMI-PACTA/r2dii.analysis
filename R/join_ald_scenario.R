@@ -51,13 +51,15 @@ join_ald_scenario <- function(data,
       by = c("region", "plant_location" = "isos", "scenario_source")
     )
 
-  if (identical(nrow(out), 0L)) {
-    rlang::warn(
-      class = "0-row-output", "The output has zero-rows."
-    )
+  warn_0row <- function(data) {
+    if (identical(nrow(data), 0L)) {
+      rlang::warn(class = "0-row-output", "The output has zero-rows.")
+    }
+
+    invisible(data)
   }
 
-  out
+  warn_0row(out)
 }
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {

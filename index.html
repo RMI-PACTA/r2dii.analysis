@@ -61,6 +61,9 @@
     <li>
       <a href="articles/scenario-fair-shares.html">Scenario Fair Shares</a>
     </li>
+    <li>
+      <a href="articles/sda-target.html">Sectoral Decarbonization Approach (SDA)</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -85,7 +88,7 @@
   <div class="contents col-md-9">
 <div id="r2diianalysis-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#r2diianalysis-" class="anchor"></a>r2dii.analysis <a href="https://github.com/2DegreesInvesting/r2dii.match"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
+<a href="#r2diianalysis-" class="anchor"></a>r2dii.analysis <a href="https://github.com/2DegreesInvesting/r2dii.analysis"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -94,85 +97,99 @@
 <p>An experimental package is in the very early stages of development. The API will be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental packages will make API breaking changes without deprecation, so you are generally best off waiting until the package is more mature before you use it.</p>
 </blockquote>
 <p>– <a href="https://www.tidyverse.org/lifecycle/#experimental" class="uri">https://www.tidyverse.org/lifecycle/#experimental</a></p>
-<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
+<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package provides a suite of metrics and analysis tools commonly used for climate scenario analysis. For more information visit <a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install the development version of r2dii.analysis with something like this:</p>
+<p>Install the development version of r2dii.analysis with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># install.packages("devtools")</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># To install from a private repo, see ?usethis::browse_github_token()</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.analysis"</span>, <span class="dt">auth_token =</span> <span class="st">"abc"</span>)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.analysis"</span>)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># devtools::update_packages("r2dii.data", upgrade = "ask")</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
-<div id="r2diianalysis-picks-up-where-r2diimatch-leaves-off" class="section level3">
-<h3 class="hasAnchor">
-<a href="#r2diianalysis-picks-up-where-r2diimatch-leaves-off" class="anchor"></a><code>r2dii.analysis</code> picks up where <code>r2dii.match</code> leaves off.</h3>
-<p>First, identify matches between your loanbook and the asset level data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>valid_matches &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html">match_name</a></span>(loanbook_demo, ald_demo) <span class="op">%&gt;%</span></span>
+<ul>
+<li>Use <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> to attach the packages you need.</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
+<ul>
+<li>Use <code><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html">r2dii.match::match_name()</a></code> to identify matches between your loanbook and the asset level data.</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>matched &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html">match_name</a></span>(loanbook_demo, ald_demo) <span class="op">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/prioritize.html">prioritize</a></span>()</span></code></pre></div>
-</div>
-<div id="join-a-validated-matched-loanbook-object-to-asset-and-scenario-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#join-a-validated-matched-loanbook-object-to-asset-and-scenario-data" class="anchor"></a>Join a validated matched loanbook object to asset and scenario data</h3>
-<p>Next, join your loanbook, to these validated matches, and to the relevant scenario data. This step also subsets assets in the relevant scenario regions.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>loanbook_joined_to_ald_scenario &lt;-<span class="st"> </span>valid_matches <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(</span>
-<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">ald =</span> ald_demo, </span>
-<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>, </span>
-<span id="cb4-5"><a href="#cb4-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  )</span></code></pre></div>
-<p>This dataset is used by all subsequent steps.</p>
-</div>
-<div id="calculate-company-and-or-portfolio-level-targets" class="section level3">
-<h3 class="hasAnchor">
-<a href="#calculate-company-and-or-portfolio-level-targets" class="anchor"></a>Calculate company and/ or portfolio level targets</h3>
-<p>Scenario targets can be calculated per company:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_company_production.html">summarize_company_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw"><a href="reference/add_company_target.html">add_company_target</a></span>()</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; # A tibble: 9,444 x 8</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;  1 autom… electric    2020 shangha… cps                 5140.            5140.</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;  2 autom… electric    2020 shangha… sds                 5140.            5140.</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;  3 autom… electric    2020 shangha… sps                 5140.            5140.</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  4 autom… electric    2020 sichuan… cps                 5985.            5985.</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  5 autom… electric    2020 sichuan… sds                 5985.            5985.</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  6 autom… electric    2020 sichuan… sps                 5985.            5985.</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  7 autom… electric    2020 singula… cps                 8674.            8674.</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  8 autom… electric    2020 singula… sds                 8674.            8674.</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  9 autom… electric    2020 singula… sps                 8674.            8674.</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 10 autom… electric    2020 south-e… cps                14409.           14409.</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; # … with 9,434 more rows, and 1 more variable:</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; #   smsp_target_weighted_production &lt;dbl&gt;</span></span></code></pre></div>
-<p>…or for the whole portfolio:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_portfolio_production.html">summarize_portfolio_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw"><a href="reference/add_portfolio_target.html">add_portfolio_target</a></span>()</span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; # A tibble: 684 x 7</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;    sector technology  year scenario weighted_produc… tmsr_target_wei…</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  1 autom… electric    2020 cps               148935.          148935.</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;  2 autom… electric    2020 sds               148935.          148935.</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;  3 autom… electric    2020 sps               148935.          148935.</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;  4 autom… electric    2021 cps               150875.          166850.</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  5 autom… electric    2021 sds               150875.          172982.</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  6 autom… electric    2021 sps               150875.          170433.</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  7 autom… electric    2022 cps               152816.          184388.</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  8 autom… electric    2022 sds               152816.          197029.</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  9 autom… electric    2022 sps               152816.          191931.</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 10 autom… electric    2023 cps               154757.          201599.</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; # … with 674 more rows, and 1 more variable:</span></span>
+<ul>
+<li>Use <code><a href="reference/sda_target.html">sda_target()</a></code> to calculate SDA targets of CO2 emissions.</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="reference/sda_target.html">sda_target</a></span>(matched, ald_demo, co2_intensity_scenario_demo)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; # Groups:   sector [1]</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;    sector  year emission_factor_name               emission_factor_value</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                              &lt;dbl&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;  1 cement  2020 portfolio_weighted_emission_factor                 0.664</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;  2 cement  2020 portfolio_target_emission_factor                   0.669</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;  3 cement  2020 scenario_emission_factor                           0.7  </span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;  4 cement  2021 portfolio_weighted_emission_factor                 0.665</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  5 cement  2021 portfolio_target_emission_factor                   0.612</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  6 cement  2021 scenario_emission_factor                           0.64 </span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  7 cement  2022 portfolio_weighted_emission_factor                 0.666</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  8 cement  2022 portfolio_target_emission_factor                   0.555</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  9 cement  2022 scenario_emission_factor                           0.580</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; 10 cement  2023 portfolio_weighted_emission_factor                 0.667</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
+<ul>
+<li>Use <code><a href="reference/join_ald_scenario.html">join_ald_scenario()</a></code> to join the matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>loanbook_joined_to_ald_scenario &lt;-<span class="st"> </span>matched <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">ald =</span> ald_demo, </span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>, </span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  )</span></code></pre></div>
+<ul>
+<li>Use <code><a href="reference/summarize_company_production.html">summarize_company_production()</a></code> then <code><a href="reference/add_company_target.html">add_company_target()</a></code> to calculate scenario-targets for each company.</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_company_production.html">summarize_company_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw"><a href="reference/add_company_target.html">add_company_target</a></span>()</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; # A tibble: 9,444 x 8</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  1 autom… electric    2020 shangha… cps                 5140.            5140.</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;  2 autom… electric    2020 shangha… sds                 5140.            5140.</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;  3 autom… electric    2020 shangha… sps                 5140.            5140.</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;  4 autom… electric    2020 sichuan… cps                 5985.            5985.</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  5 autom… electric    2020 sichuan… sds                 5985.            5985.</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  6 autom… electric    2020 sichuan… sps                 5985.            5985.</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  7 autom… electric    2020 singula… cps                 8674.            8674.</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  8 autom… electric    2020 singula… sds                 8674.            8674.</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  9 autom… electric    2020 singula… sps                 8674.            8674.</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 10 autom… electric    2020 south-e… cps                14409.           14409.</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; # … with 9,434 more rows, and 1 more variable:</span></span>
 <span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; #   smsp_target_weighted_production &lt;dbl&gt;</span></span></code></pre></div>
-</div>
+<ul>
+<li>Use <code><a href="reference/summarize_portfolio_production.html">summarize_portfolio_production()</a></code> then <code><a href="reference/add_portfolio_target.html">add_portfolio_target()</a></code> to calculate scenario-targets for the whole portfolio:</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_portfolio_production.html">summarize_portfolio_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="st">  </span><span class="kw"><a href="reference/add_portfolio_target.html">add_portfolio_target</a></span>()</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; # A tibble: 684 x 7</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;    sector technology  year scenario weighted_produc… tmsr_target_wei…</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;  1 autom… electric    2020 cps               148935.          148935.</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;  2 autom… electric    2020 sds               148935.          148935.</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;  3 autom… electric    2020 sps               148935.          148935.</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt;  4 autom… electric    2021 cps               150875.          166850.</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt;  5 autom… electric    2021 sds               150875.          172982.</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt;  6 autom… electric    2021 sps               150875.          170433.</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt;  7 autom… electric    2022 cps               152816.          184388.</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt;  8 autom… electric    2022 sds               152816.          197029.</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt;  9 autom… electric    2022 sps               152816.          191931.</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; 10 autom… electric    2023 cps               154757.          201599.</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; # … with 674 more rows, and 1 more variable:</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt; #   smsp_target_weighted_production &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 </div>
   </div>

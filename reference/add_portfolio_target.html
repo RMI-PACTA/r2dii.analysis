@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add portfolio-level targets — add_portfolio_target • r2dii.analysis</title>
+<title>Add portfolio-level production targets — add_portfolio_target • r2dii.analysis</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Add portfolio-level targets — add_portfolio_target" />
+<meta property="og:title" content="Add portfolio-level production targets — add_portfolio_target" />
 <meta property="og:description" content="This function calculates the portfolio-level production targets, as
 calculated using either the technology market share ratio tmsr or sector
 market share percentage smsp." />
@@ -99,6 +99,9 @@ market share percentage smsp." />
     <li>
       <a href="../articles/scenario-fair-shares.html">Scenario Fair Shares</a>
     </li>
+    <li>
+      <a href="../articles/sda-target.html">Sectoral Decarbonization Approach (SDA)</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -122,7 +125,7 @@ market share percentage smsp." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add portfolio-level targets</h1>
+    <h1>Add portfolio-level production targets</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.analysis/blob/master/R/add_portfolio_target.R'><code>R/add_portfolio_target.R</code></a></small>
     <div class="hidden name"><code>add_portfolio_target.Rd</code></div>
     </div>
@@ -162,10 +165,10 @@ market share percentage <code>smsp</code>.</p>
 
 <span class='no'>portfolio_production</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='summarize_portfolio_production.html'>summarize_portfolio_production</a></span>(<span class='no'>master</span>)
 <span class='no'>portfolio_production</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 0 x 7</span><span>
-#&gt; </span><span style='color: #555555;'># … with 7 variables: sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, technology </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, year </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'># … with 7 variables: sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, technology </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   scenario </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, tmsr </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, smsp </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, weighted_production </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
 <span class='fu'>add_portfolio_target</span>(<span class='no'>portfolio_production</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 0 x 7</span><span>
-#&gt; </span><span style='color: #555555;'># … with 7 variables: sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, technology </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, year </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'># … with 7 variables: sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, technology </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, year </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   scenario </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, weighted_production </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   tmsr_target_weighted_production </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   smsp_target_weighted_production </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>

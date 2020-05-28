@@ -231,3 +231,14 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     join_ald_scenario2(l, region_isos = bad_region3)
   )
 })
+
+test_that("returns visibly", {
+  expect_visible(
+    join_ald_scenario(
+      fake_matched(),
+      ald = fake_ald(),
+      scenario = fake_scenario(),
+      region_isos = r2dii.data::region_isos_demo
+    )
+  )
+})

@@ -42,18 +42,19 @@ join_ald_scenario <- function(data,
   region_isos <- region_isos %>%
     dplyr::rename(scenario_source = .data$source)
 
-  out <- data %>%
+  data %>%
     left_join(ald, by = ald_columns()) %>%
     dplyr::inner_join(scenario, by = scenario_columns()) %>%
     warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.") %>%
+
     dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
     dplyr::inner_join(
       region_isos,
       by = c("region", "plant_location" = "isos", "scenario_source")
     ) %>%
-    warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.")
-
-  out
+    warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.") %>%
+    # Return visibly
+    identity()
 }
 
 warn_if_has_zero_rows <- function(data, message) {

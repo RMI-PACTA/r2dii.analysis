@@ -182,12 +182,12 @@ test_that("without `sector` throws no error", {
 
 test_that("warns 0-rows caused by region_isos", {
   expect_warning(
-    regexp = "region_isos",
+    regexp = NA,
     join_ald_scenario(
-      fake_matched(),
-      ald = fake_ald(),
-      scenario = fake_scenario(scenario_source = "weo_2019"),
-      region_isos = r2dii.data::region_isos_demo
+      fake_matched(                                      sector_ald = "a"),
+      ald = fake_ald(plant_location = "y", sector   = "a"),
+      scenario = fake_scenario(    region = "x", sector = "a", scenario_source = "z"),
+      region_isos = tibble::tibble(region = "x", isos = "y",       source = "z")
     )
   )
 })

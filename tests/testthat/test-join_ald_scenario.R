@@ -180,7 +180,7 @@ test_that("without `sector` throws no error", {
   )
 })
 
-test_that("warns 0-rows caused by region_isos", {
+test_that("warns 0-rows caused by scenario or region_isos", {
   sector <- "a"
   region <- "b"
   isos <- "c"
@@ -195,6 +195,58 @@ test_that("warns 0-rows caused by region_isos", {
         region = region, sector = sector, scenario_source = source
       ),
       region_isos = tibble::tibble(region = region, isos = isos, source = source)
+    )
+  )
+
+  bad_scenario <-fake_scenario(
+    region = region, scenario_source = source,sector = "bad"
+  )
+  expect_warning(
+    regexp = "scenario",
+    join_ald_scenario(
+      fake_matched(sector_ald = sector),
+      ald = fake_ald(plant_location = isos, sector = sector),
+      scenario = bad_scenario,
+      region_isos = tibble::tibble(region = region, isos = isos, source = source)
+    )
+  )
+
+  bad_region1 <- tibble::tibble(region = "bad", isos = isos, source = source)
+  expect_warning(
+    regexp = "region_isos",
+    join_ald_scenario(
+      fake_matched(sector_ald = sector),
+      ald = fake_ald(plant_location = isos, sector = sector),
+      scenario = fake_scenario(
+        region = region, sector = sector, scenario_source = source
+      ),
+      region_isos = bad_region1
+    )
+  )
+
+  bad_region2 <- tibble::tibble(region = region, isos = "bad", source = source)
+  expect_warning(
+    regexp = "region_isos",
+    join_ald_scenario(
+      fake_matched(sector_ald = sector),
+      ald = fake_ald(plant_location = isos, sector = sector),
+      scenario = fake_scenario(
+        region = region, sector = sector, scenario_source = source
+      ),
+      region_isos = bad_region2
+    )
+  )
+
+  bad_region3 <- tibble::tibble(region = region, isos = isos, source = "bad")
+  expect_warning(
+    regexp = "region_isos",
+    join_ald_scenario(
+      fake_matched(sector_ald = sector),
+      ald = fake_ald(plant_location = isos, sector = sector),
+      scenario = fake_scenario(
+        region = region, sector = sector, scenario_source = source
+      ),
+      region_isos = bad_region3
     )
   )
 })

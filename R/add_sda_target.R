@@ -1,7 +1,8 @@
-#' Add targets of CO2 emissions at the portfolio level, using the SDA approach
+#' Add targets of CO2 emissions per unit production at the portfolio level,
+#' using the SDA approach
 #'
-#' This function calculates targets of CO2 emissions at the portfolio-level. It
-#' uses the [sectoral-decarbonization approach
+#' This function calculates targets of CO2 emissions per unit production at the
+#' portfolio-level. It uses the [sectoral-decarbonization approach
 #' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html).
 #'
 #' @param data A dataframe like the output of
@@ -13,8 +14,8 @@
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
 #'
-#' @return  A tibble with targets of CO2 emissions at the portfolio level, and
-#'   for multiple metrics of CO2 emissions (see column `emission_factor_name`).
+#' @return  A tibble with the actual, target, and scenario CO2 emissions per
+#' unit production at the portfolio level (see column `emission_factor_name`).
 #'
 #' @export
 #'

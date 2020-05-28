@@ -103,7 +103,7 @@ loanbook_joined_to_ald_scenario <- matched %>%
 ```
 
   - Use `summarize_company_production()` then `add_company_target()` to
-    calculate senario-targets for each company.
+    calculate scenario-targets for each company.
 
 <!-- end list -->
 
@@ -129,7 +129,7 @@ loanbook_joined_to_ald_scenario %>%
 ```
 
   - Use `summarize_portfolio_production()` then `add_portfolio_target()`
-    to calculate senario-targets for the whole portfolio:
+    to calculate scenario-targets for the whole portfolio:
 
 <!-- end list -->
 

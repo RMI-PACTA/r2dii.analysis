@@ -15,7 +15,7 @@ The Sectoral Decarbonization Approach (SDA) is a method for setting corporate em
 
 The following explains how this methodology is applied to homogeneous sectors (i.e. sectors with no technology-level scenario pathways). 
 
-The distance, $d$, between the company's carbon intensity at a given base year,  $I^{Co}(t_0)$, and the target average market intensity in 2050, $I^{in}(t_{2050})$ is calculated. The target intensity in 2050 is taken from a climate scenario:
+The distance, $d$, between the company's CO2 emissions intensity per unit production at a given base year,  $I^{Co}(t_0)$, and the target average market intensity in 2050, $I^{in}(t_{2050})$ is calculated. The target intensity in 2050 is taken from a climate scenario:
 
 $$d^{Co} = I^{Co}(t_0) - I^{in}(t_{2050})$$
 

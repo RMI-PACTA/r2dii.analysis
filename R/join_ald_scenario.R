@@ -44,18 +44,20 @@ join_ald_scenario <- function(data,
 
   out <- data %>%
     left_join(ald, by = ald_columns()) %>%
+    warn_if_has_zero_rows() %>%
     dplyr::inner_join(scenario, by = scenario_columns()) %>%
+    warn_if_has_zero_rows() %>%
     dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
     dplyr::inner_join(
       region_isos,
       by = c("region", "plant_location" = "isos", "scenario_source")
-    )
+    ) %>%
+    warn_if_has_zero_rows()
 
-
-  warn_0row(out)
+  out
 }
 
-warn_0row <- function(data) {
+warn_if_has_zero_rows <- function(data) {
   if (identical(nrow(data), 0L)) {
     rlang::warn(class = "0-row-output", "`data` has zero-rows.")
   }

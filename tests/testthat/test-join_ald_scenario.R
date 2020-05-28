@@ -1,3 +1,4 @@
+library(tibble)
 library(r2dii.data)
 library(r2dii.match)
 
@@ -93,7 +94,7 @@ test_that("outputs expected names", {
 })
 
 test_that("include/excludes `plant_location`s inside/outside a region", {
-  region_isos_toy <- tibble::tribble(
+  region_isos_toy <- tribble(
     ~region, ~isos, ~source,
     "north america", "cn", "demo_2020",
     "oecd", "de", "demo_2020",
@@ -124,7 +125,7 @@ test_that("is case-insensitive to `plant_location` inputs", {
     fake_matched(),
     ald = fake_ald(plant_location = lowercase),
     scenario = fake_scenario(region = "b", scenario_source = "c"),
-    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
+    region_isos = tibble(isos = "a", region = "b", source = "c")
   )
 
   uppercase <- "A"
@@ -132,7 +133,7 @@ test_that("is case-insensitive to `plant_location` inputs", {
     fake_matched(),
     ald = fake_ald(plant_location = uppercase),
     scenario = fake_scenario(region = "b", scenario_source = "c"),
-    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
+    region_isos = tibble(isos = "a", region = "b", source = "c")
   )
 
   expect_equal(out1, out2)
@@ -145,7 +146,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
       fake_matched(),
       ald = fake_ald(plant_location = "a"),
       scenario = fake_scenario(region = "b", scenario_source = "c"),
-      region_isos = tibble::tibble(isos = "a", region = "b", source = "-")
+      region_isos = tibble(isos = "a", region = "b", source = "-")
     )
   )
   expect_equal(nrow(matching_0), 0L)
@@ -154,7 +155,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
     fake_matched(),
     ald = fake_ald(plant_location = "a"),
     scenario = fake_scenario(region = "b", scenario_source = "c"),
-    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
+    region_isos = tibble(isos = "a", region = "b", source = "c")
   )
   expect_equal(nrow(matching_1), 1L)
 
@@ -162,7 +163,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
     fake_matched(),
     ald = fake_ald(plant_location = "a"),
     scenario = fake_scenario(region = "b", scenario_source = c("c", "c")),
-    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
+    region_isos = tibble(isos = "a", region = "b", source = "c")
   )
   expect_equal(nrow(matching_2), 2L)
 })
@@ -185,7 +186,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     scenario <- scenario %||% fake_scenario(
       region = l$region, sector = l$sector, scenario_source = l$source
     )
-    region_isos <- region_isos %||% tibble::tibble(
+    region_isos <- region_isos %||% tibble(
       region = l$region, isos = l$isos, source = l$source
     )
 
@@ -198,20 +199,35 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   }
 
   l <- list(sector = "a", region = "b", isos = "c", source = "d")
-  expect_warning(regexp = NA, join_ald_scenario2(l))
+  expect_warning(
+    regexp = NA,
+    join_ald_scenario2(l)
+  )
 
   bad_scenario <-fake_scenario(
     region = l$region, scenario_source = l$source, sector = "bad"
   )
-  expect_warning(regexp = "scenario", join_ald_scenario2(l, bad_scenario))
+  expect_warning(
+    regexp = "scenario",
+    join_ald_scenario2(l, bad_scenario)
+  )
 
-  bad_region1 <- tibble::tibble(region = "bad", isos = l$isos, source = l$source)
-  expect_warning(regexp = "region_isos", join_ald_scenario2(l, region_isos = bad_region1))
+  bad_region1 <- tibble(region = "bad", isos = l$isos, source = l$source)
+  expect_warning(
+    regexp = "region_isos",
+    join_ald_scenario2(l, region_isos = bad_region1)
+  )
 
-  bad_region2 <- tibble::tibble(region = l$region, isos = "bad", source = l$source)
-  expect_warning(regexp = "region_isos", join_ald_scenario2(l, region_isos = bad_region2))
+  bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
+  expect_warning(
+    regexp = "region_isos",
+    join_ald_scenario2(l, region_isos = bad_region2)
+  )
 
-  bad_region3 <- tibble::tibble(region = l$region, isos = l$isos, source = "bad")
-  expect_warning(regexp = "region_isos", join_ald_scenario2(l, region_isos = bad_region3))
+  bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
+  expect_warning(
+    regexp = "region_isos",
+    join_ald_scenario2(l, region_isos = bad_region3)
+  )
 })
 

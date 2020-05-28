@@ -44,7 +44,7 @@
 #'
 #' # The output includes the portfolio's actual projected emissions factors, the
 #' # scenario pathway emissions factors, and the portfolio's target emissions
-#' factors.
+#' # factors.
 #' out
 #'
 #' # Split view by metric

@@ -1,4 +1,4 @@
-#' Add company-level targets
+#' Add company-level production targets
 #'
 #' This function calculates the company-level production targets, as
 #' calculated using either the technology market share ratio `tmsr` or sector
@@ -39,7 +39,7 @@ add_company_target <- function(data) {
 
   initial_sector_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(by_company)) %>%
-    dplyr::summarise(
+    dplyr::summarize(
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
@@ -52,7 +52,7 @@ add_company_target <- function(data) {
 
   initial_technology_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(c(by_company, "technology"))) %>%
-    dplyr::summarise(
+    dplyr::summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%

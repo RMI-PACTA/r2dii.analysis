@@ -1,6 +1,6 @@
-#' Calculate portfolio targets using the Sectoral Decarbonisation Approach (SDA)
+#' Calculate portfolio targets using the Sectoral Decarbonization Approach (SDA)
 #'
-#' The Sectoral Decarbonisation Approach (SDA) is a method for setting corporate
+#' The Sectoral Decarbonization Approach (SDA) is a method for setting corporate
 #' emission reduction targets in line with climate science.
 #'
 #' @param market A dataframe like [r2dii.analysis::market].

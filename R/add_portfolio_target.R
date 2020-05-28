@@ -1,4 +1,4 @@
-#' Add portfolio-level targets
+#' Add portfolio-level production targets
 #'
 #' This function calculates the portfolio-level production targets, as
 #' calculated using either the technology market share ratio `tmsr` or sector
@@ -40,7 +40,7 @@ add_portfolio_target <- function(data) {
 
   initial_sector_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(by_portfolio)) %>%
-    dplyr::summarise(
+    dplyr::summarize(
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
@@ -53,7 +53,7 @@ add_portfolio_target <- function(data) {
 
   initial_technology_summaries <- data %>%
     dplyr::group_by(!!!rlang::syms(c(by_portfolio, "technology"))) %>%
-    dplyr::summarise(
+    dplyr::summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%

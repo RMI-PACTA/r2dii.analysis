@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_portfolio_target.R
 \name{add_portfolio_target}
 \alias{add_portfolio_target}
-\title{Add portfolio-level targets}
+\title{Add portfolio-level production targets}
 \usage{
 add_portfolio_target(data)
 }

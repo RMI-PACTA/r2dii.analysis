@@ -54,7 +54,7 @@ test_that("with fake data outputs known value", {
     region_isos = r2dii.data::region_isos_demo
   )
 
-  expect_known_value(out, "ref-join_ald_scenario", update = TRUE)
+  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
 })
 
 test_that("outputs expected names", {
@@ -131,7 +131,7 @@ test_that("case insensitive to input `plant_location`", {
   expect_equal(out1, out2)
 })
 
-test_that("oputps a number of rows equal to matches by `scenario_source`", {
+test_that("outputs a number of rows equal to matches by `scenario_source`", {
   matching_0 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
@@ -165,4 +165,17 @@ test_that("oputps a number of rows equal to matches by `scenario_source`", {
     region_isos = r2dii.data::region_isos_demo
   )
   expect_equal(nrow(matching_2), 2L)
+})
+
+test_that("without `sector` throws no error", {
+  # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
+  without_sector <- dplyr::select(fake_matched(), -sector)
+  expect_error_free(
+    join_ald_scenario(
+      without_sector,
+      ald = fake_ald(),
+      scenario = fake_scenario(),
+      region_isos = r2dii.data::region_isos_demo
+    )
+  )
 })

@@ -62,6 +62,7 @@ fake_ald <- function(name_company = NULL,
                      technology = NULL,
                      year = NULL,
                      production = NULL,
+                     emission_factor = NULL,
                      plant_location = NULL,
                      ...) {
   tibble::tibble(
@@ -70,6 +71,7 @@ fake_ald <- function(name_company = NULL,
     technology = technology %||% "ice",
     year = year %||% 2025,
     production = production %||% 1,
+    emission_factor = emission_factor %||% 1,
     plant_location = plant_location %||% "BF",
     ...
   )
@@ -94,6 +96,26 @@ fake_scenario <- function(scenario = NULL,
     year = year %||% 2025,
     tmsr = tmsr %||% 0.5,
     smsp = smsp %||% -0.08,
+    scenario_source = scenario_source %||% "demo_2020",
+    ...
+  )
+}
+
+fake_co2_scenario <- function(scenario = NULL,
+                              sector = NULL,
+                              region = NULL,
+                              year = NULL,
+                              emission_factor = NULL,
+                              emission_factor_unit = NULL,
+                              scenario_source = NULL,
+                              ...) {
+  tibble::tibble(
+    scenario = scenario %||% "b2ds",
+    sector = sector %||% "cement",
+    region = region %||% "global",
+    year = year %||% 2025,
+    emission_factor = emission_factor %||% 0.6,
+    emission_factor_unit = emission_factor_unit %||% "tons of CO2 per ton of cement",
     scenario_source = scenario_source %||% "demo_2020",
     ...
   )

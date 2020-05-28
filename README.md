@@ -1,13 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# r2dii.analysis <a href='https://github.com/2DegreesInvesting/r2dii.match'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
+# r2dii.analysis <a href='https://github.com/2DegreesInvesting/r2dii.analysis'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
 
 <!-- badges: start -->
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
+[![Codecov test
+coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=master)
 [![R build
 status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
 [![R build
@@ -29,50 +31,72 @@ These tools implement in R a fundamental part of the software PACTA
 that calculates the alignment between financial portfolios and climate
 scenarios (<https://2degrees-investing.org/>). Financial institutions
 use PACTA to study how their capital allocation impacts the climate.
-This package matches data from financial portfolios to asset level data
-from market-intelligence databases (e.g. power plant capacities,
-emission factors, etc.). This is the first step to assess if a financial
-portfolio aligns with climate goals.
+This package provides a suite of metrics and analysis tools commonly
+used for climate scenario analysis. For more information visit
+<https://2degrees-investing.org/>.
 
 ## Installation
 
-Install the development version of r2dii.analysis with something like
-this:
+Install the development version of r2dii.analysis with:
 
 ``` r
 # install.packages("devtools")
 
-# To install from a private repo, see ?usethis::browse_github_token()
-devtools::install_github("2DegreesInvesting/r2dii.analysis", auth_token = "abc")
+devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
 ## Example
 
+  - Use `library()` to attach the packages you need.
+
+<!-- end list -->
+
 ``` r
-# r2dii.data is changing rapidly; ensure you have the latest version
-# devtools::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-### `r2dii.analysis` picks up where `r2dii.match` leaves off.
+  - Use `r2dii.match::match_name()` to identify matches between your
+    loanbook and the asset level data.
 
-First, identify matches between your loanbook and the asset level data.
+<!-- end list -->
 
 ``` r
-valid_matches <- match_name(loanbook_demo, ald_demo) %>%
+matched <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()
 ```
 
-### Join a validated matched loanbook object to asset and scenario data
+  - Use `sda_target()` to calculate SDA targets of CO2 emissions.
 
-Next, join your loanbook, to these validated matches, and to the
-relevant scenario data. This step also subsets assets in the relevant
-scenario regions.
+<!-- end list -->
 
 ``` r
-loanbook_joined_to_ald_scenario <- valid_matches %>% 
+sda_target(matched, ald_demo, co2_intensity_scenario_demo)
+#> # A tibble: 28 x 4
+#> # Groups:   sector [1]
+#>    sector  year emission_factor_name               emission_factor_value
+#>    <chr>  <dbl> <chr>                                              <dbl>
+#>  1 cement  2020 portfolio_weighted_emission_factor                 0.664
+#>  2 cement  2020 portfolio_target_emission_factor                   0.669
+#>  3 cement  2020 scenario_emission_factor                           0.7  
+#>  4 cement  2021 portfolio_weighted_emission_factor                 0.665
+#>  5 cement  2021 portfolio_target_emission_factor                   0.612
+#>  6 cement  2021 scenario_emission_factor                           0.64 
+#>  7 cement  2022 portfolio_weighted_emission_factor                 0.666
+#>  8 cement  2022 portfolio_target_emission_factor                   0.555
+#>  9 cement  2022 scenario_emission_factor                           0.580
+#> 10 cement  2023 portfolio_weighted_emission_factor                 0.667
+#> # … with 18 more rows
+```
+
+  - Use `join_ald_scenario()` to join the matched dataset to the
+    relevant scenario data, and to pick assets in the relevant regions.
+
+<!-- end list -->
+
+``` r
+loanbook_joined_to_ald_scenario <- matched %>% 
   join_ald_scenario(
     ald = ald_demo, 
     scenario = scenario_demo_2020, 
@@ -80,11 +104,10 @@ loanbook_joined_to_ald_scenario <- valid_matches %>%
   )
 ```
 
-This dataset is used by all subsequent steps.
+  - Use `summarize_company_production()` then `add_company_target()` to
+    calculate scenario-targets for each company.
 
-### Calculate company and/ or portfolio level targets
-
-Scenario targets can be calculated per company:
+<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 
@@ -92,7 +115,7 @@ loanbook_joined_to_ald_scenario %>%
   add_company_target()
 #> # A tibble: 9,444 x 8
 #>    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…
-#>    <chr>  <chr>      <dbl> <chr>    <chr>               <dbl>            <dbl>
+#>    <chr>  <chr>      <int> <chr>    <chr>               <dbl>            <dbl>
 #>  1 autom… electric    2020 shangha… cps                 5140.            5140.
 #>  2 autom… electric    2020 shangha… sds                 5140.            5140.
 #>  3 autom… electric    2020 shangha… sps                 5140.            5140.
@@ -107,7 +130,10 @@ loanbook_joined_to_ald_scenario %>%
 #> #   smsp_target_weighted_production <dbl>
 ```
 
-…or for the whole portfolio:
+  - Use `summarize_portfolio_production()` then `add_portfolio_target()`
+    to calculate scenario-targets for the whole portfolio:
+
+<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 
@@ -115,7 +141,7 @@ loanbook_joined_to_ald_scenario %>%
   add_portfolio_target()
 #> # A tibble: 684 x 7
 #>    sector technology  year scenario weighted_produc… tmsr_target_wei…
-#>    <chr>  <chr>      <dbl> <chr>               <dbl>            <dbl>
+#>    <chr>  <chr>      <int> <chr>               <dbl>            <dbl>
 #>  1 autom… electric    2020 cps               148935.          148935.
 #>  2 autom… electric    2020 sds               148935.          148935.
 #>  3 autom… electric    2020 sps               148935.          148935.

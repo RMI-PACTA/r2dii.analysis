@@ -43,7 +43,8 @@ Imports:
     purrr,
     r2dii.utils (>= 0.0.0.9003),
     rlang (>= 0.1.2),
-    tibble
+    tibble,
+    tidyr
 Suggests: 
     covr,
     r2dii.data (>= 0.0.3.9000),

@@ -93,36 +93,30 @@ test_that("outputs expected names", {
 })
 
 test_that("include/excludes `plant_location`s inside/outside a region", {
-  outside <- "us"
-  europe <- c("de", "fr")
-  china <- c("cn")
-  inside <- c(europe, china)
-  these_locations <- c(outside, inside)
-
-  this_scenario <- dplyr::bind_rows(
-    fake_scenario(region = "oecd_europe"),
-    fake_scenario(region = "china")
-  )
-
   region_isos_toy <- tibble::tribble(
-    ~region,       ~isos, ~source,
-    "oecd_europe", "de",  "demo_2020",
-    "oecd_europe", "fr",  "demo_2020",
-    "china",       "cn",  "demo_2020",
+    ~region,         ~isos, ~source,
+    "oecd_europe",   "de",  "demo_2020",
+    "oecd_europe",   "fr",  "demo_2020",
+    "china",         "cn",  "demo_2020",
+
+    "north america", "cn",  "demo_2020",
   )
 
   out <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = these_locations),
-    scenario = this_scenario,
-    region_isos = region_isos_toy
+    # We have isos to match all countries and regions;
+    region_isos = region_isos_toy,
+    # And we have asset-level data from all countries;
+    ald = fake_ald(plant_location =   c("de", "fr",    "cn",      "us")),
+    # But our scenario if is only relevant to Europe and China -- not US
+    scenario = fake_scenario(region = c("oecd_europe", "china"))
   )
 
-  # Includes locations inside matching regions
-  expect_true(all(unique(out$plant_location) %in% inside))
+  # The output includes locations inside matching regions
+  expect_true(all(unique(out$plant_location) %in% c("de", "fr", "cn")))
 
   # Excludes locations outside matching regions
-  expect_false(any(unique(out$plant_location) %in% outside))
+  expect_false(any(unique(out$plant_location) %in% "us"))
 })
 
 test_that("case insensitive to input `plant_location`", {

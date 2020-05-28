@@ -31,11 +31,16 @@ test_that("with known input outputs as expected", {
   # styler: on
 })
 
-test_that("works with demo data", {
+test_that("works with demo data from r2dii.data", {
   master <- r2dii.data::loanbook_demo %>%
     r2dii.match::match_name(r2dii.data::ald_demo) %>%
     r2dii.match::prioritize() %>%
-    join_ald_scenario(r2dii.data::ald_demo, r2dii.data::scenario_demo_2020)
+    join_ald_scenario(
+      r2dii.data::ald_demo,
+      r2dii.data::scenario_demo_2020,
+      r2dii.data::region_isos_demo
+    )
 
-  expect_error_free(summarize_company_production(master))
+  expect_error_free(out <- summarize_company_production(master))
+  expect_true(nrow(out) > 0L)
 })

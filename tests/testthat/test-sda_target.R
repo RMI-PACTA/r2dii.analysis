@@ -22,7 +22,8 @@ test_that("with fake data outputs known value", {
 
   expect_known_value(out, "ref-sda_target", update = FALSE)
   expect_known_output(
-    out, "ref-sda_target-output", print = TRUE, update = FALSE
+    out, "ref-sda_target-output",
+    print = TRUE, update = FALSE
   )
 })
 
@@ -127,11 +128,11 @@ test_that("without `sector` throws no error", {
 })
 
 test_that("properly weights emissions factors", {
-  companies <- c("a","b")
+  companies <- c("a", "b")
 
   out <- sda_target(
     fake_matched(
-      id_loan = c(1,2),
+      id_loan = c(1, 2),
       name_ald = companies,
       sector_ald = "cement"
     ),
@@ -191,4 +192,3 @@ test_that("outputs expected names", {
   exp <- c("sector", "year", "emission_factor_name", "emission_factor_value")
   expect_named(out, exp)
 })
-

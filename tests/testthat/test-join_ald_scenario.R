@@ -92,77 +92,77 @@ test_that("outputs expected names", {
   )
 })
 
-test_that("excludes `plant_location`s outside a region", {
-  these_regions <- c("oecd_europe", "oecd_europe", "china", "china")
-  this_scenario <- dplyr::bind_rows(
-    fake_scenario(region = "oecd_europe"),
-    fake_scenario(region = "china")
+test_that("include/excludes `plant_location`s inside/outside a region", {
+  region_isos_toy <- tibble::tribble(
+    ~region, ~isos, ~source,
+    "north america", "cn", "demo_2020",
+    "oecd", "de", "demo_2020",
+    "oecd", "fr", "demo_2020",
+    "china", "cn", "demo_2020",
   )
+
   out <- join_ald_scenario(
     fake_matched(),
+    # We have isos to match all countries and regions;
+    region_isos = region_isos_toy,
+    # And we have asset-level data from all countries;
     ald = fake_ald(plant_location = c("de", "fr", "cn", "us")),
-    scenario = this_scenario,
-    region_isos = r2dii.data::region_isos_demo
+    # But our scenario if is only relevant to Europe and China -- not US
+    scenario = fake_scenario(region = c("oecd_europe", "china"))
   )
 
-  valid_isos_in_these_regions <- r2dii.data::region_isos %>%
-    dplyr::filter(region %in% unique(out$region)) %>%
-    dplyr::pull(isos) %>%
-    unique()
+  # The output includes locations inside matching regions
+  expect_true(all(unique(out$plant_location) %in% c("de", "fr", "cn")))
 
-  expect_true(all(unique(out$plant_location) %in% valid_isos_in_these_regions))
+  # Excludes locations outside matching regions
+  expect_false(any(unique(out$plant_location) %in% "us"))
 })
 
-test_that("case insensitive to input `plant_location`", {
+test_that("is case-insensitive to `plant_location` inputs", {
+  lowercase <- "a"
   out1 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = c("de")),
-    scenario = fake_scenario(region = "oecd_europe"),
-    region_isos = r2dii.data::region_isos_demo
+    ald = fake_ald(plant_location = lowercase),
+    scenario = fake_scenario(region = "b", scenario_source = "c"),
+    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
   )
 
+  uppercase <- "A"
   out2 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = c("DE")),
-    scenario = fake_scenario(region = "oecd_europe"),
-    region_isos = r2dii.data::region_isos_demo
+    ald = fake_ald(plant_location = uppercase),
+    scenario = fake_scenario(region = "b", scenario_source = "c"),
+    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
   )
 
   expect_equal(out1, out2)
 })
 
 test_that("outputs a number of rows equal to matches by `scenario_source`", {
-  matching_0 <- join_ald_scenario(
-    fake_matched(),
-    ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = "weo_2019"),
-    region_isos = r2dii.data::region_isos_demo
+  matching_0 <- expect_warning(
+    class = "has_zero_row",
+    join_ald_scenario(
+      fake_matched(),
+      ald = fake_ald(plant_location = "a"),
+      scenario = fake_scenario(region = "b", scenario_source = "c"),
+      region_isos = tibble::tibble(isos = "a", region = "b", source = "-")
+    )
   )
   expect_equal(nrow(matching_0), 0L)
 
   matching_1 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = c("weo_2019", "demo_2020")),
-    region_isos = r2dii.data::region_isos_demo
+    ald = fake_ald(plant_location = "a"),
+    scenario = fake_scenario(region = "b", scenario_source = "c"),
+    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
   )
-
-  expect_equal(nrow(matching_1), 1L)
-
-  matching_1 <- join_ald_scenario(
-    fake_matched(),
-    ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = "weo_2019"),
-    region_isos = r2dii.data::region_isos
-  )
-
   expect_equal(nrow(matching_1), 1L)
 
   matching_2 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(),
-    scenario = fake_scenario(scenario_source = rep("demo_2020", 2L)),
-    region_isos = r2dii.data::region_isos_demo
+    ald = fake_ald(plant_location = "a"),
+    scenario = fake_scenario(region = "b", scenario_source = c("c", "c")),
+    region_isos = tibble::tibble(isos = "a", region = "b", source = "c")
   )
   expect_equal(nrow(matching_2), 2L)
 })
@@ -175,6 +175,18 @@ test_that("without `sector` throws no error", {
       without_sector,
       ald = fake_ald(),
       scenario = fake_scenario(),
+      region_isos = r2dii.data::region_isos_demo
+    )
+  )
+})
+
+test_that("with 0-row output throws a warning", {
+  expect_warning(
+    class = "has_zero_row",
+    join_ald_scenario(
+      fake_matched(),
+      ald = fake_ald(),
+      scenario = fake_scenario(scenario_source = "weo_2019"),
       region_isos = r2dii.data::region_isos_demo
     )
   )

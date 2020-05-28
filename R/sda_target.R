@@ -37,7 +37,7 @@
 #'   prioritize()
 #'
 #' out <- valid_matches %>%
-#'   add_sda_target(
+#'   sda_target(
 #'     ald = ald_demo,
 #'     co2_intensity_scenario = co2_intensity_scenario_demo
 #'   )
@@ -49,7 +49,7 @@
 #'
 #' # Split view by metric
 #' split(out, out$emission_factor_name)
-add_sda_target <- function(data,
+sda_target <- function(data,
                            ald,
                            co2_intensity_scenario, use_credit_limit = FALSE) {
   stopifnot(

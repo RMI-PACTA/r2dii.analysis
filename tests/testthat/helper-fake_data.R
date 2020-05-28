@@ -123,32 +123,6 @@ fake_co2_scenario <- function(scenario = NULL,
 
 #' See `fake_matched()`
 #' @noRd
-fake_portfolio <- function(year = NULL,
-                           scenario_geography = NULL,
-                           scenario = NULL,
-                           sector = NULL,
-                           investor_name = NULL,
-                           portfolio_name = NULL,
-                           allocation = NULL,
-                           plan_sec_emissions_factor = NULL,
-                           scen_sec_emissions_factor = NULL,
-                           ...) {
-  tibble::tibble(
-    scenario_geography = scenario_geography %||% "Global",
-    scenario = scenario %||% "B2DS",
-    sector = sector %||% "Steel",
-    year = year %||% 2021L,
-    investor_name = investor_name %||% "Market",
-    portfolio_name = portfolio_name %||% "GlobalMarket",
-    allocation = allocation %||% "PortfolioWeight",
-    plan_sec_emissions_factor = plan_sec_emissions_factor %||% 1.0,
-    scen_sec_emissions_factor = scen_sec_emissions_factor %||% 1.0,
-    ...
-  )
-}
-
-#' See `fake_matched()`
-#' @noRd
 fake_master <- function(id_loan = NULL,
                         loan_size_outstanding = NULL,
                         loan_size_credit_limit = NULL,

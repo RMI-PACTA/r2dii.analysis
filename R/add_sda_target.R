@@ -16,7 +16,7 @@
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
 #'
-#' @return  A tibble with the CO2 emissions emissions factors attributed to
+#' @return  A tibble with the CO2 emissions factors attributed to
 #' the portfolio. These values include the portfolio's actual projected CO2
 #' emissions factors, the scenario pathway CO2 emissions factors and the SDA
 #' calculated portfolio target emissions factors (see column

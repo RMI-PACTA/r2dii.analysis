@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_sda_target.R
 \name{add_sda_target}
 \alias{add_sda_target}
-\title{Add targets of CO2 emissions per unit production at the portfolio level,
+\title{Add targets for CO2 emissions per unit production at the portfolio level,
 using the SDA approach}
 \usage{
 add_sda_target(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
@@ -21,12 +21,17 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 \code{loan_size_credit_limit}.}
 }
 \value{
-A tibble with the actual, target, and scenario CO2 emissions per
-unit production at the portfolio level (see column \code{emission_factor_name}).
+A tibble with the CO2 emissions factors attributed to
+the portfolio. These values include the portfolio's actual projected CO2
+emissions factors, the scenario pathway CO2 emissions factors and the SDA
+calculated portfolio target emissions factors (see column
+\code{emission_factor_name}).
 }
 \description{
 This function calculates targets of CO2 emissions per unit production at the
-portfolio-level. It uses the \href{https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}.
+portfolio-level, otherwise referred to as "emissions factors". It uses the
+\href{https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}
+to calculate these targets.
 }
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
@@ -46,7 +51,9 @@ out <- valid_matches \%>\%
     co2_intensity_scenario = co2_intensity_scenario_demo
   )
 
-# The output includes multiple metrics of CO2 emissions
+# The output includes the portfolio's actual projected emissions factors, the
+# scenario pathway emissions factors, and the portfolio's target emissions
+factors.
 out
 
 # Split view by metric

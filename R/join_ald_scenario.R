@@ -57,9 +57,9 @@ join_ald_scenario <- function(data,
   out
 }
 
-warn_if_has_zero_rows <- function(data) {
+warn_if_has_zero_rows <- function(data, message = "`data` has zero-rows.") {
   if (identical(nrow(data), 0L)) {
-    rlang::warn(class = "has_zero_row", "`data` has zero-rows.")
+    rlang::warn(class = "has_zero_row", message = message)
   }
 
   invisible(data)

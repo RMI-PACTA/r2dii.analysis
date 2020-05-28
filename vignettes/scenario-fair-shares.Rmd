@@ -16,7 +16,7 @@ library(r2dii.analysis)
 
 ## Scenario Fair Shares
 
-Scenario efforts must be allocated to the portfolio's production profile. To do this, two principals are currently implemented:
+Scenario efforts must be allocated to the portfolio's production profile. To do this, two principles are currently implemented:
 
 1. Technology Fair Share:
 

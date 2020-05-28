@@ -179,6 +179,31 @@ test_that("oputps a number of rows equal to matches by `scenario_source`", {
   expect_equal(nrow(matching_2), 2L)
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 test_that("with 0-row output throws a warning", {
   expect_warning(
     class = "0-row-output",

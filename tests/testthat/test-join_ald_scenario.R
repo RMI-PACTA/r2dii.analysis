@@ -180,9 +180,9 @@ test_that("without `sector` throws no error", {
   )
 })
 
-test_that("with 0-row output throws a warning", {
+test_that("warns 0-rows caused by region_isos", {
   expect_warning(
-    class = "has_zero_row",
+    regexp = "region_isos",
     join_ald_scenario(
       fake_matched(),
       ald = fake_ald(),
@@ -191,3 +191,4 @@ test_that("with 0-row output throws a warning", {
     )
   )
 })
+

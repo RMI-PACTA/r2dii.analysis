@@ -169,6 +169,7 @@ test_that("oputps a number of rows equal to matches by `scenario_source`", {
 
 test_that("with 0-row output throws a warning", {
   expect_warning(
+    class = "0-row-output",
     join_ald_scenario(
       fake_matched(),
       ald = fake_ald(),

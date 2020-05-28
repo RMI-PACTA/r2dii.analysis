@@ -95,11 +95,10 @@ test_that("outputs expected names", {
 test_that("include/excludes `plant_location`s inside/outside a region", {
   region_isos_toy <- tibble::tribble(
     ~region,         ~isos, ~source,
-    "oecd_europe",   "de",  "demo_2020",
-    "oecd_europe",   "fr",  "demo_2020",
-    "china",         "cn",  "demo_2020",
-
     "north america", "cn",  "demo_2020",
+    "oecd",          "de",  "demo_2020",
+    "oecd",          "fr",  "demo_2020",
+    "china",         "cn",  "demo_2020",
   )
 
   out <- join_ald_scenario(
@@ -119,18 +118,18 @@ test_that("include/excludes `plant_location`s inside/outside a region", {
   expect_false(any(unique(out$plant_location) %in% "us"))
 })
 
-test_that("case insensitive to input `plant_location`", {
+test_that("is case-insensitive to `plant_location` inputs", {
   out1 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(plant_location = c("de")),
-    scenario = fake_scenario(region = "oecd_europe"),
+    scenario = fake_scenario(region = "oecd"),
     region_isos = r2dii.data::region_isos_demo
   )
 
   out2 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(plant_location = c("DE")),
-    scenario = fake_scenario(region = "oecd_europe"),
+    scenario = fake_scenario(region = "oecd"),
     region_isos = r2dii.data::region_isos_demo
   )
 

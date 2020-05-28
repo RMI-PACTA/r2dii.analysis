@@ -35,7 +35,9 @@ library(r2dii.match)
 master <- r2dii.data::loanbook_demo \%>\%
   r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
   r2dii.match::prioritize() \%>\%
-  join_ald_scenario(r2dii.data::ald_demo, r2dii.data::scenario_demo_2020)
+  join_ald_scenario(r2dii.data::ald_demo,
+                    r2dii.data::scenario_demo_2020,
+                    region_isos = region_isos_demo)
 
 summarize_company_production(master)
 

@@ -204,7 +204,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     join_ald_scenario2(l)
   )
 
-  bad_scenario <-fake_scenario(
+  bad_scenario <- fake_scenario(
     region = l$region, scenario_source = l$source, sector = "bad"
   )
   expect_warning(
@@ -230,4 +230,3 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     join_ald_scenario2(l, region_isos = bad_region3)
   )
 })
-

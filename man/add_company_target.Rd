@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_company_target.R
 \name{add_company_target}
 \alias{add_company_target}
-\title{Add company-level targets}
+\title{Add company-level production targets}
 \usage{
 add_company_target(data)
 }

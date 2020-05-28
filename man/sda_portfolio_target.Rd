@@ -2,7 +2,7 @@
 % Please edit documentation in R/sda_portfolio_target.R
 \name{sda_portfolio_target}
 \alias{sda_portfolio_target}
-\title{Calculate portfolio targets using the Sectoral Decarbonisation Approach (SDA)}
+\title{Calculate portfolio targets using the Sectoral Decarbonization Approach (SDA)}
 \usage{
 sda_portfolio_target(
   market,
@@ -43,7 +43,7 @@ Returns a dataframe where the \code{scen_sec_emissions_factor} column
 holds the result of the SDA calculation.
 }
 \description{
-The Sectoral Decarbonisation Approach (SDA) is a method for setting corporate
+The Sectoral Decarbonization Approach (SDA) is a method for setting corporate
 emission reduction targets in line with climate science.
 }
 \examples{

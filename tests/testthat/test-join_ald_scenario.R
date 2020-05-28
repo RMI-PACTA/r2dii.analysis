@@ -181,97 +181,37 @@ test_that("without `sector` throws no error", {
 })
 
 test_that("warns 0-rows caused by scenario or region_isos", {
-  join_ald_scenario2 <- function(scenario = NULL, region_isos = NULL) {
-    sector <- "a"
-    region <- "b"
-    isos <- "c"
-    source <- "d"
-
+  join_ald_scenario2 <- function(l, scenario = NULL, region_isos = NULL) {
     scenario <- scenario %||% fake_scenario(
-      region = region, sector = sector, scenario_source = source
+      region = l$region, sector = l$sector, scenario_source = l$source
     )
     region_isos <- region_isos %||% tibble::tibble(
-      region = region, isos = isos, source = source
+      region = l$region, isos = l$isos, source = l$source
     )
 
     join_ald_scenario(
-      fake_matched(sector_ald = sector),
-      ald = fake_ald(plant_location = isos, sector = sector),
+      fake_matched(sector_ald = l$sector),
+      ald = fake_ald(plant_location = l$isos, sector = l$sector),
       scenario = scenario,
       region_isos = region_isos
     )
   }
 
-
-
-
-  sector <- "a"
-  region <- "b"
-  isos <- "c"
-  source <- "d"
-
-  expect_warning(
-    regexp = NA,
-    join_ald_scenario(
-      fake_matched(sector_ald = sector),
-      ald = fake_ald(plant_location = isos, sector = sector),
-      scenario = fake_scenario(
-        region = region, sector = sector, scenario_source = source
-      ),
-      region_isos = tibble::tibble(region = region, isos = isos, source = source)
-    )
-  )
+  l <- list(sector = "a", region = "b", isos = "c", source = "d")
+  expect_warning(regexp = NA, join_ald_scenario2(l))
 
   bad_scenario <-fake_scenario(
-    region = region, scenario_source = source, sector = "bad"
+    region = l$region, scenario_source = l$source, sector = "bad"
   )
-  expect_warning(
-    regexp = "scenario",
-    join_ald_scenario(
-      fake_matched(sector_ald = sector),
-      ald = fake_ald(plant_location = isos, sector = sector),
-      scenario = bad_scenario,
-      region_isos = tibble::tibble(region = region, isos = isos, source = source)
-    )
-  )
+  expect_warning(regexp = "scenario", join_ald_scenario2(l, bad_scenario))
 
-  bad_region1 <- tibble::tibble(region = "bad", isos = isos, source = source)
-  expect_warning(
-    regexp = "region_isos",
-    join_ald_scenario(
-      fake_matched(sector_ald = sector),
-      ald = fake_ald(plant_location = isos, sector = sector),
-      scenario = fake_scenario(
-        region = region, sector = sector, scenario_source = source
-      ),
-      region_isos = bad_region1
-    )
-  )
+  bad_region1 <- tibble::tibble(region = "bad", isos = l$isos, source = l$source)
+  expect_warning(regexp = "region_isos", join_ald_scenario2(l, region_isos = bad_region1))
 
-  bad_region2 <- tibble::tibble(region = region, isos = "bad", source = source)
-  expect_warning(
-    regexp = "region_isos",
-    join_ald_scenario(
-      fake_matched(sector_ald = sector),
-      ald = fake_ald(plant_location = isos, sector = sector),
-      scenario = fake_scenario(
-        region = region, sector = sector, scenario_source = source
-      ),
-      region_isos = bad_region2
-    )
-  )
+  bad_region2 <- tibble::tibble(region = l$region, isos = "bad", source = l$source)
+  expect_warning(regexp = "region_isos", join_ald_scenario2(l, region_isos = bad_region2))
 
-  bad_region3 <- tibble::tibble(region = region, isos = isos, source = "bad")
-  expect_warning(
-    regexp = "region_isos",
-    join_ald_scenario(
-      fake_matched(sector_ald = sector),
-      ald = fake_ald(plant_location = isos, sector = sector),
-      scenario = fake_scenario(
-        region = region, sector = sector, scenario_source = source
-      ),
-      region_isos = bad_region3
-    )
-  )
+  bad_region3 <- tibble::tibble(region = l$region, isos = l$isos, source = "bad")
+  expect_warning(regexp = "region_isos", join_ald_scenario2(l, region_isos = bad_region3))
 })
 

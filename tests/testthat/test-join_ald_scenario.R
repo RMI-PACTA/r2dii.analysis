@@ -92,25 +92,37 @@ test_that("outputs expected names", {
   )
 })
 
-test_that("excludes `plant_location`s outside a region", {
-  these_regions <- c("oecd_europe", "oecd_europe", "china", "china")
+test_that("include/excludes `plant_location`s inside/outside a region", {
+  outside <- "us"
+  europe <- c("de", "fr")
+  china <- c("cn")
+  inside <- c(europe, china)
+  these_locations <- c(outside, inside)
+
   this_scenario <- dplyr::bind_rows(
     fake_scenario(region = "oecd_europe"),
     fake_scenario(region = "china")
   )
-  out <- join_ald_scenario(
-    fake_matched(),
-    ald = fake_ald(plant_location = c("de", "fr", "cn", "us")),
-    scenario = this_scenario,
-    region_isos = r2dii.data::region_isos_demo
+
+  region_isos_toy <- tibble::tribble(
+    ~region,       ~isos, ~source,
+    "oecd_europe", "de",  "demo_2020",
+    "oecd_europe", "fr",  "demo_2020",
+    "china",       "cn",  "demo_2020",
   )
 
-  valid_isos_in_these_regions <- r2dii.data::region_isos %>%
-    dplyr::filter(region %in% unique(out$region)) %>%
-    dplyr::pull(isos) %>%
-    unique()
+  out <- join_ald_scenario(
+    fake_matched(),
+    ald = fake_ald(plant_location = these_locations),
+    scenario = this_scenario,
+    region_isos = region_isos_toy
+  )
 
-  expect_true(all(unique(out$plant_location) %in% valid_isos_in_these_regions))
+  # Includes locations inside matching regions
+  expect_true(all(unique(out$plant_location) %in% inside))
+
+  # Excludes locations outside matching regions
+  expect_false(any(unique(out$plant_location) %in% outside))
 })
 
 test_that("case insensitive to input `plant_location`", {

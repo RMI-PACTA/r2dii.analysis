@@ -1,9 +1,11 @@
-#' Add targets of CO2 emissions per unit production at the portfolio level,
+#' Add targets for CO2 emissions per unit production at the portfolio level,
 #' using the SDA approach
 #'
 #' This function calculates targets of CO2 emissions per unit production at the
-#' portfolio-level. It uses the [sectoral-decarbonization approach
-#' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html).
+#' portfolio-level, otherwise referred to as "emissions factors". It uses the
+#' [sectoral-decarbonization approach
+#' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html)
+#' to calculate these targets.
 #'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
@@ -14,8 +16,11 @@
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
 #'
-#' @return  A tibble with the actual, target, and scenario CO2 emissions per
-#' unit production at the portfolio level (see column `emission_factor_name`).
+#' @return  A tibble with the CO2 emissions emissions factors attributed to
+#' the portfolio. These values include the portfolio's actual projected CO2
+#' emissions factors, the scenario pathway CO2 emissions factors and the SDA
+#' calculated portfolio target emissions factors (see column
+#' `emission_factor_name`).
 #'
 #' @export
 #'
@@ -37,7 +42,9 @@
 #'     co2_intensity_scenario = co2_intensity_scenario_demo
 #'   )
 #'
-#' # The output includes multiple metrics of CO2 emissions
+#' # The output includes the portfolio's actual projected emissions factors, the
+#' # scenario pathway emissions factors, and the portfolio's target emissions
+#' factors.
 #' out
 #'
 #' # Split view by metric

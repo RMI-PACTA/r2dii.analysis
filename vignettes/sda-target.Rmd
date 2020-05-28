@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 
 ## SDA Target Definition
 
-The Sectoral Decarbonization Approach (SDA) is a method for setting corporate emission reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative ([SBTI](https://sciencebasedtargets.org/)), an international initiative on science-based target setting for companies initiated by [CDP](https://www.cdp.net/en), the [United Nations Global Compact](https://www.unglobalcompact.org/), the World Resources Institute ([WRI](https://www.wri.org/)), and the Worldwide Fund for Nature ([WWF](https://www.worldwildlife.org/)). 
+The Sectoral Decarbonization Approach (SDA) is a method for setting corporate CO2 emissions intensity reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative ([SBTI](https://sciencebasedtargets.org/)), an international initiative on science-based target setting for companies initiated by [CDP](https://www.cdp.net/en), the [United Nations Global Compact](https://www.unglobalcompact.org/), the World Resources Institute ([WRI](https://www.wri.org/)), and the Worldwide Fund for Nature ([WWF](https://www.worldwildlife.org/)). 
 
 The following explains how this methodology is applied to homogeneous sectors (i.e. sectors with no technology-level scenario pathways). 
 

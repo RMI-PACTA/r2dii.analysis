@@ -181,6 +181,30 @@ test_that("without `sector` throws no error", {
 })
 
 test_that("warns 0-rows caused by scenario or region_isos", {
+  join_ald_scenario2 <- function(scenario = NULL, region_isos = NULL) {
+    sector <- "a"
+    region <- "b"
+    isos <- "c"
+    source <- "d"
+
+    scenario <- scenario %||% fake_scenario(
+      region = region, sector = sector, scenario_source = source
+    )
+    region_isos <- region_isos %||% tibble::tibble(
+      region = region, isos = isos, source = source
+    )
+
+    join_ald_scenario(
+      fake_matched(sector_ald = sector),
+      ald = fake_ald(plant_location = isos, sector = sector),
+      scenario = scenario,
+      region_isos = region_isos
+    )
+  }
+
+
+
+
   sector <- "a"
   region <- "b"
   isos <- "c"
@@ -199,7 +223,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   )
 
   bad_scenario <-fake_scenario(
-    region = region, scenario_source = source,sector = "bad"
+    region = region, scenario_source = source, sector = "bad"
   )
   expect_warning(
     regexp = "scenario",

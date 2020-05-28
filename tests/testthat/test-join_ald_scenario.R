@@ -199,6 +199,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   }
 
   l <- list(sector = "a", region = "b", isos = "c", source = "d")
+
   expect_warning(
     regexp = NA,
     join_ald_scenario2(l)

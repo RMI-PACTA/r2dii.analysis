@@ -169,7 +169,7 @@ test_that("oputps a number of rows equal to matches by `scenario_source`", {
 
 test_that("with 0-row output throws a warning", {
   expect_warning(
-      join_ald_scenario(
+    join_ald_scenario(
       fake_matched(),
       ald = fake_ald(),
       scenario = fake_scenario(scenario_source = "weo_2019"),
@@ -177,4 +177,5 @@ test_that("with 0-row output throws a warning", {
     )
   )
 })
+
 

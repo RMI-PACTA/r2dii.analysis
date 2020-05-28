@@ -42,7 +42,7 @@ join_ald_scenario <- function(data,
   region_isos <- region_isos %>%
     dplyr::rename(scenario_source = .data$source)
 
-  data %>%
+  out <- data %>%
     left_join(ald, by = ald_columns()) %>%
     dplyr::inner_join(scenario, by = scenario_columns()) %>%
     dplyr::mutate(plant_location = tolower(.data$plant_location)) %>%
@@ -50,6 +50,14 @@ join_ald_scenario <- function(data,
       region_isos,
       by = c("region", "plant_location" = "isos", "scenario_source")
     )
+
+  if (identical(nrow(out), 0L)) {
+    rlang::warn(
+      class = "0-row-output", "The output has zero-rows."
+    )
+  }
+
+  out
 }
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {

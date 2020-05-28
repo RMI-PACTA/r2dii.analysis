@@ -181,13 +181,20 @@ test_that("without `sector` throws no error", {
 })
 
 test_that("warns 0-rows caused by region_isos", {
+  sector <- "a"
+  region <- "b"
+  isos <- "c"
+  source <- "d"
+
   expect_warning(
     regexp = NA,
     join_ald_scenario(
-      fake_matched(                                      sector_ald = "a"),
-      ald = fake_ald(plant_location = "y", sector   = "a"),
-      scenario = fake_scenario(    region = "x", sector = "a", scenario_source = "z"),
-      region_isos = tibble::tibble(region = "x", isos = "y",       source = "z")
+      fake_matched(sector_ald = sector),
+      ald = fake_ald(plant_location = isos, sector = sector),
+      scenario = fake_scenario(
+        region = region, sector = sector, scenario_source = source
+      ),
+      region_isos = tibble::tibble(region = region, isos = isos, source = source)
     )
   )
 })

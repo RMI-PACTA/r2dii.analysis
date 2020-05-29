@@ -61,7 +61,7 @@ split(out, out$emission_factor_name)
 }
 \seealso{
 Other calculate scenario targets: 
-\code{\link{target_fair_share_company}()},
-\code{\link{target_fair_share_portfolio}()}
+\code{\link{target_market_share_company}()},
+\code{\link{target_market_share_portfolio}()}
 }
 \concept{calculate scenario targets}

@@ -27,7 +27,7 @@ valid_matches <- match_name(loanbook_demo, ald_demo) %>%
 valid_matches
 ```
 
-## Scenario Fair Shares
+## Scenario Market Shares
 
 We can now join the datasets `ald` and `scenario`.
 

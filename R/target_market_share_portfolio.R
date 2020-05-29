@@ -29,8 +29,8 @@
 #' portfolio_production <- summarize_portfolio_production(master)
 #' portfolio_production
 #'
-#' target_fair_share_portfolio(portfolio_production)
-target_fair_share_portfolio <- function(data) {
+#' target_market_share_portfolio(portfolio_production)
+target_market_share_portfolio <- function(data) {
   stopifnot(is.data.frame(data))
 
   by_portfolio <- c("sector", "scenario", "year")

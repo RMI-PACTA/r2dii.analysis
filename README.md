@@ -105,15 +105,15 @@ loanbook_joined_to_ald_scenario <- matched %>%
 ```
 
   - Use `summarize_company_production()` then
-    `target_fair_share_company()` to calculate scenario-targets for each
-    company.
+    `target_market_share_company()` to calculate scenario-targets for
+    each company.
 
 <!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 
   summarize_company_production() %>% 
-  target_fair_share_company()
+  target_market_share_company()
 #> # A tibble: 9,444 x 8
 #>    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…
 #>    <chr>  <chr>      <int> <chr>    <chr>               <dbl>            <dbl>
@@ -132,7 +132,7 @@ loanbook_joined_to_ald_scenario %>%
 ```
 
   - Use `summarize_portfolio_production()` then
-    `target_fair_share_portfolio()` to calculate scenario-targets for
+    `target_market_share_portfolio()` to calculate scenario-targets for
     the whole portfolio:
 
 <!-- end list -->
@@ -140,7 +140,7 @@ loanbook_joined_to_ald_scenario %>%
 ``` r
 loanbook_joined_to_ald_scenario %>% 
   summarize_portfolio_production() %>% 
-  target_fair_share_portfolio()
+  target_market_share_portfolio()
 #> # A tibble: 684 x 7
 #>    sector technology  year scenario weighted_produc… tmsr_target_wei…
 #>    <chr>  <chr>      <int> <chr>               <dbl>            <dbl>

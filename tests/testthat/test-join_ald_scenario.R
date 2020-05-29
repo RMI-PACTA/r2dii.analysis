@@ -221,8 +221,8 @@ test_that("include/excludes `plant_location`s inside/outside a region", {
   region_isos_toy <- tribble(
     ~region, ~isos, ~source,
     "north america", "cn", "demo_2020",
-    "oecd", "de", "demo_2020",
-    "oecd", "fr", "demo_2020",
+    "oecd_europe", "de", "demo_2020",
+    "oecd_europe", "fr", "demo_2020",
     "china", "cn", "demo_2020",
   )
 

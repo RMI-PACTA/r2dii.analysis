@@ -1,1 +1,40 @@
 destination: docs
+
+template:
+  params:
+    bootswatch: flatly
+
+url: https://github.com/2DegreesInvesting/r2dii.analysis/
+
+authors:
+  Mauro Lepore:
+    href: https://github.com/maurolepore/
+  Jackson Hoffart:
+    href: https://github.com/jdhoffa/
+  2 Degrees Investing Initiative:
+    href: https://2degrees-investing.org/
+
+home:
+  links:
+  - text: Learn more
+    href: https://2degrees-investing.org/
+
+
+
+navbar:
+
+  type: default
+
+  left:
+  - text: "Reference"
+    href: reference/index.html
+
+  right:
+    - icon: fa-gavel
+      href: https://github.com/maurolepore
+
+    - icon: fa-github
+      href: https://github.com/2DegreesInvesting/r2dii.analysis
+
+    - text: r2dii
+      href: https://2degreesinvesting.github.io/r2dii/index.html

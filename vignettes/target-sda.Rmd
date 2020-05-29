@@ -95,6 +95,6 @@ matched
 ```{r}
 co2 <- r2dii.data::co2_intensity_scenario_demo
 
-sda_target(matched, ald, co2)
+target_sda(matched, ald, co2)
 ```
 

@@ -1,18 +1,18 @@
 test_that("with bad `data` errors with informative message", {
-  expect_error(add_company_target("bad"), "data.frame.*not.*TRUE")
+  expect_error(target_fair_share_company("bad"), "data.frame.*not.*TRUE")
 })
 
 test_that("outputs a tibble", {
   out <- summarize_company_production(fake_master()) %>%
-    add_company_target()
+    target_fair_share_company()
   expect_is(out, "tbl_df")
 })
 
 test_that("with fake data outputs known value", {
   out <- summarize_company_production(fake_master()) %>%
-    add_company_target()
+    target_fair_share_company()
 
-  expect_known_value(out, "ref-add_company_target", update = FALSE)
+  expect_known_value(out, "ref-target_fair_share_company", update = FALSE)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
@@ -22,7 +22,7 @@ test_that("with data lacking crucial columns errors with informative message", {
 
     expect_error(
       class = "missing_names",
-      add_company_target(data)
+      target_fair_share_company(data)
     )
   }
 
@@ -48,7 +48,7 @@ test_that("with NAs in crucial columns errors with informative message", {
     data[1, name] <- NA
     expect_error(
       class = "some_value_is_missing",
-      add_company_target(data)
+      target_fair_share_company(data)
     )
   }
 
@@ -64,7 +64,7 @@ test_that("with NAs in crucial columns errors with informative message", {
 test_that("outputs expected names", {
   out <- fake_master() %>%
     summarize_company_production() %>%
-    add_company_target()
+    target_fair_share_company()
 
   expect_named(
     out,
@@ -80,7 +80,7 @@ test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     summarize_company_production() %>%
     dplyr::group_by(.data$sector) %>%
-    add_company_target()
+    target_fair_share_company()
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
@@ -96,7 +96,7 @@ test_that("with known input outputs as expected", {
     smsp = c(0, 0, 0.34, -0.2, 0, 0, 0.34, -0.2),
     weighted_production = c(20, 60, 40, 40, 180, 190, 200, 200)
   )
-  out1 <- add_company_target(data)
+  out1 <- target_fair_share_company(data)
 
   expect_equal(
     out1$tmsr_target_weighted_production,

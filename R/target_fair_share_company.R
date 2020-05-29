@@ -27,8 +27,8 @@
 #' company_production <- summarize_company_production(master)
 #' company_production
 #'
-#' add_company_target(company_production)
-add_company_target <- function(data) {
+#' target_fair_share_company(company_production)
+target_fair_share_company <- function(data) {
   stopifnot(is.data.frame(data))
 
   by_company <- c("sector", "scenario", "year", "name_ald")

@@ -104,15 +104,16 @@ loanbook_joined_to_ald_scenario <- matched %>%
   )
 ```
 
-  - Use `summarize_company_production()` then `add_company_target()` to
-    calculate scenario-targets for each company.
+  - Use `summarize_company_production()` then
+    `target_fair_share_company()` to calculate scenario-targets for each
+    company.
 
 <!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 
   summarize_company_production() %>% 
-  add_company_target()
+  target_fair_share_company()
 #> # A tibble: 9,444 x 8
 #>    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…
 #>    <chr>  <chr>      <int> <chr>    <chr>               <dbl>            <dbl>

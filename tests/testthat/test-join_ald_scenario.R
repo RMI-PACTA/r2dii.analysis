@@ -218,13 +218,15 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 })
 
 test_that("include/excludes `plant_location`s inside/outside a region", {
+  # styler: off
   region_isos_toy <- tribble(
-    ~region, ~isos, ~source,
-    "north america", "cn", "demo_2020",
-    "oecd_europe", "de", "demo_2020",
-    "oecd_europe", "fr", "demo_2020",
-    "china", "cn", "demo_2020",
+    ~region,         ~isos, ~source,
+    "north america", "us",  "demo_2020",
+    "oecd",          "de",  "demo_2020",
+    "oecd",          "fr",  "demo_2020",
+    "china",         "cn",  "demo_2020",
   )
+  # styler: on
 
   out <- join_ald_scenario(
     fake_matched(),
@@ -233,12 +235,12 @@ test_that("include/excludes `plant_location`s inside/outside a region", {
     # And we have asset-level data from all countries;
     ald = fake_ald(plant_location = c("de", "fr", "cn", "us")),
     # But our scenario if is only relevant to Europe and China -- not US
-    scenario = fake_scenario(region = c("oecd_europe", "china"))
+    scenario = fake_scenario(region = c("oecd", "china"))
   )
 
   # The output includes locations inside matching regions
-  expect_true(all(unique(out$plant_location) %in% c("de", "fr", "cn")))
 
-  # Excludes locations outside matching regions
+  expect_true(all(unique(out$plant_location) %in% c("de", "fr", "cn")))
+  # The output excludes locations outside matching regions
   expect_false(any(unique(out$plant_location) %in% "us"))
 })

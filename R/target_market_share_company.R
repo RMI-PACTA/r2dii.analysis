@@ -1,15 +1,17 @@
-#' Add portfolio-level production targets
+#' Add company-level production targets
 #'
-#' This function calculates the portfolio-level production targets, as
+#' This function calculates the company-level production targets, as
 #' calculated using either the technology market share ratio `tmsr` or sector
 #' market share percentage `smsp`.
 #'
 #' @param data A "data.frame" like the output of
-#'   [summarize_portfolio_production()].
+#'   [summarize_company_production()].
 #'
 #' @return A tibble with the same groups as the input (if any) and columns:
 #'   `tmsr_target_weighted_production` and `smsp_target_weighted_production`.
 #' @export
+#'
+#' @family functions to calculate scenario targets
 #'
 #' @examples
 #' library(r2dii.analysis)
@@ -24,16 +26,15 @@
 #'     region_isos = region_isos_demo
 #'   )
 #'
-#' portfolio_production <- summarize_portfolio_production(master)
-#' portfolio_production
+#' company_production <- summarize_company_production(master)
+#' company_production
 #'
-#' add_portfolio_target(portfolio_production)
-add_portfolio_target <- function(data) {
+#' target_market_share_company(company_production)
+target_market_share_company <- function(data) {
   stopifnot(is.data.frame(data))
 
-  by_portfolio <- c("sector", "scenario", "year")
-  crucial <-
-    c(by_portfolio, "technology", "weighted_production", "tmsr", "smsp")
+  by_company <- c("sector", "scenario", "year", "name_ald")
+  crucial <- c(by_company, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
   purrr::walk(crucial, ~ check_no_value_is_missing(data, .x))
@@ -42,12 +43,12 @@ add_portfolio_target <- function(data) {
   data <- dplyr::ungroup(data)
 
   initial_sector_summaries <- data %>%
-    dplyr::group_by(!!!rlang::syms(by_portfolio)) %>%
+    dplyr::group_by(!!!rlang::syms(by_company)) %>%
     dplyr::summarize(
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
-    dplyr::group_by(.data$sector, .data$scenario) %>%
+    dplyr::group_by(.data$sector, .data$scenario, .data$name_ald) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
     dplyr::rename(
       initial_sector_production = .data$sector_weighted_production
@@ -55,12 +56,17 @@ add_portfolio_target <- function(data) {
     dplyr::select(-.data$year)
 
   initial_technology_summaries <- data %>%
-    dplyr::group_by(!!!rlang::syms(c(by_portfolio, "technology"))) %>%
+    dplyr::group_by(!!!rlang::syms(c(by_company, "technology"))) %>%
     dplyr::summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
-    dplyr::group_by(.data$sector, .data$technology, .data$scenario) %>%
+    dplyr::group_by(
+      .data$sector,
+      .data$technology,
+      .data$scenario,
+      .data$name_ald
+    ) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
     dplyr::rename(
       initial_technology_production = .data$technology_weighted_production
@@ -68,10 +74,13 @@ add_portfolio_target <- function(data) {
     select(-.data$year)
 
   data %>%
-    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario")) %>%
+    dplyr::left_join(
+      initial_sector_summaries,
+      by = c("sector", "scenario", "name_ald")
+    ) %>%
     dplyr::left_join(
       initial_technology_summaries,
-      by = c("sector", "scenario", "technology")
+      by = c("sector", "scenario", "technology", "name_ald")
     ) %>%
     dplyr::mutate(
       tmsr_target_weighted_production = .data$initial_technology_production *

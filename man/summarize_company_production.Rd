@@ -45,5 +45,8 @@ summarize_company_production(master)
 summarize_company_production(master, use_credit_limit = TRUE)
 }
 \seealso{
-\code{\link[=join_ald_scenario]{join_ald_scenario()}}.
+Other functions to weight production: 
+\code{\link{summarize_portfolio_production}()},
+\code{\link{summarize_weighted_production}()}
 }
+\concept{functions to weight production}

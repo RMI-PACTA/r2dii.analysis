@@ -4,7 +4,7 @@ library(dplyr)
 library(glue)
 
 test_that("with fake data outputs known value", {
-  out <- sda_target(
+  out <- target_sda(
     fake_matched(
       sector_ald = "cement"
     ),
@@ -20,28 +20,28 @@ test_that("with fake data outputs known value", {
     )
   )
 
-  expect_known_value(out, "ref-sda_target", update = FALSE)
+  expect_known_value(out, "ref-target_sda", update = FALSE)
   expect_known_output(
-    out, "ref-sda_target-output",
+    out, "ref-target_sda-output",
     print = TRUE, update = FALSE
   )
 })
 
 test_that("with bad `data` errors with informative message", {
   expect_error(
-    sda_target("bad", fake_ald(), fake_co2_scenario()),
+    target_sda("bad", fake_ald(), fake_co2_scenario()),
     "data.frame.*not.*TRUE"
   )
   expect_error(
-    sda_target(fake_matched(), "bad", fake_co2_scenario()),
+    target_sda(fake_matched(), "bad", fake_co2_scenario()),
     "data.frame.*not.*TRUE"
   )
   expect_error(
-    sda_target(fake_matched(), fake_ald(), "bad"),
+    target_sda(fake_matched(), fake_ald(), "bad"),
     "data.frame.*not.*TRUE"
   )
   expect_error(
-    sda_target(
+    target_sda(
       fake_matched(),
       ald = fake_ald(),
       co2_intensity_scenario = fake_co2_scenario(),
@@ -59,7 +59,7 @@ test_that("w/ missing crucial names errors gracefully", {
                                          scenario = fake_co2_scenario()) {
     expect_error(
       class = "missing_names",
-      sda_target(match_result, ald, scenario)
+      target_sda(match_result, ald, scenario)
     )
   }
 
@@ -102,7 +102,7 @@ test_that("with known input outputs as expected", {
     emission_factor = c(0.53835, 0.43039, 0.16897, 1.43731, 0.87454, 0.26055),
   )
 
-  out <- sda_target(valid_matches, ald, co2_intensity_scenario) %>%
+  out <- target_sda(valid_matches, ald, co2_intensity_scenario) %>%
     filter(
       emission_factor_name == "portfolio_target_emission_factor",
       year == 2030
@@ -119,7 +119,7 @@ test_that("without `sector` throws no error", {
   # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
   without_sector <- dplyr::select(fake_matched(), -sector)
   expect_error_free(
-    sda_target(
+    target_sda(
       without_sector,
       ald = fake_ald(),
       co2_intensity_scenario = fake_co2_scenario()
@@ -130,7 +130,7 @@ test_that("without `sector` throws no error", {
 test_that("properly weights emissions factors", {
   companies <- c("a", "b")
 
-  out <- sda_target(
+  out <- target_sda(
     fake_matched(
       id_loan = c(1, 2),
       name_ald = companies,
@@ -159,7 +159,7 @@ test_that("properly weights emissions factors", {
 })
 
 test_that("outputs 3 metrics of CO2 emissions", {
-  out <- sda_target(
+  out <- target_sda(
     fake_matched(sector_ald = "cement"),
     ald = fake_ald(
       sector = "cement",
@@ -176,7 +176,7 @@ test_that("outputs 3 metrics of CO2 emissions", {
 })
 
 test_that("outputs expected names", {
-  out <- sda_target(
+  out <- target_sda(
     fake_matched(sector_ald = "cement"),
     ald = fake_ald(
       sector = "cement",

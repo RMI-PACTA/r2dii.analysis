@@ -64,10 +64,10 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()
 ```
 
-* Use `sda_target()` to calculate SDA targets of CO2 emissions.
+* Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ```{r}
-sda_target(matched, ald_demo, co2_intensity_scenario_demo)
+target_sda(matched, ald_demo, co2_intensity_scenario_demo)
 ```
 
 * Use `join_ald_scenario()` to join the matched dataset to the relevant 
@@ -82,18 +82,18 @@ loanbook_joined_to_ald_scenario <- matched %>%
   )
 ```
 
-* Use `summarize_company_production()` then `add_company_target()` to calculate scenario-targets for each company.
+* Use `summarize_company_production()` then `target_market_share_company()` to calculate scenario-targets for each company.
 
 ```{r}
 loanbook_joined_to_ald_scenario %>% 
   summarize_company_production() %>% 
-  add_company_target()
+  target_market_share_company()
 ```
 
-* Use `summarize_portfolio_production()` then `add_portfolio_target()` to calculate scenario-targets for the whole portfolio:
+* Use `summarize_portfolio_production()` then `target_market_share_portfolio()` to calculate scenario-targets for the whole portfolio:
 
 ```{r}
 loanbook_joined_to_ald_scenario %>% 
   summarize_portfolio_production() %>% 
-  add_portfolio_target()
+  target_market_share_portfolio()
 ```

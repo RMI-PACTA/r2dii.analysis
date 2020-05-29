@@ -24,6 +24,8 @@
 #'
 #' @export
 #'
+#' @family functions to calculate scenario targets
+#'
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE)
@@ -37,7 +39,7 @@
 #'   prioritize()
 #'
 #' out <- valid_matches %>%
-#'   sda_target(
+#'   target_sda(
 #'     ald = ald_demo,
 #'     co2_intensity_scenario = co2_intensity_scenario_demo
 #'   )
@@ -49,7 +51,7 @@
 #'
 #' # Split view by metric
 #' split(out, out$emission_factor_name)
-sda_target <- function(data,
+target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
                        use_credit_limit = FALSE) {

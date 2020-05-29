@@ -9,6 +9,9 @@
 #' @seealso [join_ald_scenario()].
 #'
 #' @export
+#'
+#' @family functions to weight production
+#'
 #' @return A tibble with the same groups as the input (if any) and columns:
 #'   `sector`, `technology`, `year`, and `weighted_production`.
 #'

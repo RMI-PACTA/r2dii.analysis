@@ -1,18 +1,18 @@
 test_that("with bad `data` errors with informative message", {
-  expect_error(add_portfolio_target("bad"), "data.frame.*not.*TRUE")
+  expect_error(target_market_share_portfolio("bad"), "data.frame.*not.*TRUE")
 })
 
 test_that("outputs a tibble", {
   out <- summarize_portfolio_production(fake_master()) %>%
-    add_portfolio_target()
+    target_market_share_portfolio()
   expect_is(out, "tbl_df")
 })
 
 test_that("with fake data outputs known value", {
   out <- summarize_portfolio_production(fake_master()) %>%
-    add_portfolio_target()
+    target_market_share_portfolio()
 
-  expect_known_value(out, "ref-add_portfolio_target", update = FALSE)
+  expect_known_value(out, "ref-target_market_share_portfolio", update = FALSE)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
@@ -24,7 +24,7 @@ test_that("with data lacking crucial columns errors with informative message", {
 
     expect_error(
       class = "missing_names",
-      add_portfolio_target(data)
+      target_market_share_portfolio(data)
     )
   }
 
@@ -49,7 +49,7 @@ test_that("with NAs in crucial columns errors with informative message", {
     data[1, name] <- NA
     expect_error(
       class = "some_value_is_missing",
-      add_portfolio_target(data)
+      target_market_share_portfolio(data)
     )
   }
 
@@ -64,7 +64,7 @@ test_that("with NAs in crucial columns errors with informative message", {
 test_that("outputs expected names", {
   out <- fake_master() %>%
     summarize_portfolio_production() %>%
-    add_portfolio_target()
+    target_market_share_portfolio()
 
   expect_named(
     out,
@@ -84,7 +84,7 @@ test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     summarize_company_production() %>%
     dplyr::group_by(.data$sector) %>%
-    add_company_target()
+    target_market_share_portfolio()
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
@@ -100,7 +100,7 @@ test_that("with known input outputs as expected", {
     smsp = c(0, 0, 0.34, -0.2),
     weighted_production = c(200, 250, 240, 240)
   )
-  out1 <- add_portfolio_target(data)
+  out1 <- target_market_share_portfolio(data)
 
   expect_equal(out1$tmsr_target_weighted_production, c(200, 250, 370, 150))
   expect_equal(out1$smsp_target_weighted_production, c(200, 250, 353, 160))

@@ -4,19 +4,10 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/add_company_target.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/add_portfolio_target.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/join_ald_scenario.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/sda_target.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/summarize_company_production.html</loc>
@@ -28,12 +19,21 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/summarize_weighted_production.html</loc>
   </url>
   <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_market_share_company.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_market_share_portfolio.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_sda.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/tidyeval.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/scenario-fair-shares.html</loc>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/target-market-share.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/sda-target.html</loc>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/target-sda.html</loc>
   </url>
 </urlset>

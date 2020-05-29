@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summarize the portfolio-weighted production at company level — summarize_company_production • r2dii.analysis</title>
+<title>Add company-level production targets — target_market_share_company • r2dii.analysis</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,10 @@
 
 
 
-<meta property="og:title" content="Summarize the portfolio-weighted production at company level — summarize_company_production" />
-<meta property="og:description" content="A simpler wrapper used to calculate the loan-weighted production for each
-matched company, and aggregate to the company level." />
+<meta property="og:title" content="Add company-level production targets — target_market_share_company" />
+<meta property="og:description" content="This function calculates the company-level production targets, as
+calculated using either the technology market share ratio tmsr or sector
+market share percentage smsp." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,49 +125,38 @@ matched company, and aggregate to the company level." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Summarize the portfolio-weighted production at company level</h1>
-    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.analysis/blob/master/R/summarize_company_production.R'><code>R/summarize_company_production.R</code></a></small>
-    <div class="hidden name"><code>summarize_company_production.Rd</code></div>
+    <h1>Add company-level production targets</h1>
+    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.analysis/blob/master/R/target_market_share_company.R'><code>R/target_market_share_company.R</code></a></small>
+    <div class="hidden name"><code>target_market_share_company.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A simpler wrapper used to calculate the loan-weighted production for each
-matched company, and aggregate to the company level.</p>
+    <p>This function calculates the company-level production targets, as
+calculated using either the technology market share ratio <code>tmsr</code> or sector
+market share percentage <code>smsp</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>summarize_company_production</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>target_market_share_company</span>(<span class='no'>data</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A "data.frame" like the output of <code><a href='join_ald_scenario.html'>join_ald_scenario()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed on to <code><a href='summarize_weighted_production.html'>summarize_weighted_production</a></code></p><dl class='dl-horizontal'>
-    <dt><code></code></dt><dd><p></p></dd>
-  
-</dl></td>
-    </tr>
-    <tr>
-      <th>use_credit_limit</th>
-      <td><p>Logical vector of length 1. <code>FALSE</code> defaults to using
-the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use the column
-<code>loan_size_credit_limit</code> instead.</p></td>
+      <td><p>A "data.frame" like the output of
+<code><a href='summarize_company_production.html'>summarize_company_production()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble with the same groups as the input (if any) and columns:
-<code>sector</code>, <code>technology</code>, <code>year</code>, and <code>weighted_production</code>.</p>
+<code>tmsr_target_weighted_production</code> and <code>smsp_target_weighted_production</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other functions to weight production: 
-<code><a href='summarize_portfolio_production.html'>summarize_portfolio_production</a>()</code>,
-<code><a href='summarize_weighted_production.html'>summarize_weighted_production</a>()</code></p></div>
+    <div class='dont-index'><p>Other functions to calculate scenario targets: 
+<code><a href='target_market_share_portfolio.html'>target_market_share_portfolio</a>()</code>,
+<code><a href='target_sda.html'>target_sda</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.analysis</span>)
@@ -181,7 +171,8 @@ the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use t
     <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>
   )
 
-<span class='fu'>summarize_company_production</span>(<span class='no'>master</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9,444 x 8</span><span>
+<span class='no'>company_production</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='summarize_company_production.html'>summarize_company_production</a></span>(<span class='no'>master</span>)
+<span class='no'>company_production</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9,444 x 8</span><span>
 #&gt;    sector  technology  year name_ald       scenario  tmsr  smsp weighted_produc…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shanghai auto… cps          1     0            </span><span style='text-decoration: underline;'>5</span><span>140.
@@ -195,20 +186,21 @@ the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use t
 #&gt; </span><span style='color: #555555;'> 9</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singulato      sps          1     0            </span><span style='text-decoration: underline;'>8</span><span>674.
 #&gt; </span><span style='color: #555555;'>10</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 south-east au… cps          1     0           </span><span style='text-decoration: underline;'>14</span><span>409.
 #&gt; </span><span style='color: #555555;'># … with 9,434 more rows</span><span></div><div class='input'>
-<span class='fu'>summarize_company_production</span>(<span class='no'>master</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9,444 x 8</span><span>
-#&gt;    sector  technology  year name_ald       scenario  tmsr  smsp weighted_produc…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shanghai auto… cps          1     0            </span><span style='text-decoration: underline;'>8</span><span>191.
-#&gt; </span><span style='color: #555555;'> 2</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shanghai auto… sds          1     0            </span><span style='text-decoration: underline;'>8</span><span>191.
-#&gt; </span><span style='color: #555555;'> 3</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shanghai auto… sps          1     0            </span><span style='text-decoration: underline;'>8</span><span>191.
-#&gt; </span><span style='color: #555555;'> 4</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 sichuan auto   cps          1     0            </span><span style='text-decoration: underline;'>8</span><span>636.
-#&gt; </span><span style='color: #555555;'> 5</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 sichuan auto   sds          1     0            </span><span style='text-decoration: underline;'>8</span><span>636.
-#&gt; </span><span style='color: #555555;'> 6</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 sichuan auto   sps          1     0            </span><span style='text-decoration: underline;'>8</span><span>636.
-#&gt; </span><span style='color: #555555;'> 7</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singulato      cps          1     0            </span><span style='text-decoration: underline;'>8</span><span>997.
-#&gt; </span><span style='color: #555555;'> 8</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singulato      sds          1     0            </span><span style='text-decoration: underline;'>8</span><span>997.
-#&gt; </span><span style='color: #555555;'> 9</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singulato      sps          1     0            </span><span style='text-decoration: underline;'>8</span><span>997.
-#&gt; </span><span style='color: #555555;'>10</span><span> automo… electric    </span><span style='text-decoration: underline;'>2</span><span>020 south-east au… cps          1     0           </span><span style='text-decoration: underline;'>13</span><span>714.
-#&gt; </span><span style='color: #555555;'># … with 9,434 more rows</span><span></div></span></pre>
+<span class='fu'>target_market_share_company</span>(<span class='no'>company_production</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 9,444 x 8</span><span>
+#&gt;    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shangha… cps                 </span><span style='text-decoration: underline;'>5</span><span>140.            </span><span style='text-decoration: underline;'>5</span><span>140.
+#&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shangha… sds                 </span><span style='text-decoration: underline;'>5</span><span>140.            </span><span style='text-decoration: underline;'>5</span><span>140.
+#&gt; </span><span style='color: #555555;'> 3</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 shangha… sps                 </span><span style='text-decoration: underline;'>5</span><span>140.            </span><span style='text-decoration: underline;'>5</span><span>140.
+#&gt; </span><span style='color: #555555;'> 4</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 sichuan… cps                 </span><span style='text-decoration: underline;'>5</span><span>985.            </span><span style='text-decoration: underline;'>5</span><span>985.
+#&gt; </span><span style='color: #555555;'> 5</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 sichuan… sds                 </span><span style='text-decoration: underline;'>5</span><span>985.            </span><span style='text-decoration: underline;'>5</span><span>985.
+#&gt; </span><span style='color: #555555;'> 6</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 sichuan… sps                 </span><span style='text-decoration: underline;'>5</span><span>985.            </span><span style='text-decoration: underline;'>5</span><span>985.
+#&gt; </span><span style='color: #555555;'> 7</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singula… cps                 </span><span style='text-decoration: underline;'>8</span><span>674.            </span><span style='text-decoration: underline;'>8</span><span>674.
+#&gt; </span><span style='color: #555555;'> 8</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singula… sds                 </span><span style='text-decoration: underline;'>8</span><span>674.            </span><span style='text-decoration: underline;'>8</span><span>674.
+#&gt; </span><span style='color: #555555;'> 9</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 singula… sps                 </span><span style='text-decoration: underline;'>8</span><span>674.            </span><span style='text-decoration: underline;'>8</span><span>674.
+#&gt; </span><span style='color: #555555;'>10</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 south-e… cps                </span><span style='text-decoration: underline;'>14</span><span>409.           </span><span style='text-decoration: underline;'>14</span><span>409.
+#&gt; </span><span style='color: #555555;'># … with 9,434 more rows, and 1 more variable:</span><span>
+#&gt; </span><span style='color: #555555;'>#   smsp_target_weighted_production </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

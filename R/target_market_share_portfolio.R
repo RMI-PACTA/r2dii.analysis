@@ -89,8 +89,10 @@ target_market_share_portfolio <- function(data) {
         .data$initial_sector_production
       )
     ) %>%
-    tidyr::pivot_longer(cols = tidyr::ends_with("weighted_production"),
-                        names_to = "production_name",
-                        values_to = "production_value") %>%
+    tidyr::pivot_longer(
+      cols = tidyr::ends_with("weighted_production"),
+      names_to = "production_name",
+      values_to = "production_value"
+    ) %>%
     dplyr::group_by(!!!old_groups)
 }

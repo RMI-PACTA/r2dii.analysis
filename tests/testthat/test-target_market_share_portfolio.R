@@ -73,9 +73,8 @@ test_that("outputs expected names", {
       "technology",
       "year",
       "scenario",
-      "weighted_production",
-      "tmsr_target_weighted_production",
-      "smsp_target_weighted_production"
+      "production_name",
+      "production_value"
     )
   )
 })
@@ -100,8 +99,13 @@ test_that("with known input outputs as expected", {
     smsp = c(0, 0, 0.34, -0.2),
     weighted_production = c(200, 250, 240, 240)
   )
-  out1 <- target_market_share_portfolio(data)
+  out <- target_market_share_portfolio(data)
+  out_tmsr <- out %>%
+    dplyr::filter(production_name == "tmsr_target_weighted_production")
 
-  expect_equal(out1$tmsr_target_weighted_production, c(200, 250, 370, 150))
-  expect_equal(out1$smsp_target_weighted_production, c(200, 250, 353, 160))
+  out_smsp <- out %>%
+    dplyr::filter(production_name == "smsp_target_weighted_production")
+
+  expect_equal(out_tmsr$production_value, c(200, 250, 370, 150))
+  expect_equal(out_smsp$production_value, c(200, 250, 353, 160))
 })

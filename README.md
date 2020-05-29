@@ -114,21 +114,20 @@ loanbook_joined_to_ald_scenario <- matched %>%
 loanbook_joined_to_ald_scenario %>% 
   summarize_company_production() %>% 
   target_market_share_company()
-#> # A tibble: 9,444 x 8
-#>    sector technology  year name_ald scenario weighted_produc… tmsr_target_wei…
-#>    <chr>  <chr>      <int> <chr>    <chr>               <dbl>            <dbl>
-#>  1 autom… electric    2020 shangha… cps                 5140.            5140.
-#>  2 autom… electric    2020 shangha… sds                 5140.            5140.
-#>  3 autom… electric    2020 shangha… sps                 5140.            5140.
-#>  4 autom… electric    2020 sichuan… cps                 5985.            5985.
-#>  5 autom… electric    2020 sichuan… sds                 5985.            5985.
-#>  6 autom… electric    2020 sichuan… sps                 5985.            5985.
-#>  7 autom… electric    2020 singula… cps                 8674.            8674.
-#>  8 autom… electric    2020 singula… sds                 8674.            8674.
-#>  9 autom… electric    2020 singula… sps                 8674.            8674.
-#> 10 autom… electric    2020 south-e… cps                14409.           14409.
-#> # … with 9,434 more rows, and 1 more variable:
-#> #   smsp_target_weighted_production <dbl>
+#> # A tibble: 28,332 x 7
+#>    sector  technology  year name_ald  scenario production_name  production_value
+#>    <chr>   <chr>      <int> <chr>     <chr>    <chr>                       <dbl>
+#>  1 automo… electric    2020 shanghai… cps      weighted_produc…            5140.
+#>  2 automo… electric    2020 shanghai… cps      tmsr_target_wei…            5140.
+#>  3 automo… electric    2020 shanghai… cps      smsp_target_wei…            5140.
+#>  4 automo… electric    2020 shanghai… sds      weighted_produc…            5140.
+#>  5 automo… electric    2020 shanghai… sds      tmsr_target_wei…            5140.
+#>  6 automo… electric    2020 shanghai… sds      smsp_target_wei…            5140.
+#>  7 automo… electric    2020 shanghai… sps      weighted_produc…            5140.
+#>  8 automo… electric    2020 shanghai… sps      tmsr_target_wei…            5140.
+#>  9 automo… electric    2020 shanghai… sps      smsp_target_wei…            5140.
+#> 10 automo… electric    2020 sichuan … cps      weighted_produc…            5985.
+#> # … with 28,322 more rows
 ```
 
   - Use `summarize_portfolio_production()` then
@@ -141,19 +140,18 @@ loanbook_joined_to_ald_scenario %>%
 loanbook_joined_to_ald_scenario %>% 
   summarize_portfolio_production() %>% 
   target_market_share_portfolio()
-#> # A tibble: 684 x 7
-#>    sector technology  year scenario weighted_produc… tmsr_target_wei…
-#>    <chr>  <chr>      <int> <chr>               <dbl>            <dbl>
-#>  1 autom… electric    2020 cps               148935.          148935.
-#>  2 autom… electric    2020 sds               148935.          148935.
-#>  3 autom… electric    2020 sps               148935.          148935.
-#>  4 autom… electric    2021 cps               150875.          166850.
-#>  5 autom… electric    2021 sds               150875.          172982.
-#>  6 autom… electric    2021 sps               150875.          170433.
-#>  7 autom… electric    2022 cps               152816.          184388.
-#>  8 autom… electric    2022 sds               152816.          197029.
-#>  9 autom… electric    2022 sps               152816.          191931.
-#> 10 autom… electric    2023 cps               154757.          201599.
-#> # … with 674 more rows, and 1 more variable:
-#> #   smsp_target_weighted_production <dbl>
+#> # A tibble: 2,052 x 6
+#>    sector    technology  year scenario production_name          production_value
+#>    <chr>     <chr>      <int> <chr>    <chr>                               <dbl>
+#>  1 automoti… electric    2020 cps      weighted_production               148935.
+#>  2 automoti… electric    2020 cps      tmsr_target_weighted_pr…          148935.
+#>  3 automoti… electric    2020 cps      smsp_target_weighted_pr…          148935.
+#>  4 automoti… electric    2020 sds      weighted_production               148935.
+#>  5 automoti… electric    2020 sds      tmsr_target_weighted_pr…          148935.
+#>  6 automoti… electric    2020 sds      smsp_target_weighted_pr…          148935.
+#>  7 automoti… electric    2020 sps      weighted_production               148935.
+#>  8 automoti… electric    2020 sps      tmsr_target_weighted_pr…          148935.
+#>  9 automoti… electric    2020 sps      smsp_target_weighted_pr…          148935.
+#> 10 automoti… electric    2021 cps      weighted_production               150875.
+#> # … with 2,042 more rows
 ```

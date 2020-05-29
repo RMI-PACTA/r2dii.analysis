@@ -12,8 +12,8 @@
 ^pkgdown$
 ^\.github/workflows/render-readme\.yaml$
 ^vignettes/Bank-Workflow\.Rmd$
-^vignettes/Scenario-Fair-Shares\.Rmd$
-^vignettes/Sda-Target\.Rmd$
+^vignettes/Target-Fair-Share\.Rmd$
+^vignettes/Target-Sda\.Rmd$
 ^vignettes/articles$
 ^vignettes/_pr-34\.Rmd$
 ^vignettes/_pr-34\.md$

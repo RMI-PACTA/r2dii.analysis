@@ -84,7 +84,7 @@ test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     summarize_company_production() %>%
     dplyr::group_by(.data$sector) %>%
-    add_company_target()
+    add_portfolio_target()
 
   expect_equal(dplyr::group_vars(out), "sector")
 })

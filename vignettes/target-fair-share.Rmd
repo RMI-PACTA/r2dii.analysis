@@ -1,5 +1,5 @@
 ---
-title: "Scenario Fair Shares"
+title: "Fair Share Approach"
 ---
 
 ```{r, include = FALSE}

@@ -67,12 +67,12 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()
 ```
 
-  - Use `sda_target()` to calculate SDA targets of CO2 emissions.
+  - Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 <!-- end list -->
 
 ``` r
-sda_target(matched, ald_demo, co2_intensity_scenario_demo)
+target_sda(matched, ald_demo, co2_intensity_scenario_demo)
 #> # A tibble: 28 x 4
 #> # Groups:   sector [1]
 #>    sector  year emission_factor_name               emission_factor_value

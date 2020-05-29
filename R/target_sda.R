@@ -24,7 +24,7 @@
 #'
 #' @export
 #'
-#' @family calculate scenario targets
+#' @family functions to calculate scenario targets
 #'
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&

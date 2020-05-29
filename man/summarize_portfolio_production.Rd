@@ -45,8 +45,8 @@ summarize_portfolio_production(master)
 summarize_portfolio_production(master, use_credit_limit = TRUE)
 }
 \seealso{
-Other weight production: 
+Other functions to weight production: 
 \code{\link{summarize_company_production}()},
 \code{\link{summarize_weighted_production}()}
 }
-\concept{weight production}
+\concept{functions to weight production}

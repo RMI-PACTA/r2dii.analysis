@@ -45,3 +45,18 @@ navbar:
 
     - text: r2dii
       href: https://2degreesinvesting.github.io/r2dii/index.html
+
+reference:
+
+  - title: Calculate scenario targets
+    contents:
+      - has_concept("functions to calculate scenario targets")
+
+  - title: Weight production
+    contents:
+      - has_concept("functions to weight production")
+
+  - title: Other functions
+    contents:
+      - has_concept("join datasets")
+

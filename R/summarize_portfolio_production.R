@@ -8,7 +8,7 @@
 #'
 #' @export
 #'
-#' @family weight production
+#' @family functions to weight production
 #'
 #' @examples
 #' library(r2dii.analysis)

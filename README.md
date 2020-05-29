@@ -131,15 +131,16 @@ loanbook_joined_to_ald_scenario %>%
 #> #   smsp_target_weighted_production <dbl>
 ```
 
-  - Use `summarize_portfolio_production()` then `add_portfolio_target()`
-    to calculate scenario-targets for the whole portfolio:
+  - Use `summarize_portfolio_production()` then
+    `target_fair_share_portfolio()` to calculate scenario-targets for
+    the whole portfolio:
 
 <!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario %>% 
   summarize_portfolio_production() %>% 
-  add_portfolio_target()
+  target_fair_share_portfolio()
 #> # A tibble: 684 x 7
 #>    sector technology  year scenario weighted_produc… tmsr_target_wei…
 #>    <chr>  <chr>      <int> <chr>               <dbl>            <dbl>

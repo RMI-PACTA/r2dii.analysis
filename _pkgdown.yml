@@ -32,9 +32,9 @@ navbar:
   - text: "Articles"
     menu:
     - text: "Sectoral Decarbonization Approach (SDA)"
-      href: articles/sda-target.html
-    - text: "Scenario Fair Shares"
-      href: articles/scenario-fair-shares.html
+      href: articles/target-sda.html
+    - text: "Market Share Approach"
+      href: articles/target-market-share.html
 
   right:
     - icon: fa-gavel

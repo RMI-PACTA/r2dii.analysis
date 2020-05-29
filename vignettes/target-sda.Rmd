@@ -90,11 +90,11 @@ matched <- match_name(loanbook, ald) %>%
 matched
 ```
 
-* Calculate SDA targets of CO2 emissions.
+* Calculate SDA targets for CO2 emissions intensities:
 
 ```{r}
-co2 <- r2dii.data::co2_intensity_scenario_demo
+co2_intensity <- r2dii.data::co2_intensity_scenario_demo
 
-target_sda(matched, ald, co2)
+target_sda(matched, ald, co2_intensity)
 ```
 

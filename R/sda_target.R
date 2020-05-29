@@ -50,8 +50,9 @@
 #' # Split view by metric
 #' split(out, out$emission_factor_name)
 sda_target <- function(data,
-                           ald,
-                           co2_intensity_scenario, use_credit_limit = FALSE) {
+                       ald,
+                       co2_intensity_scenario,
+                       use_credit_limit = FALSE) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(ald),

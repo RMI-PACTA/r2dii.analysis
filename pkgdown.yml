@@ -6,4 +6,7 @@ articles:
   bank-workflow: bank-workflow.html
   scenario-fair-shares: scenario-fair-shares.html
   sda-target: sda-target.html
+urls:
+  reference: https://github.com/2DegreesInvesting/r2dii.analysis//reference
+  article: https://github.com/2DegreesInvesting/r2dii.analysis//articles
 

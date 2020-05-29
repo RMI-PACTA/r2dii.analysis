@@ -29,6 +29,13 @@ navbar:
   - text: "Reference"
     href: reference/index.html
 
+  - text: "Articles"
+    menu:
+    - text: "Sectoral Decarbonization Approach (SDA)"
+      href: articles/sda-target.html
+    - text: "Scenario Fair Shares"
+      href: articles/scenario-fair-shares.html
+
   right:
     - icon: fa-gavel
       href: https://github.com/maurolepore

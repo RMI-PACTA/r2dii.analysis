@@ -33,11 +33,12 @@ where $I^{in}(t)$ and $I^{Sc}(t)$ are the average market and scenario emission i
 
 The company-level emission intensity target is then defined as: 
 $$I^{Target}(t) = d^{Co} * p_{y} (t) * m_{y} (t) * I^{Sc}(t_{2050})$$
-## PACTA Assumptions
+
+## PACTA Assumption and Approximation
 
 The SDA applied in PACTA differs slightly from the way it is applied by the SBTI. To align the approach with the bottom-up asset-level data implemented in the PACTA analysis, we make one assumption and one adjustment.
 
-**Assumption 1. Market share stays constant ($m_y$ = 1)**
+**Assumption: Market share stays constant ($m_y$ = 1)**
 
 Due to the lack of quantitative data on the expected market share changes throughout the entire time horizon up to 2050. my is set to 1 for all years. Under the SBTI method for calculating $m_{y}$, there will be a higher intensity reduction target in cases where the absolute pathway of the sector exceeds the scenario target. This makes sense. However, applying this at company level is counter-intuitive:
 
@@ -47,7 +48,7 @@ Under this assumption, our target calculation reduces to:
 
 $$I^{Target}(t) = d^{Co} * p_{y} (t) * I^{Sc}(t_{2050})$$
 
-**Adjustment 1. Adjust base year Sector Intensity  to ensure consistent scope across company and benchmark**
+**Approximation: Adjust base year Sector Intensity to ensure consistent scope across company and benchmark**
 
 In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. This is a global economy top-down approach which applies an absolute emissions value in the year 2050 and then coverts this to yearly emission intensities. However, a discrepancy arises between the IEA and PACTA's approach to calculating the global base year and start year of analysis. This is caused by PACTA using bottom-up intensity data from asset-level data. Hence to reflect this difference, a rate of change, $g(t)$ is taken from the average sector CO2-intensity per unit of production in a specific year, $t$, compared to the base year, $t_0$. This ensures consistency in calculating CO2 intensity targets at any given time as the average sector intensity is calculated on a rolling basis based of real asset data. Any changes in sector intensity on a year to year basis will be reflected in the company intensity reduction target.
 

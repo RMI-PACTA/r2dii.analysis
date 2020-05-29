@@ -8,6 +8,8 @@
 #'
 #' @export
 #'
+#' @family weight production
+#'
 #' @examples
 #' library(r2dii.analysis)
 #' library(r2dii.data)

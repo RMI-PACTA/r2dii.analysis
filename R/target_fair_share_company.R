@@ -11,6 +11,8 @@
 #'   `tmsr_target_weighted_production` and `smsp_target_weighted_production`.
 #' @export
 #'
+#' @family calculate scenario targets
+#'
 #' @examples
 #' library(r2dii.analysis)
 #' library(r2dii.data)

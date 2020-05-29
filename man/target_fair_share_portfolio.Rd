@@ -37,3 +37,9 @@ portfolio_production
 
 target_fair_share_portfolio(portfolio_production)
 }
+\seealso{
+Other calculate scenario targets: 
+\code{\link{target_fair_share_company}()},
+\code{\link{target_sda}()}
+}
+\concept{calculate scenario targets}

@@ -1,3 +1,5 @@
+library(dplyr)
+
 test_that("with fake data outputs known value", {
   out <- summarize_company_production(
     fake_master()
@@ -43,4 +45,20 @@ test_that("works with demo data from r2dii.data", {
 
   expect_error_free(out <- summarize_company_production(master))
   expect_true(nrow(out) > 0L)
+})
+
+test_that("outputs uniquely identifiable scenario targets (#87)", {
+  master <- fake_master(region = c("a", "b"),
+                     tmsr = c(1,2))
+  out <- summarize_company_production(master) %>%
+    dplyr::group_by_at(dplyr::vars(-c(tmsr, smsp))) %>%
+    dplyr::summarise(distinct_tmsr = n_distinct(tmsr),
+              distinct_smsp = n_distinct(smsp))
+
+  distinct_tmsr_equal_to_1 <- out$distinct_tmsr == 1
+  distinct_smsp_equal_to_1 <- out$distinct_smsp == 1
+
+  expect_true(all(distinct_tmsr_equal_to_1))
+  expect_true(all(distinct_smsp_equal_to_1))
+
 })

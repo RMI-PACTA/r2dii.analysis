@@ -1,0 +1,14 @@
+sector,technology,which_metric
+automotive,electric,smsp
+automotive,hybrid,smsp
+automotive,ice,tmsr
+automotive,fuelcell,smsp
+power,hydrocap,smsp
+power,renewablescap,smsp
+power,coalcap,tmsr
+power,gascap,tmsr
+power,oilcap,tmsr
+power,nuclearcap,smsp
+oil and gas,oil,tmsr
+oil and gas,gas,tmsr
+coal,coal,tmsr

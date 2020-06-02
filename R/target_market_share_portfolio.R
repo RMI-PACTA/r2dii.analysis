@@ -90,9 +90,21 @@ target_market_share_portfolio <- function(data) {
       )
     ) %>%
     tidyr::pivot_longer(
-      cols = tidyr::ends_with("weighted_production"),
-      names_to = "production_name",
-      values_to = "production_value"
+      cols = c("tmsr_target_weighted_production", "smsp_target_weighted_production"),
+      names_to = "target_name",
+      values_to = "scenario_target_value"
     ) %>%
+    inner_join(pick_tmsr_or_smsp, by=c(sector = "sector",
+                                       technology = "technology",
+                                       target_name = "which_metric")) %>%
+    dplyr::select(-target_name) %>%
+    tidyr::pivot_wider(names_from = scenario,
+                       names_prefix = "weighted_production_target_",
+                       values_from = scenario_target_value) %>%
+    dplyr::rename(weighted_production_portfolio = weighted_production) %>%
+    tidyr::pivot_longer(cols = starts_with("weighted_production_"),
+                        names_prefix = "weighted_production_",
+                        names_to = "weighted_production_metric",
+                        values_to = "weighted_production_value") %>%
     dplyr::group_by(!!!old_groups)
 }

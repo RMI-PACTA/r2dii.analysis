@@ -1,14 +1,14 @@
 sector,technology,which_metric
-automotive,electric,smsp
-automotive,hybrid,smsp
-automotive,ice,tmsr
-automotive,fuelcell,smsp
-power,hydrocap,smsp
-power,renewablescap,smsp
-power,coalcap,tmsr
-power,gascap,tmsr
-power,oilcap,tmsr
-power,nuclearcap,smsp
-oil and gas,oil,tmsr
-oil and gas,gas,tmsr
-coal,coal,tmsr
+automotive,electric,smsp_target_weighted_production
+automotive,hybrid,smsp_target_weighted_production
+automotive,ice,tmsr_target_weighted_production
+automotive,fuelcell,smsp_target_weighted_production
+power,hydrocap,smsp_target_weighted_production
+power,renewablescap,smsp_target_weighted_production
+power,coalcap,tmsr_target_weighted_production
+power,gascap,tmsr_target_weighted_production
+power,oilcap,tmsr_target_weighted_production
+power,nuclearcap,smsp_target_weighted_production
+oil and gas,oil,tmsr_target_weighted_production
+oil and gas,gas,tmsr_target_weighted_production
+coal,coal,tmsr_target_weighted_production

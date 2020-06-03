@@ -39,6 +39,6 @@ summarize_portfolio_production <- function(data,
   )
 }
 
-portfolio_groups<- function(){
+portfolio_groups <- function() {
   c("scenario", "tmsr", "smsp", "region")
 }

@@ -29,7 +29,7 @@
 summarize_portfolio_production <- function(data,
                                            ...,
                                            use_credit_limit = FALSE) {
-  crucial <- c("scenario", "tmsr", "smsp", "region")
+  crucial <- portfolio_groups()
   check_crucial_names(data, crucial)
 
   summarize_weighted_production(
@@ -37,4 +37,8 @@ summarize_portfolio_production <- function(data,
     !!!rlang::syms(crucial), ...,
     use_credit_limit = use_credit_limit
   )
+}
+
+portfolio_groups<- function(){
+  c("scenario", "tmsr", "smsp", "region")
 }

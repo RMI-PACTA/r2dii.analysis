@@ -12,7 +12,7 @@ test_that("with fake data outputs known value", {
   out <- summarize_company_production(fake_master()) %>%
     target_market_share_company()
 
-  expect_known_value(out, "ref-target_market_share_company", update = FALSE)
+  expect_known_value(out, "ref-target_market_share_company", update = TRUE)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
@@ -69,8 +69,13 @@ test_that("outputs expected names", {
   expect_named(
     out,
     c(
-      "sector", "technology", "year", "name_ald", "scenario",
-      "region", "production_name", "production_value"
+      "sector",
+      "technology",
+      "year",
+      "name_ald",
+      "region",
+      "weighted_production_metric",
+      "weighted_production_value"
     )
   )
 })
@@ -87,7 +92,7 @@ test_that("with grouped data returns same groups as input", {
 test_that("with known input outputs as expected", {
   # styler: off
   data <- fake_master(
-    technology = c("ta", "tb", "ta", "tb", "ta", "tb", "ta", "tb"),
+    technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
     name_ald = paste0("comp", c(rep(1, 4), rep(2, 4))),
     scenario = "sds",
@@ -96,19 +101,12 @@ test_that("with known input outputs as expected", {
     weighted_production = c(20, 60, 40, 40, 180, 190, 200, 200)
   )
   out <- target_market_share_company(data)
-  out_tmsr <- out %>%
-    dplyr::filter(production_name == "tmsr_target_weighted_production")
-
-  out_smsp <- out %>%
-    dplyr::filter(production_name == "smsp_target_weighted_production")
+  out_target <- out %>%
+    dplyr::filter(weighted_production_metric == "target_sds")
 
   expect_equal(
-    out_tmsr$production_value,
-    c(20, 60, 37, 36, 180, 190, 333, 114)
-  )
-  expect_equal(
-    out_smsp$production_value,
-    c(20, 60, 47.2, 44, 180, 190, 305.8, 116)
+    out_target$weighted_production_value,
+    c(20, 60, 47.2, 36, 180, 190, 305.8, 114)
   )
 
 })

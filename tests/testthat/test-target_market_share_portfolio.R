@@ -69,8 +69,12 @@ test_that("outputs expected names", {
   expect_named(
     out,
     c(
-      "sector", "technology", "year", "scenario",
-      "region", "production_name", "production_value"
+      "sector",
+      "technology",
+      "year",
+      "region",
+      "weighted_production_metric",
+      "weighted_production_value"
     )
   )
 })
@@ -87,7 +91,7 @@ test_that("with grouped data returns same groups as input", {
 test_that("with known input outputs as expected", {
   # styler: off
   data <- fake_master(
-    technology = c("ta", "tb", "ta", "tb"),
+    technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021),
     name_ald = paste0("comp", rep(1, 4)),
     scenario = "sds",
@@ -96,12 +100,8 @@ test_that("with known input outputs as expected", {
     weighted_production = c(200, 250, 240, 240)
   )
   out <- target_market_share_portfolio(data)
-  out_tmsr <- out %>%
-    dplyr::filter(production_name == "tmsr_target_weighted_production")
+  out_target <- out %>%
+    dplyr::filter(weighted_production_metric == "target_sds")
 
-  out_smsp <- out %>%
-    dplyr::filter(production_name == "smsp_target_weighted_production")
-
-  expect_equal(out_tmsr$production_value, c(200, 250, 370, 150))
-  expect_equal(out_smsp$production_value, c(200, 250, 353, 160))
+  expect_equal(out_target$weighted_production_value, c(200, 250, 353, 150))
 })

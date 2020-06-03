@@ -70,7 +70,7 @@ test_that("outputs expected names", {
     out,
     c(
       "sector", "technology", "year", "name_ald", "scenario",
-      "production_name", "production_value"
+      "region", "production_name", "production_value"
     )
   )
 })

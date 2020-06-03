@@ -69,12 +69,8 @@ test_that("outputs expected names", {
   expect_named(
     out,
     c(
-      "sector",
-      "technology",
-      "year",
-      "scenario",
-      "production_name",
-      "production_value"
+      "sector", "technology", "year", "scenario",
+      "region", "production_name", "production_value"
     )
   )
 })

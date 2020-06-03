@@ -104,12 +104,12 @@ target_market_share_company <- function(data) {
     inner_join(pick_tmsr_or_smsp, by=c(sector = "sector",
                                        technology = "technology",
                                        target_name = "which_metric")) %>%
-    dplyr::select(-target_name) %>%
-    tidyr::pivot_wider(names_from = scenario,
+    dplyr::select(-.data$target_name) %>%
+    tidyr::pivot_wider(names_from = .data$scenario,
                        names_prefix = "weighted_production_target_",
-                       values_from = scenario_target_value) %>%
-    dplyr::rename(weighted_production_company = weighted_production) %>%
-    tidyr::pivot_longer(cols = starts_with("weighted_production_"),
+                       values_from = .data$scenario_target_value) %>%
+    dplyr::rename(weighted_production_company = .data$weighted_production) %>%
+    tidyr::pivot_longer(cols = dplyr::starts_with("weighted_production_"),
                         names_prefix = "weighted_production_",
                         names_to = "weighted_production_metric",
                         values_to = "weighted_production_value") %>%

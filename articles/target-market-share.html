@@ -185,20 +185,20 @@
 <span id="cb4-7"><a href="#cb4-7"></a>                    <span class="dt">region_isos =</span> region_isos_demo) <span class="op">%&gt;%</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a><span class="st">  </span><span class="kw"><a href="../reference/summarize_portfolio_production.html">summarize_portfolio_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="st">  </span><span class="kw"><a href="../reference/target_market_share_portfolio.html">target_market_share_portfolio</a></span>()</span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; # A tibble: 2,052 x 6</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;    sector    technology  year scenario production_name          production_value</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                               &lt;dbl&gt;</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  1 automoti… electric    2020 cps      weighted_production               148935.</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  2 automoti… electric    2020 cps      tmsr_target_weighted_pr…          148935.</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  3 automoti… electric    2020 cps      smsp_target_weighted_pr…          148935.</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  4 automoti… electric    2020 sds      weighted_production               148935.</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  5 automoti… electric    2020 sds      tmsr_target_weighted_pr…          148935.</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  6 automoti… electric    2020 sds      smsp_target_weighted_pr…          148935.</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt;  7 automoti… electric    2020 sps      weighted_production               148935.</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt;  8 automoti… electric    2020 sps      tmsr_target_weighted_pr…          148935.</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt;  9 automoti… electric    2020 sps      smsp_target_weighted_pr…          148935.</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co">#&gt; 10 automoti… electric    2021 cps      weighted_production               150875.</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="co">#&gt; # … with 2,042 more rows</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; # A tibble: 2,106 x 7</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;    sector  technology  year scenario region production_name     production_value</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;                          &lt;dbl&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  1 automo… electric    2020 cps      global weighted_production          148935.</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  2 automo… electric    2020 cps      global tmsr_target_weight…          148935.</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  3 automo… electric    2020 cps      global smsp_target_weight…          148935.</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  4 automo… electric    2020 sds      global weighted_production          148935.</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  5 automo… electric    2020 sds      global tmsr_target_weight…          148935.</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  6 automo… electric    2020 sds      global smsp_target_weight…          148935.</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt;  7 automo… electric    2020 sps      global weighted_production          148935.</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt;  8 automo… electric    2020 sps      global tmsr_target_weight…          148935.</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt;  9 automo… electric    2020 sps      global smsp_target_weight…          148935.</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">#&gt; 10 automo… electric    2021 cps      global weighted_production          150875.</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co">#&gt; # … with 2,096 more rows</span></span>
 <span id="cb4-24"><a href="#cb4-24"></a></span>
 <span id="cb4-25"><a href="#cb4-25"></a><span class="co"># company level targets</span></span>
 <span id="cb4-26"><a href="#cb4-26"></a>matched <span class="op">%&gt;%</span><span class="st"> </span></span>
@@ -207,20 +207,20 @@
 <span id="cb4-29"><a href="#cb4-29"></a>                    <span class="dt">region_isos =</span> region_isos_demo) <span class="op">%&gt;%</span></span>
 <span id="cb4-30"><a href="#cb4-30"></a><span class="st">  </span><span class="kw"><a href="../reference/summarize_company_production.html">summarize_company_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb4-31"><a href="#cb4-31"></a><span class="st">  </span><span class="kw"><a href="../reference/target_market_share_company.html">target_market_share_company</a></span>()</span>
-<span id="cb4-32"><a href="#cb4-32"></a><span class="co">#&gt; # A tibble: 28,332 x 7</span></span>
-<span id="cb4-33"><a href="#cb4-33"></a><span class="co">#&gt;    sector  technology  year name_ald  scenario production_name  production_value</span></span>
-<span id="cb4-34"><a href="#cb4-34"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;                       &lt;dbl&gt;</span></span>
-<span id="cb4-35"><a href="#cb4-35"></a><span class="co">#&gt;  1 automo… electric    2020 shanghai… cps      weighted_produc…            5140.</span></span>
-<span id="cb4-36"><a href="#cb4-36"></a><span class="co">#&gt;  2 automo… electric    2020 shanghai… cps      tmsr_target_wei…            5140.</span></span>
-<span id="cb4-37"><a href="#cb4-37"></a><span class="co">#&gt;  3 automo… electric    2020 shanghai… cps      smsp_target_wei…            5140.</span></span>
-<span id="cb4-38"><a href="#cb4-38"></a><span class="co">#&gt;  4 automo… electric    2020 shanghai… sds      weighted_produc…            5140.</span></span>
-<span id="cb4-39"><a href="#cb4-39"></a><span class="co">#&gt;  5 automo… electric    2020 shanghai… sds      tmsr_target_wei…            5140.</span></span>
-<span id="cb4-40"><a href="#cb4-40"></a><span class="co">#&gt;  6 automo… electric    2020 shanghai… sds      smsp_target_wei…            5140.</span></span>
-<span id="cb4-41"><a href="#cb4-41"></a><span class="co">#&gt;  7 automo… electric    2020 shanghai… sps      weighted_produc…            5140.</span></span>
-<span id="cb4-42"><a href="#cb4-42"></a><span class="co">#&gt;  8 automo… electric    2020 shanghai… sps      tmsr_target_wei…            5140.</span></span>
-<span id="cb4-43"><a href="#cb4-43"></a><span class="co">#&gt;  9 automo… electric    2020 shanghai… sps      smsp_target_wei…            5140.</span></span>
-<span id="cb4-44"><a href="#cb4-44"></a><span class="co">#&gt; 10 automo… electric    2020 sichuan … cps      weighted_produc…            5985.</span></span>
-<span id="cb4-45"><a href="#cb4-45"></a><span class="co">#&gt; # … with 28,322 more rows</span></span></code></pre></div>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="co">#&gt; # A tibble: 28,701 x 8</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="co">#&gt;    sector technology  year name_ald scenario region production_name</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;          </span></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="co">#&gt;  1 autom… electric    2020 shangha… cps      global weighted_produ…</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="co">#&gt;  2 autom… electric    2020 shangha… cps      global tmsr_target_we…</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a><span class="co">#&gt;  3 autom… electric    2020 shangha… cps      global smsp_target_we…</span></span>
+<span id="cb4-38"><a href="#cb4-38"></a><span class="co">#&gt;  4 autom… electric    2020 shangha… sds      global weighted_produ…</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a><span class="co">#&gt;  5 autom… electric    2020 shangha… sds      global tmsr_target_we…</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a><span class="co">#&gt;  6 autom… electric    2020 shangha… sds      global smsp_target_we…</span></span>
+<span id="cb4-41"><a href="#cb4-41"></a><span class="co">#&gt;  7 autom… electric    2020 shangha… sps      global weighted_produ…</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a><span class="co">#&gt;  8 autom… electric    2020 shangha… sps      global tmsr_target_we…</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a><span class="co">#&gt;  9 autom… electric    2020 shangha… sps      global smsp_target_we…</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a><span class="co">#&gt; 10 autom… electric    2020 sichuan… cps      global weighted_produ…</span></span>
+<span id="cb4-45"><a href="#cb4-45"></a><span class="co">#&gt; # … with 28,691 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></span></code></pre></div>
 </div>
   </div>
 

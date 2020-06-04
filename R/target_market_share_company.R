@@ -33,7 +33,7 @@
 target_market_share_company <- function(data) {
   stopifnot(is.data.frame(data))
 
-  by_company <- c("sector", "scenario", "year", "name_ald")
+  by_company <- c("sector", "scenario", "year", "region", "name_ald")
   crucial <- c(by_company, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
@@ -48,7 +48,7 @@ target_market_share_company <- function(data) {
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
-    dplyr::group_by(.data$sector, .data$scenario, .data$name_ald) %>%
+    dplyr::group_by(.data$sector, .data$scenario, .data$region, .data$name_ald) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
     dplyr::rename(
       initial_sector_production = .data$sector_weighted_production
@@ -65,6 +65,7 @@ target_market_share_company <- function(data) {
       .data$sector,
       .data$technology,
       .data$scenario,
+      .data$region,
       .data$name_ald
     ) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
@@ -76,11 +77,11 @@ target_market_share_company <- function(data) {
   data %>%
     dplyr::left_join(
       initial_sector_summaries,
-      by = c("sector", "scenario", "name_ald")
+      by = c("sector", "scenario", "region", "name_ald")
     ) %>%
     dplyr::left_join(
       initial_technology_summaries,
-      by = c("sector", "scenario", "technology", "name_ald")
+      by = c("sector", "scenario", "technology", "region", "name_ald")
     ) %>%
     dplyr::mutate(
       tmsr_target_weighted_production = .data$initial_technology_production *

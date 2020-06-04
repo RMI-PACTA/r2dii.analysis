@@ -13,9 +13,11 @@ The goal of this article is to define _market-share_ and to show how to calculat
 
 ## Scenario market-shares
 
-Scenario efforts must be allocated to the portfolio's production profile. To do this, two principles are currently implemented:
+You want to study how a portfolio would perform in a specific climate scenario. 
 
-1. Technology Market Share:
+How can you allocate [scenario efforts] to the production profile of your portfolio? You can do it by technology and by sector.
+
+### 1. Market-share by technology
 
 $$p_{i}^{tmsr}(t) = p_{i}(t_0) * \dfrac{s_i(t)}{s_i(t_0)}$$
 
@@ -29,7 +31,7 @@ We define the "Technology Market Share Ratio" as:
 
 $$\dfrac{s_i(t)}{s_i(t_0)}$$
 
-2. Sector Market Share:
+### 2. Market-Xshare by sector
 
 $$p_{i}^{smsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)$$
 where:

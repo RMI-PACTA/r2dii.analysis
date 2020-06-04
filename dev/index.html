@@ -88,15 +88,14 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<p>Here I show how to use the development mode of the pkgdown website.</p>
-<p>I’m now working on an experimental branch and want to show what I’m doing on the development version of the package-website.</p>
+<p>Here I show one way to use the development mode of the pkgdown website. I want to share work I did on an experimental branch; and I want my work to show up on the development version of the package-website.</p>
 <ul>
 <li>I put this in _pkgdown.yml:</li>
 </ul>
 <!-- end list --><div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>development<span class="op">:</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="st">  </span>mode<span class="op">:</span><span class="st"> </span>devel</span></code></pre></div>
 <ul>
-<li>Then I run knit README.Rmd and run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html">pkgdown::deploy_to_branch(branch = "gh-pages", remote = "upstream")</a></code>.</li>
+<li>Then I run knit README.Rmd and run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html">pkgdown::deploy_to_branch(remote = "upstream")</a></code>.</li>
 </ul>
 <p>If the release website is published at <code>*/&lt;package&gt;/*</code> (e.g. <a href="https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html" class="uri">https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html</a>), then the devel version is published at <code>*/&lt;package&gt;/dev/*</code> (e.g. <a href="https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html" class="uri">https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html</a>).</p>
 

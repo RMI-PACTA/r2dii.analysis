@@ -69,26 +69,39 @@ matched <- match_name(loanbook, ald) %>%
 matched
 ```
 
+* Create a "master" dataset: Joining the `matched` dataset to three other datasets:
+
+    1. The asset-level data (`ald`);
+    2. A dataset giving the production `scenario`;
+    3. A dataset mapping countries to `regions`.
+
+```{r}
+scenario <- r2dii.data::scenario_demo_2020
+regions <- r2dii.data::region_isos_demo
+
+master <- matched %>% 
+  join_ald_scenario(
+    ald = ald, 
+    scenario = scenario, 
+    region_isos = regions
+  )
+
+master
+```
+
 * Calculate market-share targets for production.
 
 ```{r}
-production_scenario <- r2dii.data::scenario_demo_2020
-
 # portfolio level targets
-matched %>%
-  join_ald_scenario(ald,
-    production_scenario,
-    region_isos = region_isos_demo
-  ) %>%
+master %>%
   summarize_portfolio_production() %>%
   target_market_share_portfolio()
+```
 
-# company level targets
-matched %>%
-  join_ald_scenario(ald,
-    production_scenario,
-    region_isos = region_isos_demo
-  ) %>%
+* Calculate market-share targets at the company level.
+
+```{r}
+master %>%
   summarize_company_production() %>%
   target_market_share_company()
 ```

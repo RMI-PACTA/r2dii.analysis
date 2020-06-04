@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This article first gives the theory you need to understand the so called "market share approach" and then show you how you can implement it in R.
+The goal of this article is to define _market-share_ and to show how to calculate the market-share target for a given scenario.
 
 ## Scenario market-shares
 
@@ -41,7 +41,7 @@ We define the "Sector Market Share Percentage" as:
 
 $$\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}$$
 
-## Calculating Market Share Targets
+## How to calculate market-share targets for a given scenario
 
 To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 

@@ -9,12 +9,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(r2dii.data)
-library(r2dii.analysis)
-```
+This article first gives the theory you need to understand the so called "market share approach" and then show you how you can implement it in R.
 
-## Scenario Market Shares
+## Scenario market-shares
 
 Scenario efforts must be allocated to the portfolio's production profile. To do this, two principles are currently implemented:
 

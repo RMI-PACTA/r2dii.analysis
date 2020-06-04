@@ -87,36 +87,18 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="r2diianalysis-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#r2diianalysis-" class="anchor"></a>r2dii.analysis <a href="https://github.com/2DegreesInvesting/r2dii.analysis"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
-</h1></div>
-<!-- badges: start -->
 
-<p>Warning:</p>
-<blockquote>
-<p>An experimental package is in the very early stages of development. The API will be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental packages will make API breaking changes without deprecation, so you are generally best off waiting until the package is more mature before you use it.</p>
-</blockquote>
-<p>– <a href="https://www.tidyverse.org/lifecycle/#experimental" class="uri">https://www.tidyverse.org/lifecycle/#experimental</a></p>
-<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package provides a suite of metrics and analysis tools commonly used for climate scenario analysis. For more information visit <a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install the development version of r2dii.analysis with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
+<p>Here I show how to use the development mode of the pkgdown website.</p>
+<ul>
+<li>I put this in _pkgdown.yml:</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>development<span class="op">:</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="st">  </span>mode<span class="op">:</span><span class="st"> </span>devel</span></code></pre></div>
+<ul>
+<li>Then I run knit README.Rmd and run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html">pkgdown::deploy_to_branch(branch = "gh-pages", remote = "upstream")</a></code>.</li>
+</ul>
+<p>If the release website is published at <code>*/&lt;package&gt;/*</code> (e.g. <a href="https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html" class="uri">https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html</a>), then the devel version is published at <code>*/&lt;package&gt;/dev/*</code> (e.g. <a href="https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html" class="uri">https://2degreesinvesting.github.io/r2dii.analysis/dev/index.html</a>).</p>
 
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"2DegreesInvesting/r2dii.analysis"</span>)</pre></div>
-</div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>Here I’m trying something the development mode of the pkgdown website.</p>
-<p>I put this in _pkgdown.yml:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>development<span class="op">:</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="st">  </span>mode<span class="op">:</span><span class="st"> </span>devel</span></code></pre></div>
-<p>Then I run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html">pkgdown::deploy_to_branch(branch = "gh-pages", remote = "upstream")</a></code></p>
-</div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -155,17 +137,7 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
-<li><a href="https://CRAN.R-project.org/package=r2dii.analysis"><img src="https://www.r-pkg.org/badges/version/r2dii.analysis" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=master"><img src="https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/2DegreesInvesting/r2dii.analysis/actions"><img src="https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://github.com/2degreesinvesting/r2dii.analysis/actions"><img src="https://github.com/2degreesinvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-</ul>
-</div>
-</div>
+  </div>
 </div>
 
 

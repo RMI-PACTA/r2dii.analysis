@@ -46,7 +46,7 @@ $$\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}$$
 
 ## Calculating Market Share Targets
 
-To calculate Market Share Targets, you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
+To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 
 * Use packages.
 
@@ -62,32 +62,33 @@ library(r2dii.analysis)
 loanbook <- r2dii.data::loanbook_demo
 ald <- r2dii.data::ald_demo
 
-matched <- match_name(loanbook, ald) %>% 
+matched <- match_name(loanbook, ald) %>%
   # WARNING: Remember to validate the output of match_name() before prioritize()
   prioritize()
 
 matched
 ```
 
-* Calculate Market Share targets for production.
+* Calculate market-share targets for production.
 
 ```{r}
 production_scenario <- r2dii.data::scenario_demo_2020
 
 # portfolio level targets
-matched %>% 
-  join_ald_scenario(ald, 
-                    production_scenario,
-                    region_isos = region_isos_demo) %>%
-  summarize_portfolio_production() %>% 
+matched %>%
+  join_ald_scenario(ald,
+    production_scenario,
+    region_isos = region_isos_demo
+  ) %>%
+  summarize_portfolio_production() %>%
   target_market_share_portfolio()
 
 # company level targets
-matched %>% 
-  join_ald_scenario(ald, 
-                    production_scenario,
-                    region_isos = region_isos_demo) %>%
-  summarize_company_production() %>% 
+matched %>%
+  join_ald_scenario(ald,
+    production_scenario,
+    region_isos = region_isos_demo
+  ) %>%
+  summarize_company_production() %>%
   target_market_share_company()
 ```
-

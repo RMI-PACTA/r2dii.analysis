@@ -9,13 +9,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-The goal of this article is to define _market-share_ and to show how to calculate the market-share target for a given scenario.
+The goal of this article is to define the _market-share-approach_ for allocating scenario efforts and to show how to calculate the market-share target for a given scenario.
 
 ## Scenario market-shares
 
 You want to study how a portfolio would perform in a specific climate scenario. 
 
-How can you allocate [scenario efforts] to the production profile of your portfolio? You can do it by technology and by sector.
+How can you allocate [scenario efforts] to the production profile of your portfolio? You can do it by technology or by sector.
 
 ### 1. Market-share by technology
 
@@ -71,8 +71,8 @@ matched
 * Create a "master" dataset: Joining the `matched` dataset to three other datasets:
 
     1. The asset-level data (`ald`);
-    2. A dataset giving the production `scenario`;
-    3. A dataset mapping countries to `regions`.
+    2. A dataset giving the production-targets `scenario`;
+    3. A dataset mapping countries to scenario-defined `regions`.
 
 ```{r}
 scenario <- r2dii.data::scenario_demo_2020
@@ -88,7 +88,7 @@ master <- matched %>%
 master
 ```
 
-* Calculate market-share targets for production.
+* Calculate market-share targets for production at the portfolio level.
 
 ```{r}
 # portfolio level targets
@@ -97,7 +97,7 @@ master %>%
   target_market_share_portfolio()
 ```
 
-* Calculate market-share targets at the company level.
+* Calculate market-share targets for production at the company level.
 
 ```{r}
 master %>%

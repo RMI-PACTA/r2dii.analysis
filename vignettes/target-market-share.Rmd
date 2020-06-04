@@ -9,16 +9,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(r2dii.data)
-library(r2dii.analysis)
-```
+The goal of this article is to define the _market-share-approach_ for allocating scenario efforts and to show how to calculate the market-share target for a given scenario.
 
-## Scenario Market Shares
+## Scenario market-shares
 
-Scenario efforts must be allocated to the portfolio's production profile. To do this, two principles are currently implemented:
+You want to study how a portfolio would perform in a specific climate scenario. 
 
-1. Technology Market Share:
+How can you allocate [scenario efforts] to the production profile of your portfolio? You can do it by technology or by sector.
+
+### 1. Market-share by technology
 
 $$p_{i}^{tmsr}(t) = p_{i}(t_0) * \dfrac{s_i(t)}{s_i(t_0)}$$
 
@@ -32,7 +31,7 @@ We define the "Technology Market Share Ratio" as:
 
 $$\dfrac{s_i(t)}{s_i(t_0)}$$
 
-2. Sector Market Share:
+### 2. Market-Xshare by sector
 
 $$p_{i}^{smsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)$$
 where:
@@ -44,9 +43,9 @@ We define the "Sector Market Share Percentage" as:
 
 $$\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}$$
 
-## Calculating Market Share Targets
+## How to calculate market-share targets for a given scenario
 
-To calculate Market Share Targets, you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
+To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 
 * Use packages.
 
@@ -62,32 +61,46 @@ library(r2dii.analysis)
 loanbook <- r2dii.data::loanbook_demo
 ald <- r2dii.data::ald_demo
 
-matched <- match_name(loanbook, ald) %>% 
+matched <- match_name(loanbook, ald) %>%
   # WARNING: Remember to validate the output of match_name() before prioritize()
   prioritize()
 
 matched
 ```
 
-* Calculate Market Share targets for production.
+* Create a "master" dataset: Joining the `matched` dataset to three other datasets:
+
+    1. The asset-level data (`ald`);
+    2. A dataset giving the production-targets `scenario`;
+    3. A dataset mapping countries to scenario-defined `regions`.
 
 ```{r}
-production_scenario <- r2dii.data::scenario_demo_2020
+scenario <- r2dii.data::scenario_demo_2020
+regions <- r2dii.data::region_isos_demo
 
-# portfolio level targets
-matched %>% 
-  join_ald_scenario(ald, 
-                    production_scenario,
-                    region_isos = region_isos_demo) %>%
-  summarize_portfolio_production() %>% 
-  target_market_share_portfolio()
+master <- matched %>% 
+  join_ald_scenario(
+    ald = ald, 
+    scenario = scenario, 
+    region_isos = regions
+  )
 
-# company level targets
-matched %>% 
-  join_ald_scenario(ald, 
-                    production_scenario,
-                    region_isos = region_isos_demo) %>%
-  summarize_company_production() %>% 
-  target_market_share_company()
+master
 ```
 
+* Calculate market-share targets for production at the portfolio level.
+
+```{r}
+# portfolio level targets
+master %>%
+  summarize_portfolio_production() %>%
+  target_market_share_portfolio()
+```
+
+* Calculate market-share targets for production at the company level.
+
+```{r}
+master %>%
+  summarize_company_production() %>%
+  target_market_share_company()
+```

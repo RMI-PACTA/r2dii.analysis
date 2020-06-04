@@ -110,3 +110,26 @@ test_that("with known input outputs as expected", {
   )
 
 })
+
+test_that("portfolio values and targets have identical values at start year (#87)", {
+  data <- fake_master(
+    name_ald = "comp",
+    technology = c("electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2020, 2020),
+    region = c("global", "global", "europe", "europe"),
+    scenario = "sds",
+    tmsr = 1,
+    smsp = 0,
+    weighted_production = c(200, 250, 100, 150)
+  )
+  out <- target_market_share_portfolio(data)
+
+  out %>%
+    dplyr::filter(year == min(year)) %>%
+    dplyr::group_by(sector, technology, region, name_ald) %>%
+    dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
+
+  expect_true(out$initial_values_are_equal)
+
+})

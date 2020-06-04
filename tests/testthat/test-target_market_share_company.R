@@ -12,7 +12,7 @@ test_that("with fake data outputs known value", {
   out <- summarize_company_production(fake_master()) %>%
     target_market_share_company()
 
-  expect_known_value(out, "ref-target_market_share_company", update = TRUE)
+  expect_known_value(out, "ref-target_market_share_company", update = FALSE)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
@@ -122,14 +122,12 @@ test_that("portfolio values and targets have identical values at start year (#87
     smsp = 0,
     weighted_production = c(200, 250, 100, 150)
   )
-  out <- target_market_share_portfolio(data)
-
-  out %>%
+  out <- target_market_share_company(data) %>%
     dplyr::filter(year == min(year)) %>%
     dplyr::group_by(sector, technology, region, name_ald) %>%
     dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
     dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
-  expect_true(out$initial_values_are_equal)
+  expect_true(all(out$initial_values_are_equal))
 
 })

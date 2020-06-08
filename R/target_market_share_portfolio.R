@@ -38,50 +38,50 @@ target_market_share_portfolio <- function(data) {
     c(by_portfolio, "technology", "weighted_production", "tmsr", "smsp")
 
   check_crucial_names(data, crucial)
-  purrr::walk(crucial, ~ check_no_value_is_missing(data, .x))
+  walk(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
-  data <- dplyr::ungroup(data)
+  data <- ungroup(data)
 
   initial_sector_summaries <- data %>%
-    dplyr::group_by(!!!rlang::syms(by_portfolio)) %>%
-    dplyr::summarize(
+    group_by(!!!rlang::syms(by_portfolio)) %>%
+    summarize(
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
-    dplyr::arrange(.data$year) %>%
-    dplyr::group_by(.data$sector, .data$scenario, .data$region) %>%
-    dplyr::filter(dplyr::row_number() == 1L) %>%
-    dplyr::rename(
+    arrange(.data$year) %>%
+    group_by(.data$sector, .data$scenario, .data$region) %>%
+    filter(row_number() == 1L) %>%
+    rename(
       initial_sector_production = .data$sector_weighted_production
     ) %>%
-    dplyr::select(-.data$year)
+    select(-.data$year)
 
   initial_technology_summaries <- data %>%
-    dplyr::group_by(!!!rlang::syms(c(by_portfolio, "technology"))) %>%
-    dplyr::summarize(
+    group_by(!!!rlang::syms(c(by_portfolio, "technology"))) %>%
+    summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
-    dplyr::arrange(.data$year) %>%
-    dplyr::group_by(.data$sector, .data$technology, .data$scenario, .data$region) %>%
-    dplyr::filter(dplyr::row_number() == 1L) %>%
-    dplyr::rename(
+    arrange(.data$year) %>%
+    group_by(.data$sector, .data$technology, .data$scenario, .data$region) %>%
+    filter(row_number() == 1L) %>%
+    rename(
       initial_technology_production = .data$technology_weighted_production
     ) %>%
     select(-.data$year)
 
   tmp <- data %>%
-    dplyr::left_join(initial_sector_summaries, by = c("sector", "scenario", "region")) %>%
-    dplyr::left_join(
+    left_join(initial_sector_summaries, by = c("sector", "scenario", "region")) %>%
+    left_join(
       initial_technology_summaries,
       by = c("sector", "scenario", "region", "technology")
     ) %>%
-    dplyr::mutate(
+    mutate(
       tmsr_target_weighted_production = .data$initial_technology_production *
         .data$tmsr,
       smsp_target_weighted_production = .data$initial_technology_production +
         (.data$initial_sector_production * .data$smsp)
     ) %>%
-    dplyr::select(
+    select(
       -c(
         .data$tmsr,
         .data$smsp,
@@ -99,18 +99,18 @@ target_market_share_portfolio <- function(data) {
       technology = "technology",
       target_name = "which_metric"
     )) %>%
-    dplyr::select(-.data$target_name) %>%
+    select(-.data$target_name) %>%
     tidyr::pivot_wider(
       names_from = .data$scenario,
       names_prefix = "weighted_production_target_",
       values_from = .data$scenario_target_value
     ) %>%
-    dplyr::rename(weighted_production_portfolio = .data$weighted_production) %>%
+    rename(weighted_production_portfolio = .data$weighted_production) %>%
     tidyr::pivot_longer(
       cols = dplyr::starts_with("weighted_production_"),
       names_prefix = "weighted_production_",
       names_to = "weighted_production_metric",
       values_to = "weighted_production_value"
     ) %>%
-    dplyr::group_by(!!!old_groups)
+    group_by(!!!old_groups)
 }

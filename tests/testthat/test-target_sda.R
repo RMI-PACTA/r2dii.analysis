@@ -1,7 +1,6 @@
 library(r2dii.data)
 library(r2dii.match)
 library(dplyr)
-library(glue)
 
 test_that("with fake data outputs known value", {
   out <- target_sda(
@@ -52,7 +51,7 @@ test_that("with bad `data` errors with informative message", {
 })
 
 test_that("w/ missing crucial names errors gracefully", {
-  bad <- function(data, x) rename(data, bad = one_of(x))
+  bad <- function(data, x) rename(data, bad = dplyr::one_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
                                          ald = fake_ald(),
@@ -86,11 +85,11 @@ test_that("with known input outputs as expected", {
 
   valid_matches <- fake_matched(
     sector_ald = sectors,
-    name_ald = glue("{sectors}_company")
+    name_ald = sprintf("%s_company", sectors)
   )
 
   ald <- fake_ald(
-    name_company = glue("{sectors}_company"),
+    name_company = sprintf("%s_company", sectors),
     sector = sectors,
     year = 2020,
     emission_factor = c(0.6, 1.6)
@@ -117,7 +116,7 @@ test_that("with known input outputs as expected", {
 
 test_that("without `sector` throws no error", {
   # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
-  without_sector <- dplyr::select(fake_matched(), -sector)
+  without_sector <- select(fake_matched(), -sector)
   expect_error_free(
     target_sda(
       without_sector,
@@ -150,7 +149,7 @@ test_that("properly weights emissions factors", {
   )
 
   initial_data <- out %>%
-    dplyr::filter(
+    filter(
       year == 2020,
       emission_factor_name == "portfolio_weighted_emission_factor"
     )

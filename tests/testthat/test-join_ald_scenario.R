@@ -1,4 +1,4 @@
-library(tibble)
+library(dplyr)
 library(r2dii.data)
 library(r2dii.match)
 
@@ -127,7 +127,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
 })
 
 test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
-  bad <- function(data, x) dplyr::rename(data, bad = x)
+  bad <- function(data, x) rename(data, bad = x)
 
   expect_error_missing_names <- function(match_result = fake_matched(),
                                          ald = fake_ald(),
@@ -155,7 +155,7 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
 
 test_that("without `sector` throws no error", {
   # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
-  without_sector <- dplyr::select(fake_matched(), -sector)
+  without_sector <- select(fake_matched(), -sector)
   expect_error_free(
     join_ald_scenario(
       without_sector,

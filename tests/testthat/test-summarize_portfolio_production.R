@@ -35,8 +35,8 @@ test_that("outputs uniquely identifiable scenario targets (#87)", {
     tmsr = c(1, 2)
   )
   out <- summarize_portfolio_production(master) %>%
-    dplyr::group_by_at(dplyr::vars(-c(tmsr, smsp))) %>%
-    dplyr::summarise(
+    group_by_at(dplyr::vars(-c(tmsr, smsp))) %>%
+    summarize(
       distinct_tmsr = n_distinct(tmsr),
       distinct_smsp = n_distinct(smsp)
     )

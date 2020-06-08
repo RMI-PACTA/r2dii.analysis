@@ -26,14 +26,13 @@ Warning:
 
 – <https://www.tidyverse.org/lifecycle/#experimental>
 
-These tools implement in R a fundamental part of the software PACTA
-(Paris Agreement Capital Transition Assessment), which is a free tool
-that calculates the alignment between financial portfolios and climate
-scenarios (<https://2degrees-investing.org/>). Financial institutions
-use PACTA to study how their capital allocation impacts the climate.
-This package provides a suite of metrics and analysis tools commonly
-used for climate scenario analysis. For more information visit
-<https://2degrees-investing.org/>.
+These tools help you to assess if a financial portfolio aligns with
+climate goals. They summarize the production of a financial portfolio
+and calculate targets for a given climate scenario. These tools
+implement in R the last step of the free software PACTA (Paris Agreement
+Capital Transition Assessment; <https://2degrees-investing.org/>).
+Financial institutions use PACTA to study how their capital allocation
+impacts the climate.
 
 ## Installation
 
@@ -140,18 +139,4 @@ loanbook_joined_to_ald_scenario %>%
 loanbook_joined_to_ald_scenario %>% 
   summarize_portfolio_production() %>% 
   target_market_share_portfolio()
-#> # A tibble: 936 x 6
-#>    sector    technology  year region weighted_production_… weighted_production_…
-#>    <chr>     <chr>      <int> <chr>  <chr>                                 <dbl>
-#>  1 automoti… electric    2020 global portfolio                           148935.
-#>  2 automoti… electric    2020 global target_cps                          148935.
-#>  3 automoti… electric    2020 global target_sds                          148935.
-#>  4 automoti… electric    2020 global target_sps                          148935.
-#>  5 automoti… electric    2021 global portfolio                           150875.
-#>  6 automoti… electric    2021 global target_cps                          151589.
-#>  7 automoti… electric    2021 global target_sds                          165045.
-#>  8 automoti… electric    2021 global target_sps                          152307.
-#>  9 automoti… electric    2022 global portfolio                           152816.
-#> 10 automoti… electric    2022 global target_cps                          154188.
-#> # … with 926 more rows
 ```

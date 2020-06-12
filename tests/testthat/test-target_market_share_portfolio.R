@@ -17,7 +17,7 @@ test_that("with fake data outputs known value", {
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
-    data <- dplyr::rename(
+    data <- rename(
       summarize_portfolio_production(fake_master()),
       bad = name
     )
@@ -82,7 +82,7 @@ test_that("outputs expected names", {
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     summarize_portfolio_production() %>%
-    dplyr::group_by(.data$sector) %>%
+    group_by(.data$sector) %>%
     target_market_share_portfolio()
 
   expect_equal(dplyr::group_vars(out), "sector")
@@ -101,7 +101,7 @@ test_that("with known input outputs as expected", {
   )
   out <- target_market_share_portfolio(data)
   out_target <- out %>%
-    dplyr::filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds")
 
   expect_equal(out_target$weighted_production_value, c(200, 250, 353, 150))
 })
@@ -117,10 +117,10 @@ test_that("portfolio values and targets have identical values at start year (#87
     weighted_production = c(200, 250, 100, 150)
   )
   out <- target_market_share_portfolio(data) %>%
-    dplyr::filter(year == min(year)) %>%
-    dplyr::group_by(sector, technology, region) %>%
-    dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
-    dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
+    filter(year == min(year)) %>%
+    group_by(sector, technology, region) %>%
+    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
 

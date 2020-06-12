@@ -1,6 +1,6 @@
 #' Minimal explicit loanbook and ald datasets that allow overwriting values
 #'
-#' These funtions are developer-oriented. They all call [tibble::tibble()] so
+#' These funtions are developer-oriented. They all call [tibble()] so
 #' you can expect all the goodies that come with that.
 #' * `fake_matched()` fakes the ouput of `match_name()`.
 #' * `fake_portfolio` is a minimal output of [r2dii.analysis::portfolio]
@@ -41,7 +41,7 @@ fake_matched <- function(id_loan = NULL,
                          name_ald = NULL,
                          sector_ald = NULL,
                          ...) {
-  tibble::tibble(
+  tibble(
     id_loan = id_loan %||% "L162",
     loan_size_outstanding =  loan_size_outstanding %||% 1,
     loan_size_credit_limit =  loan_size_credit_limit %||% 2,
@@ -65,7 +65,7 @@ fake_ald <- function(name_company = NULL,
                      emission_factor = NULL,
                      plant_location = NULL,
                      ...) {
-  tibble::tibble(
+  tibble(
     name_company = name_company %||% "shaanxi auto",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
@@ -88,7 +88,7 @@ fake_scenario <- function(scenario = NULL,
                           smsp = NULL,
                           scenario_source = NULL,
                           ...) {
-  tibble::tibble(
+  tibble(
     scenario = scenario %||% "sds",
     sector = sector %||% "automotive",
     technology = technology %||% "ice",
@@ -109,7 +109,7 @@ fake_co2_scenario <- function(scenario = NULL,
                               emission_factor_unit = NULL,
                               scenario_source = NULL,
                               ...) {
-  tibble::tibble(
+  tibble(
     scenario = scenario %||% "b2ds",
     sector = sector %||% "cement",
     region = region %||% "global",
@@ -137,7 +137,7 @@ fake_master <- function(id_loan = NULL,
                         tmsr = NULL,
                         smsp = NULL,
                         ...) {
-  tibble::tibble(
+  tibble(
     id_loan =   id_loan %||% "L162",
     loan_size_outstanding =  loan_size_outstanding %||% 1,
     loan_size_credit_limit =  loan_size_credit_limit %||% 2,

@@ -7,28 +7,28 @@ test_that("with bad `data` errors with informative message", {
 test_that("with bad use_credit_limit errors with informative message", {
   expect_error(
     summarize_weighted_production(fake_master(), use_credit_limit = "bad"),
-    "logical.*not*.TRUE"
+    "not TRUE"
   )
 
   expect_error(
     summarize_weighted_production(fake_master(), use_credit_limit = 1),
-    "logical.*not*.TRUE"
+    "not TRUE"
   )
 
   expect_error(
     summarize_weighted_production(fake_master(), use_credit_limit = NA),
-    "is.na"
+    "not TRUE"
   )
 
   expect_error(
     summarize_weighted_production(fake_master(), use_credit_limit = NULL),
-    "logical.*not*.TRUE"
+    "not TRUE"
   )
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name, use_credit_limit = FALSE) {
-    data <- dplyr::rename(fake_master(), bad = name)
+    data <- rename(fake_master(), bad = name)
 
     expect_error(
       class = "missing_names",
@@ -71,12 +71,12 @@ test_that("with NAs in crucial columns errors with informative message", {
 })
 
 test_that("with bad but unused loan_size_column is error free", {
-  bad_unused <- dplyr::rename(fake_master(), bad = "loan_size_credit_limit")
+  bad_unused <- rename(fake_master(), bad = "loan_size_credit_limit")
   expect_error_free(
     summarize_weighted_production(bad_unused, use_credit_limit = FALSE)
   )
 
-  bad_unused <- dplyr::rename(fake_master(), bad = "loan_size_outstanding")
+  bad_unused <- rename(fake_master(), bad = "loan_size_outstanding")
   expect_error_free(
     add_weighted_loan_production(bad_unused, use_credit_limit = TRUE)
   )
@@ -154,7 +154,7 @@ test_that("with multiple years outputs as expected", {
 
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
-    dplyr::group_by(.data$sector) %>%
+    group_by(.data$sector) %>%
     summarize_weighted_production()
 
   expect_equal(dplyr::group_vars(out), "sector")
@@ -168,7 +168,7 @@ test_that("can group by `plant_location`", {
 
 test_that("preserves groups passed to ...", {
   data <- fake_master(plant_location = c("a", "b")) %>%
-    dplyr::group_by(plant_location)
+    group_by(plant_location)
 
   out <- summarize_weighted_production(data, plant_location)
   expect_equal(nrow(out), 2L)

@@ -40,6 +40,7 @@ target_market_share_company(company_production)
 \seealso{
 Other functions to calculate scenario targets: 
 \code{\link{target_market_share_portfolio}()},
+\code{\link{target_market_share}()},
 \code{\link{target_sda}()}
 }
 \concept{functions to calculate scenario targets}

@@ -1,5 +1,5 @@
 Package: r2dii.analysis
-Title: Align a Financial Portfolio with Climate Goals
+Title: Tools to Calculate Climate Targets for Financial Portfolios
 Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Mauro",

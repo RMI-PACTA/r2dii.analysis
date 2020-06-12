@@ -158,6 +158,7 @@ test_that("with known input outputs as expected", {
     dplyr::filter(weighted_production_metric == "target_sds")
 
   expect_equal(out_target$weighted_production_value, c(200, 353, 250, 150))
+  # styler: on
 })
 
 test_that("with known input outputs as expected, at company level", {
@@ -197,6 +198,7 @@ test_that("with known input outputs as expected, at company level", {
     out_target$weighted_production_value,
     c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
   )
+  # styler: on
 })
 
 test_that("portfolio values and targets have identical values at start year (#87)", {

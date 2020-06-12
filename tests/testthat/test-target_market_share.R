@@ -212,7 +212,6 @@ test_that("portfolio values and targets have identical values at start year (#87
     weighted_production = c(200, 250, 100, 150)
   )
 
-
   ald <- fake_ald(
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2020, 2020),
@@ -227,7 +226,6 @@ test_that("portfolio values and targets have identical values at start year (#87
     tmsr = 1,
     smsp = 0
   )
-
 
   test <- fake_matched() %>%
     join_ald_scenario(ald, scenario, region_isos_demo) %>%

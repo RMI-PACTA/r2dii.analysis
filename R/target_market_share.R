@@ -38,7 +38,7 @@ target_market_share <- function(data,
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)
-  purrr::walk(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
+  walk(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   summary_groups <- maybe_add_name_ald(
     c("scenario", "tmsr", "smsp", "region"),

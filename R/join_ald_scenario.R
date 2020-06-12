@@ -65,19 +65,19 @@ warn_if_has_zero_rows <- function(data, message) {
 
 check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
   check_crucial_names(valid_matches, names(ald_columns()))
-  purrr::walk(names(ald_columns()), ~ check_no_value_is_missing(valid_matches, .x))
+  walk(names(ald_columns()), ~ check_no_value_is_missing(valid_matches, .x))
 
   check_crucial_names(
     ald, c("name_company", "plant_location", unname(scenario_columns()))
   )
-  purrr::walk(
+  walk(
     c("name_company", unname(scenario_columns())),
     ~ check_no_value_is_missing(ald, .x)
   )
 
 
   check_crucial_names(scenario, c(scenario_columns(), "scenario_source", "region"))
-  purrr::walk(
+  walk(
     c(scenario_columns(), "scenario_source", "region"),
     ~ check_no_value_is_missing(scenario, .x)
   )

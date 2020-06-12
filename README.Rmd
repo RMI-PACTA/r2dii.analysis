@@ -67,28 +67,31 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 * Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ```{r}
-target_sda(matched, 
-           ald = ald_demo, 
-           co2_intensity_scenario = co2_intensity_scenario_demo)
+target_sda(matched,
+  ald = ald_demo,
+  co2_intensity_scenario = co2_intensity_scenario_demo
+)
 ```
 
 * Use `target_market_share` to calculate market-share scenario targets at the portfolio level:
 
 ```{r}
-target_market_share(matched, 
-                    ald = ald_demo, 
-                    scenario = scenario_demo_2020, 
-                    region_isos = region_isos_demo)
+target_market_share(matched,
+  ald = ald_demo,
+  scenario = scenario_demo_2020,
+  region_isos = region_isos_demo
+)
 ```
 
 * ... or at the company level:
 
 ```{r}
-target_market_share(matched, 
-                    ald = ald_demo, 
-                    scenario = scenario_demo_2020, 
-                    region_isos = region_isos_demo,
-                    by_company = TRUE)
+target_market_share(matched,
+  ald = ald_demo,
+  scenario = scenario_demo_2020,
+  region_isos = region_isos_demo,
+  by_company = TRUE
+)
 ```
 
 ### Utility Functions
@@ -99,10 +102,10 @@ some utility functions that may be of interest to some analysts:
 scenario data, and to pick assets in the relevant regions. 
 
 ```{r}
-loanbook_joined_to_ald_scenario <- matched %>% 
+loanbook_joined_to_ald_scenario <- matched %>%
   join_ald_scenario(
-    ald = ald_demo, 
-    scenario = scenario_demo_2020, 
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
 ```
@@ -112,10 +115,10 @@ calculate scenario-targets:
 
 ```{r}
 # portfolio level
-loanbook_joined_to_ald_scenario %>% 
+loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
 
 # company level
-loanbook_joined_to_ald_scenario %>% 
+loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
 ```

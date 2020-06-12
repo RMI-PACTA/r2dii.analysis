@@ -73,9 +73,10 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 <!-- end list -->
 
 ``` r
-target_sda(matched, 
-           ald = ald_demo, 
-           co2_intensity_scenario = co2_intensity_scenario_demo)
+target_sda(matched,
+  ald = ald_demo,
+  co2_intensity_scenario = co2_intensity_scenario_demo
+)
 #> # A tibble: 28 x 4
 #> # Groups:   sector [1]
 #>    sector  year emission_factor_name               emission_factor_value
@@ -99,10 +100,11 @@ target_sda(matched,
 <!-- end list -->
 
 ``` r
-target_market_share(matched, 
-                    ald = ald_demo, 
-                    scenario = scenario_demo_2020, 
-                    region_isos = region_isos_demo)
+target_market_share(matched,
+  ald = ald_demo,
+  scenario = scenario_demo_2020,
+  region_isos = region_isos_demo
+)
 #> # A tibble: 936 x 6
 #>    sector    technology  year region weighted_production_… weighted_production_…
 #>    <chr>     <chr>      <int> <chr>  <chr>                                 <dbl>
@@ -124,11 +126,12 @@ target_market_share(matched,
 <!-- end list -->
 
 ``` r
-target_market_share(matched, 
-                    ald = ald_demo, 
-                    scenario = scenario_demo_2020, 
-                    region_isos = region_isos_demo,
-                    by_company = TRUE)
+target_market_share(matched,
+  ald = ald_demo,
+  scenario = scenario_demo_2020,
+  region_isos = region_isos_demo,
+  by_company = TRUE
+)
 #> # A tibble: 12,756 x 7
 #>    sector  technology  year region name_ald    weighted_produc… weighted_produc…
 #>    <chr>   <chr>      <int> <chr>  <chr>       <chr>                       <dbl>
@@ -157,10 +160,10 @@ analysts:
 <!-- end list -->
 
 ``` r
-loanbook_joined_to_ald_scenario <- matched %>% 
+loanbook_joined_to_ald_scenario <- matched %>%
   join_ald_scenario(
-    ald = ald_demo, 
-    scenario = scenario_demo_2020, 
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
 ```
@@ -172,7 +175,7 @@ loanbook_joined_to_ald_scenario <- matched %>%
 
 ``` r
 # portfolio level
-loanbook_joined_to_ald_scenario %>% 
+loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
 #> # A tibble: 702 x 8
 #>    sector     technology  year scenario  tmsr    smsp region weighted_production
@@ -190,7 +193,7 @@ loanbook_joined_to_ald_scenario %>%
 #> # … with 692 more rows
 
 # company level
-loanbook_joined_to_ald_scenario %>% 
+loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
 #> # A tibble: 9,567 x 9
 #>    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…

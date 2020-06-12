@@ -31,26 +31,28 @@
 #'   r2dii.match::match_name(r2dii.data::ald_demo) %>%
 #'   r2dii.match::prioritize()
 #'
-#'# calculate targets at portfolio level
+#' # calculate targets at portfolio level
 #' target_market_share(match_result,
-#'                     ald = r2dii.data::ald_demo,
-#'                     scenario = r2dii.data::scenario_demo_2020,
-#'                     region_isos = r2dii.data::region_isos_demo)
+#'   ald = r2dii.data::ald_demo,
+#'   scenario = r2dii.data::scenario_demo_2020,
+#'   region_isos = r2dii.data::region_isos_demo
+#' )
 #'
-#'# calculate targets at company level
+#' # calculate targets at company level
 #' target_market_share(match_result,
-#'                     ald = r2dii.data::ald_demo,
-#'                     scenario = r2dii.data::scenario_demo_2020,
-#'                     region_isos = r2dii.data::region_isos_demo,
-#'                     by_company = TRUE)
+#'   ald = r2dii.data::ald_demo,
+#'   scenario = r2dii.data::scenario_demo_2020,
+#'   region_isos = r2dii.data::region_isos_demo,
+#'   by_company = TRUE
+#' )
 #'
-#'# calculate targets using credit_limit
+#' # calculate targets using credit_limit
 #' target_market_share(match_result,
-#'                     ald = r2dii.data::ald_demo,
-#'                     scenario = r2dii.data::scenario_demo_2020,
-#'                     region_isos = r2dii.data::region_isos_demo,
-#'                     use_credit_limit = TRUE)
-
+#'   ald = r2dii.data::ald_demo,
+#'   scenario = r2dii.data::scenario_demo_2020,
+#'   region_isos = r2dii.data::region_isos_demo,
+#'   use_credit_limit = TRUE
+#' )
 target_market_share <- function(data,
                                 ald,
                                 scenario,

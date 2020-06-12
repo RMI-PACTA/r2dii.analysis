@@ -31,7 +31,7 @@ We define the "Technology Market Share Ratio" as:
 
 $$\dfrac{s_i(t)}{s_i(t_0)}$$
 
-### 2. Market-Xshare by sector
+### 2. Market-share by sector
 
 $$p_{i}^{smsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)$$
 where:

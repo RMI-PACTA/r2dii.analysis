@@ -1,7 +1,5 @@
 #' @importFrom dplyr arrange distinct filter first full_join group_by
-#' @importFrom dplyr if_else inner_join last left_join mutate n one_of rename
-#' @importFrom dplyr right_join row_number select summarize ungroup
-#' @importFrom rlang %||% abort warn set_names
-#' @importFrom glue glue
-#' @importFrom r2dii.utils check_crucial_names
+#' @importFrom dplyr inner_join last left_join mutate rename
+#' @importFrom dplyr row_number select summarize tibble ungroup
+#' @importFrom rlang %||% abort
 NULL

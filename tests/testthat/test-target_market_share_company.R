@@ -18,7 +18,7 @@ test_that("with fake data outputs known value", {
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
     data <- summarize_company_production(fake_master()) %>%
-      dplyr::rename(bad = name)
+      rename(bad = name)
 
     expect_error(
       class = "missing_names",
@@ -36,7 +36,23 @@ test_that("with data lacking crucial columns errors with informative message", {
 })
 
 test_that("with NAs in crucial columns errors with informative message", {
-  expect_error_crucial_NAs <- function(name) {
+  data <- fake_master(
+    technology = c("ta", "ta", "tb", "tb"),
+    id_loan = c("i1", "i2", "i1", "i2"),
+    loan_size_outstanding = c(40, 10, 40, 10),
+    production = c(10, 30, 20, 40),
+  ) %>%
+    summarize_company_production()
+
+  data[1, "smsp"] <- NA
+  path <- test_path(
+    "output", "target_market_share_company-some_value_is_missing.txt"
+  )
+  verify_output(path, target_market_share_company(data))
+})
+
+test_that("with NAs in crucial columns throws error of expected class", {
+  expect_error_crucial_NAs <- function(name, data = this_data) {
     data <- fake_master(
       technology = c("ta", "ta", "tb", "tb"),
       id_loan = c("i1", "i2", "i1", "i2"),
@@ -46,6 +62,7 @@ test_that("with NAs in crucial columns errors with informative message", {
       summarize_company_production()
 
     data[1, name] <- NA
+
     expect_error(
       class = "some_value_is_missing",
       target_market_share_company(data)
@@ -83,7 +100,7 @@ test_that("outputs expected names", {
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     summarize_company_production() %>%
-    dplyr::group_by(.data$sector) %>%
+    group_by(.data$sector) %>%
     target_market_share_company()
 
   expect_equal(dplyr::group_vars(out), "sector")
@@ -102,7 +119,7 @@ test_that("with known input outputs as expected", {
   )
   out <- target_market_share_company(data)
   out_target <- out %>%
-    dplyr::filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds")
 
   expect_equal(
     out_target$weighted_production_value,
@@ -123,10 +140,10 @@ test_that("portfolio values and targets have identical values at start year (#87
     weighted_production = c(200, 250, 100, 150)
   )
   out <- target_market_share_company(data) %>%
-    dplyr::filter(year == min(year)) %>%
-    dplyr::group_by(sector, technology, region, name_ald) %>%
-    dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
-    dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
+    filter(year == min(year)) %>%
+    group_by(sector, technology, region, name_ald) %>%
+    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
 

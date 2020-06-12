@@ -88,15 +88,15 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
 
   start_year <- co2_intensity_scenario %>%
-    dplyr::select(.data$sector, .data$year) %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::summarize(start_year = min(.data$year))
+    select(.data$sector, .data$year) %>%
+    group_by(.data$sector) %>%
+    summarize(start_year = min(.data$year))
 
   ald <- ald %>%
-    dplyr::left_join(start_year, by = "sector") %>%
-    dplyr::filter(.data$year >= .data$start_year) %>%
-    dplyr::filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
-    dplyr::select(-.data$start_year)
+    left_join(start_year, by = "sector") %>%
+    filter(.data$year >= .data$start_year) %>%
+    filter(!is.na(.data$emission_factor), !is.na(.data$production)) %>%
+    select(-.data$start_year)
 
   ald_market_average <- calculate_market_average(ald)
 
@@ -174,7 +174,7 @@ add_py_and_g_to_scenario <- function(co2_intensity_scenario) {
 add_sda_market_benchmark_target <- function(co2_intensity_scenario_with_py_and_g,
                                             ald_sda_market_benchmark) {
   co2_intensity_scenario_with_py_and_g %>%
-    filter(row_number() == 1L | row_number() == n()) %>%
+    filter(row_number() == 1L | row_number() == dplyr::n()) %>%
     select(-.data$emission_factor, -.data$py) %>%
     left_join(ald_sda_market_benchmark, by = c("sector", "year")) %>%
     group_by(.data$sector) %>%
@@ -199,7 +199,7 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
     summarize(
       portfolio_weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
     ) %>%
-    dplyr::rename(sector = .data$sector_ald)
+    rename(sector = .data$sector_ald)
 }
 
 add_loan_weighted_emission_factor <- function(data, use_credit_limit) {

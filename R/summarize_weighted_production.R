@@ -34,19 +34,18 @@
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   data %>%
     add_weighted_loan_production(use_credit_limit = use_credit_limit) %>%
-    dplyr::group_by(.data$sector, .data$technology, .data$year, ...) %>%
-    dplyr::summarize(
+    group_by(.data$sector, .data$technology, .data$year, ...) %>%
+    summarize(
       weighted_production = sum(.data$weighted_loan_production)
     ) %>%
     # Restore old groups
-    dplyr::group_by(!!!dplyr::groups(data))
+    group_by(!!!dplyr::groups(data))
 }
 
 add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
   stopifnot(
     is.data.frame(data),
-    !is.na(use_credit_limit),
-    is.logical(use_credit_limit)
+    isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )
 
   loan_size <- paste0(
@@ -62,43 +61,40 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
     "year"
   )
   check_crucial_names(data, crucial)
-  purrr::walk(crucial, ~ check_no_value_is_missing(data, .x))
+  walk(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
-  data <- dplyr::ungroup(data)
+  data <- ungroup(data)
 
   distinct_loans_by_sector <- data %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(.data$sector) %>%
-    dplyr::distinct(.data$id_loan, .data[[loan_size]]) %>%
+    ungroup() %>%
+    group_by(.data$sector) %>%
+    distinct(.data$id_loan, .data[[loan_size]]) %>%
     check_unique_loan_size_values_per_id_loan()
 
   total_size_by_sector <- distinct_loans_by_sector %>%
-    dplyr::summarize(total_size = sum(.data[[loan_size]]))
+    summarize(total_size = sum(.data[[loan_size]]))
 
   data %>%
-    dplyr::left_join(total_size_by_sector, by = "sector") %>%
-    dplyr::mutate(
+    left_join(total_size_by_sector, by = "sector") %>%
+    mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
       weighted_loan_production = .data$production * .data$loan_weight
     ) %>%
-    dplyr::group_by(!!!old_groups)
+    group_by(!!!old_groups)
 }
 
 check_unique_loan_size_values_per_id_loan <- function(data) {
   dups <- data %>%
-    dplyr::group_by(.data$sector, .data$id_loan) %>%
-    dplyr::mutate(is_duplicated = any(duplicated(.data$id_loan))) %>%
-    dplyr::ungroup() %>%
-    dplyr::filter(.data$is_duplicated)
+    group_by(.data$sector, .data$id_loan) %>%
+    mutate(is_duplicated = any(duplicated(.data$id_loan))) %>%
+    ungroup() %>%
+    filter(.data$is_duplicated)
 
   if (nrow(dups) > 0L) {
-    rlang::abort(
+    abort(
       class = "multiple_loan_size_values_by_id_loan",
-      # TODO: Print `dups` in the error message (maybe its head).
-      glue::glue(
-        "Every `id_loan` by `sector` must have unique `loan_size*` values."
-      )
+      "Every `id_loan` by `sector` must have unique `loan_size*` values."
     )
   }
 

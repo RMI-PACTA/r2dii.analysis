@@ -1,5 +1,6 @@
 Package: r2dii.analysis
-Title: Tools for Climate Scenario Analysis
+Title: Tools to Calculate Climate Targets for Financial
+    Portfolios
 Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Mauro",
@@ -27,10 +28,15 @@ Authors@R:
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: Provides a suite of metrics and analysis tools
-    commonly used for climate scenario analysis. For more information
-    visit <https://2degrees-investing.org/>.
-License: GPL-3 + file LICENSE
+Description: These tools help you to assess if a financial
+    portfolio aligns with climate goals. They summarize key metrics
+    attributed to the portfolio (e.g. production, emission factors), and
+    calculate targets based on climate scenarios. They implement in R the
+    last step of the free software 'PACTA' (Paris Agreement Capital
+    Transition Assessment; <https://2degrees-investing.org/>). Financial
+    institutions use 'PACTA' to study how their capital allocation impacts
+    the climate.
+License: GPL-3
 URL: https://github.com/2DegreesInvesting/r2dii.analysis
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.analysis/issues
@@ -38,23 +44,15 @@ Depends:
     R (>= 3.4)
 Imports: 
     dplyr,
-    glue,
     magrittr,
-    purrr,
-    r2dii.utils (>= 0.0.0.9003),
-    rlang (>= 0.1.2),
-    tibble,
+    rlang,
     tidyr
 Suggests: 
     covr,
-    r2dii.data (>= 0.0.3.9000),
+    r2dii.data,
     r2dii.match,
     spelling,
-    testthat (>= 2.1.0),
-    withr
-Remotes: 
-    2degreesinvesting/r2dii.data,
-    2DegreesInvesting/r2dii.utils
+    testthat (>= 2.1.0)
 Encoding: UTF-8
 Language: en-US
 LazyData: true

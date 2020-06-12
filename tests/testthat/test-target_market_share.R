@@ -181,10 +181,6 @@ test_that("with known input outputs as expected, at company level", {
     smsp = c(0, 0, 0.34, -0.2, 0, 0, 0.34, -0.2)
   )
 
-  test <- portfolio %>%
-    join_ald_scenario(ald, scenario, region_isos_demo) %>%
-    summarize_company_production()
-
   out <- target_market_share(portfolio,
     ald,
     scenario,
@@ -227,11 +223,6 @@ test_that("portfolio values and targets have identical values at start year (#87
     tmsr = 1,
     smsp = 0
   )
-
-
-  test <- fake_matched() %>%
-    join_ald_scenario(ald, scenario, region_isos_demo) %>%
-    summarize_portfolio_production()
 
   out <- target_market_share(
     fake_matched(),

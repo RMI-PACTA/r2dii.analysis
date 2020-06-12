@@ -40,6 +40,9 @@ This function calculates the portfolio-level production targets, as
 calculated using either the technology market share ratio \code{tmsr} or sector
 market share percentage \code{smsp}.
 }
+\examples{
+
+}
 \seealso{
 Other functions to calculate scenario targets: 
 \code{\link{target_market_share_company}()},

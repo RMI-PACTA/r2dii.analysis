@@ -14,7 +14,7 @@
 #'   scenario.
 #' @export
 #'
-#' @family join datasets
+#' @family utility functions
 #'
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&

@@ -29,9 +29,11 @@ Warning:
 -- <https://www.tidyverse.org/lifecycle/#experimental>
 
 These tools help you to assess if a financial portfolio aligns with climate
-goals. They summarize the production of a financial portfolio and calculate
-targets for a given climate scenario. These tools implement in R the last step
-of the free software PACTA (Paris Agreement Capital Transition Assessment; <https://2degrees-investing.org/>). Financial institutions use PACTA to
+goals. They summarize key metrics attributed to the portfolio (e.g.
+production, emission factors), and calculate targets based on climate
+scenarios. They implement in R the last step of the free software 'PACTA'
+(Paris Agreement Capital Transition Assessment;
+<https://2degrees-investing.org/>). Financial institutions use 'PACTA' to
 study how their capital allocation impacts the climate.
 
 ## Installation

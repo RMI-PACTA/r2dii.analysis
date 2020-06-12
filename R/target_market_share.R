@@ -23,14 +23,13 @@
 #' @family functions to calculate scenario targets
 #'
 #' @examples
-
+#'
 target_market_share <- function(data,
                                 ald,
                                 scenario,
                                 region_isos = r2dii.data::region_isos,
                                 use_credit_limit = FALSE,
-                                by_company = FALSE
-                                ) {
+                                by_company = FALSE) {
   stopifnot(is.data.frame(data))
 
   old_groups <- dplyr::groups(data)
@@ -44,12 +43,14 @@ target_market_share <- function(data,
   summary_groups <- maybe_add_name_ald(
     c("scenario", "tmsr", "smsp", "region"),
     by_company
-    )
+  )
 
   data <- data %>%
-    join_ald_scenario(ald,
-                      scenario,
-                      region_isos) %>%
+    join_ald_scenario(
+      ald,
+      scenario,
+      region_isos
+    ) %>%
     summarize_weighted_production(
       !!!rlang::syms(summary_groups),
       use_credit_limit = use_credit_limit
@@ -59,13 +60,15 @@ target_market_share <- function(data,
 
   initial_sector_summaries <- data %>%
     maybe_group_by_name_ald(target_groups,
-                            by_company = by_company) %>%
+      by_company = by_company
+    ) %>%
     dplyr::summarize(
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
     maybe_group_by_name_ald(c("sector", "scenario", "region"),
-                            by_company = by_company) %>%
+      by_company = by_company
+    ) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
     dplyr::rename(
       initial_sector_production = .data$sector_weighted_production
@@ -74,13 +77,15 @@ target_market_share <- function(data,
 
   initial_technology_summaries <- data %>%
     maybe_group_by_name_ald(c(target_groups, "technology"),
-                            by_company = by_company) %>%
+      by_company = by_company
+    ) %>%
     dplyr::summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     dplyr::arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector", "technology","scenario", "region"),
-                            by_company = by_company) %>%
+    maybe_group_by_name_ald(c("sector", "technology", "scenario", "region"),
+      by_company = by_company
+    ) %>%
     dplyr::filter(dplyr::row_number() == 1L) %>%
     dplyr::rename(
       initial_technology_production = .data$technology_weighted_production
@@ -91,12 +96,14 @@ target_market_share <- function(data,
     dplyr::left_join(
       initial_sector_summaries,
       by = maybe_add_name_ald(c("sector", "scenario", "region"),
-                              by_company = by_company)
-      ) %>%
+        by_company = by_company
+      )
+    ) %>%
     dplyr::left_join(
       initial_technology_summaries,
       by = maybe_add_name_ald(c("sector", "scenario", "region", "technology"),
-                              by_company = by_company)
+        by_company = by_company
+      )
     ) %>%
     dplyr::mutate(
       tmsr_target_weighted_production = .data$initial_technology_production *
@@ -138,7 +145,7 @@ target_market_share <- function(data,
     dplyr::group_by(!!!old_groups)
 }
 
-maybe_add_name_ald <- function(data, by_company = FALSE){
+maybe_add_name_ald <- function(data, by_company = FALSE) {
   out <- data
 
   if (by_company) {
@@ -148,7 +155,7 @@ maybe_add_name_ald <- function(data, by_company = FALSE){
   return(out)
 }
 
-maybe_group_by_name_ald <- function(data, ..., by_company = FALSE){
+maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
   groups <- c(...)
 
   if (by_company) {

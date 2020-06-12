@@ -1,22 +1,28 @@
 test_that("with bad `data` errors with informative message", {
-  expect_error(target_market_share("bad",
-                                   fake_ald(),
-                                   fake_scenario()), "data.frame.*not.*TRUE")
+  expect_error(target_market_share(
+    "bad",
+    fake_ald(),
+    fake_scenario()
+  ), "data.frame.*not.*TRUE")
 })
 
 test_that("outputs a tibble", {
-  out <- target_market_share(fake_matched(),
-                             fake_ald(),
-                             fake_scenario(),
-                             region_isos_demo)
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_demo
+  )
   expect_is(out, "tbl_df")
 })
 
 test_that("with fake data outputs known value", {
-  out <- target_market_share(fake_matched(),
-                             fake_ald(),
-                             fake_scenario(),
-                             region_isos_demo)
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_demo
+  )
 
   expect_known_value(out, "ref-target_market_share", update = FALSE)
 })
@@ -30,9 +36,11 @@ test_that("with data lacking crucial columns errors with informative message", {
 
     expect_error(
       class = "missing_names",
-      target_market_share(fake_matched(),
-                          fake_ald(),
-                          bad_scenario)
+      target_market_share(
+        fake_matched(),
+        fake_ald(),
+        bad_scenario
+      )
     )
   }
 
@@ -50,10 +58,12 @@ test_that("with NAs in crucial columns errors with informative message", {
     data[1, name] <- NA
     expect_error(
       class = "some_value_is_missing",
-      target_market_share(data,
-                          fake_ald(),
-                          fake_scenario(),
-                          region_isos_demo)
+      target_market_share(
+        data,
+        fake_ald(),
+        fake_scenario(),
+        region_isos_demo
+      )
     )
   }
 
@@ -66,10 +76,12 @@ test_that("with NAs in crucial columns errors with informative message", {
     data[1, name] <- NA
     expect_error(
       class = "some_value_is_missing",
-      target_market_share(fake_matched(),
-                          data,
-                          fake_scenario(),
-                          region_isos_demo)
+      target_market_share(
+        fake_matched(),
+        data,
+        fake_scenario(),
+        region_isos_demo
+      )
     )
   }
 
@@ -80,10 +92,12 @@ test_that("with NAs in crucial columns errors with informative message", {
 
     expect_error(
       class = "some_value_is_missing",
-      target_market_share(fake_matched(),
-                          fake_ald(),
-                          data,
-                          region_isos_demo)
+      target_market_share(
+        fake_matched(),
+        fake_ald(),
+        data,
+        region_isos_demo
+      )
     )
   }
 
@@ -99,10 +113,12 @@ test_that("with NAs in crucial columns errors with informative message", {
 })
 
 test_that("outputs expected names", {
-  out <- target_market_share(fake_matched(),
-                             fake_ald(),
-                             fake_scenario(),
-                             region_isos_demo)
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_demo
+  )
 
   expect_named(
     out,
@@ -169,15 +185,18 @@ test_that("with known input outputs as expected, at company level", {
     summarize_company_production()
 
   out <- target_market_share(portfolio,
-                             ald,
-                             scenario,
-                             region_isos_demo,
-                             by_company = TRUE)
+    ald,
+    scenario,
+    region_isos_demo,
+    by_company = TRUE
+  )
   out_target <- out %>%
     dplyr::filter(weighted_production_metric == "target_sds")
 
-  expect_equal(out_target$weighted_production_value,
-               c(20, 180, 47.2, 305.8, 60, 190, 36, 114))
+  expect_equal(
+    out_target$weighted_production_value,
+    c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
+  )
 })
 
 test_that("portfolio values and targets have identical values at start year (#87)", {
@@ -212,15 +231,16 @@ test_that("portfolio values and targets have identical values at start year (#87
     join_ald_scenario(ald, scenario, region_isos_demo) %>%
     summarize_portfolio_production()
 
-  out <- target_market_share(fake_matched(),
-                             ald,
-                             scenario,
-                             region_isos_demo) %>%
+  out <- target_market_share(
+    fake_matched(),
+    ald,
+    scenario,
+    region_isos_demo
+  ) %>%
     dplyr::filter(year == min(year)) %>%
     dplyr::group_by(sector, technology, region) %>%
     dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
     dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
-
 })

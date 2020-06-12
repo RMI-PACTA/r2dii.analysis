@@ -149,7 +149,7 @@ to calculate these targets.</p>
     <tr>
       <th>data</th>
       <td><p>A dataframe like the output of
-<code><a href='https://rdrr.io/pkg/r2dii.match/man/prioritize.html'>r2dii.match::prioritize()</a></code>.</p></td>
+<code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>r2dii.match::prioritize()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ald</th>
@@ -189,9 +189,9 @@ calculated portfolio target emissions factors (see column
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.data</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
 
-<span class='no'>valid_matches</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/r2dii.match/man/match_name.html'>match_name</a></span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>) <span class='kw'>%&gt;%</span>
+<span class='no'>valid_matches</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># WARNING: Remember to validate matches (see `?prioritize`)</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/r2dii.match/man/prioritize.html'>prioritize</a></span>()
+  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>()
 
 <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='no'>valid_matches</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>target_sda</span>(

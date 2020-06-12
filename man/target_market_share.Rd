@@ -70,7 +70,7 @@ target_market_share(match_result,
                     use_credit_limit = TRUE)
 }
 \seealso{
-Other functions to calculate scenario targets: 
+Other functions to calculate scenario targets:
 \code{\link{target_sda}()}
 }
 \concept{functions to calculate scenario targets}

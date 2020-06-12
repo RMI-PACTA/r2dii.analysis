@@ -208,7 +208,6 @@ test_that("portfolio values and targets have identical values at start year (#87
     weighted_production = c(200, 250, 100, 150)
   )
 
-
   ald <- fake_ald(
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2020, 2020),

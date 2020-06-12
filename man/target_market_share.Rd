@@ -40,6 +40,35 @@ This function calculates the portfolio-level production targets, as
 calculated using either the technology market share ratio \code{tmsr} or sector
 market share percentage \code{smsp}.
 }
+\examples{
+library(r2dii.analysis)
+library(r2dii.data)
+library(r2dii.match)
+
+match_result <- r2dii.data::loanbook_demo \%>\%
+  r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
+  r2dii.match::prioritize()
+
+# calculate targets at portfolio level
+target_market_share(match_result,
+                    ald = r2dii.data::ald_demo,
+                    scenario = r2dii.data::scenario_demo_2020,
+                    region_isos = r2dii.data::region_isos_demo)
+
+# calculate targets at company level
+target_market_share(match_result,
+                    ald = r2dii.data::ald_demo,
+                    scenario = r2dii.data::scenario_demo_2020,
+                    region_isos = r2dii.data::region_isos_demo,
+                    by_company = TRUE)
+
+# calculate targets using credit_limit
+target_market_share(match_result,
+                    ald = r2dii.data::ald_demo,
+                    scenario = r2dii.data::scenario_demo_2020,
+                    region_isos = r2dii.data::region_isos_demo,
+                    use_credit_limit = TRUE)
+}
 \seealso{
 Other functions to calculate scenario targets: 
 \code{\link{target_market_share_company}()},

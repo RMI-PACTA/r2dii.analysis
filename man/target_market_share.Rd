@@ -32,13 +32,14 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \code{weighted_production_value} at the company-level.}
 }
 \value{
-A tibble with the same groups as the input (if any) and columns:
-\code{tmsr_target_weighted_production} and \code{smsp_target_weighted_production}.
+A tibble with the same groups as the input (if any) and columns
+\code{weighted_production_metric} and \code{weighted_production_value}. If
+\code{by_company = TRUE}, the output will also have column \code{name_ald}.
 }
 \description{
 This function calculates the portfolio-level production targets, as
-calculated using either the technology market share ratio \code{tmsr} or sector
-market share percentage \code{smsp}.
+calculated using the market share approach applied to each relevant climate
+production forecast.
 }
 \examples{
 library(r2dii.analysis)
@@ -51,23 +52,26 @@ match_result <- r2dii.data::loanbook_demo \%>\%
 
 # calculate targets at portfolio level
 target_market_share(match_result,
-                    ald = r2dii.data::ald_demo,
-                    scenario = r2dii.data::scenario_demo_2020,
-                    region_isos = r2dii.data::region_isos_demo)
+  ald = r2dii.data::ald_demo,
+  scenario = r2dii.data::scenario_demo_2020,
+  region_isos = r2dii.data::region_isos_demo
+)
 
 # calculate targets at company level
 target_market_share(match_result,
-                    ald = r2dii.data::ald_demo,
-                    scenario = r2dii.data::scenario_demo_2020,
-                    region_isos = r2dii.data::region_isos_demo,
-                    by_company = TRUE)
+  ald = r2dii.data::ald_demo,
+  scenario = r2dii.data::scenario_demo_2020,
+  region_isos = r2dii.data::region_isos_demo,
+  by_company = TRUE
+)
 
 # calculate targets using credit_limit
 target_market_share(match_result,
-                    ald = r2dii.data::ald_demo,
-                    scenario = r2dii.data::scenario_demo_2020,
-                    region_isos = r2dii.data::region_isos_demo,
-                    use_credit_limit = TRUE)
+  ald = r2dii.data::ald_demo,
+  scenario = r2dii.data::scenario_demo_2020,
+  region_isos = r2dii.data::region_isos_demo,
+  use_credit_limit = TRUE
+)
 }
 \seealso{
 Other functions to calculate scenario targets: 

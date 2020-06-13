@@ -73,9 +73,11 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 <!-- end list -->
 
 ``` r
-target_sda(matched, 
-           ald = ald_demo, 
-           co2_intensity_scenario = co2_intensity_scenario_demo)
+target_sda(
+  matched, 
+  ald = ald_demo, 
+  co2_intensity_scenario = co2_intensity_scenario_demo
+  )
 #> # A tibble: 28 x 4
 #> # Groups:   sector [1]
 #>    sector  year emission_factor_name               emission_factor_value
@@ -99,10 +101,12 @@ target_sda(matched,
 <!-- end list -->
 
 ``` r
-target_market_share(matched, 
-                    ald = ald_demo, 
-                    scenario = scenario_demo_2020, 
-                    region_isos = region_isos_demo)
+target_market_share(
+  matched, 
+  ald = ald_demo, 
+  scenario = scenario_demo_2020, 
+  region_isos = region_isos_demo
+  )
 #> # A tibble: 936 x 6
 #>    sector    technology  year region weighted_production_… weighted_production_…
 #>    <chr>     <chr>      <int> <chr>  <chr>                                 <dbl>
@@ -124,11 +128,13 @@ target_market_share(matched,
 <!-- end list -->
 
 ``` r
-target_market_share(matched, 
-                    ald = ald_demo, 
-                    scenario = scenario_demo_2020, 
-                    region_isos = region_isos_demo,
-                    by_company = TRUE)
+target_market_share(
+  matched, 
+  ald = ald_demo, 
+  scenario = scenario_demo_2020, 
+  region_isos = region_isos_demo,
+  by_company = TRUE
+  )
 #> # A tibble: 12,756 x 7
 #>    sector  technology  year region name_ald    weighted_produc… weighted_produc…
 #>    <chr>   <chr>      <int> <chr>  <chr>       <chr>                       <dbl>
@@ -147,9 +153,9 @@ target_market_share(matched,
 
 ### Utility Functions
 
-While most of the joining and calculations occur under the hood, there
-are also some utility functions that may be of interest to some
-analysts:
+The target functions of this package bundle many operations together to
+allow ease of use. However, you may also find the following utility
+functions useful:
 
   - Use `join_ald_scenario()` to join a matched dataset to the relevant
     scenario data, and to pick assets in the relevant regions.

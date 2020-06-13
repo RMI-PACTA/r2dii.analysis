@@ -76,13 +76,11 @@ scenario <- r2dii.data::scenario_demo_2020
 regions <- r2dii.data::region_isos_demo
 
 
-matched %>%
-  target_market_share(ald, scenario, regions)
+matched %>% target_market_share(ald, scenario, regions)
 ```
 
 * Calculate market-share targets for production at the company level.
 
 ```{r}
-matched %>%
-  target_market_share(ald, scenario, regions, by_company = TRUE)
+matched %>% target_market_share(ald, scenario, regions, by_company = TRUE)
 ```

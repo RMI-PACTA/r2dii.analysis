@@ -100,8 +100,7 @@ matched %>%
 
 ### Utility Functions
 
-The target functions of this package bundle many operations together to allow 
-ease of use. However, you may also find the following utility functions useful:
+The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
 
 * Use `join_ald_scenario()` to join a matched dataset to the relevant 
 scenario data, and to pick assets in the relevant regions. 

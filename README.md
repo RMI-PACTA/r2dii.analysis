@@ -163,10 +163,10 @@ functions useful:
 <!-- end list -->
 
 ``` r
-loanbook_joined_to_ald_scenario <- matched %>% 
+loanbook_joined_to_ald_scenario <- matched %>%
   join_ald_scenario(
-    ald = ald_demo, 
-    scenario = scenario_demo_2020, 
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
 ```
@@ -178,7 +178,7 @@ loanbook_joined_to_ald_scenario <- matched %>%
 
 ``` r
 # portfolio level
-loanbook_joined_to_ald_scenario %>% 
+loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
 #> # A tibble: 702 x 8
 #>    sector     technology  year scenario  tmsr    smsp region weighted_production
@@ -196,7 +196,7 @@ loanbook_joined_to_ald_scenario %>%
 #> # … with 692 more rows
 
 # company level
-loanbook_joined_to_ald_scenario %>% 
+loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
 #> # A tibble: 9,567 x 9
 #>    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…

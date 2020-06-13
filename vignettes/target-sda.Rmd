@@ -84,7 +84,7 @@ library(r2dii.analysis)
 loanbook <- r2dii.data::loanbook_demo
 ald <- r2dii.data::ald_demo
 
-matched <- match_name(loanbook, ald) %>% 
+matched <- match_name(loanbook, ald) %>%
   # WARNING: Remember to validate the output of match_name() before prioritize()
   prioritize()
 
@@ -98,4 +98,3 @@ co2_intensity <- r2dii.data::co2_intensity_scenario_demo
 
 target_sda(matched, ald, co2_intensity)
 ```
-

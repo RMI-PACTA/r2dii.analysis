@@ -123,7 +123,7 @@ target_market_share(
 #> # … with 926 more rows
 ```
 
-  - … or at the company level:
+  - Or at the company level:
 
 <!-- end list -->
 

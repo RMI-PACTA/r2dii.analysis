@@ -86,7 +86,7 @@ target_market_share(
 )
 ```
 
-* ... or at the company level:
+* Or at the company level:
 
 ```{r}
 target_market_share(

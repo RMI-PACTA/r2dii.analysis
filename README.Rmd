@@ -69,33 +69,33 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 
 ```{r}
 target_sda(
-  matched, 
-  ald = ald_demo, 
+  matched,
+  ald = ald_demo,
   co2_intensity_scenario = co2_intensity_scenario_demo
-  )
+)
 ```
 
 * Use `target_market_share` to calculate market-share scenario targets at the portfolio level:
 
 ```{r}
 target_market_share(
-  matched, 
-  ald = ald_demo, 
-  scenario = scenario_demo_2020, 
+  matched,
+  ald = ald_demo,
+  scenario = scenario_demo_2020,
   region_isos = region_isos_demo
-  )
+)
 ```
 
 * ... or at the company level:
 
 ```{r}
 target_market_share(
-  matched, 
-  ald = ald_demo, 
-  scenario = scenario_demo_2020, 
+  matched,
+  ald = ald_demo,
+  scenario = scenario_demo_2020,
   region_isos = region_isos_demo,
   by_company = TRUE
-  )
+)
 ```
 
 ### Utility Functions

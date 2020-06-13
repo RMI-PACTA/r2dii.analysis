@@ -1,8 +1,8 @@
 #' Add targets for production, using the market share approach
 #'
 #' This function calculates the portfolio-level production targets, as
-#' calculated using either the technology market share ratio `tmsr` or sector
-#' market share percentage `smsp`.
+#' calculated using the market share approach applied to each relevant climate
+#' production forecast.
 #'
 #' @param data A "data.frame" like the output of
 #'   [r2dii.match::prioritize()].
@@ -17,7 +17,8 @@
 #' `weighted_production_value` at the company-level.
 #'
 #' @return A tibble with the same groups as the input (if any) and columns:
-#'   `tmsr_target_weighted_production` and `smsp_target_weighted_production`.
+#'   `weighted_production_metric` and `weighted_production_value`. If
+#'   `by_company = TRUE`, the output will also have column: `name_ald`.
 #' @export
 #'
 #' @family functions to calculate scenario targets

@@ -16,9 +16,9 @@
 #' `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #' `weighted_production_value` at the company-level.
 #'
-#' @return A tibble with the same groups as the input (if any) and columns:
+#' @return A tibble with the same groups as the input (if any) and columns
 #'   `weighted_production_metric` and `weighted_production_value`. If
-#'   `by_company = TRUE`, the output will also have column: `name_ald`.
+#'   `by_company = TRUE`, the output will also have column `name_ald`.
 #' @export
 #'
 #' @family functions to calculate scenario targets

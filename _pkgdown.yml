@@ -52,11 +52,7 @@ reference:
     contents:
       - has_concept("functions to calculate scenario targets")
 
-  - title: Weight production
+  - title: Utility functions
     contents:
-      - has_concept("functions to weight production")
-
-  - title: Other functions
-    contents:
-      - has_concept("join datasets")
+      - has_concept("utility functions")
 

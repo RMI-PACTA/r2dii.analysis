@@ -63,36 +63,66 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
   prioritize()
 ```
 
+### Add Scenario Targets
+
 * Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ```{r}
-target_sda(matched, ald_demo, co2_intensity_scenario_demo)
+matched %>%
+  target_sda(
+    ald = ald_demo,
+    co2_intensity_scenario = co2_intensity_scenario_demo
+  )
 ```
 
-* Use `join_ald_scenario()` to join the matched dataset to the relevant 
-scenario data, and to pick assets in the relevant regions. 
+* Use `target_market_share` to calculate market-share scenario targets at the portfolio level:
 
 ```{r}
-loanbook_joined_to_ald_scenario <- matched %>% 
-  join_ald_scenario(
-    ald = ald_demo, 
-    scenario = scenario_demo_2020, 
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
 ```
 
-* Use `summarize_company_production()` then `target_market_share_company()` to calculate scenario-targets for each company.
+* Or at the company level:
 
 ```{r}
-loanbook_joined_to_ald_scenario %>% 
-  summarize_company_production() %>% 
-  target_market_share_company()
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo,
+    by_company = TRUE
+  )
 ```
 
-* Use `summarize_portfolio_production()` then `target_market_share_portfolio()` to calculate scenario-targets for the whole portfolio:
+### Utility Functions
+
+The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
+
+* Use `join_ald_scenario()` to join a matched dataset to the relevant 
+scenario data, and to pick assets in the relevant regions. 
 
 ```{r}
-loanbook_joined_to_ald_scenario %>% 
-  summarize_portfolio_production() %>% 
-  target_market_share_portfolio()
+loanbook_joined_to_ald_scenario <- matched %>%
+  join_ald_scenario(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo
+  )
+```
+
+* Use `summarize_weighted_production()` with different grouping arguments to 
+calculate scenario-targets:
+
+```{r}
+# portfolio level
+loanbook_joined_to_ald_scenario %>%
+  summarize_weighted_production(scenario, tmsr, smsp, region)
+
+# company level
+loanbook_joined_to_ald_scenario %>%
+  summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
 ```

@@ -127,74 +127,132 @@
 </ul>
 <!-- end list --><div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>matched &lt;-<span class="st"> </span><span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(loanbook_demo, ald_demo) <span class="op">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()</span></code></pre></div>
+<div id="add-scenario-targets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#add-scenario-targets" class="anchor"></a>Add Scenario Targets</h3>
 <ul>
 <li>Use <code><a href="reference/target_sda.html">target_sda()</a></code> to calculate SDA targets of CO2 emissions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="reference/target_sda.html">target_sda</a></span>(matched, ald_demo, co2_intensity_scenario_demo)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; # Groups:   sector [1]</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;    sector  year emission_factor_name               emission_factor_value</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                              &lt;dbl&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;  1 cement  2020 portfolio_weighted_emission_factor                 0.664</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;  2 cement  2020 portfolio_target_emission_factor                   0.669</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;  3 cement  2020 scenario_emission_factor                           0.7  </span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;  4 cement  2021 portfolio_weighted_emission_factor                 0.665</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  5 cement  2021 portfolio_target_emission_factor                   0.612</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  6 cement  2021 scenario_emission_factor                           0.64 </span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  7 cement  2022 portfolio_weighted_emission_factor                 0.666</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  8 cement  2022 portfolio_target_emission_factor                   0.555</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  9 cement  2022 scenario_emission_factor                           0.580</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; 10 cement  2023 portfolio_weighted_emission_factor                 0.667</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>matched <span class="op">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw"><a href="reference/target_sda.html">target_sda</a></span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">ald =</span> ald_demo,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">co2_intensity_scenario =</span> co2_intensity_scenario_demo</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  )</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; # Groups:   sector [1]</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;    sector  year emission_factor_name               emission_factor_value</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                              &lt;dbl&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  1 cement  2020 portfolio_weighted_emission_factor                 0.664</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  2 cement  2020 portfolio_target_emission_factor                   0.669</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  3 cement  2020 scenario_emission_factor                           0.7  </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  4 cement  2021 portfolio_weighted_emission_factor                 0.665</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  5 cement  2021 portfolio_target_emission_factor                   0.612</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  6 cement  2021 scenario_emission_factor                           0.64 </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  7 cement  2022 portfolio_weighted_emission_factor                 0.666</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  8 cement  2022 portfolio_target_emission_factor                   0.555</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  9 cement  2022 scenario_emission_factor                           0.580</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 10 cement  2023 portfolio_weighted_emission_factor                 0.667</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
 <ul>
-<li>Use <code><a href="reference/join_ald_scenario.html">join_ald_scenario()</a></code> to join the matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li>
+<li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>loanbook_joined_to_ald_scenario &lt;-<span class="st"> </span>matched <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(</span>
-<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">ald =</span> ald_demo, </span>
-<span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>, </span>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>matched <span class="op">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="reference/target_market_share.html">target_market_share</a></span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">ald =</span> ald_demo,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>,</span>
 <span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
-<span id="cb5-6"><a href="#cb5-6"></a>  )</span></code></pre></div>
+<span id="cb5-6"><a href="#cb5-6"></a>  )</span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; # A tibble: 936 x 6</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;    sector    technology  year region weighted_production_… weighted_production_…</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                                 &lt;dbl&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  1 automoti… electric    2020 global projected                           148935.</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  2 automoti… electric    2020 global target_cps                          148935.</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  3 automoti… electric    2020 global target_sds                          148935.</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  4 automoti… electric    2020 global target_sps                          148935.</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  5 automoti… electric    2021 global projected                           150875.</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  6 automoti… electric    2021 global target_cps                          151589.</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;  7 automoti… electric    2021 global target_sds                          165045.</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;  8 automoti… electric    2021 global target_sps                          152307.</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;  9 automoti… electric    2022 global projected                           152816.</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; 10 automoti… electric    2022 global target_cps                          154188.</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; # … with 926 more rows</span></span></code></pre></div>
 <ul>
-<li>Use <code><a href="reference/summarize_company_production.html">summarize_company_production()</a></code> then <code><a href="reference/target_market_share_company.html">target_market_share_company()</a></code> to calculate scenario-targets for each company.</li>
+<li>Or at the company level:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_company_production.html">summarize_company_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw"><a href="reference/target_market_share_company.html">target_market_share_company</a></span>()</span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; # A tibble: 12,756 x 7</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;    sector  technology  year name_ald    region weighted_produc… weighted_produc…</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;                       &lt;dbl&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  1 automo… electric    2020 shanghai a… global company                     5140.</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;  2 automo… electric    2020 shanghai a… global target_cps                  5140.</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;  3 automo… electric    2020 shanghai a… global target_sds                  5140.</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;  4 automo… electric    2020 shanghai a… global target_sps                  5140.</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  5 automo… electric    2020 sichuan au… global company                     5985.</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  6 automo… electric    2020 sichuan au… global target_cps                  5985.</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  7 automo… electric    2020 sichuan au… global target_sds                  5985.</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  8 automo… electric    2020 sichuan au… global target_sps                  5985.</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  9 automo… electric    2020 singulato   global company                     8674.</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 10 automo… electric    2020 singulato   global target_cps                  8674.</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; # … with 12,746 more rows</span></span></code></pre></div>
+<!-- end list --><div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>matched <span class="op">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="reference/target_market_share.html">target_market_share</a></span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="dt">ald =</span> ald_demo,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="dt">region_isos =</span> region_isos_demo,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="dt">by_company =</span> <span class="ot">TRUE</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; # A tibble: 12,756 x 7</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;    sector  technology  year region name_ald    weighted_produc… weighted_produc…</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;                       &lt;dbl&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  1 automo… electric    2020 global shanghai a… projected                   5140.</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  2 automo… electric    2020 global shanghai a… target_cps                  5140.</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  3 automo… electric    2020 global shanghai a… target_sds                  5140.</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  4 automo… electric    2020 global shanghai a… target_sps                  5140.</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  5 automo… electric    2020 global sichuan au… projected                   5985.</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;  6 automo… electric    2020 global sichuan au… target_cps                  5985.</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt;  7 automo… electric    2020 global sichuan au… target_sds                  5985.</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;  8 automo… electric    2020 global sichuan au… target_sps                  5985.</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt;  9 automo… electric    2020 global singulato   projected                   8674.</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; 10 automo… electric    2020 global singulato   target_cps                  8674.</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; # … with 12,746 more rows</span></span></code></pre></div>
+</div>
+<div id="utility-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#utility-functions" class="anchor"></a>Utility Functions</h3>
+<p>The <code>target_*()</code> functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:</p>
 <ul>
-<li>Use <code><a href="reference/summarize_portfolio_production.html">summarize_portfolio_production()</a></code> then <code><a href="reference/target_market_share_portfolio.html">target_market_share_portfolio()</a></code> to calculate scenario-targets for the whole portfolio:</li>
+<li>Use <code><a href="reference/join_ald_scenario.html">join_ald_scenario()</a></code> to join a matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_portfolio_production.html">summarize_portfolio_production</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="st">  </span><span class="kw"><a href="reference/target_market_share_portfolio.html">target_market_share_portfolio</a></span>()</span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; # A tibble: 936 x 6</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;    sector    technology  year region weighted_production_… weighted_production_…</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                                 &lt;dbl&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;  1 automoti… electric    2020 global portfolio                           148935.</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;  2 automoti… electric    2020 global target_cps                          148935.</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;  3 automoti… electric    2020 global target_sds                          148935.</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt;  4 automoti… electric    2020 global target_sps                          148935.</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt;  5 automoti… electric    2021 global portfolio                           150875.</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt;  6 automoti… electric    2021 global target_cps                          151589.</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt;  7 automoti… electric    2021 global target_sds                          165045.</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt;  8 automoti… electric    2021 global target_sps                          152307.</span></span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt;  9 automoti… electric    2022 global portfolio                           152816.</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; 10 automoti… electric    2022 global target_cps                          154188.</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; # … with 926 more rows</span></span></code></pre></div>
+<!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>loanbook_joined_to_ald_scenario &lt;-<span class="st"> </span>matched <span class="op">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="dt">ald =</span> ald_demo,</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>,</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
+<span id="cb7-6"><a href="#cb7-6"></a>  )</span></code></pre></div>
+<ul>
+<li>Use <code><a href="reference/summarize_weighted_production.html">summarize_weighted_production()</a></code> with different grouping arguments to calculate scenario-targets:</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># portfolio level</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(scenario, tmsr, smsp, region)</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; # A tibble: 702 x 8</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt;    sector     technology  year scenario  tmsr    smsp region weighted_production</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global             148935.</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global             148935.</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global             148935.</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global             150875.</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global             150875.</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global             150875.</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global             152816.</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global             152816.</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global             152816.</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global             154757.</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; # … with 692 more rows</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="co"># company level</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>loanbook_joined_to_ald_scenario <span class="op">%&gt;%</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="st">  </span><span class="kw"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(scenario, tmsr, smsp, region, name_ald)</span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co">#&gt; # A tibble: 9,567 x 9</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co">#&gt;    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;</span></span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="co">#&gt;  1 autom… electric    2020 cps          1     0 global shangha…            5140.</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co">#&gt;  2 autom… electric    2020 cps          1     0 global sichuan…            5985.</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a><span class="co">#&gt;  3 autom… electric    2020 cps          1     0 global singula…            8674.</span></span>
+<span id="cb8-28"><a href="#cb8-28"></a><span class="co">#&gt;  4 autom… electric    2020 cps          1     0 global south-e…           14409.</span></span>
+<span id="cb8-29"><a href="#cb8-29"></a><span class="co">#&gt;  5 autom… electric    2020 cps          1     0 global suzuki …            6019.</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt;  6 autom… electric    2020 cps          1     0 global tata gr…             876.</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a><span class="co">#&gt;  7 autom… electric    2020 cps          1     0 global tesla i…            6208.</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a><span class="co">#&gt;  8 autom… electric    2020 cps          1     0 global toyota …           19860.</span></span>
+<span id="cb8-33"><a href="#cb8-33"></a><span class="co">#&gt;  9 autom… electric    2020 cps          1     0 global volkswa…            9258.</span></span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="co">#&gt; 10 autom… electric    2020 cps          1     0 global wheego              9804.</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a><span class="co">#&gt; # … with 9,557 more rows</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </div>

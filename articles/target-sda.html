@@ -146,7 +146,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>loanbook &lt;-<span class="st"> </span>r2dii.data<span class="op">::</span>loanbook_demo</span>
 <span id="cb2-2"><a href="#cb2-2"></a>ald &lt;-<span class="st"> </span>r2dii.data<span class="op">::</span>ald_demo</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a>matched &lt;-<span class="st"> </span><span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(loanbook, ald) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>matched &lt;-<span class="st"> </span><span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(loanbook, ald) <span class="op">%&gt;%</span></span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="co"># </span><span class="al">WARNING</span><span class="co">: Remember to validate the output of match_name() before prioritize()</span></span>
 <span id="cb2-6"><a href="#cb2-6"></a><span class="st">  </span><span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()</span>
 <span id="cb2-7"><a href="#cb2-7"></a></span>
@@ -179,7 +179,7 @@
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>co2_intensity &lt;-<span class="st"> </span>r2dii.data<span class="op">::</span>co2_intensity_scenario_demo</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="../reference/target_sda.html">target_sda</a></span>(matched, ald, co2_intensity)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>matched <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/target_sda.html">target_sda</a></span>(ald, co2_intensity)</span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; # Groups:   sector [1]</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt;    sector  year emission_factor_name               emission_factor_value</span></span>

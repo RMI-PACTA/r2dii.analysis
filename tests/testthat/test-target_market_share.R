@@ -29,7 +29,7 @@ test_that("with fake data outputs known value", {
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
-    bad_scenario <- dplyr::rename(
+    bad_scenario <- rename(
       fake_scenario(),
       bad = name
     )
@@ -154,7 +154,7 @@ test_that("with known input outputs as expected", {
 
   out <- target_market_share(portfolio, ald, scenario, region_isos_demo)
   out_target <- out %>%
-    dplyr::filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds")
 
   expect_equal(out_target$weighted_production_value, c(200, 353, 250, 150))
 })
@@ -186,7 +186,7 @@ test_that("with known input outputs as expected, at company level", {
     by_company = TRUE
   )
   out_target <- out %>%
-    dplyr::filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds")
 
   expect_equal(
     out_target$weighted_production_value,
@@ -226,10 +226,10 @@ test_that("portfolio values and targets have identical values at start year (#87
     scenario,
     region_isos_demo
   ) %>%
-    dplyr::filter(year == min(year)) %>%
+    filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
     dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
-    dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
+    mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
 })

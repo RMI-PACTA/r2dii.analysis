@@ -226,5 +226,4 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
         .data$production_ald_benchmark * (first(.data$weighted_production) / first(.data$production_ald_benchmark))
     ) %>%
     select(-.data$production_ald_benchmark)
-
 }

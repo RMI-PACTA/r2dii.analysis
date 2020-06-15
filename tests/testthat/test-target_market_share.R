@@ -227,7 +227,7 @@ test_that("portfolio values and targets have identical values at start year (#87
     region_isos_demo
   ) %>%
     dplyr::filter(year == min(year)) %>%
-    dplyr::group_by(sector, technology, region) %>%
+    group_by(sector, technology, region) %>%
     dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
     dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 

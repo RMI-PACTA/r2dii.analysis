@@ -172,7 +172,7 @@ target_market_share <- function(data,
       names_to = "weighted_production_metric",
       values_to = "weighted_production_value"
     ) %>%
-    dplyr::group_by(!!!old_groups)
+    group_by(!!!old_groups)
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

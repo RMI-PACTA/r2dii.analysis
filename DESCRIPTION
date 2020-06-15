@@ -45,12 +45,13 @@ Depends:
 Imports: 
     dplyr,
     magrittr,
-    rlang,
+    rlang (>= 0.1.2),
     tidyr
 Suggests: 
     covr,
     r2dii.data,
     r2dii.match,
+    roxygen2,
     spelling,
     testthat (>= 2.1.0)
 Encoding: UTF-8

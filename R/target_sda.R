@@ -20,7 +20,7 @@
 #' the portfolio. These values include the portfolio's actual projected CO2
 #' emissions factors, the scenario pathway CO2 emissions factors and the SDA
 #' calculated portfolio target emissions factors (see column
-#' `emission_factor_name`).
+#' `emission_factor_metric`).
 #'
 #' @export
 #'
@@ -50,7 +50,7 @@
 #' out
 #'
 #' # Split view by metric
-#' split(out, out$emission_factor_name)
+#' split(out, out$emission_factor_metric)
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
@@ -137,7 +137,7 @@ target_sda <- function(data,
     filter(!is.na(.data$portfolio_target_emission_factor)) %>%
     tidyr::pivot_longer(
       cols = tidyr::ends_with("factor"),
-      names_to = "emission_factor_name",
+      names_to = "emission_factor_metric",
       values_to = "emission_factor_value"
     ) %>%
     filter(!is.na(.data$emission_factor_value))

@@ -39,9 +39,6 @@ navbar:
   right:
     - text: "Packages"
       menu:
-      - text: "r2dii.banks"
-        href: https://2degreesinvesting.github.io/r2dii.banks
-      - text: "---"
       - text: "r2dii.data"
         href: https://2degreesinvesting.github.io/r2dii.data
       - text: "r2dii.match"

@@ -71,7 +71,7 @@ target_market_share <- function(data,
   walk(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   summary_groups <- maybe_add_name_ald(
-    c("scenario", "tmsr", "smsp", "region"),
+    c("scenario", "tmsr", "smsp", "region", "scenario_source"),
     by_company
   )
 
@@ -84,7 +84,8 @@ target_market_share <- function(data,
     summarize_weighted_production(
       !!!rlang::syms(summary_groups),
       use_credit_limit = use_credit_limit
-    )
+    ) %>%
+    add_ald_benchmark(ald, region_isos)
 
   target_groups <- c("sector", "scenario", "year", "region")
 
@@ -193,4 +194,37 @@ maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
   }
 
   group_by(data, !!!rlang::syms(groups))
+}
+
+
+
+add_ald_benchmark <- function(data, ald, region_isos){
+  ald_with_benchmark <- ald %>%
+    mutate(plant_location = tolower(.data$plant_location)) %>%
+    dplyr::inner_join(
+      region_isos,
+      by = c("plant_location" = "isos")
+    ) %>%
+    warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.") %>%
+    # Return visibly
+    identity() %>%
+    group_by(.data$sector, .data$technology, .data$year, .data$region, .data$source) %>%
+    summarize(production_ald_benchmark = sum(production))
+
+  data %>%
+    left_join(ald_with_benchmark, by = c(sector = "sector",
+                                       technology = "technology",
+                                       year = "year",
+                                       region = "region",
+                                       scenario_source = "source")
+              ) %>%
+    group_by(.data$sector,
+             .data$technology,
+             .data$scenario,
+             .data$region,
+             .data$scenario_source) %>%
+    mutate(weighted_production_normalized_ald_benchmark =
+             production_ald_benchmark * (first(weighted_production) / first(production_ald_benchmark))) %>%
+    select(-production_ald_benchmark)
+
 }

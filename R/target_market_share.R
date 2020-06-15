@@ -223,6 +223,7 @@ add_ald_benchmark <- function(data, ald, region_isos){
              .data$scenario,
              .data$region,
              .data$scenario_source) %>%
+    arrange(.data$year) %>%
     mutate(weighted_production_normalized_ald_benchmark =
              production_ald_benchmark * (first(weighted_production) / first(production_ald_benchmark))) %>%
     select(-production_ald_benchmark)

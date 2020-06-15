@@ -85,7 +85,7 @@ target_market_share <- function(data,
       !!!rlang::syms(summary_groups),
       use_credit_limit = use_credit_limit
     ) %>%
-    add_ald_benchmark(ald, region_isos)
+    add_ald_benchmark(ald, region_isos, by_company)
 
   target_groups <- c("sector", "scenario", "year", "region")
 
@@ -196,9 +196,7 @@ maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
   group_by(data, !!!rlang::syms(groups))
 }
 
-
-
-add_ald_benchmark <- function(data, ald, region_isos){
+add_ald_benchmark <- function(data, ald, region_isos, by_company){
   ald_with_benchmark <- ald %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
@@ -218,11 +216,9 @@ add_ald_benchmark <- function(data, ald, region_isos){
                                        region = "region",
                                        scenario_source = "source")
               ) %>%
-    group_by(.data$sector,
-             .data$technology,
-             .data$scenario,
-             .data$region,
-             .data$scenario_source) %>%
+    maybe_group_by_name_ald(c("sector", "technology", "scenario", "region", "scenario_source"),
+                            by_company = by_company
+    ) %>%
     arrange(.data$year) %>%
     mutate(weighted_production_normalized_ald_benchmark =
              production_ald_benchmark * (first(weighted_production) / first(production_ald_benchmark))) %>%

@@ -103,7 +103,7 @@ test_that("with known input outputs as expected", {
 
   out <- target_sda(valid_matches, ald, co2_intensity_scenario) %>%
     filter(
-      emission_factor_metric == "portfolio_target_emission_factor",
+      emission_factor_metric == "target",
       year == 2030
     )
 
@@ -151,7 +151,7 @@ test_that("properly weights emissions factors", {
   initial_data <- out %>%
     filter(
       year == 2020,
-      emission_factor_metric == "portfolio_weighted_emission_factor"
+      emission_factor_metric == "projected"
     )
 
   expect_equal(initial_data$emission_factor_value, 1.5)

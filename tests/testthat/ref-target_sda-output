@@ -1,9 +1,9 @@
 # A tibble: 5 x 4
 # Groups:   sector [1]
-  sector  year emission_factor_metric             emission_factor_value
-  <chr>  <dbl> <chr>                                              <dbl>
-1 cement  2020 portfolio_weighted_emission_factor                 1    
-2 cement  2020 portfolio_target_emission_factor                   0.867
-3 cement  2020 scenario_emission_factor                           0.6  
-4 cement  2050 portfolio_target_emission_factor                   0.2  
-5 cement  2050 scenario_emission_factor                           0.2  
+  sector  year emission_factor_metric emission_factor_value
+  <chr>  <dbl> <chr>                                  <dbl>
+1 cement  2020 projected                              1    
+2 cement  2020 target                                 0.867
+3 cement  2020 scenario_benchmark                     0.6  
+4 cement  2050 target                                 0.2  
+5 cement  2050 scenario_benchmark                     0.2  

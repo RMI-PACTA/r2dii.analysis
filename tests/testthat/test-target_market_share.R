@@ -128,7 +128,8 @@ test_that("outputs expected names", {
       "year",
       "region",
       "weighted_production_metric",
-      "weighted_production_value"
+      "weighted_production_value",
+      "scenario_source"
     )
   )
 })

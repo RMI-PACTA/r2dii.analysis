@@ -196,7 +196,7 @@ maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
   group_by(data, !!!rlang::syms(groups))
 }
 
-add_ald_benchmark <- function(data, ald, region_isos, by_company){
+add_ald_benchmark <- function(data, ald, region_isos, by_company) {
   ald_with_benchmark <- ald %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
@@ -210,18 +210,21 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company){
     summarize(production_ald_benchmark = sum(.data$production))
 
   data %>%
-    left_join(ald_with_benchmark, by = c(sector = "sector",
-                                       technology = "technology",
-                                       year = "year",
-                                       region = "region",
-                                       scenario_source = "source")
-              ) %>%
+    left_join(ald_with_benchmark, by = c(
+      sector = "sector",
+      technology = "technology",
+      year = "year",
+      region = "region",
+      scenario_source = "source"
+    )) %>%
     maybe_group_by_name_ald(c("sector", "technology", "scenario", "region", "scenario_source"),
-                            by_company = by_company
+      by_company = by_company
     ) %>%
     arrange(.data$year) %>%
-    mutate(weighted_production_normalized_ald_benchmark =
-             .data$production_ald_benchmark * (first(.data$weighted_production) / first(.data$production_ald_benchmark))) %>%
+    mutate(
+      weighted_production_normalized_ald_benchmark =
+        .data$production_ald_benchmark * (first(.data$weighted_production) / first(.data$production_ald_benchmark))
+    ) %>%
     select(-.data$production_ald_benchmark)
 
 }

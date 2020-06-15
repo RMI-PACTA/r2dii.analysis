@@ -154,7 +154,8 @@ test_that("with known input outputs as expected", {
 
   out <- target_market_share(portfolio, ald, scenario, region_isos_demo)
   out_target <- out %>%
-    filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds") %>%
+    arrange(.data$technology, .data$year)
 
   expect_equal(out_target$weighted_production_value, c(200, 353, 250, 150))
 })
@@ -186,7 +187,8 @@ test_that("with known input outputs as expected, at company level", {
     by_company = TRUE
   )
   out_target <- out %>%
-    filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds") %>%
+    arrange(.data$technology, .data$year, .data$name_ald)
 
   expect_equal(
     out_target$weighted_production_value,

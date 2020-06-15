@@ -197,6 +197,41 @@ test_that("with known input outputs as expected, at company level", {
   )
 })
 
+test_that("with known input outputs as expected, ald benchmark", {
+  portfolio <- fake_matched()
+
+  ald <- fake_ald(
+    name_company = c("shaanxi auto", "unmatched company", "shaanxi auto", "unmatched company"),
+    technology = c("electric", "electric", "electric", "electric"),
+    production = c(10, 20, 20, 70),
+    plant_location = c("de", "fr", "de", "fr"),
+    year = c(2020, 2020, 2025, 2025)
+  )
+
+  scenario <- fake_scenario(
+    region = c("global", "global", "europe", "europe"),
+    technology = c("electric", "electric", "ice", "ice"),
+    year = c(2020, 2025, 2020, 2025)
+  )
+
+  out <- target_market_share(
+    portfolio,
+    ald,
+    scenario,
+    region_isos_demo,
+    by_company = TRUE
+  )
+
+  out_benchmark <- out %>%
+    filter(weighted_production_metric == "normalized_ald_benchmark") %>%
+    arrange(.data$technology, .data$year)
+
+  expect_equal(
+    out_benchmark$weighted_production_value,
+    c(10, 30)
+  )
+})
+
 test_that("portfolio values and targets have identical values at start year (#87)", {
   data <- fake_master(
     technology = c("electric", "ice", "electric", "ice"),

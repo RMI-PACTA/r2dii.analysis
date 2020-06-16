@@ -37,14 +37,17 @@ navbar:
       href: articles/target-market-share.html
 
   right:
-    - icon: fa-gavel
-      href: https://github.com/maurolepore
+    - text: "Packages"
+      menu:
+      - text: "r2dii.data"
+        href: https://2degreesinvesting.github.io/r2dii.data
+      - text: "r2dii.match"
+        href: https://2degreesinvesting.github.io/r2dii.match
+      - text: "r2dii.analysis"
+        href: https://2degreesinvesting.github.io/r2dii.analysis
 
     - icon: fa-github
       href: https://github.com/2DegreesInvesting/r2dii.analysis
-
-    - text: r2dii
-      href: https://2degreesinvesting.github.io/r2dii/index.html
 
 reference:
 

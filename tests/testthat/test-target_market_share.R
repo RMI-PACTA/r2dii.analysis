@@ -29,7 +29,7 @@ test_that("with fake data outputs known value", {
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
-    bad_scenario <- dplyr::rename(
+    bad_scenario <- rename(
       fake_scenario(),
       bad = name
     )
@@ -127,6 +127,7 @@ test_that("outputs expected names", {
       "technology",
       "year",
       "region",
+      "scenario_source",
       "weighted_production_metric",
       "weighted_production_value"
     )
@@ -154,7 +155,8 @@ test_that("with known input outputs as expected", {
 
   out <- target_market_share(portfolio, ald, scenario, region_isos_demo)
   out_target <- out %>%
-    dplyr::filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds") %>%
+    arrange(.data$technology, .data$year)
 
   expect_equal(out_target$weighted_production_value, c(200, 353, 250, 150))
 })
@@ -186,11 +188,47 @@ test_that("with known input outputs as expected, at company level", {
     by_company = TRUE
   )
   out_target <- out %>%
-    dplyr::filter(weighted_production_metric == "target_sds")
+    filter(weighted_production_metric == "target_sds") %>%
+    arrange(.data$technology, .data$year, .data$name_ald)
 
   expect_equal(
     out_target$weighted_production_value,
     c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
+  )
+})
+
+test_that("with known input outputs as expected, ald benchmark", {
+  portfolio <- fake_matched()
+
+  ald <- fake_ald(
+    name_company = c("shaanxi auto", "unmatched company", "shaanxi auto", "unmatched company"),
+    technology = c("electric", "electric", "electric", "electric"),
+    production = c(10, 20, 20, 70),
+    plant_location = c("de", "fr", "de", "fr"),
+    year = c(2020, 2020, 2025, 2025)
+  )
+
+  scenario <- fake_scenario(
+    region = c("global", "global", "europe", "europe"),
+    technology = c("electric", "electric", "ice", "ice"),
+    year = c(2020, 2025, 2020, 2025)
+  )
+
+  out <- target_market_share(
+    portfolio,
+    ald,
+    scenario,
+    region_isos_demo,
+    by_company = TRUE
+  )
+
+  out_benchmark <- out %>%
+    filter(weighted_production_metric == "normalized_ald_benchmark") %>%
+    arrange(.data$technology, .data$year)
+
+  expect_equal(
+    out_benchmark$weighted_production_value,
+    c(10, 30)
   )
 })
 
@@ -226,10 +264,10 @@ test_that("portfolio values and targets have identical values at start year (#87
     scenario,
     region_isos_demo
   ) %>%
-    dplyr::filter(year == min(year)) %>%
-    dplyr::group_by(sector, technology, region) %>%
-    dplyr::summarise(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
-    dplyr::mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
+    filter(year == min(year)) %>%
+    group_by(sector, technology, region) %>%
+    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
 })

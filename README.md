@@ -80,7 +80,7 @@ matched %>%
   )
 #> # A tibble: 28 x 4
 #> # Groups:   sector [1]
-#>    sector  year emission_factor_name               emission_factor_value
+#>    sector  year emission_factor_metric             emission_factor_value
 #>    <chr>  <dbl> <chr>                                              <dbl>
 #>  1 cement  2020 portfolio_weighted_emission_factor                 0.664
 #>  2 cement  2020 portfolio_target_emission_factor                   0.669

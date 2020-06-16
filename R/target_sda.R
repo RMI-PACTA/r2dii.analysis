@@ -20,7 +20,7 @@
 #' the portfolio. These values include the portfolio's actual projected CO2
 #' emissions factors, the scenario pathway CO2 emissions factors and the SDA
 #' calculated portfolio target emissions factors (see column
-#' `emission_factor_name`).
+#' `emission_factor_metric`).
 #'
 #' @export
 #'
@@ -50,7 +50,7 @@
 #' out
 #'
 #' # Split view by metric
-#' split(out, out$emission_factor_name)
+#' split(out, out$emission_factor_metric)
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
@@ -107,7 +107,7 @@ target_sda <- function(data,
 
   formatted_co2_intensity <- co2_scenario_with_py_and_g %>%
     select(.data$sector, .data$year, .data$emission_factor, .data$py) %>%
-    rename(scenario_emission_factor = .data$emission_factor)
+    rename(emission_factor_scenario_benchmark = .data$emission_factor)
 
   loanbook_with_weighted_emission_factors <- data %>%
     calculate_weighted_emission_factor(ald, use_credit_limit = use_credit_limit)
@@ -121,23 +121,24 @@ target_sda <- function(data,
     group_by(.data$sector) %>%
     arrange(.data$year) %>%
     mutate(
-      initial_portfolio_factor = first(.data$portfolio_weighted_emission_factor),
+      initial_portfolio_factor = first(.data$emission_factor_projected),
       d = .data$initial_portfolio_factor -
         last(.data$target_weighted_emission_factor),
-      portfolio_target_emission_factor = (.data$d * .data$py) +
-        last(.data$scenario_emission_factor)
+      emission_factor_target = (.data$d * .data$py) +
+        last(.data$emission_factor_scenario_benchmark)
     ) %>%
     select(
       .data$sector,
       .data$year,
-      .data$portfolio_weighted_emission_factor,
-      .data$portfolio_target_emission_factor,
-      .data$scenario_emission_factor
+      .data$emission_factor_projected,
+      .data$emission_factor_target,
+      .data$emission_factor_scenario_benchmark
     ) %>%
-    filter(!is.na(.data$portfolio_target_emission_factor)) %>%
+    filter(!is.na(.data$emission_factor_target)) %>%
     tidyr::pivot_longer(
-      cols = tidyr::ends_with("factor"),
-      names_to = "emission_factor_name",
+      cols = tidyr::starts_with("emission_factor_"),
+      names_prefix = "emission_factor_",
+      names_to = "emission_factor_metric",
       values_to = "emission_factor_value"
     ) %>%
     filter(!is.na(.data$emission_factor_value))
@@ -197,7 +198,7 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
     add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit) %>%
     group_by(.data$sector_ald, .data$year) %>%
     summarize(
-      portfolio_weighted_emission_factor = sum(.data$weighted_loan_emission_factor)
+      emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%
     rename(sector = .data$sector_ald)
 }

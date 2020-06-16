@@ -25,7 +25,7 @@ A tibble with the CO2 emissions factors attributed to
 the portfolio. These values include the portfolio's actual projected CO2
 emissions factors, the scenario pathway CO2 emissions factors and the SDA
 calculated portfolio target emissions factors (see column
-\code{emission_factor_name}).
+\code{emission_factor_metric}).
 }
 \description{
 This function calculates targets of CO2 emissions per unit production at the
@@ -57,7 +57,7 @@ out <- valid_matches \%>\%
 out
 
 # Split view by metric
-split(out, out$emission_factor_name)
+split(out, out$emission_factor_metric)
 }
 \seealso{
 Other functions to calculate scenario targets: 

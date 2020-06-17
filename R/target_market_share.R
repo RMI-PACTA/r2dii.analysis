@@ -68,6 +68,7 @@ target_market_share <- function(data,
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)
+  check_crucial_names(ald, "is_ultimate_owner")
   walk(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   summary_groups <- maybe_add_name_ald(
@@ -198,6 +199,7 @@ maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
 
 add_ald_benchmark <- function(data, ald, region_isos, by_company) {
   ald_with_benchmark <- ald %>%
+    filter(.data$is_ultimate_owner) %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
       region_isos,
@@ -207,7 +209,7 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     # Return visibly
     identity() %>%
     group_by(.data$sector, .data$technology, .data$year, .data$region, .data$source) %>%
-    summarize(production_ald_benchmark = sum(.data$production))
+    summarize(production_corporate_economy = sum(.data$production))
 
   data %>%
     left_join(ald_with_benchmark, by = c(
@@ -222,8 +224,8 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     ) %>%
     arrange(.data$year) %>%
     mutate(
-      weighted_production_normalized_ald_benchmark =
-        .data$production_ald_benchmark * (first(.data$weighted_production) / first(.data$production_ald_benchmark))
+      weighted_production_normalized_corporate_economy =
+        .data$production_corporate_economy * (first(.data$weighted_production) / first(.data$production_corporate_economy))
     ) %>%
-    select(-.data$production_ald_benchmark)
+    select(-.data$production_corporate_economy)
 }

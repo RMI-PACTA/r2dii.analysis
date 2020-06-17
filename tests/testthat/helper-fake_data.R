@@ -64,6 +64,7 @@ fake_ald <- function(name_company = NULL,
                      production = NULL,
                      emission_factor = NULL,
                      plant_location = NULL,
+                     is_ultimate_owner = NULL,
                      ...) {
   tibble(
     name_company = name_company %||% "shaanxi auto",
@@ -73,6 +74,7 @@ fake_ald <- function(name_company = NULL,
     production = production %||% 1,
     emission_factor = emission_factor %||% 1,
     plant_location = plant_location %||% "BF",
+    is_ultimate_owner = is_ultimate_owner %||% TRUE,
     ...
   )
 }

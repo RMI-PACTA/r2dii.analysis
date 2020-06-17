@@ -271,3 +271,21 @@ test_that("portfolio values and targets have identical values at start year (#87
 
   expect_true(all(out$initial_values_are_equal))
 })
+
+test_that("corporate economy benchmark only aggregates ultimate owners (#103)", {
+
+  out <- target_market_share(
+    fake_matched(name_ald = c("company a", "company b")),
+    fake_ald(name = c("company a", "company b", "company a", "company b"),
+             is_ultimate_owner = c(T, F, T, F),
+             production = c(50, 100, 100, 50),
+             year = c(2020, 2020, 2021, 2021)),
+    fake_scenario(year = c(2020, 2021)),
+    region_isos_demo
+  )
+
+  corporate_economy_value <- out %>%
+    filter(weighted_production_metric == "normalized_corporate_economy")
+
+  expect_equal(corporate_economy_value$weighted_production_value, c(150, 300))
+})

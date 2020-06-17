@@ -149,18 +149,18 @@
 <span id="cb4-5"><a href="#cb4-5"></a>  )</span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; # Groups:   sector [1]</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;    sector  year emission_factor_metric             emission_factor_value</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                              &lt;dbl&gt;</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  1 cement  2020 portfolio_weighted_emission_factor                 0.664</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  2 cement  2020 portfolio_target_emission_factor                   0.669</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  3 cement  2020 scenario_emission_factor                           0.7  </span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  4 cement  2021 portfolio_weighted_emission_factor                 0.665</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  5 cement  2021 portfolio_target_emission_factor                   0.612</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  6 cement  2021 scenario_emission_factor                           0.64 </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  7 cement  2022 portfolio_weighted_emission_factor                 0.666</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  8 cement  2022 portfolio_target_emission_factor                   0.555</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  9 cement  2022 scenario_emission_factor                           0.580</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 10 cement  2023 portfolio_weighted_emission_factor                 0.667</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  1 cement  2020 projected                              0.664</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  2 cement  2020 target                                 0.669</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  3 cement  2020 scenario_benchmark                     0.7  </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  4 cement  2021 projected                              0.665</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  5 cement  2021 target                                 0.612</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  6 cement  2021 scenario_benchmark                     0.64 </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  7 cement  2022 projected                              0.666</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  8 cement  2022 target                                 0.555</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  9 cement  2022 scenario_benchmark                     0.580</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 10 cement  2023 projected                              0.667</span></span>
 <span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
@@ -171,20 +171,20 @@
 <span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">scenario =</span> scenario_demo_<span class="dv">2020</span>,</span>
 <span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
 <span id="cb5-6"><a href="#cb5-6"></a>  )</span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; # A tibble: 936 x 6</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;    sector    technology  year region weighted_production_… weighted_production_…</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                                 &lt;dbl&gt;</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  1 automoti… electric    2020 global projected                           148935.</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  2 automoti… electric    2020 global target_cps                          148935.</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  3 automoti… electric    2020 global target_sds                          148935.</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  4 automoti… electric    2020 global target_sps                          148935.</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  5 automoti… electric    2021 global projected                           150875.</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  6 automoti… electric    2021 global target_cps                          151589.</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;  7 automoti… electric    2021 global target_sds                          165045.</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;  8 automoti… electric    2021 global target_sps                          152307.</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;  9 automoti… electric    2022 global projected                           152816.</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; 10 automoti… electric    2022 global target_cps                          154188.</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; # … with 926 more rows</span></span></code></pre></div>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; # A tibble: 1,170 x 7</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  2 autom… electric    2020 global demo_2020       normalized_corp…</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       projected       </span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       normalized_corp…</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       target_cps      </span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;  9 autom… hybrid      2020 global demo_2020       target_sds      </span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; 10 autom… hybrid      2020 global demo_2020       target_sps      </span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
 <li>Or at the company level:</li>
 </ul>
@@ -195,20 +195,20 @@
 <span id="cb6-5"><a href="#cb6-5"></a>    <span class="dt">region_isos =</span> region_isos_demo,</span>
 <span id="cb6-6"><a href="#cb6-6"></a>    <span class="dt">by_company =</span> <span class="ot">TRUE</span></span>
 <span id="cb6-7"><a href="#cb6-7"></a>  )</span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; # A tibble: 12,756 x 7</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;    sector  technology  year region name_ald    weighted_produc… weighted_produc…</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;                       &lt;dbl&gt;</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  1 automo… electric    2020 global shanghai a… projected                   5140.</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  2 automo… electric    2020 global shanghai a… target_cps                  5140.</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  3 automo… electric    2020 global shanghai a… target_sds                  5140.</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  4 automo… electric    2020 global shanghai a… target_sps                  5140.</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  5 automo… electric    2020 global sichuan au… projected                   5985.</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;  6 automo… electric    2020 global sichuan au… target_cps                  5985.</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt;  7 automo… electric    2020 global sichuan au… target_sds                  5985.</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;  8 automo… electric    2020 global sichuan au… target_sps                  5985.</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt;  9 automo… electric    2020 global singulato   projected                   8674.</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; 10 automo… electric    2020 global singulato   target_cps                  8674.</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; # … with 12,746 more rows</span></span></code></pre></div>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; # A tibble: 15,945 x 8</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;    sector technology  year region scenario_source name_ald weighted_produc…</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… normalized_corp…</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… target_cps      </span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… target_sds      </span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… target_sps      </span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… projected       </span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="utility-functions" class="section level3">
 <h3 class="hasAnchor">

@@ -80,18 +80,18 @@ matched %>%
   )
 #> # A tibble: 28 x 4
 #> # Groups:   sector [1]
-#>    sector  year emission_factor_metric             emission_factor_value
-#>    <chr>  <dbl> <chr>                                              <dbl>
-#>  1 cement  2020 portfolio_weighted_emission_factor                 0.664
-#>  2 cement  2020 portfolio_target_emission_factor                   0.669
-#>  3 cement  2020 scenario_emission_factor                           0.7  
-#>  4 cement  2021 portfolio_weighted_emission_factor                 0.665
-#>  5 cement  2021 portfolio_target_emission_factor                   0.612
-#>  6 cement  2021 scenario_emission_factor                           0.64 
-#>  7 cement  2022 portfolio_weighted_emission_factor                 0.666
-#>  8 cement  2022 portfolio_target_emission_factor                   0.555
-#>  9 cement  2022 scenario_emission_factor                           0.580
-#> 10 cement  2023 portfolio_weighted_emission_factor                 0.667
+#>    sector  year emission_factor_metric emission_factor_value
+#>    <chr>  <dbl> <chr>                                  <dbl>
+#>  1 cement  2020 projected                              0.664
+#>  2 cement  2020 target                                 0.669
+#>  3 cement  2020 scenario_benchmark                     0.7  
+#>  4 cement  2021 projected                              0.665
+#>  5 cement  2021 target                                 0.612
+#>  6 cement  2021 scenario_benchmark                     0.64 
+#>  7 cement  2022 projected                              0.666
+#>  8 cement  2022 target                                 0.555
+#>  9 cement  2022 scenario_benchmark                     0.580
+#> 10 cement  2023 projected                              0.667
 #> # … with 18 more rows
 ```
 
@@ -107,20 +107,20 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> # A tibble: 936 x 6
-#>    sector    technology  year region weighted_production_… weighted_production_…
-#>    <chr>     <chr>      <int> <chr>  <chr>                                 <dbl>
-#>  1 automoti… electric    2020 global projected                           148935.
-#>  2 automoti… electric    2020 global target_cps                          148935.
-#>  3 automoti… electric    2020 global target_sds                          148935.
-#>  4 automoti… electric    2020 global target_sps                          148935.
-#>  5 automoti… electric    2021 global projected                           150875.
-#>  6 automoti… electric    2021 global target_cps                          151589.
-#>  7 automoti… electric    2021 global target_sds                          165045.
-#>  8 automoti… electric    2021 global target_sps                          152307.
-#>  9 automoti… electric    2022 global projected                           152816.
-#> 10 automoti… electric    2022 global target_cps                          154188.
-#> # … with 926 more rows
+#> # A tibble: 1,170 x 7
+#>    sector technology  year region scenario_source weighted_produc…
+#>    <chr>  <chr>      <int> <chr>  <chr>           <chr>           
+#>  1 autom… electric    2020 global demo_2020       projected       
+#>  2 autom… electric    2020 global demo_2020       normalized_corp…
+#>  3 autom… electric    2020 global demo_2020       target_cps      
+#>  4 autom… electric    2020 global demo_2020       target_sds      
+#>  5 autom… electric    2020 global demo_2020       target_sps      
+#>  6 autom… hybrid      2020 global demo_2020       projected       
+#>  7 autom… hybrid      2020 global demo_2020       normalized_corp…
+#>  8 autom… hybrid      2020 global demo_2020       target_cps      
+#>  9 autom… hybrid      2020 global demo_2020       target_sds      
+#> 10 autom… hybrid      2020 global demo_2020       target_sps      
+#> # … with 1,160 more rows, and 1 more variable: weighted_production_value <dbl>
 ```
 
   - Or at the company level:
@@ -135,20 +135,20 @@ matched %>%
     region_isos = region_isos_demo,
     by_company = TRUE
   )
-#> # A tibble: 12,756 x 7
-#>    sector  technology  year region name_ald    weighted_produc… weighted_produc…
-#>    <chr>   <chr>      <int> <chr>  <chr>       <chr>                       <dbl>
-#>  1 automo… electric    2020 global shanghai a… projected                   5140.
-#>  2 automo… electric    2020 global shanghai a… target_cps                  5140.
-#>  3 automo… electric    2020 global shanghai a… target_sds                  5140.
-#>  4 automo… electric    2020 global shanghai a… target_sps                  5140.
-#>  5 automo… electric    2020 global sichuan au… projected                   5985.
-#>  6 automo… electric    2020 global sichuan au… target_cps                  5985.
-#>  7 automo… electric    2020 global sichuan au… target_sds                  5985.
-#>  8 automo… electric    2020 global sichuan au… target_sps                  5985.
-#>  9 automo… electric    2020 global singulato   projected                   8674.
-#> 10 automo… electric    2020 global singulato   target_cps                  8674.
-#> # … with 12,746 more rows
+#> # A tibble: 15,945 x 8
+#>    sector technology  year region scenario_source name_ald weighted_produc…
+#>    <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>           
+#>  1 autom… electric    2020 global demo_2020       shangha… projected       
+#>  2 autom… electric    2020 global demo_2020       shangha… normalized_corp…
+#>  3 autom… electric    2020 global demo_2020       shangha… target_cps      
+#>  4 autom… electric    2020 global demo_2020       shangha… target_sds      
+#>  5 autom… electric    2020 global demo_2020       shangha… target_sps      
+#>  6 autom… electric    2020 global demo_2020       sichuan… projected       
+#>  7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…
+#>  8 autom… electric    2020 global demo_2020       sichuan… target_cps      
+#>  9 autom… electric    2020 global demo_2020       sichuan… target_sds      
+#> 10 autom… electric    2020 global demo_2020       sichuan… target_sps      
+#> # … with 15,935 more rows, and 1 more variable: weighted_production_value <dbl>
 ```
 
 ### Utility Functions

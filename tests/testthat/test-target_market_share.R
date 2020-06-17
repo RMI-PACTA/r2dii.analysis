@@ -223,7 +223,7 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 
   out_benchmark <- out %>%
-    filter(weighted_production_metric == "normalized_ald_benchmark") %>%
+    filter(weighted_production_metric == "normalized_corporate_economy") %>%
     arrange(.data$technology, .data$year)
 
   expect_equal(

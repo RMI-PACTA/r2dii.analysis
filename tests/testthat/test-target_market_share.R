@@ -232,7 +232,7 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 })
 
-test_that("outputs identical values at start year, different regions (#87)", {
+test_that("outputs identical values at start year, different regions (#47, #87)", {
   ald <- fake_ald(
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2020, 2020),
@@ -262,7 +262,7 @@ test_that("outputs identical values at start year, different regions (#87)", {
   expect_true(all(out$initial_values_are_equal))
 })
 
-test_that("outputs identical values at start year, different sectors (#87)", {
+test_that("outputs identical values at start year, different sectors (#47, #87)", {
   ald <- fake_ald(
     sector = c("automotive", "automotive", "power", "power"),
     technology = c("electric", "ice", "renewablescap", "coalcap"),

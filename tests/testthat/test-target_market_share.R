@@ -232,17 +232,7 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 })
 
-test_that("portfolio values and targets have identical values at start year (#87)", {
-  data <- fake_master(
-    technology = c("electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2020, 2020),
-    region = c("global", "global", "europe", "europe"),
-    scenario = "sds",
-    tmsr = 1,
-    smsp = 0,
-    weighted_production = c(200, 250, 100, 150)
-  )
-
+test_that("outputs identical values at start year, different regions (#87)", {
   ald <- fake_ald(
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2020, 2020),
@@ -254,6 +244,36 @@ test_that("portfolio values and targets have identical values at start year (#87
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2020, 2020),
     region = c("global", "global", "europe", "europe"),
+    tmsr = 1,
+    smsp = 0
+  )
+
+  out <- target_market_share(
+    fake_matched(),
+    ald,
+    scenario,
+    region_isos_demo
+  ) %>%
+    filter(year == min(year)) %>%
+    group_by(sector, technology, region) %>%
+    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
+
+  expect_true(all(out$initial_values_are_equal))
+})
+
+test_that("outputs identical values at start year, different sectors (#87)", {
+  ald <- fake_ald(
+    sector = c("automotive", "automotive", "power", "power"),
+    technology = c("electric", "ice", "renewablescap", "coalcap"),
+    year = c(2020, 2020, 2020, 2020),
+    production = c(200, 250, 100, 150)
+  )
+
+  scenario <- fake_scenario(
+    sector = c("automotive", "automotive", "power", "power"),
+    technology = c("electric", "ice", "renewablescap", "coalcap"),
+    year = c(2020, 2020, 2020, 2020),
     tmsr = 1,
     smsp = 0
   )
@@ -290,3 +310,4 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
 
   expect_equal(corporate_economy_value$weighted_production_value, c(150, 300))
 })
+

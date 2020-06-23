@@ -232,34 +232,31 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 })
 
-test_that("portfolio values and targets have identical values at start year (#87)", {
-  data <- fake_master(
-    technology = c("electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2020, 2020),
-    region = c("global", "global", "europe", "europe"),
-    scenario = "sds",
-    tmsr = 1,
-    smsp = 0,
-    weighted_production = c(200, 250, 100, 150)
+test_that("outputs identical values at start year (#47, #87)", {
+  matched <- fake_matched(
+    sector = c("power", "automotive"),
+    sector_ald = c("power", "automotive")
   )
 
   ald <- fake_ald(
-    technology = c("electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2020, 2020),
-    plant_location = c("us", "us", "de", "de"),
-    production = c(200, 250, 100, 150)
+    sector = rep(c("automotive", "power"), times = 2, each = 2),
+    technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
+    year = 2020,
+    plant_location = rep(c("us", "de"), each = 4),
+    production = rep(c(200, 250, 100, 150), 2)
   )
 
   scenario <- fake_scenario(
-    technology = c("electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2020, 2020),
-    region = c("global", "global", "europe", "europe"),
+    sector = rep(c("automotive", "power"), times = 2, each = 2),
+    technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
+    year = 2020,
+    region = rep(c("global", "europe"), each = 4),
     tmsr = 1,
     smsp = 0
   )
 
   out <- target_market_share(
-    fake_matched(),
+    matched,
     ald,
     scenario,
     region_isos_demo

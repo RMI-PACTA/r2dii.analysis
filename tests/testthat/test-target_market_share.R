@@ -236,21 +236,21 @@ test_that("outputs identical values at start year (#47, #87)", {
   matched <- fake_matched(
     sector = c("power", "automotive"),
     sector_ald = c("power", "automotive")
-    )
+  )
 
   ald <- fake_ald(
-    sector = rep(c(rep("automotive",2),rep("power",2)),2),
-    technology = rep(c("electric", "ice", "renewablescap", "coalcap"),2),
+    sector = rep(c(rep("automotive", 2), rep("power", 2)), 2),
+    technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
     year = 2020,
     plant_location = c(rep("us", 4), rep("de", 4)),
-    production = rep(c(200, 250, 100, 150),2)
+    production = rep(c(200, 250, 100, 150), 2)
   )
 
   scenario <- fake_scenario(
-    sector = rep(c(rep("automotive",2),rep("power",2)),2),
-    technology = rep(c("electric", "ice", "renewablescap", "coalcap"),2),
+    sector = rep(c(rep("automotive", 2), rep("power", 2)), 2),
+    technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
     year = 2020,
-    region = c(rep("global",4), rep("europe",4)),
+    region = c(rep("global", 4), rep("europe", 4)),
     tmsr = 1,
     smsp = 0
   )
@@ -287,4 +287,3 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
 
   expect_equal(corporate_economy_value$weighted_production_value, c(150, 300))
 })
-

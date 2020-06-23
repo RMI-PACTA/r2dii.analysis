@@ -232,54 +232,31 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 })
 
-test_that("outputs identical values at start year, different regions (#47, #87)", {
+test_that("outputs identical values at start year (#47, #87)", {
+  matched <- fake_matched(
+    sector = c("power", "automotive"),
+    sector_ald = c("power", "automotive")
+    )
+
   ald <- fake_ald(
-    technology = c("electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2020, 2020),
-    plant_location = c("us", "us", "de", "de"),
-    production = c(200, 250, 100, 150)
+    sector = rep(c(rep("automotive",2),rep("power",2)),2),
+    technology = rep(c("electric", "ice", "renewablescap", "coalcap"),2),
+    year = 2020,
+    plant_location = c(rep("us", 4), rep("de", 4)),
+    production = rep(c(200, 250, 100, 150),2)
   )
 
   scenario <- fake_scenario(
-    technology = c("electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2020, 2020),
-    region = c("global", "global", "europe", "europe"),
+    sector = rep(c(rep("automotive",2),rep("power",2)),2),
+    technology = rep(c("electric", "ice", "renewablescap", "coalcap"),2),
+    year = 2020,
+    region = c(rep("global",4), rep("europe",4)),
     tmsr = 1,
     smsp = 0
   )
 
   out <- target_market_share(
-    fake_matched(),
-    ald,
-    scenario,
-    region_isos_demo
-  ) %>%
-    filter(year == min(year)) %>%
-    group_by(sector, technology, region) %>%
-    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
-    mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
-
-  expect_true(all(out$initial_values_are_equal))
-})
-
-test_that("outputs identical values at start year, different sectors (#47, #87)", {
-  ald <- fake_ald(
-    sector = c("automotive", "automotive", "power", "power"),
-    technology = c("electric", "ice", "renewablescap", "coalcap"),
-    year = c(2020, 2020, 2020, 2020),
-    production = c(200, 250, 100, 150)
-  )
-
-  scenario <- fake_scenario(
-    sector = c("automotive", "automotive", "power", "power"),
-    technology = c("electric", "ice", "renewablescap", "coalcap"),
-    year = c(2020, 2020, 2020, 2020),
-    tmsr = 1,
-    smsp = 0
-  )
-
-  out <- target_market_share(
-    fake_matched(),
+    matched,
     ald,
     scenario,
     region_isos_demo

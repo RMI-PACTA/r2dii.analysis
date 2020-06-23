@@ -239,18 +239,18 @@ test_that("outputs identical values at start year (#47, #87)", {
   )
 
   ald <- fake_ald(
-    sector = rep(c(rep("automotive", 2), rep("power", 2)), 2),
+    sector = rep(c("automotive", "power"), times = 2, each = 2),
     technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
     year = 2020,
-    plant_location = c(rep("us", 4), rep("de", 4)),
+    plant_location = rep(c("us", "de"), each = 4),
     production = rep(c(200, 250, 100, 150), 2)
   )
 
   scenario <- fake_scenario(
-    sector = rep(c(rep("automotive", 2), rep("power", 2)), 2),
+    sector = rep(c("automotive", "power"), times = 2, each = 2),
     technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
     year = 2020,
-    region = c(rep("global", 4), rep("europe", 4)),
+    region = rep(c("global", "europe"), each = 4),
     tmsr = 1,
     smsp = 0
   )

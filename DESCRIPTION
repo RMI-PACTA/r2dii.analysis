@@ -3,10 +3,10 @@ Title: Tools to Calculate Climate Targets for Financial
     Portfolios
 Version: 0.0.0.9004
 Authors@R: 
-    c(person(given = "FIXME",
+    c(person(given = "Jackson",
              family = "Hoffart",
              role = c("aut", "cre"),
-             email = "maurolepore@gmail.com",
+             email = "jackson.hoffart@gmail.com",
              comment = c(ORCID = "0000-0002-8600-5042")),
       person(given = "Mauro",
              family = "Lepore",

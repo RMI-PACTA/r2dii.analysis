@@ -17,11 +17,11 @@ target_market_share(
 \item{data}{A "data.frame" like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
-\item{ald}{An asset level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
+\item{ald}{An asset level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{scenario}{A scenario dataframe like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
+\item{scenario}{A scenario data frame like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
 
-\item{region_isos}{A dataframe like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
+\item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
 the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column

@@ -7,10 +7,10 @@
 #' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html)
 #' to calculate these targets.
 #'
-#' @param data A dataframe like the output of
+#' @param data A data frame like the output of
 #'   [r2dii.match::prioritize()].
-#' @param ald An asset-level dataframe like [r2dii.data::ald_demo].
-#' @param co2_intensity_scenario A scenario dataframe like
+#' @param ald An asset-level data frame like [r2dii.data::ald_demo].
+#' @param co2_intensity_scenario A scenario data frame like
 #'   [r2dii.data::co2_intensity_scenario_demo].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column

@@ -1,7 +1,7 @@
 #' Join a data-loanbook object to the ald and scenario
 #'
 #' `join_ald_scenario()` is a simple wrapper of several calls to
-#' `join()` functions, forming the master dataset to be used in later steps of
+#' `dplyr::join_*()`, forming the master dataset to be used in later steps of
 #' the analysis.
 #'
 #' @param data A dataframe like the output of

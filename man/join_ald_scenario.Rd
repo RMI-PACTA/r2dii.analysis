@@ -22,7 +22,7 @@ scenario.
 }
 \description{
 \code{join_ald_scenario()} is a simple wrapper of several calls to
-\code{join()} functions, forming the master dataset to be used in later steps of
+\verb{dplyr::join_*()}, forming the master dataset to be used in later steps of
 the analysis.
 }
 \examples{

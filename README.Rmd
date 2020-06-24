@@ -41,7 +41,7 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis")
 
 ## Example
 
-* Use `library()` to attach the packages you need.
+* Use `library()` to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them -- with `install.packages(c("r2dii.data", "r2dii.match"))` -- so you can reproduce our examples.
 
 ```{r}
 library(r2dii.data)

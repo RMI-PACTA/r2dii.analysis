@@ -1,6 +1,8 @@
 #' Summarize production based on the weight of each loan per sector per year
 #'
-#' @param data A "data.frame" like the output of [join_ald_scenario()].
+#' Summarize production based on the weight of each loan per sector per year.
+#'
+#' @param data A data frame like the output of [join_ald_scenario()].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
 #'   `loan_size_credit_limit` instead.

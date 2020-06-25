@@ -8,9 +8,9 @@
 #'
 #' @param data A "data.frame" like the output of
 #'   [r2dii.match::prioritize()].
-#' @param ald An asset level dataframe like [r2dii.data::ald_demo].
-#' @param scenario A scenario dataframe like [r2dii.data::scenario_demo_2020].
-#' @param region_isos A dataframe like [r2dii.data::region_isos] (default).
+#' @param ald An asset level data frame like [r2dii.data::ald_demo].
+#' @param scenario A scenario data frame like [r2dii.data::scenario_demo_2020].
+#' @param region_isos A data frame like [r2dii.data::region_isos] (default).
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
 #'   `loan_size_credit_limit` instead.

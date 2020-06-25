@@ -5,7 +5,8 @@
 
 <!-- badges: start -->
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 [![Codecov test
@@ -15,16 +16,6 @@ status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-chec
 [![R build
 status](https://github.com/2degreesinvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.analysis/actions)
 <!-- badges: end -->
-
-Warning:
-
-> An experimental package is in the very early stages of development.
-> The API will be changing frequently as we rapidly iterate and explore
-> variations in search of the best fit. Experimental packages will make
-> API breaking changes without deprecation, so you are generally best
-> off waiting until the package is more mature before you use it.
-
-– <https://www.tidyverse.org/lifecycle/#experimental>
 
 These tools help you to assess if a financial portfolio aligns with
 climate goals. They summarize key metrics attributed to the portfolio
@@ -40,13 +31,15 @@ Install the development version of r2dii.analysis with:
 
 ``` r
 # install.packages("devtools")
-
 devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
 ## Example
 
-  - Use `library()` to attach the packages you need.
+  - Use `library()` to attach the packages you need. r2dii.analysis does
+    not depend on the packages r2dii.data and r2dii.match; but we
+    suggest you install them – with `install.packages(c("r2dii.data",
+    "r2dii.match"))` – so you can reproduce our examples.
 
 <!-- end list -->
 

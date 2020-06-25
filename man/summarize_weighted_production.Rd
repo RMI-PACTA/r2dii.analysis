@@ -7,7 +7,7 @@
 summarize_weighted_production(data, ..., use_credit_limit = FALSE)
 }
 \arguments{
-\item{data}{A "data.frame" like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
+\item{data}{A data frame like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
 
 \item{...}{Variables to group by.}
 
@@ -20,7 +20,7 @@ A tibble with the same groups as the input (if any) and columns:
 \code{sector}, \code{technology}, \code{year}, and \code{weighted_production}.
 }
 \description{
-Summarize production based on the weight of each loan per sector per year
+Summarize production based on the weight of each loan per sector per year.
 }
 \examples{
 library(r2dii.analysis)

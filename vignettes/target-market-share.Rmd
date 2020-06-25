@@ -13,9 +13,7 @@ The goal of this article is to define the _market-share-approach_ for allocating
 
 ## Scenario market-shares
 
-You want to study how a portfolio would perform in a specific climate scenario. 
-
-How can you allocate [scenario efforts] to the production profile of your portfolio? You can do it by technology or by sector.
+Say that you want to study how a portfolio would perform in a specific climate scenario. How can you allocate scenario efforts to the production profile of your portfolio? You can do that in two ways -- by technology, or by sector.
 
 ### 1. Market-share by technology
 
@@ -45,7 +43,7 @@ $$\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}$$
 
 ## How to calculate market-share targets for a given scenario
 
-To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
+To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets. One of those datasets is a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 
 * Use packages.
 

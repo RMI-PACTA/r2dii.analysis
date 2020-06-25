@@ -11,9 +11,9 @@ target_sda(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 \item{data}{A dataframe like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
-\item{ald}{An asset-level dataframe like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
+\item{ald}{An asset-level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{co2_intensity_scenario}{A scenario dataframe like
+\item{co2_intensity_scenario}{A scenario data frame like
 \link[r2dii.data:co2_intensity_scenario_demo]{r2dii.data::co2_intensity_scenario_demo}.}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using

@@ -27,7 +27,6 @@ test_that("outputs is ungrouped", {
 })
 
 test_that("warns when input data is grouped", {
-
   grouped_data <- group_by(fake_matched(), id_loan)
 
   expect_warning(
@@ -36,9 +35,9 @@ test_that("warns when input data is grouped", {
       fake_ald(),
       fake_scenario(),
       region_isos_demo
-      ),
+    ),
     "Ungrouping"
-    )
+  )
 })
 
 test_that("with fake data outputs known value", {

@@ -46,10 +46,9 @@ test_that("outputs is ungrouped", {
 })
 
 test_that("warns when input data is grouped", {
+  grouped_data <- group_by(fake_matched(sector_ald = "cement"), id_loan)
 
-  grouped_data <- group_by(fake_matched( sector_ald = "cement"), id_loan)
-
-  out <- function(){
+  out <- function() {
     target_sda(
       grouped_data,
       ald = fake_ald(
@@ -65,7 +64,7 @@ test_that("warns when input data is grouped", {
     )
   }
 
-  expect_warning(out(),"Ungrouping")
+  expect_warning(out(), "Ungrouping")
 })
 
 test_that("with bad `data` errors with informative message", {

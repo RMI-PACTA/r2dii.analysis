@@ -16,6 +16,31 @@ test_that("outputs a tibble", {
   expect_is(out, "tbl_df")
 })
 
+test_that("outputs is ungrouped", {
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_demo
+  )
+  expect_false(dplyr::is_grouped_df(out))
+})
+
+test_that("warns when input data is grouped", {
+
+  grouped_data <- group_by(fake_matched(), id_loan)
+
+  expect_warning(
+    target_market_share(
+      grouped_data,
+      fake_ald(),
+      fake_scenario(),
+      region_isos_demo
+      ),
+    "Ungrouping"
+    )
+})
+
 test_that("with fake data outputs known value", {
   out <- target_market_share(
     fake_matched(),

@@ -190,9 +190,14 @@ the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use t
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with the same groups as the input (if any) and columns
-<code>weighted_production_metric</code> and <code>weighted_production_value</code>. If
-<code>by_company = TRUE</code>, the output will also have column <code>name_ald</code>.</p>
+    <p>A tibble with the summarized columns <code>weighted_production_metric</code>
+and <code>weighted_production_value</code>. If <code>by_company = TRUE</code>, the output will also
+have the column <code>name_ald</code>.</p>
+    <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
+
+    
+
+<p>This function ignores existing groups and outputs ungrouped data.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions to calculate scenario targets: 
@@ -272,6 +277,7 @@ the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use t
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#handling-grouped-data">Handling grouped data</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

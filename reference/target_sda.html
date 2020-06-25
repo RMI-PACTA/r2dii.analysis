@@ -184,6 +184,11 @@ the portfolio. These values include the portfolio's actual projected CO2
 emissions factors, the scenario pathway CO2 emissions factors and the SDA
 calculated portfolio target emissions factors (see column
 <code>emission_factor_metric</code>).</p>
+    <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
+
+    
+
+<p>This function ignores existing groups and outputs ungrouped data.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions to calculate scenario targets: 
@@ -211,7 +216,6 @@ calculated portfolio target emissions factors (see column
 <span class='co'># scenario pathway emissions factors, and the portfolio's target emissions</span>
 <span class='co'># factors.</span>
 <span class='no'>out</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 28 x 4</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   sector [1]</span><span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 projected                              0.664
@@ -228,7 +232,6 @@ calculated portfolio target emissions factors (see column
 <span class='co'># Split view by metric</span>
 <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>out</span>, <span class='no'>out</span>$<span class='no'>emission_factor_metric</span>)</div><div class='output co'>#&gt; $projected
 #&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   sector [1]</span><span>
 #&gt;   sector  year emission_factor_metric emission_factor_value
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 projected                              0.664
@@ -240,7 +243,6 @@ calculated portfolio target emissions factors (see column
 #&gt; 
 #&gt; $scenario_benchmark
 #&gt; </span><span style='color: #555555;'># A tibble: 11 x 4</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   sector [1]</span><span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 scenario_benchmark                     0.7  
@@ -257,7 +259,6 @@ calculated portfolio target emissions factors (see column
 #&gt; 
 #&gt; $target
 #&gt; </span><span style='color: #555555;'># A tibble: 11 x 4</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   sector [1]</span><span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 target                                 0.669
@@ -278,6 +279,7 @@ calculated portfolio target emissions factors (see column
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#handling-grouped-data">Handling grouped data</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

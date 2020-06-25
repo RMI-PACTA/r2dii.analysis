@@ -8,7 +8,7 @@ using the SDA approach}
 target_sda(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 }
 \arguments{
-\item{data}{A data frame like the output of
+\item{data}{A dataframe like the output of
 \code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
 
 \item{ald}{An asset-level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}

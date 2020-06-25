@@ -20,7 +20,7 @@
 #'
 #' @return A tibble with the summarized columns `weighted_production_metric`
 #' and `weighted_production_value`. If `by_company = TRUE`, the output will also
-#' have column `name_ald`.
+#' have the column `name_ald`.
 #' @export
 #'
 #' @family functions to calculate scenario targets

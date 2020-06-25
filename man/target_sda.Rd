@@ -33,6 +33,11 @@ portfolio-level, otherwise referred to as "emissions factors". It uses the
 \href{https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}
 to calculate these targets.
 }
+\section{Handling grouped data}{
+
+This function ignores existing groups and outputs ungrouped data.
+}
+
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)

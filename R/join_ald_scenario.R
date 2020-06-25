@@ -59,7 +59,8 @@ join_ald_scenario <- function(data,
 }
 
 warn_if_has_zero_rows <- function(data, message) {
-  if (nrow(data) == 0L) warning(message = message, call. = FALSE)
+  if (nrow(data) == 0L) warn(message)
+
   invisible(data)
 }
 

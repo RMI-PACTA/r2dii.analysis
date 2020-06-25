@@ -1,5 +1,4 @@
 # A tibble: 5 x 4
-# Groups:   sector [1]
   sector  year emission_factor_metric emission_factor_value
   <chr>  <dbl> <chr>                                  <dbl>
 1 cement  2020 projected                              1    

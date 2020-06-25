@@ -20,10 +20,6 @@ test_that("with fake data outputs known value", {
   )
 
   expect_known_value(out, "ref-target_sda", update = FALSE)
-  expect_known_output(
-    out, "ref-target_sda-output",
-    print = TRUE, update = FALSE
-  )
 })
 
 test_that("outputs is ungrouped", {

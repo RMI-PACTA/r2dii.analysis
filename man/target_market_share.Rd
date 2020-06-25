@@ -32,9 +32,9 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \code{weighted_production_value} at the company-level.}
 }
 \value{
-A tibble with the summarized columns: \code{weighted_production_metric}
+A tibble with the summarized columns \code{weighted_production_metric}
 and \code{weighted_production_value}. If \code{by_company = TRUE}, the output will also
-have column \code{name_ald}.
+have the column \code{name_ald}.
 }
 \description{
 This function calculates the portfolio-level production targets, as

@@ -10,10 +10,10 @@ check_no_value_is_missing <- function(data, column) {
 }
 
 ungroup_and_warn <- function(data, message) {
-  if (dplyr::is_grouped_df(data)) warning(message = message, call. = FALSE)
+  if (dplyr::is_grouped_df(data)) warn(message)
+
   dplyr::ungroup(data)
 }
-
 
 # Avoid dependency on purrr
 walk <- function(.x, .f, ...) {

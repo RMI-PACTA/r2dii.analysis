@@ -9,10 +9,10 @@ check_no_value_is_missing <- function(data, column) {
   invisible(data)
 }
 
-ungroup_and_warn <- function(data, message) {
+warn_grouped <- function(data, message) {
   if (dplyr::is_grouped_df(data)) warn(message)
 
-  dplyr::ungroup(data)
+  invisible(data)
 }
 
 # Avoid dependency on purrr

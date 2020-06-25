@@ -64,7 +64,7 @@ target_sda <- function(data,
     is.logical(use_credit_limit)
   )
 
-  data <- ungroup_and_warn(data, "Ungrouping input data.")
+  data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_portfolio <- c(
     "loan_size_outstanding",

@@ -64,7 +64,7 @@ target_market_share <- function(data,
                                 by_company = FALSE) {
   stopifnot(is.data.frame(data))
 
-  data <- ungroup_and_warn(data, "Ungrouping input data.")
+  data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)

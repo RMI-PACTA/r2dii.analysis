@@ -7,6 +7,8 @@
 #' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html)
 #' to calculate these targets.
 #'
+#' @template ignores-existing-groups
+#'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset-level dataframe like [r2dii.data::ald_demo].

@@ -4,6 +4,8 @@
 #' calculated using the market share approach applied to each relevant climate
 #' production forecast.
 #'
+#' @template ignores-existing-groups
+#'
 #' @param data A "data.frame" like the output of
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset level dataframe like [r2dii.data::ald_demo].

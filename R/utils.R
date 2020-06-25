@@ -9,6 +9,12 @@ check_no_value_is_missing <- function(data, column) {
   invisible(data)
 }
 
+ungroup_and_warn <- function(data, message) {
+  if (dplyr::is_grouped_df(data)) warning(message = message, call. = FALSE)
+  dplyr::ungroup(data)
+}
+
+
 # Avoid dependency on purrr
 walk <- function(.x, .f, ...) {
   .f <- rlang::as_function(.f)

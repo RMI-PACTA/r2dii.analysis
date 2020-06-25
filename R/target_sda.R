@@ -62,6 +62,8 @@ target_sda <- function(data,
     is.logical(use_credit_limit)
   )
 
+  data <- ungroup_and_warn(data, "Ungrouping input data.")
+
   crucial_portfolio <- c(
     "loan_size_outstanding",
     "loan_size_credit_limit",
@@ -141,7 +143,8 @@ target_sda <- function(data,
       names_to = "emission_factor_metric",
       values_to = "emission_factor_value"
     ) %>%
-    filter(!is.na(.data$emission_factor_value))
+    filter(!is.na(.data$emission_factor_value)) %>%
+    ungroup()
 }
 
 calculate_market_average <- function(market) {

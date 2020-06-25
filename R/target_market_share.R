@@ -16,9 +16,9 @@
 #' `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #' `weighted_production_value` at the company-level.
 #'
-#' @return A tibble with the same groups as the input (if any) and columns
-#'   `weighted_production_metric` and `weighted_production_value`. If
-#'   `by_company = TRUE`, the output will also have column `name_ald`.
+#' @return A tibble with the summarized columns: `weighted_production_metric`
+#' and `weighted_production_value`. If `by_company = TRUE`, the output will also
+#' have column `name_ald`.
 #' @export
 #'
 #' @family functions to calculate scenario targets
@@ -62,9 +62,7 @@ target_market_share <- function(data,
                                 by_company = FALSE) {
   stopifnot(is.data.frame(data))
 
-  old_groups <- dplyr::groups(data)
-  data <- ungroup(data)
-
+  data <- ungroup_and_warn(data, "Ungrouping input data.")
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)
@@ -174,7 +172,7 @@ target_market_share <- function(data,
       names_to = "weighted_production_metric",
       values_to = "weighted_production_value"
     ) %>%
-    group_by(!!!old_groups)
+    ungroup()
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

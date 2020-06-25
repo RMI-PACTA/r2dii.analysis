@@ -26,6 +26,47 @@ test_that("with fake data outputs known value", {
   )
 })
 
+test_that("outputs is ungrouped", {
+  out <- target_sda(
+    fake_matched(
+      sector_ald = "cement"
+    ),
+    ald = fake_ald(
+      sector = "cement",
+      technology = "cement",
+      year = c(2020, 2021, 2022),
+      emission_factor = c(1, 2, 3)
+    ),
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050),
+      emission_factor = c(0.6, 0.2)
+    )
+  )
+  expect_false(dplyr::is_grouped_df(out))
+})
+
+test_that("warns when input data is grouped", {
+  grouped_data <- group_by(fake_matched(sector_ald = "cement"), id_loan)
+
+  out <- function() {
+    target_sda(
+      grouped_data,
+      ald = fake_ald(
+        sector = "cement",
+        technology = "cement",
+        year = c(2020, 2021, 2022),
+        emission_factor = c(1, 2, 3)
+      ),
+      co2_intensity_scenario = fake_co2_scenario(
+        year = c(2020, 2050),
+        emission_factor = c(0.6, 0.2)
+      )
+    )
+  }
+
+  expect_warning(out(), "Ungrouping")
+})
+
 test_that("with bad `data` errors with informative message", {
   expect_error(
     target_sda("bad", fake_ald(), fake_co2_scenario()),

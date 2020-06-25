@@ -7,6 +7,8 @@
 #' (SDA)](https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html)
 #' to calculate these targets.
 #'
+#' @template ignores-existing-groups
+#'
 #' @param data A dataframe like the output of
 #'   [r2dii.match::prioritize()].
 #' @param ald An asset-level dataframe like [r2dii.data::ald_demo].
@@ -61,6 +63,8 @@ target_sda <- function(data,
     is.data.frame(co2_intensity_scenario),
     is.logical(use_credit_limit)
   )
+
+  data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_portfolio <- c(
     "loan_size_outstanding",
@@ -141,7 +145,8 @@ target_sda <- function(data,
       names_to = "emission_factor_metric",
       values_to = "emission_factor_value"
     ) %>%
-    filter(!is.na(.data$emission_factor_value))
+    filter(!is.na(.data$emission_factor_value)) %>%
+    ungroup()
 }
 
 calculate_market_average <- function(market) {

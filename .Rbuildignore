@@ -10,6 +10,7 @@
 ^codecov\.yml$
 ^data-raw$
 ^docs$
+^man-roxygen$
 ^pkgdown$
 ^r2dii\.analysis\.Rproj$
 ^vignettes/target-market-share\.Rmd$

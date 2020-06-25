@@ -18,7 +18,7 @@
 #' `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #' `weighted_production_value` at the company-level.
 #'
-#' @return A tibble with the summarized columns: `weighted_production_metric`
+#' @return A tibble with the summarized columns `weighted_production_metric`
 #' and `weighted_production_value`. If `by_company = TRUE`, the output will also
 #' have column `name_ald`.
 #' @export

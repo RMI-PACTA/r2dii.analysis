@@ -70,13 +70,6 @@ target_market_share(match_result,
   by_company = TRUE
 )
 
-# calculate targets using credit_limit
-target_market_share(match_result,
-  ald = r2dii.data::ald_demo,
-  scenario = r2dii.data::scenario_demo_2020,
-  region_isos = r2dii.data::region_isos_demo,
-  use_credit_limit = TRUE
-)
 }
 \seealso{
 Other functions to calculate scenario targets: 

@@ -47,6 +47,9 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="articles/r2dii-analysis.html">Get started</a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -142,20 +145,19 @@
 <span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">co2_intensity_scenario =</span> co2_intensity_scenario_demo</span>
 <span id="cb4-5"><a href="#cb4-5"></a>  )</span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; # Groups:   sector [1]</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  1 cement  2020 projected                              0.664</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  2 cement  2020 target                                 0.669</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  3 cement  2020 scenario_benchmark                     0.7  </span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  4 cement  2021 projected                              0.665</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  5 cement  2021 target                                 0.612</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  6 cement  2021 scenario_benchmark                     0.64 </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  7 cement  2022 projected                              0.666</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  8 cement  2022 target                                 0.555</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  9 cement  2022 scenario_benchmark                     0.580</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 10 cement  2023 projected                              0.667</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;  1 cement  2020 projected                              0.664</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  2 cement  2020 target                                 0.669</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  3 cement  2020 scenario_benchmark                     0.7  </span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  4 cement  2021 projected                              0.665</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  5 cement  2021 target                                 0.612</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  6 cement  2021 scenario_benchmark                     0.64 </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  7 cement  2022 projected                              0.666</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  8 cement  2022 target                                 0.555</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  9 cement  2022 scenario_benchmark                     0.580</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; 10 cement  2023 projected                              0.667</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
 </ul>
@@ -226,16 +228,16 @@
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; # A tibble: 702 x 8</span></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt;    sector     technology  year scenario  tmsr    smsp region weighted_production</span></span>
 <span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global             148935.</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global             148935.</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global             148935.</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global             150875.</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global             150875.</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global             150875.</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global             152816.</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global             152816.</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global             152816.</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global             154757.</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global             145942.</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global             145942.</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global             145942.</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global             148212.</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global             148212.</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global             148212.</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global             150481.</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global             150481.</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global             150481.</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global             152751.</span></span>
 <span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; # … with 692 more rows</span></span>
 <span id="cb8-18"><a href="#cb8-18"></a></span>
 <span id="cb8-19"><a href="#cb8-19"></a><span class="co"># company level</span></span>
@@ -245,7 +247,7 @@
 <span id="cb8-23"><a href="#cb8-23"></a><span class="co">#&gt;    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…</span></span>
 <span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;</span></span>
 <span id="cb8-25"><a href="#cb8-25"></a><span class="co">#&gt;  1 autom… electric    2020 cps          1     0 global shangha…            5140.</span></span>
-<span id="cb8-26"><a href="#cb8-26"></a><span class="co">#&gt;  2 autom… electric    2020 cps          1     0 global sichuan…            5985.</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co">#&gt;  2 autom… electric    2020 cps          1     0 global sichuan…            2992.</span></span>
 <span id="cb8-27"><a href="#cb8-27"></a><span class="co">#&gt;  3 autom… electric    2020 cps          1     0 global singula…            8674.</span></span>
 <span id="cb8-28"><a href="#cb8-28"></a><span class="co">#&gt;  4 autom… electric    2020 cps          1     0 global south-e…           14409.</span></span>
 <span id="cb8-29"><a href="#cb8-29"></a><span class="co">#&gt;  5 autom… electric    2020 cps          1     0 global suzuki …            6019.</span></span>

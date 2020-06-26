@@ -1,3 +1,0 @@
-> target_market_share_company(data)
-Error: Column `smsp` must not contain any `NA`s.
-

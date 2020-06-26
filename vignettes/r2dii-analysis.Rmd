@@ -112,7 +112,7 @@ From the market share output, you can plot the portfolio's exposure to various
 climate sensitive technologies (`projected`), and compare with various scenario 
 targets.
 
-```{r technoloy mix portfolio, echo=FALSE}
+```{r technoloy mix portfolio}
 market_share_targets_portfolio %>% 
   filter(sector == "power",
          weighted_production_metric != "normalized_corporate_economy",
@@ -132,7 +132,7 @@ You can also plot the technology-specific volume trend. All targets and
 benchmarks are normalized to the initial portfolio value, so we are effectively 
 comparing ambition. 
 
-```{r volume portfolio, echo=FALSE}
+```{r volume portfolio}
 renewables_data <- filter(market_share_targets_portfolio, 
                           sector == "power",
                           technology == "renewablescap",
@@ -177,7 +177,7 @@ attributed to the portfolio, with the actual emission intensity scenario, and th
 scenario compliant SDA pathway that the portfolio must follow to achieve the 
 scenario ambition by 2050.
 
-```{r sda plot, echo=FALSE}
+```{r sda plot}
 sda_targets %>% 
   group_by(emission_factor_metric) %>% 
   ggplot(aes(x = year, y = emission_factor_value, color = emission_factor_metric)) + 

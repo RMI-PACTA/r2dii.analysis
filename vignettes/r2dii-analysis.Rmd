@@ -55,7 +55,7 @@ You can calculate scenario targets using two different approaches: Market Share 
 
 ### Market Share Approach
 
-The [Market Share Approach](/target-market-share.html) is used to 
+The [Market Share Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-sda.html) is used to 
 calculate scenario targets for the `production` of a technology in a sector. For 
 example, we can use this approach to set targets for the production of electric 
 vehicles in the automotive sector. This approach is recommended for sectors 
@@ -89,7 +89,7 @@ market_share_targets_portfolio %>% head()
 
 ### Sectoral Decarbonization Approach
 
-The [Sectoral Decarbonization Approach](/target-market-share.html) is 
+The [Sectoral Decarbonization Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-market-share.html) is 
 used to calculate scenario targets for the `emission_factor` of a sector. For 
 example, you can use this approach to set targets for the average emission factor 
 of the cement sector. This approach is recommended for sectors lacking technology 

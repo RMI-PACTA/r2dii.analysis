@@ -13,8 +13,6 @@ status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-pro
 coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=master)
 [![R build
 status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
-[![R build
-status](https://github.com/2degreesinvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.analysis/actions)
 <!-- badges: end -->
 
 These tools help you to assess if a financial portfolio aligns with
@@ -72,7 +70,6 @@ matched %>%
     co2_intensity_scenario = co2_intensity_scenario_demo
   )
 #> # A tibble: 28 x 4
-#> # Groups:   sector [1]
 #>    sector  year emission_factor_metric emission_factor_value
 #>    <chr>  <dbl> <chr>                                  <dbl>
 #>  1 cement  2020 projected                              0.664
@@ -175,16 +172,16 @@ loanbook_joined_to_ald_scenario %>%
 #> # A tibble: 702 x 8
 #>    sector     technology  year scenario  tmsr    smsp region weighted_production
 #>    <chr>      <chr>      <int> <chr>    <dbl>   <dbl> <chr>                <dbl>
-#>  1 automotive electric    2020 cps       1    0       global             148935.
-#>  2 automotive electric    2020 sds       1    0       global             148935.
-#>  3 automotive electric    2020 sps       1    0       global             148935.
-#>  4 automotive electric    2021 cps       1.12 0.00108 global             150875.
-#>  5 automotive electric    2021 sds       1.16 0.00653 global             150875.
-#>  6 automotive electric    2021 sps       1.14 0.00137 global             150875.
-#>  7 automotive electric    2022 cps       1.24 0.00213 global             152816.
-#>  8 automotive electric    2022 sds       1.32 0.0131  global             152816.
-#>  9 automotive electric    2022 sps       1.29 0.00273 global             152816.
-#> 10 automotive electric    2023 cps       1.35 0.00316 global             154757.
+#>  1 automotive electric    2020 cps       1    0       global             145942.
+#>  2 automotive electric    2020 sds       1    0       global             145942.
+#>  3 automotive electric    2020 sps       1    0       global             145942.
+#>  4 automotive electric    2021 cps       1.12 0.00108 global             148212.
+#>  5 automotive electric    2021 sds       1.16 0.00653 global             148212.
+#>  6 automotive electric    2021 sps       1.14 0.00137 global             148212.
+#>  7 automotive electric    2022 cps       1.24 0.00213 global             150481.
+#>  8 automotive electric    2022 sds       1.32 0.0131  global             150481.
+#>  9 automotive electric    2022 sps       1.29 0.00273 global             150481.
+#> 10 automotive electric    2023 cps       1.35 0.00316 global             152751.
 #> # … with 692 more rows
 
 # company level
@@ -194,7 +191,7 @@ loanbook_joined_to_ald_scenario %>%
 #>    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…
 #>    <chr>  <chr>      <int> <chr>    <dbl> <dbl> <chr>  <chr>               <dbl>
 #>  1 autom… electric    2020 cps          1     0 global shangha…            5140.
-#>  2 autom… electric    2020 cps          1     0 global sichuan…            5985.
+#>  2 autom… electric    2020 cps          1     0 global sichuan…            2992.
 #>  3 autom… electric    2020 cps          1     0 global singula…            8674.
 #>  4 autom… electric    2020 cps          1     0 global south-e…           14409.
 #>  5 autom… electric    2020 cps          1     0 global suzuki …            6019.

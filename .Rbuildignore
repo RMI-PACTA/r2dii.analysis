@@ -13,6 +13,7 @@
 ^man-roxygen$
 ^pkgdown$
 ^r2dii\.analysis\.Rproj$
+^vignettes/r2dii-analysis\.Rmd$
 ^vignettes/target-market-share\.Rmd$
 ^vignettes/target-sda\.Rmd$
 ^cran-comments\.md$

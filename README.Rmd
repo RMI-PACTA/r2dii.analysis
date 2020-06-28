@@ -34,8 +34,7 @@ study how their capital allocation impacts the climate.
 Install the development version of r2dii.analysis with:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("2DegreesInvesting/r2dii.analysis")
+# install.packages("r2dii.analysis")
 ```
 
 ## Example

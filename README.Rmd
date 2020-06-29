@@ -49,7 +49,7 @@ Or install the development version of r2dii.analysis from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
-* [How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 ## Example
 
@@ -131,3 +131,6 @@ loanbook_joined_to_ald_scenario %>%
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
 ```
+
+[Get started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).
+

@@ -29,7 +29,7 @@ Or install the development version of r2dii.analysis from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
--   [How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 Example
 -------
@@ -180,3 +180,5 @@ loanbook_joined_to_ald_scenario %>%
 #> 10 autom… electric    2020 cps          1     0 global wheego              9804.
 #> # … with 9,557 more rows
 ```
+
+[Get started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).

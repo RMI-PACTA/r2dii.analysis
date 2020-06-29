@@ -31,11 +31,21 @@ study how their capital allocation impacts the climate.
 
 ## Installation
 
-Install the development version of r2dii.analysis with:
+Install the released version of r2dii.analysis from CRAN with:
 
 ```r
-# install.packages("r2dii.analysis")
+install.packages("r2dii.analysis")
 ```
+
+Or install the development version of r2dii.analysis from GitHub with:
+
+```r
+# install.packages("devtools")
+devtools::install_github("2DegreesInvesting/r2dii.analysis")
+```
+
+* [How to minimize installation errors?](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation)
+* [How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 ## Example
 

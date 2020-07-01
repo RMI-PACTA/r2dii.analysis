@@ -14,7 +14,7 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages("ps")
-          install.packages("ggplot2")
+          install.packages("tidyverse")
           install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_github("jimhester/pkgdown@f6ed7d2a46a2ff5622852972f716e37a7c0baf6d")

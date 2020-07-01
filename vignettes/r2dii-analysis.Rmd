@@ -136,7 +136,6 @@ renewables_data <- filter(
   region == "global"
 )
 
-
 just_targets2 <- renewables_data %>%
   filter(str_detect(weighted_production_metric, "target_"))
 

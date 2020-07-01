@@ -2,7 +2,7 @@
 title: "Introduction to r2dii.analysis" 
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -30,7 +30,7 @@ library(tidyverse)
 
 See [r2dii.match](https://2degreesinvesting.github.io/r2dii.match) for a more complete description of this process. 
 
-```{r match}
+```{r matched}
 # Use these datasets to practice but eventually you should use your own data.
 # The optional syntax `package::data` is to clarify where the data comes from.
 loanbook <- r2dii.data::loanbook_demo
@@ -103,7 +103,7 @@ There are a large variety of possible visualizations stemming from the outputs o
 
 From the market share output, you can plot the portfolio's exposure to various climate sensitive technologies (`projected`), and compare with various scenario targets.
 
-```{r technoloy mix portfolio}
+```{r technoloy-mix-portfolio}
 # Pick the targets you want to plot.
 tech_mix_data <- market_share_targets_portfolio %>%
   filter(
@@ -111,7 +111,9 @@ tech_mix_data <- market_share_targets_portfolio %>%
     weighted_production_metric != "normalized_corporate_economy",
     year == max(year)
   )
+```
 
+```{r plot-metric-versus-weighted-capacity}
 ggplot(
   data = tech_mix_data, 
   mapping = aes(
@@ -128,7 +130,7 @@ ggplot(
 
 You can also plot the technology-specific volume trend. All targets and benchmarks are normalized to the initial portfolio value, so we are effectively comparing ambition.
 
-```{r volume portfolio}
+```{r targets-and-ceiling}
 renewables_data <- filter(
   market_share_targets_portfolio,
   sector == "power",
@@ -136,7 +138,7 @@ renewables_data <- filter(
   region == "global"
 )
 
-just_targets2 <- renewables_data %>%
+just_targets <- renewables_data %>%
   filter(str_detect(weighted_production_metric, "target_"))
 
 ceiling <- just_targets %>%
@@ -159,7 +161,9 @@ targets_and_ceiling <- just_targets %>%
     previous_value = lag(weighted_production_value, default = 0),
   ) %>%
   filter(region == "global")
+```
 
+```{r plot-year-versus-weithed-production-value}
 ggplot(
   data = targets_and_ceiling,
   mapping = aes(
@@ -182,6 +186,7 @@ ggplot(
   ) +
   facet_wrap(vars(sector, technology))
 ```
+
 
 ### SDA Target
 

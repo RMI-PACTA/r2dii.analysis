@@ -114,17 +114,9 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.analysis)</span></code></pre></div>
-<p>We also recommend the following two <code>tidyverse</code> packages for data manipulation and plotting:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; </span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; </span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;     filter, lag</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; </span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span></code></pre></div>
+<p>We also recommend the following two <code>tidyverse</code> packages to manipulate and plot data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span></code></pre></div>
 </div>
 <div id="match-your-loanbook-to-climate-related-asset-level-data" class="section level2">
 <h2 class="hasAnchor">
@@ -141,26 +133,30 @@
 <span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; parent' (UP) you consequently overwrite all children of that sector,</span></span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; which most likely is a mistake.</span></span>
 <span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a>matched <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt; # A tibble: 6 x 27</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;   id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; 1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; 2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; 3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; 4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; 5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            </span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; # … with 22 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></span></code></pre></div>
+<span id="cb3-12"><a href="#cb3-12"></a>matched</span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt; # A tibble: 267 x 27</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt;  2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;  3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;  4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;  5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt;  6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt;  7 L157    C178             Shenyang Polars… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt;  8 L158    C180             Shuanghuan Auto  &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt;  9 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#&gt; 10 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#&gt; # … with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div id="calculate-targets" class="section level2">
 <h2 class="hasAnchor">
@@ -178,17 +174,21 @@
 <span id="cb4-5"><a href="#cb4-5"></a>    <span class="dt">region_isos =</span> region_isos_demo</span>
 <span id="cb4-6"><a href="#cb4-6"></a>  )</span>
 <span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a>market_share_targets_portfolio <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; # A tibble: 6 x 7</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;   sector technology  year region scenario_source weighted_produc…</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; 1 autom… electric    2020 global demo_2020       projected       </span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; 2 autom… electric    2020 global demo_2020       normalized_corp…</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 3 autom… electric    2020 global demo_2020       target_cps      </span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; 4 autom… electric    2020 global demo_2020       target_sds      </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; 5 autom… electric    2020 global demo_2020       target_sps      </span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; 6 autom… hybrid      2020 global demo_2020       projected       </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; # … with 1 more variable: weighted_production_value &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a>market_share_targets_portfolio</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; # A tibble: 1,200 x 7</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  2 autom… electric    2020 global demo_2020       normalized_corp…</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       projected       </span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       normalized_corp…</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       target_cps      </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt;  9 autom… hybrid      2020 global demo_2020       target_sds      </span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt; 10 autom… hybrid      2020 global demo_2020       target_sps      </span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">#&gt; # … with 1,190 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>market_share_targets_company &lt;-<span class="st"> </span>matched <span class="op">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="../reference/target_market_share.html">target_market_share</a></span>(</span>
@@ -198,17 +198,21 @@
 <span id="cb5-6"><a href="#cb5-6"></a>    <span class="dt">by_company =</span> <span class="ot">TRUE</span> <span class="co"># setting this flag will output results at company-level</span></span>
 <span id="cb5-7"><a href="#cb5-7"></a>  )</span>
 <span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a>market_share_targets_portfolio <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; # A tibble: 6 x 7</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;   sector technology  year region scenario_source weighted_produc…</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 1 autom… electric    2020 global demo_2020       projected       </span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 2 autom… electric    2020 global demo_2020       normalized_corp…</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 3 autom… electric    2020 global demo_2020       target_cps      </span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 4 autom… electric    2020 global demo_2020       target_sds      </span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; 5 autom… electric    2020 global demo_2020       target_sps      </span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; 6 autom… hybrid      2020 global demo_2020       projected       </span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; # … with 1 more variable: weighted_production_value &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb5-9"><a href="#cb5-9"></a>market_share_targets_portfolio</span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; # A tibble: 1,200 x 7</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  2 autom… electric    2020 global demo_2020       normalized_corp…</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       projected       </span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       normalized_corp…</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       target_cps      </span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt;  9 autom… hybrid      2020 global demo_2020       target_sds      </span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; 10 autom… hybrid      2020 global demo_2020       target_sps      </span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; # … with 1,190 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">
@@ -220,16 +224,21 @@
 <span id="cb6-4"><a href="#cb6-4"></a>    <span class="dt">co2_intensity_scenario =</span> co2_intensity_scenario_demo</span>
 <span id="cb6-5"><a href="#cb6-5"></a>  )</span>
 <span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a>sda_targets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; # A tibble: 6 x 4</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;   sector  year emission_factor_metric emission_factor_value</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; 1 cement  2020 projected                              0.664</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; 2 cement  2020 target                                 0.669</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; 3 cement  2020 scenario_benchmark                     0.7  </span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; 4 cement  2021 projected                              0.665</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; 5 cement  2021 target                                 0.612</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 6 cement  2021 scenario_benchmark                     0.64</span></span></code></pre></div>
+<span id="cb6-7"><a href="#cb6-7"></a>sda_targets</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; # A tibble: 28 x 4</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  1 cement  2020 projected                              0.664</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  2 cement  2020 target                                 0.669</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  3 cement  2020 scenario_benchmark                     0.7  </span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  4 cement  2021 projected                              0.665</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt;  5 cement  2021 target                                 0.612</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;  6 cement  2021 scenario_benchmark                     0.64 </span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt;  7 cement  2022 projected                              0.666</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;  8 cement  2022 target                                 0.555</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt;  9 cement  2022 scenario_benchmark                     0.580</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; 10 cement  2023 projected                              0.667</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div id="visualization" class="section level2">
@@ -241,22 +250,23 @@
 <a href="#market-share-sector-level-technology-mix" class="anchor"></a>Market Share: Sector-level technology mix</h3>
 <p>From the market share output, you can plot the portfolio’s exposure to various climate sensitive technologies (<code>projected</code>), and compare with various scenario targets.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>market_share_targets_portfolio <span class="op">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>    sector <span class="op">==</span><span class="st"> "power"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>    weighted_production_metric <span class="op">!=</span><span class="st"> "normalized_corporate_economy"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5"></a>    year <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(year)</span>
-<span id="cb7-6"><a href="#cb7-6"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># different targets can be plotted by setting these filters</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(technology) <span class="op">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(</span>
-<span id="cb7-9"><a href="#cb7-9"></a>    <span class="dt">x =</span> weighted_production_metric, <span class="dt">y =</span> weighted_production_value, <span class="dt">fill =</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>      technology</span>
-<span id="cb7-11"><a href="#cb7-11"></a>  )) <span class="op">+</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="dt">position =</span> <span class="st">"fill"</span>) <span class="op">+</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
-<span id="cb7-14"><a href="#cb7-14"></a>    <span class="dt">x =</span> <span class="st">"Metric"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15"></a>    <span class="dt">y =</span> <span class="st">"Weighted Capacity [%]"</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a>  )</span></code></pre></div>
-<p><img src="man/figures/README-technoloy%20mix%20portfolio-1.png" width="100%"></p>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="co"># different targets can be plotted by setting these filters</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    sector <span class="op">==</span><span class="st"> "power"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    weighted_production_metric <span class="op">!=</span><span class="st"> "normalized_corporate_economy"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    year <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(year)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(technology) <span class="op">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="dt">x =</span> weighted_production_metric, <span class="dt">y =</span> weighted_production_value, <span class="dt">fill =</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>      technology</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  )) <span class="op">+</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="dt">position =</span> <span class="st">"fill"</span>) <span class="op">+</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="dt">x =</span> <span class="st">"Metric"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="dt">y =</span> <span class="st">"Weighted Capacity [%]"</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  )</span></code></pre></div>
+<p><img src="r2dii-analysis_files/figure-html/technoloy%20mix%20portfolio-1.png" width="100%"></p>
 </div>
 <div id="market-share-technology-level-volume-trajectory" class="section level3">
 <h3 class="hasAnchor">
@@ -305,7 +315,7 @@
 <span id="cb8-41"><a href="#cb8-41"></a>    <span class="dt">linetype =</span> weighted_production_metric</span>
 <span id="cb8-42"><a href="#cb8-42"></a>  )) <span class="op">+</span></span>
 <span id="cb8-43"><a href="#cb8-43"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(sector, technology))</span></code></pre></div>
-<p><img src="man/figures/README-volume%20portfolio-1.png" width="100%"></p>
+<p><img src="r2dii-analysis_files/figure-html/volume%20portfolio-1.png" width="100%"></p>
 </div>
 <div id="sda-target" class="section level3">
 <h3 class="hasAnchor">
@@ -316,7 +326,7 @@
 <span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> year, <span class="dt">y =</span> emission_factor_value, <span class="dt">color =</span> emission_factor_metric)) <span class="op">+</span></span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(sector))</span></code></pre></div>
-<p><img src="man/figures/README-sda%20plot-1.png" width="100%"></p>
+<p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>
   </div>

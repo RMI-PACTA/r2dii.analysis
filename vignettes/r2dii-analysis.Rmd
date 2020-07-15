@@ -154,7 +154,7 @@ just_data <- renewables_data %>%
   filter(!str_detect(weighted_production_metric, "target_"))
 
 targets_and_ceiling <- just_targets %>%
-  rbind(ceiling) %>%
+  bind_rows(ceiling) %>%
   group_by(year) %>%
   arrange(year, weighted_production_value) %>%
   mutate(

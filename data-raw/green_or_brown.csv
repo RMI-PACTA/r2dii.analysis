@@ -1,0 +1,14 @@
+sector,technology,green_or_brown
+automotive,electric,green
+automotive,hybrid,green
+automotive,ice,brown
+automotive,fuelcell,green
+power,hydrocap,green
+power,renewablescap,green
+power,coalcap,brown
+power,gascap,brown
+power,oilcap,brown
+power,nuclearcap,green
+oil and gas,oil,brown
+oil and gas,gas,brown
+coal,coal,brown

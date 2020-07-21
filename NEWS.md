@@ -2,7 +2,7 @@
 
 Internal:
 
-* Meaning of internal data is more transparent (@jdhoffa #136).
+* The meaning of internal data is now more transparent (@jdhoffa #136).
 
 # r2dii.analysis 0.0.1
 

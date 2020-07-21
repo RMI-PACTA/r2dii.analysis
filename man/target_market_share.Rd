@@ -69,7 +69,6 @@ target_market_share(match_result,
   region_isos = r2dii.data::region_isos_demo,
   by_company = TRUE
 )
-
 }
 \seealso{
 Other functions to calculate scenario targets: 

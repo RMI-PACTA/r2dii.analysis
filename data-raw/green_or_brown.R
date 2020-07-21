@@ -12,7 +12,7 @@ path_green_or_brown <- file.path("data-raw", "green_or_brown.csv")
 green_or_brown <- readr::read_csv(path_green_or_brown)
 
 usethis::use_data(green_or_brown,
-                  tmsr_or_smsp,
-                  overwrite = TRUE,
-                  internal = TRUE
+  tmsr_or_smsp,
+  overwrite = TRUE,
+  internal = TRUE
 )

@@ -155,8 +155,8 @@ target_market_share <- function(data,
         .data$sector,
         .data$technology,
         .data$green_or_brown
-        )
-      ) %>%
+      )
+    ) %>%
     select(-.data$target_name, -.data$green_or_brown) %>%
     tidyr::pivot_wider(
       names_from = .data$scenario,

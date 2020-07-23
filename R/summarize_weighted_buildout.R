@@ -1,11 +1,9 @@
 #' Summarize build-out based on the weight of each loan per sector per year
 #'
-#' Summarize build-out based on the weight of each loan per sector per year.
-#'
 #' @param data A data frame like the output of [join_ald_scenario()].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
-#'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
-#'   `loan_size_credit_limit` instead.
+#'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
+#'   `loan_size_credit_limit`.
 #' @param ... Variables to group by.
 #'
 #' @seealso [join_ald_scenario()].
@@ -13,9 +11,10 @@
 #' @export
 #'
 #' @section Warning:
-#' Build-out is undefined for companies that have no initial production.
-#' Build-out percentage in this case would be infinite! Companies with 0
-#' production will be removed automatically prior to analysis.
+#' Companies with 0 production are removed from the analysis.
+#' Build-out is undefined for companies that have no initial
+#' production; including such companies would cause build-out
+#' percentage to be infinite, which is wrong.
 #'
 #' @family utility functions
 #'

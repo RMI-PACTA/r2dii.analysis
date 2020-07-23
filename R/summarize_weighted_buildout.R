@@ -73,6 +73,8 @@ add_weighted_loan_buildout <- function(data, use_credit_limit = FALSE) {
   check_crucial_names(data, crucial)
   walk(crucial, ~ check_no_value_is_missing(data, .x))
 
+  check_zero_initial_production(data)
+
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
@@ -87,8 +89,6 @@ add_weighted_loan_buildout <- function(data, use_credit_limit = FALSE) {
 
   data_with_buildout <- data %>%
     add_buildout()
-
-  check_and_filter_infinite_buildout(data_with_buildout)
 
   data_with_buildout %>%
     left_join(total_size_by_sector, by = "sector") %>%
@@ -106,12 +106,12 @@ add_buildout <- function(data){
   data %>%
     inner_join(green_or_brown, by = c(.data$sector, .data$technology)) %>%
     group_by(.data$sector, .data$year, .data$scenario) %>%
-    mutate(sector_production = sum(production)) %>%
-    group_by(.data$name_ald) %>%
-    arrange(name_ald, year) %>%
-    mutate(brown_build_out = (production - first(production))/first(production),
-           green_build_out = (production - first(production))/first(sector_production)) %>%
-    mutate(build_out = case_when(green_or_brown == "green" ~ green_build_out,
+    mutate(sector_production = sum(.data$production)) %>%
+    group_by(.data$sector, .data$name_ald) %>%
+    arrange(.data$name_ald, .data$year) %>%
+    mutate(brown_build_out = (.data$production - first(.data$production))/first(.data$production),
+           green_build_out = (.data$production - first(.data$production))/first(.data$sector_production)) %>%
+    mutate(build_out = dplyr::case_when(green_or_brown == "green" ~ green_build_out,
                                  green_or_brown == "brown" ~ brown_build_out)) %>%
     select(c(cols, "build_out")) %>%
     ungroup()
@@ -135,9 +135,20 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
   invisible(data)
 }
 
-check_and_filter_infinite_buildout <- function(data) {
+check_zero_initial_production <- function(data) {
+  companies_with_zero_initial_production <- data %>%
+    group_by(.data$technology, .data$name_ald, .data$year) %>%
+    arrange(.data$year) %>%
+    filter(.data$year == first(.data$year)) %>%
+    summarize(production_at_start_year = sum(.data$production)) %>%
+    filter(.data$production_at_start_year == 0)
 
-  #TODO: Filter out companies with 0 production in start year, and warn!
+  if (nrow(companies_with_zero_initial_production) > 0L) {
+    abort(
+      class = "zero_initial_production",
+      "No `name_ald` by `technology` can have initial `produiction` values of 0."
+    )
+  }
 
   invisible(data)
 }

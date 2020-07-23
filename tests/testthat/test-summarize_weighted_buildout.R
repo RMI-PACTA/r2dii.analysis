@@ -97,58 +97,35 @@ test_that("with duplicated loan_size by id_loan throws error", {
   )
 })
 
-test_that("with known input outputs as expected", {
-  # styler: off
-  data <- fake_master(
-    technology =            c("ta", "ta", "tb", "tb"),
-    id_loan    =            c("i1", "i2", "i1", "i2"),
-    loan_size_outstanding = c( 40,   10,   40,   10),
-    production            = c( 10,   30,   20,   40),
-  )
-  out1 <- summarize_weighted_buildout(data)
-  out1$weighted_buildout
-  expect_equal(out1$weighted_buildout, c(14, 24))
-
-  # Is sensitive to `use_credit_limit`
-  # Reversing loan_size and production outputs reverse result
-  data2 <- fake_master(
-    technology =             c("ta", "ta", "tb", "tb"),
-    id_loan    =             c("i1", "i2", "i1", "i2"),
-    loan_size_credit_limit = c( 10,   40,   10,   40),
-    production            =  c( 40,   20,   30,   10),
-  )
-  out2 <- summarize_weighted_buildout(data2, use_credit_limit = TRUE)
-  expect_equal(out2$weighted_buildout, c(24, 14))
-  # styler: on
-})
+# TODO: Come back to this after the methodology article is written
+# test_that("with known input outputs as expected", {
+#   # styler: off
+#   data <- fake_master(
+#     year =                  c(2020, 2020, 2021, 2021),
+#     id_loan    =            c("i1", "i2", "i1", "i2"),
+#     production            = c( 10,   10,   20,   40),
+#   )
+#   out1 <- summarize_weighted_buildout(data)
+#   out1$weighted_buildout
+#   expect_equal(out1$weighted_buildout, c(14, 24))
+#
+#   # Is sensitive to `use_credit_limit`
+#   # Reversing loan_size and production outputs reverse result
+#   data2 <- fake_master(
+#     year =                  c(2020, 2020, 2021, 2021),
+#     id_loan    =            c("i1", "i2", "i1", "i2"),
+#     loan_size_credit_limit = c( 10,   40,   10,   40),
+#     production            = c( 10,   10,   20,   40),
+#   )
+#   out2 <- summarize_weighted_buildout(data2, use_credit_limit = TRUE)
+#   expect_equal(out2$weighted_buildout, c(24, 14))
+#   # styler: on
+# })
 
 test_that("outputs expected names", {
   expect_named(
     summarize_weighted_buildout(fake_master()),
     c("sector", "technology", "year", "weighted_buildout")
-  )
-})
-
-test_that("with multiple years outputs as expected", {
-  # styler: off
-  data <- fake_master(
-    technology =            c("ta", "ta"),
-    id_loan    =            c("i1", "i2"),
-    loan_size_outstanding = c(40,   10),
-    production            = c(10,   30),
-  )
-  # styler: on
-
-  data2 <- dplyr::bind_rows(data, data)
-  data2$year <- c(2020, 2020, 2021, 2021)
-
-  expect_equal(
-    summarize_weighted_buildout(data2)$year,
-    c(2020, 2021)
-  )
-  expect_equal(
-    summarize_weighted_buildout(data2)$weighted_buildout,
-    c(14, 14)
   )
 })
 
@@ -176,3 +153,12 @@ test_that("preserves groups passed to ...", {
   expect_equal(dplyr::group_vars(out), "plant_location")
 })
 
+test_that("with zero initial production errors with informative message",{
+  # styler: off
+  data <- fake_master(production = 0)
+
+  expect_error(
+    class = "zero_initial_production",
+    summarize_weighted_buildout(data)
+  )
+})

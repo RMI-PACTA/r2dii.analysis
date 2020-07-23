@@ -179,7 +179,6 @@ test_that("preserves groups passed to ...", {
   expect_equal(dplyr::group_vars(out), "plant_location")
 })
 
-# FIXME
 test_that("with demo data returns known value", {
   master <- prioritize(match_name(loanbook_demo, ald_demo)) %>%
     join_ald_scenario(

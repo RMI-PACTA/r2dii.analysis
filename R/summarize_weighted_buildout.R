@@ -39,6 +39,18 @@
 #'
 #' summarize_weighted_buildout(master, use_credit_limit = TRUE)
 summarize_weighted_buildout <- function(data, ..., use_credit_limit = FALSE) {
+  data %>%
+    add_weighted_loan_buildout(use_credit_limit = use_credit_limit) %>%
+    group_by(.data$sector, .data$technology, .data$year, ...) %>%
+    summarize(
+      weighted_buildout = mean(.data$weighted_loan_buildout)
+    ) %>%
+    # Restore old groups
+    group_by(!!!dplyr::groups(data))
+}
+
+add_weighted_loan_buildout <- function(data, use_credit_limit = FALSE) {
+
   stopifnot(
     is.data.frame(data),
     isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
@@ -57,26 +69,38 @@ summarize_weighted_buildout <- function(data, ..., use_credit_limit = FALSE) {
     "year",
     "scenario"
   )
+
   check_crucial_names(data, crucial)
   walk(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
-  check_and_filter_infinite_buildout(data)
+  distinct_loans_by_sector <- data %>%
+    ungroup() %>%
+    group_by(.data$sector) %>%
+    distinct(.data$id_loan, .data[[loan_size]]) %>%
+    check_unique_loan_size_values_per_id_loan()
 
-  data %>%
-    add_buildout() %>%
-    add_weighted_loan_buildout(use_credit_limit = use_credit_limit) %>%
-    group_by(.data$sector, .data$technology, .data$year, ...) %>%
-    summarize(
-      weighted_buildout = mean(.data$weighted_buildout)
+  total_size_by_sector <- distinct_loans_by_sector %>%
+    summarize(total_size = sum(.data[[loan_size]]))
+
+  data_with_buildout <- data %>%
+    add_buildout()
+
+  check_and_filter_infinite_buildout(data_with_buildout)
+
+  data_with_buildout %>%
+    left_join(total_size_by_sector, by = "sector") %>%
+    mutate(
+      loan_weight = .data[[loan_size]] / .data$total_size,
+      weighted_loan_buildout = .data$build_out * .data$loan_weight
     ) %>%
-    # Restore old groups
     group_by(!!!old_groups)
 }
 
 add_buildout <- function(data){
+
   cols <- names(data)
 
   data %>%
@@ -92,26 +116,6 @@ add_buildout <- function(data){
     select(c(cols, "build_out")) %>%
     ungroup()
 
-}
-
-add_weighted_loan_buildout <- function(data, use_credit_limit = FALSE) {
-
-  distinct_loans_by_sector <- data %>%
-    ungroup() %>%
-    group_by(.data$sector) %>%
-    distinct(.data$id_loan, .data[[loan_size]]) %>%
-    check_unique_loan_size_values_per_id_loan()
-
-  total_size_by_sector <- distinct_loans_by_sector %>%
-    summarize(total_size = sum(.data[[loan_size]]))
-
-  data %>%
-    left_join(total_size_by_sector, by = "sector") %>%
-    mutate(
-      loan_weight = .data[[loan_size]] / .data$total_size,
-      weighted_loan_production = .data$build_out * .data$loan_weight
-    ) %>%
-    group_by(!!!old_groups)
 }
 
 check_unique_loan_size_values_per_id_loan <- function(data) {

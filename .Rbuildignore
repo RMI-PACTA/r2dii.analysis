@@ -16,5 +16,6 @@
 ^vignettes/r2dii-analysis\.Rmd$
 ^vignettes/target-market-share\.Rmd$
 ^vignettes/target-sda\.Rmd$
+^vignettes/volume-build-out\.Rmd$
 ^cran-comments\.md$
 ^vignettes/articles$

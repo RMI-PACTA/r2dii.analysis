@@ -143,7 +143,7 @@ target_market_share <- function(data,
         .data$initial_sector_production
       )
     ) %>%
-    tidyr::pivot_longer(
+    pivot_longer(
       cols = c("tmsr_target_weighted_production", "smsp_target_weighted_production"),
       names_to = "target_name",
       values_to = "scenario_target_value"
@@ -158,14 +158,16 @@ target_market_share <- function(data,
       )
     ) %>%
     select(-.data$target_name, -.data$green_or_brown) %>%
-    tidyr::pivot_wider(
+    pivot_wider(
       names_from = .data$scenario,
       names_prefix = "weighted_production_target_",
-      values_from = .data$scenario_target_value
+      values_from = .data$scenario_target_value,
+      values_fn = list
     ) %>%
+    tidyr::unnest(starts_with("weighted_production_")) %>%
     rename(weighted_production_projected = .data$weighted_production) %>%
-    tidyr::pivot_longer(
-      cols = dplyr::starts_with("weighted_production_"),
+    pivot_longer(
+      cols = starts_with("weighted_production_"),
       names_prefix = "weighted_production_",
       names_to = "weighted_production_metric",
       values_to = "weighted_production_value"

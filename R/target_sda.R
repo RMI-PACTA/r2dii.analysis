@@ -139,7 +139,7 @@ target_sda <- function(data,
       .data$emission_factor_scenario_benchmark
     ) %>%
     filter(!is.na(.data$emission_factor_target)) %>%
-    tidyr::pivot_longer(
+    pivot_longer(
       cols = tidyr::starts_with("emission_factor_"),
       names_prefix = "emission_factor_",
       names_to = "emission_factor_metric",

@@ -38,17 +38,18 @@ Imports:
     dplyr,
     magrittr,
     rlang (>= 0.1.2),
-    tidyr
+    tidyr,
+    tidyselect
 Suggests: 
     covr,
     r2dii.data,
     r2dii.match,
+    rmarkdown,
     roxygen2,
     spelling,
-    testthat (>= 2.1.0),
-    rmarkdown
+    testthat (>= 2.1.0)
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

@@ -47,28 +47,33 @@ This function ignores existing groups and outputs ungrouped data.
 }
 
 \examples{
-library(r2dii.analysis)
+installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
+  requireNamespace("r2dii.match", quietly = TRUE)
+if (!installed) stop("Please install r2dii.match and r2dii.data")
+
 library(r2dii.data)
 library(r2dii.match)
 
-match_result <- r2dii.data::loanbook_demo \%>\%
-  r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
-  r2dii.match::prioritize()
+matched <- loanbook_demo \%>\%
+  match_name(ald_demo) \%>\%
+  prioritize()
 
-# calculate targets at portfolio level
-target_market_share(match_result,
-  ald = r2dii.data::ald_demo,
-  scenario = r2dii.data::scenario_demo_2020,
-  region_isos = r2dii.data::region_isos_demo
-)
+# Calculate targets at portfolio level
+matched \%>\%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo
+  )
 
-# calculate targets at company level
-target_market_share(match_result,
-  ald = r2dii.data::ald_demo,
-  scenario = r2dii.data::scenario_demo_2020,
-  region_isos = r2dii.data::region_isos_demo,
-  by_company = TRUE
-)
+# Calculate targets at company level
+matched \%>\%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo,
+    by_company = TRUE
+  )
 }
 \seealso{
 Other functions to calculate scenario targets: 

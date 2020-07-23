@@ -154,7 +154,6 @@ test_that("preserves groups passed to ...", {
 })
 
 test_that("with zero initial production errors with informative message",{
-  # styler: off
   data <- fake_master(production = 0)
 
   expect_error(

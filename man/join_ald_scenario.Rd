@@ -46,6 +46,7 @@ valid_matches \%>\%
 }
 \seealso{
 Other utility functions: 
+\code{\link{summarize_weighted_buildout}()},
 \code{\link{summarize_weighted_production}()}
 }
 \concept{utility functions}

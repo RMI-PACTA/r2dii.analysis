@@ -43,6 +43,7 @@ summarize_weighted_production(master, use_credit_limit = TRUE)
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.
 
 Other utility functions: 
-\code{\link{join_ald_scenario}()}
+\code{\link{join_ald_scenario}()},
+\code{\link{summarize_weighted_buildout}()}
 }
 \concept{utility functions}

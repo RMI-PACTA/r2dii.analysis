@@ -1,7 +1,7 @@
 #' Summaries based on the weight of each loan per sector per year
 #'
 #' Based on the based on the weight of each loan per sector per year,
-#' `summarize_weighted_production()` and `summarize_weighted_buildout()`
+#' `summarize_weighted_production()` and `summarize_weighted_percent_change()`
 #' summarize the production and build-out, respectively.
 #'
 #' @param data A data frame like the output of [join_ald_scenario()].
@@ -24,7 +24,7 @@
 #' @return A tibble with the same groups as the input (if any) and columns:
 #'   `sector`, `technology`, and `year`; and `weighted_production` or
 #'   `weighted_production` for `summarize_weighted_production()` and
-#'   `summarize_weighted_buildout()`, respectively.
+#'   `summarize_weighted_percent_change()`, respectively.
 #'
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
@@ -47,9 +47,9 @@
 #'
 #' summarize_weighted_production(master, use_credit_limit = TRUE)
 #'
-#' summarize_weighted_buildout(master)
+#' summarize_weighted_percent_change(master)
 #'
-#' summarize_weighted_buildout(master, use_credit_limit = TRUE)
+#' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   summarize_weighted_metric(
     data = data,
@@ -63,14 +63,14 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
 
 #' @rdname summarize_weighted_production
 #' @export
-summarize_weighted_buildout <- function(data, ..., use_credit_limit = FALSE) {
+summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
   summarize_weighted_metric(
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
 
-    .f = add_weighted_loan_buildout,
-    weighted_buildout = mean(.data$weighted_loan_buildout)
+    .f = add_weighted_loan_percent_change,
+    weighted_percent_change = mean(.data$weighted_loan_percent_change)
   )
 }
 
@@ -87,15 +87,15 @@ summarize_weighted_metric <- function(data,
     group_by(!!!dplyr::groups(data))
 }
 
-add_weighted_loan_buildout <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, buildout = TRUE)
+add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
+  add_weighted_loan_metric(data, use_credit_limit, percent_change = TRUE)
 }
 
 add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, buildout = FALSE)
+  add_weighted_loan_metric(data, use_credit_limit, percent_change = FALSE)
 }
 
-add_weighted_loan_metric <- function(data, use_credit_limit, buildout) {
+add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
   stopifnot(
     is.data.frame(data),
     isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
@@ -114,14 +114,14 @@ add_weighted_loan_metric <- function(data, use_credit_limit, buildout) {
     "year"
   )
 
-  if (buildout) {
+  if (percent_change) {
     crucial <- c(crucial, "scenario")
   }
 
   check_crucial_names(data, crucial)
   walk(crucial, ~ check_no_value_is_missing(data, .x))
 
-  if (buildout) {
+  if (percent_change) {
     check_zero_initial_production(data)
   }
 
@@ -139,9 +139,9 @@ add_weighted_loan_metric <- function(data, use_credit_limit, buildout) {
 
   out <- data
   metric <- "production"
-  if (buildout) {
-    out <- add_buildout(out)
-    metric <- "buildout"
+  if (percent_change) {
+    out <- add_percent_change(out)
+    metric <- "percent_change"
   }
 
   out <- out %>%
@@ -153,7 +153,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, buildout) {
     group_by(!!!old_groups)
 }
 
-add_buildout <- function(data) {
+add_percent_change <- function(data) {
   data %>%
     inner_join(green_or_brown, by = c(.data$sector, .data$technology)) %>%
     group_by(.data$sector, .data$year, .data$scenario) %>%
@@ -161,17 +161,17 @@ add_buildout <- function(data) {
     group_by(.data$sector, .data$name_ald) %>%
     arrange(.data$name_ald, .data$year) %>%
     mutate(
-      brown_buildout =
+      brown_percent_change =
         (.data$production - first(.data$production)) /
           first(.data$production),
-      green_buildout = (.data$production - first(.data$production)) /
+      green_percent_change = (.data$production - first(.data$production)) /
         first(.data$sector_production)
     ) %>%
-    mutate(buildout = dplyr::case_when(
-      green_or_brown == "green" ~ green_buildout,
-      green_or_brown == "brown" ~ brown_buildout
+    mutate(percent_change = dplyr::case_when(
+      green_or_brown == "green" ~ green_percent_change,
+      green_or_brown == "brown" ~ brown_percent_change
     )) %>%
-    select(one_of(c(names(data), "buildout"))) %>%
+    select(one_of(c(names(data), "percent_change"))) %>%
     ungroup()
 }
 

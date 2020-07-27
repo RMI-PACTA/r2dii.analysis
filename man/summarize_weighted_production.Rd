@@ -2,12 +2,12 @@
 % Please edit documentation in R/summarize_weighted_production.R
 \name{summarize_weighted_production}
 \alias{summarize_weighted_production}
-\alias{summarize_weighted_buildout}
+\alias{summarize_weighted_percent_change}
 \title{Summaries based on the weight of each loan per sector per year}
 \usage{
 summarize_weighted_production(data, ..., use_credit_limit = FALSE)
 
-summarize_weighted_buildout(data, ..., use_credit_limit = FALSE)
+summarize_weighted_percent_change(data, ..., use_credit_limit = FALSE)
 }
 \arguments{
 \item{data}{A data frame like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
@@ -22,11 +22,11 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 A tibble with the same groups as the input (if any) and columns:
 \code{sector}, \code{technology}, and \code{year}; and \code{weighted_production} or
 \code{weighted_production} for \code{summarize_weighted_production()} and
-\code{summarize_weighted_buildout()}, respectively.
+\code{summarize_weighted_percent_change()}, respectively.
 }
 \description{
 Based on the based on the weight of each loan per sector per year,
-\code{summarize_weighted_production()} and \code{summarize_weighted_buildout()}
+\code{summarize_weighted_production()} and \code{summarize_weighted_percent_change()}
 summarize the production and build-out, respectively.
 }
 \section{Warning}{
@@ -57,9 +57,9 @@ summarize_weighted_production(master)
 
 summarize_weighted_production(master, use_credit_limit = TRUE)
 
-summarize_weighted_buildout(master)
+summarize_weighted_percent_change(master)
 
-summarize_weighted_buildout(master, use_credit_limit = TRUE)
+summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 }
 \seealso{
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.

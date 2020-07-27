@@ -204,27 +204,27 @@ test_that("with demo data returns known value", {
 # Built-out ---------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {
-  expect_error(summarize_weighted_buildout("bad"), "data.frame.*not.*TRUE")
+  expect_error(summarize_weighted_percent_change("bad"), "data.frame.*not.*TRUE")
 })
 
 test_that("with bad use_credit_limit errors with informative message", {
   expect_error(
-    summarize_weighted_buildout(fake_master(), use_credit_limit = "bad"),
+    summarize_weighted_percent_change(fake_master(), use_credit_limit = "bad"),
     "not TRUE"
   )
 
   expect_error(
-    summarize_weighted_buildout(fake_master(), use_credit_limit = 1),
+    summarize_weighted_percent_change(fake_master(), use_credit_limit = 1),
     "not TRUE"
   )
 
   expect_error(
-    summarize_weighted_buildout(fake_master(), use_credit_limit = NA),
+    summarize_weighted_percent_change(fake_master(), use_credit_limit = NA),
     "not TRUE"
   )
 
   expect_error(
-    summarize_weighted_buildout(fake_master(), use_credit_limit = NULL),
+    summarize_weighted_percent_change(fake_master(), use_credit_limit = NULL),
     "not TRUE"
   )
 })
@@ -235,7 +235,7 @@ test_that("with data lacking crucial columns errors with informative message", {
 
     expect_error(
       class = "missing_names",
-      summarize_weighted_buildout(data, use_credit_limit = use_credit_limit)
+      summarize_weighted_percent_change(data, use_credit_limit = use_credit_limit)
     )
   }
 
@@ -260,7 +260,7 @@ test_that("with NAs in crucial columns errors with informative message", {
     data[1, name] <- NA
     expect_error(
       class = "some_value_is_missing",
-      summarize_weighted_buildout(data, use_credit_limit = use_credit_limit)
+      summarize_weighted_percent_change(data, use_credit_limit = use_credit_limit)
     )
   }
 
@@ -276,24 +276,24 @@ test_that("with NAs in crucial columns errors with informative message", {
 test_that("with bad but unused loan_size_column is error free", {
   bad_unused <- rename(fake_master(), bad = "loan_size_credit_limit")
   expect_error_free(
-    summarize_weighted_buildout(bad_unused, use_credit_limit = FALSE)
+    summarize_weighted_percent_change(bad_unused, use_credit_limit = FALSE)
   )
 
   bad_unused <- rename(fake_master(), bad = "loan_size_outstanding")
   expect_error_free(
-    add_weighted_loan_buildout(bad_unused, use_credit_limit = TRUE)
+    add_weighted_loan_percent_change(bad_unused, use_credit_limit = TRUE)
   )
 })
 
 test_that("with duplicated loan_size by id_loan throws error", {
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
-    summarize_weighted_buildout(fake_master(loan_size_outstanding = 1:2))
+    summarize_weighted_percent_change(fake_master(loan_size_outstanding = 1:2))
   )
 
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
-    summarize_weighted_buildout(
+    summarize_weighted_percent_change(
       fake_master(loan_size_credit_limit = 1:2),
       use_credit_limit = TRUE
     )
@@ -308,9 +308,9 @@ test_that("with duplicated loan_size by id_loan throws error", {
 #     id_loan    =            c("i1", "i2", "i1", "i2"),
 #     production            = c( 10,   10,   20,   40),
 #   )
-#   out1 <- summarize_weighted_buildout(data)
-#   out1$weighted_buildout
-#   expect_equal(out1$weighted_buildout, c(14, 24))
+#   out1 <- summarize_weighted_percent_change(data)
+#   out1$weighted_percent_change
+#   expect_equal(out1$weighted_percent_change, c(14, 24))
 #
 #   # Is sensitive to `use_credit_limit`
 #   # Reversing loan_size and production outputs reverse result
@@ -320,35 +320,35 @@ test_that("with duplicated loan_size by id_loan throws error", {
 #     loan_size_credit_limit = c( 10,   40,   10,   40),
 #     production            = c( 10,   10,   20,   40),
 #   )
-#   out2 <- summarize_weighted_buildout(data2, use_credit_limit = TRUE)
-#   expect_equal(out2$weighted_buildout, c(24, 14))
+#   out2 <- summarize_weighted_percent_change(data2, use_credit_limit = TRUE)
+#   expect_equal(out2$weighted_percent_change, c(24, 14))
 #   # styler: on
 # })
 
 test_that("outputs expected names", {
   expect_named(
-    summarize_weighted_buildout(fake_master()),
-    c("sector", "technology", "year", "weighted_buildout")
+    summarize_weighted_percent_change(fake_master()),
+    c("sector", "technology", "year", "weighted_percent_change")
   )
 })
 
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     group_by(.data$sector) %>%
-    summarize_weighted_buildout()
+    summarize_weighted_percent_change()
 
   expect_equal(dplyr::group_vars(out), "sector")
 })
 
 test_that("can group by `plant_location`", {
   data <- fake_master(plant_location = c("a", "b"))
-  out <- summarize_weighted_buildout(data, plant_location)
+  out <- summarize_weighted_percent_change(data, plant_location)
   expect_equal(nrow(out), 2L)
 })
 
 test_that("outputs names that include two grouping columns", {
   data <- fake_master(plant_location = c("a", "b"))
-  out <- summarize_weighted_buildout(data, plant_location, region)
+  out <- summarize_weighted_percent_change(data, plant_location, region)
 
   grp_cols <- c("plant_location", "region")
   names_include_groups <- identical(setdiff(grp_cols, names(out)), character(0))
@@ -359,7 +359,7 @@ test_that("preserves groups passed to ...", {
   data <- fake_master(plant_location = c("a", "b")) %>%
     group_by(plant_location)
 
-  out <- summarize_weighted_buildout(data, plant_location)
+  out <- summarize_weighted_percent_change(data, plant_location)
   expect_equal(nrow(out), 2L)
 
   expect_equal(dplyr::group_vars(out), "plant_location")
@@ -370,7 +370,7 @@ test_that("with zero initial production errors with informative message", {
 
   expect_error(
     class = "zero_initial_production",
-    summarize_weighted_buildout(data)
+    summarize_weighted_percent_change(data)
   )
 })
 
@@ -382,14 +382,14 @@ test_that("with demo data returns known value", {
       region_isos = region_isos_demo
     )
 
-  credit_limit0 <- summarize_weighted_buildout(master)
-  file0 <- "ref-summarize_weighted_buildout-credit_limit0"
+  credit_limit0 <- summarize_weighted_percent_change(master)
+  file0 <- "ref-summarize_weighted_percent_change-credit_limit0"
   expect_known_value(credit_limit0, file0, update = FALSE)
   # Clearer output when this test fails
   expect_equal(readRDS(test_path(file0)), credit_limit0)
 
-  credit_limit1 <- summarize_weighted_buildout(master, use_credit_limit = TRUE)
-  file1 <- "ref-summarize_weighted_buildout-credit_limit1"
+  credit_limit1 <- summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+  file1 <- "ref-summarize_weighted_percent_change-credit_limit1"
   expect_known_value(credit_limit1, file1, update = FALSE)
   # Clearer output when this test fails
   expect_equal(readRDS(test_path(file1)), credit_limit1)

@@ -25,15 +25,15 @@ A tibble with the same groups as the input (if any) and columns:
 \code{summarize_weighted_percent_change()}, respectively.
 }
 \description{
-Based on the based on the weight of each loan per sector per year,
+Based on on the weight of each loan per sector per year,
 \code{summarize_weighted_production()} and \code{summarize_weighted_percent_change()}
-summarize the production and build-out, respectively.
+summarize the production and percent-change, respectively.
 }
 \section{Warning}{
 
-The build-out analysis excludes companies with 0 production. Build-out is
+The percent-change analysis excludes companies with 0 production. percent-change is
 undefined for companies that have no initial production; including such
-companies would cause build-out percentage to be infinite, which is wrong.
+companies would cause percent-change percentage to be infinite, which is wrong.
 }
 
 \examples{

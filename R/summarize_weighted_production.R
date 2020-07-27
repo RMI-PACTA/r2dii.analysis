@@ -1,8 +1,8 @@
 #' Summaries based on the weight of each loan per sector per year
 #'
-#' Based on the based on the weight of each loan per sector per year,
+#' Based on on the weight of each loan per sector per year,
 #' `summarize_weighted_production()` and `summarize_weighted_percent_change()`
-#' summarize the production and build-out, respectively.
+#' summarize the production and percent-change, respectively.
 #'
 #' @param data A data frame like the output of [join_ald_scenario()].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
@@ -15,9 +15,9 @@
 #' @export
 #'
 #' @section Warning:
-#' The build-out analysis excludes companies with 0 production. Build-out is
+#' The percent-change analysis excludes companies with 0 production. percent-change is
 #' undefined for companies that have no initial production; including such
-#' companies would cause build-out percentage to be infinite, which is wrong.
+#' companies would cause percent-change percentage to be infinite, which is wrong.
 #'
 #' @family utility functions
 #'

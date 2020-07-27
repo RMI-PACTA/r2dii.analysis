@@ -311,7 +311,7 @@ test_that("with duplicated loan_size by id_loan throws error", {
   )
   out1 <- summarize_weighted_percent_change(data, name_ald)
   out1$weighted_percent_change
-  expect_equal(out1$weighted_percent_change, c(0,0,0.5,1.5))
+  expect_equal(out1$weighted_percent_change, c(0,0,50,150))
 
   # Is sensitive to `use_credit_limit`
   # Reversing loan_size and production outputs reverse result
@@ -323,7 +323,7 @@ test_that("with duplicated loan_size by id_loan throws error", {
     production            = c( 10,   10,   20,   40),
   )
   out2 <- summarize_weighted_percent_change(data2, name_ald, use_credit_limit = TRUE)
-  expect_equal(out2$weighted_percent_change, c(0,0,0.4,1.8))
+  expect_equal(out2$weighted_percent_change, c(0,0,40,180))
 #   # styler: on
 # })
 

@@ -201,7 +201,7 @@ test_that("with demo data returns known value", {
 })
 
 
-# Built-out ---------------------------------------------------------------
+# Percent-change ---------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {
   expect_error(summarize_weighted_percent_change("bad"), "data.frame.*not.*TRUE")

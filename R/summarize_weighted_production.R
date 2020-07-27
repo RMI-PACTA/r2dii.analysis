@@ -138,18 +138,17 @@ add_weighted_loan_metric <- function(data, use_credit_limit, buildout) {
     summarize(total_size = sum(.data[[loan_size]]))
 
   out <- data
-  metric_nm <- metric_col <- "production"
+  metric <- "production"
   if (buildout) {
     out <- add_buildout(out)
-    metric_nm <- "buildout"
-    metric_col <- "build_out"
+    metric <- "buildout"
   }
 
   out <- out %>%
     left_join(total_size_by_sector, by = "sector") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
-      "weighted_loan_{metric_nm}" := .data[[metric_col]] * .data$loan_weight
+      "weighted_loan_{metric}" := .data[[metric]] * .data$loan_weight
     ) %>%
     group_by(!!!old_groups)
 }
@@ -162,17 +161,17 @@ add_buildout <- function(data) {
     group_by(.data$sector, .data$name_ald) %>%
     arrange(.data$name_ald, .data$year) %>%
     mutate(
-      brown_build_out =
+      brown_buildout =
         (.data$production - first(.data$production)) /
           first(.data$production),
-      green_build_out = (.data$production - first(.data$production)) /
+      green_buildout = (.data$production - first(.data$production)) /
         first(.data$sector_production)
     ) %>%
-    mutate(build_out = dplyr::case_when(
-      green_or_brown == "green" ~ green_build_out,
-      green_or_brown == "brown" ~ brown_build_out
+    mutate(buildout = dplyr::case_when(
+      green_or_brown == "green" ~ green_buildout,
+      green_or_brown == "brown" ~ brown_buildout
     )) %>%
-    select(one_of(c(names(data), "build_out"))) %>%
+    select(one_of(c(names(data), "buildout"))) %>%
     ungroup()
 }
 

@@ -303,25 +303,27 @@ test_that("with duplicated loan_size by id_loan throws error", {
 # TODO: Come back to this after the methodology article is written
 # test_that("with known input outputs as expected", {
 #   # styler: off
-#   data <- fake_master(
-#     year =                  c(2020, 2020, 2021, 2021),
-#     id_loan    =            c("i1", "i2", "i1", "i2"),
-#     production            = c( 10,   10,   20,   40),
-#   )
-#   out1 <- summarize_weighted_percent_change(data)
-#   out1$weighted_percent_change
-#   expect_equal(out1$weighted_percent_change, c(14, 24))
-#
-#   # Is sensitive to `use_credit_limit`
-#   # Reversing loan_size and production outputs reverse result
-#   data2 <- fake_master(
-#     year =                  c(2020, 2020, 2021, 2021),
-#     id_loan    =            c("i1", "i2", "i1", "i2"),
-#     loan_size_credit_limit = c( 10,   40,   10,   40),
-#     production            = c( 10,   10,   20,   40),
-#   )
-#   out2 <- summarize_weighted_percent_change(data2, use_credit_limit = TRUE)
-#   expect_equal(out2$weighted_percent_change, c(24, 14))
+  data <- fake_master(
+    name_ald = rep(c("company a", "company b"),2),
+    year =                  c(2020, 2020, 2021, 2021),
+    id_loan    =            c("i1", "i2", "i1", "i2"),
+    production            = c( 10,   10,   20,   40),
+  )
+  out1 <- summarize_weighted_percent_change(data, name_ald)
+  out1$weighted_percent_change
+  expect_equal(out1$weighted_percent_change, c(0,0,0.5,1.5))
+
+  # Is sensitive to `use_credit_limit`
+  # Reversing loan_size and production outputs reverse result
+  data2 <- fake_master(
+    name_ald = rep(c("company a", "company b"),2),
+    year =                  c(2020, 2020, 2021, 2021),
+    id_loan    =            c("i1", "i2", "i1", "i2"),
+    loan_size_credit_limit = c( 20,   30,   20,   30),
+    production            = c( 10,   10,   20,   40),
+  )
+  out2 <- summarize_weighted_percent_change(data2, name_ald, use_credit_limit = TRUE)
+  expect_equal(out2$weighted_percent_change, c(0,0,0.4,1.8))
 #   # styler: on
 # })
 

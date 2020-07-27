@@ -163,9 +163,9 @@ add_percent_change <- function(data) {
     mutate(
       brown_percent_change =
         (.data$production - first(.data$production)) /
-          first(.data$production),
+          first(.data$production) * 100,
       green_percent_change = (.data$production - first(.data$production)) /
-        first(.data$sector_production)
+        first(.data$sector_production) * 100
     ) %>%
     mutate(percent_change = dplyr::case_when(
       green_or_brown == "green" ~ green_percent_change,

@@ -312,8 +312,8 @@ test_that("is sensitive to `use_credit_limit`", {
     name_ald = rep(c("company a", "company b"), 2),
     year = c(2020, 2020, 2021, 2021),
     id_loan = c("i1", "i2", "i1", "i2"),
-    loan_size_credit_limit = c(20,   30,   20,   30),
-    production = c(10,   10,   20,   40),
+    loan_size_credit_limit = c(20, 30, 20, 30),
+    production = c(10, 10, 20, 40),
   )
   out2 <- data %>%
     summarize_weighted_percent_change(name_ald, use_credit_limit = TRUE)

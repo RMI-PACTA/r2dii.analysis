@@ -300,8 +300,6 @@ test_that("with duplicated loan_size by id_loan throws error", {
   )
 })
 
-# TODO: Come back to this after the methodology article is written
-# test_that("with known input outputs as expected", {
 #   # styler: off
   data <- fake_master(
     name_ald = rep(c("company a", "company b"),2),

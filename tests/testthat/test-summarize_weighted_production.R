@@ -307,6 +307,22 @@ test_that("outputs expected names", {
   )
 })
 
+test_that("is sensitive to `use_credit_limit`", {
+  data <- fake_master(
+    name_ald = rep(c("company a", "company b"), 2),
+    year = c(2020, 2020, 2021, 2021),
+    id_loan = c("i1", "i2", "i1", "i2"),
+    loan_size_credit_limit = c(20,   30,   20,   30),
+    production = c(10,   10,   20,   40),
+  )
+  out2 <- data %>%
+    summarize_weighted_percent_change(name_ald, use_credit_limit = TRUE)
+  out3 <- data %>%
+    summarize_weighted_percent_change(name_ald, use_credit_limit = FALSE)
+
+  expect_false(identical(out2, out3))
+})
+
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
     group_by(.data$sector) %>%

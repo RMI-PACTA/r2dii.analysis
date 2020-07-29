@@ -144,18 +144,19 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     metric <- "percent_change"
   }
 
-  out <- out %>%
+  out %>%
     left_join(total_size_by_sector, by = "sector") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
-      "weighted_loan_{metric}" := .data[[metric]] * .data$loan_weight
+      weighted_loan_metric = .data[[metric]] * .data$loan_weight
     ) %>%
-    group_by(!!!old_groups)
+    group_by(!!!old_groups) %>%
+    rename_metric(metric)
 }
 
 add_percent_change <- function(data) {
   data %>%
-    inner_join(green_or_brown, by = c(.data$sector, .data$technology)) %>%
+    inner_join(green_or_brown, by = c("sector", "technology")) %>%
     group_by(.data$sector, .data$year, .data$scenario) %>%
     mutate(sector_production = sum(.data$production)) %>%
     group_by(.data$sector, .data$name_ald) %>%
@@ -208,4 +209,12 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
   }
 
   invisible(data)
+}
+
+rename_metric <- function(out, metric) {
+  new_name <- paste0("weighted_loan_", metric)
+  newnames <- sub("weighted_loan_metric", new_name, names(out))
+  out <- rlang::set_names(out, newnames)
+
+  out
 }

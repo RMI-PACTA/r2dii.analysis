@@ -10,7 +10,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ## Weighted Production
 For most intents and purposes, we recommend calculating all targets using the loan weighted production as an indicator. In particular, we define the loan weighted production of a given company, $j$ as: 
 $$ \overline{p}_{i,j}(t) = p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j}$$ 
@@ -22,6 +21,7 @@ $$ \overline{p}_i (t) = \sum_j \left[  p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j} \rig
 Effectively, this is a loan-weighted average of the production attributed to each company in your portfolio. A significant result of this indicator choice is that small companies (with little production) will be favorably weighted, given that the loan to that company is sufficiently large. This can be useful to reflect large investments into green start-ups. 
 
 To calculate the weighted production:
+
 ```{r}
 library(r2dii.data)
 library(r2dii.match)
@@ -36,10 +36,8 @@ master <- loanbook_demo %>%
     region_isos = region_isos_demo
   )
 
-summarize_weighted_production(master) %>% 
-  head()
+summarize_weighted_production(master)
 ```
-
 
 ## Weighted Percent Change in Production
 
@@ -56,8 +54,8 @@ $$ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} * \dfrac{l_j}{\sum_j l_j} \right
 It should be noted that the percent change, $\chi$, is undefined for $0$ initial production. Intuitively, this makes sense, since you would require an "infinite percent" build-out to grow to anything from 0. For this reason, any company having $0$ initial production is filtered out prior to calculating the percent change indicator.
 
 To calculate the weighted percent change:
+
 ```{r}
 # using the master dataset defined in the previous chunk:
-summarize_weighted_percent_change(master) %>% 
-  head()
+summarize_weighted_percent_change(master)
 ```

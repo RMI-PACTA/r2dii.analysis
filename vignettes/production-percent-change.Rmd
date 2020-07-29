@@ -1,6 +1,6 @@
 ---
-  title: "Indicator Choices:"
-  subtitle: "Weighted Production vs. Weighted Percent Change in Production"
+title: "Indicator Choices:"
+subtitle: "Weighted Production vs. Weighted Percent Change in Production"
 ---
 
 ```{r, include = FALSE}
@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Weighted Production
+
 For most intents and purposes, we recommend calculating all targets using the loan weighted production as an indicator. In particular, we define the loan weighted production of a given company, $j$ as: 
 $$ \overline{p}_{i,j}(t) = p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j}$$ 
 where $p_{i,j}$ is the production of company $i$ in technology $j$ and $l_j$ is the loan given to company $j$. 

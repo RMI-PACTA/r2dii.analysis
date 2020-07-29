@@ -36,6 +36,8 @@ navbar:
       href: articles/target-sda.html
     - text: "Market Share Approach"
       href: articles/target-market-share.html
+    - text: "Indicator Choices: Weighted Production vs. Weighted Percent Change in Production"
+      href: articles/production-percent-change.html
 
   right:
     - text: "Packages"

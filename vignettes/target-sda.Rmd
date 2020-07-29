@@ -24,7 +24,7 @@ It should be noted that this parameter does not capture the change in the market
 
 The sector decarbonization factor, $p_y$, is then calculated. This variable captures the remaining effort needed from the market to meet the target in 2050, per year. Under the SDA assumptions the CO2 intensity for all companies in a sector converge in 2050. Thus, 100% of the expected decarbonization efforts are still to be met at the base year and 0% should be left at 2050. $p_y$ is defined as:
 
-$$ p_y = \frac{I^{in}(t) - I^{Sc}(t_{2050})}{I^{in}(t_0) - I^{Sc}(t_{2050})}$$
+$$ p_y = \frac{I^{Sc}(t) - I^{Sc}(t_{2050})}{I^{Sc}(t_0) - I^{Sc}(t_{2050})}$$
 
 where $I^{in}(t)$ and $I^{Sc}(t)$ are the average market and scenario emission intensities respectively, at time $t$.
 

@@ -2,9 +2,12 @@
 % Please edit documentation in R/summarize_weighted_production.R
 \name{summarize_weighted_production}
 \alias{summarize_weighted_production}
-\title{Summarize production based on the weight of each loan per sector per year}
+\alias{summarize_weighted_percent_change}
+\title{Summaries based on the weight of each loan per sector per year}
 \usage{
 summarize_weighted_production(data, ..., use_credit_limit = FALSE)
+
+summarize_weighted_percent_change(data, ..., use_credit_limit = FALSE)
 }
 \arguments{
 \item{data}{A data frame like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
@@ -12,32 +15,51 @@ summarize_weighted_production(data, ..., use_credit_limit = FALSE)
 \item{...}{Variables to group by.}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
-the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
-\code{loan_size_credit_limit} instead.}
+the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the column
+\code{loan_size_credit_limit}.}
 }
 \value{
 A tibble with the same groups as the input (if any) and columns:
-\code{sector}, \code{technology}, \code{year}, and \code{weighted_production}.
+\code{sector}, \code{technology}, and \code{year}; and \code{weighted_production} or
+\code{weighted_production} for \code{summarize_weighted_production()} and
+\code{summarize_weighted_percent_change()}, respectively.
 }
 \description{
-Summarize production based on the weight of each loan per sector per year.
+Based on on the weight of each loan per sector per year,
+\code{summarize_weighted_production()} and \code{summarize_weighted_percent_change()}
+summarize the production and percent-change, respectively.
 }
+\section{Warning}{
+
+The percent-change analysis excludes companies with 0 production. percent-change is
+undefined for companies that have no initial production; including such
+companies would cause percent-change percentage to be infinite, which is wrong.
+}
+
 \examples{
-library(r2dii.analysis)
+installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
+  requireNamespace("r2dii.match", quietly = TRUE)
+if (!installed) stop("Please install r2dii.match and r2dii.data")
+
 library(r2dii.data)
 library(r2dii.match)
 
-master <- r2dii.data::loanbook_demo \%>\%
-  r2dii.match::match_name(r2dii.data::ald_demo) \%>\%
-  r2dii.match::prioritize() \%>\%
-  join_ald_scenario(r2dii.data::ald_demo,
-    r2dii.data::scenario_demo_2020,
+master <- loanbook_demo \%>\%
+  match_name(ald_demo) \%>\%
+  prioritize() \%>\%
+  join_ald_scenario(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
 
 summarize_weighted_production(master)
 
 summarize_weighted_production(master, use_credit_limit = TRUE)
+
+summarize_weighted_percent_change(master)
+
+summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 }
 \seealso{
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.

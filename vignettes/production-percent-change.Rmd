@@ -1,0 +1,61 @@
+---
+  title: "Indicator Choices:"
+  subtitle: "Weighted Production vs. Weighted Percent Change in Production"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Weighted Production
+For most intents and purposes, we recommend calculating all targets using the loan weighted production as an indicator. In particular, we define the loan weighted production of a given company, $j$ as: 
+$$ \overline{p}_{i,j}(t) = p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j}$$ 
+where $p_{i,j}$ is the production of company $i$ in technology $j$ and $l_j$ is the loan given to company $j$. 
+
+To calculate portfolio targets, we aggregate this value by summing over every company in the portfolio: 
+$$ \overline{p}_i (t) = \sum_j \left[  p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j} \right] $$
+
+Effectively, this is a loan-weighted average of the production attributed to each company in your portfolio. A significant result of this indicator choice is that small companies (with little production) will be favorably weighted, given that the loan to that company is sufficiently large. This can be useful to reflect large investments into green start-ups. 
+
+To calculate the weighted production:
+
+```{r}
+library(r2dii.data)
+library(r2dii.match)
+library(r2dii.analysis)
+
+master <- loanbook_demo %>%
+  match_name(ald_demo) %>%
+  prioritize() %>%
+  join_ald_scenario(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo
+  )
+
+summarize_weighted_production(master)
+```
+
+## Weighted Percent Change in Production
+
+On the other-hand, if you're more keen to understand if the large corporations in your portfolio are planning to make any significant changes, the percent change in production may be a more useful indicator. 
+
+For each company, we define the percent change, $\chi_i(t)$, as compared to the start year, $t_0$:
+
+$$ \chi_i(t) =  \dfrac{p_{i}(t)-p_{i}(t_0)}{p_i(t_0)} * 100$$
+where $p_i(t)$ is the indicator (production or capacity) of technology $i$, and $t0$ is the start year of the analysis.
+
+We aggregate the percent-change in production for each company to the portfolio-level, by using the same loan-weighted average as above. In particular, for each loan $l_j$ to company $j$, we have: 
+$$ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} * \dfrac{l_j}{\sum_j l_j} \right]$$
+
+It should be noted that the percent change, $\chi$, is undefined for 0 initial production. Intuitively, this makes sense, since you would require an "infinite percent" build-out to grow to anything from 0. For this reason, any company having 0 initial production is filtered out prior to calculating the percent change indicator.
+
+To calculate the weighted percent change:
+
+```{r}
+# using the master dataset defined in the previous chunk:
+summarize_weighted_percent_change(master)
+```

@@ -228,3 +228,4 @@ test_that("outputs expected names", {
   exp <- c("sector", "year", "emission_factor_metric", "emission_factor_value")
   expect_named(out, exp)
 })
+

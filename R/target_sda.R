@@ -92,8 +92,8 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
 
   start_year <- co2_intensity_scenario %>%
-    select(.data$sector, .data$year) %>%
-    group_by(.data$sector) %>%
+    inner_join(ald, by = c("sector", "year")) %>%
+    group_by(.data$sector, .data$scenario) %>%
     summarize(start_year = min(.data$year))
 
   ald <- ald %>%

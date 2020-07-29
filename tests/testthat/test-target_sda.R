@@ -178,6 +178,44 @@ test_that("outputs expected names", {
   expect_named(out, exp)
 })
 
+test_that("with known input outputs as expected", {
+  #TODO: Refactor this test into smaller isolated expected output tests
+matched <- fake_matched(sector_ald = "cement")
+
+ald <- fake_ald(
+        sector = "cement",
+        technology = "cement",
+        name_company = c(rep("shaanxi auto", 4), "company 2"),
+        year = c(2020, 2021, 2022, 2025, 2020),
+        emission_factor = c(0.9, 0.9, 0.8, 0.5, 12)
+      )
+
+
+co2_intensity_scenario <- fake_co2_scenario(
+  scenario = c(rep("b2ds", 2), rep("sds", 2)),
+  year = rep(c(2020, 2025), 2),
+  emission_factor = c(0.5, 0.1, 0.5, 0.4)
+
+)
+
+out <- target_sda(matched,
+                  ald,
+                  co2_intensity_scenario) %>%
+  arrange(.data$year)
+
+out <- split(out, out$emission_factor_metric)
+
+expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
+expect_equal(out$corporate_economy$emission_factor_value, c(06.45, 0.9, 0.8, 0.5))
+expect_equal(out$adjusted_scenario_b2ds$emission_factor_value, c(6.45, 1.29))
+expect_equal(out$adjusted_scenario_sds$emission_factor_value, c(6.45, 5.16))
+expect_equal(out$target_b2ds$emission_factor_value, c(0.9, 1.29))
+expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
+
+
+})
+
+
 # test_that("outputs 3 metrics of CO2 emissions", {
 #   out <- target_sda(
 #     fake_matched(sector_ald = "cement"),

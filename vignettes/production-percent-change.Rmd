@@ -51,7 +51,7 @@ where $p_i(t)$ is the indicator (production or capacity) of technology $i$, and 
 We aggregate the percent-change in production for each company to the portfolio-level, by using the same loan-weighted average as above. In particular, for each loan $l_j$ to company $j$, we have: 
 $$ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} * \dfrac{l_j}{\sum_j l_j} \right]$$
 
-It should be noted that the percent change, $\chi$, is undefined for $0$ initial production. Intuitively, this makes sense, since you would require an "infinite percent" build-out to grow to anything from 0. For this reason, any company having $0$ initial production is filtered out prior to calculating the percent change indicator.
+It should be noted that the percent change, $\chi$, is undefined for 0 initial production. Intuitively, this makes sense, since you would require an "infinite percent" build-out to grow to anything from 0. For this reason, any company having 0 initial production is filtered out prior to calculating the percent change indicator.
 
 To calculate the weighted percent change:
 

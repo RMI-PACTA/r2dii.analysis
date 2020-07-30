@@ -91,12 +91,6 @@ target_sda <- function(data,
   check_crucial_names(ald, crucial_ald)
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
 
-  # start_year <- co2_intensity_scenario %>%
-  #   inner_join(ald, by = c("sector", "year")) %>%
-  #   group_by(.data$sector, .data$scenario) %>%
-  #   summarize(start_year = min(.data$year))
-
-  # TODO: Test that loanbook and ald have any rows when joined, move this up.
   loanbook_with_weighted_emission_factors <- data %>%
     calculate_weighted_emission_factor(ald, use_credit_limit = use_credit_limit)
 

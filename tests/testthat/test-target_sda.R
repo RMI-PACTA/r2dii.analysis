@@ -236,54 +236,30 @@ expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
 
 })
 
+test_that("with no matching data warns", {
 
-# test_that("outputs 3 metrics of CO2 emissions", {
-#   out <- target_sda(
-#     fake_matched(sector_ald = "cement"),
-#     ald = fake_ald(
-#       sector = "cement",
-#       technology = "cement",
-#       year = c(2020, 2021, 2022),
-#       emission_factor = c(1, 2, 3)
-#     ),
-#     co2_intensity_scenario = fake_co2_scenario(
-#       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
-#     )
-#   )
-#
-#   expect_length(unique(out$emission_factor_metric), 3L)
-# })
+  no_matches <- function(){
 
-# test_that("with known input outputs as expected", {
-#   sectors <- c("cement", "steel")
-#
-#   valid_matches <- fake_matched(
-#     sector_ald = sectors,
-#     name_ald = sprintf("%s_company", sectors)
-#   )
-#
-#   ald <- fake_ald(
-#     name_company = sprintf("%s_company", sectors),
-#     sector = sectors,
-#     year = 2020,
-#     emission_factor = c(0.6, 1.6)
-#   )
-#
-#   co2_intensity_scenario <- fake_co2_scenario(
-#     sector = rep(sectors, each = 3),
-#     year = rep(c(2020, 2030, 2050), 2),
-#     emission_factor = c(0.53835, 0.43039, 0.16897, 1.43731, 0.87454, 0.26055),
-#   )
-#
-#   out <- target_sda(valid_matches, ald, co2_intensity_scenario) %>%
-#     filter(
-#       emission_factor_metric == "target",
-#       year == 2030
-#     )
-#
-#   out_cement <- filter(out, sector == "cement")
-#   expect_equal(round(out_cement$emission_factor_value, 3), 0.460)
-#
-#   out_steel <- filter(out, sector == "steel")
-#   expect_equal(round(out_steel$emission_factor_value, 3), 0.944)
-# })
+    target_sda(fake_matched(sector_ald = "bad"),
+               fake_ald(),
+               fake_co2_scenario()
+    )
+  }
+
+  expect_warning(
+    no_matches(),
+    "no match"
+  )
+
+  bad_scenario <- function(){
+    target_sda(fake_matched(),
+               fake_ald(),
+               fake_co2_scenario(sector = "bad")
+    )
+  }
+
+  expect_warning(
+    bad_scenario(),
+    "no scenario"
+  )
+})

@@ -119,11 +119,11 @@ test_that("w/ missing crucial names errors gracefully", {
 
 test_that("without `sector` throws no error", {
   # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
-  without_sector <- select(fake_matched(), -sector)
+  without_sector <- select(fake_matched(sector_ald = "cement"), -sector)
   expect_error_free(
     target_sda(
       without_sector,
-      ald = fake_ald(),
+      ald = fake_ald(sector = "cement"),
       co2_intensity_scenario = fake_co2_scenario()
     )
   )

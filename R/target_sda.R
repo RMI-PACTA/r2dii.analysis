@@ -223,8 +223,8 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy){
   corporate_economy_baseline <- corporate_economy %>%
     group_by(.data$sector) %>%
     filter(.data$year == min(.data$year)) %>%
-    select(sector,
-           baseline_emission_factor = emission_factor_corporate_economy) %>%
+    select(.data$sector,
+           baseline_emission_factor = .data$emission_factor_corporate_economy) %>%
     ungroup()
 
   data %>%
@@ -233,7 +233,7 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy){
     arrange(.data$year) %>%
     mutate(
       baseline_adjustment = .data$baseline_emission_factor / first(.data$emission_factor),
-      emission_factor_adjusted_scenario = .data$emission_factor * baseline_adjustment
+      emission_factor_adjusted_scenario = .data$emission_factor * .data$baseline_adjustment
     ) %>%
     ungroup() %>%
     select(
@@ -298,7 +298,7 @@ ald_columns <- function() {
 }
 
 empty_target_sda_output <- function() {
-  tibble::tibble(
+  tibble(
     sector = character(),
     year = integer(),
     emission_factor_metric = character(),

@@ -193,18 +193,21 @@ test_that("with demo data returns known value", {
   # Clearer output when this test fails
   expect_equal(readRDS(test_path(file0)), credit_limit0)
 
-  credit_limit1 <- summarize_weighted_production(master, use_credit_limit = TRUE)
+  credit_limit1 <- master %>%
+    summarize_weighted_production(use_credit_limit = TRUE)
   file1 <- "ref-summarize_weighted_production-credit_limit1"
   expect_known_value(credit_limit1, file1, update = FALSE)
   # Clearer output when this test fails
   expect_equal(readRDS(test_path(file1)), credit_limit1)
 })
 
-
 # Percent-change ---------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {
-  expect_error(summarize_weighted_percent_change("bad"), "data.frame.*not.*TRUE")
+  expect_error(
+    summarize_weighted_percent_change("bad"),
+    "data.frame.*not.*TRUE"
+  )
 })
 
 test_that("with bad use_credit_limit errors with informative message", {
@@ -235,7 +238,9 @@ test_that("with data lacking crucial columns errors with informative message", {
 
     expect_error(
       class = "missing_names",
-      summarize_weighted_percent_change(data, use_credit_limit = use_credit_limit)
+      summarize_weighted_percent_change(
+        data, use_credit_limit = use_credit_limit
+      )
     )
   }
 
@@ -260,7 +265,9 @@ test_that("with NAs in crucial columns errors with informative message", {
     data[1, name] <- NA
     expect_error(
       class = "some_value_is_missing",
-      summarize_weighted_percent_change(data, use_credit_limit = use_credit_limit)
+      summarize_weighted_percent_change(
+        data, use_credit_limit = use_credit_limit
+      )
     )
   }
 
@@ -379,7 +386,8 @@ test_that("with demo data returns known value", {
   # Clearer output when this test fails
   expect_equal(readRDS(test_path(file0)), credit_limit0)
 
-  credit_limit1 <- summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+  credit_limit1 <- master %>%
+    summarize_weighted_percent_change(use_credit_limit = TRUE)
   file1 <- "ref-summarize_weighted_percent_change-credit_limit1"
   expect_known_value(credit_limit1, file1, update = FALSE)
   # Clearer output when this test fails
@@ -387,27 +395,26 @@ test_that("with demo data returns known value", {
 })
 
 test_that("with known input outputs as expected", {
-#   # styler: off
-data <- fake_master(
-  name_ald = rep(c("company a", "company b"),2),
-  year =                  c(2020, 2020, 2021, 2021),
-  id_loan    =            c("i1", "i2", "i1", "i2"),
-  production            = c( 10,   10,   20,   40),
-)
-out1 <- summarize_weighted_percent_change(data, name_ald)
-out1$weighted_percent_change
-expect_equal(out1$weighted_percent_change, c(0,0,50,150))
+  data <- fake_master(
+    name_ald = rep(c("company a", "company b"), 2),
+    year = c(2020, 2020, 2021, 2021),
+    id_loan = c("i1", "i2", "i1", "i2"),
+    production = c(10, 10, 20, 40),
+  )
+  out1 <- summarize_weighted_percent_change(data, name_ald)
+  out1$weighted_percent_change
+  expect_equal(out1$weighted_percent_change, c(0, 0, 50, 150))
 
-# Is sensitive to `use_credit_limit`
-# Reversing loan_size and production outputs reverse result
-data2 <- fake_master(
-  name_ald = rep(c("company a", "company b"),2),
-  year =                  c(2020, 2020, 2021, 2021),
-  id_loan    =            c("i1", "i2", "i1", "i2"),
-  loan_size_credit_limit = c( 20,   30,   20,   30),
-  production            = c( 10,   10,   20,   40),
-)
-out2 <- summarize_weighted_percent_change(data2, name_ald, use_credit_limit = TRUE)
-expect_equal(out2$weighted_percent_change, c(0,0,40,180))
-#   # styler: on
+  # Is sensitive to `use_credit_limit`
+  # Reversing loan_size and production outputs reverse result
+  data2 <- fake_master(
+    name_ald = rep(c("company a", "company b"), 2),
+    year = c(2020, 2020, 2021, 2021),
+    id_loan = c("i1", "i2", "i1", "i2"),
+    loan_size_credit_limit = c(20, 30, 20, 30),
+    production = c(10, 10, 20, 40),
+  )
+  out2 <- data2 %>%
+    summarize_weighted_percent_change(name_ald, use_credit_limit = TRUE)
+  expect_equal(out2$weighted_percent_change, c(0, 0, 40, 180))
 })

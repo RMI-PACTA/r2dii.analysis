@@ -104,7 +104,7 @@ target_sda <- function(data,
   adjusted_scenario <- compute_ald_adjusted_scenario(
     co2_intensity_scenario,
     corporate_economy
-    )
+  )
 
   if (identical(nrow(adjusted_scenario), 0L)) {
     rlang::warn("Found no scenario data for input ald.")
@@ -128,16 +128,13 @@ target_sda <- function(data,
     corporate_economy,
     loanbook_targets,
     adjusted_scenario
-    )
+  )
 }
 
-format_and_combine_output <- function(lbk, corp_economy, targets, scen){
+format_and_combine_output <- function(lbk, corporate_economy, targets, scen) {
+  projected <- pivot_emission_factors_longer(lbk)
 
-  projected <- lbk %>%
-    pivot_emission_factors_longer()
-
-  corporate_economy <- corp_economy %>%
-    pivot_emission_factors_longer()
+  corporate_economy <- pivot_emission_factors_longer(corporate_economy)
 
   targets <- targets %>%
     pivot_wider(
@@ -160,10 +157,10 @@ format_and_combine_output <- function(lbk, corp_economy, targets, scen){
     corporate_economy,
     targets,
     scenario
-    )
+  )
 }
 
-#TODO: maybe extract these to `summarize_weighted_production`
+# TODO: maybe extract these to `summarize_weighted_production`
 calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
   data %>%
     inner_join(ald, by = ald_columns()) %>%
@@ -176,7 +173,7 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
     rename(sector = .data$sector_ald)
 }
 
-#TODO: maybe extract these to `summarize_weighted_production`
+# TODO: maybe extract these to `summarize_weighted_production`
 add_loan_weighted_emission_factor <- function(data, use_credit_limit) {
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
@@ -213,12 +210,14 @@ calculate_market_average <- function(data) {
     ungroup()
 }
 
-compute_ald_adjusted_scenario <- function(data, corporate_economy){
+compute_ald_adjusted_scenario <- function(data, corporate_economy) {
   corporate_economy_baseline <- corporate_economy %>%
     group_by(.data$sector) %>%
     filter(.data$year == min(.data$year)) %>%
-    select(.data$sector,
-           baseline_emission_factor = .data$emission_factor_corporate_economy) %>%
+    select(
+      .data$sector,
+      baseline_emission_factor = .data$emission_factor_corporate_economy
+    ) %>%
     ungroup()
 
   data %>%
@@ -226,8 +225,10 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy){
     group_by(.data$scenario, .data$sector) %>%
     arrange(.data$year) %>%
     mutate(
-      baseline_adjustment = .data$baseline_emission_factor / first(.data$emission_factor),
-      emission_factor_adjusted_scenario = .data$emission_factor * .data$baseline_adjustment
+      baseline_adjustment =
+        .data$baseline_emission_factor / first(.data$emission_factor),
+      emission_factor_adjusted_scenario =
+        .data$emission_factor * .data$baseline_adjustment
     ) %>%
     ungroup() %>%
     select(
@@ -239,20 +240,16 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy){
 }
 
 add_p_to_scenario <- function(data) {
+  p <- function(x) (x - last(x)) / (first(x) - last(x))
+
   data %>%
     group_by(.data$sector, .data$scenario) %>%
     arrange(.data$year) %>%
-    mutate(
-    # styler: off
-      .x =  .data$emission_factor_adjusted_scenario,  # For short so the pattern is clearer
-      p = (.data$.x -  last(.data$.x)) / (first(.data$.x) - last(.data$.x)),
-      .x = NULL
-      # styler: on
-    ) %>%
+    mutate(p = p(.data$emission_factor_adjusted_scenario)) %>%
     ungroup()
 }
 
-compute_loanbook_targets <- function(data,scenario_with_p){
+compute_loanbook_targets <- function(data, scenario_with_p) {
   data %>%
     inner_join(scenario_with_p, by = c("year", "sector")) %>%
     group_by(.data$sector, .data$scenario) %>%
@@ -270,10 +267,9 @@ compute_loanbook_targets <- function(data,scenario_with_p){
       .data$year,
       .data$emission_factor_target
     )
-
 }
 
-pivot_emission_factors_longer <- function(data){
+pivot_emission_factors_longer <- function(data) {
   data %>%
     pivot_longer(
       cols = tidyr::starts_with("emission_factor_"),
@@ -281,22 +277,17 @@ pivot_emission_factors_longer <- function(data){
       names_to = "emission_factor_metric",
       values_to = "emission_factor_value"
     )
-
 }
 
 ald_columns <- function() {
-  c(
-    name_ald = "name_company",
-    sector_ald = "sector"
-  )
+  c(name_ald = "name_company", sector_ald = "sector")
 }
 
 empty_target_sda_output <- function() {
   tibble(
-    sector = character(),
-    year = integer(),
-    emission_factor_metric = character(),
-    emission_factor_value = numeric()
+    sector = character(0),
+    year = integer(0),
+    emission_factor_metric = character(0),
+    emission_factor_value = numeric(0)
   )
-
 }

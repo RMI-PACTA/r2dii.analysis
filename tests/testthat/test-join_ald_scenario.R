@@ -185,39 +185,30 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 
   l <- list(sector = "a", region = "b", isos = "c", source = "d")
 
-  expect_warning(
-    regexp = NA,
-    join_ald_scenario2(l)
-  )
+  expect_warning(join_ald_scenario2(l), NA)
 
   bad_scenario <- fake_scenario(
     region = l$region, scenario_source = l$source, sector = "bad"
   )
-  expect_warning(
-    regexp = "scenario",
-    join_ald_scenario2(l, bad_scenario)
-  )
+  expect_warning(join_ald_scenario2(l, bad_scenario), "scenario")
 
   bad_region1 <- tibble(region = "bad", isos = l$isos, source = l$source)
   expect_warning(
-    regexp = "region_isos",
-    join_ald_scenario2(l, region_isos = bad_region1)
+    join_ald_scenario2(l, region_isos = bad_region1), "region_isos"
   )
 
   bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
   expect_warning(
-    regexp = "region_isos",
-    join_ald_scenario2(l, region_isos = bad_region2)
+    join_ald_scenario2(l, region_isos = bad_region2), "region_isos"
   )
 
   bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
   expect_warning(
-    regexp = "region_isos",
-    join_ald_scenario2(l, region_isos = bad_region3)
+    join_ald_scenario2(l, region_isos = bad_region3), "region_isos"
   )
 })
 
-test_that("include/excludes `plant_location`s inside/outside a region", {
+test_that("include/excludes `plant_location` inside/outside a region", {
   # styler: off
   region_isos_toy <- tribble(
     ~region,         ~isos, ~source,

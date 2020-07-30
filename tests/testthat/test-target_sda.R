@@ -32,7 +32,7 @@ test_that("outputs is ungrouped", {
       year = c(2020, 2050)
     ),
     co2_intensity_scenario = fake_co2_scenario(
-      emission_factor = c(1,2),
+      emission_factor = c(1, 2),
       year = c(2020, 2050)
     )
   )
@@ -50,7 +50,7 @@ test_that("warns when input data is grouped", {
         year = c(2020, 2050)
       ),
       co2_intensity_scenario = fake_co2_scenario(
-        emission_factor = c(1,2),
+        emission_factor = c(1, 2),
         year = c(2020, 2050)
       )
     )
@@ -175,86 +175,45 @@ test_that("outputs expected names", {
 })
 
 test_that("with known input outputs as expected", {
-  #TODO: Re-factor this test into smaller isolated expected output tests
-matched <- fake_matched(sector_ald = "cement")
+  # TODO: Re-factor this test into smaller isolated expected output tests
+  matched <- fake_matched(sector_ald = "cement")
 
-ald <- fake_ald(
-        sector = "cement",
-        technology = "cement",
-        name_company = c(rep("shaanxi auto", 4), "company 2"),
-        year = c(2020, 2021, 2022, 2025, 2020),
-        emission_factor = c(0.9, 0.9, 0.8, 0.5, 12)
-      )
-
-
-co2_intensity_scenario <- fake_co2_scenario(
-  scenario = c(rep("b2ds", 2), rep("sds", 2)),
-  year = rep(c(2020, 2025), 2),
-  emission_factor = c(0.5, 0.1, 0.5, 0.4)
-
-)
-
-out <- target_sda(matched,
-                  ald,
-                  co2_intensity_scenario) %>%
-  arrange(.data$year)
-
-out <- split(out, out$emission_factor_metric)
-
-expected_out <- tribble(
-   ~sector, ~year,  ~emission_factor_metric, ~emission_factor_value,
-  "cement", 2020L,              "projected",                    0.9,
-  "cement", 2021L,              "projected",                    0.9,
-  "cement", 2022L,              "projected",                    0.8,
-  "cement", 2025L,              "projected",                    0.5,
-  "cement", 2020L,            "target_b2ds",                    0.9,
-  "cement", 2025L,            "target_b2ds",                   1.29,
-  "cement", 2020L,             "target_sds",                    0.9,
-  "cement", 2025L,             "target_sds",                   5.16,
-  "cement", 2020L, "adjusted_scenario_b2ds",                   6.45,
-  "cement", 2025L, "adjusted_scenario_b2ds",                   1.29,
-  "cement", 2020L,  "adjusted_scenario_sds",                   6.45,
-  "cement", 2025L,  "adjusted_scenario_sds",                   5.16,
-  "cement", 2020L,      "corporate_economy",                   6.45,
-  "cement", 2021L,      "corporate_economy",                    0.9,
-  "cement", 2022L,      "corporate_economy",                    0.8,
-  "cement", 2025L,      "corporate_economy",                    0.5
+  ald <- fake_ald(
+    sector = "cement",
+    technology = "cement",
+    name_company = c(rep("shaanxi auto", 4), "company 2"),
+    year = c(2020, 2021, 2022, 2025, 2020),
+    emission_factor = c(0.9, 0.9, 0.8, 0.5, 12)
   )
 
-expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
-expect_equal(out$corporate_economy$emission_factor_value, c(06.45, 0.9, 0.8, 0.5))
-expect_equal(out$adjusted_scenario_b2ds$emission_factor_value, c(6.45, 1.29))
-expect_equal(out$adjusted_scenario_sds$emission_factor_value, c(6.45, 5.16))
-expect_equal(out$target_b2ds$emission_factor_value, c(0.9, 1.29))
-expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
+  co2_intensity_scenario <- fake_co2_scenario(
+    scenario = c(rep("b2ds", 2), rep("sds", 2)),
+    year = rep(c(2020, 2025), 2),
+    emission_factor = c(0.5, 0.1, 0.5, 0.4)
+  )
 
+  out <-target_sda(matched, ald, co2_intensity_scenario) %>%
+    arrange(.data$year) %>%
+    split(.$emission_factor_metric)
 
+  expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
+  expect_equal(
+    out$corporate_economy$emission_factor_value, c(06.45, 0.9, 0.8, 0.5)
+  )
+  expect_equal(out$adjusted_scenario_b2ds$emission_factor_value, c(6.45, 1.29))
+  expect_equal(out$adjusted_scenario_sds$emission_factor_value, c(6.45, 5.16))
+  expect_equal(out$target_b2ds$emission_factor_value, c(0.9, 1.29))
+  expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
 })
 
 test_that("with no matching data warns", {
-
-  no_matches <- function(){
-
-    target_sda(fake_matched(sector_ald = "bad"),
-               fake_ald(),
-               fake_co2_scenario()
-    )
-  }
-
+  no_matches <- fake_matched(sector_ald = "bad")
   expect_warning(
-    no_matches(),
-    "no match"
+    target_sda(no_matches, fake_ald(),fake_co2_scenario()), "no match"
   )
 
-  bad_scenario <- function(){
-    target_sda(fake_matched(),
-               fake_ald(),
-               fake_co2_scenario(sector = "bad")
-    )
-  }
-
+  bad_scenario <- fake_co2_scenario(sector = "bad")
   expect_warning(
-    bad_scenario(),
-    "no scenario"
+    target_sda(fake_matched(), fake_ald(), bad_scenario), "no scenario"
   )
 })

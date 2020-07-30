@@ -201,26 +201,25 @@ out <- target_sda(matched,
 
 out <- split(out, out$emission_factor_metric)
 
-expected_out <- tibble::tribble(
-                   ~sector, ~year,  ~emission_factor_metric, ~emission_factor_value,
-                  "cement", 2020L,              "projected",                    0.9,
-                  "cement", 2021L,              "projected",                    0.9,
-                  "cement", 2022L,              "projected",                    0.8,
-                  "cement", 2025L,              "projected",                    0.5,
-                  "cement", 2020L,            "target_b2ds",                    0.9,
-                  "cement", 2025L,            "target_b2ds",                   1.29,
-                  "cement", 2020L,             "target_sds",                    0.9,
-                  "cement", 2025L,             "target_sds",                   5.16,
-                  "cement", 2020L, "adjusted_scenario_b2ds",                   6.45,
-                  "cement", 2025L, "adjusted_scenario_b2ds",                   1.29,
-                  "cement", 2020L,  "adjusted_scenario_sds",                   6.45,
-                  "cement", 2025L,  "adjusted_scenario_sds",                   5.16,
-                  "cement", 2020L,      "corporate_economy",                   6.45,
-                  "cement", 2021L,      "corporate_economy",                    0.9,
-                  "cement", 2022L,      "corporate_economy",                    0.8,
-                  "cement", 2025L,      "corporate_economy",                    0.5
-                  )
-
+expected_out <- tribble(
+   ~sector, ~year,  ~emission_factor_metric, ~emission_factor_value,
+  "cement", 2020L,              "projected",                    0.9,
+  "cement", 2021L,              "projected",                    0.9,
+  "cement", 2022L,              "projected",                    0.8,
+  "cement", 2025L,              "projected",                    0.5,
+  "cement", 2020L,            "target_b2ds",                    0.9,
+  "cement", 2025L,            "target_b2ds",                   1.29,
+  "cement", 2020L,             "target_sds",                    0.9,
+  "cement", 2025L,             "target_sds",                   5.16,
+  "cement", 2020L, "adjusted_scenario_b2ds",                   6.45,
+  "cement", 2025L, "adjusted_scenario_b2ds",                   1.29,
+  "cement", 2020L,  "adjusted_scenario_sds",                   6.45,
+  "cement", 2025L,  "adjusted_scenario_sds",                   5.16,
+  "cement", 2020L,      "corporate_economy",                   6.45,
+  "cement", 2021L,      "corporate_economy",                    0.9,
+  "cement", 2022L,      "corporate_economy",                    0.8,
+  "cement", 2025L,      "corporate_economy",                    0.5
+  )
 
 expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
 expect_equal(out$corporate_economy$emission_factor_value, c(06.45, 0.9, 0.8, 0.5))

@@ -19,7 +19,7 @@ test_that("with fake data outputs known value", {
     )
   )
 
-  expect_known_value(out, "ref-target_sda", update = TRUE)
+  expect_known_value(out, "ref-target_sda", update = FALSE)
 })
 
 test_that("outputs is ungrouped", {
@@ -27,15 +27,13 @@ test_that("outputs is ungrouped", {
     fake_matched(
       sector_ald = "cement"
     ),
-    ald = fake_ald(
+    fake_ald(
       sector = "cement",
-      technology = "cement",
-      year = c(2020, 2021, 2022),
-      emission_factor = c(1, 2, 3)
+      year = c(2020, 2050)
     ),
     co2_intensity_scenario = fake_co2_scenario(
-      year = c(2020, 2050),
-      emission_factor = c(0.6, 0.2)
+      emission_factor = c(1,2),
+      year = c(2020, 2050)
     )
   )
   expect_false(dplyr::is_grouped_df(out))
@@ -49,13 +47,11 @@ test_that("warns when input data is grouped", {
       grouped_data,
       ald = fake_ald(
         sector = "cement",
-        technology = "cement",
-        year = c(2020, 2021, 2022),
-        emission_factor = c(1, 2, 3)
+        year = c(2020, 2050)
       ),
       co2_intensity_scenario = fake_co2_scenario(
-        year = c(2020, 2050),
-        emission_factor = c(0.6, 0.2)
+        emission_factor = c(1,2),
+        year = c(2020, 2050)
       )
     )
   }
@@ -179,7 +175,7 @@ test_that("outputs expected names", {
 })
 
 test_that("with known input outputs as expected", {
-  #TODO: Refactor this test into smaller isolated expected output tests
+  #TODO: Re-factor this test into smaller isolated expected output tests
 matched <- fake_matched(sector_ald = "cement")
 
 ald <- fake_ald(

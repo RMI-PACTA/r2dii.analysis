@@ -297,7 +297,7 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
   out <- target_market_share(
     fake_matched(name_ald = c("company a", "company b")),
     fake_ald(
-      name = c("company a", "company b", "company a", "company b"),
+      name_company = c("company a", "company b", "company a", "company b"),
       is_ultimate_owner = c(T, F, T, F),
       production = c(50, 100, 100, 50),
       year = c(2020, 2020, 2021, 2021)

@@ -2,6 +2,8 @@
 
 User-facing
 
+* `target_sda()` major bugfix and article update (@jdhoffa #153)
+
 * New `summarize_weighted_percent_change()` allows user to calculate a new indicator. (@jdhoffa #141)
 
 * `target_market_share()` no longer errors if the combination of `sector` and `scenario_target_value` does not uniquely identify an observation (@georgeharris2deg #142).

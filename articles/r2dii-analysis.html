@@ -190,15 +190,15 @@
 <span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       normalized_corp…</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corporate_econo…</span>
 <span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span>
 <span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span>
 <span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span>
-<span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       normalized_corp…</span>
-<span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  9 autom… hybrid      2020 global demo_2020       target_sds      </span>
-<span class="co">#&gt; 10 autom… hybrid      2020 global demo_2020       target_sps      </span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       projected       </span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corporate_econo…</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       target_cps      </span>
+<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       target_sds      </span>
+<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       target_sps      </span>
 <span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></pre></body></html></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">market_share_targets_company</span> <span class="kw">&lt;-</span> <span class="no">matched</span> <span class="kw">%&gt;%</span>
@@ -216,12 +216,12 @@
 <span class="co">#&gt;    sector technology  year region scenario_source name_ald weighted_produc…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… normalized_corp…</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…</span>
 <span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… target_cps      </span>
 <span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… target_sds      </span>
 <span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… target_sps      </span>
 <span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… projected       </span>
-<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…</span>
+<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corporate_econo…</span>
 <span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span>
 <span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span>
 <span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span>
@@ -261,12 +261,11 @@
 <div id="market-share-sector-level-technology-mix" class="section level3">
 <h3 class="hasAnchor">
 <a href="#market-share-sector-level-technology-mix" class="anchor"></a>Market Share: Sector-level technology mix</h3>
-<p>From the market share output, you can plot the portfolio’s exposure to various climate sensitive technologies (<code>projected</code>), and compare with various scenario targets.</p>
+<p>From the market share output, you can plot the portfolio’s exposure to various climate sensitive technologies (<code>projected</code>), and compare with the corporate economy, or against various scenario targets.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Pick the targets you want to plot.</span>
 <span class="no">tech_mix_data</span> <span class="kw">&lt;-</span> <span class="no">market_share_targets_portfolio</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(
     <span class="no">sector</span> <span class="kw">==</span> <span class="st">"power"</span>,
-    <span class="no">weighted_production_metric</span> <span class="kw">!=</span> <span class="st">"normalized_corporate_economy"</span>,
     <span class="no">year</span> <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">year</span>)
   )</pre></body></html></div>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu">ggplot</span>(
@@ -284,8 +283,19 @@
 <div id="market-share-technology-level-volume-trajectory" class="section level3">
 <h3 class="hasAnchor">
 <a href="#market-share-technology-level-volume-trajectory" class="anchor"></a>Market Share: Technology-level volume trajectory</h3>
-<p>You can also plot the technology-specific volume trend. All targets and benchmarks are normalized to the initial portfolio value, so we are effectively comparing ambition.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">renewables_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(
+<p>You can also plot the technology-specific volume trend. All benchmarks must first be normalized to the initial portfolio value, so that we are effectively comparing ambition.</p>
+<div class="sourceCode" id="cb9"><html><body><pre class="r">  <span class="no">market_share_targets_portfolio</span> <span class="kw">&lt;-</span> <span class="no">market_share_targets_portfolio</span> <span class="kw">%&gt;%</span>
+  <span class="fu">pivot_wider</span>(<span class="kw">names_from</span> <span class="kw">=</span> <span class="no">weighted_production_metric</span>,
+              <span class="kw">values_from</span> <span class="kw">=</span> <span class="no">weighted_production_value</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">arrange</span>(<span class="no">year</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">group_by</span>(<span class="no">sector</span>, <span class="no">technology</span>, <span class="no">region</span>, <span class="no">scenario_source</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">normalized_corporate_economy</span> <span class="kw">=</span> <span class="no">corporate_economy</span> * (<span class="fu">first</span>(<span class="no">projected</span>)/<span class="fu">first</span>(<span class="no">corporate_economy</span>))) <span class="kw">%&gt;%</span>
+  <span class="fu">select</span>(-<span class="no">corporate_economy</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">pivot_longer</span>(<span class="kw">names_to</span> <span class="kw">=</span> <span class="st">"weighted_production_metric"</span>,
+               <span class="kw">cols</span> <span class="kw">=</span> <span class="no">projected</span>:<span class="no">normalized_corporate_economy</span>,
+               <span class="kw">values_to</span> <span class="kw">=</span> <span class="st">"weighted_production_value"</span>)
+
+<span class="no">renewables_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(
   <span class="no">market_share_targets_portfolio</span>,
   <span class="no">sector</span> <span class="kw">==</span> <span class="st">"power"</span>,
   <span class="no">technology</span> <span class="kw">==</span> <span class="st">"renewablescap"</span>,

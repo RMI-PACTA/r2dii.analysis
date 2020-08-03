@@ -192,7 +192,7 @@ test_that("with known input outputs as expected", {
     emission_factor = c(0.5, 0.1, 0.5, 0.4)
   )
 
-  out <-target_sda(matched, ald, co2_intensity_scenario) %>%
+  out <- target_sda(matched, ald, co2_intensity_scenario) %>%
     arrange(.data$year) %>%
     split(.$emission_factor_metric)
 
@@ -207,8 +207,10 @@ test_that("with known input outputs as expected", {
 })
 
 test_that("with known input outputs as expected, at company level (#155)", {
-  matched <- fake_matched(name_ald = c("shaanxi auto", "company 2"),
-                          sector_ald = "cement")
+  matched <- fake_matched(
+    name_ald = c("shaanxi auto", "company 2"),
+    sector_ald = "cement"
+  )
 
   ald <- fake_ald(
     sector = "cement",
@@ -229,7 +231,7 @@ test_that("with known input outputs as expected, at company level (#155)", {
     ald,
     co2_intensity_scenario,
     by_company = TRUE
-    ) %>%
+  ) %>%
     arrange(.data$year)
 
   out_shaanxi <- filter(out, name_ald == "shaanxi auto") %>%
@@ -250,7 +252,7 @@ test_that("with known input outputs as expected, at company level (#155)", {
 test_that("with no matching data warns", {
   no_matches <- fake_matched(sector_ald = "bad")
   expect_warning(
-    target_sda(no_matches, fake_ald(),fake_co2_scenario()), "no match"
+    target_sda(no_matches, fake_ald(), fake_co2_scenario()), "no match"
   )
 
   bad_scenario <- fake_co2_scenario(sector = "bad")

@@ -1,7 +1,10 @@
 # r2dii.analysis (development version)
 
 User-facing
-* `target_market_share()` not longer outputs normalized corporate economy (@jdhoffa #158)
+
+* `target_sda()` gains `by_company` argument (@jdhoffa #155)
+
+* `target_market_share()` no longer outputs normalized corporate economy (@jdhoffa #158)
 
 * `target_sda()` major bug fix and article update (@jdhoffa #153)
 

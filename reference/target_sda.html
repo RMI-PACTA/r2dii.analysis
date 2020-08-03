@@ -159,7 +159,13 @@ portfolio-level, otherwise referred to as "emissions factors". It uses the
 to calculate these targets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>target_sda</span>(<span class='no'>data</span>, <span class='no'>ald</span>, <span class='no'>co2_intensity_scenario</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>target_sda</span>(
+  <span class='no'>data</span>,
+  <span class='no'>ald</span>,
+  <span class='no'>co2_intensity_scenario</span>,
+  <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,6 +189,12 @@ to calculate these targets.</p>
       <td><p>Logical vector of length 1. <code>FALSE</code> defaults to using
 the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to instead use the column
 <code>loan_size_credit_limit</code>.</p></td>
+    </tr>
+    <tr>
+      <th>by_company</th>
+      <td><p>Logical vector of length 1. <code>FALSE</code> defaults to outputting
+<code>weighted_production_value</code> at the portfolio-level. Set to <code>TRUE</code> to output
+<code>weighted_production_value</code> at the company-level.</p></td>
     </tr>
     </table>
 
@@ -297,7 +309,14 @@ calculated portfolio target emissions factors (see column
 #&gt; </span><span style='color: #555555;'>4</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 target_demo                               </span><span style='color: #BB0000;'>NA</span><span>
 #&gt; </span><span style='color: #555555;'>5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>024 target_demo                               </span><span style='color: #BB0000;'>NA</span><span>
 #&gt; </span><span style='color: #555555;'>6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>025 target_demo                               </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </div></span></pre>
+#&gt; </div><div class='input'>
+<span class='co'># calculate company-level targets</span>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='no'>valid_matches</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>target_sda</span>(
+    <span class='kw'>ald</span> <span class='kw'>=</span> <span class='no'>ald_demo</span>,
+    <span class='kw'>co2_intensity_scenario</span> <span class='kw'>=</span> <span class='no'>co2_intensity_scenario_demo</span>,
+    <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  )</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,8 +1,9 @@
 # r2dii.analysis (development version)
 
 User-facing
+* `target_sda()` gains `by_company` argument (@jdhoffa #155)
 
-* `target_sda()` major bugfix and article update (@jdhoffa #153)
+* `target_sda()` major bug fix and article update (@jdhoffa #153)
 
 * New `summarize_weighted_percent_change()` allows user to calculate a new indicator. (@jdhoffa #141)
 

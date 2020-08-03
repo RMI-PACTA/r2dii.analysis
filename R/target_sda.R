@@ -17,6 +17,9 @@
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
+#' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
+#'   `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
+#'   `weighted_production_value` at the company-level.
 #'
 #' @return  A tibble with the CO2 emissions factors attributed to
 #' the portfolio. These values include the portfolio's actual projected CO2
@@ -56,12 +59,14 @@
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
-                       use_credit_limit = FALSE) {
+                       use_credit_limit = FALSE,
+                       by_company = FALSE) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(ald),
     is.data.frame(co2_intensity_scenario),
-    is.logical(use_credit_limit)
+    is.logical(use_credit_limit),
+    is.logical(by_company)
   )
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
@@ -91,8 +96,16 @@ target_sda <- function(data,
   check_crucial_names(ald, crucial_ald)
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
 
+  loanbook_summary_groups <- maybe_add_name_ald(
+    c("sector_ald", "year"),
+    by_company
+  )
+
   loanbook_with_weighted_emission_factors <- data %>%
-    calculate_weighted_emission_factor(ald, use_credit_limit = use_credit_limit)
+    calculate_weighted_emission_factor(ald,
+      !!!rlang::syms(loanbook_summary_groups),
+      use_credit_limit = use_credit_limit
+    )
 
   if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {
     rlang::warn("Found no match between loanbook and ald.")
@@ -113,9 +126,15 @@ target_sda <- function(data,
 
   adjusted_scenario_with_p <- add_p_to_scenario(adjusted_scenario)
 
+  target_summary_groups <- maybe_add_name_ald(
+    c("sector", "scenario"),
+    by_company
+  )
+
   loanbook_targets <- compute_loanbook_targets(
     loanbook_with_weighted_emission_factors,
-    adjusted_scenario_with_p
+    adjusted_scenario_with_p,
+    !!!rlang::syms(target_summary_groups)
   )
 
   if (identical(nrow(loanbook_targets), 0L)) {
@@ -127,45 +146,29 @@ target_sda <- function(data,
     loanbook_with_weighted_emission_factors,
     corporate_economy,
     loanbook_targets,
-    adjusted_scenario
+    adjusted_scenario,
+    by_company = by_company
   )
 }
 
-format_and_combine_output <- function(lbk, corporate_economy, targets, scen) {
-  projected <- pivot_emission_factors_longer(lbk)
+maybe_add_name_ald <- function(data, by_company = FALSE) {
+  out <- data
 
-  corporate_economy <- pivot_emission_factors_longer(corporate_economy)
+  if (by_company) {
+    out <- c(data, "name_ald")
+  }
 
-  targets <- targets %>%
-    pivot_wider(
-      names_from = .data$scenario,
-      names_prefix = "emission_factor_target_",
-      values_from = .data$emission_factor_target
-    ) %>%
-    pivot_emission_factors_longer()
-
-  scenario <- scen %>%
-    pivot_wider(
-      names_from = .data$scenario,
-      names_prefix = "emission_factor_adjusted_scenario_",
-      values_from = .data$emission_factor_adjusted_scenario
-    ) %>%
-    pivot_emission_factors_longer()
-
-  rbind(
-    projected,
-    corporate_economy,
-    targets,
-    scenario
-  )
+  return(out)
 }
 
-# TODO: maybe extract these to `summarize_weighted_production`
-calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
+calculate_weighted_emission_factor <- function(data,
+                                               ald,
+                                               ...,
+                                               use_credit_limit = FALSE) {
   data %>%
     inner_join(ald, by = ald_columns()) %>%
     add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit) %>%
-    group_by(.data$sector_ald, .data$year) %>%
+    group_by(...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%
@@ -173,7 +176,6 @@ calculate_weighted_emission_factor <- function(data, ald, use_credit_limit) {
     rename(sector = .data$sector_ald)
 }
 
-# TODO: maybe extract these to `summarize_weighted_production`
 add_loan_weighted_emission_factor <- function(data, use_credit_limit) {
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
@@ -249,10 +251,12 @@ add_p_to_scenario <- function(data) {
     ungroup()
 }
 
-compute_loanbook_targets <- function(data, scenario_with_p) {
+compute_loanbook_targets <- function(data,
+                                     scenario_with_p,
+                                     ...) {
   data %>%
     inner_join(scenario_with_p, by = c("year", "sector")) %>%
-    group_by(.data$sector, .data$scenario) %>%
+    group_by(...) %>%
     arrange(.data$year) %>%
     mutate(
       d = first(.data$emission_factor_projected) -
@@ -262,8 +266,7 @@ compute_loanbook_targets <- function(data, scenario_with_p) {
     ) %>%
     ungroup() %>%
     select(
-      .data$sector,
-      .data$scenario,
+      ...,
       .data$year,
       .data$emission_factor_target
     )
@@ -277,6 +280,44 @@ pivot_emission_factors_longer <- function(data) {
       names_to = "emission_factor_metric",
       values_to = "emission_factor_value"
     )
+}
+
+format_and_combine_output <- function(lbk, corporate_economy, targets, scen, by_company = FALSE) {
+  projected <- pivot_emission_factors_longer(lbk)
+
+  corporate_economy <- pivot_emission_factors_longer(corporate_economy)
+
+  targets <- targets %>%
+    pivot_wider(
+      names_from = .data$scenario,
+      names_prefix = "emission_factor_target_",
+      values_from = .data$emission_factor_target
+    ) %>%
+    pivot_emission_factors_longer()
+
+  scenario <- scen %>%
+    pivot_wider(
+      names_from = .data$scenario,
+      names_prefix = "emission_factor_adjusted_scenario_",
+      values_from = .data$emission_factor_adjusted_scenario
+    ) %>%
+    pivot_emission_factors_longer() %>%
+    mutate(name_ald = NULL)
+
+  if (by_company) {
+    corporate_economy <- corporate_economy %>%
+      mutate(name_ald = "market")
+
+    scenario <- scenario %>%
+      mutate(name_ald = "market")
+  }
+
+  rbind(
+    projected,
+    corporate_economy,
+    targets,
+    scenario
+  )
 }
 
 ald_columns <- function() {

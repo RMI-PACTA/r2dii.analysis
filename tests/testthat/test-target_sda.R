@@ -207,7 +207,6 @@ test_that("with known input outputs as expected", {
 })
 
 test_that("with known input outputs as expected, at company level (#155)", {
-  # TODO: Re-factor this test into smaller isolated expected output tests
   matched <- fake_matched(name_ald = c("shaanxi auto", "company 2"),
                           sector_ald = "cement")
 
@@ -246,8 +245,6 @@ test_that("with known input outputs as expected, at company level (#155)", {
   expect_equal(out_company_2$projected$emission_factor_value, 12)
   expect_equal(out_company_2$target_b2ds$emission_factor_value, 12)
   expect_equal(out_company_2$target_sds$emission_factor_value, 12)
-
-
 })
 
 test_that("with no matching data warns", {

@@ -101,14 +101,13 @@ There are a large variety of possible visualizations stemming from the outputs o
 
 ### Market Share: Sector-level technology mix
 
-From the market share output, you can plot the portfolio's exposure to various climate sensitive technologies (`projected`), and compare with various scenario targets.
+From the market share output, you can plot the portfolio's exposure to various climate sensitive technologies (`projected`), and compare with the corporate economy, or against various scenario targets.
 
 ```{r technoloy-mix-portfolio}
 # Pick the targets you want to plot.
 tech_mix_data <- market_share_targets_portfolio %>%
   filter(
     sector == "power",
-    weighted_production_metric != "normalized_corporate_economy",
     year == max(year)
   )
 ```
@@ -128,9 +127,20 @@ ggplot(
 
 ### Market Share: Technology-level volume trajectory
 
-You can also plot the technology-specific volume trend. All targets and benchmarks are normalized to the initial portfolio value, so we are effectively comparing ambition.
+You can also plot the technology-specific volume trend. All benchmarks must first be normalized to the initial portfolio value, so that we are effectively comparing ambition.
 
 ```{r targets-and-ceiling}
+  market_share_targets_portfolio <- market_share_targets_portfolio %>% 
+  pivot_wider(names_from = weighted_production_metric, 
+              values_from = weighted_production_value) %>% 
+  arrange(year) %>% 
+  group_by(sector, technology, region, scenario_source) %>% 
+  mutate(normalized_corporate_economy = corporate_economy * (first(projected)/first(corporate_economy))) %>% 
+  select(-corporate_economy) %>% 
+  pivot_longer(names_to = "weighted_production_metric",
+               cols = projected:normalized_corporate_economy,
+               values_to = "weighted_production_value")
+
 renewables_data <- filter(
   market_share_targets_portfolio,
   sector == "power",

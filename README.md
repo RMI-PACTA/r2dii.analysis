@@ -1,22 +1,39 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-r2dii.analysis <a href='https://github.com/2DegreesInvesting/r2dii.analysis'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
-======================================================================================================================================================
+
+# r2dii.analysis <a href='https://github.com/2DegreesInvesting/r2dii.analysis'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
 
 <!-- badges: start -->
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![CRAN status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis) [![Codecov test coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=master) [![R build status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions) <!-- badges: end -->
 
-These tools help you to assess if a financial portfolio aligns with climate goals. They summarize key metrics attributed to the portfolio (e.g. production, emission factors), and calculate targets based on climate scenarios. They implement in R the last step of the free software 'PACTA' (Paris Agreement Capital Transition Assessment; <https://2degrees-investing.org/>). Financial institutions use 'PACTA' to study how their capital allocation impacts the climate.
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
+[![Codecov test
+coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=master)
+[![R build
+status](https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions)
+<!-- badges: end -->
 
-Installation
-------------
+These tools help you to assess if a financial portfolio aligns with
+climate goals. They summarize key metrics attributed to the portfolio
+(e.g. production, emission factors), and calculate targets based on
+climate scenarios. They implement in R the last step of the free
+software ‘PACTA’ (Paris Agreement Capital Transition Assessment;
+<https://2degrees-investing.org/>). Financial institutions use ‘PACTA’
+to study how their capital allocation impacts the climate.
+
+## Installation
 
 Before you install r2dii.analysis you may want to:
 
--   [Try an rstudio.cloud project with this package already installed](https://rstudio.cloud/project/1424833).
--   [Learn how to minimize installation errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
+  - [Try an rstudio.cloud project with this package already
+    installed](https://rstudio.cloud/project/1424833).
+  - [Learn how to minimize installation
+    errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
-When you are ready, install the released version of r2dii.analysis from CRAN with:
+When you are ready, install the released version of r2dii.analysis from
+CRAN with:
 
 ``` r
 install.packages("r2dii.analysis")
@@ -29,12 +46,17 @@ Or install the development version of r2dii.analysis from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
-[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+[How to raise an
+issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
-Example
--------
+## Example
 
--   Use `library()` to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them -- with `install.packages(c("r2dii.data", "r2dii.match"))` -- so you can reproduce our examples.
+  - Use `library()` to attach the packages you need. r2dii.analysis does
+    not depend on the packages r2dii.data and r2dii.match; but we
+    suggest you install them – with `install.packages(c("r2dii.data",
+    "r2dii.match"))` – so you can reproduce our examples.
+
+<!-- end list -->
 
 ``` r
 library(r2dii.data)
@@ -42,7 +64,10 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
--   Use `r2dii.match::match_name()` to identify matches between your loanbook and the asset level data.
+  - Use `r2dii.match::match_name()` to identify matches between your
+    loanbook and the asset level data.
+
+<!-- end list -->
 
 ``` r
 matched <- match_name(loanbook_demo, ald_demo) %>%
@@ -51,7 +76,9 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 
 ### Add Scenario Targets
 
--   Use `target_sda()` to calculate SDA targets of CO2 emissions.
+  - Use `target_sda()` to calculate SDA targets of CO2 emissions.
+
+<!-- end list -->
 
 ``` r
 matched %>%
@@ -59,23 +86,26 @@ matched %>%
     ald = ald_demo,
     co2_intensity_scenario = co2_intensity_scenario_demo
   )
-#> # A tibble: 28 x 4
-#>    sector  year emission_factor_metric emission_factor_value
-#>    <chr>  <dbl> <chr>                                  <dbl>
-#>  1 cement  2020 projected                              0.664
-#>  2 cement  2020 target                                 0.669
-#>  3 cement  2020 scenario_benchmark                     0.7  
-#>  4 cement  2021 projected                              0.665
-#>  5 cement  2021 target                                 0.612
-#>  6 cement  2021 scenario_benchmark                     0.64 
-#>  7 cement  2022 projected                              0.666
-#>  8 cement  2022 target                                 0.555
-#>  9 cement  2022 scenario_benchmark                     0.580
-#> 10 cement  2023 projected                              0.667
-#> # … with 18 more rows
+#> # A tibble: 264 x 4
+#>    sector      year emission_factor_metric emission_factor_value
+#>    <chr>      <dbl> <chr>                                  <dbl>
+#>  1 automotive  2002 projected                              0.309
+#>  2 automotive  2003 projected                              0.306
+#>  3 automotive  2004 projected                              0.303
+#>  4 automotive  2005 projected                              0.300
+#>  5 automotive  2006 projected                              0.297
+#>  6 automotive  2007 projected                              0.294
+#>  7 automotive  2008 projected                              0.291
+#>  8 automotive  2009 projected                              0.288
+#>  9 automotive  2010 projected                              0.285
+#> 10 automotive  2011 projected                              0.282
+#> # … with 254 more rows
 ```
 
--   Use `target_market_share` to calculate market-share scenario targets at the portfolio level:
+  - Use `target_market_share` to calculate market-share scenario targets
+    at the portfolio level:
+
+<!-- end list -->
 
 ``` r
 matched %>%
@@ -84,23 +114,26 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
+#> Joining, by = c("sector", "technology", "green_or_brown")
 #> # A tibble: 1,170 x 7
 #>    sector technology  year region scenario_source weighted_produc…
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>           
 #>  1 autom… electric    2020 global demo_2020       projected       
-#>  2 autom… electric    2020 global demo_2020       normalized_corp…
+#>  2 autom… electric    2020 global demo_2020       corporate_econo…
 #>  3 autom… electric    2020 global demo_2020       target_cps      
 #>  4 autom… electric    2020 global demo_2020       target_sds      
 #>  5 autom… electric    2020 global demo_2020       target_sps      
-#>  6 autom… hybrid      2020 global demo_2020       projected       
-#>  7 autom… hybrid      2020 global demo_2020       normalized_corp…
-#>  8 autom… hybrid      2020 global demo_2020       target_cps      
-#>  9 autom… hybrid      2020 global demo_2020       target_sds      
-#> 10 autom… hybrid      2020 global demo_2020       target_sps      
+#>  6 autom… electric    2021 global demo_2020       projected       
+#>  7 autom… electric    2021 global demo_2020       corporate_econo…
+#>  8 autom… electric    2021 global demo_2020       target_cps      
+#>  9 autom… electric    2021 global demo_2020       target_sds      
+#> 10 autom… electric    2021 global demo_2020       target_sps      
 #> # … with 1,160 more rows, and 1 more variable: weighted_production_value <dbl>
 ```
 
--   Or at the company level:
+  - Or at the company level:
+
+<!-- end list -->
 
 ``` r
 matched %>%
@@ -110,16 +143,17 @@ matched %>%
     region_isos = region_isos_demo,
     by_company = TRUE
   )
+#> Joining, by = c("sector", "technology", "green_or_brown")
 #> # A tibble: 15,945 x 8
 #>    sector technology  year region scenario_source name_ald weighted_produc…
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>           
 #>  1 autom… electric    2020 global demo_2020       shangha… projected       
-#>  2 autom… electric    2020 global demo_2020       shangha… normalized_corp…
+#>  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…
 #>  3 autom… electric    2020 global demo_2020       shangha… target_cps      
 #>  4 autom… electric    2020 global demo_2020       shangha… target_sds      
 #>  5 autom… electric    2020 global demo_2020       shangha… target_sps      
 #>  6 autom… electric    2020 global demo_2020       sichuan… projected       
-#>  7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…
+#>  7 autom… electric    2020 global demo_2020       sichuan… corporate_econo…
 #>  8 autom… electric    2020 global demo_2020       sichuan… target_cps      
 #>  9 autom… electric    2020 global demo_2020       sichuan… target_sds      
 #> 10 autom… electric    2020 global demo_2020       sichuan… target_sps      
@@ -128,9 +162,13 @@ matched %>%
 
 ### Utility Functions
 
-The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
+The `target_*()` functions provide shortcuts for common operations. They
+wrap some utility functions that you may also use directly:
 
--   Use `join_ald_scenario()` to join a matched dataset to the relevant scenario data, and to pick assets in the relevant regions.
+  - Use `join_ald_scenario()` to join a matched dataset to the relevant
+    scenario data, and to pick assets in the relevant regions.
+
+<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario <- matched %>%
@@ -141,7 +179,10 @@ loanbook_joined_to_ald_scenario <- matched %>%
   )
 ```
 
--   Use `summarize_weighted_production()` with different grouping arguments to calculate scenario-targets:
+  - Use `summarize_weighted_production()` with different grouping
+    arguments to calculate scenario-targets:
+
+<!-- end list -->
 
 ``` r
 # portfolio level
@@ -181,4 +222,5 @@ loanbook_joined_to_ald_scenario %>%
 #> # … with 9,557 more rows
 ```
 
-[Get started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).
+[Get
+started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).

@@ -212,7 +212,7 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     # Return visibly
     identity() %>%
     group_by(.data$sector, .data$technology, .data$year, .data$region, .data$source) %>%
-    summarize(production_corporate_economy = sum(.data$production))
+    summarize(weighted_production_corporate_economy = sum(.data$production))
 
   data %>%
     left_join(ald_with_benchmark, by = c(
@@ -221,14 +221,5 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
       year = "year",
       region = "region",
       scenario_source = "source"
-    )) %>%
-    maybe_group_by_name_ald(c("sector", "technology", "scenario", "region", "scenario_source"),
-      by_company = by_company
-    ) %>%
-    arrange(.data$year) %>%
-    mutate(
-      weighted_production_normalized_corporate_economy =
-        .data$production_corporate_economy * (first(.data$weighted_production) / first(.data$production_corporate_economy))
-    ) %>%
-    select(-.data$production_corporate_economy)
+    ))
 }

@@ -247,12 +247,12 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 
   out_benchmark <- out %>%
-    filter(weighted_production_metric == "normalized_corporate_economy") %>%
+    filter(weighted_production_metric == "corporate_economy") %>%
     arrange(.data$technology, .data$year)
 
   expect_equal(
     out_benchmark$weighted_production_value,
-    c(10, 30)
+    c(30, 90)
   )
 })
 
@@ -307,7 +307,7 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
   )
 
   corporate_economy_value <- out %>%
-    filter(weighted_production_metric == "normalized_corporate_economy")
+    filter(weighted_production_metric == "corporate_economy")
 
-  expect_equal(corporate_economy_value$weighted_production_value, c(150, 300))
+  expect_equal(corporate_economy_value$weighted_production_value, c(50, 100))
 })

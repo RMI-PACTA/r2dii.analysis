@@ -56,6 +56,14 @@
 #'
 #' # Split view by metric
 #' split(out, out$emission_factor_metric)
+#'
+#' # calculate company-level targets
+#' out <- valid_matches %>%
+#'   target_sda(
+#'     ald = ald_demo,
+#'     co2_intensity_scenario = co2_intensity_scenario_demo,
+#'     by_company = TRUE
+#'   )
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,

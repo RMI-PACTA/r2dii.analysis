@@ -206,6 +206,50 @@ test_that("with known input outputs as expected", {
   expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
 })
 
+test_that("with known input outputs as expected, at company level (#155)", {
+  # TODO: Re-factor this test into smaller isolated expected output tests
+  matched <- fake_matched(name_ald = c("shaanxi auto", "company 2"),
+                          sector_ald = "cement")
+
+  ald <- fake_ald(
+    sector = "cement",
+    technology = "cement",
+    name_company = c(rep("shaanxi auto", 4), "company 2"),
+    year = c(2020, 2021, 2022, 2025, 2020),
+    emission_factor = c(0.9, 0.9, 0.8, 0.5, 12)
+  )
+
+  co2_intensity_scenario <- fake_co2_scenario(
+    scenario = c(rep("b2ds", 2), rep("sds", 2)),
+    year = rep(c(2020, 2025), 2),
+    emission_factor = c(0.5, 0.1, 0.5, 0.4)
+  )
+
+  out <- target_sda(
+    matched,
+    ald,
+    co2_intensity_scenario,
+    by_company = TRUE
+    ) %>%
+    arrange(.data$year)
+
+  out_shaanxi <- filter(out, name_ald == "shaanxi auto") %>%
+    split(.$emission_factor_metric)
+
+  expect_equal(out_shaanxi$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
+  expect_equal(out_shaanxi$target_b2ds$emission_factor_value, c(0.9, 1.29))
+  expect_equal(out_shaanxi$target_sds$emission_factor_value, c(0.9, 5.16))
+
+  out_company_2 <- filter(out, name_ald == "company 2") %>%
+    split(.$emission_factor_metric)
+
+  expect_equal(out_company_2$projected$emission_factor_value, 12)
+  expect_equal(out_company_2$target_b2ds$emission_factor_value, 12)
+  expect_equal(out_company_2$target_sds$emission_factor_value, 12)
+
+
+})
+
 test_that("with no matching data warns", {
   no_matches <- fake_matched(sector_ald = "bad")
   expect_warning(

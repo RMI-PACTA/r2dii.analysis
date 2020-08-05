@@ -60,7 +60,7 @@ valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
   # WARNING: Remember to validate matches (see `?prioritize`)
   prioritize()
 
-ald <- filter(ald_demo, !is.na(emission_factor))
+ald <- na.omit(ald_demo)
 
 out <- valid_matches \%>\%
   target_sda(

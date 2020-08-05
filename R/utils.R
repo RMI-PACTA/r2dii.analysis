@@ -16,6 +16,8 @@ check_unique_id <- function(data, column){
       sprintf("Column `%s` must not contain any duplicates.", column)
     )
   }
+
+  invisible(data)
 }
 
 warn_grouped <- function(data, message) {

@@ -262,7 +262,6 @@ test_that("with no matching data warns", {
 })
 
 test_that("with NAs in crucial columns errors with informative message (#146)", {
-
   expect_error_crucial_NAs_portfolio <- function(name) {
     data <- fake_matched(sector_ald = "cement")
 

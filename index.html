@@ -40,15 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="articles/r2dii-analysis.html">Get started</a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -64,9 +61,6 @@
     </li>
     <li>
       <a href="articles/target-market-share.html">Market Share Approach</a>
-    </li>
-    <li>
-      <a href="articles/production-percent-change.html">Indicator Choices: Weighted Production vs. Weighted Percent Change in Production</a>
     </li>
   </ul>
 </li>
@@ -108,9 +102,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="r2diianalysis-" class="section level1">
+<div id="r2dii-analysis" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#r2diianalysis-" class="anchor"></a>r2dii.analysis <a href="https://github.com/2DegreesInvesting/r2dii.analysis"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
+<a href="#r2dii-analysis" class="anchor"></a>r2dii.analysis <a href="https://github.com/2DegreesInvesting/r2dii.analysis"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -118,19 +112,9 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Before you install r2dii.analysis you may want to:</p>
-<ul>
-<li>
-<a href="https://rstudio.cloud/project/1424833">Try an rstudio.cloud project with this package already installed</a>.</li>
-<li>
-<a href="https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation">Learn how to minimize installation errors</a>.</li>
-</ul>
-<p>When you are ready, install the released version of r2dii.analysis from CRAN with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"r2dii.analysis"</span>)</pre></div>
-<p>Or install the development version of r2dii.analysis from GitHub with:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.analysis"</span>)</pre></div>
-<p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/">How to raise an issue?</a></p>
+<p>Install the development version of r2dii.analysis with:</p>
+<div class="sourceCode"><pre class="r"><span class="co"># install.packages("devtools")</span>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"2DegreesInvesting/r2dii.analysis"</span>)</pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -138,13 +122,13 @@
 <ul>
 <li>Use <code>library()</code> to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them – with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages(c("r2dii.data", "r2dii.match"))</a></code> – so you can reproduce our examples.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.analysis</span>)</pre></div>
 <ul>
 <li>Use <code><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">r2dii.match::match_name()</a></code> to identify matches between your loanbook and the asset level data.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb4"><pre class="r"><span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="no">loanbook_demo</span>, <span class="no">ald_demo</span>) <span class="kw">%&gt;%</span>
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="no">loanbook_demo</span>, <span class="no">ald_demo</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()</pre></div>
 <div id="add-scenario-targets" class="section level3">
 <h3 class="hasAnchor">
@@ -152,70 +136,69 @@
 <ul>
 <li>Use <code><a href="reference/target_sda.html">target_sda()</a></code> to calculate SDA targets of CO2 emissions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb5"><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/target_sda.html">target_sda</a></span>(
     <span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald_demo</span>,
     <span class="kw">co2_intensity_scenario</span> <span class="kw">=</span> <span class="no">co2_intensity_scenario_demo</span>
   )
-<span class="co">#&gt; # A tibble: 264 x 4</span>
-<span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
-<span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automotive  2002 projected                              0.309</span>
-<span class="co">#&gt;  2 automotive  2003 projected                              0.306</span>
-<span class="co">#&gt;  3 automotive  2004 projected                              0.303</span>
-<span class="co">#&gt;  4 automotive  2005 projected                              0.300</span>
-<span class="co">#&gt;  5 automotive  2006 projected                              0.297</span>
-<span class="co">#&gt;  6 automotive  2007 projected                              0.294</span>
-<span class="co">#&gt;  7 automotive  2008 projected                              0.291</span>
-<span class="co">#&gt;  8 automotive  2009 projected                              0.288</span>
-<span class="co">#&gt;  9 automotive  2010 projected                              0.285</span>
-<span class="co">#&gt; 10 automotive  2011 projected                              0.282</span>
-<span class="co">#&gt; # … with 254 more rows</span></pre></div>
+<span class="co">#&gt; # A tibble: 28 x 4</span>
+<span class="co">#&gt; # Groups:   sector [1]</span>
+<span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 cement  2020 projected                              0.664</span>
+<span class="co">#&gt;  2 cement  2020 target                                 0.669</span>
+<span class="co">#&gt;  3 cement  2020 scenario_benchmark                     0.7  </span>
+<span class="co">#&gt;  4 cement  2021 projected                              0.665</span>
+<span class="co">#&gt;  5 cement  2021 target                                 0.612</span>
+<span class="co">#&gt;  6 cement  2021 scenario_benchmark                     0.64 </span>
+<span class="co">#&gt;  7 cement  2022 projected                              0.666</span>
+<span class="co">#&gt;  8 cement  2022 target                                 0.555</span>
+<span class="co">#&gt;  9 cement  2022 scenario_benchmark                     0.580</span>
+<span class="co">#&gt; 10 cement  2023 projected                              0.667</span>
+<span class="co">#&gt; # … with 18 more rows</span></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb6"><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span>(
     <span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald_demo</span>,
     <span class="kw">scenario</span> <span class="kw">=</span> <span class="no">scenario_demo_2020</span>,
     <span class="kw">region_isos</span> <span class="kw">=</span> <span class="no">region_isos_demo</span>
   )
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
 <span class="co">#&gt; # A tibble: 1,170 x 7</span>
 <span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corporate_econo…</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       normalized_corp…</span>
 <span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span>
 <span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span>
 <span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       projected       </span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corporate_econo…</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       target_sds      </span>
-<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       target_sps      </span>
+<span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       projected       </span>
+<span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       normalized_corp…</span>
+<span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       target_cps      </span>
+<span class="co">#&gt;  9 autom… hybrid      2020 global demo_2020       target_sds      </span>
+<span class="co">#&gt; 10 autom… hybrid      2020 global demo_2020       target_sps      </span>
 <span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></pre></div>
 <ul>
 <li>Or at the company level:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span>(
     <span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald_demo</span>,
     <span class="kw">scenario</span> <span class="kw">=</span> <span class="no">scenario_demo_2020</span>,
     <span class="kw">region_isos</span> <span class="kw">=</span> <span class="no">region_isos_demo</span>,
     <span class="kw">by_company</span> <span class="kw">=</span> <span class="fl">TRUE</span>
   )
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
 <span class="co">#&gt; # A tibble: 15,945 x 8</span>
 <span class="co">#&gt;    sector technology  year region scenario_source name_ald weighted_produc…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… normalized_corp…</span>
 <span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… target_cps      </span>
 <span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… target_sds      </span>
 <span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… target_sps      </span>
 <span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… projected       </span>
-<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corporate_econo…</span>
+<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…</span>
 <span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span>
 <span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span>
 <span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span>
@@ -228,7 +211,7 @@
 <ul>
 <li>Use <code><a href="reference/join_ald_scenario.html">join_ald_scenario()</a></code> to join a matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb8"><pre class="r"><span class="no">loanbook_joined_to_ald_scenario</span> <span class="kw">&lt;-</span> <span class="no">matched</span> <span class="kw">%&gt;%</span>
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="no">loanbook_joined_to_ald_scenario</span> <span class="kw">&lt;-</span> <span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span>(
     <span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald_demo</span>,
     <span class="kw">scenario</span> <span class="kw">=</span> <span class="no">scenario_demo_2020</span>,
@@ -237,7 +220,7 @@
 <ul>
 <li>Use <code><a href="reference/summarize_weighted_production.html">summarize_weighted_production()</a></code> with different grouping arguments to calculate scenario-targets:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb9"><pre class="r"><span class="co"># portfolio level</span>
+<!-- end list --><div class="sourceCode"><pre class="r"><span class="co"># portfolio level</span>
 <span class="no">loanbook_joined_to_ald_scenario</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(<span class="no">scenario</span>, <span class="no">tmsr</span>, <span class="no">smsp</span>, <span class="no">region</span>)
 <span class="co">#&gt; # A tibble: 702 x 8</span>
@@ -272,7 +255,6 @@
 <span class="co">#&gt;  9 autom… electric    2020 cps          1     0 global volkswa…            9258.</span>
 <span class="co">#&gt; 10 autom… electric    2020 cps          1     0 global wheego              9804.</span>
 <span class="co">#&gt; # … with 9,557 more rows</span></pre></div>
-<p><a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
 </div>
 </div>
 </div>
@@ -317,9 +299,9 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
-<li><a href="https://CRAN.R-project.org/package=r2dii.analysis"><img src="https://www.r-pkg.org/badges/version/r2dii.analysis" alt="CRAN status"></a></li>
 <li><a href="https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=master"><img src="https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/2DegreesInvesting/r2dii.analysis/actions"><img src="https://github.com/2DegreesInvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/2degreesinvesting/r2dii.analysis/actions"><img src="https://github.com/2degreesinvesting/r2dii.analysis/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>

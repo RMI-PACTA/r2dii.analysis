@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summaries based on the weight of each loan per sector per year — summarize_weighted_production • r2dii.analysis</title>
+<title>Summarize production based on the weight of each loan per sector per year — summarize_weighted_production • r2dii.analysis</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Summaries based on the weight of each loan per sector per year — summarize_weighted_production" />
-<meta property="og:description" content="Based on on the weight of each loan per sector per year,
-summarize_weighted_production() and summarize_weighted_percent_change()
-summarize the production and percent-change, respectively." />
+<meta property="og:title" content="Summarize production based on the weight of each loan per sector per year — summarize_weighted_production" />
+<meta property="og:description" content="Summarize production based on the weight of each loan per sector per year." />
 
 
 
@@ -74,16 +72,13 @@ summarize the production and percent-change, respectively." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/r2dii-analysis.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -98,9 +93,6 @@ summarize the production and percent-change, respectively." />
     </li>
     <li>
       <a href="../articles/target-market-share.html">Market Share Approach</a>
-    </li>
-    <li>
-      <a href="../articles/production-percent-change.html">Indicator Choices: Weighted Production vs. Weighted Percent Change in Production</a>
     </li>
   </ul>
 </li>
@@ -143,20 +135,16 @@ summarize the production and percent-change, respectively." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Summaries based on the weight of each loan per sector per year</h1>
+    <h1>Summarize production based on the weight of each loan per sector per year</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.analysis/blob/master/R/summarize_weighted_production.R'><code>R/summarize_weighted_production.R</code></a></small>
     <div class="hidden name"><code>summarize_weighted_production.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Based on on the weight of each loan per sector per year,
-<code>summarize_weighted_production()</code> and <code>summarize_weighted_percent_change()</code>
-summarize the production and percent-change, respectively.</p>
+    <p>Summarize production based on the weight of each loan per sector per year.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>summarize_weighted_production</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>summarize_weighted_percent_change</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>summarize_weighted_production</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,24 +160,15 @@ summarize the production and percent-change, respectively.</p>
     <tr>
       <th>use_credit_limit</th>
       <td><p>Logical vector of length 1. <code>FALSE</code> defaults to using
-the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to instead use the column
-<code>loan_size_credit_limit</code>.</p></td>
+the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use the column
+<code>loan_size_credit_limit</code> instead.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble with the same groups as the input (if any) and columns:
-<code>sector</code>, <code>technology</code>, and <code>year</code>; and <code>weighted_production</code> or
-<code>weighted_production</code> for <code>summarize_weighted_production()</code> and
-<code>summarize_weighted_percent_change()</code>, respectively.</p>
-    <h2 class="hasAnchor" id="warning"><a class="anchor" href="#warning"></a>Warning</h2>
-
-    
-
-<p>The percent-change analysis excludes companies with 0 production. percent-change is
-undefined for companies that have no initial production; including such
-companies would cause percent-change percentage to be infinite, which is wrong.</p>
+<code>sector</code>, <code>technology</code>, <code>year</code>, and <code>weighted_production</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='join_ald_scenario.html'>join_ald_scenario()</a></code>.</p>
@@ -197,19 +176,15 @@ companies would cause percent-change percentage to be infinite, which is wrong.<
 <code><a href='join_ald_scenario.html'>join_ald_scenario</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>installed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.data"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>&amp;&amp;</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.match"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='kw'>if</span> (!<span class='no'>installed</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Please install r2dii.match and r2dii.data"</span>)
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.analysis</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.data</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
 
-<span class='no'>master</span> <span class='kw'>&lt;-</span> <span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='no'>ald_demo</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='join_ald_scenario.html'>join_ald_scenario</a></span>(
-    <span class='kw'>ald</span> <span class='kw'>=</span> <span class='no'>ald_demo</span>,
-    <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='no'>scenario_demo_2020</span>,
+<span class='no'>master</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html'>loanbook_demo</a></span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>r2dii.match</span><span class='kw ns'>::</span><span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html'>ald_demo</a></span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>r2dii.match</span><span class='kw ns'>::</span><span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='join_ald_scenario.html'>join_ald_scenario</a></span>(<span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html'>ald_demo</a></span>,
+    <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/scenario_demo_2020.html'>scenario_demo_2020</a></span>,
     <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>
   )
 
@@ -240,34 +215,6 @@ companies would cause percent-change percentage to be infinite, which is wrong.<
 #&gt; </span><span style='color: #555555;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020             </span><span style='text-decoration: underline;'>388</span><span>781.
 #&gt; </span><span style='color: #555555;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021             </span><span style='text-decoration: underline;'>387</span><span>804.
 #&gt; </span><span style='color: #555555;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022             </span><span style='text-decoration: underline;'>386</span><span>827.
-#&gt; </span><span style='color: #555555;'># … with 128 more rows</span><span></div><div class='input'>
-<span class='fu'>summarize_weighted_percent_change</span>(<span class='no'>master</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 138 x 4</span><span>
-#&gt;    sector     technology  year weighted_percent_change
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>020                0       
-#&gt; </span><span style='color: #555555;'> 2</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>021                0.000</span><span style='text-decoration: underline;'>102</span><span>
-#&gt; </span><span style='color: #555555;'> 3</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>022                0.000</span><span style='text-decoration: underline;'>205</span><span>
-#&gt; </span><span style='color: #555555;'> 4</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>023                0.000</span><span style='text-decoration: underline;'>307</span><span>
-#&gt; </span><span style='color: #555555;'> 5</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>024                0.000</span><span style='text-decoration: underline;'>409</span><span>
-#&gt; </span><span style='color: #555555;'> 6</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>025                0.000</span><span style='text-decoration: underline;'>512</span><span>
-#&gt; </span><span style='color: #555555;'> 7</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>026                0.000</span><span style='text-decoration: underline;'>614</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020                0.005</span><span style='text-decoration: underline;'>76</span><span> 
-#&gt; </span><span style='color: #555555;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021                0.005</span><span style='text-decoration: underline;'>47</span><span> 
-#&gt; </span><span style='color: #555555;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022                0.005</span><span style='text-decoration: underline;'>18</span><span> 
-#&gt; </span><span style='color: #555555;'># … with 128 more rows</span><span></div><div class='input'>
-<span class='fu'>summarize_weighted_percent_change</span>(<span class='no'>master</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 138 x 4</span><span>
-#&gt;    sector     technology  year weighted_percent_change
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>020               0        
-#&gt; </span><span style='color: #555555;'> 2</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>021               0.000</span><span style='text-decoration: underline;'>074</span><span>3
-#&gt; </span><span style='color: #555555;'> 3</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>022               0.000</span><span style='text-decoration: underline;'>149</span><span> 
-#&gt; </span><span style='color: #555555;'> 4</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>023               0.000</span><span style='text-decoration: underline;'>223</span><span> 
-#&gt; </span><span style='color: #555555;'> 5</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>024               0.000</span><span style='text-decoration: underline;'>297</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>025               0.000</span><span style='text-decoration: underline;'>371</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>026               0.000</span><span style='text-decoration: underline;'>446</span><span> 
-#&gt; </span><span style='color: #555555;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020               0.005</span><span style='text-decoration: underline;'>40</span><span>  
-#&gt; </span><span style='color: #555555;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021               0.005</span><span style='text-decoration: underline;'>37</span><span>  
-#&gt; </span><span style='color: #555555;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022               0.005</span><span style='text-decoration: underline;'>34</span><span>  
 #&gt; </span><span style='color: #555555;'># … with 128 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

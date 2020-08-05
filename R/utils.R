@@ -9,7 +9,7 @@ check_no_value_is_missing <- function(data, column) {
   invisible(data)
 }
 
-check_unique_id <- function(data, column){
+check_unique_id <- function(data, column) {
   if (sum(duplicated(data[[column]]))) {
     abort(
       class = "unique_ids",

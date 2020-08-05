@@ -121,13 +121,13 @@ target_sda <- function(data,
     by_company
   )
 
-  loanbook_with_weighted_emission_factors <-  calculate_weighted_emission_factor(
+  loanbook_with_weighted_emission_factors <- calculate_weighted_emission_factor(
     data,
     ald,
     !!!rlang::syms(loanbook_summary_groups),
     use_credit_limit = use_credit_limit,
     by_company = by_company
-    )
+  )
 
   if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {
     rlang::warn("Found no match between loanbook and ald.")
@@ -190,8 +190,10 @@ calculate_weighted_emission_factor <- function(data,
                                                by_company = FALSE) {
   data %>%
     inner_join(ald, by = ald_columns()) %>%
-    add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit,
-                                      by_company = by_company) %>%
+    add_loan_weighted_emission_factor(
+      use_credit_limit = use_credit_limit,
+      by_company = by_company
+    ) %>%
     group_by(...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
@@ -204,7 +206,7 @@ add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company
   if (by_company) {
     data %>%
       mutate(weighted_loan_emission_factor = .data$emission_factor)
-  } else{
+  } else {
     loan_size <- paste0(
       "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
     )

@@ -109,10 +109,11 @@ target_sda <- function(data,
     by_company
   )
 
-  loanbook_with_weighted_emission_factors <- data %>%
-    calculate_weighted_emission_factor(ald,
-      !!!rlang::syms(loanbook_summary_groups),
-      use_credit_limit = use_credit_limit
+  loanbook_with_weighted_emission_factors <-  calculate_weighted_emission_factor(
+    data,
+    ald,
+    !!!rlang::syms(loanbook_summary_groups),
+    use_credit_limit = use_credit_limit
     )
 
   if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {

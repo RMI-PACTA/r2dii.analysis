@@ -101,8 +101,14 @@ target_sda <- function(data,
   )
 
   check_crucial_names(data, crucial_portfolio)
+  walk(crucial_portfolio, ~ check_no_value_is_missing(data, .x))
+
   check_crucial_names(ald, crucial_ald)
+  walk(crucial_ald, ~ check_no_value_is_missing(ald, .x))
+
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
+  walk(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
+
 
   loanbook_summary_groups <- maybe_add_name_ald(
     c("sector_ald", "year"),

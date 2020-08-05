@@ -260,3 +260,93 @@ test_that("with no matching data warns", {
     target_sda(fake_matched(), fake_ald(), bad_scenario), "no scenario"
   )
 })
+
+test_that("with NAs in crucial columns errors with informative message (#146)", {
+
+  expect_error_crucial_NAs_portfolio <- function(name) {
+    data <- fake_matched(sector_ald = "cement")
+
+    ald <- fake_ald(
+      sector = "cement",
+      year = c(2020, 2050)
+    )
+
+    scen <- fake_co2_scenario(
+      emission_factor = c(1, 2),
+      year = c(2020, 2050)
+    )
+
+    data[1, name] <- NA
+    expect_error(
+      class = "some_value_is_missing",
+      target_sda(
+        data,
+        ald,
+        scen
+      )
+    )
+  }
+
+  expect_error_crucial_NAs_ald <- function(name) {
+    match_result <- fake_matched(sector_ald = "cement")
+
+    data <- fake_ald(
+      sector = "cement",
+      year = c(2020, 2050)
+    )
+
+    scen <- fake_co2_scenario(
+      emission_factor = c(1, 2),
+      year = c(2020, 2050)
+    )
+
+
+    data[1, name] <- NA
+    expect_error(
+      class = "some_value_is_missing",
+      target_sda(
+        match_result,
+        data,
+        scen
+      )
+    )
+  }
+
+  expect_error_crucial_NAs_scenario <- function(name) {
+    match_result <- fake_matched(sector_ald = "cement")
+
+    ald <- fake_ald(
+      sector = "cement",
+      year = c(2020, 2050)
+    )
+
+    data <- fake_co2_scenario(
+      emission_factor = c(1, 2),
+      year = c(2020, 2050)
+    )
+
+    data[1, name] <- NA
+
+    expect_error(
+      class = "some_value_is_missing",
+      target_sda(
+        match_result,
+        ald,
+        data
+      )
+    )
+  }
+
+  expect_error_crucial_NAs_portfolio("name_ald")
+  expect_error_crucial_NAs_portfolio("sector_ald")
+
+  expect_error_crucial_NAs_ald("name_company")
+  expect_error_crucial_NAs_ald("production")
+  expect_error_crucial_NAs_ald("emission_factor")
+  expect_error_crucial_NAs_ald("sector")
+  expect_error_crucial_NAs_ald("year")
+
+  expect_error_crucial_NAs_scenario("sector")
+  expect_error_crucial_NAs_scenario("year")
+  expect_error_crucial_NAs_scenario("emission_factor")
+})

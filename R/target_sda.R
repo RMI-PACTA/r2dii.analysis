@@ -203,7 +203,7 @@ calculate_weighted_emission_factor <- function(data,
 add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
   if (by_company) {
     data %>%
-      mutate(weighted_loan_emission_factor = emission_factor)
+      mutate(weighted_loan_emission_factor = .data$emission_factor)
   } else{
     loan_size <- paste0(
       "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")

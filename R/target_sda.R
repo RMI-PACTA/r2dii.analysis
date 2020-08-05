@@ -32,40 +32,42 @@
 #' @family functions to calculate scenario targets
 #'
 #' @examples
-#' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-#'   requireNamespace("r2dii.match", quietly = TRUE)
+#' installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
+#'   requireNamespace("r2dii.data", quietly = TRUE)
 #' if (!installed) stop("Please install r2dii.match and r2dii.data")
 #'
-#' library(r2dii.data)
 #' library(r2dii.match)
+#' library(r2dii.data)
 #'
-#' valid_matches <- match_name(loanbook_demo, ald_demo) %>%
-#'   # WARNING: Remember to validate matches (see `?prioritize`)
-#'   prioritize()
+#' # Example datasets from r2dii.data
+#' loanbook <- loanbook_demo
+#' ald <- ald_demo
+#' co2_scenario <- co2_intensity_scenario_demo
 #'
-#' ald <- na.omit(ald_demo)
+#' # WARNING: Remember to validate matches (see `?prioritize`)
+#' matched <- prioritize(match_name(loanbook, ald))
 #'
-#' out <- valid_matches %>%
-#'   target_sda(
-#'     ald = ald,
-#'     co2_intensity_scenario = co2_intensity_scenario_demo
-#'   )
+#' # You may need to clean your data
+#' anyNA(ald$emission_factor)
+#' try(target_sda(matched, ald, co2_intensity_scenario = co2_scenario))
+#'
+#' ald2 <- subset(ald, !is.na(emission_factor))
+#' anyNA(ald2$emission_factor)
+#'
+#' out <- target_sda(matched, ald2, co2_intensity_scenario = co2_scenario)
 #'
 #' # The output includes the portfolio's actual projected emissions factors, the
 #' # scenario pathway emissions factors, and the portfolio's target emissions
 #' # factors.
 #' out
 #'
-#' # Split view by metric
+#' # Split-view by metric
 #' split(out, out$emission_factor_metric)
 #'
-#' # calculate company-level targets
-#' out <- valid_matches %>%
-#'   target_sda(
-#'     ald = ald,
-#'     co2_intensity_scenario = co2_intensity_scenario_demo,
-#'     by_company = TRUE
-#'   )
+#' # Calculate company-level targets
+#' out <- target_sda(
+#'   matched, ald2, co2_intensity_scenario = co2_scenario, by_company = TRUE
+#' )
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,

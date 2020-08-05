@@ -5,7 +5,13 @@
 \title{Add targets for CO2 emissions per unit production at the portfolio level,
 using the SDA approach}
 \usage{
-target_sda(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
+target_sda(
+  data,
+  ald,
+  co2_intensity_scenario,
+  use_credit_limit = FALSE,
+  by_company = FALSE
+)
 }
 \arguments{
 \item{data}{A dataframe like the output of
@@ -19,6 +25,10 @@ target_sda(data, ald, co2_intensity_scenario, use_credit_limit = FALSE)
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
 the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the column
 \code{loan_size_credit_limit}.}
+
+\item{by_company}{Logical vector of length 1. \code{FALSE} defaults to outputting
+\code{weighted_production_value} at the portfolio-level. Set to \code{TRUE} to output
+\code{weighted_production_value} at the company-level.}
 }
 \value{
 A tibble with the CO2 emissions factors attributed to
@@ -63,6 +73,14 @@ out
 
 # Split view by metric
 split(out, out$emission_factor_metric)
+
+# calculate company-level targets
+out <- valid_matches \%>\%
+  target_sda(
+    ald = ald_demo,
+    co2_intensity_scenario = co2_intensity_scenario_demo,
+    by_company = TRUE
+  )
 }
 \seealso{
 Other functions to calculate scenario targets: 

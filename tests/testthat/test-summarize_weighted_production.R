@@ -239,7 +239,8 @@ test_that("with data lacking crucial columns errors with informative message", {
     expect_error(
       class = "missing_names",
       summarize_weighted_percent_change(
-        data, use_credit_limit = use_credit_limit
+        data,
+        use_credit_limit = use_credit_limit
       )
     )
   }
@@ -266,7 +267,8 @@ test_that("with NAs in crucial columns errors with informative message", {
     expect_error(
       class = "some_value_is_missing",
       summarize_weighted_percent_change(
-        data, use_credit_limit = use_credit_limit
+        data,
+        use_credit_limit = use_credit_limit
       )
     )
   }

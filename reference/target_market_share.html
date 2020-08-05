@@ -74,13 +74,16 @@ production forecast." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/r2dii-analysis.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -95,6 +98,9 @@ production forecast." />
     </li>
     <li>
       <a href="../articles/target-market-share.html">Market Share Approach</a>
+    </li>
+    <li>
+      <a href="../articles/production-percent-change.html">Indicator Choices: Weighted Production vs. Weighted Percent Change in Production</a>
     </li>
   </ul>
 </li>
@@ -207,54 +213,58 @@ have the column <code>name_ald</code>.</p>
 <code><a href='target_sda.html'>target_sda</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.analysis</span>)
+    <pre class="examples"><div class='input'><span class='no'>installed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.data"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>&amp;&amp;</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.match"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='kw'>if</span> (!<span class='no'>installed</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Please install r2dii.match and r2dii.data"</span>)
+
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.data</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
 
-<span class='no'>match_result</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html'>loanbook_demo</a></span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>r2dii.match</span><span class='kw ns'>::</span><span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html'>ald_demo</a></span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>r2dii.match</span><span class='kw ns'>::</span><span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>()
+<span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='no'>ald_demo</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>()
 
-<span class='co'># calculate targets at portfolio level</span>
-<span class='fu'>target_market_share</span>(<span class='no'>match_result</span>,
-  <span class='kw'>ald</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html'>ald_demo</a></span>,
-  <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/scenario_demo_2020.html'>scenario_demo_2020</a></span>,
-  <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos_demo.html'>region_isos_demo</a></span>
-)</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("sector", "technology", "green_or_brown")</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,170 x 7</span><span>
+<span class='co'># Calculate targets at portfolio level</span>
+<span class='no'>matched</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>target_market_share</span>(
+    <span class='kw'>ald</span> <span class='kw'>=</span> <span class='no'>ald_demo</span>,
+    <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='no'>scenario_demo_2020</span>,
+    <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>
+  )</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("sector", "technology", "green_or_brown")</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,170 x 7</span><span>
 #&gt;    sector technology  year region scenario_source weighted_produc…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       projected       
-#&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       normalized_corp…
+#&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       corporate_econo…
 #&gt; </span><span style='color: #555555;'> 3</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_cps      
 #&gt; </span><span style='color: #555555;'> 4</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_sds      
 #&gt; </span><span style='color: #555555;'> 5</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_sps      
-#&gt; </span><span style='color: #555555;'> 6</span><span> autom… hybrid      </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       projected       
-#&gt; </span><span style='color: #555555;'> 7</span><span> autom… hybrid      </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       normalized_corp…
-#&gt; </span><span style='color: #555555;'> 8</span><span> autom… hybrid      </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_cps      
-#&gt; </span><span style='color: #555555;'> 9</span><span> autom… hybrid      </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_sds      
-#&gt; </span><span style='color: #555555;'>10</span><span> autom… hybrid      </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_sps      
+#&gt; </span><span style='color: #555555;'> 6</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       projected       
+#&gt; </span><span style='color: #555555;'> 7</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       corporate_econo…
+#&gt; </span><span style='color: #555555;'> 8</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_cps      
+#&gt; </span><span style='color: #555555;'> 9</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_sds      
+#&gt; </span><span style='color: #555555;'>10</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_sps      
 #&gt; </span><span style='color: #555555;'># … with 1,160 more rows, and 1 more variable: weighted_production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='co'># calculate targets at company level</span>
-<span class='fu'>target_market_share</span>(<span class='no'>match_result</span>,
-  <span class='kw'>ald</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html'>ald_demo</a></span>,
-  <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/scenario_demo_2020.html'>scenario_demo_2020</a></span>,
-  <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos_demo.html'>region_isos_demo</a></span>,
-  <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("sector", "technology", "green_or_brown")</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 15,945 x 8</span><span>
+<span class='co'># Calculate targets at company level</span>
+<span class='no'>matched</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>target_market_share</span>(
+    <span class='kw'>ald</span> <span class='kw'>=</span> <span class='no'>ald_demo</span>,
+    <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='no'>scenario_demo_2020</span>,
+    <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>,
+    <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  )</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("sector", "technology", "green_or_brown")</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 15,945 x 8</span><span>
 #&gt;    sector technology  year region scenario_source name_ald weighted_produc…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… projected       
-#&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… normalized_corp…
+#&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… corporate_econo…
 #&gt; </span><span style='color: #555555;'> 3</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… target_cps      
 #&gt; </span><span style='color: #555555;'> 4</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… target_sds      
 #&gt; </span><span style='color: #555555;'> 5</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… target_sps      
 #&gt; </span><span style='color: #555555;'> 6</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… projected       
-#&gt; </span><span style='color: #555555;'> 7</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… normalized_corp…
+#&gt; </span><span style='color: #555555;'> 7</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… corporate_econo…
 #&gt; </span><span style='color: #555555;'> 8</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… target_cps      
 #&gt; </span><span style='color: #555555;'> 9</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… target_sds      
 #&gt; </span><span style='color: #555555;'>10</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… target_sps      
-#&gt; </span><span style='color: #555555;'># … with 15,935 more rows, and 1 more variable: weighted_production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 15,935 more rows, and 1 more variable: weighted_production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

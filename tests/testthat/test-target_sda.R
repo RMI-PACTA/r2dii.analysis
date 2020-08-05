@@ -208,6 +208,7 @@ test_that("with known input outputs as expected", {
 
 test_that("with known input outputs as expected, at company level (#155)", {
   matched <- fake_matched(
+    id_loan = c(1,2),
     name_ald = c("shaanxi auto", "company 2"),
     sector_ald = "cement"
   )
@@ -280,12 +281,11 @@ test_that("with duplicated id_loan weights emission_factor as expected (#160)", 
     emission_factor = c(1, 0.5)
   )
 
-  out <- target_sda(match_result,
+  expect_error(
+    target_sda(match_result,
              ald,
              scen) %>%
-    filter(year == min(year))
-
-  split_out <- split(out, out$emission_factor_metric)
-
-  expect_equal(split_out$projected$emission_factor_value, 2)
+    filter(year == min(year)),
+    class =  "unique_ids"
+  )
 })

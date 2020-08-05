@@ -43,9 +43,11 @@
 #'   # WARNING: Remember to validate matches (see `?prioritize`)
 #'   prioritize()
 #'
+#' ald <- filter(ald_demo, !is.na(emission_factor))
+#'
 #' out <- valid_matches %>%
 #'   target_sda(
-#'     ald = ald_demo,
+#'     ald = ald,
 #'     co2_intensity_scenario = co2_intensity_scenario_demo
 #'   )
 #'
@@ -60,7 +62,7 @@
 #' # calculate company-level targets
 #' out <- valid_matches %>%
 #'   target_sda(
-#'     ald = ald_demo,
+#'     ald = ald,
 #'     co2_intensity_scenario = co2_intensity_scenario_demo,
 #'     by_company = TRUE
 #'   )

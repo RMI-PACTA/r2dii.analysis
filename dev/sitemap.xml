@@ -10,25 +10,22 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/summarize_company_production.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/summarize_portfolio_production.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/summarize_weighted_production.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_market_share_company.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_market_share_portfolio.html</loc>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_market_share.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_sda.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/tidyeval.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/production-percent-change.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/r2dii-analysis.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/target-market-share.html</loc>

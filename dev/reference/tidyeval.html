@@ -40,39 +40,7 @@
 
 
 <meta property="og:title" content="Tidy eval helpers — tidyeval" />
-<meta property="og:description" content="
-
-sym() creates a symbol from a string and
-syms() creates a list of symbols from a
-character vector.
-enquo() and
-enquos() delay the execution of one or
-several function arguments. enquo() returns a single quoted
-expression, which is like a blueprint for the delayed computation.
-enquos() returns a list of such quoted expressions.
-expr() quotes a new expression locally. It
-is mostly useful to build new expressions around arguments
-captured with enquo() or enquos():
-expr(mean(!!enquo(arg), na.rm = TRUE)).
-as_name() transforms a quoted variable name
-into a string. Supplying something else than a quoted variable
-name is an error.
-That's unlike as_label() which also returns
-a single string but supports any kind of R object as input,
-including quoted function calls and vectors. Its purpose is to
-summarize that object into a single label. That label is often
-suitable as a default name.
-If you don't know what a quoted expression contains (for instance
-expressions captured with enquo() could be a variable
-name, a call to a function, or an unquoted constant), then use
-as_label(). If you know you have quoted a simple variable
-name, or would like to enforce this, use as_name().
-
-
-To learn more about tidy eval and how to use these tools, visit
-https://tidyeval.tidyverse.org and the
-Metaprogramming
-section of Advanced R." />
+<meta property="og:description" content="See https://dplyr.tidyverse.org/reference/tidyeval.html." />
 
 
 <meta name="robots" content="noindex">
@@ -104,13 +72,16 @@ section of Advanced R." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.0.9004</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/r2dii-analysis.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -126,24 +97,36 @@ section of Advanced R." />
     <li>
       <a href="../articles/target-market-share.html">Market Share Approach</a>
     </li>
+    <li>
+      <a href="../articles/production-percent-change.html">Indicator Choices: Weighted Production vs. Weighted Percent Change in Production</a>
+    </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/maurolepore">
-    <span class="fa fa-gavel"></span>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Packages
      
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="https://github.com/2DegreesInvesting/r2dii.analysis">
     <span class="fa fa-github"></span>
      
   </a>
-</li>
-<li>
-  <a href="https://2degreesinvesting.github.io/r2dii/index.html">r2dii</a>
 </li>
       </ul>
       
@@ -164,39 +147,7 @@ section of Advanced R." />
     </div>
 
     <div class="ref-description">
-    
-<ul>
-<li><p><code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>sym</a>()</code> creates a symbol from a string and
-<code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>syms</a>()</code> creates a list of symbols from a
-character vector.</p></li>
-<li><p><code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquo</a>()</code> and
-<code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquos</a>()</code> delay the execution of one or
-several function arguments. <code>enquo()</code> returns a single quoted
-expression, which is like a blueprint for the delayed computation.
-<code>enquos()</code> returns a list of such quoted expressions.</p></li>
-<li><p><code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a>()</code> quotes a new expression <em>locally</em>. It
-is mostly useful to build new expressions around arguments
-captured with <code>enquo()</code> or <code>enquos()</code>:
-<code>expr(mean(!!enquo(arg), na.rm = TRUE))</code>.</p></li>
-<li><p><code><a href='https://rlang.r-lib.org/reference/as_name.html'>as_name</a>()</code> transforms a quoted variable name
-into a string. Supplying something else than a quoted variable
-name is an error.</p>
-<p>That's unlike <code><a href='https://rlang.r-lib.org/reference/as_label.html'>as_label</a>()</code> which also returns
-a single string but supports any kind of R object as input,
-including quoted function calls and vectors. Its purpose is to
-summarize that object into a single label. That label is often
-suitable as a default name.</p>
-<p>If you don't know what a quoted expression contains (for instance
-expressions captured with <code>enquo()</code> could be a variable
-name, a call to a function, or an unquoted constant), then use
-<code>as_label()</code>. If you know you have quoted a simple variable
-name, or would like to enforce this, use <code>as_name()</code>.</p></li>
-</ul>
-
-<p>To learn more about tidy eval and how to use these tools, visit
-<a href='https://tidyeval.tidyverse.org'>https://tidyeval.tidyverse.org</a> and the
-<a href='https://adv-r.hadley.nz/metaprogramming.html'>Metaprogramming
-section</a> of <a href='https://adv-r.hadley.nz'>Advanced R</a>.</p>
+    <p>See <a href='https://dplyr.tidyverse.org/reference/tidyeval.html'>https://dplyr.tidyverse.org/reference/tidyeval.html</a>.</p>
     </div>
 
 
@@ -213,7 +164,7 @@ section</a> of <a href='https://adv-r.hadley.nz'>Advanced R</a>.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/maurolepore/'>Mauro Lepore</a>, <a href='https://github.com/jdhoffa/'>Jackson Hoffart</a>, Vincent Jerosch-Herold, Clare Murray, Klaus Hogedorn, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
+  <p>Developed by <a href='https://github.com/jdhoffa/'>Jackson Hoffart</a>, <a href='https://github.com/maurolepore/'>Mauro Lepore</a>, Klaus Hogedorn, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
 </div>
 
 <div class="pkgdown">

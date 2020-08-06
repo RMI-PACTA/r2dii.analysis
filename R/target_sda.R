@@ -179,12 +179,11 @@ aggregate_ald_by_technology <- function(data) {
   data %>%
     dplyr::group_by_at(setdiff(names(data), "technology")) %>%
     mutate(
-      production_weight = .data$production / sum(.data$production)
+      weight = .data$production / sum(.data$production)
     ) %>%
     summarize(
       production = sum(.data$production),
-      .x
-      emission_factor = sum(.data$emission_factor * production_weight)/sum(production_weight)
+      emission_factor = sum(.data$emission_factor * weight / sum(weight))
     ) %>%
     ungroup()
 }

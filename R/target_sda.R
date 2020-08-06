@@ -177,11 +177,12 @@ target_sda <- function(data,
 
 aggregate_ald_by_technology <- function(data){
   data %>%
-    group_by_at(setdiff(names(data), "technology")) %>%
-    summarise(
+    dplyr::group_by_at(setdiff(names(data), "technology")) %>%
+    summarize(
       production = sum(.data$production),
       emission_factor = mean(.data$emission_factor)
-    )
+    ) %>%
+    ungroup()
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

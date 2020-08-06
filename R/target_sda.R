@@ -175,12 +175,18 @@ target_sda <- function(data,
   )
 }
 
-aggregate_ald_by_technology <- function(data){
+aggregate_ald_by_technology <- function(data) {
   data %>%
     dplyr::group_by_at(setdiff(names(data), "technology")) %>%
+    mutate(
+      production_weight = .data$production / sum(.data$production)
+    ) %>%
     summarize(
       production = sum(.data$production),
-      emission_factor = mean(.data$emission_factor)
+      emission_factor = weighted.mean(
+        .data$emission_factor,
+        .data$production_weight
+        )
     ) %>%
     ungroup()
 }
@@ -202,14 +208,14 @@ calculate_weighted_emission_factor <- function(data,
                                                by_company = FALSE) {
   data <- inner_join(data, ald, by = ald_columns())
   data <- add_loan_weighted_emission_factor(data,
-      use_credit_limit = use_credit_limit,
-      by_company = by_company
-    )
+    use_credit_limit = use_credit_limit,
+    by_company = by_company
+  )
 
   data <- group_by(data, ...)
   data <- summarize(data,
-      emission_factor_projected = sum(.data$weighted_loan_emission_factor)
-    )
+    emission_factor_projected = sum(.data$weighted_loan_emission_factor)
+  )
   data <- ungroup(data)
   data <- rename(data, sector = .data$sector_ald)
 }

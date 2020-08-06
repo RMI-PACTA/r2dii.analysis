@@ -183,10 +183,8 @@ aggregate_ald_by_technology <- function(data) {
     ) %>%
     summarize(
       production = sum(.data$production),
-      emission_factor = weighted.mean(
-        .data$emission_factor,
-        .data$production_weight
-        )
+      .x
+      emission_factor = sum(.data$emission_factor * production_weight)/sum(production_weight)
     ) %>%
     ungroup()
 }

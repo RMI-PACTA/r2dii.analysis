@@ -412,3 +412,22 @@ test_that("with multiple technologies weights emission_factor as expected (#160)
   expect_equal(out$projected$emission_factor_value, 2)
   expect_equal(out$target_b2ds$emission_factor_value, 2)
 })
+
+test_that("with multiple technologies, aggregates production-weighted emission_factor (#160)", {
+   out <- target_sda(
+    fake_matched(sector_ald = "cement"),
+     ald = fake_ald(
+       sector = "cement",
+       technology = c("cement 1", "cement 2"),
+       year = 2020,
+       production = c(1, 3),
+       emission_factor = c(4, 132)
+     ),
+     co2_intensity_scenario = fake_co2_scenario(
+       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
+     )
+   ) %>%
+     split(.$emission_factor_metric)
+
+   expect_equal(out$corporate_economy$emission_factor_value, 100)
+})

@@ -94,6 +94,7 @@ target_sda <- function(data,
   crucial_ald <- c(
     "name_company",
     "sector",
+    "technology",
     "year",
     "emission_factor",
     "production"
@@ -115,6 +116,7 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
   walk(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
+  ald_by_sector <- aggregate_ald_by_technology(ald)
 
   loanbook_summary_groups <- maybe_add_name_ald(
     c("sector_ald", "year"),
@@ -123,7 +125,7 @@ target_sda <- function(data,
 
   loanbook_with_weighted_emission_factors <- calculate_weighted_emission_factor(
     data,
-    ald,
+    ald_by_sector,
     !!!rlang::syms(loanbook_summary_groups),
     use_credit_limit = use_credit_limit,
     by_company = by_company
@@ -134,7 +136,7 @@ target_sda <- function(data,
     return(empty_target_sda_output())
   }
 
-  corporate_economy <- calculate_market_average(ald)
+  corporate_economy <- calculate_market_average(ald_by_sector)
 
   adjusted_scenario <- compute_ald_adjusted_scenario(
     co2_intensity_scenario,
@@ -171,6 +173,15 @@ target_sda <- function(data,
     adjusted_scenario,
     by_company = by_company
   )
+}
+
+aggregate_ald_by_technology <- function(data){
+  data %>%
+    group_by_at(setdiff(names(data), "technology")) %>%
+    summarise(
+      production = sum(.data$production),
+      emission_factor = mean(.data$emission_factor)
+    )
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

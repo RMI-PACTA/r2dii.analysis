@@ -208,6 +208,7 @@ test_that("with known input outputs as expected", {
 
 test_that("with known input outputs as expected, at company level (#155)", {
   matched <- fake_matched(
+    id_loan = c(1, 2),
     name_ald = c("shaanxi auto", "company 2"),
     sector_ald = "cement"
   )
@@ -258,6 +259,36 @@ test_that("with no matching data warns", {
   bad_scenario <- fake_co2_scenario(sector = "bad")
   expect_warning(
     target_sda(fake_matched(), fake_ald(), bad_scenario), "no scenario"
+  )
+})
+
+test_that("with duplicated id_loan weights emission_factor as expected (#160)", {
+  match_result <- fake_matched(
+    id_loan = c(1, 1),
+    name_ald = rep("large company", 2),
+    sector_ald = "cement"
+  )
+
+  ald <- fake_ald(
+    sector = "cement",
+    name_company = "large company",
+    emission_factor = 2,
+    year = c(2020, 2025)
+  )
+
+  scen <- fake_co2_scenario(
+    year = c(2020, 2025),
+    emission_factor = c(1, 0.5)
+  )
+
+  expect_error(
+    target_sda(
+      match_result,
+      ald,
+      scen
+    ) %>%
+      filter(year == min(year)),
+    class = "unique_ids"
   )
 })
 

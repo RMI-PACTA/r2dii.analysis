@@ -9,6 +9,17 @@ check_no_value_is_missing <- function(data, column) {
   invisible(data)
 }
 
+check_unique_id <- function(data, column) {
+  if (sum(duplicated(data[[column]]))) {
+    abort(
+      class = "unique_ids",
+      sprintf("Column `%s` must not contain any duplicates.", column)
+    )
+  }
+
+  invisible(data)
+}
+
 warn_grouped <- function(data, message) {
   if (dplyr::is_grouped_df(data)) warn(message)
 

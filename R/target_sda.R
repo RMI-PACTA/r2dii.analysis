@@ -106,6 +106,7 @@ target_sda <- function(data,
   )
 
   check_crucial_names(data, crucial_portfolio)
+  check_unique_id(data, "id_loan")
   walk(crucial_portfolio, ~ check_no_value_is_missing(data, .x))
 
   check_crucial_names(ald, crucial_ald)
@@ -120,11 +121,13 @@ target_sda <- function(data,
     by_company
   )
 
-  loanbook_with_weighted_emission_factors <- data %>%
-    calculate_weighted_emission_factor(ald,
-      !!!rlang::syms(loanbook_summary_groups),
-      use_credit_limit = use_credit_limit
-    )
+  loanbook_with_weighted_emission_factors <- calculate_weighted_emission_factor(
+    data,
+    ald,
+    !!!rlang::syms(loanbook_summary_groups),
+    use_credit_limit = use_credit_limit,
+    by_company = by_company
+  )
 
   if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {
     rlang::warn("Found no match between loanbook and ald.")
@@ -183,10 +186,14 @@ maybe_add_name_ald <- function(data, by_company = FALSE) {
 calculate_weighted_emission_factor <- function(data,
                                                ald,
                                                ...,
-                                               use_credit_limit = FALSE) {
+                                               use_credit_limit = FALSE,
+                                               by_company = FALSE) {
   data %>%
     inner_join(ald, by = ald_columns()) %>%
-    add_loan_weighted_emission_factor(use_credit_limit = use_credit_limit) %>%
+    add_loan_weighted_emission_factor(
+      use_credit_limit = use_credit_limit,
+      by_company = by_company
+    ) %>%
     group_by(...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
@@ -195,25 +202,30 @@ calculate_weighted_emission_factor <- function(data,
     rename(sector = .data$sector_ald)
 }
 
-add_loan_weighted_emission_factor <- function(data, use_credit_limit) {
-  loan_size <- paste0(
-    "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
-  )
-
-  distinct_loans_by_sector <- data %>%
-    ungroup() %>%
-    group_by(.data$sector_ald) %>%
-    distinct(.data$id_loan, .data[[loan_size]])
-
-  total_size_by_sector <- distinct_loans_by_sector %>%
-    summarize(total_size = sum(.data[[loan_size]]))
-
-  data %>%
-    left_join(total_size_by_sector, by = "sector_ald") %>%
-    mutate(
-      loan_weight = .data[[loan_size]] / .data$total_size,
-      weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
+add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
+  if (by_company) {
+    data %>%
+      mutate(weighted_loan_emission_factor = .data$emission_factor)
+  } else {
+    loan_size <- paste0(
+      "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
     )
+
+    distinct_loans_by_sector <- data %>%
+      ungroup() %>%
+      group_by(.data$sector_ald) %>%
+      distinct(.data$id_loan, .data[[loan_size]])
+
+    total_size_by_sector <- distinct_loans_by_sector %>%
+      summarize(total_size = sum(.data[[loan_size]]))
+
+    data %>%
+      left_join(total_size_by_sector, by = "sector_ald") %>%
+      mutate(
+        loan_weight = .data[[loan_size]] / .data$total_size,
+        weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
+      )
+  }
 }
 
 calculate_market_average <- function(data) {

@@ -116,7 +116,8 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
   walk(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
-  ald_by_sector <- aggregate_ald_by_columns(ald, c("technology", "plant_location"))
+  ald_aggregation_columns <- c("technology", "plant_location")
+  ald_by_sector <- aggregate_ald_by_columns(ald, ald_aggregation_columns)
 
   loanbook_summary_groups <- maybe_add_name_ald(
     c("sector_ald", "year"),
@@ -173,19 +174,6 @@ target_sda <- function(data,
     adjusted_scenario,
     by_company = by_company
   )
-}
-
-aggregate_ald_by_columns <- function(data, columns) {
-  data %>%
-    dplyr::group_by_at(setdiff(names(data), columns)) %>%
-    mutate(
-      weight = .data$production / sum(.data$production)
-    ) %>%
-    summarize(
-      production = sum(.data$production),
-      emission_factor = sum(.data$emission_factor * .data$weight / sum(.data$weight))
-    ) %>%
-    ungroup()
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

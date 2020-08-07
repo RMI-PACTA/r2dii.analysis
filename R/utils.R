@@ -42,3 +42,16 @@ isTRUE <- function(x) {
 isFALSE <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
+
+aggregate_ald_by_columns <- function(data, columns) {
+  data %>%
+    dplyr::group_by_at(setdiff(names(data), c("production", "emission_factor", columns))) %>%
+    mutate(
+      weight = .data$production / sum(.data$production)
+    ) %>%
+    summarize(
+      production = sum(.data$production),
+      emission_factor = sum(.data$emission_factor * .data$weight / sum(.data$weight))
+    ) %>%
+    ungroup()
+}

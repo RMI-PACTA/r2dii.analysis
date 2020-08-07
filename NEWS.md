@@ -2,8 +2,8 @@
 
 User-facing
 
-* `target_sda()` now aggregates input `ald` by `technology` prior to calculating 
-  targets (@QianFeng2020 #160).
+* `target_sda()` now aggregates input `ald` by `technology` and `plant_location`
+  prior to calculating targets (@QianFeng2020 #160).
 
 * `target_sda()` now errors if input data has any duplicated `id_loan` 
   (@QianFeng2020 #164).

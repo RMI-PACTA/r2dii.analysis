@@ -235,3 +235,37 @@ test_that("include/excludes `plant_location` inside/outside a region", {
   # The output excludes locations outside matching regions
   expect_false(any(unique(out$plant_location) %in% "us"))
 })
+
+test_that("outputs the same when ald$sector values are upper or lower case", {
+  # From r2dii.match fake_lbk()
+  lkb <- tibble(
+    sector_classification_system = c("NACE"),
+    id_ultimate_parent = c("UP15"),
+    name_ultimate_parent = c("Alpine Knits India Pvt. Limited", NA),
+    id_direct_loantaker = c("C294"),
+    name_direct_loantaker = c("Yuamen Xinneng Thermal Power Co Ltd", NA),
+    sector_classification_direct_loantaker = c(3511),
+    id_loan = c(1)
+  )
+  # Based on r2dii.match fake_ald()
+  ald <- tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd",
+    plant_location = "dm",
+    technology = "renewablescap",
+    year = 2020
+  )
+  matched <- prioritize(match_name(lbk, ald))
+
+  scenario <- r2dii.data::scenario_demo_2020
+  regions <- r2dii.data::region_isos_demo
+
+  out_lower <- join_ald_scenario(matched, ald, scenario, regions)
+  out_upper <- join_ald_scenario(
+    matched,
+    purrr::modify_at(ald, "sector", toupper),
+    scenario, regions
+  )
+  expect_equal(out_upper, out_lower)
+})

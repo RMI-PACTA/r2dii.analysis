@@ -195,44 +195,28 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     expect_warning(join_ald_scenario2(l, bad_scenario), class = "has_zero_rows")
   )
 
-  bad_region1 <- tibble(region = "bad", isos = l$isos, source = l$source)
-
-  if (packageVersion("testthat") > "2.3.2") {
-    .class <- "has_zero_rows"
-
-    expect_warning(
-      join_ald_scenario2(l, region_isos = bad_region1), "region_isos",
-      class = .class
+  # testthat < 2.99.0.9000 seems to lack the `class` argument to expect_warning
+  # This function passes `class` only when testthat is >= 2.99.0.9000
+  .args <- function(expr) {
+    out <- list(
+      object = rlang::expr({{expr}}),
+      regexp = "region_isos",
+      class = ifelse(
+        packageVersion("testthat") >= "2.99.0.9000", "has_zero_rows", NULL
+      )
     )
-
-    bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
-    expect_warning(
-      join_ald_scenario2(l, region_isos = bad_region2), "region_isos",
-      class = .class
-    )
-
-    bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
-    expect_warning(
-      join_ald_scenario2(l, region_isos = bad_region3), "region_isos",
-      class = .class
-    )
+    # Exclude `class = NULL`
+    out[!vapply(out, is.null, logical(1))]
   }
 
-  if (packageVersion("testthat") <= "2.3.2") {
-    expect_warning(
-      join_ald_scenario2(l, region_isos = bad_region1), "region_isos"
-    )
+  bad_reg1 <- tibble(region = "bad", isos = l$isos, source = l$source)
+  do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg1)))
 
-    bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
-    expect_warning(
-      join_ald_scenario2(l, region_isos = bad_region2), "region_isos"
-    )
+  bad_reg2 <- tibble(region = l$region, isos = "bad", source = l$source)
+  do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg2)))
 
-    bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
-    expect_warning(
-      join_ald_scenario2(l, region_isos = bad_region3), "region_isos"
-    )
-  }
+  bad_reg3 <- tibble(region = l$region, isos = l$isos, source = "bad")
+  do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg3)))
 })
 
 test_that("include/excludes `plant_location` inside/outside a region", {

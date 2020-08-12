@@ -2,6 +2,9 @@
 
 User-facing
 
+* `join_ald_scenario()` now convert `sector_ald` and `technology` to lower case
+  (#172). This results in the expected matches in the rare case when the values
+  of these columns are not exclusively lower case.
 * `target_sda()` now aggregates input `ald` by `technology` and `plant_location`
   prior to calculating targets (@QianFeng2020 #160).
 

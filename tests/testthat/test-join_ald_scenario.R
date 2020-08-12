@@ -98,14 +98,13 @@ test_that("is case-insensitive to `plant_location` inputs", {
 })
 
 test_that("outputs a number of rows equal to matches by `scenario_source`", {
-  matching_0 <- expect_warning(
+  matching_0 <- suppressWarnings(
     join_ald_scenario(
       fake_matched(),
       ald = fake_ald(plant_location = "a"),
       scenario = fake_scenario(region = "b", scenario_source = "c"),
       region_isos = tibble(isos = "a", region = "b", source = "-")
-    ),
-    "region_isos.*0 row",
+    )
   )
   expect_equal(nrow(matching_0), 0L)
 

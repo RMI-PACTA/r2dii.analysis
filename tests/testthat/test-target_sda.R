@@ -252,10 +252,17 @@ test_that("with known input outputs as expected, at company level (#155)", {
 
 test_that("with no matching data warns", {
   no_matches <- fake_matched(sector_ald = "bad")
-  expect_warning(
-    # class = "no_match",
-    target_sda(no_matches, fake_ald(), fake_co2_scenario()), "no match"
-  )
+
+  if (packageVersion("testthat") >= "2.99.0.9000") {
+    expect_warning(
+      class = "no_match",
+      target_sda(no_matches, fake_ald(), fake_co2_scenario())
+    )
+  } else {
+    expect_warning(
+      target_sda(no_matches, fake_ald(), fake_co2_scenario()), "no match"
+    )
+  }
 
   bad_scenario <- fake_co2_scenario(sector = "bad")
   expect_warning(

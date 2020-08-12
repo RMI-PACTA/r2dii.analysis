@@ -2,9 +2,9 @@
 
 User-facing
 
-* `join_ald_scenario()` now convert `sector_ald` and `technology` to lower case
-  (#172). This results in the expected matches in the rare case when the values
-  of these columns are not exclusively lower case.
+* `join_ald_scenario()` now converts to lower case the values of the columns
+  `sector_ald` and `technology` (#172).
+
 * `target_sda()` now aggregates input `ald` by `technology` and `plant_location`
   prior to calculating targets (@QianFeng2020 #160).
 
@@ -34,6 +34,8 @@ User-facing
   (@georgeharris2deg #142).
 
 Internal
+
+* Tests now work with testthat v3.
 
 * The meaning of "internal data" is now more transparent. (#136)
 

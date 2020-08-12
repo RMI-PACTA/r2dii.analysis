@@ -119,7 +119,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
   }
 
   check_crucial_names(data, crucial)
-  walk(crucial, ~ check_no_value_is_missing(data, .x))
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
   if (percent_change) {
     check_zero_initial_production(data)

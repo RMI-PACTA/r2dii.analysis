@@ -270,11 +270,11 @@ test_that("outputs the same with upper/lower ald$sector or ald$technology", {
 
   out_lower <- join_ald_scenario(matched, ald, scenario, regions)
 
-  upper_sector <- purrr::modify_at(ald, "sector", toupper)
+  upper_sector <- modify_at_(ald, "sector", toupper)
   out_upper <- join_ald_scenario(matched, upper_sector, scenario, regions)
   expect_equal(out_upper, out_lower)
 
-  upper_technology <- purrr::modify_at(ald, "technology", toupper)
+  upper_technology <- modify_at_(ald, "technology", toupper)
   out_upper <- join_ald_scenario(matched, upper_technology, scenario, regions)
   expect_equal(out_upper, out_lower)
 })

@@ -108,13 +108,13 @@ target_sda <- function(data,
 
   check_crucial_names(data, crucial_portfolio)
   check_unique_id(data, "id_loan")
-  walk(crucial_portfolio, ~ check_no_value_is_missing(data, .x))
+  walk_(crucial_portfolio, ~ check_no_value_is_missing(data, .x))
 
   check_crucial_names(ald, crucial_ald)
-  walk(crucial_ald, ~ check_no_value_is_missing(ald, .x))
+  walk_(crucial_ald, ~ check_no_value_is_missing(ald, .x))
 
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
-  walk(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
+  walk_(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
   ald_aggregation_columns <- c("technology", "plant_location")
   ald_by_sector <- aggregate_ald_by_columns(ald, ald_aggregation_columns)

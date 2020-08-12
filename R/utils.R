@@ -27,10 +27,16 @@ warn_grouped <- function(data, message) {
 }
 
 # Avoid dependency on purrr
-walk <- function(.x, .f, ...) {
+walk_ <- function(.x, .f, ...) {
   .f <- rlang::as_function(.f)
   lapply(.x, .f, ...)
   invisible(.x)
+}
+
+# Avoid dependency on purrr
+modify_at_ <- function(.x, .at, .f) {
+  .x[[.at]] <- .f(.x[[.at]])
+  .x
 }
 
 # We can remove this once we depend on R >= 3.5. See ?backports::isTRUE

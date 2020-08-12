@@ -44,6 +44,7 @@ join_ald_scenario <- function(data,
   region_isos <- region_isos %>%
     rename(scenario_source = .data$source)
 
+  ald <-purrr::modify_at(ald, c("sector", "technology"), tolower)
   data %>%
     left_join(ald, by = ald_columns()) %>%
     inner_join(scenario, by = scenario_columns()) %>%
@@ -59,7 +60,7 @@ join_ald_scenario <- function(data,
 }
 
 warn_if_has_zero_rows <- function(data, message) {
-  if (nrow(data) == 0L) warn(message)
+  if (nrow(data) == 0L) warn(message = message, class = "has_zero_rows")
 
   invisible(data)
 }

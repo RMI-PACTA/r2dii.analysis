@@ -133,7 +133,7 @@ target_sda <- function(data,
   )
 
   if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {
-    rlang::warn("Found no match between loanbook and ald.")
+    warn("Found no match between loanbook and ald.", class = "no_match")
     return(empty_target_sda_output())
   }
 

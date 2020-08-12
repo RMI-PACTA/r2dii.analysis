@@ -99,13 +99,13 @@ test_that("is case-insensitive to `plant_location` inputs", {
 
 test_that("outputs a number of rows equal to matches by `scenario_source`", {
   matching_0 <- expect_warning(
-    class = "has_zero_row",
     join_ald_scenario(
       fake_matched(),
       ald = fake_ald(plant_location = "a"),
       scenario = fake_scenario(region = "b", scenario_source = "c"),
       region_isos = tibble(isos = "a", region = "b", source = "-")
-    )
+    ),
+    "region_isos.*0 row",
   )
   expect_equal(nrow(matching_0), 0L)
 
@@ -190,20 +190,27 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   bad_scenario <- fake_scenario(
     region = l$region, scenario_source = l$source, sector = "bad"
   )
-  expect_warning(join_ald_scenario2(l, bad_scenario), "scenario")
+  # There are more than one warnings; this catches the first one, the rest
+  # buttle up so we need to suppress them.
+  suppressWarnings(
+    expect_warning(join_ald_scenario2(l, bad_scenario), class = "has_zero_rows")
+  )
 
   bad_region1 <- tibble(region = "bad", isos = l$isos, source = l$source)
   expect_warning(
+    class = "has_zero_rows",
     join_ald_scenario2(l, region_isos = bad_region1), "region_isos"
   )
 
   bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
   expect_warning(
+    class = "has_zero_rows",
     join_ald_scenario2(l, region_isos = bad_region2), "region_isos"
   )
 
   bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
   expect_warning(
+    class = "has_zero_rows",
     join_ald_scenario2(l, region_isos = bad_region3), "region_isos"
   )
 })
@@ -238,7 +245,7 @@ test_that("include/excludes `plant_location` inside/outside a region", {
 
 test_that("outputs the same with upper/lower ald$sector or ald$technology", {
   # From r2dii.match fake_lbk()
-  lkb <- tibble(
+  lbk <- tibble(
     sector_classification_system = c("NACE"),
     id_ultimate_parent = c("UP15"),
     name_ultimate_parent = c("Alpine Knits India Pvt. Limited", NA),

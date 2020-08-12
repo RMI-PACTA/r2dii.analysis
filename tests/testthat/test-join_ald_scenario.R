@@ -191,7 +191,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   .args <- function(expr) {
     supports_class <- packageVersion("testthat") >= "2.99.0.9000"
     out <- list(
-      object = rlang::expr({{expr}}),
+      object = rlang::expr({{ expr }}),
       regexp = "region_isos",
       class = if (supports_class) "has_zero_rows" else NULL
     )

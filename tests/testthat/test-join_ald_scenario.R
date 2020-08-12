@@ -186,15 +186,6 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 
   expect_warning(join_ald_scenario2(l), NA)
 
-  bad_scenario <- fake_scenario(
-    region = l$region, scenario_source = l$source, sector = "bad"
-  )
-  # There are more than one warnings; this catches the first one, the rest
-  # buttle up so we need to suppress them.
-  suppressWarnings(
-    expect_warning(join_ald_scenario2(l, bad_scenario), class = "has_zero_rows")
-  )
-
   # testthat < 2.99.0.9000 seems to lack the `class` argument to expect_warning
   # This function passes `class` only when testthat is >= 2.99.0.9000
   .args <- function(expr) {
@@ -207,6 +198,11 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     # Exclude `class = NULL`
     out[!vapply(out, is.null, logical(1))]
   }
+
+  bad_scenario <- fake_scenario(
+    region = l$region, scenario_source = l$source, sector = "bad"
+  )
+  do.call(expect_warning, .args(join_ald_scenario2(l, bad_scenario)))
 
   bad_reg1 <- tibble(region = "bad", isos = l$isos, source = l$source)
   do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg1)))

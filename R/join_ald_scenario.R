@@ -44,7 +44,7 @@ join_ald_scenario <- function(data,
   region_isos <- region_isos %>%
     rename(scenario_source = .data$source)
 
-  ald <-purrr::modify_at(ald, c("sector", "technology"), tolower)
+  ald <- purrr::modify_at(ald, c("sector", "technology"), tolower)
   data %>%
     left_join(ald, by = ald_columns()) %>%
     inner_join(scenario, by = scenario_columns()) %>%

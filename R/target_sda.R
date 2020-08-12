@@ -191,7 +191,6 @@ calculate_weighted_emission_factor <- function(data,
                                                ...,
                                                use_credit_limit = FALSE,
                                                by_company = FALSE) {
-
   data %>%
     inner_join(ald, by = ald_columns()) %>%
     add_loan_weighted_emission_factor(
@@ -204,7 +203,6 @@ calculate_weighted_emission_factor <- function(data,
     ) %>%
     ungroup() %>%
     rename(sector = .data$sector_ald)
-
 }
 
 add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {

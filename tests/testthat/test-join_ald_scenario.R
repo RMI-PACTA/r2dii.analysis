@@ -278,4 +278,3 @@ test_that("outputs the same with upper/lower ald$sector or ald$technology", {
   out_upper <- join_ald_scenario(matched, upper_technology, scenario, regions)
   expect_equal(out_upper, out_lower)
 })
-

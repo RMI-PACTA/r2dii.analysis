@@ -197,22 +197,43 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   )
 
   bad_region1 <- tibble(region = "bad", isos = l$isos, source = l$source)
-  expect_warning(
-    class = "has_zero_rows",
-    join_ald_scenario2(l, region_isos = bad_region1), "region_isos"
-  )
 
-  bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
-  expect_warning(
-    class = "has_zero_rows",
-    join_ald_scenario2(l, region_isos = bad_region2), "region_isos"
-  )
+  if (packageVersion("testthat") > "2.3.2") {
+    .class <- "has_zero_rows"
 
-  bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
-  expect_warning(
-    class = "has_zero_rows",
-    join_ald_scenario2(l, region_isos = bad_region3), "region_isos"
-  )
+    expect_warning(
+      join_ald_scenario2(l, region_isos = bad_region1), "region_isos",
+      class = .class
+    )
+
+    bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
+    expect_warning(
+      join_ald_scenario2(l, region_isos = bad_region2), "region_isos",
+      class = .class
+    )
+
+    bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
+    expect_warning(
+      join_ald_scenario2(l, region_isos = bad_region3), "region_isos",
+      class = .class
+    )
+  }
+
+  if (packageVersion("testthat") <= "2.3.2") {
+    expect_warning(
+      join_ald_scenario2(l, region_isos = bad_region1), "region_isos"
+    )
+
+    bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
+    expect_warning(
+      join_ald_scenario2(l, region_isos = bad_region2), "region_isos"
+    )
+
+    bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
+    expect_warning(
+      join_ald_scenario2(l, region_isos = bad_region3), "region_isos"
+    )
+  }
 })
 
 test_that("include/excludes `plant_location` inside/outside a region", {

@@ -198,12 +198,11 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   # testthat < 2.99.0.9000 seems to lack the `class` argument to expect_warning
   # This function passes `class` only when testthat is >= 2.99.0.9000
   .args <- function(expr) {
+    supports_class <- packageVersion("testthat") >= "2.99.0.9000"
     out <- list(
       object = rlang::expr({{expr}}),
       regexp = "region_isos",
-      class = ifelse(
-        packageVersion("testthat") >= "2.99.0.9000", "has_zero_rows", NULL
-      )
+      class = if (supports_class) "has_zero_rows" else NULL
     )
     # Exclude `class = NULL`
     out[!vapply(out, is.null, logical(1))]

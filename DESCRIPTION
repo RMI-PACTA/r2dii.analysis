@@ -39,7 +39,8 @@ Imports:
     magrittr,
     rlang (>= 0.1.2),
     tidyr,
-    tidyselect
+    tidyselect,
+    purrr
 Suggests: 
     covr,
     r2dii.data,

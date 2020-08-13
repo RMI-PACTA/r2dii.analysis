@@ -118,7 +118,7 @@ target_sda <- function(data,
       class = "na_emission_factor"
       )
 
-    ald <- filter(ald, !is.na(emission_factor))
+    ald <- filter(ald, !is.na(.data$emission_factor))
 
   }
 

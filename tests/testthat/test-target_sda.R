@@ -380,7 +380,6 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
 
   expect_error_crucial_NAs_ald("name_company")
   expect_error_crucial_NAs_ald("production")
-  expect_error_crucial_NAs_ald("emission_factor")
   expect_error_crucial_NAs_ald("sector")
   expect_error_crucial_NAs_ald("year")
 
@@ -457,4 +456,32 @@ test_that("with multiple plant_location, aggregates production-weighted emission
     split(.$emission_factor_metric)
 
   expect_equal(out$corporate_economy$emission_factor_value, 100)
+})
+
+test_that("filters and warns when input-data has NAs", {
+  # Work around: in testthat v2, the `class` argument seems to now work
+  # https://gist.github.com/maurolepore/c04388c6d4795561fb168172e75154c0
+  .object <- rlang::expr(
+    out <- target_sda(
+      fake_matched(sector_ald = "cement"),
+      ald = fake_ald(
+        sector = "cement",
+        technology = rep(c("cement", "bad"), 2),
+        year = rep(c(2020, 2050), 2),
+        emission_factor = c(1, 2, rep(NA, 2))
+      ),
+      co2_intensity_scenario = fake_co2_scenario(
+        year = c(2020, 2050), emission_factor = c(0.6, 0.2)
+      )
+    )
+  )
+  if (packageVersion("testthat") >= "2.99.0.9000") {
+    args <- list(object = .object, class = "na_emission_factor")
+  } else {
+    args <- list(object = .object, regexp = "emission_factor.*NA")
+  }
+  do.call(expect_warning, args)
+
+  out <- split(out, out$emission_factor_metric)
+  expect_equal(out$corporate_economy$emission_factor_value, c(1, 2))
 })

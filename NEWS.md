@@ -2,6 +2,9 @@
 
 User-facing
 
+* `target_sda()` now automatically filters out `ald` rows where the 
+  `emissions_factor` values are `NA` (#173).
+
 * `join_ald_scenario()` now converts to lower case the values of the columns
   `sector_ald` and `technology` (#172).
 

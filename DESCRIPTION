@@ -37,10 +37,10 @@ Depends:
 Imports: 
     dplyr,
     magrittr,
+    r2dii.data,
     rlang (>= 0.1.2),
     tidyr,
-    tidyselect,
-    r2dii.data
+    tidyselect
 Suggests: 
     covr,
     r2dii.match,

@@ -116,10 +116,9 @@ target_sda <- function(data,
     warn(
       "Removing ald rows where `emission_factor` is NA",
       class = "na_emission_factor"
-      )
+    )
 
     ald <- filter(ald, !is.na(.data$emission_factor))
-
   }
 
   walk_(crucial_ald, ~ check_no_value_is_missing(ald, .x))

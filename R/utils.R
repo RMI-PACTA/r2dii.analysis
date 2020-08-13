@@ -61,3 +61,11 @@ aggregate_ald_by_columns <- function(data, columns) {
     ) %>%
     ungroup()
 }
+
+tmsr_or_smsp <- function() {
+  dplyr::tribble(
+    ~which_metric, ~green_or_brown,
+    "tmsr_target_weighted_production", "brown",
+    "smsp_target_weighted_production", "green"
+  )
+}

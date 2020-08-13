@@ -68,6 +68,8 @@ target_market_share <- function(data,
   check_crucial_names(ald, "is_ultimate_owner")
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
+  green_or_brown <- r2dii.data::green_or_brown
+
   summary_groups <- maybe_add_name_ald(
     c("scenario", "tmsr", "smsp", "region", "scenario_source"),
     by_company
@@ -153,7 +155,7 @@ target_market_share <- function(data,
       names_to = "target_name",
       values_to = "scenario_target_value"
     ) %>%
-    left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
+    left_join(tmsr_or_smsp(), by = c(target_name = "which_metric")) %>%
     inner_join(
       green_or_brown,
       by = c(

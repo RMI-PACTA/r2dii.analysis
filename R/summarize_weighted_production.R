@@ -155,6 +155,8 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
 }
 
 add_percent_change <- function(data) {
+  green_or_brown <- r2dii.data::green_or_brown
+
   data %>%
     inner_join(green_or_brown, by = c("sector", "technology")) %>%
     group_by(.data$sector, .data$year, .data$scenario) %>%

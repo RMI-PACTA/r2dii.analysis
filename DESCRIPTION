@@ -39,10 +39,10 @@ Imports:
     magrittr,
     rlang (>= 0.1.2),
     tidyr,
-    tidyselect
+    tidyselect,
+    r2dii.data
 Suggests: 
     covr,
-    r2dii.data,
     r2dii.match,
     rmarkdown,
     roxygen2,

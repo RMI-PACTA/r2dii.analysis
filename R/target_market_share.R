@@ -68,6 +68,8 @@ target_market_share <- function(data,
   check_crucial_names(ald, "is_ultimate_owner")
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
+  green_or_brown <- r2dii.data::green_or_brown
+
   summary_groups <- maybe_add_name_ald(
     c("scenario", "tmsr", "smsp", "region", "scenario_source"),
     by_company

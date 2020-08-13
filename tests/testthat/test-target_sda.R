@@ -460,7 +460,7 @@ test_that("with multiple plant_location, aggregates production-weighted emission
 
 test_that("filters and warns when input-data has NAs", {
 
-  out <- function(){
+  out_function <- function(){
     target_sda(
     fake_matched(
       sector_ald = "cement"
@@ -469,7 +469,7 @@ test_that("filters and warns when input-data has NAs", {
       sector = "cement",
       technology = rep(c("cement","bad"),2),
       year = rep(c(2020, 2050),2),
-      emission_factor = c(rep(1,2),rep(NA,2))
+      emission_factor = c(1,2,rep(NA,2))
     ),
     co2_intensity_scenario = fake_co2_scenario(
       year = c(2020, 2050),
@@ -480,7 +480,16 @@ test_that("filters and warns when input-data has NAs", {
 
   expect_warning(
     class = "na_emission_factor",
-    out()
+    out_function()
+    )
+
+  out <- out_function() %>%
+    split(.$emission_factor_metric)
+
+
+  expect_equal(
+    out$corporate_economy$emission_factor_value,
+    c(1,2)
     )
 
 })

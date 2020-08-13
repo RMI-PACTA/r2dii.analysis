@@ -66,7 +66,7 @@ target_market_share <- function(data,
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)
   check_crucial_names(ald, "is_ultimate_owner")
-  walk(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
+  walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   summary_groups <- maybe_add_name_ald(
     c("scenario", "tmsr", "smsp", "region", "scenario_source"),

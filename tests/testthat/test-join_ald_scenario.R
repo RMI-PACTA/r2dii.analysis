@@ -98,8 +98,7 @@ test_that("is case-insensitive to `plant_location` inputs", {
 })
 
 test_that("outputs a number of rows equal to matches by `scenario_source`", {
-  matching_0 <- expect_warning(
-    class = "has_zero_row",
+  matching_0 <- suppressWarnings(
     join_ald_scenario(
       fake_matched(),
       ald = fake_ald(plant_location = "a"),
@@ -187,25 +186,32 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 
   expect_warning(join_ald_scenario2(l), NA)
 
+  # testthat < 2.99.0.9000 seems to lack the `class` argument to expect_warning
+  # This function passes `class` only when testthat is >= 2.99.0.9000
+  .args <- function(expr) {
+    supports_class <- packageVersion("testthat") >= "2.99.0.9000"
+    out <- list(
+      object = rlang::expr({{ expr }}),
+      regexp = "region_isos",
+      class = if (supports_class) "has_zero_rows" else NULL
+    )
+    # Exclude `class = NULL`
+    out[!vapply(out, is.null, logical(1))]
+  }
+
   bad_scenario <- fake_scenario(
     region = l$region, scenario_source = l$source, sector = "bad"
   )
-  expect_warning(join_ald_scenario2(l, bad_scenario), "scenario")
+  do.call(expect_warning, .args(join_ald_scenario2(l, bad_scenario)))
 
-  bad_region1 <- tibble(region = "bad", isos = l$isos, source = l$source)
-  expect_warning(
-    join_ald_scenario2(l, region_isos = bad_region1), "region_isos"
-  )
+  bad_reg1 <- tibble(region = "bad", isos = l$isos, source = l$source)
+  do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg1)))
 
-  bad_region2 <- tibble(region = l$region, isos = "bad", source = l$source)
-  expect_warning(
-    join_ald_scenario2(l, region_isos = bad_region2), "region_isos"
-  )
+  bad_reg2 <- tibble(region = l$region, isos = "bad", source = l$source)
+  do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg2)))
 
-  bad_region3 <- tibble(region = l$region, isos = l$isos, source = "bad")
-  expect_warning(
-    join_ald_scenario2(l, region_isos = bad_region3), "region_isos"
-  )
+  bad_reg3 <- tibble(region = l$region, isos = l$isos, source = "bad")
+  do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg3)))
 })
 
 test_that("include/excludes `plant_location` inside/outside a region", {
@@ -234,4 +240,40 @@ test_that("include/excludes `plant_location` inside/outside a region", {
   expect_true(all(unique(out$plant_location) %in% c("de", "fr", "cn")))
   # The output excludes locations outside matching regions
   expect_false(any(unique(out$plant_location) %in% "us"))
+})
+
+test_that("outputs the same with upper/lower ald$sector or ald$technology", {
+  # From r2dii.match fake_lbk()
+  lbk <- tibble(
+    sector_classification_system = c("NACE"),
+    id_ultimate_parent = c("UP15"),
+    name_ultimate_parent = c("Alpine Knits India Pvt. Limited", NA),
+    id_direct_loantaker = c("C294"),
+    name_direct_loantaker = c("Yuamen Xinneng Thermal Power Co Ltd", NA),
+    sector_classification_direct_loantaker = c(3511),
+    id_loan = c(1)
+  )
+  # Based on r2dii.match fake_ald()
+  ald <- tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd",
+    plant_location = "dm",
+    technology = "renewablescap",
+    year = 2020
+  )
+  matched <- prioritize(match_name(lbk, ald))
+
+  scenario <- r2dii.data::scenario_demo_2020
+  regions <- r2dii.data::region_isos_demo
+
+  out_lower <- join_ald_scenario(matched, ald, scenario, regions)
+
+  upper_sector <- modify_at_(ald, "sector", toupper)
+  out_upper <- join_ald_scenario(matched, upper_sector, scenario, regions)
+  expect_equal(out_upper, out_lower)
+
+  upper_technology <- modify_at_(ald, "technology", toupper)
+  out_upper <- join_ald_scenario(matched, upper_technology, scenario, regions)
+  expect_equal(out_upper, out_lower)
 })

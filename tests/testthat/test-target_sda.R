@@ -482,12 +482,6 @@ test_that("filters and warns when input-data has NAs", {
   }
   do.call(expect_warning, args)
 
-  out <- out %>%
-    split(.$emission_factor_metric)
-
-
-  expect_equal(
-    out$corporate_economy$emission_factor_value,
-    c(1, 2)
-  )
+  out <- split(out, out$emission_factor_metric)
+  expect_equal(out$corporate_economy$emission_factor_value, c(1, 2))
 })

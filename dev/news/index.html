@@ -150,15 +150,21 @@
 </h1>
 <p>User-facing</p>
 <ul>
-<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> gains <code>by_company</code> argument (<a href='https://github.com/jdhoffa'>@jdhoffa</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/155'>#155</a>)</p></li>
-<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> no longer outputs normalized corporate economy (<a href='https://github.com/jdhoffa'>@jdhoffa</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/158'>#158</a>)</p></li>
-<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> major bug fix and article update (<a href='https://github.com/jdhoffa'>@jdhoffa</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/153'>#153</a>)</p></li>
-<li><p>New <code><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change()</a></code> allows user to calculate a new indicator. (<a href='https://github.com/jdhoffa'>@jdhoffa</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/141'>#141</a>)</p></li>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now automatically filters out <code>ald</code> rows where the <code>emissions_factor</code> values are <code>NA</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/173'>#173</a>).</p></li>
+<li><p><code><a href="../reference/join_ald_scenario.html">join_ald_scenario()</a></code> now converts to lower case the values of the columns <code>sector_ald</code> and <code>technology</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/172'>#172</a>).</p></li>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now aggregates input <code>ald</code> by <code>technology</code> and <code>plant_location</code> prior to calculating targets (<a href='https://github.com/QianFeng2020'>@QianFeng2020</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/160'>#160</a>).</p></li>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now errors if input data has any duplicated <code>id_loan</code> (<a href='https://github.com/QianFeng2020'>@QianFeng2020</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/164'>#164</a>).</p></li>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> gains <code>by_company</code> parameter (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/155'>#155</a>).</p></li>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now outputs the actual aggregated corporate economy. Previously, the output would, erroneously, be normalized to the starting portfolio value (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/158'>#158</a>).</p></li>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now correctly calculates SDA targets (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/153'>#153</a>): Targets are now calculated using scenario data that is adjusted to corporate economy data. The adjusted scenario data is also output by the function along with the usual metrics. Methodology error fixed, and reflected in the code. Previously, the target was, incorrectly, calculated by multiplying the adjusted scenario. Now the scenario data is added instead.</p></li>
+<li><p>New <code><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change()</a></code> allows user to calculate a new indicator (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/141'>#141</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> no longer errors if the combination of <code>sector</code> and <code>scenario_target_value</code> does not uniquely identify an observation (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/142'>#142</a>).</p></li>
 </ul>
 <p>Internal</p>
 <ul>
-<li>The meaning of “internal data” is now more transparent (<a href='https://github.com/jdhoffa'>@jdhoffa</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/136'>#136</a>).</li>
+<li><p>Removed internal datasets. Package now pulls dataset <code>green_or_brown</code> from <code>rdii.data</code>, and dataset <code>tmsr_or_smsp</code> from <code>utils.R</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/146'>#146</a>).</p></li>
+<li><p>Tests now work with testthat v3.</p></li>
+<li><p>The meaning of “internal data” is now more transparent (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/136'>#136</a>).</p></li>
 </ul>
 </div>
     <div id="r2diianalysis-001" class="section level1">

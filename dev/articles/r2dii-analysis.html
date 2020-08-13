@@ -237,9 +237,10 @@
 
 <span class="no">sda_targets</span> <span class="kw">&lt;-</span> <span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span>(<span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald</span>, <span class="kw">co2_intensity_scenario</span> <span class="kw">=</span> <span class="no">co2</span>)
+<span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
 
 <span class="no">sda_targets</span>
-<span class="co">#&gt; # A tibble: 264 x 4</span>
+<span class="co">#&gt; # A tibble: 208 x 4</span>
 <span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 automotive  2002 projected                              0.309</span>
@@ -252,7 +253,7 @@
 <span class="co">#&gt;  8 automotive  2009 projected                              0.288</span>
 <span class="co">#&gt;  9 automotive  2010 projected                              0.285</span>
 <span class="co">#&gt; 10 automotive  2011 projected                              0.282</span>
-<span class="co">#&gt; # … with 254 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 198 more rows</span></pre></body></html></div>
 </div>
 </div>
 <div id="visualization" class="section level2">
@@ -362,8 +363,7 @@
     <span class="kw">color</span> <span class="kw">=</span> <span class="no">emission_factor_metric</span>)
 ) +
   <span class="fu">geom_line</span>() +
-  <span class="fu">facet_wrap</span>(~ <span class="no">sector</span>)
-<span class="co">#&gt; Warning: Removed 41 row(s) containing missing values (geom_path).</span></pre></body></html></div>
+  <span class="fu">facet_wrap</span>(~ <span class="no">sector</span>)</pre></body></html></div>
 <p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>

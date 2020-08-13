@@ -194,7 +194,8 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">co2_intensity</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
 
 <span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span>(<span class="no">ald</span>, <span class="no">co2_intensity</span>)
-<span class="co">#&gt; # A tibble: 264 x 4</span>
+<span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
+<span class="co">#&gt; # A tibble: 208 x 4</span>
 <span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 automotive  2002 projected                              0.309</span>
@@ -207,7 +208,7 @@
 <span class="co">#&gt;  8 automotive  2009 projected                              0.288</span>
 <span class="co">#&gt;  9 automotive  2010 projected                              0.285</span>
 <span class="co">#&gt; 10 automotive  2011 projected                              0.282</span>
-<span class="co">#&gt; # … with 254 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 198 more rows</span></pre></body></html></div>
 </div>
   </div>
 

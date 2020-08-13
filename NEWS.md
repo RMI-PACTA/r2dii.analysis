@@ -27,7 +27,7 @@ User-facing
   scenario data is added instead. 
 
 * New `summarize_weighted_percent_change()` allows user to calculate a new 
-  indicator. (#141)
+  indicator (#141).
 
 * `target_market_share()` no longer errors if the combination of `sector` and 
   `scenario_target_value` does not uniquely identify an observation 
@@ -35,9 +35,12 @@ User-facing
 
 Internal
 
+* Removed internal datasets. Package now pulls dataset `green_or_brown` from 
+  `rdii.data`, and dataset `tmsr_or_smsp` from `utils.R` (#146).
+
 * Tests now work with testthat v3.
 
-* The meaning of "internal data" is now more transparent. (#136)
+* The meaning of "internal data" is now more transparent (#136).
 
 # r2dii.analysis 0.0.1
 

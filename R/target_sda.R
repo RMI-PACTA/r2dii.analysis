@@ -111,6 +111,17 @@ target_sda <- function(data,
   walk_(crucial_portfolio, ~ check_no_value_is_missing(data, .x))
 
   check_crucial_names(ald, crucial_ald)
+
+  if (any(is.na(ald$emission_factor))) {
+    warn(
+      "Removing ald rows where `emission_factor` is NA",
+      class = "na_emission_factor"
+      )
+
+    ald <- filter(ald, !is.na(emission_factor))
+
+  }
+
   walk_(crucial_ald, ~ check_no_value_is_missing(ald, .x))
 
   check_crucial_names(co2_intensity_scenario, crucial_scenario)

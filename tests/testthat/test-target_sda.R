@@ -380,7 +380,6 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
 
   expect_error_crucial_NAs_ald("name_company")
   expect_error_crucial_NAs_ald("production")
-  expect_error_crucial_NAs_ald("emission_factor")
   expect_error_crucial_NAs_ald("sector")
   expect_error_crucial_NAs_ald("year")
 

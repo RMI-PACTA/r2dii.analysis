@@ -155,7 +155,7 @@ target_market_share <- function(data,
       names_to = "target_name",
       values_to = "scenario_target_value"
     ) %>%
-    left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
+    left_join(tmsr_or_smsp(), by = c(target_name = "which_metric")) %>%
     inner_join(
       green_or_brown,
       by = c(

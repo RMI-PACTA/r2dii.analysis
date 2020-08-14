@@ -126,6 +126,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   }
 
   expect_error_crucial_NAs_portfolio("name_ald")
+  expect_error_crucial_NAs_portfolio("sector_ald")
 
   expect_error_crucial_NAs_ald("production")
   expect_error_crucial_NAs_ald("sector")

@@ -167,20 +167,20 @@
   <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()
 
 <span class="no">matched</span>
-<span class="co">#&gt; # A tibble: 267 x 27</span>
+<span class="co">#&gt; # A tibble: 267 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L157    C178             Shenyang Polars… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L158    C180             Shuanghuan Auto  &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; 10 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L13     C297             Yuba City Cogen… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  3 L20     C287             Ytl Powerseraya… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  4 L21     C286             Ytl Power Inter… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L22     C285             Ytl Corp Bhd     &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L23     C283             Ypic Internatio… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L24     C282             Ypfb Corporacion &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 257 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -189,7 +189,7 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></body></html></div>
 <ul>
 <li>Calculate market-share targets for production at the portfolio level.</li>
 </ul>
@@ -199,7 +199,6 @@
 
 
 <span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="no">ald</span>, <span class="no">scenario</span>, <span class="no">regions</span>)
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
 <span class="co">#&gt; # A tibble: 1,170 x 7</span>
 <span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
@@ -218,7 +217,6 @@
 <li>Calculate market-share targets for production at the company level.</li>
 </ul>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="no">ald</span>, <span class="no">scenario</span>, <span class="no">regions</span>, <span class="kw">by_company</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
 <span class="co">#&gt; # A tibble: 15,945 x 8</span>
 <span class="co">#&gt;    sector technology  year region scenario_source name_ald weighted_produc…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>

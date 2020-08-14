@@ -55,7 +55,6 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
-
     .f = add_weighted_loan_production,
     weighted_production = sum(.data$weighted_loan_production)
   )
@@ -68,7 +67,6 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
-
     .f = add_weighted_loan_percent_change,
     weighted_percent_change = mean(.data$weighted_loan_percent_change)
   )
@@ -81,7 +79,7 @@ summarize_weighted_metric <- function(data,
                                       ...) {
   data %>%
     .f(use_credit_limit = use_credit_limit) %>%
-    group_by(.data$sector, .data$technology, .data$year, !!!group_dots) %>%
+    group_by(.data$sector_ald, .data$technology, .data$year, !!!group_dots) %>%
     summarize(...) %>%
     # Restore old groups
     group_by(!!!dplyr::groups(data))
@@ -109,7 +107,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     "id_loan",
     loan_size,
     "production",
-    "sector",
+    "sector_ald",
     "technology",
     "year"
   )
@@ -130,7 +128,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
 
   distinct_loans_by_sector <- data %>%
     ungroup() %>%
-    group_by(.data$sector) %>%
+    group_by(.data$sector_ald) %>%
     distinct(.data$id_loan, .data[[loan_size]]) %>%
     check_unique_loan_size_values_per_id_loan()
 
@@ -145,7 +143,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
   }
 
   out %>%
-    left_join(total_size_by_sector, by = "sector") %>%
+    left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
       weighted_loan_metric = .data[[metric]] * .data$loan_weight
@@ -158,10 +156,13 @@ add_percent_change <- function(data) {
   green_or_brown <- r2dii.data::green_or_brown
 
   data %>%
-    inner_join(green_or_brown, by = c("sector", "technology")) %>%
-    group_by(.data$sector, .data$year, .data$scenario) %>%
+    inner_join(green_or_brown, by = c(
+      sector_ald = "sector",
+      technology = "technology"
+    )) %>%
+    group_by(.data$sector_ald, .data$year, .data$scenario) %>%
     mutate(sector_production = sum(.data$production)) %>%
-    group_by(.data$sector, .data$name_ald) %>%
+    group_by(.data$sector_ald, .data$name_ald) %>%
     arrange(.data$name_ald, .data$year) %>%
     mutate(
       brown_percent_change =
@@ -198,7 +199,7 @@ check_zero_initial_production <- function(data) {
 
 check_unique_loan_size_values_per_id_loan <- function(data) {
   dups <- data %>%
-    group_by(.data$sector, .data$id_loan) %>%
+    group_by(.data$sector_ald, .data$id_loan) %>%
     mutate(is_duplicated = any(duplicated(.data$id_loan))) %>%
     ungroup() %>%
     filter(.data$is_duplicated)

@@ -43,7 +43,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("loan_size_outstanding")
   expect_error_missing_names("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_missing_names("production")
-  expect_error_missing_names("sector")
+  expect_error_missing_names("sector_ald")
   expect_error_missing_names("technology")
   expect_error_missing_names("year")
 })
@@ -68,7 +68,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs("loan_size_outstanding")
   expect_error_crucial_NAs("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_crucial_NAs("production")
-  expect_error_crucial_NAs("sector")
+  expect_error_crucial_NAs("sector_ald")
   expect_error_crucial_NAs("technology")
   expect_error_crucial_NAs("year")
 })
@@ -128,7 +128,7 @@ test_that("with known input outputs as expected", {
 test_that("outputs expected names", {
   expect_named(
     summarize_weighted_production(fake_master()),
-    c("sector", "technology", "year", "weighted_production")
+    c("sector_ald", "technology", "year", "weighted_production")
   )
 })
 
@@ -157,10 +157,10 @@ test_that("with multiple years outputs as expected", {
 
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
-    group_by(.data$sector) %>%
+    group_by(.data$sector_ald) %>%
     summarize_weighted_production()
 
-  expect_equal(dplyr::group_vars(out), "sector")
+  expect_equal(dplyr::group_vars(out), "sector_ald")
 })
 
 test_that("can group by `plant_location`", {
@@ -249,7 +249,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("loan_size_outstanding")
   expect_error_missing_names("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_missing_names("production")
-  expect_error_missing_names("sector")
+  expect_error_missing_names("sector_ald")
   expect_error_missing_names("technology")
   expect_error_missing_names("year")
 })
@@ -277,7 +277,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs("loan_size_outstanding")
   expect_error_crucial_NAs("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_crucial_NAs("production")
-  expect_error_crucial_NAs("sector")
+  expect_error_crucial_NAs("sector_ald")
   expect_error_crucial_NAs("technology")
   expect_error_crucial_NAs("year")
 })
@@ -312,7 +312,7 @@ test_that("with duplicated loan_size by id_loan throws error", {
 test_that("outputs expected names", {
   expect_named(
     summarize_weighted_percent_change(fake_master()),
-    c("sector", "technology", "year", "weighted_percent_change")
+    c("sector_ald", "technology", "year", "weighted_percent_change")
   )
 })
 
@@ -334,10 +334,10 @@ test_that("is sensitive to `use_credit_limit`", {
 
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
-    group_by(.data$sector) %>%
+    group_by(.data$sector_ald) %>%
     summarize_weighted_percent_change()
 
-  expect_equal(dplyr::group_vars(out), "sector")
+  expect_equal(dplyr::group_vars(out), "sector_ald")
 })
 
 test_that("can group by `plant_location`", {

@@ -485,3 +485,24 @@ test_that("filters and warns when input-data has NAs", {
   out <- split(out, out$emission_factor_metric)
   expect_equal(out$corporate_economy$emission_factor_value, c(1, 2))
 })
+
+test_that(
+  "`sector` column is not used from data (should only use `sector_ald`) (#178)",
+  {
+    expect_error_free(
+      target_sda(
+        fake_matched(
+          sector_ald = "cement"
+        ) %>% select(-sector),
+        fake_ald(
+          sector = "cement",
+          year = c(2020, 2050)
+        ),
+        co2_intensity_scenario = fake_co2_scenario(
+          emission_factor = c(1, 2),
+          year = c(2020, 2050)
+        )
+      )
+    )
+  }
+)

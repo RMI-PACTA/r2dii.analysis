@@ -277,7 +277,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs("loan_size_outstanding")
   expect_error_crucial_NAs("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_crucial_NAs("production")
-  expect_error_crucial_NAs("sector")
+  expect_error_crucial_NAs("sector_ald")
   expect_error_crucial_NAs("technology")
   expect_error_crucial_NAs("year")
 })

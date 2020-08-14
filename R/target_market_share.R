@@ -87,7 +87,7 @@ target_market_share <- function(data,
     ) %>%
     add_ald_benchmark(ald, region_isos, by_company)
 
-  target_groups <- c("sector", "scenario", "year", "region")
+  target_groups <- c("sector_ald", "scenario", "year", "region")
 
   initial_sector_summaries <- data %>%
     maybe_group_by_name_ald(target_groups,
@@ -97,7 +97,7 @@ target_market_share <- function(data,
       sector_weighted_production = sum(.data$weighted_production)
     ) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector", "scenario", "region"),
+    maybe_group_by_name_ald(c("sector_ald", "scenario", "region"),
       by_company = by_company
     ) %>%
     filter(row_number() == 1L) %>%
@@ -114,7 +114,7 @@ target_market_share <- function(data,
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector", "technology", "scenario", "region"),
+    maybe_group_by_name_ald(c("sector_ald", "technology", "scenario", "region"),
       by_company = by_company
     ) %>%
     filter(row_number() == 1L) %>%
@@ -126,13 +126,13 @@ target_market_share <- function(data,
   data %>%
     left_join(
       initial_sector_summaries,
-      by = maybe_add_name_ald(c("sector", "scenario", "region"),
+      by = maybe_add_name_ald(c("sector_ald", "scenario", "region"),
         by_company = by_company
       )
     ) %>%
     left_join(
       initial_technology_summaries,
-      by = maybe_add_name_ald(c("sector", "scenario", "region", "technology"),
+      by = maybe_add_name_ald(c("sector_ald", "scenario", "region", "technology"),
         by_company = by_company
       )
     ) %>%
@@ -159,9 +159,9 @@ target_market_share <- function(data,
     inner_join(
       green_or_brown,
       by = c(
-        .data$sector,
-        .data$technology,
-        .data$green_or_brown
+        sector_ald = "sector",
+        technology = "technology",
+        green_or_brown = "green_or_brown"
       )
     ) %>%
     select(-.data$target_name, -.data$green_or_brown) %>%
@@ -172,7 +172,8 @@ target_market_share <- function(data,
       values_fn = list
     ) %>%
     tidyr::unnest(starts_with("weighted_production_")) %>%
-    rename(weighted_production_projected = .data$weighted_production) %>%
+    rename(weighted_production_projected = .data$weighted_production,
+           sector = .data$sector_ald) %>%
     pivot_longer(
       cols = starts_with("weighted_production_"),
       names_prefix = "weighted_production_",
@@ -218,7 +219,7 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
 
   data %>%
     left_join(ald_with_benchmark, by = c(
-      sector = "sector",
+      sector_ald = "sector",
       technology = "technology",
       year = "year",
       region = "region",

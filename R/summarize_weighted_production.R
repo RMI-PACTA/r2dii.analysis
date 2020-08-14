@@ -55,7 +55,6 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
-
     .f = add_weighted_loan_production,
     weighted_production = sum(.data$weighted_loan_production)
   )
@@ -68,7 +67,6 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
-
     .f = add_weighted_loan_percent_change,
     weighted_percent_change = mean(.data$weighted_loan_percent_change)
   )
@@ -145,7 +143,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
   }
 
   out %>%
-    left_join(total_size_by_sector, by =  "sector_ald") %>%
+    left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size,
       weighted_loan_metric = .data[[metric]] * .data$loan_weight
@@ -158,8 +156,10 @@ add_percent_change <- function(data) {
   green_or_brown <- r2dii.data::green_or_brown
 
   data %>%
-    inner_join(green_or_brown, by = c(sector_ald = "sector",
-                                      technology = "technology")) %>%
+    inner_join(green_or_brown, by = c(
+      sector_ald = "sector",
+      technology = "technology"
+    )) %>%
     group_by(.data$sector_ald, .data$year, .data$scenario) %>%
     mutate(sector_production = sum(.data$production)) %>%
     group_by(.data$sector_ald, .data$name_ald) %>%

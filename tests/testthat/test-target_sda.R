@@ -489,7 +489,6 @@ test_that("filters and warns when input-data has NAs", {
 test_that(
   "`sector` column is not used from data (should only use `sector_ald`) (#178)",
   {
-
     expect_error_free(
       target_sda(
         fake_matched(
@@ -505,5 +504,5 @@ test_that(
         )
       )
     )
-
-  })
+  }
+)

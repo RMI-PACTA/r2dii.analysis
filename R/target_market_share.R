@@ -172,8 +172,10 @@ target_market_share <- function(data,
       values_fn = list
     ) %>%
     tidyr::unnest(starts_with("weighted_production_")) %>%
-    rename(weighted_production_projected = .data$weighted_production,
-           sector = .data$sector_ald) %>%
+    rename(
+      weighted_production_projected = .data$weighted_production,
+      sector = .data$sector_ald
+    ) %>%
     pivot_longer(
       cols = starts_with("weighted_production_"),
       names_prefix = "weighted_production_",

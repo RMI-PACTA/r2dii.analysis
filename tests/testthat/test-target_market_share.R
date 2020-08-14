@@ -316,7 +316,6 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
 test_that(
   "`sector` column is not used from data (should only use `sector_ald`) (#178)",
   {
-
     expect_error_free(
       target_market_share(
         fake_matched() %>% select(-sector),
@@ -325,5 +324,5 @@ test_that(
         region_isos_demo
       )
     )
-
-})
+  }
+)

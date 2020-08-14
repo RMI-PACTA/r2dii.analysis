@@ -311,3 +311,18 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
 
   expect_equal(corporate_economy_value$weighted_production_value, c(50, 100))
 })
+
+test_that(
+  "`sector` column is not used from data (should only use `sector_ald`) (#178)",
+  {
+
+    expect_error_free(
+      target_market_share(
+        fake_matched() %>% select(-sector),
+        fake_ald(),
+        fake_scenario(),
+        region_isos_demo
+      )
+    )
+
+})

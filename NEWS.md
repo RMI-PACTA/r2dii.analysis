@@ -1,6 +1,8 @@
 # r2dii.analysis (development version)
 
 User-facing
+* `target_market_share()` now correctly use `sector_ald` column from input 
+  `data` argument (#178).
 
 * `target_sda()` now automatically filters out `ald` rows where the 
   `emissions_factor` values are `NA` (#173).

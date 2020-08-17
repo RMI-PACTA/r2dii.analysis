@@ -86,17 +86,18 @@ summarize_weighted_metric <- function(data,
 }
 
 add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, percent_change = TRUE)
+  add_weighted_loan_metric(data, use_credit_limit, metric = "percent_change")
 }
 
 add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, percent_change = FALSE)
+  add_weighted_loan_metric(data, use_credit_limit, metric = "production")
 }
 
-add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
+add_weighted_loan_metric <- function(data, use_credit_limit, metric) {
   stopifnot(
     is.data.frame(data),
-    isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
+    isTRUE(use_credit_limit) || isFALSE(use_credit_limit),
+    metric %in% c('production', "percent_change")
   )
 
   loan_size <- paste0(
@@ -112,14 +113,14 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     "year"
   )
 
-  if (percent_change) {
+  if (metric == "percent_change") {
     crucial <- c(crucial, "scenario")
   }
 
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
-  if (percent_change) {
+  if (metric == "percent_change") {
     check_zero_initial_production(data)
   }
 
@@ -136,10 +137,9 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     summarize(total_size = sum(.data[[loan_size]]))
 
   out <- data
-  metric <- "production"
-  if (percent_change) {
+
+  if (metric == "percent_change") {
     out <- add_percent_change(out)
-    metric <- "percent_change"
   }
 
   out %>%

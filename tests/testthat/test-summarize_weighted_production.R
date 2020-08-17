@@ -294,6 +294,19 @@ test_that("with bad but unused loan_size_column is error free", {
   )
 })
 
+test_that("with bad `metric` errors gracefully", {
+  expect_error(
+    with_mock(
+      summarize_weighted_percent_change = function(data,
+                                                   use_credit_limit = FALSE) {
+        add_weighted_loan_metric(data, use_credit_limit, metric = "bad")
+      },
+      summarize_weighted_percent_change(fake_master(), use_credit_limit = FALSE)
+    ),
+  "metric.*in.*not TRUE"
+  )
+})
+
 test_that("with duplicated loan_size by id_loan throws error", {
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",

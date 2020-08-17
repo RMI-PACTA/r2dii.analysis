@@ -432,12 +432,12 @@ test_that("with different currencies errors with informative message (#137)", {
   # outstanding
   expect_error(
     summarize_weighted_production(data),
-    class = "different_currencies"
-    )
+    class = "multiple_currencies"
+  )
 
   #credit_limit
   expect_error(
     summarize_weighted_production(data, use_credit_limit = TRUE),
-    class = "different_currencies"
+    class = "multiple_currencies"
   )
 })

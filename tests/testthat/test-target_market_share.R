@@ -288,7 +288,7 @@ test_that("outputs identical values at start year (#47, #87)", {
   ) %>%
     filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
-    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    summarize(distinct_intial_values = n_distinct(weighted_production_value)) %>%
     mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))

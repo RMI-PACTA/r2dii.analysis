@@ -109,8 +109,8 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
   type <- ifelse(use_credit_limit, "credit_limit", "outstanding")
   loan_size <- paste0("loan_size_", type)
 
-  currency <- paste0(loan_size, "_currency")
-  check_identical_currencies(data, currency)
+  currency <- paste0(loan_size, "_currency") %>%
+    check_single_currency(data)
 
   metrics <- c("production", "percent_change", "emission_factor")
   metric <- rlang::arg_match(metric, metrics)
@@ -221,19 +221,17 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
   invisible(data)
 }
 
-check_identical_currencies <- function(data, currency) {
-  if (!all(data[[currency]] == data[[currency]][1])) {
-    abort(
-      class = "different_currencies",
-      sprintf("Column `%s` must contain only one type of currency.", currency)
-    )
+check_single_currency <- function(currency, data) {
+  if (n_distinct(data[[currency]]) > 1L) {
+    msg <- sprintf("Column `%s` must contain a single currency.", currency)
+    abort(msg, class = "multiple_currencies")
   }
+
+  invisible(currency)
 }
 
 rename_metric <- function(out, metric) {
   new_name <- paste0("weighted_loan_", metric)
   newnames <- sub("weighted_loan_metric", new_name, names(out))
-  out <- rlang::set_names(out, newnames)
-
-  out
+  rlang::set_names(out, newnames)
 }

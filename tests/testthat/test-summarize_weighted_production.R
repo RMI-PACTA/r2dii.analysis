@@ -421,7 +421,7 @@ test_that("with known input outputs as expected", {
   expect_equal(out2$weighted_percent_change, c(0, 0, 40, 180))
 })
 
-test_that("with duplicated currencies errors with informative message (#137)", {
+test_that("with different currencies errors with informative message (#137)", {
   # styler: off
   data <- fake_master(
     id_loan = c(1,2),

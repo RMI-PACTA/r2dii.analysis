@@ -97,7 +97,8 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
   add_weighted_loan_metric(data, use_credit_limit, metric = "emission_factor")
 }
 
-add_weighted_loan_metric <- function(data, use_credit_limit,
+add_weighted_loan_metric <- function(data,
+                                     use_credit_limit,
                                      metric = c(
                                        "production",
                                        "percent_change",

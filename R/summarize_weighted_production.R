@@ -123,9 +123,8 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
     "year"
   )
 
-  metric <- rlang::arg_match(
-    metric, c("production", "percent_change", "emission_factor")
-  )
+  metrics <- c("production", "percent_change", "emission_factor")
+  metric <- rlang::arg_match(metric, metrics)
 
   if (metric %in% c("production", "percent_change")) {
     crucial <- c(crucial, "technology")

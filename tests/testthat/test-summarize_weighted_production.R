@@ -420,3 +420,24 @@ test_that("with known input outputs as expected", {
     summarize_weighted_percent_change(name_ald, use_credit_limit = TRUE)
   expect_equal(out2$weighted_percent_change, c(0, 0, 40, 180))
 })
+
+test_that("with duplicated currencies errors with informative message (#137)", {
+  # styler: off
+  data <- fake_master(
+    id_loan = c(1,2),
+    loan_size_outstanding_currency = c("a", "b"),
+    loan_size_credit_limit_currency = c("a","b")
+  )
+
+  # outstanding
+  expect_error(
+    summarize_weighted_production(data),
+    class = "different_currencies"
+    )
+
+  #credit_limit
+  expect_error(
+    summarize_weighted_production(data, use_credit_limit = TRUE),
+    class = "different_currencies"
+  )
+})

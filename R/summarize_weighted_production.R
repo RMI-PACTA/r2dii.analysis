@@ -114,6 +114,9 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
   currency <- paste0(loan_size, "_currency")
   check_identical_currencies(data, currency)
 
+  metrics <- c("production", "percent_change", "emission_factor")
+  metric <- rlang::arg_match(metric, metrics)
+
   crucial <- c(
     "id_loan",
     loan_size,
@@ -122,9 +125,6 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
     "sector_ald",
     "year"
   )
-
-  metrics <- c("production", "percent_change", "emission_factor")
-  metric <- rlang::arg_match(metric, metrics)
 
   if (metric %in% c("production", "percent_change")) {
     crucial <- c(crucial, "technology")

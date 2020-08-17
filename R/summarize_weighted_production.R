@@ -152,7 +152,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     rename_metric(metric)
 }
 
-add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
+add_weighted_loan_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
   if (by_company) {
     data %>%
       mutate(weighted_loan_emission_factor = .data$emission_factor)

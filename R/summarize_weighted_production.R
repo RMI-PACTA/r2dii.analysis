@@ -102,7 +102,8 @@ add_weighted_loan_metric <- function(data,
                                      metric = c(
                                        "production",
                                        "percent_change",
-                                       "emission_factor")) {
+                                       "emission_factor"
+                                     )) {
   stopifnot(
     is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )

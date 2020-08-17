@@ -107,29 +107,20 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
   )
 
 
-  loan_size <- paste0(
+  size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
   )
 
-  currency <- paste0(loan_size, "_currency")
+  currency <- paste0(size, "_currency")
   check_identical_currencies(data, currency)
 
   metrics <- c("production", "percent_change", "emission_factor")
   metric <- rlang::arg_match(metric, metrics)
 
-  crucial <- c(
-    "id_loan",
-    loan_size,
-    currency,
-    "production",
-    "sector_ald",
-    "year"
-  )
-
+  crucial <- c("id_loan", "production", "sector_ald", "year", size, currency)
   if (metric %in% c("production", "percent_change")) {
     crucial <- c(crucial, "technology")
   }
-
   if (metric == "percent_change") {
     crucial <- c(crucial, "scenario")
   }
@@ -147,11 +138,11 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
   distinct_loans_by_sector <- data %>%
     ungroup() %>%
     group_by(.data$sector_ald) %>%
-    distinct(.data$id_loan, .data[[loan_size]]) %>%
+    distinct(.data$id_loan, .data[[size]]) %>%
     check_unique_loan_size_values_per_id_loan()
 
   total_size_by_sector <- distinct_loans_by_sector %>%
-    summarize(total_size = sum(.data[[loan_size]]))
+    summarize(total_size = sum(.data[[size]]))
 
   out <- data
 
@@ -162,7 +153,7 @@ add_weighted_loan_metric <- function(data, use_credit_limit,
   out %>%
     left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
-      loan_weight = .data[[loan_size]] / .data$total_size,
+      loan_weight = .data[[size]] / .data$total_size,
       weighted_loan_metric = .data[[metric]] * .data$loan_weight
     ) %>%
     group_by(!!!old_groups) %>%

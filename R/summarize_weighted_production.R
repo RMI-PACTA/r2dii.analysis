@@ -152,14 +152,11 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     rename_metric(metric)
 }
 
-add_weighted_loan_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
-  if (by_company) {
-    data %>%
-      mutate(weighted_loan_emission_factor = .data$emission_factor)
-  } else {
-    loan_size <- paste0(
-      "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
-    )
+add_weighted_loan_emission_factor <- function(data, use_credit_limit) {
+
+  loan_size <- paste0(
+    "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
+  )
 
     distinct_loans_by_sector <- data %>%
       ungroup() %>%
@@ -175,7 +172,6 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit, by_company
         loan_weight = .data[[loan_size]] / .data$total_size,
         weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
       )
-  }
 }
 
 add_percent_change <- function(data) {

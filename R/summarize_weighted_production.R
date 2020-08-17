@@ -97,11 +97,20 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
   add_weighted_loan_metric(data, use_credit_limit, metric = "emission_factor")
 }
 
-add_weighted_loan_metric <- function(data, use_credit_limit, metric) {
+add_weighted_loan_metric <- function(data, use_credit_limit,
+                                     metric = c(
+                                       "production",
+                                       "percent_change",
+                                       "emission_factor")
+                                     ) {
   stopifnot(
     is.data.frame(data),
-    isTRUE(use_credit_limit) || isFALSE(use_credit_limit),
-    metric %in% c("production", "percent_change", "emission_factor")
+    metric %in% c("production", "percent_change", "emission_factor"),
+    isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
+  )
+
+  metric <- rlang::arg_match(
+    metric, c("production", "percent_change", "emission_factor")
   )
 
   loan_size <- paste0(

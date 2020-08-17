@@ -101,17 +101,14 @@ add_weighted_loan_metric <- function(data, use_credit_limit, metric) {
   stopifnot(
     is.data.frame(data),
     isTRUE(use_credit_limit) || isFALSE(use_credit_limit),
-    metric %in% c('production', "percent_change", "emission_factor")
+    metric %in% c("production", "percent_change", "emission_factor")
   )
 
   loan_size <- paste0(
     "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
   )
 
-  currency <- paste0(
-    loan_size,
-    "_currency"
-  )
+  currency <- paste0(loan_size, "_currency")
 
   crucial <- c(
     "id_loan",
@@ -230,14 +227,12 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
 }
 
 check_identical_currencies <- function(data, currency) {
-
   if (!all(data[[currency]] == data[[currency]][1])) {
     abort(
       class = "different_currencies",
       sprintf("Column `%s` must contain only one type of currency.", currency)
     )
   }
-
 }
 
 rename_metric <- function(out, metric) {

@@ -93,11 +93,15 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
   add_weighted_loan_metric(data, use_credit_limit, metric = "production")
 }
 
+add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
+  add_weighted_loan_metric(data, use_credit_limit, metric = "emission_factor")
+}
+
 add_weighted_loan_metric <- function(data, use_credit_limit, metric) {
   stopifnot(
     is.data.frame(data),
     isTRUE(use_credit_limit) || isFALSE(use_credit_limit),
-    metric %in% c('production', "percent_change")
+    metric %in% c('production', "percent_change", "emission_factor")
   )
 
   loan_size <- paste0(
@@ -109,9 +113,12 @@ add_weighted_loan_metric <- function(data, use_credit_limit, metric) {
     loan_size,
     "production",
     "sector_ald",
-    "technology",
     "year"
   )
+
+  if (metric %in% c("production", "percent_change")) {
+    crucial <- c(crucial, "technology")
+  }
 
   if (metric == "percent_change") {
     crucial <- c(crucial, "scenario")
@@ -150,28 +157,6 @@ add_weighted_loan_metric <- function(data, use_credit_limit, metric) {
     ) %>%
     group_by(!!!old_groups) %>%
     rename_metric(metric)
-}
-
-add_weighted_loan_emission_factor <- function(data, use_credit_limit) {
-
-  loan_size <- paste0(
-    "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
-  )
-
-    distinct_loans_by_sector <- data %>%
-      ungroup() %>%
-      group_by(.data$sector_ald) %>%
-      distinct(.data$id_loan, .data[[loan_size]])
-
-    total_size_by_sector <- distinct_loans_by_sector %>%
-      summarize(total_size = sum(.data[[loan_size]]))
-
-    data %>%
-      left_join(total_size_by_sector, by = "sector_ald") %>%
-      mutate(
-        loan_weight = .data[[loan_size]] / .data$total_size,
-        weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
-      )
 }
 
 add_percent_change <- function(data) {

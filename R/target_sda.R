@@ -215,32 +215,6 @@ calculate_weighted_emission_factor <- function(data,
     rename(sector = .data$sector_ald)
 }
 
-add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
-  if (by_company) {
-    data %>%
-      mutate(weighted_loan_emission_factor = .data$emission_factor)
-  } else {
-    loan_size <- paste0(
-      "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
-    )
-
-    distinct_loans_by_sector <- data %>%
-      ungroup() %>%
-      group_by(.data$sector_ald) %>%
-      distinct(.data$id_loan, .data[[loan_size]])
-
-    total_size_by_sector <- distinct_loans_by_sector %>%
-      summarize(total_size = sum(.data[[loan_size]]))
-
-    data %>%
-      left_join(total_size_by_sector, by = "sector_ald") %>%
-      mutate(
-        loan_weight = .data[[loan_size]] / .data$total_size,
-        weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
-      )
-  }
-}
-
 calculate_market_average <- function(data) {
   data %>%
     group_by(.data$sector, .data$year) %>%

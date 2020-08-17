@@ -152,6 +152,32 @@ add_weighted_loan_metric <- function(data, use_credit_limit, percent_change) {
     rename_metric(metric)
 }
 
+add_loan_weighted_emission_factor <- function(data, use_credit_limit, by_company = FALSE) {
+  if (by_company) {
+    data %>%
+      mutate(weighted_loan_emission_factor = .data$emission_factor)
+  } else {
+    loan_size <- paste0(
+      "loan_size_", ifelse(use_credit_limit, "credit_limit", "outstanding")
+    )
+
+    distinct_loans_by_sector <- data %>%
+      ungroup() %>%
+      group_by(.data$sector_ald) %>%
+      distinct(.data$id_loan, .data[[loan_size]])
+
+    total_size_by_sector <- distinct_loans_by_sector %>%
+      summarize(total_size = sum(.data[[loan_size]]))
+
+    data %>%
+      left_join(total_size_by_sector, by = "sector_ald") %>%
+      mutate(
+        loan_weight = .data[[loan_size]] / .data$total_size,
+        weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
+      )
+  }
+}
+
 add_percent_change <- function(data) {
   green_or_brown <- r2dii.data::green_or_brown
 

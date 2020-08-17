@@ -303,7 +303,7 @@ test_that("with bad `metric` errors gracefully", {
       },
       summarize_weighted_percent_change(fake_master(), use_credit_limit = FALSE)
     ),
-  "metric.*in.*not TRUE"
+    "metric.*must be"
   )
 })
 

@@ -153,8 +153,8 @@ test_that("outputs expected names", {
       "year",
       "region",
       "scenario_source",
-      "weighted_production_metric",
-      "weighted_production_value"
+      "production_metric",
+      "production_value"
     )
   )
 })
@@ -180,10 +180,10 @@ test_that("with known input outputs as expected", {
 
   out <- target_market_share(portfolio, ald, scenario, region_isos_demo)
   out_target <- out %>%
-    filter(weighted_production_metric == "target_sds") %>%
+    filter(production_metric == "target_sds") %>%
     arrange(.data$technology, .data$year)
 
-  expect_equal(out_target$weighted_production_value, c(200, 353, 250, 150))
+  expect_equal(out_target$production_value, c(200, 353, 250, 150))
 })
 
 test_that("with known input outputs as expected, at company level", {
@@ -213,11 +213,11 @@ test_that("with known input outputs as expected, at company level", {
     by_company = TRUE
   )
   out_target <- out %>%
-    filter(weighted_production_metric == "target_sds") %>%
+    filter(production_metric == "target_sds") %>%
     arrange(.data$technology, .data$year, .data$name_ald)
 
   expect_equal(
-    out_target$weighted_production_value,
+    out_target$production_value,
     c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
   )
 })
@@ -248,11 +248,11 @@ test_that("with known input outputs as expected, ald benchmark", {
   )
 
   out_benchmark <- out %>%
-    filter(weighted_production_metric == "corporate_economy") %>%
+    filter(production_metric == "corporate_economy") %>%
     arrange(.data$technology, .data$year)
 
   expect_equal(
-    out_benchmark$weighted_production_value,
+    out_benchmark$production_value,
     c(30, 90)
   )
 })
@@ -288,7 +288,7 @@ test_that("outputs identical values at start year (#47, #87)", {
   ) %>%
     filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
-    summarize(distinct_intial_values = n_distinct(weighted_production_value)) %>%
+    summarize(distinct_intial_values = n_distinct(production_value)) %>%
     mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
@@ -308,9 +308,9 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
   )
 
   corporate_economy_value <- out %>%
-    filter(weighted_production_metric == "corporate_economy")
+    filter(production_metric == "corporate_economy")
 
-  expect_equal(corporate_economy_value$weighted_production_value, c(50, 100))
+  expect_equal(corporate_economy_value$production_value, c(50, 100))
 })
 
 test_that(
@@ -346,9 +346,9 @@ test_that("outputs known value with `weight_production` (#131)", {
     region_isos = region_isos_demo,
     weight_production = TRUE
   ) %>%
-    split(.$weighted_production_metric)
+    split(.$production_metric)
 
-  expect_equal(out_weighted$projected$weighted_production_value, 1.9)
+  expect_equal(out_weighted$projected$production_value, 1.9)
 
   out_unweighted <- target_market_share(
     matched,
@@ -357,7 +357,7 @@ test_that("outputs known value with `weight_production` (#131)", {
     region_isos = region_isos_demo,
     weight_production = FALSE
   ) %>%
-    split(.$weighted_production_metric)
+    split(.$production_metric)
 
-  expect_equal(out_weighted$projected$weighted_production_value, 3)
+  expect_equal(out_weighted$projected$production_value, 3)
 })

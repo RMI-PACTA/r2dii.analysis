@@ -15,14 +15,14 @@
 #'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
 #'   `loan_size_credit_limit` instead.
 #' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
-#' `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
-#' `weighted_production_value` at the company-level.
+#' `production_value` at the portfolio-level. Set to `TRUE` to output
+#' `production_value` at the company-level.
 #' @param weight_production Logical vector of length 1. `TRUE` defaults to
 #' outputting production, weighted by relative loan-size. Set to `FALSE` to
 #' output the unweighted production values.
 #'
-#' @return A tibble with the summarized columns `weighted_production_metric`
-#' and `weighted_production_value`. If `by_company = TRUE`, the output will also
+#' @return A tibble with the summarized columns `production_metric`
+#' and `production_value`. If `by_company = TRUE`, the output will also
 #' have the column `name_ald`.
 #' @export
 #'
@@ -192,8 +192,8 @@ target_market_share <- function(data,
     pivot_longer(
       cols = starts_with("weighted_production_"),
       names_prefix = "weighted_production_",
-      names_to = "weighted_production_metric",
-      values_to = "weighted_production_value"
+      names_to = "production_metric",
+      values_to = "production_value"
     ) %>%
     ungroup()
 }

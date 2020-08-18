@@ -326,3 +326,38 @@ test_that(
     )
   }
 )
+
+test_that("outputs known value with `weight_production` (#131)", {
+  matched <- fake_matched(
+    id_loan = c(1, 2),
+    loan_size_outstanding = c(1, 9),
+    name_ald = c("a", "b")
+  )
+
+  ald <- fake_ald(
+    name_company = c("a", "b"),
+    production = c(1, 2)
+  )
+
+  out_weighted <- target_market_share(
+    matched,
+    ald = ald,
+    scenario = fake_scenario(),
+    region_isos = region_isos_demo,
+    weight_production = TRUE
+  ) %>%
+    split(.$weighted_production_metric)
+
+  expect_equal(out_weighted$projected$weighted_production_value, 1.9)
+
+  out_unweighted <- target_market_share(
+    matched,
+    ald = ald,
+    scenario = fake_scenario(),
+    region_isos = region_isos_demo,
+    weight_production = FALSE
+  ) %>%
+    split(.$weighted_production_metric)
+
+  expect_equal(out_weighted$projected$weighted_production_value, 3)
+})

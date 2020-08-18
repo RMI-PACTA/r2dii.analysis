@@ -462,3 +462,50 @@ test_that(
     )
   }
 )
+
+test_that("outputs known value with `weight_production` (#131)", {
+
+  matched <- fake_matched(
+    id_loan = c(1,2),
+    loan_size_outstanding = c(1, 9),
+    name_ald = c("a", "b"),
+    sector_ald = "cement"
+  )
+
+   ald <- fake_ald(
+     name_company = rep(c("a", "b"),2),
+     sector = "cement",
+     technology = "cement",
+     year = rep(c(2020,2050),each = 2),
+     production = rep(c(1, 2),2),
+     emission_factor = rep(c(1, 2),2)
+   )
+
+   co2_scenario <- fake_co2_scenario(
+     year = c(2020, 2050),
+     emission_factor = c(0.6, 0.2)
+   )
+
+  out_weighted <- target_sda(
+    matched,
+    ald = ald,
+    co2_intensity_scenario = co2_scenario,
+    weight_production = TRUE
+  ) %>%
+    filter(year == 2020) %>%
+    split(.$emission_factor_metric)
+
+
+  expect_equal(out_weighted$projected$emission_factor_value, 1.9)
+
+  out_weighted <- target_sda(
+    matched,
+    ald = ald,
+    co2_intensity_scenario = co2_scenario,
+    weight_production = FALSE
+  ) %>%
+    filter(year == 2020) %>%
+    split(.$emission_factor_metric)
+
+  expect_equal(out_weighted$projected$emission_factor_value, 1.5)
+})

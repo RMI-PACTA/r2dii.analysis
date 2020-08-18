@@ -10,7 +10,8 @@ target_sda(
   ald,
   co2_intensity_scenario,
   use_credit_limit = FALSE,
-  by_company = FALSE
+  by_company = FALSE,
+  weight_production = TRUE
 )
 }
 \arguments{
@@ -29,6 +30,10 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 \item{by_company}{Logical vector of length 1. \code{FALSE} defaults to outputting
 \code{weighted_production_value} at the portfolio-level. Set to \code{TRUE} to output
 \code{weighted_production_value} at the company-level.}
+
+\item{weight_production}{Logical vector of length 1. \code{TRUE} defaults to
+outputting production, weighted by relative loan-size. Set to \code{FALSE} to
+output the unweighted production values.}
 }
 \value{
 A tibble with the CO2 emissions factors attributed to
@@ -84,7 +89,15 @@ split(out, out$emission_factor_metric)
 # Calculate company-level targets
 out <- target_sda(
   matched, ald2,
-  co2_intensity_scenario = co2_scenario, by_company = TRUE
+  co2_intensity_scenario = co2_scenario,
+  by_company = TRUE
+)
+
+# Calculate unweighted targets
+out <- target_sda(
+  matched, ald2,
+  co2_intensity_scenario = co2_scenario,
+  weight_production = FALSE
 )
 }
 \seealso{

@@ -17,6 +17,9 @@
 #' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
 #' `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #' `weighted_production_value` at the company-level.
+#' @param weight_production Logical vector of length 1. `TRUE` defaults to
+#' outputting production, weighted by relative loan-size. Set to `FALSE` to
+#' output the unweighted production values.
 #'
 #' @return A tibble with the summarized columns `weighted_production_metric`
 #' and `weighted_production_value`. If `by_company = TRUE`, the output will also
@@ -53,12 +56,22 @@
 #'     region_isos = region_isos_demo,
 #'     by_company = TRUE
 #'   )
+#'
+#' # Calculate unweighted targets
+#' matched %>%
+#'   target_market_share(
+#'     ald = ald_demo,
+#'     scenario = scenario_demo_2020,
+#'     region_isos = region_isos_demo,
+#'     weight_production = FALSE
+#'   )
 target_market_share <- function(data,
                                 ald,
                                 scenario,
                                 region_isos = r2dii.data::region_isos,
                                 use_credit_limit = FALSE,
-                                by_company = FALSE) {
+                                by_company = FALSE,
+                                weight_production = TRUE) {
   stopifnot(is.data.frame(data))
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))

@@ -10,7 +10,8 @@ target_market_share(
   scenario,
   region_isos = r2dii.data::region_isos,
   use_credit_limit = FALSE,
-  by_company = FALSE
+  by_company = FALSE,
+  weight_production = TRUE
 )
 }
 \arguments{
@@ -30,6 +31,10 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \item{by_company}{Logical vector of length 1. \code{FALSE} defaults to outputting
 \code{weighted_production_value} at the portfolio-level. Set to \code{TRUE} to output
 \code{weighted_production_value} at the company-level.}
+
+\item{weight_production}{Logical vector of length 1. \code{TRUE} defaults to
+outputting production, weighted by relative loan-size. Set to \code{FALSE} to
+output the unweighted production values.}
 }
 \value{
 A tibble with the summarized columns \code{weighted_production_metric}
@@ -73,6 +78,15 @@ matched \%>\%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo,
     by_company = TRUE
+  )
+
+# Calculate unweighted targets
+matched \%>\%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo,
+    weight_production = FALSE
   )
 }
 \seealso{

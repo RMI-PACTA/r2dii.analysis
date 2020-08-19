@@ -84,9 +84,8 @@ target_market_share <- function(data,
 
   if (by_company & weight_production) {
     warn(
-      class = "incompatible_by_company_and_weight_production",
       glue(
-        "`by_company` & `weight_production` shouldn't be both TRUE or FALSE`:
+        "`by_company` & `weight_production` shouldn't be both TRUE`:
         You've supplied `by_company = TRUE` and `weight_production = TRUE`.
         Did you forget to set one of these arguments to `FALSE`?"
       )

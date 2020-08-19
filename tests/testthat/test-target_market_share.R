@@ -365,7 +365,7 @@ test_that("outputs known value with `weight_production` (#131)", {
 })
 
 test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
-  .object <- rlang::expr(
+  expect_warning(
     target_market_share(
       fake_matched(),
       ald = fake_ald(),
@@ -373,14 +373,7 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
       region_isos = region_isos_demo,
       by_company = TRUE,
       weight_production = TRUE
-    )
+    ),
+    "shouldn't be both TRUE"
   )
-
-  if (packageVersion("testthat") >= "2.99.0.9000") {
-    class_or_regexp <- c(class = "incompatible_by_company_and_weight_production")
-  } else {
-    class_or_regexp <- c(regexp = "shouldn't be both TRUE")
-  }
-  args <- append(list(object = .object), class_or_regexp)
-  do.call(expect_warning, args)
 })

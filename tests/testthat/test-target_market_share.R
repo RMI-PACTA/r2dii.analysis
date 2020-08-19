@@ -364,8 +364,7 @@ test_that("outputs known value with `weight_production` (#131)", {
   expect_equal(out_unweighted$projected$production_value, 3)
 })
 
-test_that("warns if `by_company` and `weight_production` (#165)", {
-
+test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   expect_warning(
       target_market_share(
         fake_matched(),
@@ -374,7 +373,22 @@ test_that("warns if `by_company` and `weight_production` (#165)", {
         region_isos = region_isos_demo,
         by_company = TRUE,
         weight_production = TRUE
-        )
-    )
-
+      ),
+      regexp = "shouldn't be both TRUE"
+  )
 })
+
+# test_that("warns if `by_company` & `weight_production` are both FALSE (#165)", {
+#
+#   expect_warning(
+#       target_market_share(
+#         fake_matched(),
+#         ald = fake_ald(),
+#         scenario = fake_scenario(),
+#         region_isos = region_isos_demo,
+#         by_company = FALSE,
+#         weight_production = FALSE
+#         )
+#     )
+#
+# })

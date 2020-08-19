@@ -29,16 +29,16 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \code{loan_size_credit_limit} instead.}
 
 \item{by_company}{Logical vector of length 1. \code{FALSE} defaults to outputting
-\code{weighted_production_value} at the portfolio-level. Set to \code{TRUE} to output
-\code{weighted_production_value} at the company-level.}
+\code{production_value} at the portfolio-level. Set to \code{TRUE} to output
+\code{production_value} at the company-level.}
 
 \item{weight_production}{Logical vector of length 1. \code{TRUE} defaults to
 outputting production, weighted by relative loan-size. Set to \code{FALSE} to
 output the unweighted production values.}
 }
 \value{
-A tibble with the summarized columns \code{weighted_production_metric}
-and \code{weighted_production_value}. If \code{by_company = TRUE}, the output will also
+A tibble with the summarized columns \code{production_metric}
+and \code{production_value}. If \code{by_company = TRUE}, the output will also
 have the column \code{name_ald}.
 }
 \description{

@@ -72,7 +72,15 @@ target_market_share <- function(data,
                                 use_credit_limit = FALSE,
                                 by_company = FALSE,
                                 weight_production = TRUE) {
-  stopifnot(is.data.frame(data))
+  stopifnot(
+    is.data.frame(data),
+    is.data.frame(ald),
+    is.data.frame(scenario),
+    is.data.frame(region_isos),
+    is.logical(use_credit_limit),
+    is.logical(by_company),
+    is.locgical(weight_production)
+  )
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 

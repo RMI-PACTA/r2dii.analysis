@@ -210,7 +210,8 @@ test_that("with known input outputs as expected, at company level", {
     ald,
     scenario,
     region_isos_demo,
-    by_company = TRUE
+    by_company = TRUE,
+    weight_production = FALSE
   )
   out_target <- out %>%
     filter(production_metric == "target_sds") %>%
@@ -244,7 +245,8 @@ test_that("with known input outputs as expected, ald benchmark", {
     ald,
     scenario,
     region_isos_demo,
-    by_company = TRUE
+    by_company = TRUE,
+    weight_production = FALSE
   )
 
   out_benchmark <- out %>%

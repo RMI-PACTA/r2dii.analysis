@@ -82,6 +82,13 @@ target_market_share <- function(data,
     is.locgical(weight_production)
   )
 
+  if (by_company & weight_production) {
+    warn(message = "You have selected to view the weighted production at company
+         level. Make sure this is what you want to see! It is often desirable to
+         see these results unweighted, to understand where the company actualyl
+         stands in the market. ")
+  }
+
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")

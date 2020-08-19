@@ -79,7 +79,7 @@ target_market_share <- function(data,
     is.data.frame(region_isos),
     is.logical(use_credit_limit),
     is.logical(by_company),
-    is.locgical(weight_production)
+    is.logical(weight_production)
   )
 
   if (by_company & weight_production) {

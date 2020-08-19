@@ -36,12 +36,12 @@ Depends:
     R (>= 3.4)
 Imports: 
     dplyr,
+    glue,
     magrittr,
     r2dii.data,
     rlang (>= 0.1.2),
     tidyr,
-    tidyselect,
-    glue
+    tidyselect
 Suggests: 
     covr,
     r2dii.match,

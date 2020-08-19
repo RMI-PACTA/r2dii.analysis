@@ -93,12 +93,28 @@ target_market_share <- function(data,
       ald,
       scenario,
       region_isos
-    ) %>%
-    summarize_weighted_production(
-      !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
-    ) %>%
-    add_ald_benchmark(ald, region_isos, by_company)
+    )
+
+  if (weight_production) {
+    data <- data %>%
+      summarize_weighted_production(
+        !!!rlang::syms(summary_groups),
+        use_credit_limit = use_credit_limit
+        ) %>%
+      add_ald_benchmark(ald, region_isos, by_company)
+  } else {
+    data <- data %>%
+      group_by(
+        .data$sector_ald,
+        .data$technology,
+        .data$year,
+        !!!rlang::syms(summary_groups)
+        ) %>%
+      summarize(
+        weighted_production = sum(.data$production) # this is not actually "weighted"
+      ) %>%
+      add_ald_benchmark(ald, region_isos, by_company)
+  }
 
   target_groups <- c("sector_ald", "scenario", "year", "region")
 
@@ -196,6 +212,7 @@ target_market_share <- function(data,
       values_to = "production_value"
     ) %>%
     ungroup()
+
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

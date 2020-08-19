@@ -57,12 +57,12 @@
 #'     by_company = TRUE
 #'   )
 #'
-#' # Calculate unweighted targets
 #' matched %>%
 #'   target_market_share(
 #'     ald = ald_demo,
 #'     scenario = scenario_demo_2020,
 #'     region_isos = region_isos_demo,
+#'     # Calculate unweighted targets
 #'     weight_production = FALSE
 #'   )
 target_market_share <- function(data,

@@ -384,18 +384,3 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   args <- append(list(object = .object), class_or_regexp)
   do.call(expect_warning, args)
 })
-
-# test_that("warns if `by_company` & `weight_production` are both FALSE (#165)", {
-#
-#   expect_warning(
-#       target_market_share(
-#         fake_matched(),
-#         ald = fake_ald(),
-#         scenario = fake_scenario(),
-#         region_isos = region_isos_demo,
-#         by_company = FALSE,
-#         weight_production = FALSE
-#         )
-#     )
-#
-# })

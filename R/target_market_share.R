@@ -108,44 +108,34 @@ target_market_share <- function(data,
   )
 
   data <- data %>%
-    join_ald_scenario(
-      ald,
-      scenario,
-      region_isos
-    )
-
-  if (weight_production) {
-    data <- data %>%
-      summarize_weighted_production(
-        !!!rlang::syms(summary_groups),
-        use_credit_limit = use_credit_limit
-      ) %>%
-      add_ald_benchmark(ald, region_isos, by_company)
-  } else {
-    data <- data %>%
-      group_by(
-        .data$sector_ald,
-        .data$technology,
-        .data$year,
-        !!!rlang::syms(summary_groups)
-      ) %>%
-      summarize(
-        weighted_production = sum(.data$production) # this is not actually "weighted"
-      ) %>%
-      add_ald_benchmark(ald, region_isos, by_company)
-  }
+    join_ald_scenario(ald, scenario, region_isos) %>%
+    {
+      if (weight_production) {
+        summarize_weighted_production(
+          .,
+          !!!rlang::syms(summary_groups),
+          use_credit_limit = use_credit_limit
+        )
+      } else {
+        summarize_unweighted_production(
+          .,
+          .data$sector_ald,
+          .data$technology,
+          .data$year,
+          !!!rlang::syms(summary_groups)
+        )
+      }
+    } %>%
+    add_ald_benchmark(ald, region_isos, by_company)
 
   target_groups <- c("sector_ald", "scenario", "year", "region")
 
   initial_sector_summaries <- data %>%
-    maybe_group_by_name_ald(target_groups,
-      by_company = by_company
-    ) %>%
-    summarize(
-      sector_weighted_production = sum(.data$weighted_production)
-    ) %>%
+    maybe_group_by_name_ald(target_groups, by_company = by_company) %>%
+    summarize(sector_weighted_production = sum(.data$weighted_production)) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector_ald", "scenario", "region"),
+    maybe_group_by_name_ald(
+      c("sector_ald", "scenario", "region"),
       by_company = by_company
     ) %>%
     filter(row_number() == 1L) %>%
@@ -155,14 +145,16 @@ target_market_share <- function(data,
     select(-.data$year)
 
   initial_technology_summaries <- data %>%
-    maybe_group_by_name_ald(c(target_groups, "technology"),
+    maybe_group_by_name_ald(
+      c(target_groups, "technology"),
       by_company = by_company
     ) %>%
     summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector_ald", "technology", "scenario", "region"),
+    maybe_group_by_name_ald(
+      c("sector_ald", "technology", "scenario", "region"),
       by_company = by_company
     ) %>%
     filter(row_number() == 1L) %>%
@@ -174,13 +166,15 @@ target_market_share <- function(data,
   data %>%
     left_join(
       initial_sector_summaries,
-      by = maybe_add_name_ald(c("sector_ald", "scenario", "region"),
+      by = maybe_add_name_ald(
+        c("sector_ald", "scenario", "region"),
         by_company = by_company
       )
     ) %>%
     left_join(
       initial_technology_summaries,
-      by = maybe_add_name_ald(c("sector_ald", "scenario", "region", "technology"),
+      by = maybe_add_name_ald(
+        c("sector_ald", "scenario", "region", "technology"),
         by_company = by_company
       )
     ) %>%
@@ -199,7 +193,9 @@ target_market_share <- function(data,
       )
     ) %>%
     pivot_longer(
-      cols = c("tmsr_target_weighted_production", "smsp_target_weighted_production"),
+      cols = c(
+        "tmsr_target_weighted_production", "smsp_target_weighted_production"
+      ),
       names_to = "target_name",
       values_to = "scenario_target_value"
     ) %>%
@@ -264,7 +260,9 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.") %>%
     # Return visibly
     identity() %>%
-    group_by(.data$sector, .data$technology, .data$year, .data$region, .data$source) %>%
+    group_by(
+      .data$sector, .data$technology, .data$year, .data$region, .data$source
+    ) %>%
     summarize(weighted_production_corporate_economy = sum(.data$production))
 
   data %>%

@@ -359,5 +359,5 @@ test_that("outputs known value with `weight_production` (#131)", {
   ) %>%
     split(.$production_metric)
 
-  expect_equal(out_weighted$projected$production_value, 3)
+  expect_equal(out_unweighted$projected$production_value, 3)
 })

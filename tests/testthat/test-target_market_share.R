@@ -374,6 +374,6 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
       by_company = TRUE,
       weight_production = TRUE
     ),
-    "shouldn't be both TRUE"
+    "`by_company = TRUE` and `weight_production = TRUE`"
   )
 })

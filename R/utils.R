@@ -2,7 +2,7 @@ check_no_value_is_missing <- function(data, column) {
   if (anyNA(data[[column]])) {
     abort(
       class = "some_value_is_missing",
-      sprintf("Column `%s` must not contain any `NA`s.", column)
+      glue("Column `{column}` must not contain any `NA`s.")
     )
   }
 
@@ -13,7 +13,7 @@ check_unique_id <- function(data, column) {
   if (sum(duplicated(data[[column]]))) {
     abort(
       class = "unique_ids",
-      sprintf("Column `%s` must not contain any duplicates.", column)
+      glue("Column `{column}` must not contain any duplicates.", column)
     )
   }
 

@@ -231,7 +231,7 @@ check_unique_loan_size_values_per_id_loan <- function(data) {
 
 check_single_currency <- function(currency, data) {
   if (n_distinct(data[[currency]]) > 1L) {
-    msg <- sprintf("Column `%s` must contain a single currency.", currency)
+    msg <- glue("Column `{currency}` must contain a single currency.")
     abort(msg, class = "multiple_currencies")
   }
 

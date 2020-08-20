@@ -36,6 +36,7 @@ Depends:
     R (>= 3.4)
 Imports: 
     dplyr,
+    glue,
     magrittr,
     r2dii.data,
     rlang (>= 0.1.2),

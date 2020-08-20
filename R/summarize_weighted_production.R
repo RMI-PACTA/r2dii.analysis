@@ -60,6 +60,12 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   )
 }
 
+summarize_unweighted_production <- function(data, ...) {
+  data %>%
+    group_by(...) %>%
+    summarize(weighted_production = sum(.data$production))
+}
+
 #' @rdname summarize_weighted_production
 #' @export
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {

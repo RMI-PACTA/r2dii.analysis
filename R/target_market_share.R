@@ -15,11 +15,14 @@
 #'   the column `loan_size_outstanding`. Set to `TRUE` to use the column
 #'   `loan_size_credit_limit` instead.
 #' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
-#' `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
-#' `weighted_production_value` at the company-level.
+#' `production_value` at the portfolio-level. Set to `TRUE` to output
+#' `production_value` at the company-level.
+#' @param weight_production Logical vector of length 1. `TRUE` defaults to
+#' outputting production, weighted by relative loan-size. Set to `FALSE` to
+#' output the unweighted production values.
 #'
-#' @return A tibble with the summarized columns `weighted_production_metric`
-#' and `weighted_production_value`. If `by_company = TRUE`, the output will also
+#' @return A tibble with the summarized columns `production_metric`
+#' and `production_value`. If `by_company = TRUE`, the output will also
 #' have the column `name_ald`.
 #' @export
 #'
@@ -53,13 +56,42 @@
 #'     region_isos = region_isos_demo,
 #'     by_company = TRUE
 #'   )
+#'
+#' matched %>%
+#'   target_market_share(
+#'     ald = ald_demo,
+#'     scenario = scenario_demo_2020,
+#'     region_isos = region_isos_demo,
+#'     # Calculate unweighted targets
+#'     weight_production = FALSE
+#'   )
 target_market_share <- function(data,
                                 ald,
                                 scenario,
                                 region_isos = r2dii.data::region_isos,
                                 use_credit_limit = FALSE,
-                                by_company = FALSE) {
-  stopifnot(is.data.frame(data))
+                                by_company = FALSE,
+                                weight_production = TRUE) {
+  stopifnot(
+    is.data.frame(data),
+    is.data.frame(ald),
+    is.data.frame(scenario),
+    is.data.frame(region_isos),
+    is.logical(use_credit_limit),
+    is.logical(by_company),
+    is.logical(weight_production)
+  )
+
+  if (by_company & weight_production) {
+    warn(
+      glue(
+        "You've supplied `by_company = TRUE` and `weight_production = TRUE`.
+        This will result in company-level, weighted by the portfolio loan size, \\
+        which is rarely useful.
+        Did you mean to set one of these arguments to `FALSE`?"
+      )
+    )
+  }
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
@@ -76,28 +108,34 @@ target_market_share <- function(data,
   )
 
   data <- data %>%
-    join_ald_scenario(
-      ald,
-      scenario,
-      region_isos
-    ) %>%
-    summarize_weighted_production(
-      !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
-    ) %>%
+    join_ald_scenario(ald, scenario, region_isos) %>%
+    {
+      if (weight_production) {
+        summarize_weighted_production(
+          .,
+          !!!rlang::syms(summary_groups),
+          use_credit_limit = use_credit_limit
+        )
+      } else {
+        summarize_unweighted_production(
+          .,
+          .data$sector_ald,
+          .data$technology,
+          .data$year,
+          !!!rlang::syms(summary_groups)
+        )
+      }
+    } %>%
     add_ald_benchmark(ald, region_isos, by_company)
 
   target_groups <- c("sector_ald", "scenario", "year", "region")
 
   initial_sector_summaries <- data %>%
-    maybe_group_by_name_ald(target_groups,
-      by_company = by_company
-    ) %>%
-    summarize(
-      sector_weighted_production = sum(.data$weighted_production)
-    ) %>%
+    maybe_group_by_name_ald(target_groups, by_company = by_company) %>%
+    summarize(sector_weighted_production = sum(.data$weighted_production)) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector_ald", "scenario", "region"),
+    maybe_group_by_name_ald(
+      c("sector_ald", "scenario", "region"),
       by_company = by_company
     ) %>%
     filter(row_number() == 1L) %>%
@@ -107,14 +145,16 @@ target_market_share <- function(data,
     select(-.data$year)
 
   initial_technology_summaries <- data %>%
-    maybe_group_by_name_ald(c(target_groups, "technology"),
+    maybe_group_by_name_ald(
+      c(target_groups, "technology"),
       by_company = by_company
     ) %>%
     summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(c("sector_ald", "technology", "scenario", "region"),
+    maybe_group_by_name_ald(
+      c("sector_ald", "technology", "scenario", "region"),
       by_company = by_company
     ) %>%
     filter(row_number() == 1L) %>%
@@ -126,13 +166,15 @@ target_market_share <- function(data,
   data %>%
     left_join(
       initial_sector_summaries,
-      by = maybe_add_name_ald(c("sector_ald", "scenario", "region"),
+      by = maybe_add_name_ald(
+        c("sector_ald", "scenario", "region"),
         by_company = by_company
       )
     ) %>%
     left_join(
       initial_technology_summaries,
-      by = maybe_add_name_ald(c("sector_ald", "scenario", "region", "technology"),
+      by = maybe_add_name_ald(
+        c("sector_ald", "scenario", "region", "technology"),
         by_company = by_company
       )
     ) %>%
@@ -151,7 +193,9 @@ target_market_share <- function(data,
       )
     ) %>%
     pivot_longer(
-      cols = c("tmsr_target_weighted_production", "smsp_target_weighted_production"),
+      cols = c(
+        "tmsr_target_weighted_production", "smsp_target_weighted_production"
+      ),
       names_to = "target_name",
       values_to = "scenario_target_value"
     ) %>%
@@ -179,8 +223,8 @@ target_market_share <- function(data,
     pivot_longer(
       cols = starts_with("weighted_production_"),
       names_prefix = "weighted_production_",
-      names_to = "weighted_production_metric",
-      values_to = "weighted_production_value"
+      names_to = "production_metric",
+      values_to = "production_value"
     ) %>%
     ungroup()
 }
@@ -216,7 +260,9 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.") %>%
     # Return visibly
     identity() %>%
-    group_by(.data$sector, .data$technology, .data$year, .data$region, .data$source) %>%
+    group_by(
+      .data$sector, .data$technology, .data$year, .data$region, .data$source
+    ) %>%
     summarize(weighted_production_corporate_economy = sum(.data$production))
 
   data %>%

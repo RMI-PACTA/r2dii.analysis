@@ -84,7 +84,8 @@ split(out, out$emission_factor_metric)
 # Calculate company-level targets
 out <- target_sda(
   matched, ald2,
-  co2_intensity_scenario = co2_scenario, by_company = TRUE
+  co2_intensity_scenario = co2_scenario,
+  by_company = TRUE
 )
 }
 \seealso{

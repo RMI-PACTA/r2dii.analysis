@@ -202,7 +202,10 @@ test_that("warns 0-rows caused by scenario or region_isos", {
   bad_scenario <- fake_scenario(
     region = l$region, scenario_source = l$source, sector = "bad"
   )
-  do.call(expect_warning, .args(join_ald_scenario2(l, bad_scenario)))
+  # Silence warnings other than the first one
+  suppressWarnings(
+    do.call(expect_warning, .args(join_ald_scenario2(l, bad_scenario)))
+  )
 
   bad_reg1 <- tibble(region = "bad", isos = l$isos, source = l$source)
   do.call(expect_warning, .args(join_ald_scenario2(l, region_isos = bad_reg1)))

@@ -1,3 +1,5 @@
+library(r2dii.data)
+
 test_that("with bad `data` errors with informative message", {
   expect_error(target_market_share(
     "bad",

@@ -90,7 +90,8 @@ The [Sectoral Decarbonization Approach](https://2degreesinvesting.github.io/r2di
 co2 <- r2dii.data::co2_intensity_scenario_demo
 
 sda_targets <- matched %>%
-  target_sda(ald = ald, co2_intensity_scenario = co2)
+  target_sda(ald = ald, co2_intensity_scenario = co2) %>% 
+  filter(sector == "cement", year >= 2020)
 
 sda_targets
 ```
@@ -116,8 +117,8 @@ tech_mix_data <- market_share_targets_portfolio %>%
 ggplot(
   data = tech_mix_data, 
   mapping = aes(
-    x = weighted_production_metric, 
-    y = weighted_production_value, 
+    x = production_metric, 
+    y = production_value, 
     fill = technology
   )
 ) +
@@ -131,15 +132,15 @@ You can also plot the technology-specific volume trend. All benchmarks must firs
 
 ```{r targets-and-ceiling}
   market_share_targets_portfolio <- market_share_targets_portfolio %>% 
-  pivot_wider(names_from = weighted_production_metric, 
-              values_from = weighted_production_value) %>% 
+  pivot_wider(names_from = production_metric, 
+              values_from = production_value) %>% 
   arrange(year) %>% 
   group_by(sector, technology, region, scenario_source) %>% 
   mutate(normalized_corporate_economy = corporate_economy * (first(projected)/first(corporate_economy))) %>% 
   select(-corporate_economy) %>% 
-  pivot_longer(names_to = "weighted_production_metric",
+  pivot_longer(names_to = "production_metric",
                cols = projected:normalized_corporate_economy,
-               values_to = "weighted_production_value")
+               values_to = "production_value")
 
 renewables_data <- filter(
   market_share_targets_portfolio,
@@ -149,26 +150,26 @@ renewables_data <- filter(
 )
 
 just_targets <- renewables_data %>%
-  filter(str_detect(weighted_production_metric, "target_"))
+  filter(str_detect(production_metric, "target_"))
 
 ceiling <- just_targets %>%
   group_by(sector, technology, year, region, scenario_source) %>%
   summarize(
-    weighted_production_metric = "target_ceiling",
-    weighted_production_value = max(weighted_production_value)
+    production_metric = "target_ceiling",
+    production_value = max(production_value)
   ) %>%
   group_by(sector, technology, region, scenario_source) %>%
-  mutate(weighted_production_value = max(weighted_production_value))
+  mutate(production_value = max(production_value))
 
 just_data <- renewables_data %>%
-  filter(!str_detect(weighted_production_metric, "target_"))
+  filter(!str_detect(production_metric, "target_"))
 
 targets_and_ceiling <- just_targets %>%
   bind_rows(ceiling) %>%
   group_by(year) %>%
-  arrange(year, weighted_production_value) %>%
+  arrange(year, production_value) %>%
   mutate(
-    previous_value = lag(weighted_production_value, default = 0),
+    previous_value = lag(production_value, default = 0),
   ) %>%
   filter(region == "global")
 ```
@@ -178,20 +179,20 @@ ggplot(
   data = targets_and_ceiling,
   mapping = aes(
     x = year,
-    y = weighted_production_value,
-    fill = weighted_production_metric
+    y = production_value,
+    fill = production_metric
   )
 ) +
   geom_ribbon(
     data = targets_and_ceiling,
-    mapping = aes(ymin = previous_value, ymax = weighted_production_value)
+    mapping = aes(ymin = previous_value, ymax = production_value)
   ) +
   geom_line(
     data = just_data, 
     mapping = aes(
       x = year, 
-      y = weighted_production_value, 
-      linetype = weighted_production_metric
+      y = production_value, 
+      linetype = production_metric
     )
   ) +
   facet_wrap(vars(sector, technology))

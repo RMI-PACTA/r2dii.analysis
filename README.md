@@ -86,7 +86,8 @@ matched %>%
     ald = ald_demo,
     co2_intensity_scenario = co2_intensity_scenario_demo
   )
-#> # A tibble: 264 x 4
+#> Warning: Removing ald rows where `emission_factor` is NA
+#> # A tibble: 208 x 4
 #>    sector      year emission_factor_metric emission_factor_value
 #>    <chr>      <dbl> <chr>                                  <dbl>
 #>  1 automotive  2002 projected                              0.309
@@ -99,7 +100,7 @@ matched %>%
 #>  8 automotive  2009 projected                              0.288
 #>  9 automotive  2010 projected                              0.285
 #> 10 automotive  2011 projected                              0.282
-#> # … with 254 more rows
+#> # … with 198 more rows
 ```
 
   - Use `target_market_share` to calculate market-share scenario targets
@@ -114,9 +115,8 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> Joining, by = c("sector", "technology", "green_or_brown")
 #> # A tibble: 1,170 x 7
-#>    sector technology  year region scenario_source weighted_produc…
+#>    sector technology  year region scenario_source production_metr…
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>           
 #>  1 autom… electric    2020 global demo_2020       projected       
 #>  2 autom… electric    2020 global demo_2020       corporate_econo…
@@ -128,7 +128,7 @@ matched %>%
 #>  8 autom… electric    2021 global demo_2020       target_cps      
 #>  9 autom… electric    2021 global demo_2020       target_sds      
 #> 10 autom… electric    2021 global demo_2020       target_sps      
-#> # … with 1,160 more rows, and 1 more variable: weighted_production_value <dbl>
+#> # … with 1,160 more rows, and 1 more variable: production_value <dbl>
 ```
 
   - Or at the company level:
@@ -143,9 +143,11 @@ matched %>%
     region_isos = region_isos_demo,
     by_company = TRUE
   )
-#> Joining, by = c("sector", "technology", "green_or_brown")
+#> Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.
+#> This will result in company-level, weighted by the portfolio loan size, which is rarely useful.
+#> Did you mean to set one of these arguments to `FALSE`?
 #> # A tibble: 15,945 x 8
-#>    sector technology  year region scenario_source name_ald weighted_produc…
+#>    sector technology  year region scenario_source name_ald production_metr…
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>           
 #>  1 autom… electric    2020 global demo_2020       shangha… projected       
 #>  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…
@@ -157,7 +159,7 @@ matched %>%
 #>  8 autom… electric    2020 global demo_2020       sichuan… target_cps      
 #>  9 autom… electric    2020 global demo_2020       sichuan… target_sds      
 #> 10 autom… electric    2020 global demo_2020       sichuan… target_sps      
-#> # … with 15,935 more rows, and 1 more variable: weighted_production_value <dbl>
+#> # … with 15,935 more rows, and 1 more variable: production_value <dbl>
 ```
 
 ### Utility Functions
@@ -189,37 +191,37 @@ loanbook_joined_to_ald_scenario <- matched %>%
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
 #> # A tibble: 702 x 8
-#>    sector     technology  year scenario  tmsr    smsp region weighted_production
+#>    sector_ald technology  year scenario  tmsr    smsp region weighted_production
 #>    <chr>      <chr>      <int> <chr>    <dbl>   <dbl> <chr>                <dbl>
-#>  1 automotive electric    2020 cps       1    0       global             148935.
-#>  2 automotive electric    2020 sds       1    0       global             148935.
-#>  3 automotive electric    2020 sps       1    0       global             148935.
-#>  4 automotive electric    2021 cps       1.12 0.00108 global             150875.
-#>  5 automotive electric    2021 sds       1.16 0.00653 global             150875.
-#>  6 automotive electric    2021 sps       1.14 0.00137 global             150875.
-#>  7 automotive electric    2022 cps       1.24 0.00213 global             152816.
-#>  8 automotive electric    2022 sds       1.32 0.0131  global             152816.
-#>  9 automotive electric    2022 sps       1.29 0.00273 global             152816.
-#> 10 automotive electric    2023 cps       1.35 0.00316 global             154757.
+#>  1 automotive electric    2020 cps       1    0       global             145942.
+#>  2 automotive electric    2020 sds       1    0       global             145942.
+#>  3 automotive electric    2020 sps       1    0       global             145942.
+#>  4 automotive electric    2021 cps       1.12 0.00108 global             148212.
+#>  5 automotive electric    2021 sds       1.16 0.00653 global             148212.
+#>  6 automotive electric    2021 sps       1.14 0.00137 global             148212.
+#>  7 automotive electric    2022 cps       1.24 0.00213 global             150481.
+#>  8 automotive electric    2022 sds       1.32 0.0131  global             150481.
+#>  9 automotive electric    2022 sps       1.29 0.00273 global             150481.
+#> 10 automotive electric    2023 cps       1.35 0.00316 global             152751.
 #> # … with 692 more rows
 
 # company level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
 #> # A tibble: 9,567 x 9
-#>    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…
-#>    <chr>  <chr>      <int> <chr>    <dbl> <dbl> <chr>  <chr>               <dbl>
-#>  1 autom… electric    2020 cps          1     0 global shangha…            5140.
-#>  2 autom… electric    2020 cps          1     0 global sichuan…            5985.
-#>  3 autom… electric    2020 cps          1     0 global singula…            8674.
-#>  4 autom… electric    2020 cps          1     0 global south-e…           14409.
-#>  5 autom… electric    2020 cps          1     0 global suzuki …            6019.
-#>  6 autom… electric    2020 cps          1     0 global tata gr…             876.
-#>  7 autom… electric    2020 cps          1     0 global tesla i…            6208.
-#>  8 autom… electric    2020 cps          1     0 global toyota …           19860.
-#>  9 autom… electric    2020 cps          1     0 global volkswa…            9258.
-#> 10 autom… electric    2020 cps          1     0 global wheego              9804.
-#> # … with 9,557 more rows
+#>    sector_ald technology  year scenario  tmsr  smsp region name_ald
+#>    <chr>      <chr>      <int> <chr>    <dbl> <dbl> <chr>  <chr>   
+#>  1 automotive electric    2020 cps          1     0 global shangha…
+#>  2 automotive electric    2020 cps          1     0 global sichuan…
+#>  3 automotive electric    2020 cps          1     0 global singula…
+#>  4 automotive electric    2020 cps          1     0 global south-e…
+#>  5 automotive electric    2020 cps          1     0 global suzuki …
+#>  6 automotive electric    2020 cps          1     0 global tata gr…
+#>  7 automotive electric    2020 cps          1     0 global tesla i…
+#>  8 automotive electric    2020 cps          1     0 global toyota …
+#>  9 automotive electric    2020 cps          1     0 global volkswa…
+#> 10 automotive electric    2020 cps          1     0 global wheego  
+#> # … with 9,557 more rows, and 1 more variable: weighted_production <dbl>
 ```
 
 [Get

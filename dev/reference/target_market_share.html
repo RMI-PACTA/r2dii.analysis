@@ -160,7 +160,8 @@ production forecast.</p>
   <span class='no'>scenario</span>,
   <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='kw pkg'>r2dii.data</span><span class='kw ns'>::</span><span class='no'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos.html'>region_isos</a></span>,
   <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>weight_production</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -192,15 +193,21 @@ the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use t
     <tr>
       <th>by_company</th>
       <td><p>Logical vector of length 1. <code>FALSE</code> defaults to outputting
-<code>weighted_production_value</code> at the portfolio-level. Set to <code>TRUE</code> to output
-<code>weighted_production_value</code> at the company-level.</p></td>
+<code>production_value</code> at the portfolio-level. Set to <code>TRUE</code> to output
+<code>production_value</code> at the company-level.</p></td>
+    </tr>
+    <tr>
+      <th>weight_production</th>
+      <td><p>Logical vector of length 1. <code>TRUE</code> defaults to
+outputting production, weighted by relative loan-size. Set to <code>FALSE</code> to
+output the unweighted production values.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with the summarized columns <code>weighted_production_metric</code>
-and <code>weighted_production_value</code>. If <code>by_company = TRUE</code>, the output will also
+    <p>A tibble with the summarized columns <code>production_metric</code>
+and <code>production_value</code>. If <code>by_company = TRUE</code>, the output will also
 have the column <code>name_ald</code>.</p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
@@ -231,7 +238,7 @@ have the column <code>name_ald</code>.</p>
     <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='no'>scenario_demo_2020</span>,
     <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>
   )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,170 x 7</span><span>
-#&gt;    sector technology  year region scenario_source weighted_produc…
+#&gt;    sector technology  year region scenario_source production_metr…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       projected       
 #&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       corporate_econo…
@@ -243,7 +250,7 @@ have the column <code>name_ald</code>.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_cps      
 #&gt; </span><span style='color: #555555;'> 9</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_sds      
 #&gt; </span><span style='color: #555555;'>10</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_sps      
-#&gt; </span><span style='color: #555555;'># … with 1,160 more rows, and 1 more variable: weighted_production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'># … with 1,160 more rows, and 1 more variable: production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
 <span class='co'># Calculate targets at company level</span>
 <span class='no'>matched</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>target_market_share</span>(
@@ -251,8 +258,10 @@ have the column <code>name_ald</code>.</p>
     <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='no'>scenario_demo_2020</span>,
     <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>,
     <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 15,945 x 8</span><span>
-#&gt;    sector technology  year region scenario_source name_ald weighted_produc…
+  )</div><div class='output co'>#&gt; <span class='warning'>Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
+#&gt; <span class='warning'>This will result in company-level, weighted by the portfolio loan size, which is rarely useful.</span>
+#&gt; <span class='warning'>Did you mean to set one of these arguments to `FALSE`?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 15,945 x 8</span><span>
+#&gt;    sector technology  year region scenario_source name_ald production_metr…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… projected       
 #&gt; </span><span style='color: #555555;'> 2</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       shangha… corporate_econo…
@@ -264,7 +273,28 @@ have the column <code>name_ald</code>.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… target_cps      
 #&gt; </span><span style='color: #555555;'> 9</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… target_sds      
 #&gt; </span><span style='color: #555555;'>10</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       sichuan… target_sps      
-#&gt; </span><span style='color: #555555;'># … with 15,935 more rows, and 1 more variable: weighted_production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 15,935 more rows, and 1 more variable: production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='no'>matched</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>target_market_share</span>(
+    <span class='kw'>ald</span> <span class='kw'>=</span> <span class='no'>ald_demo</span>,
+    <span class='kw'>scenario</span> <span class='kw'>=</span> <span class='no'>scenario_demo_2020</span>,
+    <span class='kw'>region_isos</span> <span class='kw'>=</span> <span class='no'>region_isos_demo</span>,
+    <span class='co'># Calculate unweighted targets</span>
+    <span class='kw'>weight_production</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  )</div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `tmsr`, `smsp`</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3,350 x 9</span><span>
+#&gt;     tmsr    smsp sector technology  year region scenario_source production_metr…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span>  1    0       autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       projected       
+#&gt; </span><span style='color: #555555;'> 2</span><span>  1    0       autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       corporate_econo…
+#&gt; </span><span style='color: #555555;'> 3</span><span>  1    0       autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_cps      
+#&gt; </span><span style='color: #555555;'> 4</span><span>  1    0       autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_sds      
+#&gt; </span><span style='color: #555555;'> 5</span><span>  1    0       autom… electric    </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       target_sps      
+#&gt; </span><span style='color: #555555;'> 6</span><span>  1.12 0.001</span><span style='text-decoration: underline;'>08</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       projected       
+#&gt; </span><span style='color: #555555;'> 7</span><span>  1.12 0.001</span><span style='text-decoration: underline;'>08</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       corporate_econo…
+#&gt; </span><span style='color: #555555;'> 8</span><span>  1.12 0.001</span><span style='text-decoration: underline;'>08</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_cps      
+#&gt; </span><span style='color: #555555;'> 9</span><span>  1.12 0.001</span><span style='text-decoration: underline;'>08</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_sds      
+#&gt; </span><span style='color: #555555;'>10</span><span>  1.12 0.001</span><span style='text-decoration: underline;'>08</span><span> autom… electric    </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       target_sps      
+#&gt; </span><span style='color: #555555;'># … with 3,340 more rows, and 1 more variable: production_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

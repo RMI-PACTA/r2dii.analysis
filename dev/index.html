@@ -158,7 +158,8 @@
     <span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald_demo</span>,
     <span class="kw">co2_intensity_scenario</span> <span class="kw">=</span> <span class="no">co2_intensity_scenario_demo</span>
   )
-<span class="co">#&gt; # A tibble: 264 x 4</span>
+<span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
+<span class="co">#&gt; # A tibble: 208 x 4</span>
 <span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 automotive  2002 projected                              0.309</span>
@@ -171,7 +172,7 @@
 <span class="co">#&gt;  8 automotive  2009 projected                              0.288</span>
 <span class="co">#&gt;  9 automotive  2010 projected                              0.285</span>
 <span class="co">#&gt; 10 automotive  2011 projected                              0.282</span>
-<span class="co">#&gt; # … with 254 more rows</span></pre></div>
+<span class="co">#&gt; # … with 198 more rows</span></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
 </ul>
@@ -181,9 +182,8 @@
     <span class="kw">scenario</span> <span class="kw">=</span> <span class="no">scenario_demo_2020</span>,
     <span class="kw">region_isos</span> <span class="kw">=</span> <span class="no">region_isos_demo</span>
   )
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
 <span class="co">#&gt; # A tibble: 1,170 x 7</span>
-<span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span>
+<span class="co">#&gt;    sector technology  year region scenario_source production_metr…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span>
 <span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corporate_econo…</span>
@@ -195,7 +195,7 @@
 <span class="co">#&gt;  8 autom… electric    2021 global demo_2020       target_cps      </span>
 <span class="co">#&gt;  9 autom… electric    2021 global demo_2020       target_sds      </span>
 <span class="co">#&gt; 10 autom… electric    2021 global demo_2020       target_sps      </span>
-<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></pre></div>
+<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></pre></div>
 <ul>
 <li>Or at the company level:</li>
 </ul>
@@ -206,9 +206,11 @@
     <span class="kw">region_isos</span> <span class="kw">=</span> <span class="no">region_isos_demo</span>,
     <span class="kw">by_company</span> <span class="kw">=</span> <span class="fl">TRUE</span>
   )
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
+<span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
+<span class="co">#&gt; This will result in company-level, weighted by the portfolio loan size, which is rarely useful.</span>
+<span class="co">#&gt; Did you mean to set one of these arguments to `FALSE`?</span>
 <span class="co">#&gt; # A tibble: 15,945 x 8</span>
-<span class="co">#&gt;    sector technology  year region scenario_source name_ald weighted_produc…</span>
+<span class="co">#&gt;    sector technology  year region scenario_source name_ald production_metr…</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span>
 <span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…</span>
@@ -220,7 +222,7 @@
 <span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span>
 <span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span>
 <span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span>
-<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></pre></div>
+<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></pre></div>
 </div>
 <div id="utility-functions" class="section level3">
 <h3 class="hasAnchor">
@@ -242,37 +244,37 @@
 <span class="no">loanbook_joined_to_ald_scenario</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(<span class="no">scenario</span>, <span class="no">tmsr</span>, <span class="no">smsp</span>, <span class="no">region</span>)
 <span class="co">#&gt; # A tibble: 702 x 8</span>
-<span class="co">#&gt;    sector     technology  year scenario  tmsr    smsp region weighted_production</span>
+<span class="co">#&gt;    sector_ald technology  year scenario  tmsr    smsp region weighted_production</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global             148935.</span>
-<span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global             148935.</span>
-<span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global             148935.</span>
-<span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global             150875.</span>
-<span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global             150875.</span>
-<span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global             150875.</span>
-<span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global             152816.</span>
-<span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global             152816.</span>
-<span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global             152816.</span>
-<span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global             154757.</span>
+<span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global             145942.</span>
+<span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global             145942.</span>
+<span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global             145942.</span>
+<span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global             148212.</span>
+<span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global             148212.</span>
+<span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global             148212.</span>
+<span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global             150481.</span>
+<span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global             150481.</span>
+<span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global             150481.</span>
+<span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global             152751.</span>
 <span class="co">#&gt; # … with 692 more rows</span>
 
 <span class="co"># company level</span>
 <span class="no">loanbook_joined_to_ald_scenario</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(<span class="no">scenario</span>, <span class="no">tmsr</span>, <span class="no">smsp</span>, <span class="no">region</span>, <span class="no">name_ald</span>)
 <span class="co">#&gt; # A tibble: 9,567 x 9</span>
-<span class="co">#&gt;    sector technology  year scenario  tmsr  smsp region name_ald weighted_produc…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 autom… electric    2020 cps          1     0 global shangha…            5140.</span>
-<span class="co">#&gt;  2 autom… electric    2020 cps          1     0 global sichuan…            5985.</span>
-<span class="co">#&gt;  3 autom… electric    2020 cps          1     0 global singula…            8674.</span>
-<span class="co">#&gt;  4 autom… electric    2020 cps          1     0 global south-e…           14409.</span>
-<span class="co">#&gt;  5 autom… electric    2020 cps          1     0 global suzuki …            6019.</span>
-<span class="co">#&gt;  6 autom… electric    2020 cps          1     0 global tata gr…             876.</span>
-<span class="co">#&gt;  7 autom… electric    2020 cps          1     0 global tesla i…            6208.</span>
-<span class="co">#&gt;  8 autom… electric    2020 cps          1     0 global toyota …           19860.</span>
-<span class="co">#&gt;  9 autom… electric    2020 cps          1     0 global volkswa…            9258.</span>
-<span class="co">#&gt; 10 autom… electric    2020 cps          1     0 global wheego              9804.</span>
-<span class="co">#&gt; # … with 9,557 more rows</span></pre></div>
+<span class="co">#&gt;    sector_ald technology  year scenario  tmsr  smsp region name_ald</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   </span>
+<span class="co">#&gt;  1 automotive electric    2020 cps          1     0 global shangha…</span>
+<span class="co">#&gt;  2 automotive electric    2020 cps          1     0 global sichuan…</span>
+<span class="co">#&gt;  3 automotive electric    2020 cps          1     0 global singula…</span>
+<span class="co">#&gt;  4 automotive electric    2020 cps          1     0 global south-e…</span>
+<span class="co">#&gt;  5 automotive electric    2020 cps          1     0 global suzuki …</span>
+<span class="co">#&gt;  6 automotive electric    2020 cps          1     0 global tata gr…</span>
+<span class="co">#&gt;  7 automotive electric    2020 cps          1     0 global tesla i…</span>
+<span class="co">#&gt;  8 automotive electric    2020 cps          1     0 global toyota …</span>
+<span class="co">#&gt;  9 automotive electric    2020 cps          1     0 global volkswa…</span>
+<span class="co">#&gt; 10 automotive electric    2020 cps          1     0 global wheego  </span>
+<span class="co">#&gt; # … with 9,557 more rows, and 1 more variable: weighted_production &lt;dbl&gt;</span></pre></div>
 <p><a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
 </div>
 </div>

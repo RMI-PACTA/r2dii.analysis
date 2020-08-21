@@ -1,6 +1,7 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.1.0
 
-User-facing
+## User-facing
+
 * `target_market_share()` gains `weight_production` parameter (#181).
 
 * `target_market_share()` now correctly use `sector_ald` column from input 
@@ -40,7 +41,7 @@ User-facing
   `scenario_target_value` does not uniquely identify an observation 
   (@georgeharris2deg #142).
 
-Internal
+## Internal
 
 * Removed internal datasets. Package now pulls dataset `green_or_brown` from 
   `rdii.data`, and dataset `tmsr_or_smsp` from `utils.R` (#146).

@@ -63,7 +63,8 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
 summarize_unweighted_production <- function(data, ...) {
   data %>%
     group_by(...) %>%
-    summarize(weighted_production = sum(.data$production))
+    summarize(weighted_production = sum(.data$production)) %>%
+    group_by(!!!dplyr::groups(data))
 }
 
 #' @rdname summarize_weighted_production

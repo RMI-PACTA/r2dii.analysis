@@ -1,7 +1,5 @@
 # r2dii.analysis 0.1.0
 
-## User-facing
-
 * `target_market_share()` gains `weight_production` parameter (#181).
 
 * `target_market_share()` now correctly use `sector_ald` column from input 
@@ -40,15 +38,6 @@
 * `target_market_share()` no longer errors if the combination of `sector` and 
   `scenario_target_value` does not uniquely identify an observation 
   (@georgeharris2deg #142).
-
-## Internal
-
-* Removed internal datasets. Package now pulls dataset `green_or_brown` from 
-  `rdii.data`, and dataset `tmsr_or_smsp` from `utils.R` (#146).
-
-* Tests now work with testthat v3.
-
-* The meaning of "internal data" is now more transparent (#136).
 
 # r2dii.analysis 0.0.1
 

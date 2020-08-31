@@ -1,4 +1,4 @@
-# r2dii.analysis 0.1.0
+# r2dii.analysis (development version)
 
 * `join_ald_scenario()` now returns visibly with dev-magrittr (#188 @lionel-).
 

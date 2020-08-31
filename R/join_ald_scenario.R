@@ -46,7 +46,7 @@ join_ald_scenario <- function(data,
 
   ald <- modify_at_(ald, "sector", tolower)
   ald <- modify_at_(ald, "technology", tolower)
-  data %>%
+  out <- data %>%
     left_join(ald, by = ald_columns()) %>%
     inner_join(scenario, by = scenario_columns()) %>%
     warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.") %>%
@@ -55,9 +55,8 @@ join_ald_scenario <- function(data,
       region_isos,
       by = c("region", "plant_location" = "isos", "scenario_source")
     ) %>%
-    warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.") %>%
-    # Return visibly
-    identity()
+    warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.")
+  out
 }
 
 warn_if_has_zero_rows <- function(data, message) {

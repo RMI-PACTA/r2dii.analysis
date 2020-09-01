@@ -1,4 +1,4 @@
-# r2dii.analysis 0.1.0
+# r2dii.analysis (development version)
 
 * `target_market_share()` now outputs `weighted_technology_share` (#184).
 

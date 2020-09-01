@@ -434,4 +434,16 @@ test_that("with known input outputs `share_value` as expected (#184)", {
     out$projected$share_value,
     c(0.6875, 0.3125)
   )
+
+  expect_equal(
+    out$corporate_economy$share_value,
+    c(0.666, 0.333),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out$target_sds$share_value,
+    c(0.923, 0.076),
+    tolerance = 1e-3
+  )
 })

@@ -1,5 +1,7 @@
 # r2dii.analysis 0.1.0
 
+* `target_market_share()` now outputs `weighted_technology_share` (#184).
+
 * `join_ald_scenario()` now returns visibly with dev-magrittr (#188 @lionel-).
 
 * `target_market_share()` gains `weight_production` parameter (#181).

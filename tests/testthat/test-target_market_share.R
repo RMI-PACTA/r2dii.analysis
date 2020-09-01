@@ -403,3 +403,35 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
   expect_equal(diff_names, character(0))
 
 })
+
+test_that("with known input outputs `share_value` as expected (#184)", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    loan_size_outstanding = c(1,3),
+    name_ald = c("a", "b")
+  )
+
+  ald <- fake_ald(
+    name_company = rep(c("a", "b"), each = 2),
+    technology = rep(c("ice", "electric"),2),
+    production = c(1,1,1,3)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("ice", "electric"),
+    smsp = 1
+  )
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_demo
+  ) %>%
+    split(.$production_metric)
+
+  expect_equal(
+    out$projected$share_value,
+    c(0.6875, 0.3125)
+  )
+})

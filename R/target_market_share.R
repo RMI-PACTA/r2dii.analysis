@@ -86,9 +86,9 @@ target_market_share <- function(data,
     warn(
       glue(
         "You've supplied `by_company = TRUE` and `weight_production = TRUE`.
-        This will result in company-level, weighted by the portfolio loan size, \\
-        which is rarely useful.
-        Did you mean to set one of these arguments to `FALSE`?"
+        This will result in company-level results, weighted by the portfolio
+        loan size, which is rarely useful. Did you mean to set one of these
+        arguments to `FALSE`?"
       )
     )
   }

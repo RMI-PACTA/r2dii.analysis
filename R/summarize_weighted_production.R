@@ -64,9 +64,11 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
 summarize_unweighted_production <- function(data, ...) {
   data %>%
     group_by(...) %>%
-    add_technology_share %>%
-    summarize(weighted_production = sum(.data$production),
-              weighted_technology_share = sum(.data$technology_share)) %>%
+    add_technology_share() %>%
+    summarize(
+      weighted_production = sum(.data$production),
+      weighted_technology_share = sum(.data$technology_share)
+    ) %>%
     group_by(!!!dplyr::groups(data))
 }
 
@@ -212,7 +214,6 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%

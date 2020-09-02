@@ -127,23 +127,12 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
   walk_(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
-  ald_aggregation_columns <- c(
-    "technology",
-    "plant_location",
-    "country_of_domicile"
-  )
-
-  ald_by_sector <- aggregate_ald_by_columns(ald, ald_aggregation_columns)
-
-  loanbook_summary_groups <- maybe_add_name_ald(
-    c("sector_ald", "year"),
-    by_company
-  )
+  ald_by_sector <- ald %>%
+    aggregate_including(c("technology", "plant_location", "country_of_domicile"))
 
   loanbook_with_weighted_emission_factors <- calculate_weighted_emission_factor(
     data,
-    ald_by_sector,
-    !!!rlang::syms(loanbook_summary_groups),
+    ald = ald_by_sector,
     use_credit_limit = use_credit_limit,
     by_company = by_company
   )
@@ -192,6 +181,32 @@ target_sda <- function(data,
   )
 }
 
+check_unique_id <- function(data, column) {
+  if (sum(duplicated(data[[column]]))) {
+    abort(
+      class = "unique_ids",
+      glue("Column `{column}` must not contain any duplicates.", column)
+    )
+  }
+
+  invisible(data)
+}
+
+aggregate_including <- function(ald, columns) {
+  .vars <- setdiff(names(ald), c("production", "emission_factor", columns))
+
+  ald %>%
+    dplyr::group_by_at(.vars = .vars) %>%
+    dplyr::filter(.data$production > 0) %>%
+    mutate(weight = .data$production / sum(.data$production)) %>%
+    summarize(
+      production = sum(.data$production),
+      emission_factor =
+        sum(.data$emission_factor * .data$weight / sum(.data$weight))
+    ) %>%
+    ungroup()
+}
+
 maybe_add_name_ald <- function(data, by_company = FALSE) {
   out <- data
 
@@ -204,15 +219,16 @@ maybe_add_name_ald <- function(data, by_company = FALSE) {
 
 calculate_weighted_emission_factor <- function(data,
                                                ald,
-                                               ...,
                                                use_credit_limit = FALSE,
                                                by_company = FALSE) {
+  summary_groups <- maybe_add_name_ald(c("sector_ald", "year"), by_company)
+
   data %>%
     inner_join(ald, by = ald_columns()) %>%
     add_weighted_loan_emission_factor(
       use_credit_limit = use_credit_limit
     ) %>%
-    group_by(...) %>%
+    group_by(!!!rlang::syms(summary_groups)) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%

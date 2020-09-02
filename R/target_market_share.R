@@ -240,6 +240,14 @@ target_market_share <- function(data,
     ungroup()
 }
 
+tmsr_or_smsp <- function() {
+  dplyr::tribble(
+    ~which_metric, ~green_or_brown,
+    "tmsr_target_weighted_production", "brown",
+    "smsp_target_weighted_production", "green"
+  )
+}
+
 separate_metric_from_name <- function(data) {
   data %>%
     mutate(

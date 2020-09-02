@@ -4,6 +4,7 @@ CDP
 Codecov
 decarbonization
 Decarbonization
+dev
 dfrac
 dii
 eval
@@ -11,6 +12,7 @@ frac
 https
 Lifecycle
 loanbook
+magrittr
 overline
 PACTA
 PACTA’
@@ -22,7 +24,6 @@ SDA
 sectoral
 Sectoral
 smsp
-testthat
 tibble
 tidyverse
 tmsr

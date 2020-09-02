@@ -156,7 +156,8 @@ test_that("outputs expected names", {
       "region",
       "scenario_source",
       "metric",
-      "production"
+      "production",
+      "technology_share"
     )
   )
 })

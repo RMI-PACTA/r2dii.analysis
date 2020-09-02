@@ -64,9 +64,9 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
 summarize_unweighted_production <- function(data, ...) {
   data %>%
     group_by(...) %>%
-    add_technology_share %>%
-    summarize(weighted_production = sum(.data$production),
-              weighted_technology_share = sum(.data$technology_share)) %>%
+    summarize(weighted_production = sum(.data$production), .groups = "keep") %>%
+    ungroup(.data$technology) %>%
+    mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
     group_by(!!!dplyr::groups(data))
 }
 
@@ -216,7 +216,7 @@ add_technology_share <- function(data) {
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%
-    ungroup()
+    group_by(!!!dplyr::groups(data))
 }
 
 check_zero_initial_production <- function(data) {

@@ -212,7 +212,6 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%

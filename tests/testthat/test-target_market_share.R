@@ -381,14 +381,13 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
 })
 
 test_that("outputs same names regardless of the value of `weight_production` (#186)", {
-
   out_weighted <- target_market_share(
     fake_matched(),
     fake_ald(),
     fake_scenario(),
     region_isos_demo,
     weight_production = TRUE
-    )
+  )
 
   out_unweighted <- target_market_share(
     fake_matched(),
@@ -401,20 +400,19 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
   diff_names <- setdiff(names(out_unweighted), names(out_weighted))
 
   expect_equal(diff_names, character(0))
-
 })
 
 test_that("with known input outputs `share_value` as expected (#184)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
-    loan_size_outstanding = c(1,3),
+    loan_size_outstanding = c(1, 3),
     name_ald = c("a", "b")
   )
 
   ald <- fake_ald(
     name_company = rep(c("a", "b"), each = 2),
-    technology = rep(c("ice", "electric"),2),
-    production = c(1,1,1,3)
+    technology = rep(c("ice", "electric"), 2),
+    production = c(1, 1, 1, 3)
   )
 
   scenario <- fake_scenario(

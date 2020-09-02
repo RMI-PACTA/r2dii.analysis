@@ -219,7 +219,7 @@ target_market_share <- function(data,
       .x = .data$weighted_production_target,
       weighted_technology_share_target = .data$.x / sum(.data$.x),
       .x = NULL
-      ) %>%
+    ) %>%
     pivot_wider(
       names_from = .data$scenario,
       values_from = c(.data$weighted_production_target, .data$weighted_technology_share_target),
@@ -288,7 +288,8 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     mutate(
       .x = .data$weighted_production_corporate_economy,
       weighted_technology_share_corporate_economy = .data$.x / sum(.data$.x),
-      .x = NULL)
+      .x = NULL
+    )
 
   data %>%
     left_join(ald_with_benchmark, by = c(

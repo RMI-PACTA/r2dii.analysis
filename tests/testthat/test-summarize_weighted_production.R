@@ -134,7 +134,7 @@ test_that("outputs expected names", {
       "year",
       "weighted_production",
       "weighted_technology_share"
-      )
+    )
   )
 })
 

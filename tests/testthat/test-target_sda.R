@@ -463,32 +463,27 @@ test_that(
   }
 )
 
-test_that("with different `country_of_domicile` column do not affect output (#171)",{
+test_that("with different `country_of_domicile` column do not affect output (#171)", {
+  matched <- fake_matched(
+    name_ald = "company",
+    sector = "steel",
+    sector_ald = "steel"
+  )
 
-    matched <- fake_matched(
-      name_ald = "company",
-      sector = "steel",
-      sector_ald = "steel"
-    )
+  ald <- fake_ald(
+    name_company = "company",
+    sector = "steel",
+    country_of_domicile = c("a", "b"),
+    emission_factor = c(0.5, 0.5),
+    year = 2020
+  )
 
-    ald <- fake_ald(
-      name_company = "company",
-      sector = "steel",
-      country_of_domicile = c("a", "b"),
-      emission_factor = c(0.5, 0.5),
-      year = 2020
-    )
+  out <- matched %>%
+    target_sda(
+      ald,
+      co2_intensity_scenario_demo
+    ) %>%
+    split(.$emission_factor_metric)
 
-    out <- matched %>%
-      target_sda(ald,
-                 co2_intensity_scenario_demo) %>%
-      split(.$emission_factor_metric)
-
-    expect_equal(out$projected$emission_factor_value, 0.5)
-
-
-  }
-
-)
-
-
+  expect_equal(out$projected$emission_factor_value, 0.5)
+})

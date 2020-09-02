@@ -131,7 +131,7 @@ target_sda <- function(data,
     "technology",
     "plant_location",
     "country_of_domicile"
-    )
+  )
 
   ald_by_sector <- aggregate_ald_by_columns(ald, ald_aggregation_columns)
 

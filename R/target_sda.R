@@ -127,7 +127,12 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
   walk_(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
-  ald_aggregation_columns <- c("technology", "plant_location")
+  ald_aggregation_columns <- c(
+    "technology",
+    "plant_location",
+    "country_of_domicile"
+  )
+
   ald_by_sector <- aggregate_ald_by_columns(ald, ald_aggregation_columns)
 
   loanbook_summary_groups <- maybe_add_name_ald(

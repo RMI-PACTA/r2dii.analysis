@@ -462,3 +462,28 @@ test_that(
     )
   }
 )
+
+test_that("with multiple values of `country_of_domicile` outputs the expected
+          `emission_factor_value` (#171)", {
+  this_company <- "company"
+  this_sector <- "steel"
+  ald <- fake_ald(
+    country_of_domicile = c("a", "b"),
+    emission_factor = 0.5,
+    year = 2020,
+    name_company = this_company,
+    sector = this_sector
+  )
+
+  matched <- fake_matched(
+    name_ald = this_company,
+    sector = this_sector,
+    sector_ald = this_sector
+  )
+
+  out <- matched %>%
+    target_sda(ald, co2_intensity_scenario_demo) %>%
+    split(.$emission_factor_metric)
+
+  expect_equal(out$projected$emission_factor_value, 0.5)
+})

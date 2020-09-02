@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_sda()` now correctly handles differing `country_of_domicile` inputs 
+  (#171).
+
 * `target_market_share()` now outputs `technology_share` (#184).
 
 * `join_ald_scenario()` now returns visibly with dev-magrittr (#188 @lionel-).

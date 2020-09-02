@@ -267,3 +267,13 @@ rename_metric <- function(out, metric) {
   newnames <- sub("weighted_loan_metric", new_name, names(out))
   rlang::set_names(out, newnames)
 }
+
+# We can remove this once we depend on R >= 3.5. See ?backports::isTRUE
+isTRUE <- function(x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && x
+}
+
+# We can remove this once we depend on R >= 3.5. See ?backports::isFALSE
+isFALSE <- function(x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}

@@ -157,7 +157,7 @@ test_that("outputs expected names", {
       "scenario_source",
       "metric",
       "production",
-      "technology_share"
+      "weighted_technology_share"
     )
   )
 })
@@ -403,7 +403,7 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
   expect_equal(diff_names, character(0))
 })
 
-test_that("with known input outputs `share_value` as expected (#184)", {
+test_that("with known input outputs `weighted_technology_share` as expected (#184)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
     loan_size_outstanding = c(1, 3),
@@ -430,18 +430,18 @@ test_that("with known input outputs `share_value` as expected (#184)", {
     split(.$metric)
 
   expect_equal(
-    out$projected$share_value,
+    out$projected$weighted_technology_share,
     c(0.6875, 0.3125)
   )
 
   expect_equal(
-    out$corporate_economy$share_value,
+    out$corporate_economy$weighted_technology_share,
     c(0.666, 0.333),
     tolerance = 1e-3
   )
 
   expect_equal(
-    out$target_sds$share_value,
+    out$target_sds$weighted_technology_share,
     c(0.923, 0.076),
     tolerance = 1e-3
   )

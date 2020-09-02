@@ -242,9 +242,11 @@ target_market_share <- function(data,
 
 separate_metric_from_name <- function(data) {
   data %>%
-    mutate(name = sub("weighted_", "", .data$name)) %>%
-    mutate(name = sub("(production)_", "\\1-", .data$name)) %>%
-    mutate(name = sub("(technology_share)_", "\\1-", .data$name)) %>%
+    mutate(
+      name = sub("weighted_", "", .data$name),
+      name = sub("(production)_", "\\1-", .data$name),
+      name = sub("(technology_share)_", "\\1-", .data$name)
+    ) %>%
     tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
 }
 

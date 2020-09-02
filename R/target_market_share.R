@@ -233,18 +233,19 @@ target_market_share <- function(data,
       sector = .data$sector_ald
     )
 
-  replacements <- c(
-    "weighted_" = "",
-    "(production)_" = "\\1-",
-    "(technology_share)_" = "\\1-"
-  )
-
   data %>%
     pivot_longer(cols = starts_with("weighted_")) %>%
-    mutate(name = stringr::str_replace_all(.data$name, replacements)) %>%
-    tidyr::separate(.data$name, into = c("type", "metric"), sep = "-") %>%
-    pivot_wider(names_from = .data$type) %>%
+    separate_metric_from_name() %>%
+    pivot_wider(names_from = .data$name) %>%
     ungroup()
+}
+
+separate_metric_from_name <- function(data) {
+  data %>%
+    mutate(name = sub("weighted_", "", .data$name)) %>%
+    mutate(name = sub("(production)_", "\\1-", .data$name)) %>%
+    mutate(name = sub("(technology_share)_", "\\1-", .data$name)) %>%
+    tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
 }
 
 maybe_add_name_ald <- function(data, by_company = FALSE) {

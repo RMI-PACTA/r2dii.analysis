@@ -163,7 +163,7 @@ target_market_share <- function(data,
     ) %>%
     select(-.data$year)
 
-  data %>%
+  data <- data %>%
     left_join(
       initial_sector_summaries,
       by = maybe_add_name_ald(
@@ -197,7 +197,7 @@ target_market_share <- function(data,
         "tmsr_target_weighted_production", "smsp_target_weighted_production"
       ),
       names_to = "target_name",
-      values_to = "scenario_target_value"
+      values_to = "weighted_production_target"
     ) %>%
     left_join(tmsr_or_smsp(), by = c(target_name = "which_metric")) %>%
     inner_join(
@@ -208,24 +208,42 @@ target_market_share <- function(data,
         green_or_brown = "green_or_brown"
       )
     ) %>%
-    select(-.data$target_name, -.data$green_or_brown) %>%
+    select(-.data$target_name, -.data$green_or_brown)
+
+  data <- data %>%
+    maybe_group_by_name_ald(
+      c("sector_ald", "year", "scenario", "region"),
+      by_company = by_company
+    ) %>%
+    mutate(
+      .x = .data$weighted_production_target,
+      weighted_technology_share_target = .x / sum(.x),
+      .x = NULL
+      ) %>%
     pivot_wider(
       names_from = .data$scenario,
-      names_prefix = "weighted_production_target_",
-      values_from = .data$scenario_target_value,
+      values_from = c(.data$weighted_production_target, .data$weighted_technology_share_target),
       values_fn = list
     ) %>%
     tidyr::unnest(starts_with("weighted_production_")) %>%
+    tidyr::unnest(starts_with("weighted_technology_share_")) %>%
     rename(
       weighted_production_projected = .data$weighted_production,
+      weighted_technology_share_projected = .data$weighted_technology_share,
       sector = .data$sector_ald
-    ) %>%
-    pivot_longer(
-      cols = starts_with("weighted_production_"),
-      names_prefix = "weighted_production_",
-      names_to = "production_metric",
-      values_to = "production_value"
-    ) %>%
+    )
+
+  replacements <- c(
+    "weighted_" = "",
+    "(production)_" = "\\1-",
+    "(technology_share)_" = "\\1-"
+  )
+
+  data %>%
+    pivot_longer(cols = starts_with("weighted_")) %>%
+    mutate(name = stringr::str_replace_all(name, replacements)) %>%
+    tidyr::separate(name, into = c("type", "metric"), sep = "-") %>%
+    pivot_wider(names_from = type) %>%
     ungroup()
 }
 
@@ -263,7 +281,14 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     group_by(
       .data$sector, .data$technology, .data$year, .data$region, .data$source
     ) %>%
-    summarize(weighted_production_corporate_economy = sum(.data$production))
+    summarize(weighted_production_corporate_economy = sum(.data$production)) %>%
+    group_by(
+      .data$sector, .data$year, .data$region, .data$source
+    ) %>%
+    mutate(
+      .x = weighted_production_corporate_economy,
+      weighted_technology_share_corporate_economy = .x / sum(.x),
+      .x = NULL)
 
   data %>%
     left_join(ald_with_benchmark, by = c(

@@ -217,7 +217,7 @@ target_market_share <- function(data,
     ) %>%
     mutate(
       .x = .data$weighted_production_target,
-      weighted_technology_share_target = .x / sum(.x),
+      weighted_technology_share_target = .data$.x / sum(.data$.x),
       .x = NULL
       ) %>%
     pivot_wider(
@@ -241,9 +241,9 @@ target_market_share <- function(data,
 
   data %>%
     pivot_longer(cols = starts_with("weighted_")) %>%
-    mutate(name = stringr::str_replace_all(name, replacements)) %>%
-    tidyr::separate(name, into = c("type", "metric"), sep = "-") %>%
-    pivot_wider(names_from = type) %>%
+    mutate(name = stringr::str_replace_all(.data$name, replacements)) %>%
+    tidyr::separate(.data$name, into = c("type", "metric"), sep = "-") %>%
+    pivot_wider(names_from = .data$type) %>%
     ungroup()
 }
 
@@ -286,8 +286,8 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
       .data$sector, .data$year, .data$region, .data$source
     ) %>%
     mutate(
-      .x = weighted_production_corporate_economy,
-      weighted_technology_share_corporate_economy = .x / sum(.x),
+      .x = .data$weighted_production_corporate_economy,
+      weighted_technology_share_corporate_economy = .data$.x / sum(.data$.x),
       .x = NULL)
 
   data %>%

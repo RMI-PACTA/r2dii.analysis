@@ -128,7 +128,7 @@ target_sda <- function(data,
   walk_(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
   ald_by_sector <- ald %>%
-    aggregate_including(c("technology", "plant_location", "country_of_domicile"))
+    aggregate_excluding(c("technology", "plant_location", "country_of_domicile"))
 
   loanbook_with_weighted_emission_factors <- calculate_weighted_emission_factor(
     data,
@@ -192,7 +192,7 @@ check_unique_id <- function(data, column) {
   invisible(data)
 }
 
-aggregate_including <- function(ald, columns) {
+aggregate_excluding <- function(ald, columns) {
   .vars <- setdiff(names(ald), c("production", "emission_factor", columns))
 
   ald %>%

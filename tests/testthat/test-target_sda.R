@@ -463,8 +463,7 @@ test_that(
   }
 )
 
-test_that(
-  "unused `ald` column do not affect output (#171)",{
+test_that("unused `ald` column do not affect output (#171)",{
 
     matched <- fake_matched(
       name_ald = "company",

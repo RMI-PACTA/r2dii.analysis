@@ -52,6 +52,7 @@ isFALSE <- function(x) {
 aggregate_ald_by_columns <- function(data, columns) {
   data %>%
     dplyr::group_by_at(setdiff(names(data), c("production", "emission_factor", columns))) %>%
+    dplyr::filter(.data$production > 0) %>%
     mutate(
       weight = .data$production / sum(.data$production)
     ) %>%

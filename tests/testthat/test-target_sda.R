@@ -463,7 +463,7 @@ test_that(
   }
 )
 
-test_that("unused `ald` column do not affect output (#171)",{
+test_that("with different `country_of_domicile` column do not affect output (#171)",{
 
     matched <- fake_matched(
       name_ald = "company",
@@ -474,7 +474,7 @@ test_that("unused `ald` column do not affect output (#171)",{
     ald <- fake_ald(
       name_company = "company",
       sector = "steel",
-      unused_column = c("a", "b"),
+      country_of_domicile = c("a", "b"),
       emission_factor = c(0.5, 0.5),
       year = 2020
     )

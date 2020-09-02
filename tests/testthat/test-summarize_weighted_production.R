@@ -128,7 +128,13 @@ test_that("with known input outputs as expected", {
 test_that("outputs expected names", {
   expect_named(
     summarize_weighted_production(fake_master()),
-    c("sector_ald", "technology", "year", "weighted_production")
+    c(
+      "sector_ald",
+      "technology",
+      "year",
+      "weighted_production",
+      "weighted_technology_share"
+    )
   )
 })
 

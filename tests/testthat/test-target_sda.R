@@ -462,3 +462,34 @@ test_that(
     )
   }
 )
+
+test_that(
+  "unused `ald` column do not affect output (#171)",{
+
+    matched <- fake_matched(
+      name_ald = "company",
+      sector = "steel",
+      sector_ald = "steel"
+    )
+
+    ald <- fake_ald(
+      name_company = "company",
+      sector = "steel",
+      unused_column = c("a", "b"),
+      emission_factor = c(0.5, 0.5),
+      year = 2020
+    )
+
+    out <- matched %>%
+      target_sda(ald,
+                 co2_intensity_scenario_demo) %>%
+      split(.$emission_factor_metric)
+
+    expect_equal(out$projected$emission_factor_value, 0.5)
+
+
+  }
+
+)
+
+

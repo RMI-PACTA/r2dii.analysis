@@ -186,20 +186,20 @@
   )
 
 <span class="no">market_share_targets_portfolio</span>
-<span class="co">#&gt; # A tibble: 1,170 x 7</span>
-<span class="co">#&gt;    sector technology  year region scenario_source production_metr…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corporate_econo…</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       projected       </span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corporate_econo…</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       target_sds      </span>
-<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       target_sps      </span>
-<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></pre></body></html></div>
+<span class="co">#&gt; # A tibble: 1,170 x 8</span>
+<span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    145942.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corpo…   8134869.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       proje…    148212.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corpo…   8183411.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    148361.</span>
+<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       targe…    160625.</span>
+<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       targe…    149016.</span>
+<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></pre></body></html></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">market_share_targets_company</span> <span class="kw">&lt;-</span> <span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(
@@ -210,24 +210,25 @@
     <span class="kw">by_company</span> <span class="kw">=</span> <span class="fl">TRUE</span>
   )
 <span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
-<span class="co">#&gt; This will result in company-level, weighted by the portfolio loan size, which is rarely useful.</span>
-<span class="co">#&gt; Did you mean to set one of these arguments to `FALSE`?</span>
+<span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span>
+<span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span>
+<span class="co">#&gt; arguments to `FALSE`?</span>
 
 <span class="no">market_share_targets_company</span>
-<span class="co">#&gt; # A tibble: 15,945 x 8</span>
-<span class="co">#&gt;    sector technology  year region scenario_source name_ald production_metr…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… target_cps      </span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… target_sds      </span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… target_sps      </span>
-<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… projected       </span>
-<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corporate_econo…</span>
-<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span>
-<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span>
-<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span>
-<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></pre></body></html></div>
+<span class="co">#&gt; # A tibble: 15,945 x 9</span>
+<span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… proje…      5140.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corpo…   8134869.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… proje…      2992.</span>
+<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corpo…   8134869.</span>
+<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></pre></body></html></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">
@@ -275,8 +276,8 @@
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu">ggplot</span>(
   <span class="kw">data</span> <span class="kw">=</span> <span class="no">tech_mix_data</span>,
   <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(
-    <span class="kw">x</span> <span class="kw">=</span> <span class="no">production_metric</span>,
-    <span class="kw">y</span> <span class="kw">=</span> <span class="no">production_value</span>,
+    <span class="kw">x</span> <span class="kw">=</span> <span class="no">metric</span>,
+    <span class="kw">y</span> <span class="kw">=</span> <span class="no">technology_share</span>,
     <span class="kw">fill</span> <span class="kw">=</span> <span class="no">technology</span>
   )
 ) +
@@ -289,15 +290,16 @@
 <a href="#market-share-technology-level-volume-trajectory" class="anchor"></a>Market Share: Technology-level volume trajectory</h3>
 <p>You can also plot the technology-specific volume trend. All benchmarks must first be normalized to the initial portfolio value, so that we are effectively comparing ambition.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r">  <span class="no">market_share_targets_portfolio</span> <span class="kw">&lt;-</span> <span class="no">market_share_targets_portfolio</span> <span class="kw">%&gt;%</span>
-  <span class="fu">pivot_wider</span>(<span class="kw">names_from</span> <span class="kw">=</span> <span class="no">production_metric</span>,
-              <span class="kw">values_from</span> <span class="kw">=</span> <span class="no">production_value</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">select</span>(-<span class="no">technology_share</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">pivot_wider</span>(<span class="kw">names_from</span> <span class="kw">=</span> <span class="no">metric</span>,
+              <span class="kw">values_from</span> <span class="kw">=</span> <span class="no">production</span>) <span class="kw">%&gt;%</span>
   <span class="fu">arrange</span>(<span class="no">year</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">sector</span>, <span class="no">technology</span>, <span class="no">region</span>, <span class="no">scenario_source</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">normalized_corporate_economy</span> <span class="kw">=</span> <span class="no">corporate_economy</span> * (<span class="fu">first</span>(<span class="no">projected</span>)/<span class="fu">first</span>(<span class="no">corporate_economy</span>))) <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(-<span class="no">corporate_economy</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">pivot_longer</span>(<span class="kw">names_to</span> <span class="kw">=</span> <span class="st">"production_metric"</span>,
+  <span class="fu">pivot_longer</span>(<span class="kw">names_to</span> <span class="kw">=</span> <span class="st">"metric"</span>,
                <span class="kw">cols</span> <span class="kw">=</span> <span class="no">projected</span>:<span class="no">normalized_corporate_economy</span>,
-               <span class="kw">values_to</span> <span class="kw">=</span> <span class="st">"production_value"</span>)
+               <span class="kw">values_to</span> <span class="kw">=</span> <span class="st">"production"</span>)
 
 <span class="no">renewables_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(
   <span class="no">market_share_targets_portfolio</span>,
@@ -307,47 +309,47 @@
 )
 
 <span class="no">just_targets</span> <span class="kw">&lt;-</span> <span class="no">renewables_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu">str_detect</span>(<span class="no">production_metric</span>, <span class="st">"target_"</span>))
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu">str_detect</span>(<span class="no">metric</span>, <span class="st">"target_"</span>))
 
 <span class="no">ceiling</span> <span class="kw">&lt;-</span> <span class="no">just_targets</span> <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">sector</span>, <span class="no">technology</span>, <span class="no">year</span>, <span class="no">region</span>, <span class="no">scenario_source</span>) <span class="kw">%&gt;%</span>
   <span class="fu">summarize</span>(
-    <span class="kw">production_metric</span> <span class="kw">=</span> <span class="st">"target_ceiling"</span>,
-    <span class="kw">production_value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">production_value</span>)
+    <span class="kw">metric</span> <span class="kw">=</span> <span class="st">"target_ceiling"</span>,
+    <span class="kw">production</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">production</span>)
   ) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">sector</span>, <span class="no">technology</span>, <span class="no">region</span>, <span class="no">scenario_source</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">production_value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">production_value</span>))
+  <span class="fu">mutate</span>(<span class="kw">production</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">production</span>))
 <span class="co">#&gt; `summarise()` regrouping output by 'sector', 'technology', 'year', 'region' (override with `.groups` argument)</span>
 
 <span class="no">just_data</span> <span class="kw">&lt;-</span> <span class="no">renewables_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="fu">str_detect</span>(<span class="no">production_metric</span>, <span class="st">"target_"</span>))
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="fu">str_detect</span>(<span class="no">metric</span>, <span class="st">"target_"</span>))
 
 <span class="no">targets_and_ceiling</span> <span class="kw">&lt;-</span> <span class="no">just_targets</span> <span class="kw">%&gt;%</span>
   <span class="fu">bind_rows</span>(<span class="no">ceiling</span>) <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">year</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">arrange</span>(<span class="no">year</span>, <span class="no">production_value</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">arrange</span>(<span class="no">year</span>, <span class="no">production</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(
-    <span class="kw">previous_value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span>(<span class="no">production_value</span>, <span class="kw">default</span> <span class="kw">=</span> <span class="fl">0</span>),
+    <span class="kw">previous_value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span>(<span class="no">production</span>, <span class="kw">default</span> <span class="kw">=</span> <span class="fl">0</span>),
   ) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">region</span> <span class="kw">==</span> <span class="st">"global"</span>)</pre></body></html></div>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu">ggplot</span>(
   <span class="kw">data</span> <span class="kw">=</span> <span class="no">targets_and_ceiling</span>,
   <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(
     <span class="kw">x</span> <span class="kw">=</span> <span class="no">year</span>,
-    <span class="kw">y</span> <span class="kw">=</span> <span class="no">production_value</span>,
-    <span class="kw">fill</span> <span class="kw">=</span> <span class="no">production_metric</span>
+    <span class="kw">y</span> <span class="kw">=</span> <span class="no">production</span>,
+    <span class="kw">fill</span> <span class="kw">=</span> <span class="no">metric</span>
   )
 ) +
   <span class="fu">geom_ribbon</span>(
     <span class="kw">data</span> <span class="kw">=</span> <span class="no">targets_and_ceiling</span>,
-    <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">previous_value</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">production_value</span>)
+    <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">previous_value</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">production</span>)
   ) +
   <span class="fu">geom_line</span>(
     <span class="kw">data</span> <span class="kw">=</span> <span class="no">just_data</span>,
     <span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(
       <span class="kw">x</span> <span class="kw">=</span> <span class="no">year</span>,
-      <span class="kw">y</span> <span class="kw">=</span> <span class="no">production_value</span>,
-      <span class="kw">linetype</span> <span class="kw">=</span> <span class="no">production_metric</span>
+      <span class="kw">y</span> <span class="kw">=</span> <span class="no">production</span>,
+      <span class="kw">linetype</span> <span class="kw">=</span> <span class="no">metric</span>
     )
   ) +
   <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(<span class="no">sector</span>, <span class="no">technology</span>))</pre></body></html></div>

@@ -199,41 +199,42 @@
 
 
 <span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="no">ald</span>, <span class="no">scenario</span>, <span class="no">regions</span>)
-<span class="co">#&gt; # A tibble: 1,170 x 7</span>
-<span class="co">#&gt;    sector technology  year region scenario_source production_metr…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corporate_econo…</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       projected       </span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corporate_econo…</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       target_sds      </span>
-<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       target_sps      </span>
-<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></pre></body></html></div>
+<span class="co">#&gt; # A tibble: 1,170 x 8</span>
+<span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    145942.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corpo…   8134869.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       proje…    148212.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corpo…   8183411.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    148361.</span>
+<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       targe…    160625.</span>
+<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       targe…    149016.</span>
+<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></pre></body></html></div>
 <ul>
 <li>Calculate market-share targets for production at the company level.</li>
 </ul>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="no">ald</span>, <span class="no">scenario</span>, <span class="no">regions</span>, <span class="kw">by_company</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
-<span class="co">#&gt; This will result in company-level, weighted by the portfolio loan size, which is rarely useful.</span>
-<span class="co">#&gt; Did you mean to set one of these arguments to `FALSE`?</span>
-<span class="co">#&gt; # A tibble: 15,945 x 8</span>
-<span class="co">#&gt;    sector technology  year region scenario_source name_ald production_metr…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… target_cps      </span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… target_sds      </span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… target_sps      </span>
-<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… projected       </span>
-<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corporate_econo…</span>
-<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span>
-<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span>
-<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span>
-<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: production_value &lt;dbl&gt;</span></pre></body></html></div>
+<span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span>
+<span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span>
+<span class="co">#&gt; arguments to `FALSE`?</span>
+<span class="co">#&gt; # A tibble: 15,945 x 9</span>
+<span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… proje…      5140.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corpo…   8134869.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… proje…      2992.</span>
+<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corpo…   8134869.</span>
+<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></pre></body></html></div>
 </div>
   </div>
 

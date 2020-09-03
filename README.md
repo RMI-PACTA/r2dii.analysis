@@ -90,16 +90,16 @@ matched %>%
 #> # A tibble: 208 x 4
 #>    sector      year emission_factor_metric emission_factor_value
 #>    <chr>      <dbl> <chr>                                  <dbl>
-#>  1 automotive  2002 projected                              0.309
-#>  2 automotive  2003 projected                              0.306
-#>  3 automotive  2004 projected                              0.303
-#>  4 automotive  2005 projected                              0.300
-#>  5 automotive  2006 projected                              0.297
-#>  6 automotive  2007 projected                              0.294
-#>  7 automotive  2008 projected                              0.291
-#>  8 automotive  2009 projected                              0.288
-#>  9 automotive  2010 projected                              0.285
-#> 10 automotive  2011 projected                              0.282
+#>  1 automotive  2002 projected                              0.228
+#>  2 automotive  2003 projected                              0.226
+#>  3 automotive  2004 projected                              0.224
+#>  4 automotive  2005 projected                              0.222
+#>  5 automotive  2006 projected                              0.220
+#>  6 automotive  2007 projected                              0.218
+#>  7 automotive  2008 projected                              0.216
+#>  8 automotive  2009 projected                              0.214
+#>  9 automotive  2010 projected                              0.212
+#> 10 automotive  2011 projected                              0.210
 #> # … with 198 more rows
 ```
 
@@ -115,20 +115,20 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> # A tibble: 1,170 x 7
-#>    sector technology  year region scenario_source production_metr…
-#>    <chr>  <chr>      <int> <chr>  <chr>           <chr>           
-#>  1 autom… electric    2020 global demo_2020       projected       
-#>  2 autom… electric    2020 global demo_2020       corporate_econo…
-#>  3 autom… electric    2020 global demo_2020       target_cps      
-#>  4 autom… electric    2020 global demo_2020       target_sds      
-#>  5 autom… electric    2020 global demo_2020       target_sps      
-#>  6 autom… electric    2021 global demo_2020       projected       
-#>  7 autom… electric    2021 global demo_2020       corporate_econo…
-#>  8 autom… electric    2021 global demo_2020       target_cps      
-#>  9 autom… electric    2021 global demo_2020       target_sds      
-#> 10 autom… electric    2021 global demo_2020       target_sps      
-#> # … with 1,160 more rows, and 1 more variable: production_value <dbl>
+#> # A tibble: 1,170 x 8
+#>    sector technology  year region scenario_source metric production
+#>    <chr>  <chr>      <int> <chr>  <chr>           <chr>       <dbl>
+#>  1 autom… electric    2020 global demo_2020       proje…    145942.
+#>  2 autom… electric    2020 global demo_2020       corpo…   8134869.
+#>  3 autom… electric    2020 global demo_2020       targe…    145942.
+#>  4 autom… electric    2020 global demo_2020       targe…    145942.
+#>  5 autom… electric    2020 global demo_2020       targe…    145942.
+#>  6 autom… electric    2021 global demo_2020       proje…    148212.
+#>  7 autom… electric    2021 global demo_2020       corpo…   8183411.
+#>  8 autom… electric    2021 global demo_2020       targe…    148361.
+#>  9 autom… electric    2021 global demo_2020       targe…    160625.
+#> 10 autom… electric    2021 global demo_2020       targe…    149016.
+#> # … with 1,160 more rows, and 1 more variable: technology_share <dbl>
 ```
 
   - Or at the company level:
@@ -144,22 +144,23 @@ matched %>%
     by_company = TRUE
   )
 #> Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.
-#> This will result in company-level, weighted by the portfolio loan size, which is rarely useful.
-#> Did you mean to set one of these arguments to `FALSE`?
-#> # A tibble: 15,945 x 8
-#>    sector technology  year region scenario_source name_ald production_metr…
-#>    <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>           
-#>  1 autom… electric    2020 global demo_2020       shangha… projected       
-#>  2 autom… electric    2020 global demo_2020       shangha… corporate_econo…
-#>  3 autom… electric    2020 global demo_2020       shangha… target_cps      
-#>  4 autom… electric    2020 global demo_2020       shangha… target_sds      
-#>  5 autom… electric    2020 global demo_2020       shangha… target_sps      
-#>  6 autom… electric    2020 global demo_2020       sichuan… projected       
-#>  7 autom… electric    2020 global demo_2020       sichuan… corporate_econo…
-#>  8 autom… electric    2020 global demo_2020       sichuan… target_cps      
-#>  9 autom… electric    2020 global demo_2020       sichuan… target_sds      
-#> 10 autom… electric    2020 global demo_2020       sichuan… target_sps      
-#> # … with 15,935 more rows, and 1 more variable: production_value <dbl>
+#> This will result in company-level results, weighted by the portfolio
+#> loan size, which is rarely useful. Did you mean to set one of these
+#> arguments to `FALSE`?
+#> # A tibble: 15,945 x 9
+#>    sector technology  year region scenario_source name_ald metric production
+#>    <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>       <dbl>
+#>  1 autom… electric    2020 global demo_2020       shangha… proje…      5140.
+#>  2 autom… electric    2020 global demo_2020       shangha… corpo…   8134869.
+#>  3 autom… electric    2020 global demo_2020       shangha… targe…      5140.
+#>  4 autom… electric    2020 global demo_2020       shangha… targe…      5140.
+#>  5 autom… electric    2020 global demo_2020       shangha… targe…      5140.
+#>  6 autom… electric    2020 global demo_2020       sichuan… proje…      2992.
+#>  7 autom… electric    2020 global demo_2020       sichuan… corpo…   8134869.
+#>  8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.
+#>  9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.
+#> 10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.
+#> # … with 15,935 more rows, and 1 more variable: technology_share <dbl>
 ```
 
 ### Utility Functions
@@ -190,25 +191,25 @@ loanbook_joined_to_ald_scenario <- matched %>%
 # portfolio level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
-#> # A tibble: 702 x 8
-#>    sector_ald technology  year scenario  tmsr    smsp region weighted_production
-#>    <chr>      <chr>      <int> <chr>    <dbl>   <dbl> <chr>                <dbl>
-#>  1 automotive electric    2020 cps       1    0       global             145942.
-#>  2 automotive electric    2020 sds       1    0       global             145942.
-#>  3 automotive electric    2020 sps       1    0       global             145942.
-#>  4 automotive electric    2021 cps       1.12 0.00108 global             148212.
-#>  5 automotive electric    2021 sds       1.16 0.00653 global             148212.
-#>  6 automotive electric    2021 sps       1.14 0.00137 global             148212.
-#>  7 automotive electric    2022 cps       1.24 0.00213 global             150481.
-#>  8 automotive electric    2022 sds       1.32 0.0131  global             150481.
-#>  9 automotive electric    2022 sps       1.29 0.00273 global             150481.
-#> 10 automotive electric    2023 cps       1.35 0.00316 global             152751.
-#> # … with 692 more rows
+#> # A tibble: 702 x 9
+#>    sector_ald technology  year scenario  tmsr    smsp region weighted_produc…
+#>    <chr>      <chr>      <int> <chr>    <dbl>   <dbl> <chr>             <dbl>
+#>  1 automotive electric    2020 cps       1    0       global          145942.
+#>  2 automotive electric    2020 sds       1    0       global          145942.
+#>  3 automotive electric    2020 sps       1    0       global          145942.
+#>  4 automotive electric    2021 cps       1.12 0.00108 global          148212.
+#>  5 automotive electric    2021 sds       1.16 0.00653 global          148212.
+#>  6 automotive electric    2021 sps       1.14 0.00137 global          148212.
+#>  7 automotive electric    2022 cps       1.24 0.00213 global          150481.
+#>  8 automotive electric    2022 sds       1.32 0.0131  global          150481.
+#>  9 automotive electric    2022 sps       1.29 0.00273 global          150481.
+#> 10 automotive electric    2023 cps       1.35 0.00316 global          152751.
+#> # … with 692 more rows, and 1 more variable: weighted_technology_share <dbl>
 
 # company level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
-#> # A tibble: 9,567 x 9
+#> # A tibble: 9,567 x 10
 #>    sector_ald technology  year scenario  tmsr  smsp region name_ald
 #>    <chr>      <chr>      <int> <chr>    <dbl> <dbl> <chr>  <chr>   
 #>  1 automotive electric    2020 cps          1     0 global shangha…
@@ -221,7 +222,8 @@ loanbook_joined_to_ald_scenario %>%
 #>  8 automotive electric    2020 cps          1     0 global toyota …
 #>  9 automotive electric    2020 cps          1     0 global volkswa…
 #> 10 automotive electric    2020 cps          1     0 global wheego  
-#> # … with 9,557 more rows, and 1 more variable: weighted_production <dbl>
+#> # … with 9,557 more rows, and 2 more variables: weighted_production <dbl>,
+#> #   weighted_technology_share <dbl>
 ```
 
 [Get

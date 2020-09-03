@@ -132,6 +132,7 @@ You can also plot the technology-specific volume trend. All benchmarks must firs
 
 ```{r targets-and-ceiling}
   market_share_targets_portfolio <- market_share_targets_portfolio %>% 
+  select(-technology_share) %>% 
   pivot_wider(names_from = metric, 
               values_from = production) %>% 
   arrange(year) %>% 

@@ -1,0 +1,16 @@
+%>%	pipe
+.data	tidyeval
+:=	tidyeval
+as_label	tidyeval
+as_name	tidyeval
+enquo	tidyeval
+enquos	tidyeval
+expr	tidyeval
+join_ald_scenario	join_ald_scenario
+summarize_weighted_percent_change	summarize_weighted_production
+summarize_weighted_production	summarize_weighted_production
+sym	tidyeval
+syms	tidyeval
+target_market_share	target_market_share
+target_sda	target_sda
+tidyeval	tidyeval

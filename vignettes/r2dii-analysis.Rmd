@@ -117,8 +117,8 @@ tech_mix_data <- market_share_targets_portfolio %>%
 ggplot(
   data = tech_mix_data, 
   mapping = aes(
-    x = production_metric, 
-    y = production_value, 
+    x = metric, 
+    y = technology_share, 
     fill = technology
   )
 ) +
@@ -132,15 +132,16 @@ You can also plot the technology-specific volume trend. All benchmarks must firs
 
 ```{r targets-and-ceiling}
   market_share_targets_portfolio <- market_share_targets_portfolio %>% 
-  pivot_wider(names_from = production_metric, 
-              values_from = production_value) %>% 
+  select(-technology_share) %>% 
+  pivot_wider(names_from = metric, 
+              values_from = production) %>% 
   arrange(year) %>% 
   group_by(sector, technology, region, scenario_source) %>% 
   mutate(normalized_corporate_economy = corporate_economy * (first(projected)/first(corporate_economy))) %>% 
   select(-corporate_economy) %>% 
-  pivot_longer(names_to = "production_metric",
+  pivot_longer(names_to = "metric",
                cols = projected:normalized_corporate_economy,
-               values_to = "production_value")
+               values_to = "production")
 
 renewables_data <- filter(
   market_share_targets_portfolio,
@@ -150,26 +151,26 @@ renewables_data <- filter(
 )
 
 just_targets <- renewables_data %>%
-  filter(str_detect(production_metric, "target_"))
+  filter(str_detect(metric, "target_"))
 
 ceiling <- just_targets %>%
   group_by(sector, technology, year, region, scenario_source) %>%
   summarize(
-    production_metric = "target_ceiling",
-    production_value = max(production_value)
+    metric = "target_ceiling",
+    production = max(production)
   ) %>%
   group_by(sector, technology, region, scenario_source) %>%
-  mutate(production_value = max(production_value))
+  mutate(production = max(production))
 
 just_data <- renewables_data %>%
-  filter(!str_detect(production_metric, "target_"))
+  filter(!str_detect(metric, "target_"))
 
 targets_and_ceiling <- just_targets %>%
   bind_rows(ceiling) %>%
   group_by(year) %>%
-  arrange(year, production_value) %>%
+  arrange(year, production) %>%
   mutate(
-    previous_value = lag(production_value, default = 0),
+    previous_value = lag(production, default = 0),
   ) %>%
   filter(region == "global")
 ```
@@ -179,20 +180,20 @@ ggplot(
   data = targets_and_ceiling,
   mapping = aes(
     x = year,
-    y = production_value,
-    fill = production_metric
+    y = production,
+    fill = metric
   )
 ) +
   geom_ribbon(
     data = targets_and_ceiling,
-    mapping = aes(ymin = previous_value, ymax = production_value)
+    mapping = aes(ymin = previous_value, ymax = production)
   ) +
   geom_line(
     data = just_data, 
     mapping = aes(
       x = year, 
-      y = production_value, 
-      linetype = production_metric
+      y = production, 
+      linetype = metric
     )
   ) +
   facet_wrap(vars(sector, technology))

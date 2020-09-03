@@ -19,3 +19,4 @@
 ^vignettes/production-percent-change\.Rmd$
 ^cran-comments\.md$
 ^vignettes/articles$
+^revdep$

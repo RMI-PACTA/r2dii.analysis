@@ -21,9 +21,9 @@
 #' outputting production, weighted by relative loan-size. Set to `FALSE` to
 #' output the unweighted production values.
 #'
-#' @return A tibble with the summarized columns `production_metric`
-#' and `production_value`. If `by_company = TRUE`, the output will also
-#' have the column `name_ald`.
+#' @return A tibble with the summarized columns `metric`, `production` and
+#' `technology_share`. If `by_company = TRUE`, the output will also have the
+#' column `name_ald`.
 #' @export
 #'
 #' @family functions to calculate scenario targets

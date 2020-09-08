@@ -170,7 +170,7 @@ targets_and_ceiling <- just_targets %>%
   group_by(year) %>%
   arrange(year, production) %>%
   mutate(
-    previous_value = lag(production, default = 0),
+    previous_value = lag(production, default = 0)
   ) %>%
   filter(region == "global")
 ```

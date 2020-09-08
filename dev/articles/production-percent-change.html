@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -119,20 +119,21 @@
 <p>To calculate portfolio targets, we aggregate this value by summing over every company in the portfolio: <span class="math display">\[ \overline{p}_i (t) = \sum_j \left[  p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j} \right] \]</span></p>
 <p>Effectively, this is a loan-weighted average of the production attributed to each company in your portfolio. A significant result of this indicator choice is that small companies (with little production) will be favorably weighted, given that the loan to that company is sufficiently large. This can be useful to reflect large investments into green start-ups.</p>
 <p>To calculate the weighted production:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.analysis</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span>)
 
-<span class="no">master</span> <span class="kw">&lt;-</span> <span class="no">loanbook_demo</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="no">ald_demo</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>() <span class="kw">%&gt;%</span>
+<span class="kw">master</span> <span class="op">&lt;-</span> <span class="kw">loanbook_demo</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="kw">ald_demo</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/join_ald_scenario.html">join_ald_scenario</a></span>(
-    <span class="kw">ald</span> <span class="kw">=</span> <span class="no">ald_demo</span>,
-    <span class="kw">scenario</span> <span class="kw">=</span> <span class="no">scenario_demo_2020</span>,
-    <span class="kw">region_isos</span> <span class="kw">=</span> <span class="no">region_isos_demo</span>
+    ald = <span class="kw">ald_demo</span>,
+    scenario = <span class="kw">scenario_demo_2020</span>,
+    region_isos = <span class="kw">region_isos_demo</span>
   )
 
-<span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(<span class="no">master</span>)
+<span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_production</a></span>(<span class="kw">master</span>)
 <span class="co">#&gt; # A tibble: 138 x 5</span>
 <span class="co">#&gt;    sector_ald technology  year weighted_production weighted_technology_share</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt;               &lt;dbl&gt;                     &lt;dbl&gt;</span>
@@ -146,7 +147,8 @@
 <span class="co">#&gt;  8 automotive hybrid      2020             425303.                    0.0973</span>
 <span class="co">#&gt;  9 automotive hybrid      2021             416061.                    0.0971</span>
 <span class="co">#&gt; 10 automotive hybrid      2022             406818.                    0.0970</span>
-<span class="co">#&gt; # … with 128 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 128 more rows</span>
+</pre></div>
 </div>
 <div id="weighted-percent-change-in-production" class="section level2">
 <h2 class="hasAnchor">
@@ -157,8 +159,9 @@
 <p>We aggregate the percent-change in production for each company to the portfolio-level, by using the same loan-weighted average as above. In particular, for each loan <span class="math inline">\(l_j\)</span> to company <span class="math inline">\(j\)</span>, we have: <span class="math display">\[ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} * \dfrac{l_j}{\sum_j l_j} \right]\]</span></p>
 <p>It should be noted that the percent change, <span class="math inline">\(\chi\)</span>, is undefined for 0 initial production. Intuitively, this makes sense, since you would require an “infinite percent” build-out to grow to anything from 0. For this reason, any company having 0 initial production is filtered out prior to calculating the percent change indicator.</p>
 <p>To calculate the weighted percent change:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># using the master dataset defined in the previous chunk:</span>
-<span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change</a></span>(<span class="no">master</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co"># using the master dataset defined in the previous chunk:</span>
+<span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change</a></span>(<span class="kw">master</span>)
 <span class="co">#&gt; # A tibble: 138 x 4</span>
 <span class="co">#&gt;    sector_ald technology  year weighted_percent_change</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt;                   &lt;dbl&gt;</span>
@@ -172,7 +175,8 @@
 <span class="co">#&gt;  8 automotive hybrid      2020                0.00576 </span>
 <span class="co">#&gt;  9 automotive hybrid      2021                0.00547 </span>
 <span class="co">#&gt; 10 automotive hybrid      2022                0.00518 </span>
-<span class="co">#&gt; # … with 128 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 128 more rows</span>
+</pre></div>
 </div>
   </div>
 
@@ -191,7 +195,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

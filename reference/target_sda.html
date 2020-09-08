@@ -77,13 +77,16 @@ to calculate these targets." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../articles/r2dii-analysis.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -98,6 +101,9 @@ to calculate these targets." />
     </li>
     <li>
       <a href="../articles/target-market-share.html">Market Share Approach</a>
+    </li>
+    <li>
+      <a href="../articles/production-percent-change.html">Indicator Choices: Weighted Production vs. Weighted Percent Change in Production</a>
     </li>
   </ul>
 </li>
@@ -153,7 +159,13 @@ portfolio-level, otherwise referred to as "emissions factors". It uses the
 to calculate these targets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>target_sda</span>(<span class='no'>data</span>, <span class='no'>ald</span>, <span class='no'>co2_intensity_scenario</span>, <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>target_sda</span>(
+  <span class='kw'>data</span>,
+  <span class='kw'>ald</span>,
+  <span class='kw'>co2_intensity_scenario</span>,
+  use_credit_limit = <span class='fl'>FALSE</span>,
+  by_company = <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,6 +190,12 @@ to calculate these targets.</p>
 the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to instead use the column
 <code>loan_size_credit_limit</code>.</p></td>
     </tr>
+    <tr>
+      <th>by_company</th>
+      <td><p>Logical vector of length 1. <code>FALSE</code> defaults to outputting
+<code>weighted_production_value</code> at the portfolio-level. Set to <code>TRUE</code> to output
+<code>weighted_production_value</code> at the company-level.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -198,84 +216,129 @@ calculated portfolio target emissions factors (see column
 <code><a href='target_market_share.html'>target_market_share</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>installed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.data"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>&amp;&amp;</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.match"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='kw'>if</span> (!<span class='no'>installed</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Please install r2dii.match and r2dii.data"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>installed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.match"</span>, quietly = <span class='fl'>TRUE</span>) <span class='op'>&amp;&amp;</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.data"</span>, quietly = <span class='fl'>TRUE</span>)
+<span class='co'>if</span> (<span class='op'>!</span><span class='kw'>installed</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Please install r2dii.match and r2dii.data"</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.data</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://2degreesinvesting.github.io/r2dii.match'>r2dii.match</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://2degreesinvesting.github.io/r2dii.data'>r2dii.data</a></span>)
 
-<span class='no'>valid_matches</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>) <span class='kw'>%&gt;%</span>
-  <span class='co'># WARNING: Remember to validate matches (see `?prioritize`)</span>
-  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>()
+<span class='co'># Example datasets from r2dii.data</span>
+<span class='kw'>loanbook</span> <span class='op'>&lt;-</span> <span class='kw'>loanbook_demo</span>
+<span class='kw'>ald</span> <span class='op'>&lt;-</span> <span class='kw'>ald_demo</span>
+<span class='kw'>co2_scenario</span> <span class='op'>&lt;-</span> <span class='kw'>co2_intensity_scenario_demo</span>
 
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='no'>valid_matches</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>target_sda</span>(
-    <span class='kw'>ald</span> <span class='kw'>=</span> <span class='no'>ald_demo</span>,
-    <span class='kw'>co2_intensity_scenario</span> <span class='kw'>=</span> <span class='no'>co2_intensity_scenario_demo</span>
-  )
+<span class='co'># WARNING: Remember to validate matches (see `?prioritize`)</span>
+<span class='kw'>matched</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='kw'>loanbook</span>, <span class='kw'>ald</span>))
+
+<span class='co'># You may need to clean your data</span>
+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span>(<span class='kw'>ald</span><span class='op'>$</span><span class='kw'>emission_factor</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>target_sda</span>(<span class='kw'>matched</span>, <span class='kw'>ald</span>, co2_intensity_scenario = <span class='kw'>co2_scenario</span>))
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 208 x 4</span><span>
+#&gt;    sector      year emission_factor_metric emission_factor_value
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>002 projected                              0.228
+#&gt; </span><span style='color: #555555;'> 2</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>003 projected                              0.226
+#&gt; </span><span style='color: #555555;'> 3</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>004 projected                              0.224
+#&gt; </span><span style='color: #555555;'> 4</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>005 projected                              0.222
+#&gt; </span><span style='color: #555555;'> 5</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>006 projected                              0.220
+#&gt; </span><span style='color: #555555;'> 6</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>007 projected                              0.218
+#&gt; </span><span style='color: #555555;'> 7</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>008 projected                              0.216
+#&gt; </span><span style='color: #555555;'> 8</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>009 projected                              0.214
+#&gt; </span><span style='color: #555555;'> 9</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>010 projected                              0.212
+#&gt; </span><span style='color: #555555;'>10</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>011 projected                              0.210
+#&gt; </span><span style='color: #555555;'># … with 198 more rows</span><span></div><div class='input'>
+<span class='kw'>ald2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>ald</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>emission_factor</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span>(<span class='kw'>ald2</span><span class='op'>$</span><span class='kw'>emission_factor</span>)
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='kw'>out</span> <span class='op'>&lt;-</span> <span class='fu'>target_sda</span>(<span class='kw'>matched</span>, <span class='kw'>ald2</span>, co2_intensity_scenario = <span class='kw'>co2_scenario</span>)
 
 <span class='co'># The output includes the portfolio's actual projected emissions factors, the</span>
 <span class='co'># scenario pathway emissions factors, and the portfolio's target emissions</span>
 <span class='co'># factors.</span>
-<span class='no'>out</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 28 x 4</span><span>
+<span class='kw'>out</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 208 x 4</span><span>
+#&gt;    sector      year emission_factor_metric emission_factor_value
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>002 projected                              0.228
+#&gt; </span><span style='color: #555555;'> 2</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>003 projected                              0.226
+#&gt; </span><span style='color: #555555;'> 3</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>004 projected                              0.224
+#&gt; </span><span style='color: #555555;'> 4</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>005 projected                              0.222
+#&gt; </span><span style='color: #555555;'> 5</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>006 projected                              0.220
+#&gt; </span><span style='color: #555555;'> 6</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>007 projected                              0.218
+#&gt; </span><span style='color: #555555;'> 7</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>008 projected                              0.216
+#&gt; </span><span style='color: #555555;'> 8</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>009 projected                              0.214
+#&gt; </span><span style='color: #555555;'> 9</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>010 projected                              0.212
+#&gt; </span><span style='color: #555555;'>10</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>011 projected                              0.210
+#&gt; </span><span style='color: #555555;'># … with 198 more rows</span><span></div><div class='input'>
+<span class='co'># Split-view by metric</span>
+<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='kw'>out</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>emission_factor_metric</span>)
+</div><div class='output co'>#&gt; $adjusted_scenario_demo
+#&gt; </span><span style='color: #555555;'># A tibble: 22 x 4</span><span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 projected                              0.664
-#&gt; </span><span style='color: #555555;'> 2</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 target                                 0.669
-#&gt; </span><span style='color: #555555;'> 3</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 scenario_benchmark                     0.7  
-#&gt; </span><span style='color: #555555;'> 4</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 projected                              0.665
-#&gt; </span><span style='color: #555555;'> 5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 target                                 0.612
-#&gt; </span><span style='color: #555555;'> 6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 scenario_benchmark                     0.64 
-#&gt; </span><span style='color: #555555;'> 7</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 projected                              0.666
-#&gt; </span><span style='color: #555555;'> 8</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 target                                 0.555
-#&gt; </span><span style='color: #555555;'> 9</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 scenario_benchmark                     0.580
-#&gt; </span><span style='color: #555555;'>10</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 projected                              0.667
-#&gt; </span><span style='color: #555555;'># … with 18 more rows</span><span></div><div class='input'>
-<span class='co'># Split view by metric</span>
-<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>out</span>, <span class='no'>out</span>$<span class='no'>emission_factor_metric</span>)</div><div class='output co'>#&gt; $projected
+#&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 adjusted_scenario_demo                 0.661
+#&gt; </span><span style='color: #555555;'> 2</span><span> steel   </span><span style='text-decoration: underline;'>2</span><span>020 adjusted_scenario_demo                 0.262
+#&gt; </span><span style='color: #555555;'> 3</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 adjusted_scenario_demo                 0.605
+#&gt; </span><span style='color: #555555;'> 4</span><span> steel   </span><span style='text-decoration: underline;'>2</span><span>021 adjusted_scenario_demo                 0.249
+#&gt; </span><span style='color: #555555;'> 5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 adjusted_scenario_demo                 0.548
+#&gt; </span><span style='color: #555555;'> 6</span><span> steel   </span><span style='text-decoration: underline;'>2</span><span>022 adjusted_scenario_demo                 0.236
+#&gt; </span><span style='color: #555555;'> 7</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 adjusted_scenario_demo                 0.491
+#&gt; </span><span style='color: #555555;'> 8</span><span> steel   </span><span style='text-decoration: underline;'>2</span><span>023 adjusted_scenario_demo                 0.222
+#&gt; </span><span style='color: #555555;'> 9</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>024 adjusted_scenario_demo                 0.435
+#&gt; </span><span style='color: #555555;'>10</span><span> steel   </span><span style='text-decoration: underline;'>2</span><span>024 adjusted_scenario_demo                 0.209
+#&gt; </span><span style='color: #555555;'># … with 12 more rows</span><span>
+#&gt; 
+#&gt; $corporate_economy
+#&gt; </span><span style='color: #555555;'># A tibble: 103 x 4</span><span>
+#&gt;    sector      year emission_factor_metric emission_factor_value
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>002 corporate_economy                      0.236
+#&gt; </span><span style='color: #555555;'> 2</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>003 corporate_economy                      0.237
+#&gt; </span><span style='color: #555555;'> 3</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>004 corporate_economy                      0.238
+#&gt; </span><span style='color: #555555;'> 4</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>005 corporate_economy                      0.240
+#&gt; </span><span style='color: #555555;'> 5</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>006 corporate_economy                      0.241
+#&gt; </span><span style='color: #555555;'> 6</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>007 corporate_economy                      0.242
+#&gt; </span><span style='color: #555555;'> 7</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>008 corporate_economy                      0.244
+#&gt; </span><span style='color: #555555;'> 8</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>009 corporate_economy                      0.245
+#&gt; </span><span style='color: #555555;'> 9</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>010 corporate_economy                      0.247
+#&gt; </span><span style='color: #555555;'>10</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>011 corporate_economy                      0.249
+#&gt; </span><span style='color: #555555;'># … with 93 more rows</span><span>
+#&gt; 
+#&gt; $projected
+#&gt; </span><span style='color: #555555;'># A tibble: 77 x 4</span><span>
+#&gt;    sector      year emission_factor_metric emission_factor_value
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>002 projected                              0.228
+#&gt; </span><span style='color: #555555;'> 2</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>003 projected                              0.226
+#&gt; </span><span style='color: #555555;'> 3</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>004 projected                              0.224
+#&gt; </span><span style='color: #555555;'> 4</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>005 projected                              0.222
+#&gt; </span><span style='color: #555555;'> 5</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>006 projected                              0.220
+#&gt; </span><span style='color: #555555;'> 6</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>007 projected                              0.218
+#&gt; </span><span style='color: #555555;'> 7</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>008 projected                              0.216
+#&gt; </span><span style='color: #555555;'> 8</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>009 projected                              0.214
+#&gt; </span><span style='color: #555555;'> 9</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>010 projected                              0.212
+#&gt; </span><span style='color: #555555;'>10</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>011 projected                              0.210
+#&gt; </span><span style='color: #555555;'># … with 67 more rows</span><span>
+#&gt; 
+#&gt; $target_demo
 #&gt; </span><span style='color: #555555;'># A tibble: 6 x 4</span><span>
 #&gt;   sector  year emission_factor_metric emission_factor_value
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 projected                              0.664
-#&gt; </span><span style='color: #555555;'>2</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 projected                              0.665
-#&gt; </span><span style='color: #555555;'>3</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 projected                              0.666
-#&gt; </span><span style='color: #555555;'>4</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 projected                              0.667
-#&gt; </span><span style='color: #555555;'>5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>024 projected                              0.668
-#&gt; </span><span style='color: #555555;'>6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>025 projected                              0.669
-#&gt; 
-#&gt; $scenario_benchmark
-#&gt; </span><span style='color: #555555;'># A tibble: 11 x 4</span><span>
-#&gt;    sector  year emission_factor_metric emission_factor_value
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 scenario_benchmark                     0.7  
-#&gt; </span><span style='color: #555555;'> 2</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 scenario_benchmark                     0.64 
-#&gt; </span><span style='color: #555555;'> 3</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 scenario_benchmark                     0.580
-#&gt; </span><span style='color: #555555;'> 4</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 scenario_benchmark                     0.52 
-#&gt; </span><span style='color: #555555;'> 5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>024 scenario_benchmark                     0.46 
-#&gt; </span><span style='color: #555555;'> 6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>025 scenario_benchmark                     0.4  
-#&gt; </span><span style='color: #555555;'> 7</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>030 scenario_benchmark                     0.39 
-#&gt; </span><span style='color: #555555;'> 8</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>035 scenario_benchmark                     0.38 
-#&gt; </span><span style='color: #555555;'> 9</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>040 scenario_benchmark                     0.25 
-#&gt; </span><span style='color: #555555;'>10</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>045 scenario_benchmark                     0.2  
-#&gt; </span><span style='color: #555555;'>11</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>050 scenario_benchmark                     0.1  
-#&gt; 
-#&gt; $target
-#&gt; </span><span style='color: #555555;'># A tibble: 11 x 4</span><span>
-#&gt;    sector  year emission_factor_metric emission_factor_value
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 target                                 0.669
-#&gt; </span><span style='color: #555555;'> 2</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 target                                 0.612
-#&gt; </span><span style='color: #555555;'> 3</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 target                                 0.555
-#&gt; </span><span style='color: #555555;'> 4</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 target                                 0.498
-#&gt; </span><span style='color: #555555;'> 5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>024 target                                 0.441
-#&gt; </span><span style='color: #555555;'> 6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>025 target                                 0.384
-#&gt; </span><span style='color: #555555;'> 7</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>030 target                                 0.375
-#&gt; </span><span style='color: #555555;'> 8</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>035 target                                 0.365
-#&gt; </span><span style='color: #555555;'> 9</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>040 target                                 0.242
-#&gt; </span><span style='color: #555555;'>10</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>045 target                                 0.195
-#&gt; </span><span style='color: #555555;'>11</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>050 target                                 0.1  
-#&gt; </div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>020 target_demo                            0.664
+#&gt; </span><span style='color: #555555;'>2</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>021 target_demo                            0.636
+#&gt; </span><span style='color: #555555;'>3</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>022 target_demo                            0.607
+#&gt; </span><span style='color: #555555;'>4</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>023 target_demo                            0.578
+#&gt; </span><span style='color: #555555;'>5</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>024 target_demo                            0.550
+#&gt; </span><span style='color: #555555;'>6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>025 target_demo                            0.521
+#&gt; </div><div class='input'>
+<span class='co'># Calculate company-level targets</span>
+<span class='kw'>out</span> <span class='op'>&lt;-</span> <span class='fu'>target_sda</span>(
+  <span class='kw'>matched</span>, <span class='kw'>ald2</span>,
+  co2_intensity_scenario = <span class='kw'>co2_scenario</span>,
+  by_company = <span class='fl'>TRUE</span>
+)
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -291,7 +354,7 @@ calculated portfolio target emissions factors (see column
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

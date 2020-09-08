@@ -31,12 +31,15 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../articles/r2dii-analysis.html">Get started</a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -52,6 +55,9 @@
     </li>
     <li>
       <a href="../articles/target-market-share.html">Market Share Approach</a>
+    </li>
+    <li>
+      <a href="../articles/production-percent-change.html">Indicator Choices: Weighted Production vs. Weighted Percent Change in Production</a>
     </li>
   </ul>
 </li>
@@ -91,7 +97,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="target-market-share_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Market Share Approach</h1>
@@ -108,7 +114,7 @@
 <div id="scenario-market-shares" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scenario-market-shares" class="anchor"></a>Scenario market-shares</h2>
-<p>Say that you want to study how a portfolio would perform in a specific climate scenario. How can you allocate scenario efforts to the production profile of your portfolio? You can do that in two ways -- by technology, or by sector.</p>
+<p>Say that you want to study how a portfolio would perform in a specific climate scenario. How can you allocate scenario efforts to the production profile of your portfolio? You can do that in two ways – by technology, or by sector.</p>
 <div id="market-share-by-technology" class="section level3">
 <h3 class="hasAnchor">
 <a href="#market-share-by-technology" class="anchor"></a>1. Market-share by technology</h3>
@@ -122,7 +128,7 @@
 <li>
 <span class="math inline">\(p_{i}^{tmsr}(t)\)</span> is the portfolio-specific target production for that technology.</li>
 </ul>
-<p>We define the "Technology Market Share Ratio" as:</p>
+<p>We define the “Technology Market Share Ratio” as:</p>
 <p><span class="math display">\[\dfrac{s_i(t)}{s_i(t_0)}\]</span></p>
 </div>
 <div id="market-share-by-sector" class="section level3">
@@ -131,51 +137,52 @@
 <p><span class="math display">\[p_{i}^{smsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)\]</span> where:</p>
 <ul>
 <li>
-<span class="math inline">\(P_i(t_0)\)</span> is the portfolio's total production in the sector at <span class="math inline">\(t_0\)</span>, and</li>
+<span class="math inline">\(P_i(t_0)\)</span> is the portfolio’s total production in the sector at <span class="math inline">\(t_0\)</span>, and</li>
 <li>
 <span class="math inline">\(S(t_0)\)</span> is the scenario total production at <span class="math inline">\(t_0\)</span>.</li>
 </ul>
-<p>We define the "Sector Market Share Percentage" as:</p>
+<p>We define the “Sector Market Share Percentage” as:</p>
 <p><span class="math display">\[\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\]</span></p>
 </div>
 </div>
 <div id="how-to-calculate-market-share-targets-for-a-given-scenario" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-calculate-market-share-targets-for-a-given-scenario" class="anchor"></a>How to calculate market-share targets for a given scenario</h2>
-<p>To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets. One of those datasets is a "matched" dataset (loanbook + asset-level data) that you can get with the package <a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a>. The datasets I use here come from the package <a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a>; they are fake but show how you should structure your own data.</p>
+<p>To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets. One of those datasets is a “matched” dataset (loanbook + asset-level data) that you can get with the package <a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a>. The datasets I use here come from the package <a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a>; they are fake but show how you should structure your own data.</p>
 <ul>
 <li>Use packages.</li>
 </ul>
-<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
-<span class="co">#&gt; Warning: package 'r2dii.data' was built under R version 4.0.2</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.analysis</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span>)
+</pre></div>
 <ul>
 <li>Match the loanbook to asset level data.</li>
 </ul>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">loanbook</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
-<span class="no">ald</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">loanbook</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
+<span class="kw">ald</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
 
-<span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="no">loanbook</span>, <span class="no">ald</span>) <span class="kw">%&gt;%</span>
+<span class="kw">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="kw">loanbook</span>, <span class="kw">ald</span>) <span class="op">%&gt;%</span>
   <span class="co"># WARNING: Remember to validate the output of match_name() before prioritize()</span>
   <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()
 
-<span class="no">matched</span>
+<span class="kw">matched</span>
 <span class="co">#&gt; # A tibble: 267 x 28</span>
-<span class="co">#&gt;    rowid id_loan id_direct_loant… name_direct_loa… id_intermediate…</span>
-<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1     6 L6      C304             Yukon Developme… &lt;NA&gt;            </span>
-<span class="co">#&gt;  2    13 L13     C297             Yuba City Cogen… &lt;NA&gt;            </span>
-<span class="co">#&gt;  3    20 L20     C287             Ytl Powerseraya… &lt;NA&gt;            </span>
-<span class="co">#&gt;  4    21 L21     C286             Ytl Power Inter… &lt;NA&gt;            </span>
-<span class="co">#&gt;  5    22 L22     C285             Ytl Corp Bhd     &lt;NA&gt;            </span>
-<span class="co">#&gt;  6    23 L23     C283             Ypic Internatio… &lt;NA&gt;            </span>
-<span class="co">#&gt;  7    24 L24     C282             Ypfb Corporacion &lt;NA&gt;            </span>
-<span class="co">#&gt;  8    25 L25     C281             Ypf Sa           &lt;NA&gt;            </span>
-<span class="co">#&gt;  9    26 L26     C280             Ypf Energia Ele… &lt;NA&gt;            </span>
-<span class="co">#&gt; 10    27 L27     C278             Younicos Ag      &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 23 more variables:</span>
-<span class="co">#&gt; #   name_intermediate_parent_1 &lt;chr&gt;, id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L13     C297             Yuba City Cogen… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  3 L20     C287             Ytl Powerseraya… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  4 L21     C286             Ytl Power Inter… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L22     C285             Ytl Corp Bhd     &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L23     C283             Ypic Internatio… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L24     C282             Ypfb Corporacion &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 257 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -184,50 +191,57 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span>
+</pre></div>
 <ul>
 <li>Calculate market-share targets for production at the portfolio level.</li>
 </ul>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># portfolio level targets</span>
-<span class="no">scenario</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/scenario_demo_2020.html">scenario_demo_2020</a></span>
-<span class="no">regions</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos_demo.html">region_isos_demo</a></span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co"># portfolio level targets</span>
+<span class="kw">scenario</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/scenario_demo_2020.html">scenario_demo_2020</a></span>
+<span class="kw">regions</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos_demo.html">region_isos_demo</a></span>
 
 
-<span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="no">ald</span>, <span class="no">scenario</span>, <span class="no">regions</span>)
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
-<span class="co">#&gt; # A tibble: 1,170 x 7</span>
-<span class="co">#&gt;    sector technology  year region scenario_source weighted_produc…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       normalized_corp…</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       target_sds      </span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       target_sps      </span>
-<span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       projected       </span>
-<span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       normalized_corp…</span>
-<span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       target_cps      </span>
-<span class="co">#&gt;  9 autom… hybrid      2020 global demo_2020       target_sds      </span>
-<span class="co">#&gt; 10 autom… hybrid      2020 global demo_2020       target_sps      </span>
-<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></pre></body></html></div>
+<span class="kw">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="kw">ald</span>, <span class="kw">scenario</span>, <span class="kw">regions</span>)
+<span class="co">#&gt; # A tibble: 1,170 x 8</span>
+<span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    145942.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corpo…   8134869.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       targe…    145942.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       proje…    148212.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corpo…   8183411.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    148361.</span>
+<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       targe…    160625.</span>
+<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       targe…    149016.</span>
+<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span>
+</pre></div>
 <ul>
 <li>Calculate market-share targets for production at the company level.</li>
 </ul>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="no">ald</span>, <span class="no">scenario</span>, <span class="no">regions</span>, <span class="kw">by_company</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="co">#&gt; Joining, by = c("sector", "technology", "green_or_brown")</span>
-<span class="co">#&gt; # A tibble: 15,945 x 8</span>
-<span class="co">#&gt;    sector technology  year region scenario_source name_ald weighted_produc…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… projected       </span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… normalized_corp…</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… target_cps      </span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… target_sds      </span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… target_sps      </span>
-<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… projected       </span>
-<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…</span>
-<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… target_cps      </span>
-<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… target_sds      </span>
-<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… target_sps      </span>
-<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: weighted_production_value &lt;dbl&gt;</span></pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span>(<span class="kw">ald</span>, <span class="kw">scenario</span>, <span class="kw">regions</span>, by_company = <span class="fl">TRUE</span>)
+<span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
+<span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span>
+<span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span>
+<span class="co">#&gt; arguments to `FALSE`?</span>
+<span class="co">#&gt; # A tibble: 15,945 x 9</span>
+<span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… proje…      5140.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corpo…   8134869.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
+<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… proje…      2992.</span>
+<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corpo…   8134869.</span>
+<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
+<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span>
+</pre></div>
 </div>
   </div>
 
@@ -246,7 +260,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

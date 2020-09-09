@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* The website now shows the News tab.
+
 # r2dii.analysis 0.1.0
 
 * `target_sda()` now correctly handles differing `country_of_domicile` inputs 

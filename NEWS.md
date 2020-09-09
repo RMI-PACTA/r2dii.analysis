@@ -1,5 +1,10 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now works as expected when some value of the column
+`scenario` is missing for some value of the column `region`. It no longer
+results in output columns `production` and `technology_share` of type "list"
+(#203).
+
 # r2dii.analysis 0.1.0
 
 * `target_sda()` now correctly handles differing `country_of_domicile` inputs 

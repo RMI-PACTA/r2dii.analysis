@@ -235,8 +235,11 @@ target_market_share <- function(data,
 
   data %>%
     pivot_longer(cols = starts_with("weighted_")) %>%
+    filter(!is.na(value)) %>%
     separate_metric_from_name() %>%
-    pivot_wider(names_from = .data$name) %>%
+    pivot_wider(names_from = .data$name, values_fn = list) %>%
+    tidyr::unnest(production) %>%
+    tidyr::unnest(technology_share) %>%
     ungroup()
 }
 

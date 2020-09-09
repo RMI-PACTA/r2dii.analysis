@@ -44,7 +44,7 @@ navbar:
 
   - text: "News"
     menu:
-    - text: "Release notes"
+    - text: "Releases"
     - text: "Version 0.1.0"
       href: https://2degreesinvesting.github.io/posts/2020-09-08-r2dii-analysis-0-1-0-is-now-on-cran/
     - text: "Version 0.0.1"

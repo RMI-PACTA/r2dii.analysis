@@ -219,27 +219,34 @@ target_market_share <- function(data,
       .x = .data$weighted_production_target,
       weighted_technology_share_target = .data$.x / sum(.data$.x),
       .x = NULL
-    ) %>%
+    )
+
+  data <- data %>%
+    abort_if_has_list_colum() %>%
     pivot_wider(
       names_from = .data$scenario,
-      values_from = c(.data$weighted_production_target, .data$weighted_technology_share_target),
+      values_from = c(
+        .data$weighted_production_target,
+        .data$weighted_technology_share_target
+      ),
       values_fn = list
     ) %>%
-    tidyr::unnest(starts_with("weighted_production_")) %>%
-    tidyr::unnest(starts_with("weighted_technology_share_")) %>%
+    unnest(where_(is.list))
+
+  data <- data %>%
     rename(
       weighted_production_projected = .data$weighted_production,
       weighted_technology_share_projected = .data$weighted_technology_share,
       sector = .data$sector_ald
-    )
-
-  data %>%
+    ) %>%
     pivot_longer(cols = starts_with("weighted_")) %>%
     filter(!is.na(.data$value)) %>%
-    separate_metric_from_name() %>%
-    pivot_wider(names_from = .data$name, values_fn = list) %>%
-    tidyr::unnest(.data$production) %>%
-    tidyr::unnest(.data$technology_share) %>%
+    separate_metric_from_name()
+
+  data %>%
+    abort_if_has_list_colum() %>%
+    pivot_wider(values_fn = list) %>%
+    unnest(where_(is.list)) %>%
     ungroup()
 }
 
@@ -280,6 +287,19 @@ maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
 
   group_by(data, !!!rlang::syms(groups))
 }
+
+abort_if_has_list_colum <- function(data) {
+  if (has_list_colum(data)) {
+    abort("`data` must have no list column.")
+  }
+
+  invisible(data)
+}
+
+has_list_colum <- function(data) {
+  any(vapply(data, is.list, logical(1)))
+}
+
 
 add_ald_benchmark <- function(data, ald, region_isos, by_company) {
   ald_with_benchmark <- ald %>%

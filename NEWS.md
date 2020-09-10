@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* The website's home page now thanks founders.
+
 * `target_market_share()` now works as expected when some value of the column
 `scenario` is missing for some value of the column `region`. It no longer
 results in output columns `production` and `technology_share` of type "list"

@@ -3,6 +3,6 @@
 #' @importFrom dplyr row_number select summarize tibble ungroup
 #' @importFrom glue glue
 #' @importFrom rlang %||% abort warn
-#' @importFrom tidyr pivot_longer pivot_wider
+#' @importFrom tidyr pivot_longer pivot_wider unnest
 #' @importFrom tidyselect one_of starts_with
 NULL

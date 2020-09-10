@@ -27,3 +27,16 @@ modify_at_ <- function(.x, .at, .f) {
   .x[[.at]] <- .f(.x[[.at]])
   .x
 }
+
+# Inspired by tidyselect:::where
+where_ <- function (fn) {
+  function(x, ...) {
+    out <- fn(x, ...)
+    if (!rlang::is_bool(out)) {
+      abort(
+        "`where()` must be used with functions that return `TRUE` or `FALSE`."
+      )
+    }
+    out
+  }
+}

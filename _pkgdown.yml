@@ -1,7 +1,7 @@
 destination: docs
 
 development:
-  mode: auto
+  mode: release
 
 template:
   params:

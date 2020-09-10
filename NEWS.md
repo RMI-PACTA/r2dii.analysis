@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* Change license to MIT.
+
 # r2dii.analysis 0.1.0
 
 * `target_sda()` now correctly handles differing `country_of_domicile` inputs 

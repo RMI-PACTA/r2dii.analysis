@@ -1,6 +1,7 @@
 # r2dii.analysis (development version)
 
 * Change license to MIT.
+* The website now shows the News tab.
 
 # r2dii.analysis 0.1.0
 

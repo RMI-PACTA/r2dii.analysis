@@ -446,3 +446,21 @@ test_that("with known input outputs `technology_share` as expected (#184)", {
     tolerance = 1e-3
   )
 })
+
+test_that("w/ some region missing some scenario outputs expected `production`
+          values (#203)", {
+  scenario <- fake_scenario(
+    scenario = c("cps", "sds", "sds"),
+    region = c("global", "global", "non opec"),
+    scenario_source = "weo_2019"
+  )
+
+  out <- target_market_share(fake_matched(), fake_ald(), scenario)
+
+  target_cps <- out %>% filter(metric == "target_cps") %>% split(.$region)
+  target_sds <- out %>% filter(metric == "target_sds") %>% split(.$region)
+
+  expect_equal(target_cps$global$production, 0.5)
+  expect_equal(target_sds$global$production, 0.5)
+  expect_equal(target_sds$`non opec`$production, 0.5)
+})

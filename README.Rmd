@@ -134,3 +134,10 @@ loanbook_joined_to_ald_scenario %>%
 
 [Get started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).
 
+```{r echo=FALSE}
+download.file("http://bit.ly/banks-thanks", thanks <- tempfile())
+```
+
+```{r child=thanks}
+
+```

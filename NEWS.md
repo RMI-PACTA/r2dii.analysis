@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* Change license to MIT.
+
 * The website's home page now thanks founders.
 
 * `target_market_share()` now works as expected when some value of the column

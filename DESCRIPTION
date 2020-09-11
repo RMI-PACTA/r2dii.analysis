@@ -28,7 +28,7 @@ Description: These tools help you to assess if a financial
     Transition Assessment; <https://2degrees-investing.org/>). Financial
     institutions use 'PACTA' to study how their capital allocation impacts
     the climate.
-License: GPL-3
+License: MIT + file LICENSE
 URL: https://github.com/2DegreesInvesting/r2dii.analysis
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.analysis/issues

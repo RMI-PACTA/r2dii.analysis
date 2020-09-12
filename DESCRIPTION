@@ -1,7 +1,7 @@
 Package: r2dii.analysis
 Title: Tools to Calculate Climate Targets for Financial
     Portfolios
-Version: 0.1.0.9000
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Jackson",
              family = "Hoffart",

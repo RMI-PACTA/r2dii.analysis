@@ -1,4 +1,4 @@
-# r2dii.analysis 0.1.1
+# r2dii.analysis (development version)
 
 * Change license to MIT.
 

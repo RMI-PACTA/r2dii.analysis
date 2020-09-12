@@ -457,8 +457,12 @@ test_that("w/ some region missing some scenario outputs expected `production`
 
   out <- target_market_share(fake_matched(), fake_ald(), scenario)
 
-  target_cps <- out %>% filter(metric == "target_cps") %>% split(.$region)
-  target_sds <- out %>% filter(metric == "target_sds") %>% split(.$region)
+  target_cps <- out %>%
+    filter(metric == "target_cps") %>%
+    split(.$region)
+  target_sds <- out %>%
+    filter(metric == "target_sds") %>%
+    split(.$region)
 
   expect_equal(target_cps$global$production, 0.5)
   expect_equal(target_sds$global$production, 0.5)

@@ -248,7 +248,7 @@ target_market_share <- function(data,
 pivot_wider2 <- function(data, ...) {
   abort_if_has_list_colums(data)
 
-  out <- suppressWarnings(pivot_wider(data,  ...))
+  out <- suppressWarnings(pivot_wider(data, ...))
   unnest_list_columns(out)
 }
 

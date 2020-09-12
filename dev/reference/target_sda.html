@@ -180,11 +180,11 @@ to calculate these targets.</p>
     </div>
 
     <pre class="usage"><span class='fu'>target_sda</span>(
-  <span class='no'>data</span>,
-  <span class='no'>ald</span>,
-  <span class='no'>co2_intensity_scenario</span>,
-  <span class='kw'>use_credit_limit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>data</span>,
+  <span class='kw'>ald</span>,
+  <span class='kw'>co2_intensity_scenario</span>,
+  use_credit_limit = <span class='fl'>FALSE</span>,
+  by_company = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -236,23 +236,25 @@ calculated portfolio target emissions factors (see column
 <code><a href='target_market_share.html'>target_market_share</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>installed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.match"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>&amp;&amp;</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.data"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='kw'>if</span> (!<span class='no'>installed</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Please install r2dii.match and r2dii.data"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>installed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.match"</span>, quietly = <span class='fl'>TRUE</span>) <span class='op'>&amp;&amp;</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"r2dii.data"</span>, quietly = <span class='fl'>TRUE</span>)
+<span class='co'>if</span> (<span class='op'>!</span><span class='kw'>installed</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Please install r2dii.match and r2dii.data"</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.data</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://2degreesinvesting.github.io/r2dii.match'>r2dii.match</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://2degreesinvesting.github.io/r2dii.data'>r2dii.data</a></span>)
 
 <span class='co'># Example datasets from r2dii.data</span>
-<span class='no'>loanbook</span> <span class='kw'>&lt;-</span> <span class='no'>loanbook_demo</span>
-<span class='no'>ald</span> <span class='kw'>&lt;-</span> <span class='no'>ald_demo</span>
-<span class='no'>co2_scenario</span> <span class='kw'>&lt;-</span> <span class='no'>co2_intensity_scenario_demo</span>
+<span class='kw'>loanbook</span> <span class='op'>&lt;-</span> <span class='kw'>loanbook_demo</span>
+<span class='kw'>ald</span> <span class='op'>&lt;-</span> <span class='kw'>ald_demo</span>
+<span class='kw'>co2_scenario</span> <span class='op'>&lt;-</span> <span class='kw'>co2_intensity_scenario_demo</span>
 
 <span class='co'># WARNING: Remember to validate matches (see `?prioritize`)</span>
-<span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='no'>loanbook</span>, <span class='no'>ald</span>))
+<span class='kw'>matched</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span>(<span class='kw'>loanbook</span>, <span class='kw'>ald</span>))
 
 <span class='co'># You may need to clean your data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span>(<span class='no'>ald</span>$<span class='no'>emission_factor</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>target_sda</span>(<span class='no'>matched</span>, <span class='no'>ald</span>, <span class='kw'>co2_intensity_scenario</span> <span class='kw'>=</span> <span class='no'>co2_scenario</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 208 x 4</span><span>
+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span>(<span class='kw'>ald</span><span class='op'>$</span><span class='kw'>emission_factor</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>target_sda</span>(<span class='kw'>matched</span>, <span class='kw'>ald</span>, co2_intensity_scenario = <span class='kw'>co2_scenario</span>))
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 208 x 4</span><span>
 #&gt;    sector      year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>002 projected                              0.228
@@ -266,14 +268,16 @@ calculated portfolio target emissions factors (see column
 #&gt; </span><span style='color: #555555;'> 9</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>010 projected                              0.212
 #&gt; </span><span style='color: #555555;'>10</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>011 projected                              0.210
 #&gt; </span><span style='color: #555555;'># … with 198 more rows</span><span></div><div class='input'>
-<span class='no'>ald2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>ald</span>, !<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>emission_factor</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span>(<span class='no'>ald2</span>$<span class='no'>emission_factor</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>target_sda</span>(<span class='no'>matched</span>, <span class='no'>ald2</span>, <span class='kw'>co2_intensity_scenario</span> <span class='kw'>=</span> <span class='no'>co2_scenario</span>)
+<span class='kw'>ald2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>ald</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>emission_factor</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span>(<span class='kw'>ald2</span><span class='op'>$</span><span class='kw'>emission_factor</span>)
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='kw'>out</span> <span class='op'>&lt;-</span> <span class='fu'>target_sda</span>(<span class='kw'>matched</span>, <span class='kw'>ald2</span>, co2_intensity_scenario = <span class='kw'>co2_scenario</span>)
 
 <span class='co'># The output includes the portfolio's actual projected emissions factors, the</span>
 <span class='co'># scenario pathway emissions factors, and the portfolio's target emissions</span>
 <span class='co'># factors.</span>
-<span class='no'>out</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 208 x 4</span><span>
+<span class='kw'>out</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 208 x 4</span><span>
 #&gt;    sector      year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>002 projected                              0.228
@@ -288,7 +292,8 @@ calculated portfolio target emissions factors (see column
 #&gt; </span><span style='color: #555555;'>10</span><span> automotive  </span><span style='text-decoration: underline;'>2</span><span>011 projected                              0.210
 #&gt; </span><span style='color: #555555;'># … with 198 more rows</span><span></div><div class='input'>
 <span class='co'># Split-view by metric</span>
-<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>out</span>, <span class='no'>out</span>$<span class='no'>emission_factor_metric</span>)</div><div class='output co'>#&gt; $adjusted_scenario_demo
+<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='kw'>out</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>emission_factor_metric</span>)
+</div><div class='output co'>#&gt; $adjusted_scenario_demo
 #&gt; </span><span style='color: #555555;'># A tibble: 22 x 4</span><span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -348,11 +353,12 @@ calculated portfolio target emissions factors (see column
 #&gt; </span><span style='color: #555555;'>6</span><span> cement  </span><span style='text-decoration: underline;'>2</span><span>025 target_demo                            0.521
 #&gt; </div><div class='input'>
 <span class='co'># Calculate company-level targets</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>target_sda</span>(
-  <span class='no'>matched</span>, <span class='no'>ald2</span>,
-  <span class='kw'>co2_intensity_scenario</span> <span class='kw'>=</span> <span class='no'>co2_scenario</span>,
-  <span class='kw'>by_company</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div></span></pre>
+<span class='kw'>out</span> <span class='op'>&lt;-</span> <span class='fu'>target_sda</span>(
+  <span class='kw'>matched</span>, <span class='kw'>ald2</span>,
+  co2_intensity_scenario = <span class='kw'>co2_scenario</span>,
+  by_company = <span class='fl'>TRUE</span>
+)
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -368,7 +374,7 @@ calculated portfolio target emissions factors (see column
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

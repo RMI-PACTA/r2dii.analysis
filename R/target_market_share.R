@@ -253,15 +253,11 @@ pivot_wider2 <- function(data, ...) {
 }
 
 unnest_list_columns <- function(data) {
-  if (tidyr_is_old()) {
+  if (utils::packageVersion("tidyr") < "1.1.2") {
     suppressWarnings(unnest(data))
   } else {
     unnest(data, where(is.list))
   }
-}
-
-tidyr_is_old <- function() {
-  utils::packageVersion("tidyr") < "1.1.2"
 }
 
 tmsr_or_smsp <- function() {

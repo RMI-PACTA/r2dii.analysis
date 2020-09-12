@@ -6,3 +6,5 @@
 #' @importFrom tidyr pivot_longer pivot_wider unnest
 #' @importFrom tidyselect one_of starts_with
 NULL
+
+globalVariables("where")

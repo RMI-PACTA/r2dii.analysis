@@ -222,16 +222,13 @@ target_market_share <- function(data,
     )
 
   data <- data %>%
-    abort_if_has_list_colum() %>%
-    pivot_wider(
+    pivot_wider2(
       names_from = .data$scenario,
       values_from = c(
         .data$weighted_production_target,
         .data$weighted_technology_share_target
-      ),
-      values_fn = list
-    ) %>%
-    unnest(where_(is.list))
+      )
+    )
 
   data <- data %>%
     rename(
@@ -244,10 +241,27 @@ target_market_share <- function(data,
     separate_metric_from_name()
 
   data %>%
-    abort_if_has_list_colum() %>%
-    pivot_wider(values_fn = list) %>%
-    unnest(where_(is.list)) %>%
+    pivot_wider2() %>%
     ungroup()
+}
+
+pivot_wider2 <- function(data, ...) {
+  abort_if_has_list_colums(data)
+
+  out <- suppressWarnings(pivot_wider(data,  ...))
+  unnest_list_columns(out)
+}
+
+unnest_list_columns <- function(data) {
+  if (tidyr_is_old()) {
+    suppressWarnings(unnest(data))
+  } else {
+    unnest(data, where(is.list))
+  }
+}
+
+tidyr_is_old <- function() {
+  utils::packageVersion("tidyr") < "1.1.2"
 }
 
 tmsr_or_smsp <- function() {
@@ -288,7 +302,7 @@ maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
   group_by(data, !!!rlang::syms(groups))
 }
 
-abort_if_has_list_colum <- function(data) {
+abort_if_has_list_colums <- function(data) {
   if (has_list_colum(data)) {
     abort("`data` must have no list column.")
   }

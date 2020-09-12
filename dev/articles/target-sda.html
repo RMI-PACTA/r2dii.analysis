@@ -118,7 +118,7 @@
 
       
 
-      </header><script src="target-sda_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sectoral Decarbonization Approach (SDA)</h1>
@@ -135,12 +135,12 @@
 <h2 class="hasAnchor">
 <a href="#sda-methodology" class="anchor"></a>SDA Methodology</h2>
 <p>The Sectoral Decarbonization Approach (SDA) is a method for setting corporate CO2 emissions intensity reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative (<a href="https://sciencebasedtargets.org/">SBTI</a>), an international initiative on science-based target setting for companies initiated by <a href="https://www.cdp.net/en">CDP</a>, the <a href="https://www.unglobalcompact.org/">United Nations Global Compact</a>, the World Resources Institute (<a href="https://www.wri.org/">WRI</a>), and the Worldwide Fund for Nature (<a href="https://www.worldwildlife.org/">WWF</a>).</p>
-<p>In the context of PACTA, this methodology is used to calculate emission factor targets for homogenous sectors (i.e. sectors with no technology-level scenario pathways).</p>
-<p>First, the distance, <span class="math inline">\(d\)</span>, between the company’s CO2 emissions intensity per unit production (or emissions factor), <span class="math inline">\(I^{Co}(t)\)</span> at some base year, <span class="math inline">\(t_0\)</span>, and a scenario target intensity in 2050, <span class="math inline">\(I^{Sc}(2050)\)</span> is calculated. The target intensity in 2050 can be taken from any relevant climate scenario:</p>
+<p>In the context of PACTA, this methodology is used to calculate emission factor targets for homogenous sectors (i.e. sectors with no technology-level scenario pathways).</p>
+<p>First, the distance, <span class="math inline">\(d\)</span>, between the company's CO2 emissions intensity per unit production (or emissions factor), <span class="math inline">\(I^{Co}(t)\)</span> at some base year, <span class="math inline">\(t_0\)</span>, and a scenario target intensity in 2050, <span class="math inline">\(I^{Sc}(2050)\)</span> is calculated. The target intensity in 2050 can be taken from any relevant climate scenario:</p>
 <p><span class="math display">\[d = I^{Co}(t_0) - I^{Sc}(2050)\]</span></p>
-<p>The company’s market share parameter, <span class="math inline">\(m(t)\)</span>, is defined as the company’s expected future activity, <span class="math inline">\(P^{Co}(t)\)</span> divided by the sector’s future activity, <span class="math inline">\(P^{Sc}(t)\)</span> to reflect the expected forward-looking market share of the company. This is given as a ratio to the company’s base year market share, derived from its activity, <span class="math inline">\(P^{Co}(t_0)\)</span> divided by the sector’s activity in the same year, <span class="math inline">\(P^{Sc}(t_0)\)</span>. In both cases the former is calculated per company, and the latter is determined from the climate scenario:</p>
+<p>The company's market share parameter, <span class="math inline">\(m(t)\)</span>, is defined as the company's expected future activity, <span class="math inline">\(P^{Co}(t)\)</span> divided by the sector's future activity, <span class="math inline">\(P^{Sc}(t)\)</span> to reflect the expected forward-looking market share of the company. This is given as a ratio to the company's base year market share, derived from its activity, <span class="math inline">\(P^{Co}(t_0)\)</span> divided by the sector's activity in the same year, <span class="math inline">\(P^{Sc}(t_0)\)</span>. In both cases the former is calculated per company, and the latter is determined from the climate scenario:</p>
 <p><span class="math display">\[m (t) = \dfrac{P^{Co}(t_0) / P^{Sc}(t_0)}{P^{Co}(t) / P^{Sc}(t)}\]</span></p>
-<p>It should be noted that this parameter does not capture the change in the market share of the company but rather the inverse. This is useful as it equates to a decreasing parameter when the company’s market share is increasing. This equates to larger reduction efforts when the companies market share is increasing over time.</p>
+<p>It should be noted that this parameter does not capture the change in the market share of the company but rather the inverse. This is useful as it equates to a decreasing parameter when the company's market share is increasing. This equates to larger reduction efforts when the companies market share is increasing over time.</p>
 <p>The sector decarbonization factor, <span class="math inline">\(p(t)\)</span> is defined as:</p>
 <p><span class="math display">\[ p(t) = \frac{I^{Sc}(t) - I^{Sc}(2050)}{I^{Sc}(t_0) - I^{Sc}(2050)}\]</span></p>
 <p>where <span class="math inline">\(I^{in}(t)\)</span> and <span class="math inline">\(I^{Sc}(t)\)</span> are the average market and scenario emission intensities respectively, at time <span class="math inline">\(t\)</span>.</p>
@@ -167,27 +167,24 @@
 <div id="calculating-sda-targets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#calculating-sda-targets" class="anchor"></a>Calculating SDA Targets</h2>
-<p>To calculate SDA targets you need to use the package r2dii.analysis and a number of datasets, including a “matched” dataset (loanbook + asset-level data) that you can get with the package <a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a>. The datasets I use here come from the package <a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a>; they are fake but show how you should structure your own data.</p>
+<p>To calculate SDA targets you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package <a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a>. The datasets I use here come from the package <a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a>; they are fake but show how you should structure your own data.</p>
 <ul>
 <li>Use packages.</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span>)
-</pre></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.analysis</span>)</pre></body></html></div>
 <ul>
 <li>Match the loanbook to asset level data.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">loanbook</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
-<span class="kw">ald</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">loanbook</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
+<span class="no">ald</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
 
-<span class="kw">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="kw">loanbook</span>, <span class="kw">ald</span>) <span class="op">%&gt;%</span>
+<span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="no">loanbook</span>, <span class="no">ald</span>) <span class="kw">%&gt;%</span>
   <span class="co"># WARNING: Remember to validate the output of match_name() before prioritize()</span>
   <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()
 
-<span class="kw">matched</span>
+<span class="no">matched</span>
 <span class="co">#&gt; # A tibble: 267 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
@@ -210,15 +207,13 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span>
-</pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></body></html></div>
 <ul>
 <li>Calculate SDA targets for CO2 emissions intensities:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">co2_intensity</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">co2_intensity</span> <span class="kw">&lt;-</span> <span class="kw pkg">r2dii.data</span><span class="kw ns">::</span><span class="no"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
 
-<span class="kw">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span>(<span class="kw">ald</span>, <span class="kw">co2_intensity</span>)
+<span class="no">matched</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span>(<span class="no">ald</span>, <span class="no">co2_intensity</span>)
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
 <span class="co">#&gt; # A tibble: 208 x 4</span>
 <span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
@@ -233,8 +228,7 @@
 <span class="co">#&gt;  8 automotive  2009 projected                              0.214</span>
 <span class="co">#&gt;  9 automotive  2010 projected                              0.212</span>
 <span class="co">#&gt; 10 automotive  2011 projected                              0.210</span>
-<span class="co">#&gt; # … with 198 more rows</span>
-</pre></div>
+<span class="co">#&gt; # … with 198 more rows</span></pre></body></html></div>
 </div>
   </div>
 
@@ -253,7 +247,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

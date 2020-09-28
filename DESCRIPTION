@@ -35,11 +35,11 @@ BugReports:
 Depends:
     R (>= 3.4)
 Imports: 
-    dplyr,
+    dplyr (>= 0.8.5),
     glue,
     magrittr,
     r2dii.data,
-    rlang (>= 0.1.2),
+    rlang,
     tidyr,
     tidyselect
 Suggests: 

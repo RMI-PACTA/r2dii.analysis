@@ -6,23 +6,18 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
-knitr::opts_chunk$set(
-  echo = FALSE, 
-  exercise = TRUE, 
-  exercise.eval = TRUE, 
-  exercise.timelimit = 60,
-  results = "hold"
-)
+knitr::opts_chunk$set(echo = FALSE)
 
-library(r2dii.data)
-library(r2dii.match)
-library(r2dii.analysis)
+# This code in a separate chunk run slowly or failed to run
+source("setup.R")
 
-loanbook <- loanbook_demo
-ald <- ald_demo
+# Reuse code in setup.R
+show_setup <- function(path = "setup.R") {
+  lines <- readLines(path, encoding = "UTF-8")
+  writeLines(r_chunk(lines))
+}
 
-matched <- match_name(loanbook, ald) %>%
-  prioritize()
+r_chunk <- function(x) c("```r\n", x, "\n```")
 ```
 
 ## Goal
@@ -65,26 +60,15 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis")
 
 * Use `r2dii.match::match_name()` to identify matches between your loanbook and the asset level data.
 
-```r
-# Packages
-library(r2dii.data)
-library(r2dii.match)
-library(r2dii.analysis)
-
-# Data
-loanbook <- loanbook_demo
-ald <- ald_demo
-
-# Match
-matched <- match_name(loanbook, ald) %>%
-  prioritize()
+```{r results='asis'}
+show_setup()
 ```
 
 ## Add Scenario Targets
 
 * Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
-```{r unlabeled-75, exercise.setup='setup'}
+```{r unlabeled-75, exercise=TRUE, exercise.eval=TRUE, exercise.setup='setup'}
 matched %>%
   target_sda(
     ald = ald,
@@ -94,7 +78,7 @@ matched %>%
 
 * Use `target_market_share` to calculate market-share scenario targets at the portfolio level:
 
-```{r unlabeled-85, exercise.setup='setup'}
+```{r unlabeled-85, exercise=TRUE, exercise.eval=TRUE, exercise.setup='setup'}
 matched %>%
   target_market_share(
     ald = ald,
@@ -105,7 +89,7 @@ matched %>%
 
 * Or at the company level:
 
-```{r unlabeled-96, exercise.setup='setup'}
+```{r unlabeled-96, exercise=TRUE, exercise.eval=TRUE, exercise.setup='setup'}
 matched %>%
   target_market_share(
     ald = ald,
@@ -122,7 +106,7 @@ The `target_*()` functions provide shortcuts for common operations. They wrap so
 * Use `join_ald_scenario()` to join a matched dataset to the relevant
 scenario data, and to pick assets in the relevant regions.
 
-```{r joint, exercise.setup='setup'}
+```{r joint, exercise=TRUE, exercise.eval=TRUE, exercise.setup='setup'}
 loanbook_joined_to_ald_scenario <- matched %>%
   join_ald_scenario(
     ald = ald,
@@ -134,13 +118,13 @@ loanbook_joined_to_ald_scenario <- matched %>%
 * Use `summarize_weighted_production()` with different grouping arguments to
 calculate scenario-targets:
 
-```{r portfolio-level, exercise.setup='joint'}
+```{r portfolio-level, exercise=TRUE, exercise.eval=TRUE, exercise.setup='joint'}
 # portfolio level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
 ```
 
-```{r company-level, exercise.setup='joint'}
+```{r company-level, exercise=TRUE, exercise.eval=TRUE, exercise.setup='joint'}
 # company level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)

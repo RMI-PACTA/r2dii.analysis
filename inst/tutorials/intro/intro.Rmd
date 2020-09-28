@@ -1,0 +1,146 @@
+---
+title: "Introduction to r2dii.analysis"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+    df_print: default
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+
+tutorial_options(
+  exercise.timelimit = 60,
+  exercise.eval = TRUE
+)
+
+# Code that prints anything to the console should be at the end of any one chunk
+knitr::opts_chunk$set(
+  echo = FALSE,
+  # Can't be set in tutorial_options()
+  exercise = TRUE,
+  # Problematic arguments: If not set this way, output breaks code
+  results = "hold",
+  collapse = FALSE
+  # error = FALSE,
+  # warning = FALSE,
+  # message = FALSE
+)
+```
+
+## Goal
+
+These tools help you to assess if a financial portfolio aligns with climate
+goals. They summarize key metrics attributed to the portfolio (e.g.
+production, emission factors), and calculate targets based on climate
+scenarios. They implement in R the last step of the free software 'PACTA'
+(Paris Agreement Capital Transition Assessment;
+<https://2degrees-investing.org/>). Financial institutions use 'PACTA' to
+study how their capital allocation impacts the climate.
+
+## Installation
+
+Before you install r2dii.analysis you may want to:
+
+* [Try an rstudio.cloud project with this package already installed](https://rstudio.cloud/project/1424833).
+* [Learn how to minimize installation errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
+
+When you are ready, install the released version of r2dii.analysis from CRAN with:
+
+```r
+install.packages("r2dii.analysis")
+```
+
+Or install the development version of r2dii.analysis from GitHub with:
+
+```r
+# install.packages("devtools")
+devtools::install_github("2DegreesInvesting/r2dii.analysis")
+```
+
+[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+
+## Example
+
+* Use `library()` to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them -- with `install.packages(c("r2dii.data", "r2dii.match"))` -- so you can reproduce our examples.
+
+```{r unlabeled-58, exercise.setup='setup'}
+library(r2dii.data)
+library(r2dii.match)
+library(r2dii.analysis)
+```
+
+* Use `r2dii.match::match_name()` to identify matches between your loanbook and the asset level data.
+
+```{r unlabeled-66, exercise.setup='unlabeled-58'}
+matched <- match_name(loanbook_demo, ald_demo) %>%
+  prioritize()
+```
+
+### Add Scenario Targets
+
+* Use `target_sda()` to calculate SDA targets of CO2 emissions.
+
+```{r unlabeled-75, exercise.setup='unlabeled-66'}
+matched %>%
+  target_sda(
+    ald = ald_demo,
+    co2_intensity_scenario = co2_intensity_scenario_demo
+  )
+```
+
+* Use `target_market_share` to calculate market-share scenario targets at the portfolio level:
+
+```{r unlabeled-85, exercise.setup='unlabeled-75'}
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo
+  )
+```
+
+* Or at the company level:
+
+```{r unlabeled-96, exercise.setup='unlabeled-85'}
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo,
+    by_company = TRUE
+  )
+```
+
+### Utility Functions
+
+The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
+
+* Use `join_ald_scenario()` to join a matched dataset to the relevant
+scenario data, and to pick assets in the relevant regions.
+
+```{r unlabeled-113, exercise.setup='unlabeled-96'}
+loanbook_joined_to_ald_scenario <- matched %>%
+  join_ald_scenario(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo
+  )
+```
+
+* Use `summarize_weighted_production()` with different grouping arguments to
+calculate scenario-targets:
+
+```{r unlabeled-125, exercise.setup='unlabeled-113'}
+# portfolio level
+loanbook_joined_to_ald_scenario %>%
+  summarize_weighted_production(scenario, tmsr, smsp, region)
+
+# company level
+loanbook_joined_to_ald_scenario %>%
+  summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
+```
+
+[Get started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).

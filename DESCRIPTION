@@ -48,7 +48,8 @@ Suggests:
     rmarkdown,
     roxygen2,
     spelling,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    learnr
 Encoding: UTF-8
 Language: en-US
 LazyData: true

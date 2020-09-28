@@ -21,3 +21,4 @@
 ^vignettes/articles$
 ^revdep$
 ^CRAN-RELEASE$
+^inst/tutorials/intro/intro\.Rmd$

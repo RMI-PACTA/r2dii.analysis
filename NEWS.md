@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* New tutorial "Introduction to r2dii.analysis" reuses README.Rmd (#219).
+
 # r2dii.analysis 0.1.1
 
 * Change license to MIT.

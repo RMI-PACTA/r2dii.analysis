@@ -1,18 +1,28 @@
 ---
 title: "Introduction to r2dii.analysis"
-output: 
-  learnr::tutorial:
-    progressive: true
-    allow_skip: true
-    df_print: default
+output: learnr::tutorial
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  exercise = TRUE, 
+  exercise.eval = TRUE, 
+  exercise.timelimit = 60,
+  results = "hold"
+)
 
-tutorial_options(exercise.timelimit = 60, exercise.eval = TRUE)
-knitr::opts_chunk$set(echo = FALSE, exercise = TRUE, results = "hold")
+library(r2dii.data)
+library(r2dii.match)
+library(r2dii.analysis)
+
+loanbook <- loanbook_demo
+ald <- ald_demo
+
+matched <- match_name(loanbook, ald) %>%
+  prioritize()
 ```
 
 ## Goal
@@ -47,31 +57,37 @@ devtools::install_github("2DegreesInvesting/r2dii.analysis")
 
 [How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
-## Example
+## Setup
 
 * Use `library()` to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them -- with `install.packages(c("r2dii.data", "r2dii.match"))` -- so you can reproduce our examples.
 
-```{r unlabeled-58, exercise.setup='setup'}
-library(r2dii.data)
-library(r2dii.match)
-library(r2dii.analysis)
-```
+* Load your data (here we use small, example datasets).
 
 * Use `r2dii.match::match_name()` to identify matches between your loanbook and the asset level data.
 
-```{r unlabeled-66, exercise.setup='unlabeled-58'}
-matched <- match_name(loanbook_demo, ald_demo) %>%
+```r
+# Packages
+library(r2dii.data)
+library(r2dii.match)
+library(r2dii.analysis)
+
+# Data
+loanbook <- loanbook_demo
+ald <- ald_demo
+
+# Match
+matched <- match_name(loanbook, ald) %>%
   prioritize()
 ```
 
-### Add Scenario Targets
+## Add Scenario Targets
 
 * Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
-```{r unlabeled-75, exercise.setup='unlabeled-66'}
+```{r unlabeled-75, exercise.setup='setup'}
 matched %>%
   target_sda(
-    ald = ald_demo,
+    ald = ald,
     co2_intensity_scenario = co2_intensity_scenario_demo
   )
 ```
@@ -81,7 +97,7 @@ matched %>%
 ```{r unlabeled-85, exercise.setup='unlabeled-75'}
 matched %>%
   target_market_share(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
@@ -92,14 +108,14 @@ matched %>%
 ```{r unlabeled-96, exercise.setup='unlabeled-85'}
 matched %>%
   target_market_share(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo,
     by_company = TRUE
   )
 ```
 
-### Utility Functions
+## Utility Functions
 
 The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
 
@@ -109,7 +125,7 @@ scenario data, and to pick assets in the relevant regions.
 ```{r unlabeled-113, exercise.setup='unlabeled-96'}
 loanbook_joined_to_ald_scenario <- matched %>%
   join_ald_scenario(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
@@ -122,7 +138,9 @@ calculate scenario-targets:
 # portfolio level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
+```
 
+```{r unlabeled-126, exercise.setup='unlabeled-125'}
 # company level
 loanbook_joined_to_ald_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)

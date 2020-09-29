@@ -168,6 +168,10 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#r2diianalysis-development-version" class="anchor"></a>r2dii.analysis (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li><p>Depend on dplyr &gt;= 0.8.5, explicitly. We commit to this version because the newer dplyr 1 is still relatively new, and represents a major change which some users initially resist.</p></li>
+<li><p>Relax dependency on rlang, as it is mostly driven dynamically by the by our recursive dependencies. For example, dplyr 0.8.5 depends on a specific version of rlang that is more recent than the version we explicitly depended on – which suggests that being explicit about rlang is unhelpful and misleading.</p></li>
+</ul>
 </div>
     <div id="r2diianalysis-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">

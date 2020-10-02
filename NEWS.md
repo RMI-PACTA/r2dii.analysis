@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* Hyperlinks on the "Get Started" tab of the website now points to correct links 
+  (#222 @apmanning)
+
 # r2dii.analysis 0.1.1
 
 * Change license to MIT.

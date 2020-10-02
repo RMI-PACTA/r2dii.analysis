@@ -3,6 +3,16 @@
 * Hyperlinks on the "Get Started" tab of the website now points to correct links 
   (#222 @apmanning)
 
+* Depend on dplyr >= 0.8.5, explicitly. We commit to this version because the
+  newer dplyr 1 is still relatively new, and represents a major change which
+  some users initially resist.
+
+* Relax dependency on rlang, as it is mostly driven dynamically by the 
+  by our recursive dependencies. For example, dplyr 0.8.5 depends on a specific
+  version of rlang that is more recent than the version we explicitly 
+  depended on -- which suggests that being explicit about rlang is unhelpful and
+  misleading.
+
 # r2dii.analysis 0.1.1
 
 * Change license to MIT.

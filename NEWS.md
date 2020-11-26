@@ -1,7 +1,9 @@
 # r2dii.analysis (development version)
 
+* Gains internal dataset `loanbook_demo` for more stable regression tests (#227).
+
 * Hyperlinks on the "Get Started" tab of the website now points to correct links 
-  (#222 @apmanning)
+  (#222 @apmanning).
 
 * Depend on dplyr >= 0.8.5, explicitly. We commit to this version because the
   newer dplyr 1 is still relatively new, and represents a major change which

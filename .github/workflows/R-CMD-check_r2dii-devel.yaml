@@ -79,8 +79,8 @@ jobs:
 
       - name: Install latest changes to reverse dependencies we maintain
         run: |
-          remotes::install_github("r2dii.data")
-          remotes::install_github("r2dii.match")
+          remotes::install_github("2DegreesInvesting/r2dii.data")
+          remotes::install_github("2DegreesInvesting/r2dii.match")
         shell: Rscript {0}
 
       - name: Session info

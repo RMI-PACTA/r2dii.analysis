@@ -12,7 +12,7 @@ on:
     branches:
       - master
 
-name: R-CMD-check
+name: R-CMD-check r2dii-devel
 
 jobs:
   R-CMD-check:

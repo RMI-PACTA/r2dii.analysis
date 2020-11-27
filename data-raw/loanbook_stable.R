@@ -16,13 +16,13 @@ install_version("r2dii.data", version = "0.1.4")
 library(r2dii.data)
 library(dplyr)
 
-loanbook_demo <- loanbook_demo %>%
+loanbook_stable <- loanbook_demo %>%
   left_join(
     select(nace_classification, code, sector, borderline),
     by = c(sector_classification_direct_loantaker = "code")
   )
 
-usethis::use_data(loanbook_demo, internal = TRUE)
+usethis::use_data(loanbook_stable, internal = TRUE)
 
 if (r2dii_data_installed) {
   install_version("r2dii.data", version = version)

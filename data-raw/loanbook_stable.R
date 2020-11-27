@@ -22,7 +22,11 @@ loanbook_stable <- loanbook_demo %>%
     by = c(sector_classification_direct_loantaker = "code")
   )
 
-usethis::use_data(loanbook_stable, internal = TRUE)
+usethis::use_data(
+  loanbook_stable,
+  internal = TRUE,
+  overwrite = TRUE
+  )
 
 if (r2dii_data_installed) {
   install_version("r2dii.data", version = version)

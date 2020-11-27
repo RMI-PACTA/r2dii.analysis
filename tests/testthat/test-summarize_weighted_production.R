@@ -186,7 +186,7 @@ test_that("preserves groups passed to ...", {
 })
 
 test_that("with demo data returns known value", {
-  master <- prioritize(match_name(loanbook_demo, ald_demo)) %>%
+  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,
@@ -381,7 +381,7 @@ test_that("with zero initial production errors with informative message", {
 })
 
 test_that("with demo data returns known value", {
-  master <- prioritize(match_name(loanbook_demo, ald_demo)) %>%
+  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,

@@ -77,7 +77,7 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Install latest changes to reverse dependencies we maintain
+      - name: Install devel version of other r2dii packages
         run: |
           remotes::install_github("2DegreesInvesting/r2dii.data")
           remotes::install_github("2DegreesInvesting/r2dii.match")

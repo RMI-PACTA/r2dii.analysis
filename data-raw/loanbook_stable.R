@@ -7,7 +7,7 @@
 
 r2dii_data_installed <- requireNamespace("r2dii.data", quietly = TRUE)
 
-if (r2dii_data_installed){
+if (r2dii_data_installed) {
   version <- packageVersion("r2dii.data")
 }
 
@@ -26,7 +26,7 @@ usethis::use_data(
   loanbook_stable,
   internal = TRUE,
   overwrite = TRUE
-  )
+)
 
 if (r2dii_data_installed) {
   install_version("r2dii.data", version = version)

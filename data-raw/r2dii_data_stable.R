@@ -10,7 +10,7 @@ if (r2dii_data_installed) {
   version <- packageVersion("r2dii.data")
 }
 
-install_version("r2dii.data", version = "0.1.4")
+devtools::install_version("r2dii.data", version = "0.1.4")
 
 library(r2dii.data)
 library(dplyr)
@@ -34,7 +34,7 @@ usethis::use_data(
 )
 
 if (r2dii_data_installed) {
-  install_version("r2dii.data", version = version)
+  devtools::install_version("r2dii.data", version = version)
 } else {
   remove.packages("r2dii.data")
 }

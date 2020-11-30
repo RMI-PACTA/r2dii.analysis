@@ -1,6 +1,7 @@
 # r2dii.analysis (development version)
 
-* New internal data `loanbook_stable` makes regression tests more stable (#227).
+* New internal data `loanbook_stable` and `region_isos_stable` make regression
+  tests more stable (#227).
 
 * Hyperlinks on the "Get Started" tab of the website now points to correct links 
   (#222 @apmanning).

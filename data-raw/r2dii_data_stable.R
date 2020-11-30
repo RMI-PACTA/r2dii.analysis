@@ -1,9 +1,8 @@
-# The purpose of this stable version of loanbook_demo is to mask the,
-# potentially unstable data coming from r2dii.data, for the purpose of testing.
-# In particular, the `sector` and `borderline` values are subject to change if
-# the classification system is updated, and this gives many false positives in
-# our regression tests. See the convo here:
-# https://github.com/2DegreesInvesting/r2dii.analysis/issues/227
+# The `*_stable` datasets help create regression tests independent from changes
+# in r2dii.data which might cause meaningless errors when checking for problems
+# in reverse dependencies of r2dii.data. For example, in `loanbook_demo`, values
+# of the columns `sector` and `borderline` may change if the classification
+# system is updated (see #227).
 
 r2dii_data_installed <- requireNamespace("r2dii.data", quietly = TRUE)
 

@@ -22,8 +22,14 @@ loanbook_stable <- loanbook_demo %>%
     by = c(sector_classification_direct_loantaker = "code")
   )
 
+
+# do the same for region_isos ------------------------------------------------
+
+region_isos_stable <- region_isos_demo
+
 usethis::use_data(
   loanbook_stable,
+  region_isos_stable,
   internal = TRUE,
   overwrite = TRUE
 )

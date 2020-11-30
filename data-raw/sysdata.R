@@ -23,6 +23,7 @@ region_isos_stable <- region_isos_demo
 
 nace_classification <- nace_classification %>%
   select(.data$code, .data$sector, .data$borderline)
+
 loanbook_stable <- left_join(
   loanbook_demo, nace_classification,
   by = c(sector_classification_direct_loantaker = "code")

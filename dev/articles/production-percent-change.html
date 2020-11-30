@@ -118,7 +118,8 @@
 
       
 
-      </header><script src="production-percent-change_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="production-percent-change_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="production-percent-change_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="production-percent-change_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Indicator Choices:</h1>
@@ -139,8 +140,8 @@
 <p>To calculate portfolio targets, we aggregate this value by summing over every company in the portfolio: <span class="math display">\[ \overline{p}_i (t) = \sum_j \left[  p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j} \right] \]</span></p>
 <p>Effectively, this is a loan-weighted average of the production attributed to each company in your portfolio. A significant result of this indicator choice is that small companies (with little production) will be favorably weighted, given that the loan to that company is sufficiently large. This can be useful to reflect large investments into green start-ups.</p>
 <p>To calculate the weighted production:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span>
 
@@ -167,7 +168,7 @@
 <span class="co">#&gt;  8 automotive hybrid      2020             425303.                    0.0973</span>
 <span class="co">#&gt;  9 automotive hybrid      2021             416061.                    0.0971</span>
 <span class="co">#&gt; 10 automotive hybrid      2022             406818.                    0.0970</span>
-<span class="co">#&gt; # … with 128 more rows</span></pre></div>
+<span class="co">#&gt; # … with 128 more rows</span></code></pre></div>
 </div>
 <div id="weighted-percent-change-in-production" class="section level2">
 <h2 class="hasAnchor">
@@ -178,8 +179,8 @@
 <p>We aggregate the percent-change in production for each company to the portfolio-level, by using the same loan-weighted average as above. In particular, for each loan <span class="math inline">\(l_j\)</span> to company <span class="math inline">\(j\)</span>, we have: <span class="math display">\[ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} * \dfrac{l_j}{\sum_j l_j} \right]\]</span></p>
 <p>It should be noted that the percent change, <span class="math inline">\(\chi\)</span>, is undefined for 0 initial production. Intuitively, this makes sense, since you would require an “infinite percent” build-out to grow to anything from 0. For this reason, any company having 0 initial production is filtered out prior to calculating the percent change indicator.</p>
 <p>To calculate the weighted percent change:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># using the master dataset defined in the previous chunk:</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># using the master dataset defined in the previous chunk:</span>
 <span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 138 x 4</span>
 <span class="co">#&gt;    sector_ald technology  year weighted_percent_change</span>
@@ -194,7 +195,7 @@
 <span class="co">#&gt;  8 automotive hybrid      2020                0.00576 </span>
 <span class="co">#&gt;  9 automotive hybrid      2021                0.00547 </span>
 <span class="co">#&gt; 10 automotive hybrid      2022                0.00518 </span>
-<span class="co">#&gt; # … with 128 more rows</span></pre></div>
+<span class="co">#&gt; # … with 128 more rows</span></code></pre></div>
 </div>
   </div>
 

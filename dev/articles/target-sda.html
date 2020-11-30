@@ -118,7 +118,8 @@
 
       
 
-      </header><script src="target-sda_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="target-sda_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="target-sda_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="target-sda_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sectoral Decarbonization Approach (SDA)</h1>
@@ -171,15 +172,15 @@
 <ul>
 <li>Use packages.</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
 <ul>
 <li>Match the loanbook to asset level data.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
 <span class="va">ald</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
 
 <span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">ald</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -209,12 +210,12 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
 <ul>
 <li>Calculate SDA targets for CO2 emissions intensities:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">co2_intensity</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">co2_intensity</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
 
 <span class="va">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span><span class="op">(</span><span class="va">ald</span>, <span class="va">co2_intensity</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
@@ -231,7 +232,7 @@
 <span class="co">#&gt;  8 automotive  2009 projected                              0.214</span>
 <span class="co">#&gt;  9 automotive  2010 projected                              0.212</span>
 <span class="co">#&gt; 10 automotive  2011 projected                              0.210</span>
-<span class="co">#&gt; # … with 198 more rows</span></pre></div>
+<span class="co">#&gt; # … with 198 more rows</span></code></pre></div>
 </div>
   </div>
 

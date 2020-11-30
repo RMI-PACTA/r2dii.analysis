@@ -147,12 +147,12 @@
 <a href="https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation">Learn how to minimize installation errors</a>.</li>
 </ul>
 <p>When you are ready, install the released version of r2dii.analysis from CRAN with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.analysis"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.analysis"</span><span class="op">)</span></code></pre></div>
 <p>Or install the development version of r2dii.analysis from GitHub with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.analysis"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.analysis"</span><span class="op">)</span></code></pre></div>
 <p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/">How to raise an issue?</a></p>
 </div>
 <div id="example" class="section level2">
@@ -161,24 +161,24 @@
 <ul>
 <li>Use <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them – with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages(c("r2dii.data", "r2dii.match"))</a></code> – so you can reproduce our examples.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
 <ul>
 <li>Use <code><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">r2dii.match::match_name()</a></code> to identify matches between your loanbook and the asset level data.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div id="add-scenario-targets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#add-scenario-targets" class="anchor"></a>Add Scenario Targets</h3>
 <ul>
 <li>Use <code><a href="reference/target_sda.html">target_sda()</a></code> to calculate SDA targets of CO2 emissions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">matched</span> <span class="op">%&gt;%</span>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">matched</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/target_sda.html">target_sda</a></span><span class="op">(</span>
     ald <span class="op">=</span> <span class="va">ald_demo</span>,
     co2_intensity_scenario <span class="op">=</span> <span class="va">co2_intensity_scenario_demo</span>
@@ -197,12 +197,12 @@
 <span class="co">#&gt;  8 automotive  2009 projected                              0.214</span>
 <span class="co">#&gt;  9 automotive  2010 projected                              0.212</span>
 <span class="co">#&gt; 10 automotive  2011 projected                              0.210</span>
-<span class="co">#&gt; # … with 198 more rows</span></pre></div>
+<span class="co">#&gt; # … with 198 more rows</span></code></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">matched</span> <span class="op">%&gt;%</span>
+<!-- end list --><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">matched</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
     ald <span class="op">=</span> <span class="va">ald_demo</span>,
     scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
@@ -221,12 +221,12 @@
 <span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    148361.</span>
 <span class="co">#&gt;  9 autom… electric    2021 global demo_2020       targe…    160625.</span>
 <span class="co">#&gt; 10 autom… electric    2021 global demo_2020       targe…    149016.</span>
-<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></pre></div>
+<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <ul>
 <li>Or at the company level:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">matched</span> <span class="op">%&gt;%</span>
+<!-- end list --><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">matched</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
     ald <span class="op">=</span> <span class="va">ald_demo</span>,
     scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
@@ -250,7 +250,7 @@
 <span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
 <span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
 <span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
-<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></pre></div>
+<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="utility-functions" class="section level3">
 <h3 class="hasAnchor">
@@ -259,18 +259,18 @@
 <ul>
 <li>Use <code><a href="reference/join_ald_scenario.html">join_ald_scenario()</a></code> to join a matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">loanbook_joined_to_ald_scenario</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
+<!-- end list --><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">loanbook_joined_to_ald_scenario</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/join_ald_scenario.html">join_ald_scenario</a></span><span class="op">(</span>
     ald <span class="op">=</span> <span class="va">ald_demo</span>,
     scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
     region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>
-  <span class="op">)</span></pre></div>
+  <span class="op">)</span></code></pre></div>
 <ul>
 <li>Use <code><a href="reference/summarize_weighted_production.html">summarize_weighted_production()</a></code> with different grouping arguments to calculate scenario-targets:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="co"># portfolio level</span>
+<!-- end list --><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># portfolio level</span>
 <span class="va">loanbook_joined_to_ald_scenario</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 702 x 9</span>
@@ -305,7 +305,7 @@
 <span class="co">#&gt;  9 automotive electric    2020 cps          1     0 global volkswa…</span>
 <span class="co">#&gt; 10 automotive electric    2020 cps          1     0 global wheego  </span>
 <span class="co">#&gt; # … with 9,557 more rows, and 2 more variables: weighted_production &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></pre></div>
+<span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></code></pre></div>
 <p><a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
 </div>
 </div>

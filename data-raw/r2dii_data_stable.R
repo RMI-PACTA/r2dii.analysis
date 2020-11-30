@@ -4,37 +4,35 @@
 # of the columns `sector` and `borderline` may change if the classification
 # system is updated (see #227).
 
-r2dii_data_installed <- requireNamespace("r2dii.data", quietly = TRUE)
-
-if (r2dii_data_installed) {
-  version <- packageVersion("r2dii.data")
-}
-
-devtools::install_version("r2dii.data", version = "0.1.4")
-
-library(r2dii.data)
 library(dplyr)
+library(fs)
+library(withr)
 
-loanbook_stable <- loanbook_demo %>%
-  left_join(
-    select(nace_classification, code, sector, borderline),
-    by = c(sector_classification_direct_loantaker = "code")
-  )
+# Access older version of r2dii.data without changing current version
+temp_lib <- tempdir()
+fs::dir_create(temp_lib)
 
-
-# do the same for region_isos ------------------------------------------------
+withr::with_libpaths(temp_lib, {
+  remotes::install_version("r2dii.data", version = "0.1.4")
+  region_isos_demo <- r2dii.data::region_isos_demo
+  nace_classification <- r2dii.data::nace_classification
+  loanbook_demo <- r2dii.data::loanbook_demo
+})
 
 region_isos_stable <- region_isos_demo
 
+nace_classification <- nace_classification %>%
+  select(.data$code, .data$sector, .data$borderline)
+loanbook_stable <- left_join(
+  loanbook_demo, nace_classification,
+  by = c(sector_classification_direct_loantaker = "code")
+)
+
 usethis::use_data(
-  loanbook_stable,
   region_isos_stable,
+  loanbook_stable,
   internal = TRUE,
   overwrite = TRUE
 )
 
-if (r2dii_data_installed) {
-  devtools::install_version("r2dii.data", version = version)
-} else {
-  remove.packages("r2dii.data")
-}
+fs::dir_delete(temp_lib)

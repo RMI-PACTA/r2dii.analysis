@@ -200,7 +200,7 @@ test_that("with demo data returns known value", {
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,
-      region_isos = region_isos_demo
+      region_isos = region_isos_stable
     )
 
   credit_limit0 <- summarize_weighted_production(master)
@@ -405,7 +405,7 @@ test_that("with demo data returns known value", {
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,
-      region_isos = region_isos_demo
+      region_isos = region_isos_stable
     )
 
   credit_limit0 <- summarize_weighted_percent_change(master)

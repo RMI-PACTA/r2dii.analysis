@@ -186,6 +186,13 @@ test_that("preserves groups passed to ...", {
 })
 
 test_that("with demo data returns known value", {
+  allows_reserved_columns <- exists(
+    'allow_reserved_columns',
+    where = asNamespace('r2dii.match'),
+    mode = 'function'
+  )
+  skip_if_not(allows_reserved_columns)
+
   restore <- options(r2dii.match.allow_reserved_columns = TRUE)
   on.exit(options(restore), add = TRUE)
 
@@ -384,6 +391,13 @@ test_that("with zero initial production errors with informative message", {
 })
 
 test_that("with demo data returns known value", {
+  allows_reserved_columns <- exists(
+    'allow_reserved_columns',
+    where = asNamespace('r2dii.match'),
+    mode = 'function'
+  )
+  skip_if_not(allows_reserved_columns)
+
   restore <- options(r2dii.match.allow_reserved_columns = TRUE)
   on.exit(options(restore), add = TRUE)
 

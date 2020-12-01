@@ -125,8 +125,7 @@ target_market_share <- function(data,
           !!!rlang::syms(summary_groups)
         )
       }
-    } %>%
-    add_ald_benchmark(ald, region_isos, by_company)
+    }
 
   target_groups <- c("sector_ald", "scenario", "year", "region")
 
@@ -240,8 +239,13 @@ target_market_share <- function(data,
     filter(!is.na(.data$value)) %>%
     separate_metric_from_name()
 
+  data <- data %>%
+    pivot_wider2()
+
+  ald_with_benchmark <- calculate_ald_benchmark(ald, region_isos, by_company)
+
   data %>%
-    pivot_wider2() %>%
+    rbind(ald_with_benchmark) %>%
     ungroup()
 }
 
@@ -311,8 +315,9 @@ has_list_colum <- function(data) {
 }
 
 
-add_ald_benchmark <- function(data, ald, region_isos, by_company) {
-  ald_with_benchmark <- ald %>%
+calculate_ald_benchmark <- function(ald, region_isos, by_company) {
+
+  out <- ald %>%
     filter(.data$is_ultimate_owner) %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
@@ -325,22 +330,25 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
     group_by(
       .data$sector, .data$technology, .data$year, .data$region, .data$source
     ) %>%
-    summarize(weighted_production_corporate_economy = sum(.data$production)) %>%
+    summarize(production = sum(.data$production)) %>%
     group_by(
       .data$sector, .data$year, .data$region, .data$source
     ) %>%
     mutate(
-      .x = .data$weighted_production_corporate_economy,
-      weighted_technology_share_corporate_economy = .data$.x / sum(.data$.x),
-      .x = NULL
+      .x = .data$production,
+      technology_share = .data$.x / sum(.data$.x),
+      .x = NULL,
+      metric = "corporate_economy"
+    ) %>%
+    rename(
+      scenario_source = "source"
     )
 
-  data %>%
-    left_join(ald_with_benchmark, by = c(
-      sector_ald = "sector",
-      technology = "technology",
-      year = "year",
-      region = "region",
-      scenario_source = "source"
-    ))
+  if(by_company){
+    out <- out %>%
+      mutate(name_ald = "corporate_economy")
+  }
+
+  out
+
 }

@@ -468,3 +468,34 @@ test_that("w/ some region missing some scenario outputs expected `production`
   expect_equal(target_sds$global$production, 0.5)
   expect_equal(target_sds$`non opec`$production, 0.5)
 })
+
+test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
+
+  matched <- fake_matched(
+    name_ald = "company a"
+    )
+
+  ald <- fake_ald(
+    name_company = c("company a", "company b"),
+    technology = c("ice", "electric"),
+    production = c(1,3)
+    )
+
+  scenario <- fake_scenario(
+    technology = c("electric", "ice")
+  )
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_stable
+    )
+
+  corporate_economy <- out %>%
+    filter(metric == "corporate_economy") %>%
+    split(.$technology)
+
+  expect_equal(corporate_economy$ice$technology_share, 0.25)
+  expect_equal(corporate_economy$electric$technology_share, 0.75)
+})

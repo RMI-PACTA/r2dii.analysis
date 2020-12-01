@@ -7,7 +7,7 @@ test_that("with fake data outputs known value", {
     fake_matched(),
     ald = fake_ald(),
     scenario = fake_scenario(),
-    region_isos = r2dii.data::region_isos_demo
+    region_isos = region_isos_stable
   )
 
   expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
@@ -19,7 +19,7 @@ test_that("returns visibly", {
       fake_matched(),
       ald = fake_ald(),
       scenario = fake_scenario(),
-      region_isos = r2dii.data::region_isos_demo
+      region_isos = region_isos_stable
     )
   )
 })
@@ -40,7 +40,7 @@ test_that("outputs expected names", {
     fake_matched(),
     ald = fake_ald(),
     scenario = fake_scenario(),
-    region_isos = r2dii.data::region_isos_demo
+    region_isos = region_isos_stable
   )
   expect_equal(
     sort(unique(names(out))),
@@ -51,7 +51,7 @@ test_that("outputs expected names", {
     fake_matched(new_column = "anything"),
     ald = fake_ald(),
     scenario = fake_scenario(),
-    region_isos = r2dii.data::region_isos_demo
+    region_isos = region_isos_stable
   )
   expect_equal(
     sort(unique(c(names(out2)), "new_column")),
@@ -71,7 +71,7 @@ test_that("is sensitive to region_isos", {
     fake_matched(),
     ald = fake_ald(),
     scenario = fake_scenario(scenario_source = "demo_2020"),
-    region_isos = r2dii.data::region_isos_demo
+    region_isos = region_isos_stable
   )
 
   expect_false(identical(out1, out2))
@@ -160,7 +160,7 @@ test_that("without `sector` throws no error", {
       without_sector,
       ald = fake_ald(),
       scenario = fake_scenario(),
-      region_isos = r2dii.data::region_isos_demo
+      region_isos = region_isos_stable
     )
   )
 })
@@ -268,7 +268,7 @@ test_that("outputs the same with upper/lower ald$sector or ald$technology", {
   matched <- prioritize(match_name(lbk, ald))
 
   scenario <- r2dii.data::scenario_demo_2020
-  regions <- r2dii.data::region_isos_demo
+  regions <- region_isos_stable
 
   out_lower <- join_ald_scenario(matched, ald, scenario, regions)
 

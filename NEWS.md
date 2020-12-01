@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share` now outputs all technologies present in `ald`, even if 
+  they are not present in `data` (#235).
+
 * New internal data `loanbook_stable` and `region_isos_stable` make regression
   tests more stable (#227).
 

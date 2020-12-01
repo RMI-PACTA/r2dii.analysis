@@ -470,16 +470,15 @@ test_that("w/ some region missing some scenario outputs expected `production`
 })
 
 test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
-
   matched <- fake_matched(
     name_ald = "company a"
-    )
+  )
 
   ald <- fake_ald(
     name_company = c("company a", "company b"),
     technology = c("ice", "electric"),
-    production = c(1,3)
-    )
+    production = c(1, 3)
+  )
 
   scenario <- fake_scenario(
     technology = c("electric", "ice")
@@ -490,7 +489,7 @@ test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
     ald,
     scenario,
     region_isos_stable
-    )
+  )
 
   corporate_economy <- out %>%
     filter(metric == "corporate_economy") %>%

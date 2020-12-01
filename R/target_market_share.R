@@ -316,7 +316,6 @@ has_list_colum <- function(data) {
 
 
 calculate_ald_benchmark <- function(ald, region_isos, by_company) {
-
   out <- ald %>%
     filter(.data$is_ultimate_owner) %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
@@ -344,11 +343,10 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
       scenario_source = "source"
     )
 
-  if(by_company){
+  if (by_company) {
     out <- out %>%
       mutate(name_ald = "corporate_economy")
   }
 
   out
-
 }

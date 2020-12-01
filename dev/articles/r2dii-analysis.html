@@ -165,7 +165,7 @@
 <span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">ald</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 267 x 28</span>
+<span class="co">#&gt; # A tibble: 217 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -178,7 +178,7 @@
 <span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -211,20 +211,20 @@
   <span class="op">)</span>
 
 <span class="va">market_share_targets_portfolio</span>
-<span class="co">#&gt; # A tibble: 1,170 x 8</span>
+<span class="co">#&gt; # A tibble: 3,492 x 8</span>
 <span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    145942.</span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       corpo…   8134869.</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    145942.</span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    145942.</span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       targe…    145942.</span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       proje…    148212.</span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       corpo…   8183411.</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    148361.</span>
-<span class="co">#&gt;  9 autom… electric    2021 global demo_2020       targe…    160625.</span>
-<span class="co">#&gt; 10 autom… electric    2021 global demo_2020       targe…    149016.</span>
-<span class="co">#&gt; # … with 1,160 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    324592.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       targe…    324592.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    324592.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    324592.</span>
+<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       proje…    339656.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       targe…    329191.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       targe…    352505.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    330435.</span>
+<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       proje…    354720.</span>
+<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       targe…    333693.</span>
+<span class="co">#&gt; # … with 3,482 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
@@ -241,20 +241,20 @@
 <span class="co">#&gt; arguments to `FALSE`?</span>
 
 <span class="va">market_share_targets_company</span>
-<span class="co">#&gt; # A tibble: 15,945 x 9</span>
+<span class="co">#&gt; # A tibble: 14,604 x 9</span>
 <span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       shangha… proje…      5140.</span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       shangha… corpo…   8134869.</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
-<span class="co">#&gt;  5 autom… electric    2020 global demo_2020       shangha… targe…      5140.</span>
-<span class="co">#&gt;  6 autom… electric    2020 global demo_2020       sichuan… proje…      2992.</span>
-<span class="co">#&gt;  7 autom… electric    2020 global demo_2020       sichuan… corpo…   8134869.</span>
-<span class="co">#&gt;  8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
-<span class="co">#&gt;  9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
-<span class="co">#&gt; 10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.</span>
-<span class="co">#&gt; # … with 15,935 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       toyota … proje…    324592.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       toyota … proje…    339656.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       toyota … targe…    329191.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       toyota … targe…    352505.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       toyota … targe…    330435.</span>
+<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       toyota … proje…    354720.</span>
+<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       toyota … targe…    333693.</span>
+<span class="co">#&gt; # … with 14,594 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">
@@ -383,7 +383,10 @@
       linetype <span class="op">=</span> <span class="va">metric</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning -</span>
+<span class="co">#&gt; Inf</span>
+<span class="co">#&gt; Warning: Removed 35 row(s) containing missing values (geom_path).</span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/plot-year-versus-weithed-production-value-1.png" width="100%"></p>
 </div>
 <div id="sda-target" class="section level3">

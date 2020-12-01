@@ -13,7 +13,7 @@ test_that("outputs a tibble", {
     fake_matched(),
     fake_ald(),
     fake_scenario(),
-    region_isos_demo
+    region_isos_stable
   )
   expect_is(out, "tbl_df")
 })
@@ -23,7 +23,7 @@ test_that("outputs is ungrouped", {
     fake_matched(),
     fake_ald(),
     fake_scenario(),
-    region_isos_demo
+    region_isos_stable
   )
   expect_false(dplyr::is_grouped_df(out))
 })
@@ -36,7 +36,7 @@ test_that("warns when input data is grouped", {
       grouped_data,
       fake_ald(),
       fake_scenario(),
-      region_isos_demo
+      region_isos_stable
     ),
     "Ungrouping"
   )
@@ -47,7 +47,7 @@ test_that("with fake data outputs known value", {
     fake_matched(),
     fake_ald(),
     fake_scenario(),
-    region_isos_demo
+    region_isos_stable
   )
 
   expect_known_value(out, "ref-target_market_share", update = FALSE)
@@ -88,7 +88,7 @@ test_that("with NAs in crucial columns errors with informative message", {
         data,
         fake_ald(),
         fake_scenario(),
-        region_isos_demo
+        region_isos_stable
       )
     )
   }
@@ -106,7 +106,7 @@ test_that("with NAs in crucial columns errors with informative message", {
         fake_matched(),
         data,
         fake_scenario(),
-        region_isos_demo
+        region_isos_stable
       )
     )
   }
@@ -122,7 +122,7 @@ test_that("with NAs in crucial columns errors with informative message", {
         fake_matched(),
         fake_ald(),
         data,
-        region_isos_demo
+        region_isos_stable
       )
     )
   }
@@ -144,7 +144,7 @@ test_that("outputs expected names", {
     fake_matched(),
     fake_ald(),
     fake_scenario(),
-    region_isos_demo
+    region_isos_stable
   )
 
   expect_named(
@@ -181,7 +181,7 @@ test_that("with known input outputs as expected", {
     smsp = c(0, 0, 0.34, -0.2)
   )
 
-  out <- target_market_share(portfolio, ald, scenario, region_isos_demo)
+  out <- target_market_share(portfolio, ald, scenario, region_isos_stable)
   out_target <- out %>%
     filter(metric == "target_sds") %>%
     arrange(.data$technology, .data$year)
@@ -212,7 +212,7 @@ test_that("with known input outputs as expected, at company level", {
     portfolio,
     ald,
     scenario,
-    region_isos_demo,
+    region_isos_stable,
     by_company = TRUE,
     weight_production = FALSE
   )
@@ -247,7 +247,7 @@ test_that("with known input outputs as expected, ald benchmark", {
     portfolio,
     ald,
     scenario,
-    region_isos_demo,
+    region_isos_stable,
     by_company = TRUE,
     weight_production = FALSE
   )
@@ -289,7 +289,7 @@ test_that("outputs identical values at start year (#47, #87)", {
     matched,
     ald,
     scenario,
-    region_isos_demo
+    region_isos_stable
   ) %>%
     filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
@@ -309,7 +309,7 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
       year = c(2020, 2020, 2021, 2021)
     ),
     fake_scenario(year = c(2020, 2021)),
-    region_isos_demo
+    region_isos_stable
   )
 
   corporate_economy_value <- out %>%
@@ -326,7 +326,7 @@ test_that(
         fake_matched() %>% select(-sector),
         fake_ald(),
         fake_scenario(),
-        region_isos_demo
+        region_isos_stable
       )
     )
   }
@@ -348,7 +348,7 @@ test_that("outputs known value with `weight_production` (#131)", {
     matched,
     ald = ald,
     scenario = fake_scenario(),
-    region_isos = region_isos_demo,
+    region_isos = region_isos_stable,
     weight_production = TRUE
   ) %>%
     split(.$metric)
@@ -359,7 +359,7 @@ test_that("outputs known value with `weight_production` (#131)", {
     matched,
     ald = ald,
     scenario = fake_scenario(),
-    region_isos = region_isos_demo,
+    region_isos = region_isos_stable,
     weight_production = FALSE
   ) %>%
     split(.$metric)
@@ -373,7 +373,7 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
       fake_matched(),
       ald = fake_ald(),
       scenario = fake_scenario(),
-      region_isos = region_isos_demo,
+      region_isos = region_isos_stable,
       by_company = TRUE,
       weight_production = TRUE
     ),
@@ -386,7 +386,7 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
     fake_matched(),
     fake_ald(),
     fake_scenario(),
-    region_isos_demo,
+    region_isos_stable,
     weight_production = TRUE
   )
 
@@ -394,7 +394,7 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
     fake_matched(),
     fake_ald(),
     fake_scenario(),
-    region_isos_demo,
+    region_isos_stable,
     weight_production = FALSE
   )
 
@@ -425,7 +425,7 @@ test_that("with known input outputs `technology_share` as expected (#184)", {
     matched,
     ald,
     scenario,
-    region_isos_demo
+    region_isos_stable
   ) %>%
     split(.$metric)
 

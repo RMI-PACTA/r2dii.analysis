@@ -128,6 +128,10 @@ target_market_share <- function(data,
     } %>%
     add_ald_benchmark(ald, region_isos, by_company)
 
+  if (nrow(data) == 0) {
+    return(empty_target_market_share_output())
+  }
+
   target_groups <- c("sector_ald", "scenario", "year", "region")
 
   initial_sector_summaries <- data %>%
@@ -343,4 +347,17 @@ add_ald_benchmark <- function(data, ald, region_isos, by_company) {
       region = "region",
       scenario_source = "source"
     ))
+}
+
+empty_target_market_share_output <- function() {
+  tibble(
+    sector = character(0),
+    technology = character(0),
+    year = integer(0),
+    region = character(0),
+    scenario_source = character(0),
+    metric = character(0),
+    production = numeric(0),
+    technology_share = numeric(0)
+  )
 }

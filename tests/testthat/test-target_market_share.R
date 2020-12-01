@@ -468,3 +468,28 @@ test_that("w/ some region missing some scenario outputs expected `production`
   expect_equal(target_sds$global$production, 0.5)
   expect_equal(target_sds$`non opec`$production, 0.5)
 })
+
+test_that("w/ no matching regions, outputs empty named tibble", {
+
+  out <- suppressWarnings(
+    target_market_share(
+      fake_matched(),
+      fake_ald(),
+      fake_scenario()
+    )
+  )
+
+  expect_equal(nrow(out), 0L)
+
+  good_names <- names(
+    target_market_share(
+      fake_matched(),
+      fake_ald(),
+      fake_scenario(),
+      region_isos_stable
+    )
+  )
+
+  expect_equal(setdiff(names(out), good_names), character(0))
+
+})

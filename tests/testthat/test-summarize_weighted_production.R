@@ -186,11 +186,21 @@ test_that("preserves groups passed to ...", {
 })
 
 test_that("with demo data returns known value", {
-  master <- prioritize(match_name(loanbook_demo, ald_demo)) %>%
+  allows_reserved_columns <- exists(
+    'allow_reserved_columns',
+    where = asNamespace('r2dii.match'),
+    mode = 'function'
+  )
+  skip_if_not(allows_reserved_columns)
+
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,
-      region_isos = region_isos_demo
+      region_isos = region_isos_stable
     )
 
   credit_limit0 <- summarize_weighted_production(master)
@@ -381,11 +391,21 @@ test_that("with zero initial production errors with informative message", {
 })
 
 test_that("with demo data returns known value", {
-  master <- prioritize(match_name(loanbook_demo, ald_demo)) %>%
+  allows_reserved_columns <- exists(
+    'allow_reserved_columns',
+    where = asNamespace('r2dii.match'),
+    mode = 'function'
+  )
+  skip_if_not(allows_reserved_columns)
+
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,
-      region_isos = region_isos_demo
+      region_isos = region_isos_stable
     )
 
   credit_limit0 <- summarize_weighted_percent_change(master)

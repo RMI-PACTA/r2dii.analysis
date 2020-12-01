@@ -470,7 +470,6 @@ test_that("w/ some region missing some scenario outputs expected `production`
 })
 
 test_that("w/ no matching regions, outputs empty named tibble", {
-
   out <- suppressWarnings(
     target_market_share(
       fake_matched(),
@@ -491,5 +490,4 @@ test_that("w/ no matching regions, outputs empty named tibble", {
   )
 
   expect_equal(setdiff(names(out), good_names), character(0))
-
 })

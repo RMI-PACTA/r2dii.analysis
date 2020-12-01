@@ -258,7 +258,7 @@ test_that("with known input outputs as expected, ald benchmark", {
 
   expect_equal(
     out_benchmark$production,
-    c(30, 90)
+    c(rep(30, 3), rep(90, 3))
   )
 })
 

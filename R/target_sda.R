@@ -144,8 +144,15 @@ target_sda <- function(data,
 
   corporate_economy <- calculate_market_average(ald_by_sector)
 
-  adjusted_scenario <- compute_ald_adjusted_scenario(
+  interpolate_groups <- c("scenario", "sector", "region")
+
+  interpolated_scenario <- interpolate_scenario_yearly(
     co2_intensity_scenario,
+    !!!rlang::syms(interpolate_groups)
+  )
+
+  adjusted_scenario <- compute_ald_adjusted_scenario(
+    interpolated_scenario,
     corporate_economy
   )
 
@@ -294,7 +301,7 @@ compute_loanbook_targets <- function(data,
                                      scenario_with_p,
                                      ...) {
   data %>%
-    inner_join(scenario_with_p, by = c("year", "sector")) %>%
+    full_join(scenario_with_p, by = c("year", "sector")) %>%
     group_by(...) %>%
     arrange(.data$year) %>%
     mutate(
@@ -370,4 +377,17 @@ empty_target_sda_output <- function() {
     emission_factor_metric = character(0),
     emission_factor_value = numeric(0)
   )
+}
+
+interpolate_scenario_yearly <- function(data, ...) {
+  data %>%
+    group_by(...) %>%
+    tidyr::complete(year = tidyr::full_seq(.data$year, 1)) %>%
+    mutate(
+      emission_factor = zoo::na.approx(
+        .data$emission_factor,
+        .data$year,
+        na.rm = FALSE
+      )
+    )
 }

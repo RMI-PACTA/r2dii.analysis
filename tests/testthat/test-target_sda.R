@@ -198,12 +198,24 @@ test_that("with known input outputs as expected", {
 
   expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
   expect_equal(
-    out$corporate_economy$emission_factor_value, c(06.45, 0.9, 0.8, 0.5)
+    out$corporate_economy$emission_factor_value, c(6.45, 0.9, 0.8, 0.5)
   )
-  expect_equal(out$adjusted_scenario_b2ds$emission_factor_value, c(6.45, 1.29))
-  expect_equal(out$adjusted_scenario_sds$emission_factor_value, c(6.45, 5.16))
-  expect_equal(out$target_b2ds$emission_factor_value, c(0.9, 1.29))
-  expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
+  expect_equal(
+    round(out$adjusted_scenario_b2ds$emission_factor_value, 2),
+    c(6.45, 5.42, 4.39, 3.35, 2.32, 1.29)
+  )
+  expect_equal(
+    round(out$adjusted_scenario_sds$emission_factor_value, 2),
+    c(6.45, 6.19, 5.93, 5.68, 5.42, 5.16)
+  )
+  expect_equal(
+    round(out$target_b2ds$emission_factor_value, 2),
+    c(0.9, 0.98, 1.06, 1.13, 1.21, 1.29)
+  )
+  expect_equal(
+    round(out$target_sds$emission_factor_value, 2),
+    c(0.9, 1.75, 2.60, 3.46, 4.31, 5.16)
+  )
 })
 
 test_that("with no matching data warns", {
@@ -486,4 +498,53 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
     split(.$emission_factor_metric)
 
   expect_equal(out$projected$emission_factor_value, 0.5)
+})
+
+test_that("outputs same target regardless of years present in ald", {
+  matched <- fake_matched(
+    name_ald = "company a",
+    sector_ald = "steel"
+  )
+
+
+  ald_ten_year <- fake_ald(
+    sector = "steel",
+    technology = "steel",
+    name_company = c(rep("company a", 3), rep("company b", 3)),
+    emission_factor = c(rep(1.5, 3), rep(2.5, 3)),
+    year = rep(c(2020, 2025, 2030), 2),
+    plant_location = "DE"
+  )
+
+  ald_thirty_year <- fake_ald(
+    sector = "steel",
+    technology = "steel",
+    name_company = c(rep("company a", 4), rep("company b", 4)),
+    emission_factor = c(rep(1.5, 4), rep(2.5, 4)),
+    year = rep(c(2020, 2025, 2030, 2050), 2),
+    plant_location = "DE"
+  )
+
+  co2_scenario <- fake_co2_scenario(
+    sector = "steel",
+    year = c(2020, 2025, 2030, 2050),
+    emission_factor = c(2, 1.9, 1.8, 0.25)
+  )
+
+  out_ten_year <- target_sda(matched, ald_ten_year, co2_scenario) %>%
+    filter(
+      year == 2030,
+      emission_factor_metric == "target_b2ds"
+    )
+
+  out_thirty_year <- target_sda(matched, ald_thirty_year, co2_scenario) %>%
+    filter(
+      year == 2030,
+      emission_factor_metric == "target_b2ds"
+    )
+
+  expect_equal(
+    out_ten_year$emission_factor_value,
+    out_thirty_year$emission_factor_value
+  )
 })

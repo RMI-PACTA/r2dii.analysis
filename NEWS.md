@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_sda()` now interpolates input scenario file by year and correctly 
+  calculates target, regardless of the time-horizon of `ald` (#234).
+
 * `target_market_share()` now outputs empty named tibble if no matching region 
   definitions can be found (#236).
   

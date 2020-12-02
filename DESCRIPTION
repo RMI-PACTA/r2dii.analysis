@@ -41,7 +41,8 @@ Imports:
     r2dii.data,
     rlang,
     tidyr,
-    tidyselect
+    tidyselect,
+    zoo
 Suggests: 
     covr,
     r2dii.match,

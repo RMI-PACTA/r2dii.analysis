@@ -203,19 +203,19 @@ test_that("with known input outputs as expected", {
   expect_equal(
     round(out$adjusted_scenario_b2ds$emission_factor_value, 2),
     c(6.45, 5.42, 4.39, 3.35, 2.32, 1.29)
-    )
+  )
   expect_equal(
     round(out$adjusted_scenario_sds$emission_factor_value, 2),
     c(6.45, 6.19, 5.93, 5.68, 5.42, 5.16)
-    )
+  )
   expect_equal(
     round(out$target_b2ds$emission_factor_value, 2),
     c(0.9, 0.98, 1.06, 1.13, 1.21, 1.29)
-    )
+  )
   expect_equal(
     round(out$target_sds$emission_factor_value, 2),
     c(0.9, 1.75, 2.60, 3.46, 4.31, 5.16)
-    )
+  )
 })
 
 test_that("with no matching data warns", {
@@ -501,7 +501,6 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
 })
 
 test_that("outputs same target regardless of years present in ald", {
-
   matched <- fake_matched(
     name_ald = "company a",
     sector_ald = "steel"
@@ -513,7 +512,7 @@ test_that("outputs same target regardless of years present in ald", {
     technology = "steel",
     name_company = c(rep("company a", 3), rep("company b", 3)),
     emission_factor = c(rep(1.5, 3), rep(2.5, 3)),
-    year = rep(c(2020, 2025, 2030),2),
+    year = rep(c(2020, 2025, 2030), 2),
     plant_location = "DE"
   )
 
@@ -522,7 +521,7 @@ test_that("outputs same target regardless of years present in ald", {
     technology = "steel",
     name_company = c(rep("company a", 4), rep("company b", 4)),
     emission_factor = c(rep(1.5, 4), rep(2.5, 4)),
-    year = rep(c(2020, 2025, 2030, 2050),2),
+    year = rep(c(2020, 2025, 2030, 2050), 2),
     plant_location = "DE"
   )
 
@@ -547,6 +546,5 @@ test_that("outputs same target regardless of years present in ald", {
   expect_equal(
     out_ten_year$emission_factor_value,
     out_thirty_year$emission_factor_value
-    )
+  )
 })
-

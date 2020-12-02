@@ -144,12 +144,12 @@ target_sda <- function(data,
 
   corporate_economy <- calculate_market_average(ald_by_sector)
 
-  interpolate_groups <-  c("scenario", "sector", "region")
+  interpolate_groups <- c("scenario", "sector", "region")
 
   interpolated_scenario <- interpolate_scenario_yearly(
     co2_intensity_scenario,
     !!!rlang::syms(interpolate_groups)
-    )
+  )
 
   adjusted_scenario <- compute_ald_adjusted_scenario(
     interpolated_scenario,
@@ -388,6 +388,6 @@ interpolate_scenario_yearly <- function(data, ...) {
         .data$emission_factor,
         .data$year,
         na.rm = FALSE
-        )
       )
+    )
 }

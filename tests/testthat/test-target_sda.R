@@ -198,12 +198,24 @@ test_that("with known input outputs as expected", {
 
   expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
   expect_equal(
-    out$corporate_economy$emission_factor_value, c(06.45, 0.9, 0.8, 0.5)
+    out$corporate_economy$emission_factor_value, c(6.45, 0.9, 0.8, 0.5)
   )
-  expect_equal(out$adjusted_scenario_b2ds$emission_factor_value, c(6.45, 1.29))
-  expect_equal(out$adjusted_scenario_sds$emission_factor_value, c(6.45, 5.16))
-  expect_equal(out$target_b2ds$emission_factor_value, c(0.9, 1.29))
-  expect_equal(out$target_sds$emission_factor_value, c(0.9, 5.16))
+  expect_equal(
+    round(out$adjusted_scenario_b2ds$emission_factor_value, 2),
+    c(6.45, 5.42, 4.39, 3.35, 2.32, 1.29)
+    )
+  expect_equal(
+    round(out$adjusted_scenario_sds$emission_factor_value, 2),
+    c(6.45, 6.19, 5.93, 5.68, 5.42, 5.16)
+    )
+  expect_equal(
+    round(out$target_b2ds$emission_factor_value, 2),
+    c(0.9, 0.98, 1.06, 1.13, 1.21, 1.29)
+    )
+  expect_equal(
+    round(out$target_sds$emission_factor_value, 2),
+    c(0.9, 1.75, 2.60, 3.46, 4.31, 5.16)
+    )
 })
 
 test_that("with no matching data warns", {

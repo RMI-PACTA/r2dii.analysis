@@ -270,7 +270,7 @@
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
 
 <span class="va">sda_targets</span>
-<span class="co">#&gt; # A tibble: 29 x 4</span>
+<span class="co">#&gt; # A tibble: 105 x 4</span>
 <span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 cement  2020 projected                              0.664</span>
@@ -283,7 +283,7 @@
 <span class="co">#&gt;  8 cement  2021 corporate_economy                      0.670</span>
 <span class="co">#&gt;  9 cement  2022 corporate_economy                      0.671</span>
 <span class="co">#&gt; 10 cement  2023 corporate_economy                      0.672</span>
-<span class="co">#&gt; # … with 19 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 95 more rows</span></code></pre></div>
 </div>
 </div>
 <div id="visualization" class="section level2">
@@ -402,7 +402,8 @@
     color <span class="op">=</span> <span class="va">emission_factor_metric</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">sector</span><span class="op">)</span></code></pre></div>
+  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">sector</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Removed 31 row(s) containing missing values (geom_path).</span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>

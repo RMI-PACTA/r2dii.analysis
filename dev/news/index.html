@@ -169,6 +169,7 @@
 <a href="#r2diianalysis-development-version" class="anchor"></a>r2dii.analysis (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now interpolates input scenario file by year and correctly calculates target, regardless of the time-horizon of <code>ald</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/234'>#234</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now outputs empty named tibble if no matching region definitions can be found (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/236'>#236</a>).</p></li>
 <li><p><code>target_market_share</code> now outputs all technologies present in <code>ald</code>, even if they are not present in <code>data</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/235'>#235</a>).</p></li>
 <li><p>New internal data <code>loanbook_stable</code> and <code>region_isos_stable</code> make regression tests more stable (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/227'>#227</a>).</p></li>

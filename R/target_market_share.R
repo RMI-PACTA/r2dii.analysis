@@ -107,25 +107,23 @@ target_market_share <- function(data,
     by_company
   )
 
-  data <- data %>%
-    join_ald_scenario(ald, scenario, region_isos) %>%
-    {
-      if (weight_production) {
-        summarize_weighted_production(
-          .,
-          !!!rlang::syms(summary_groups),
-          use_credit_limit = use_credit_limit
-        )
-      } else {
-        summarize_unweighted_production(
-          .,
-          .data$sector_ald,
-          .data$technology,
-          .data$year,
-          !!!rlang::syms(summary_groups)
-        )
-      }
-    }
+  data <- join_ald_scenario(data, ald, scenario, region_isos)
+
+  if (weight_production) {
+    data <- summarize_weighted_production(
+      data,
+      !!!rlang::syms(summary_groups),
+      use_credit_limit = use_credit_limit
+    )
+  } else {
+    data <- summarize_unweighted_production(
+      data,
+      .data$sector_ald,
+      .data$technology,
+      .data$year,
+      !!!rlang::syms(summary_groups)
+    )
+  }
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())

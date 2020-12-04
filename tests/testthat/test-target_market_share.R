@@ -523,7 +523,6 @@ test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
 })
 
 test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)", {
-
   matched <- fake_matched(id_loan = c("L1", "L2"))
   ald <- fake_ald()
   scenario <- fake_scenario()
@@ -540,4 +539,24 @@ test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)",
   projected <- filter(out, metric == "projected")
 
   expect_equal(projected$production, ald$production)
+})
+
+test_that("w/ multiple loans to same company, `technology_share` sums to one (#218)", {
+  shares_sum_to_one <- function(data) {
+    technology_share_sum <- data %>%
+      group_by(sector, metric) %>%
+      summarize(share_sum = sum(technology_share), .groups = "drop")
+
+    all(technology_share_sum$share_sum == 1)
+  }
+
+  # multiple loans to same company
+  out <- target_market_share(
+    fake_matched(id_loan = c("L1", "L2")),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_stable
+  )
+
+  expect_true(shares_sum_to_one(out))
 })

@@ -222,7 +222,7 @@ test_that("with known input outputs as expected, at company level", {
 
   expect_equal(
     out_target$production,
-    c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
+    c(10, 90, 23.6, 152.9, 30, 95, 18, 57)
   )
 })
 

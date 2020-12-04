@@ -63,6 +63,8 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
 
 summarize_unweighted_production <- function(data, ...) {
   data %>%
+    select(-.data$id_loan) %>%
+    distinct() %>%
     group_by(...) %>%
     summarize(weighted_production = sum(.data$production), .groups = "keep") %>%
     ungroup(.data$technology) %>%

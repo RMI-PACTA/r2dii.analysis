@@ -222,7 +222,7 @@ test_that("with known input outputs as expected, at company level", {
 
   expect_equal(
     out_target$production,
-    c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
+    c(10, 90, 23.6, 152.9, 30, 95, 18, 57)
   )
 })
 
@@ -522,6 +522,26 @@ test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
   expect_equal(corporate_economy$electric$technology_share, 0.75)
 })
 
+test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)", {
+
+  matched <- fake_matched(id_loan = c("L1", "L2"))
+  ald <- fake_ald()
+  scenario <- fake_scenario()
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_stable,
+    by_company = TRUE,
+    weight_production = FALSE
+  )
+
+  projected <- filter(out, metric == "projected")
+
+  expect_equal(projected$production, ald$production)
+})
+
 test_that("w/ multiple loans to same company, `technology_share` sums to one (#218)", {
 
   shares_sum_to_one <- function(data) {
@@ -543,3 +563,4 @@ test_that("w/ multiple loans to same company, `technology_share` sums to one (#2
 
   expect_true(shares_sum_to_one(out))
 })
+

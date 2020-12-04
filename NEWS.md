@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now correctly outputs unweighted production when 
+  multiple loans exist for the same company (#239).
+
 * `target_sda()` now interpolates input scenario file by year and correctly 
   calculates target, regardless of the time-horizon of `ald` (#234).
 

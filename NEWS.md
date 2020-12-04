@@ -6,17 +6,14 @@
 * `target_market_share()` now correctly outputs unweighted production when 
   multiple loans exist for the same company (#239).
 
-* `target_sda()` now interpolates input scenario file by year and correctly 
-  calculates target, regardless of the time-horizon of `ald` (#234).
-
 * `target_market_share()` now outputs empty named tibble if no matching region 
   definitions can be found (#236).
   
 * `target_market_share` now outputs all technologies present in `ald`, even if 
   they are not present in `data` (#235).
 
-* New internal data `loanbook_stable` and `region_isos_stable` make regression
-  tests more stable (#227).
+* `target_sda()` now interpolates input scenario file by year and correctly 
+  calculates target, regardless of the time-horizon of `ald` (#234).
 
 * Hyperlinks on the "Get Started" tab of the website now points to correct links 
   (#222 @apmanning).
@@ -30,6 +27,9 @@
   version of rlang that is more recent than the version we explicitly 
   depended on -- which suggests that being explicit about rlang is unhelpful and
   misleading.
+
+* New internal data `loanbook_stable` and `region_isos_stable` make regression
+  tests more stable (#227).
 
 # r2dii.analysis 0.1.1
 

@@ -376,15 +376,13 @@ empty_target_market_share_output <- function() {
   )
 }
 
-reweight_technology_share <- function(data, ...){
+reweight_technology_share <- function(data, ...) {
   data %>%
     group_by(...) %>%
     mutate(
       .x = .data$weighted_technology_share,
-      weighted_technology_share = .data$.x/sum(.data$.x),
+      weighted_technology_share = .data$.x / sum(.data$.x),
       .x = NULL
     ) %>%
     ungroup()
-
-
 }

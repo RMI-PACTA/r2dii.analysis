@@ -523,10 +523,9 @@ test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
 })
 
 test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)", {
+
   matched <- fake_matched(id_loan = c("L1", "L2"))
-
   ald <- fake_ald()
-
   scenario <- fake_scenario()
 
   out <- target_market_share(

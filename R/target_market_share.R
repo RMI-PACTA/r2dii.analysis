@@ -125,6 +125,16 @@ target_market_share <- function(data,
     )
   }
 
+  reweighting_groups <- maybe_add_name_ald(
+    c("sector_ald", "region", "scenario", "scenario_source", "year"),
+    by_company
+  )
+
+  data <- reweight_technology_share(
+    data,
+    !!!rlang::syms(reweighting_groups)
+  )
+
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
   }
@@ -364,4 +374,17 @@ empty_target_market_share_output <- function() {
     production = numeric(0),
     technology_share = numeric(0)
   )
+}
+
+reweight_technology_share <- function(data, ...){
+  data %>%
+    group_by(...) %>%
+    mutate(
+      .x = weighted_technology_share,
+      weighted_technology_share = .data$.x/sum(.data$.x),
+      .x = NULL
+    ) %>%
+    ungroup()
+
+
 }

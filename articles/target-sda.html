@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -117,7 +117,8 @@
 
       
 
-      </header><script src="target-sda_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="target-sda_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="target-sda_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="target-sda_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sectoral Decarbonization Approach (SDA)</h1>
@@ -170,24 +171,23 @@
 <ul>
 <li>Use packages.</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
 <ul>
 <li>Match the loanbook to asset level data.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">loanbook</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
-<span class="kw">ald</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
+<span class="va">ald</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/ald_demo.html">ald_demo</a></span>
 
-<span class="kw">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span>(<span class="kw">loanbook</span>, <span class="kw">ald</span>) <span class="op">%&gt;%</span>
+<span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">ald</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co"># WARNING: Remember to validate the output of match_name() before prioritize()</span>
-  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span>()
+  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="kw">matched</span>
-<span class="co">#&gt; # A tibble: 267 x 28</span>
+<span class="va">matched</span>
+<span class="co">#&gt; # A tibble: 217 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -200,7 +200,7 @@
 <span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -209,31 +209,29 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span>
-</pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
 <ul>
 <li>Calculate SDA targets for CO2 emissions intensities:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">co2_intensity</span> <span class="op">&lt;-</span> <span class="kw">r2dii.data</span>::<span class="kw"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">co2_intensity</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
 
-<span class="kw">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span>(<span class="kw">ald</span>, <span class="kw">co2_intensity</span>)
+<span class="va">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span><span class="op">(</span><span class="va">ald</span>, <span class="va">co2_intensity</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
-<span class="co">#&gt; # A tibble: 208 x 4</span>
+<span class="co">#&gt; # A tibble: 508 x 4</span>
 <span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automotive  2002 projected                              0.228</span>
-<span class="co">#&gt;  2 automotive  2003 projected                              0.226</span>
-<span class="co">#&gt;  3 automotive  2004 projected                              0.224</span>
-<span class="co">#&gt;  4 automotive  2005 projected                              0.222</span>
-<span class="co">#&gt;  5 automotive  2006 projected                              0.220</span>
-<span class="co">#&gt;  6 automotive  2007 projected                              0.218</span>
-<span class="co">#&gt;  7 automotive  2008 projected                              0.216</span>
-<span class="co">#&gt;  8 automotive  2009 projected                              0.214</span>
-<span class="co">#&gt;  9 automotive  2010 projected                              0.212</span>
-<span class="co">#&gt; 10 automotive  2011 projected                              0.210</span>
-<span class="co">#&gt; # … with 198 more rows</span>
-</pre></div>
+<span class="co">#&gt;  1 automotive  2002 projected                              0.436</span>
+<span class="co">#&gt;  2 automotive  2003 projected                              0.425</span>
+<span class="co">#&gt;  3 automotive  2004 projected                              0.413</span>
+<span class="co">#&gt;  4 automotive  2005 projected                              0.402</span>
+<span class="co">#&gt;  5 automotive  2006 projected                              0.391</span>
+<span class="co">#&gt;  6 automotive  2007 projected                              0.380</span>
+<span class="co">#&gt;  7 automotive  2008 projected                              0.369</span>
+<span class="co">#&gt;  8 automotive  2009 projected                              0.358</span>
+<span class="co">#&gt;  9 automotive  2010 projected                              0.348</span>
+<span class="co">#&gt; 10 automotive  2011 projected                              0.337</span>
+<span class="co">#&gt; # … with 498 more rows</span></code></pre></div>
 </div>
   </div>
 

@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -164,6 +164,22 @@
       <small>Source: <a href='https://github.com/2DegreesInvesting/r2dii.analysis/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="r2diianalysis-012" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.2">
+<a href="#r2diianalysis-012" class="anchor"></a>r2dii.analysis 0.1.2<small> Unreleased </small>
+</h1>
+<ul>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now outputs <code>weighted_technology_share</code> that correctly sums to 1 when grouped by <code>sector</code>, <code>metric</code> and <code>secnario</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/218'>#218</a>).</p></li>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now correctly outputs unweighted production when multiple loans exist for the same company (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/239'>#239</a>).</p></li>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now outputs empty named tibble if no matching region definitions can be found (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/236'>#236</a>).</p></li>
+<li><p><code>target_market_share</code> now outputs all technologies present in <code>ald</code>, even if they are not present in <code>data</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/235'>#235</a>).</p></li>
+<li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now interpolates input scenario file by year and correctly calculates target, regardless of the time-horizon of <code>ald</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/234'>#234</a>).</p></li>
+<li><p>Hyperlinks on the “Get Started” tab of the website now points to correct links (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/222'>#222</a> <a href='https://github.com/apmanning'>@apmanning</a>).</p></li>
+<li><p>Depend on dplyr &gt;= 0.8.5, explicitly. We commit to this version because the newer dplyr 1 is still relatively new, and represents a major change which some users initially resist.</p></li>
+<li><p>Relax dependency on rlang, as it is mostly driven dynamically by the by our recursive dependencies. For example, dplyr 0.8.5 depends on a specific version of rlang that is more recent than the version we explicitly depended on – which suggests that being explicit about rlang is unhelpful and misleading.</p></li>
+<li><p>New internal data <code>loanbook_stable</code> and <code>region_isos_stable</code> make regression tests more stable (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/227'>#227</a>).</p></li>
+</ul>
+</div>
     <div id="r2diianalysis-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
 <a href="#r2diianalysis-011" class="anchor"></a>r2dii.analysis 0.1.1<small> 2020-09-12 </small>

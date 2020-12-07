@@ -3,7 +3,7 @@
 # r2dii.analysis 0.1.2
 
 * `target_market_share()` now outputs `weighted_technology_share` that 
-  correctly sums to 1 when grouped by `sector`, `metric` and `secnario` (#218).
+  correctly sums to 1 when grouped by `sector`, `metric` and `scenario` (#218).
 
 * `target_market_share()` now correctly outputs unweighted production when 
   multiple loans exist for the same company (#239).

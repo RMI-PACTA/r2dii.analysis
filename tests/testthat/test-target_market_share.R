@@ -560,3 +560,27 @@ test_that("w/ multiple loans to same company, `technology_share` sums to one (#2
 
   expect_true(shares_sum_to_one(out))
 })
+
+test_that("w/ multiple match `level`, unweighted production is equal to ALD production (#249)", {
+  matched <- fake_matched(
+    id_loan = c(1, 2),
+    level = c("direct_loantaker", "ultimate_parent"),
+  )
+
+  out <- target_market_share(
+    matched,
+    fake_ald(),
+    fake_scenario(),
+    r2dii.data::region_isos_demo,
+    by_company = TRUE,
+    weight_production = FALSE
+  )
+
+  ald_production <- fake_ald() %>%
+    pull(production)
+
+  out_production <- filter(out, metric == "projected") %>%
+    pull(production)
+
+  expect_equal(ald_production, out_production)
+})

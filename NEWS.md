@@ -1,4 +1,4 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.1.3
 
 * `target_market_share()` now correctly outputs unweighted production when 
   multiple levels exist for the same company (#249).

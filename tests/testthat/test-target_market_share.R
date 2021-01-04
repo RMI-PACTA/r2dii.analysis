@@ -584,3 +584,25 @@ test_that("w/ multiple match `level`, unweighted production is equal to ALD prod
 
   expect_equal(ald_production, out_production)
 })
+
+test_that("for one company with multiple loans of different size, unweighted
+          production by company equals ald-production (#239)", {
+  different_loan_size <- 1:2
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    loan_size_credit_limit = different_loan_size,
+    loan_size_outstanding = different_loan_size
+  )
+
+  projected <- target_market_share(
+    matched,
+    fake_ald(),
+    scenario = fake_scenario(),
+    region_isos = region_isos_stable,
+    by_company = TRUE,
+    weight_production = FALSE
+  ) %>%
+    filter(metric == "projected")
+
+  expect_equal(projected$production, fake_ald()$production)
+})

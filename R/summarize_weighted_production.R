@@ -63,7 +63,12 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
 
 summarize_unweighted_production <- function(data, ...) {
   data %>%
-    select(-c(.data$id_loan, .data$level)) %>%
+    select(-c(
+      .data$id_loan,
+      .data$level,
+      .data$loan_size_credit_limit,
+      .data$loan_size_outstanding
+    )) %>%
     distinct() %>%
     group_by(...) %>%
     summarize(weighted_production = sum(.data$production), .groups = "keep") %>%

@@ -1,4 +1,4 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.1.4
 
 * `target_market_share()` now correctly outputs unweighted production by
   company, equal to ald-production for one company with multiple loans of

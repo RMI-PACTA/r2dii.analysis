@@ -184,7 +184,20 @@
     co2_intensity_scenario <span class="op">=</span> <span class="va">co2_intensity_scenario_demo</span>
   <span class="op">)</span>
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
-<span class="co">#&gt; &lt;print(tibble::tibble())&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 508 x 4</span>
+<span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 automotive  2002 projected                              0.436</span>
+<span class="co">#&gt;  2 automotive  2003 projected                              0.425</span>
+<span class="co">#&gt;  3 automotive  2004 projected                              0.413</span>
+<span class="co">#&gt;  4 automotive  2005 projected                              0.402</span>
+<span class="co">#&gt;  5 automotive  2006 projected                              0.391</span>
+<span class="co">#&gt;  6 automotive  2007 projected                              0.380</span>
+<span class="co">#&gt;  7 automotive  2008 projected                              0.369</span>
+<span class="co">#&gt;  8 automotive  2009 projected                              0.358</span>
+<span class="co">#&gt;  9 automotive  2010 projected                              0.348</span>
+<span class="co">#&gt; 10 automotive  2011 projected                              0.337</span>
+<span class="co">#&gt; # … with 498 more rows</span></code></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
 </ul>
@@ -195,7 +208,20 @@
     scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
     region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>
   <span class="op">)</span>
-<span class="co">#&gt; &lt;print(tibble::tibble())&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 3,492 x 8</span>
+<span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    324592.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       targe…    324592.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    324592.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    324592.</span>
+<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       proje…    339656.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       targe…    329191.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       targe…    352505.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    330435.</span>
+<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       proje…    354720.</span>
+<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       targe…    333693.</span>
+<span class="co">#&gt; # … with 3,482 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <ul>
 <li>Or at the company level:</li>
 </ul>
@@ -211,7 +237,20 @@
 <span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span>
 <span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span>
 <span class="co">#&gt; arguments to `FALSE`?</span>
-<span class="co">#&gt; &lt;print(tibble::tibble())&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 14,604 x 9</span>
+<span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       toyota … proje…    324592.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       toyota … proje…    339656.</span>
+<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       toyota … targe…    329191.</span>
+<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       toyota … targe…    352505.</span>
+<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       toyota … targe…    330435.</span>
+<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       toyota … proje…    354720.</span>
+<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       toyota … targe…    333693.</span>
+<span class="co">#&gt; # … with 14,594 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="utility-functions" class="section level3">
 <h3 class="hasAnchor">
@@ -234,12 +273,39 @@
 <code class="sourceCode R"><span class="co"># portfolio level</span>
 <span class="va">loanbook_joined_to_ald_scenario</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span><span class="op">)</span>
-<span class="co">#&gt; &lt;print(tibble::tibble())&gt;</span>
+<span class="co">#&gt; # A tibble: 702 x 9</span>
+<span class="co">#&gt;    sector_ald technology  year scenario  tmsr    smsp region weighted_produc…</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global          324592.</span>
+<span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global          324592.</span>
+<span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global          324592.</span>
+<span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global          339656.</span>
+<span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global          339656.</span>
+<span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global          339656.</span>
+<span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global          354720.</span>
+<span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global          354720.</span>
+<span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global          354720.</span>
+<span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global          369784.</span>
+<span class="co">#&gt; # … with 692 more rows, and 1 more variable: weighted_technology_share &lt;dbl&gt;</span>
 
 <span class="co"># company level</span>
 <span class="va">loanbook_joined_to_ald_scenario</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span>, <span class="va">name_ald</span><span class="op">)</span>
-<span class="co">#&gt; &lt;print(tibble::tibble())&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 9,036 x 10</span>
+<span class="co">#&gt;    sector_ald technology  year scenario  tmsr    smsp region name_ald</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   </span>
+<span class="co">#&gt;  1 automotive electric    2020 cps       1    0       global toyota …</span>
+<span class="co">#&gt;  2 automotive electric    2020 sds       1    0       global toyota …</span>
+<span class="co">#&gt;  3 automotive electric    2020 sps       1    0       global toyota …</span>
+<span class="co">#&gt;  4 automotive electric    2021 cps       1.12 0.00108 global toyota …</span>
+<span class="co">#&gt;  5 automotive electric    2021 sds       1.16 0.00653 global toyota …</span>
+<span class="co">#&gt;  6 automotive electric    2021 sps       1.14 0.00137 global toyota …</span>
+<span class="co">#&gt;  7 automotive electric    2022 cps       1.24 0.00213 global toyota …</span>
+<span class="co">#&gt;  8 automotive electric    2022 sds       1.32 0.0131  global toyota …</span>
+<span class="co">#&gt;  9 automotive electric    2022 sps       1.29 0.00273 global toyota …</span>
+<span class="co">#&gt; 10 automotive electric    2023 cps       1.35 0.00316 global toyota …</span>
+<span class="co">#&gt; # … with 9,026 more rows, and 2 more variables: weighted_production &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></code></pre></div>
 <p><a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
 </div>
 </div>

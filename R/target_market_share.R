@@ -95,6 +95,8 @@ target_market_share <- function(data,
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
+  data <- aggregate_by_loan_id(data)
+
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)
   check_crucial_names(ald, "is_ultimate_owner")
@@ -383,6 +385,20 @@ reweight_technology_share <- function(data, ...) {
       .x = .data$weighted_technology_share,
       weighted_technology_share = .data$.x / sum(.data$.x),
       .x = NULL
+    ) %>%
+    ungroup()
+}
+
+aggregate_by_loan_id <- function(data) {
+
+  aggregate_columns <- c("id_loan", "loan_size_outstanding", "loan_size_credit_limit")
+
+  data %>%
+    dplyr::group_by_at(setdiff(names(data), aggregate_columns)) %>%
+    summarize(
+      id_loan = first(id_loan),
+      loan_size_outstanding = sum(loan_size_outstanding),
+      loan_size_credit_limit = sum(loan_size_credit_limit)
     ) %>%
     ungroup()
 }

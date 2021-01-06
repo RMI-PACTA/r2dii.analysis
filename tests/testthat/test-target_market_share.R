@@ -468,9 +468,9 @@ test_that("with known input outputs `technology_share` as expected (#184, #262)"
         "nuclearcap",
         "oilcap",
         "renewablescap"
-        ),
-      2
       ),
+      2
+    ),
     production = c(100, 200, 300, 100, 100, 200, 500, 0, 0, 300, 100, 100),
     year = 2020
   )
@@ -515,7 +515,6 @@ test_that("with known input outputs `technology_share` as expected (#184, #262)"
     c(0.3, 0.1, 0.15, 0.2, 0.1, 0.15),
     tolerance = 1e-3
   )
-
 })
 
 test_that("w/ some region missing some scenario outputs expected `production`

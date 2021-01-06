@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now correctly outputs `technology_share` with
+  multiple loans to the same company (@georgeharris2deg #262).
+
 # r2dii.analysis 0.1.4
 
 * `target_market_share()` now correctly outputs unweighted production by

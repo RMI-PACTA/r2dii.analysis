@@ -403,7 +403,7 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
   expect_equal(diff_names, character(0))
 })
 
-test_that("with known input outputs `technology_share` as expected (#184)", {
+test_that("with known input outputs `technology_share` as expected (#184, #262)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
     loan_size_outstanding = c(1, 3),
@@ -443,6 +443,76 @@ test_that("with known input outputs `technology_share` as expected (#184)", {
   expect_equal(
     out$target_sds$technology_share,
     c(0.923, 0.076),
+    tolerance = 1e-3
+  )
+
+  ################ More extensive test (#262)
+
+  matched <- fake_matched(
+    id_loan = c("L1", "L2", "L3"),
+    loan_size_outstanding = c(1000, 15000, 1200),
+    name_ald = c("a", "b", "a"),
+    id_2dii = c("DL1", "DL2", "DL1"),
+    sector = "power",
+    sector_ald = "power"
+  )
+
+  ald <- fake_ald(
+    name_company = rep(c("a", "b"), each = 6),
+    sector = "power",
+    technology = rep(
+      c(
+        "coalcap",
+        "gascap",
+        "hydrocap",
+        "nuclearcap",
+        "oilcap",
+        "renewablescap"
+      ),
+      2
+    ),
+    production = c(100, 200, 300, 100, 100, 200, 500, 0, 0, 300, 100, 100),
+    year = 2020
+  )
+
+  scenario <- fake_scenario(
+    sector = "power",
+    technology = c(
+      "coalcap",
+      "gascap",
+      "hydrocap",
+      "nuclearcap",
+      "oilcap",
+      "renewablescap"
+    ),
+    year = 2020,
+    tmsr = 1,
+    smsp = 0
+  )
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_stable
+  ) %>%
+    split(.$metric)
+
+  expect_equal(
+    out$projected$technology_share,
+    c(0.4488, 0.0255, 0.0383, 0.2744, 0.1, 0.1128),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out$target_sds$technology_share,
+    c(0.4488, 0.0255, 0.0383, 0.2744, 0.1, 0.1128),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out$corporate_economy$technology_share,
+    c(0.3, 0.1, 0.15, 0.2, 0.1, 0.15),
     tolerance = 1e-3
   )
 })

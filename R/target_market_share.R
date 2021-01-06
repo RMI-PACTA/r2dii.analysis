@@ -396,9 +396,9 @@ aggregate_by_loan_id <- function(data) {
   data %>%
     dplyr::group_by_at(setdiff(names(data), aggregate_columns)) %>%
     summarize(
-      id_loan = first(id_loan),
-      loan_size_outstanding = sum(loan_size_outstanding),
-      loan_size_credit_limit = sum(loan_size_credit_limit)
+      id_loan = first(.data$id_loan),
+      loan_size_outstanding = sum(.data$loan_size_outstanding),
+      loan_size_credit_limit = sum(.data$loan_size_credit_limit)
     ) %>%
     ungroup()
 }

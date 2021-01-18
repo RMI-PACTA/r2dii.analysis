@@ -677,29 +677,18 @@ test_that("for one company with multiple loans of different size, unweighted
   expect_equal(projected$production, fake_ald()$production)
 })
 
-test_that("input with extra columns outputs as expected (#267)", {
+test_that("with bad column errors with informative message (#267)", {
 
-  matched <- fake_matched(
-    bad_column = c(1, 2),
-    id_loan = c("L1", "L2")
+  bad_matched <- fake_matched(
+    bad_column = "bad"
   )
 
-  ald <- fake_ald(
-    production = 100
+  expect_error(
+    class = "unexpected_names",
+    target_market_share(
+      bad_matched,
+      fake_ald(),
+      fake_scenario()
+    )
   )
-
-  company_results <- target_market_share(
-    matched,
-    ald,
-    fake_scenario(),
-    region_isos_stable,
-    by_company = TRUE,
-    weight_production = FALSE
-  )
-
-  out <- company_results %>%
-    filter(year == 2025, metric == "projected")
-
-  expect_equal(out$production, 100)
-
 })

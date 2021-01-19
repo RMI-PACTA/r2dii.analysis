@@ -678,7 +678,6 @@ test_that("for one company with multiple loans of different size, unweighted
 })
 
 test_that("with bad column errors with informative message (#267)", {
-
   bad_matched <- fake_matched(
     bad_column = "bad"
   )

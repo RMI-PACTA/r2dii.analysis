@@ -390,12 +390,11 @@ reweight_technology_share <- function(data, ...) {
 }
 
 aggregate_by_loan_id <- function(data) {
-
   aggregate_columns <- c(
     "id_loan",
     "loan_size_outstanding",
     "loan_size_credit_limit"
-    )
+  )
 
 
   data %>%
@@ -409,7 +408,6 @@ aggregate_by_loan_id <- function(data) {
 }
 
 check_unexpected_columns <- function(data) {
-
   possible_matched_columns <- c(
     "id_loan",
     "id_direct_loantaker",
@@ -439,9 +437,9 @@ check_unexpected_columns <- function(data) {
     "score",
     "source",
     "borderline"
-    )
+  )
 
-unexpected_names <- setdiff(names(data), possible_matched_columns)
+  unexpected_names <- setdiff(names(data), possible_matched_columns)
 
   if (length(unexpected_names) != 0) {
     abort(
@@ -451,5 +449,4 @@ unexpected_names <- setdiff(names(data), possible_matched_columns)
   }
 
   invisible(data)
-
 }

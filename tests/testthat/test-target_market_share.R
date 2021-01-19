@@ -676,3 +676,52 @@ test_that("for one company with multiple loans of different size, unweighted
 
   expect_equal(projected$production, fake_ald()$production)
 })
+
+test_that("`technology_share` outputs consistently when multiple
+          direct_loantakers match to a single company (#265)", {
+
+  matched <- fake_matched(
+    id_loan = c("L1", "L2", "L3", "L4", "L5"),
+    name_ald = c(rep("company a", 4), "company b")
+  )
+
+  matched_split_dl <- matched %>%
+    mutate(name_direct_loantaker = c("company a1", "company a2", "company a3", "company a4", "company b"))
+
+  ald <- fake_ald(
+    name_company = rep(c("company a","company b"), each = 2),
+    technology = rep(c("ice", "electric"), 2),
+    production = c(8, 2, 15, 5)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("ice", "electric")
+  )
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_stable
+  ) %>%
+    filter(
+      metric == "projected",
+      year == 2025,
+      technology == "ice"
+    )
+
+  out_split_dl <- target_market_share(
+    matched_split_dl,
+    ald,
+    scenario,
+    region_isos_stable
+  ) %>%
+    filter(
+      metric == "projected",
+      year == 2025,
+      technology == "ice"
+    )
+
+  expect_equal(out$technology_share, out_split_dl$technology_share)
+
+})

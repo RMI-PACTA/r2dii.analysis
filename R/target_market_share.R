@@ -440,7 +440,6 @@ aggregate_by_loan_id <- function(data) {
 }
 
 check_valid_columns <- function(data, valid_columns) {
-
   invalid_columns <- setdiff(names(data), valid_columns)
 
   if (length(invalid_columns) != 0) {

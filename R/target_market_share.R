@@ -441,12 +441,12 @@ check_valid_columns <- function(data) {
     "borderline"
     )
 
-unexpected_names <- setdiff(names(data), possible_matched_columns)
+invalid_columns <- setdiff(names(data), possible_matched_columns)
 
-  if (length(unexpected_names) != 0) {
+  if (length(invalid_columns) != 0) {
     abort(
-      glue("Loanbook has unexpected names: `{unexpected_names}`."),
-      class = "unexpected_names"
+      glue("Loanbook has unexpected names: `{invalid_columns}`."),
+      class = "invalid_columns"
     )
   }
 

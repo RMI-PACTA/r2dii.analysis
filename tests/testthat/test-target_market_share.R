@@ -684,7 +684,7 @@ test_that("with bad column errors with informative message (#267)", {
   )
 
   expect_error(
-    class = "unexpected_names",
+    class = "invalid_columns",
     target_market_share(
       bad_matched,
       fake_ald(),

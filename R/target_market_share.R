@@ -94,7 +94,7 @@ target_market_share <- function(data,
   }
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
-  check_unexpected_columns(data)
+  check_valid_columns(data)
   data <- aggregate_by_loan_id(data)
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
@@ -408,7 +408,7 @@ aggregate_by_loan_id <- function(data) {
     ungroup()
 }
 
-check_unexpected_columns <- function(data) {
+check_valid_columns <- function(data) {
 
   possible_matched_columns <- c(
     "id_loan",

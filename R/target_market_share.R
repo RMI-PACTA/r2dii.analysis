@@ -422,12 +422,11 @@ reweight_technology_share <- function(data, ...) {
 }
 
 aggregate_by_loan_id <- function(data) {
-
   aggregate_columns <- c(
     "id_loan",
     "loan_size_outstanding",
     "loan_size_credit_limit"
-    )
+  )
 
 
   data %>%
@@ -452,5 +451,4 @@ check_valid_columns <- function(data, valid_columns) {
   }
 
   invisible(data)
-
 }

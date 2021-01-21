@@ -422,15 +422,15 @@ reweight_technology_share <- function(data, ...) {
 }
 
 aggregate_by_loan_id <- function(data) {
-  aggregate_columns <- c(
-    "id_loan",
-    "loan_size_outstanding",
-    "loan_size_credit_limit"
-  )
-
 
   data %>%
-    dplyr::group_by_at(setdiff(names(data), aggregate_columns)) %>%
+    group_by(
+      .data$level,
+      .data$loan_size_outstanding_currency,
+      .data$loan_size_credit_limit_currency,
+      .data$name_ald,
+      .data$sector_ald
+      ) %>%
     summarize(
       id_loan = first(.data$id_loan),
       loan_size_outstanding = sum(.data$loan_size_outstanding),

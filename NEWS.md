@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now errors if input `data` has an unexpected column
+  (@georgeharris2deg #267).
+
 * `target_market_share()` now correctly outputs `technology_share` with
   multiple loans to the same company (@georgeharris2deg #262, @ab-bbva #265).
 

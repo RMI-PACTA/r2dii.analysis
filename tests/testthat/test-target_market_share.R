@@ -677,6 +677,21 @@ test_that("for one company with multiple loans of different size, unweighted
   expect_equal(projected$production, fake_ald()$production)
 })
 
+test_that("with bad column errors with informative message (#267)", {
+  bad_matched <- fake_matched(
+    bad_column = "bad"
+  )
+
+  expect_error(
+    class = "invalid_columns",
+    target_market_share(
+      bad_matched,
+      fake_ald(),
+      fake_scenario()
+    )
+  )
+})
+
 test_that("`technology_share` outputs consistently when multiple
           direct_loantakers match to a single company (#265)", {
 

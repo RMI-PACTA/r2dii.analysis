@@ -95,6 +95,38 @@ target_market_share <- function(data,
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
+  valid_columns <- c(
+    "id_loan",
+    "id_direct_loantaker",
+    "name_direct_loantaker",
+    "id_intermediate_parent_1",
+    "name_intermediate_parent_1",
+    "id_ultimate_parent",
+    "name_ultimate_parent",
+    "loan_size_outstanding",
+    "loan_size_outstanding_currency",
+    "loan_size_credit_limit",
+    "loan_size_credit_limit_currency",
+    "sector_classification_system",
+    "sector_classification_input_type",
+    "sector_classification_direct_loantaker",
+    "fi_type",
+    "flag_project_finance_loan",
+    "name_project",
+    "lei_direct_loantaker",
+    "isin_direct_loantaker",
+    "id_2dii",
+    "level",
+    "sector",
+    "sector_ald",
+    "name",
+    "name_ald",
+    "score",
+    "source",
+    "borderline"
+  )
+
+  check_valid_columns(data, valid_columns)
   data <- aggregate_by_loan_id(data)
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
@@ -405,4 +437,17 @@ aggregate_by_loan_id <- function(data) {
       loan_size_credit_limit = sum(.data$loan_size_credit_limit)
     ) %>%
     ungroup()
+}
+
+check_valid_columns <- function(data, valid_columns) {
+  invalid_columns <- setdiff(names(data), valid_columns)
+
+  if (length(invalid_columns) != 0) {
+    abort(
+      glue("Loanbook has unexpected names: `{invalid_columns}`."),
+      class = "invalid_columns"
+    )
+  }
+
+  invisible(data)
 }

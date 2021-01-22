@@ -1,4 +1,4 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.1.5
 
 * `target_market_share()` now errors if input `data` has an unexpected column
   (@georgeharris2deg #267).

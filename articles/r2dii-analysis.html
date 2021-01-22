@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span>
 <span class="co">#&gt; ✔ ggplot2 3.3.3     ✔ purrr   0.3.4</span>
-<span class="co">#&gt; ✔ tibble  3.0.4     ✔ dplyr   1.0.2</span>
+<span class="co">#&gt; ✔ tibble  3.0.5     ✔ dplyr   1.0.3</span>
 <span class="co">#&gt; ✔ tidyr   1.1.2     ✔ stringr 1.4.0</span>
 <span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.0</span>
 <span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
@@ -347,7 +347,7 @@
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span>, <span class="va">region</span>, <span class="va">scenario_source</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>production <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">production</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'sector', 'technology', 'year', 'region' (override with `.groups` argument)</span>
+<span class="co">#&gt; `summarise()` has grouped output by 'sector', 'technology', 'year', 'region'. You can override using the `.groups` argument.</span>
 
 <span class="va">just_data</span> <span class="op">&lt;-</span> <span class="va">renewables_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">metric</span>, <span class="st">"target_"</span><span class="op">)</span><span class="op">)</span>

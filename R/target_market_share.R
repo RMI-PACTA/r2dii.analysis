@@ -127,7 +127,6 @@ target_market_share <- function(data,
   )
 
   check_valid_columns(data, valid_columns)
-  data <- aggregate_by_loan_id(data)
 
   crucial_scenario <- c("scenario", "tmsr", "smsp")
   check_crucial_names(scenario, crucial_scenario)
@@ -135,6 +134,9 @@ target_market_share <- function(data,
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   green_or_brown <- r2dii.data::green_or_brown
+  tmsr_or_smsp <- tmsr_or_smsp()
+
+  data <- aggregate_by_loan_id(data)
 
   summary_groups <- c(
     "scenario",
@@ -202,7 +204,7 @@ target_market_share <- function(data,
       names_to = "target_name",
       values_to = "weighted_production_target"
     ) %>%
-    left_join(tmsr_or_smsp(), by = c(target_name = "which_metric")) %>%
+    left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
     inner_join(
       green_or_brown,
       by = c(

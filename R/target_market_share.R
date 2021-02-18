@@ -214,7 +214,7 @@ target_market_share <- function(data,
     select(-.data$target_name, -.data$green_or_brown)
 
   if (!by_company) {
-    summary_groups <- c(
+    aggregate_company_groups <- c(
       "sector_ald",
       "technology",
       "year",
@@ -224,7 +224,7 @@ target_market_share <- function(data,
       )
 
     data <- data %>%
-      group_by(!!!rlang::syms(summary_groups)) %>%
+      group_by(!!!rlang::syms(aggregate_company_groups)) %>%
       summarize(
         weighted_production = sum(.data$weighted_production),
         weighted_production_target = sum(.data$weighted_production_target),

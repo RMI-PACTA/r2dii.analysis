@@ -144,19 +144,40 @@ target_market_share <- function(data,
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
   if (weight_production) {
-    data <- summarize_weighted_production(
-      data,
-      !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
-    )
+    data <- data %>%
+      add_weighted_loan_production(use_credit_limit = use_credit_limit) %>%
+      group_by(
+        .data$sector_ald,
+        .data$technology,
+        .data$year,
+        !!!rlang::syms(summary_groups)
+        ) %>%
+      summarize(
+        weighted_production = sum(.data$weighted_loan_production),
+        weighted_technology_share = sum(.data$weighted_technology_share)
+      ) %>%
+      # Restore old groups
+      group_by(!!!dplyr::groups(data))
+
   } else {
-    data <- summarize_unweighted_production(
-      data,
-      .data$sector_ald,
-      .data$technology,
-      .data$year,
-      !!!rlang::syms(summary_groups)
-    )
+    data <- data %>%
+      select(-c(
+        .data$id_loan,
+        .data$level,
+        .data$loan_size_credit_limit,
+        .data$loan_size_outstanding
+      )) %>%
+      distinct() %>%
+      group_by(
+        .data$sector_ald,
+        .data$technology,
+        .data$year,
+        !!!rlang::syms(summary_groups)
+      ) %>%
+      summarize(weighted_production = sum(.data$production), .groups = "keep") %>%
+      ungroup(.data$technology) %>%
+      mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
+      group_by(!!!dplyr::groups(data))
   }
 
   reweighting_groups <- maybe_add_name_ald(

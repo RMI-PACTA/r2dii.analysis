@@ -382,16 +382,6 @@ maybe_add_name_ald <- function(data, by_company = FALSE) {
   return(out)
 }
 
-maybe_group_by_name_ald <- function(data, ..., by_company = FALSE) {
-  groups <- c(...)
-
-  if (by_company) {
-    groups <- c(groups, "name_ald")
-  }
-
-  group_by(data, !!!rlang::syms(groups))
-}
-
 abort_if_has_list_colums <- function(data) {
   if (has_list_colum(data)) {
     abort("`data` must have no list column.")

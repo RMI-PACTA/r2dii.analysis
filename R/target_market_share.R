@@ -145,7 +145,7 @@ target_market_share <- function(data,
     "region",
     "scenario_source",
     "name_ald"
-    )
+  )
 
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
@@ -153,7 +153,7 @@ target_market_share <- function(data,
     data <- summarize_weighted_production(
       data,
       !!!rlang::syms(summary_groups)
-      )
+    )
 
   } else {
     data <- summarize_unweighted_production(
@@ -223,7 +223,7 @@ target_market_share <- function(data,
       "scenario",
       "region",
       "scenario_source"
-      )
+    )
 
     data <- data %>%
       group_by(!!!rlang::syms(aggregate_company_groups)) %>%
@@ -237,7 +237,7 @@ target_market_share <- function(data,
   reweighting_groups <- maybe_add_name_ald(
     c("sector_ald", "region", "scenario", "scenario_source", "year"),
     by_company
-    )
+  )
 
   data <- reweight_technology_share(
     data,
@@ -405,7 +405,7 @@ aggregate_by_loan_id <- function(data) {
       .data$loan_size_credit_limit_currency,
       .data$name_ald,
       .data$sector_ald
-      ) %>%
+    ) %>%
     summarize(
       id_loan = first(.data$id_loan),
       loan_size_outstanding = sum(.data$loan_size_outstanding),

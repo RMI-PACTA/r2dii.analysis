@@ -136,10 +136,14 @@ target_market_share <- function(data,
 
   green_or_brown <- r2dii.data::green_or_brown
 
-  summary_groups <- maybe_add_name_ald(
-    c("scenario", "tmsr", "smsp", "region", "scenario_source"),
-    by_company
-  )
+  summary_groups <- c(
+    "scenario",
+    "tmsr",
+    "smsp",
+    "region",
+    "scenario_source",
+    "name_ald"
+    )
 
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
@@ -180,30 +184,22 @@ target_market_share <- function(data,
       group_by(!!!dplyr::groups(data))
   }
 
-  reweighting_groups <- maybe_add_name_ald(
-    c("sector_ald", "region", "scenario", "scenario_source", "year"),
-    by_company
-  )
-
-  data <- reweight_technology_share(
-    data,
-    !!!rlang::syms(reweighting_groups)
-  )
-
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
   }
 
-  target_groups <- c("sector_ald", "scenario", "year", "region")
+  target_groups <- c("sector_ald", "scenario", "year", "region", "name_ald")
 
   initial_sector_summaries <- data %>%
-    maybe_group_by_name_ald(target_groups, by_company = by_company) %>%
+    group_by(!!!rlang::syms(target_groups)) %>%
     summarize(sector_weighted_production = sum(.data$weighted_production)) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(
-      c("sector_ald", "scenario", "region"),
-      by_company = by_company
-    ) %>%
+    group_by(
+      .data$sector_ald,
+      .data$scenario,
+      .data$region,
+      .data$name_ald
+      ) %>%
     filter(row_number() == 1L) %>%
     rename(
       initial_sector_production = .data$sector_weighted_production
@@ -211,17 +207,17 @@ target_market_share <- function(data,
     select(-.data$year)
 
   initial_technology_summaries <- data %>%
-    maybe_group_by_name_ald(
-      c(target_groups, "technology"),
-      by_company = by_company
-    ) %>%
+    group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
     summarize(
       technology_weighted_production = sum(.data$weighted_production)
     ) %>%
     arrange(.data$year) %>%
-    maybe_group_by_name_ald(
-      c("sector_ald", "technology", "scenario", "region"),
-      by_company = by_company
+    group_by(
+      .data$sector_ald,
+      .data$technology,
+      .data$scenario,
+      .data$region,
+      .data$name_ald
     ) %>%
     filter(row_number() == 1L) %>%
     rename(
@@ -232,17 +228,11 @@ target_market_share <- function(data,
   data <- data %>%
     left_join(
       initial_sector_summaries,
-      by = maybe_add_name_ald(
-        c("sector_ald", "scenario", "region"),
-        by_company = by_company
-      )
+      by = c("sector_ald", "scenario", "region", "name_ald")
     ) %>%
     left_join(
       initial_technology_summaries,
-      by = maybe_add_name_ald(
-        c("sector_ald", "scenario", "region", "technology"),
-        by_company = by_company
-      )
+      by = c("sector_ald", "scenario", "region", "technology", "name_ald")
     ) %>%
     mutate(
       tmsr_target_weighted_production = .data$initial_technology_production *
@@ -276,11 +266,44 @@ target_market_share <- function(data,
     ) %>%
     select(-.data$target_name, -.data$green_or_brown)
 
+  ##### TODO: ADD SUMMARIZE HERE
+  if (!by_company) {
+    summary_groups <- c(
+      "sector_ald",
+      "technology",
+      "year",
+      "scenario",
+      "region",
+      "scenario_source"
+      )
+
+    data <- data %>%
+      group_by(!!!rlang::syms(summary_groups)) %>%
+      summarize(
+        weighted_production = sum(.data$weighted_production),
+        weighted_production_target = sum(.data$weighted_production_target),
+        weighted_technology_share = sum(.data$weighted_technology_share)
+      )
+  }
+
+  reweighting_groups <- maybe_add_name_ald(
+    c(
+      "sector_ald",
+      "region",
+      "scenario",
+      "scenario_source",
+      "year"
+    ),
+    by_company
+    )
+
+  data <- reweight_technology_share(
+    data,
+    !!!rlang::syms(reweighting_groups)
+  )
+
   data <- data %>%
-    maybe_group_by_name_ald(
-      c("sector_ald", "year", "scenario", "region"),
-      by_company = by_company
-    ) %>%
+    group_by(!!!rlang::syms(reweighting_groups)) %>%
     mutate(
       .x = .data$weighted_production_target,
       weighted_technology_share_target = .data$.x / sum(.data$.x),

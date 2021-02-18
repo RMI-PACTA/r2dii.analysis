@@ -394,7 +394,6 @@ has_list_colum <- function(data) {
   any(vapply(data, is.list, logical(1)))
 }
 
-
 calculate_ald_benchmark <- function(ald, region_isos, by_company) {
   out <- ald %>%
     filter(.data$is_ultimate_owner) %>%

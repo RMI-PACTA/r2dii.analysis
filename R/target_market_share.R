@@ -152,7 +152,8 @@ target_market_share <- function(data,
   if (weight_production) {
     data <- summarize_weighted_production(
       data,
-      !!!rlang::syms(summary_groups)
+      !!!rlang::syms(summary_groups),
+      use_credit_limit = use_credit_limit
     )
 
   } else {

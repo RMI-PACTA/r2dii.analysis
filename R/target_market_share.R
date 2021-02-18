@@ -233,13 +233,7 @@ target_market_share <- function(data,
   }
 
   reweighting_groups <- maybe_add_name_ald(
-    c(
-      "sector_ald",
-      "region",
-      "scenario",
-      "scenario_source",
-      "year"
-    ),
+    c("sector_ald", "region", "scenario", "scenario_source", "year"),
     by_company
     )
 

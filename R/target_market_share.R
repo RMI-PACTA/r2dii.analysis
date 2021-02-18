@@ -148,40 +148,16 @@ target_market_share <- function(data,
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
   if (weight_production) {
-    data <- data %>%
-      add_weighted_loan_production(use_credit_limit = use_credit_limit) %>%
-      group_by(
-        .data$sector_ald,
-        .data$technology,
-        .data$year,
-        !!!rlang::syms(summary_groups)
-        ) %>%
-      summarize(
-        weighted_production = sum(.data$weighted_loan_production),
-        weighted_technology_share = sum(.data$weighted_technology_share)
-      ) %>%
-      # Restore old groups
-      group_by(!!!dplyr::groups(data))
+    data <- summarize_weighted_production(
+      data,
+      !!!rlang::syms(summary_groups)
+      )
 
   } else {
-    data <- data %>%
-      select(-c(
-        .data$id_loan,
-        .data$level,
-        .data$loan_size_credit_limit,
-        .data$loan_size_outstanding
-      )) %>%
-      distinct() %>%
-      group_by(
-        .data$sector_ald,
-        .data$technology,
-        .data$year,
-        !!!rlang::syms(summary_groups)
-      ) %>%
-      summarize(weighted_production = sum(.data$production), .groups = "keep") %>%
-      ungroup(.data$technology) %>%
-      mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
-      group_by(!!!dplyr::groups(data))
+    data <- summarize_unweighted_production(
+      data,
+      !!!rlang::syms(summary_groups)
+    )
   }
 
   if (nrow(data) == 0) {
@@ -266,7 +242,6 @@ target_market_share <- function(data,
     ) %>%
     select(-.data$target_name, -.data$green_or_brown)
 
-  ##### TODO: ADD SUMMARIZE HERE
   if (!by_company) {
     summary_groups <- c(
       "sector_ald",

@@ -164,52 +164,23 @@ target_market_share <- function(data,
     return(empty_target_market_share_output())
   }
 
-  target_groups <- c("sector_ald", "scenario", "year", "region", "name_ald")
-
-  initial_sector_summaries <- data %>%
-    group_by(!!!rlang::syms(target_groups)) %>%
-    summarize(sector_weighted_production = sum(.data$weighted_production)) %>%
-    arrange(.data$year) %>%
-    group_by(
-      .data$sector_ald,
-      .data$scenario,
-      .data$region,
-      .data$name_ald
-      ) %>%
-    filter(row_number() == 1L) %>%
-    rename(
-      initial_sector_production = .data$sector_weighted_production
-    ) %>%
-    select(-.data$year)
-
-  initial_technology_summaries <- data %>%
-    group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
-    summarize(
-      technology_weighted_production = sum(.data$weighted_production)
-    ) %>%
-    arrange(.data$year) %>%
-    group_by(
-      .data$sector_ald,
-      .data$technology,
-      .data$scenario,
-      .data$region,
-      .data$name_ald
-    ) %>%
-    filter(row_number() == 1L) %>%
-    rename(
-      initial_technology_production = .data$technology_weighted_production
-    ) %>%
-    select(-.data$year)
+  target_groups <- c("sector_ald", "scenario", "region", "name_ald")
 
   data <- data %>%
-    left_join(
-      initial_sector_summaries,
-      by = c("sector_ald", "scenario", "region", "name_ald")
-    ) %>%
-    left_join(
-      initial_technology_summaries,
-      by = c("sector_ald", "scenario", "region", "technology", "name_ald")
-    ) %>%
+    group_by(!!!rlang::syms(c(target_groups, "year"))) %>%
+    mutate(sector_weighted_production = sum(.data$weighted_production)) %>%
+    arrange(.data$year) %>%
+    group_by(!!!rlang::syms(target_groups)) %>%
+    mutate(initial_sector_production = first(.data$sector_weighted_production))
+
+  data <- data %>%
+    group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
+    mutate(technology_weighted_production = sum(.data$weighted_production)) %>%
+    arrange(.data$year) %>%
+    group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
+    mutate(initial_technology_production = first(.data$technology_weighted_production))
+
+  data <- data %>%
     mutate(
       tmsr_target_weighted_production = .data$initial_technology_production *
         .data$tmsr,

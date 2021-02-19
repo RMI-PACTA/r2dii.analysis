@@ -51,14 +51,19 @@
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
-  summarize_weighted_metric(
-    data = data,
-    group_dots = rlang::enquos(...),
-    use_credit_limit = use_credit_limit,
-    .f = calculate_weighted_loan_production,
-    weighted_production = sum(.data$weighted_loan_production),
-    weighted_technology_share = sum(.data$weighted_loan_technology_share)
-  )
+  stopifnot(is.data.frame(data))
+
+  data %>%
+    ungroup() %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    calculate_weighted_loan_production() %>%
+    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+    summarize(
+      weighted_production = sum(.data$weighted_loan_production),
+      weighted_technology_share = sum(.data$weighted_loan_technology_share)
+    ) %>%
+    # Restore old groups
+    group_by(!!!dplyr::groups(data))
 }
 
 summarize_unweighted_production <- function(data, ...) {
@@ -80,28 +85,16 @@ summarize_unweighted_production <- function(data, ...) {
 #' @rdname summarize_weighted_production
 #' @export
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
-  summarize_weighted_metric(
-    data = data,
-    group_dots = rlang::enquos(...),
-    use_credit_limit = use_credit_limit,
-    .f = calculate_weighted_loan_percent_change,
-    weighted_percent_change = mean(.data$weighted_loan_percent_change)
-  )
-}
-
-summarize_weighted_metric <- function(data,
-                                      group_dots,
-                                      use_credit_limit,
-                                      .f,
-                                      ...) {
   stopifnot(is.data.frame(data))
 
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
-    .f() %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, !!!group_dots) %>%
-    summarize(...) %>%
+    calculate_weighted_loan_percent_change() %>%
+    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+    summarize(
+      weighted_percent_change = mean(.data$weighted_loan_percent_change)
+      ) %>%
     # Restore old groups
     group_by(!!!dplyr::groups(data))
 }

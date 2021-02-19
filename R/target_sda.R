@@ -130,17 +130,25 @@ target_sda <- function(data,
   ald_by_sector <- ald %>%
     aggregate_excluding(c("technology", "plant_location", "country_of_domicile"))
 
-  summary_groups <- maybe_add_name_ald(c("sector_ald", "year"), by_company)
+  data <- inner_join(data, ald_by_sector, by = ald_columns())
 
-  loanbook_with_weighted_emission_factors <- data %>%
-    inner_join(ald_by_sector, by = ald_columns()) %>%
-    summarize_weighted_emission_factor(
-      !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
-    ) %>%
+  if (by_company) {
+    data <- data %>%
+      summarize_weighted_emission_factor(
+        "name_ald",
+        use_credit_limit = use_credit_limit
+      )
+  } else {
+    data <- data %>%
+      summarize_weighted_emission_factor(
+        use_credit_limit = use_credit_limit
+      )
+    }
+
+  data <- data %>%
     rename(sector = .data$sector_ald)
 
-  if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {
+  if (identical(nrow(data), 0L)) {
     warn("Found no match between loanbook and ald.", class = "no_match")
     return(empty_target_sda_output())
   }
@@ -172,7 +180,7 @@ target_sda <- function(data,
   )
 
   loanbook_targets <- compute_loanbook_targets(
-    loanbook_with_weighted_emission_factors,
+    data,
     adjusted_scenario_with_p,
     !!!rlang::syms(target_summary_groups)
   )
@@ -183,7 +191,7 @@ target_sda <- function(data,
   }
 
   format_and_combine_output(
-    loanbook_with_weighted_emission_factors,
+    data,
     corporate_economy,
     loanbook_targets,
     adjusted_scenario,

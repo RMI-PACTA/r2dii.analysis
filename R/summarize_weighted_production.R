@@ -106,7 +106,7 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     calculate_weighted_loan_emission_factor() %>%
-    group_by(...) %>%
+    group_by(.data$sector_ald, .data$year, ...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%

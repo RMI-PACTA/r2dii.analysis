@@ -103,74 +103,78 @@ summarize_weighted_metric <- function(data,
 }
 
 add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, metric = "percent_change")
-}
-
-add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, metric = "production")
-}
-
-add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, metric = "emission_factor")
-}
-
-add_weighted_loan_metric <- function(data,
-                                     use_credit_limit,
-                                     metric = c(
-                                       "production",
-                                       "percent_change",
-                                       "emission_factor"
-                                     )) {
   stopifnot(
     is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )
 
-  metrics <- c("production", "percent_change", "emission_factor")
-  metric <- rlang::arg_match(metric, metrics)
+  crucial <- c("production", "sector_ald", "year", "technology", "scenario")
 
-  crucial <- c("production", "sector_ald", "year")
-
-  if (metric %in% c("production", "percent_change")) {
-    crucial <- c(crucial, "technology")
-  }
-  if (metric == "percent_change") {
-    crucial <- c(crucial, "scenario")
-  }
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
-  if (metric == "percent_change") {
-    check_zero_initial_production(data)
-  }
+  check_zero_initial_production(data)
 
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
   data <- add_loan_weight(data, use_credit_limit)
 
-  if (metric == "percent_change") {
-    data <- add_percent_change(data)
-  }
-
-  if (metric == "production") {
-    data <- add_technology_share(data)
-  }
+  data <- add_percent_change(data)
 
   data <- data %>%
     mutate(
-      weighted_loan_metric = .data[[metric]] * .data$loan_weight
+      weighted_loan_percent_change = .data$percent_change * .data$loan_weight
     )
 
-  if (metric == "production") {
-    data <- data %>%
-      mutate(
-        weighted_technology_share = .data$technology_share * .data$loan_weight
-      )
-  }
 
-  data %>%
-    group_by(!!!old_groups) %>%
-    rename_metric(metric)
+}
+
+add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
+  stopifnot(
+    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
+  )
+
+  crucial <- c("production", "sector_ald", "year", "technology")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  old_groups <- dplyr::groups(data)
+  data <- ungroup(data)
+
+  data <- add_loan_weight(data, use_credit_limit)
+
+  data <- add_technology_share(data)
+
+  data <- data %>%
+    mutate(
+      weighted_loan_production = .data$production * .data$loan_weight,
+      weighted_technology_share = .data$technology_share * .data$loan_weight
+    )
+
+
+}
+
+add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
+  stopifnot(
+    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
+  )
+
+  crucial <- c("production", "sector_ald", "year")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  old_groups <- dplyr::groups(data)
+  data <- ungroup(data)
+
+  data <- add_loan_weight(data, use_credit_limit)
+
+  data <- data %>%
+    mutate(
+      weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
+    )
+
 }
 
 add_loan_weight <- function(data, use_credit_limit) {
@@ -288,12 +292,6 @@ check_single_currency <- function(currency, data) {
   }
 
   invisible(currency)
-}
-
-rename_metric <- function(out, metric) {
-  new_name <- paste0("weighted_loan_", metric)
-  newnames <- sub("weighted_loan_metric", new_name, names(out))
-  rlang::set_names(out, newnames)
 }
 
 # We can remove this once we depend on R >= 3.5. See ?backports::isTRUE

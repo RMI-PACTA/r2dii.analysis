@@ -133,8 +133,7 @@ target_market_share <- function(data,
   check_crucial_names(ald, "is_ultimate_owner")
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
-  green_or_brown <- r2dii.data::green_or_brown
-  tmsr_or_smsp <- tmsr_or_smsp()
+
 
   data <- aggregate_by_loan_id(data)
 
@@ -182,6 +181,9 @@ target_market_share <- function(data,
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
     mutate(initial_technology_production = first(.data$technology_weighted_production))
+
+  green_or_brown <- r2dii.data::green_or_brown
+  tmsr_or_smsp <- tmsr_or_smsp()
 
   data <- data %>%
     mutate(

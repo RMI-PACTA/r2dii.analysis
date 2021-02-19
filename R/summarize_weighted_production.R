@@ -95,18 +95,16 @@ summarize_weighted_metric <- function(data,
                                       .f,
                                       ...) {
   data %>%
-    add_loan_weight(use_credit_limit) %>%
-    .f(use_credit_limit = use_credit_limit) %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    .f() %>%
     group_by(.data$sector_ald, .data$technology, .data$year, !!!group_dots) %>%
     summarize(...) %>%
     # Restore old groups
     group_by(!!!dplyr::groups(data))
 }
 
-calculate_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
-  stopifnot(
-    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
-  )
+calculate_weighted_loan_percent_change <- function(data) {
+  stopifnot(is.data.frame(data))
 
   crucial <- c("production", "sector_ald", "year", "technology", "scenario")
 
@@ -126,10 +124,8 @@ calculate_weighted_loan_percent_change <- function(data, use_credit_limit = FALS
 
 }
 
-calculate_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
-  stopifnot(
-    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
-  )
+calculate_weighted_loan_production <- function(data) {
+  stopifnot(is.data.frame(data))
 
   crucial <- c("production", "sector_ald", "year", "technology")
 
@@ -149,10 +145,8 @@ calculate_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
 
 }
 
-calculate_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
-  stopifnot(
-    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
-  )
+calculate_weighted_loan_emission_factor <- function(data) {
+  stopifnot(is.data.frame(data))
 
   crucial <- c("production", "sector_ald", "year")
 

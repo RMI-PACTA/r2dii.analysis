@@ -130,7 +130,7 @@ target_sda <- function(data,
   ald_by_sector <- ald %>%
     aggregate_excluding(c("technology", "plant_location", "country_of_domicile"))
 
-  loanbook_with_weighted_emission_factors <- calculate_weighted_emission_factor(
+  loanbook_with_weighted_emission_factors <- summarize_weighted_emission_factor(
     data,
     ald = ald_by_sector,
     use_credit_limit = use_credit_limit,
@@ -224,7 +224,7 @@ maybe_add_name_ald <- function(data, by_company = FALSE) {
   return(out)
 }
 
-calculate_weighted_emission_factor <- function(data,
+summarize_weighted_emission_factor <- function(data,
                                                ald,
                                                use_credit_limit = FALSE,
                                                by_company = FALSE) {

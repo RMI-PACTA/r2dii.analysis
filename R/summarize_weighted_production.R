@@ -107,20 +107,16 @@ summarize_weighted_metric <- function(data,
 }
 
 calculate_weighted_loan_percent_change <- function(data) {
-  data <- add_percent_change(data)
-
-  data <- data %>%
+  data >%
+    add_percent_change(data) %>%
     mutate(
       weighted_loan_percent_change = .data$percent_change * .data$loan_weight
     )
-
-
 }
 
 calculate_weighted_loan_production <- function(data) {
-  data <- add_technology_share(data)
-
-  data <- data %>%
+  data %>%
+    add_technology_share() %>%
     mutate(
       weighted_loan_production = .data$production * .data$loan_weight,
       weighted_technology_share = .data$technology_share * .data$loan_weight

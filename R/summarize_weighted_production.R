@@ -112,8 +112,6 @@ add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
-  check_zero_initial_production(data)
-
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
@@ -151,7 +149,6 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
       weighted_loan_production = .data$production * .data$loan_weight,
       weighted_technology_share = .data$technology_share * .data$loan_weight
     )
-
 
 }
 
@@ -217,6 +214,8 @@ add_loan_weight <- function(data, use_credit_limit) {
 }
 
 add_percent_change <- function(data) {
+  check_zero_initial_production(data)
+
   green_or_brown <- r2dii.data::green_or_brown
 
   data %>%

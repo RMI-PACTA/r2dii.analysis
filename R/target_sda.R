@@ -130,12 +130,15 @@ target_sda <- function(data,
   ald_by_sector <- ald %>%
     aggregate_excluding(c("technology", "plant_location", "country_of_domicile"))
 
-  loanbook_with_weighted_emission_factors <- summarize_weighted_emission_factor(
-    data,
-    ald = ald_by_sector,
-    use_credit_limit = use_credit_limit,
-    by_company = by_company
-  )
+  summary_groups <- maybe_add_name_ald(c("sector_ald", "year"), by_company)
+
+  loanbook_with_weighted_emission_factors <- data %>%
+    inner_join(ald_by_sector, by = ald_columns()) %>%
+    summarize_weighted_emission_factor(
+      !!!rlang::syms(summary_groups),
+      use_credit_limit = use_credit_limit
+    ) %>%
+    rename(sector = .data$sector_ald)
 
   if (identical(nrow(loanbook_with_weighted_emission_factors), 0L)) {
     warn("Found no match between loanbook and ald.", class = "no_match")
@@ -225,21 +228,17 @@ maybe_add_name_ald <- function(data, by_company = FALSE) {
 }
 
 summarize_weighted_emission_factor <- function(data,
-                                               ald,
-                                               use_credit_limit = FALSE,
-                                               by_company = FALSE) {
-  summary_groups <- maybe_add_name_ald(c("sector_ald", "year"), by_company)
+                                               ...,
+                                               use_credit_limit = FALSE) {
 
   data %>%
-    inner_join(ald, by = ald_columns()) %>%
     add_loan_weight(use_credit_limit) %>%
     calculate_weighted_loan_emission_factor() %>%
-    group_by(!!!rlang::syms(summary_groups)) %>%
+    group_by(...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%
-    ungroup() %>%
-    rename(sector = .data$sector_ald)
+    ungroup()
 }
 
 calculate_market_average <- function(data) {

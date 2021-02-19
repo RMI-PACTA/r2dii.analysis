@@ -107,8 +107,8 @@ summarize_weighted_metric <- function(data,
 }
 
 calculate_weighted_loan_percent_change <- function(data) {
-  data >%
-    add_percent_change(data) %>%
+  data %>%
+    add_percent_change() %>%
     mutate(
       weighted_loan_percent_change = .data$percent_change * .data$loan_weight
     )
@@ -135,6 +135,19 @@ calculate_weighted_loan_emission_factor <- function(data) {
       weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
     )
 
+}
+
+calculate_weighted_loan_metric <- function(data, metric) {
+  crucial <- c(metric, "loan_weight")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  data %>%
+    mutate(
+      weighted_loan_metric = .data[[metric]] * .data$loan_weight
+    ) %>%
+    rename_metric(metric)
 }
 
 add_loan_weight <- function(data, use_credit_limit) {
@@ -259,6 +272,12 @@ check_single_currency <- function(currency, data) {
   }
 
   invisible(currency)
+}
+
+rename_metric <- function(out, metric) {
+  new_name <- paste0("weighted_loan_", metric)
+  newnames <- sub("weighted_loan_metric", new_name, names(out))
+  rlang::set_names(out, newnames)
 }
 
 # We can remove this once we depend on R >= 3.5. See ?backports::isTRUE

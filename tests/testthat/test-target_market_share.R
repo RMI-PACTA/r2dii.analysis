@@ -740,3 +740,37 @@ test_that("`technology_share` outputs consistently when multiple
   expect_equal(out$technology_share, out_split_dl$technology_share)
 
 })
+
+test_that("`technology_share` outputs consistent values of projected and target in start year", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    name_ald = c("company a", "company b")
+  )
+
+  ald <- fake_ald(
+    name_company = rep(c("company a", "company b"), 2),
+    technology = rep(c("ice", "electric"), each = 2),
+    production = c(100, 1, 100, 3)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("ice", "electric"),
+    tmsr = 1,
+    smsp = 0
+  )
+
+  out <- target_market_share(matched, ald, scenario, region_isos_stable)
+
+  out_projected <- out %>%
+    filter(metric == "projected") %>%
+    split(.$technology)
+
+  out_target <- out %>%
+    filter(metric == "target_sds") %>%
+    split(.$technology)
+
+  expect_equal(out_projected$ice$technology_share, out_target$ice$technology_share)
+  expect_equal(out_projected$electric$technology_share, out_target$electric$technology_share)
+
+
+})

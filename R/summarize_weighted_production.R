@@ -97,6 +97,7 @@ summarize_weighted_metric <- function(data,
   stopifnot(is.data.frame(data))
 
   data %>%
+    ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     .f() %>%
     group_by(.data$sector_ald, .data$technology, .data$year, !!!group_dots) %>%
@@ -110,9 +111,6 @@ calculate_weighted_loan_percent_change <- function(data) {
 
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
-  old_groups <- dplyr::groups(data)
-  data <- ungroup(data)
 
   data <- add_percent_change(data)
 
@@ -130,9 +128,6 @@ calculate_weighted_loan_production <- function(data) {
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
-  old_groups <- dplyr::groups(data)
-  data <- ungroup(data)
-
   data <- add_technology_share(data)
 
   data <- data %>%
@@ -148,9 +143,6 @@ calculate_weighted_loan_emission_factor <- function(data) {
 
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
-  old_groups <- dplyr::groups(data)
-  data <- ungroup(data)
 
   data <- data %>%
     mutate(
@@ -186,14 +178,11 @@ add_loan_weight <- function(data, use_credit_limit) {
   total_size_by_sector <- distinct_loans_by_sector %>%
     summarize(total_size = sum(.data[[loan_size]]))
 
-  data <- data %>%
+  data %>%
     left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size
     )
-
-  data %>%
-    group_by(!!!old_groups)
 }
 
 add_percent_change <- function(data) {

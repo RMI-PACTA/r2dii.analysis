@@ -99,6 +99,20 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
     group_by(!!!dplyr::groups(data))
 }
 
+summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FALSE) {
+  stopifnot(is.data.frame(data))
+
+  data %>%
+    ungroup() %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    calculate_weighted_loan_emission_factor() %>%
+    group_by(...) %>%
+    summarize(
+      emission_factor_projected = sum(.data$weighted_loan_emission_factor)
+    ) %>%
+    ungroup()
+}
+
 calculate_weighted_loan_percent_change <- function(data) {
   data %>%
     add_percent_change() %>%

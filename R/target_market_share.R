@@ -135,6 +135,12 @@ target_market_share <- function(data,
 
   data <- aggregate_by_loan_id(data)
 
+  data <- join_ald_scenario(data, ald, scenario, region_isos)
+
+  if (nrow(data) == 0) {
+    return(empty_target_market_share_output())
+  }
+
   summary_groups <- c(
     "scenario",
     "tmsr",
@@ -143,12 +149,6 @@ target_market_share <- function(data,
     "scenario_source",
     "name_ald"
   )
-
-  data <- join_ald_scenario(data, ald, scenario, region_isos)
-
-  if (nrow(data) == 0) {
-    return(empty_target_market_share_output())
-  }
 
   if (weight_production) {
     data <- summarize_weighted_production(

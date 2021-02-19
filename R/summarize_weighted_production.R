@@ -94,6 +94,8 @@ summarize_weighted_metric <- function(data,
                                       use_credit_limit,
                                       .f,
                                       ...) {
+  stopifnot(is.data.frame(data))
+
   data %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     .f() %>%
@@ -104,8 +106,6 @@ summarize_weighted_metric <- function(data,
 }
 
 calculate_weighted_loan_percent_change <- function(data) {
-  stopifnot(is.data.frame(data))
-
   crucial <- c("production", "sector_ald", "year", "technology", "scenario")
 
   check_crucial_names(data, crucial)
@@ -125,8 +125,6 @@ calculate_weighted_loan_percent_change <- function(data) {
 }
 
 calculate_weighted_loan_production <- function(data) {
-  stopifnot(is.data.frame(data))
-
   crucial <- c("production", "sector_ald", "year", "technology")
 
   check_crucial_names(data, crucial)
@@ -146,8 +144,6 @@ calculate_weighted_loan_production <- function(data) {
 }
 
 calculate_weighted_loan_emission_factor <- function(data) {
-  stopifnot(is.data.frame(data))
-
   crucial <- c("production", "sector_ald", "year")
 
   check_crucial_names(data, crucial)
@@ -164,9 +160,7 @@ calculate_weighted_loan_emission_factor <- function(data) {
 }
 
 add_loan_weight <- function(data, use_credit_limit) {
-  stopifnot(
-    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
-  )
+  stopifnot(isTRUE(use_credit_limit) || isFALSE(use_credit_limit))
 
   type <- ifelse(use_credit_limit, "credit_limit", "outstanding")
   loan_size <- paste0("loan_size_", type)

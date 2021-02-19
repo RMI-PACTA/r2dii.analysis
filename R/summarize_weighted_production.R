@@ -117,7 +117,12 @@ calculate_weighted_loan_production <- function(data) {
     add_technology_share() %>%
     calculate_weighted_loan_metric("production") %>%
     calculate_weighted_loan_metric("technology_share")
+}
 
+calculate_weighted_loan_technology_share <- function(data) {
+  data %>%
+    add_technology_share() %>%
+    calculate_weighted_loan_metric("technology_share")
 }
 
 calculate_weighted_loan_emission_factor <- function(data) {

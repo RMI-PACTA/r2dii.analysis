@@ -125,18 +125,11 @@ add_weighted_loan_metric <- function(data,
     is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )
 
-  type <- ifelse(use_credit_limit, "credit_limit", "outstanding")
-  loan_size <- paste0("loan_size_", type)
-
-  currency <- paste0(loan_size, "_currency") %>%
-    check_single_currency(data)
-
   metrics <- c("production", "percent_change", "emission_factor")
   metric <- rlang::arg_match(metric, metrics)
 
-  crucial <- c(
-    "id_loan", "production", "sector_ald", "year", loan_size, currency
-  )
+  crucial <- c("production", "sector_ald", "year")
+
   if (metric %in% c("production", "percent_change")) {
     crucial <- c(crucial, "technology")
   }
@@ -153,8 +146,55 @@ add_weighted_loan_metric <- function(data,
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
+  data <- add_loan_weight(data, use_credit_limit)
+
+  if (metric == "percent_change") {
+    data <- add_percent_change(data)
+  }
+
+  if (metric == "production") {
+    data <- add_technology_share(data)
+  }
+
+  data <- data %>%
+    mutate(
+      weighted_loan_metric = .data[[metric]] * .data$loan_weight
+    )
+
+  if (metric == "production") {
+    data <- data %>%
+      mutate(
+        weighted_technology_share = .data$technology_share * .data$loan_weight
+      )
+  }
+
+  data %>%
+    group_by(!!!old_groups) %>%
+    rename_metric(metric)
+}
+
+add_loan_weight <- function(data, use_credit_limit) {
+  stopifnot(
+    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
+  )
+
+  type <- ifelse(use_credit_limit, "credit_limit", "outstanding")
+  loan_size <- paste0("loan_size_", type)
+
+  currency <- paste0(loan_size, "_currency") %>%
+    check_single_currency(data)
+
+  crucial <- c(
+    "id_loan", "sector_ald", "year", loan_size, currency
+  )
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  old_groups <- dplyr::groups(data)
+  data <- ungroup(data)
+
   distinct_loans_by_sector <- data %>%
-    ungroup() %>%
     group_by(.data$sector_ald) %>%
     distinct(.data$id_loan, .data[[loan_size]]) %>%
     check_unique_loan_size_values_per_id_loan()
@@ -162,33 +202,14 @@ add_weighted_loan_metric <- function(data,
   total_size_by_sector <- distinct_loans_by_sector %>%
     summarize(total_size = sum(.data[[loan_size]]))
 
-  out <- data
-
-  if (metric == "percent_change") {
-    out <- add_percent_change(out)
-  }
-
-  if (metric == "production") {
-    out <- add_technology_share(out)
-  }
-
-  out <- out %>%
+  data <- data %>%
     left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
-      loan_weight = .data[[loan_size]] / .data$total_size,
-      weighted_loan_metric = .data[[metric]] * .data$loan_weight
+      loan_weight = .data[[loan_size]] / .data$total_size
     )
 
-  if (metric == "production") {
-    out <- out %>%
-      mutate(
-        weighted_technology_share = .data$technology_share * .data$loan_weight
-      )
-  }
-
-  out %>%
-    group_by(!!!old_groups) %>%
-    rename_metric(metric)
+  data %>%
+    group_by(!!!old_groups)
 }
 
 add_percent_change <- function(data) {

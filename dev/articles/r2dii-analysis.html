@@ -144,9 +144,9 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span>
 <span class="co">#&gt; ✔ ggplot2 3.3.3     ✔ purrr   0.3.4</span>
-<span class="co">#&gt; ✔ tibble  3.0.5     ✔ dplyr   1.0.3</span>
+<span class="co">#&gt; ✔ tibble  3.0.6     ✔ dplyr   1.0.4</span>
 <span class="co">#&gt; ✔ tidyr   1.1.2     ✔ stringr 1.4.0</span>
-<span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.0</span>
+<span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.1</span>
 <span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
@@ -164,7 +164,7 @@
 <span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">ald</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 217 x 28</span>
+<span class="co">#&gt; # A tibble: 218 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -177,7 +177,7 @@
 <span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 208 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -210,7 +210,7 @@
   <span class="op">)</span>
 
 <span class="va">market_share_targets_portfolio</span>
-<span class="co">#&gt; # A tibble: 3,492 x 8</span>
+<span class="co">#&gt; # A tibble: 3,642 x 8</span>
 <span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    324592.</span>
@@ -223,7 +223,7 @@
 <span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    330435.</span>
 <span class="co">#&gt;  9 autom… electric    2022 global demo_2020       proje…    354720.</span>
 <span class="co">#&gt; 10 autom… electric    2022 global demo_2020       targe…    333693.</span>
-<span class="co">#&gt; # … with 3,482 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # … with 3,632 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
@@ -240,20 +240,22 @@
 <span class="co">#&gt; arguments to `FALSE`?</span>
 
 <span class="va">market_share_targets_company</span>
-<span class="co">#&gt; # A tibble: 14,604 x 9</span>
-<span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       toyota … proje…    324592.</span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
-<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       toyota … proje…    339656.</span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       toyota … targe…    329191.</span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       toyota … targe…    352505.</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       toyota … targe…    330435.</span>
-<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       toyota … proje…    354720.</span>
-<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       toyota … targe…    333693.</span>
-<span class="co">#&gt; # … with 14,594 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 14,754 x 11</span>
+<span class="co">#&gt;    sector technology  year region scenario_source name_ald sector_weighted…</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;               &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  5 autom… hybrid      2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  6 autom… hybrid      2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  7 autom… hybrid      2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  8 autom… hybrid      2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt;  9 autom… ice         2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt; 10 autom… ice         2020 global demo_2020       toyota …         4275858.</span>
+<span class="co">#&gt; # … with 14,744 more rows, and 4 more variables:</span>
+<span class="co">#&gt; #   technology_weighted_production &lt;dbl&gt;, metric &lt;chr&gt;, production &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">

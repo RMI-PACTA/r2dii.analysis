@@ -57,7 +57,7 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
     use_credit_limit = use_credit_limit,
     .f = calculate_weighted_loan_production,
     weighted_production = sum(.data$weighted_loan_production),
-    weighted_technology_share = sum(.data$weighted_technology_share)
+    weighted_technology_share = sum(.data$weighted_loan_technology_share)
   )
 }
 
@@ -109,32 +109,20 @@ summarize_weighted_metric <- function(data,
 calculate_weighted_loan_percent_change <- function(data) {
   data %>%
     add_percent_change() %>%
-    mutate(
-      weighted_loan_percent_change = .data$percent_change * .data$loan_weight
-    )
+    calculate_weighted_loan_metric("percent_change")
 }
 
 calculate_weighted_loan_production <- function(data) {
   data %>%
     add_technology_share() %>%
-    mutate(
-      weighted_loan_production = .data$production * .data$loan_weight,
-      weighted_technology_share = .data$technology_share * .data$loan_weight
-    )
+    calculate_weighted_loan_metric("production") %>%
+    calculate_weighted_loan_metric("technology_share")
 
 }
 
 calculate_weighted_loan_emission_factor <- function(data) {
-  crucial <- c("emission_factor")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
-  data <- data %>%
-    mutate(
-      weighted_loan_emission_factor = .data$emission_factor * .data$loan_weight
-    )
-
+  data %>%
+    calculate_weighted_loan_metric("emission_factor")
 }
 
 calculate_weighted_loan_metric <- function(data, metric) {

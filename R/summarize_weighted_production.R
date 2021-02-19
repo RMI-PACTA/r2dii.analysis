@@ -70,7 +70,7 @@ summarize_unweighted_production <- function(data, ...) {
       .data$loan_size_outstanding
     )) %>%
     distinct() %>%
-    group_by(...) %>%
+    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
     summarize(weighted_production = sum(.data$production), .groups = "keep") %>%
     ungroup(.data$technology) %>%
     mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%

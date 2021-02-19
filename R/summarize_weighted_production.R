@@ -55,7 +55,7 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
-    .f = add_weighted_loan_production,
+    .f = calculate_weighted_loan_production,
     weighted_production = sum(.data$weighted_loan_production),
     weighted_technology_share = sum(.data$weighted_technology_share)
   )
@@ -84,7 +84,7 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
     data = data,
     group_dots = rlang::enquos(...),
     use_credit_limit = use_credit_limit,
-    .f = add_weighted_loan_percent_change,
+    .f = calculate_weighted_loan_percent_change,
     weighted_percent_change = mean(.data$weighted_loan_percent_change)
   )
 }
@@ -95,6 +95,7 @@ summarize_weighted_metric <- function(data,
                                       .f,
                                       ...) {
   data %>%
+    add_loan_weight(use_credit_limit) %>%
     .f(use_credit_limit = use_credit_limit) %>%
     group_by(.data$sector_ald, .data$technology, .data$year, !!!group_dots) %>%
     summarize(...) %>%
@@ -102,7 +103,7 @@ summarize_weighted_metric <- function(data,
     group_by(!!!dplyr::groups(data))
 }
 
-add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
+calculate_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
   stopifnot(
     is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )
@@ -115,8 +116,6 @@ add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
-  data <- add_loan_weight(data, use_credit_limit)
-
   data <- add_percent_change(data)
 
   data <- data %>%
@@ -127,7 +126,7 @@ add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
 
 }
 
-add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
+calculate_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
   stopifnot(
     is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )
@@ -140,8 +139,6 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
-  data <- add_loan_weight(data, use_credit_limit)
-
   data <- add_technology_share(data)
 
   data <- data %>%
@@ -152,7 +149,7 @@ add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
 
 }
 
-add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
+calculate_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
   stopifnot(
     is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
   )
@@ -164,8 +161,6 @@ add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
 
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
-
-  data <- add_loan_weight(data, use_credit_limit)
 
   data <- data %>%
     mutate(

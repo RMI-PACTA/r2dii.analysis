@@ -56,7 +56,9 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
-    calculate_weighted_loan_production() %>%
+    add_technology_share() %>%
+    calculate_weighted_loan_metric("production") %>%
+    calculate_weighted_loan_metric("technology_share") %>%
     group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
     summarize(
       weighted_production = sum(.data$weighted_loan_production),
@@ -90,7 +92,8 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
-    calculate_weighted_loan_percent_change() %>%
+    add_percent_change() %>%
+    calculate_weighted_loan_metric("percent_change") %>%
     group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
     summarize(
       weighted_percent_change = mean(.data$weighted_loan_percent_change)
@@ -105,36 +108,12 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
-    calculate_weighted_loan_emission_factor() %>%
+    calculate_weighted_loan_metric("emission_factor") %>%
     group_by(.data$sector_ald, .data$year, ...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%
     ungroup()
-}
-
-calculate_weighted_loan_percent_change <- function(data) {
-  data %>%
-    add_percent_change() %>%
-    calculate_weighted_loan_metric("percent_change")
-}
-
-calculate_weighted_loan_production <- function(data) {
-  data %>%
-    add_technology_share() %>%
-    calculate_weighted_loan_metric("production") %>%
-    calculate_weighted_loan_metric("technology_share")
-}
-
-calculate_weighted_loan_technology_share <- function(data) {
-  data %>%
-    add_technology_share() %>%
-    calculate_weighted_loan_metric("technology_share")
-}
-
-calculate_weighted_loan_emission_factor <- function(data) {
-  data %>%
-    calculate_weighted_loan_metric("emission_factor")
 }
 
 calculate_weighted_loan_metric <- function(data, metric) {

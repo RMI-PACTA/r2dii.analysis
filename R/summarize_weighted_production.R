@@ -107,11 +107,6 @@ summarize_weighted_metric <- function(data,
 }
 
 calculate_weighted_loan_percent_change <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology", "scenario")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data <- add_percent_change(data)
 
   data <- data %>%
@@ -123,11 +118,6 @@ calculate_weighted_loan_percent_change <- function(data) {
 }
 
 calculate_weighted_loan_production <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data <- add_technology_share(data)
 
   data <- data %>%
@@ -139,7 +129,7 @@ calculate_weighted_loan_production <- function(data) {
 }
 
 calculate_weighted_loan_emission_factor <- function(data) {
-  crucial <- c("production", "sector_ald", "year")
+  crucial <- c("emission_factor")
 
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
@@ -186,6 +176,11 @@ add_loan_weight <- function(data, use_credit_limit) {
 }
 
 add_percent_change <- function(data) {
+  crucial <- c("production", "sector_ald", "year", "technology", "scenario")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
   check_zero_initial_production(data)
 
   green_or_brown <- r2dii.data::green_or_brown
@@ -215,6 +210,11 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
+  crucial <- c("production", "sector_ald", "year", "technology")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%

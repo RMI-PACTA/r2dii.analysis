@@ -133,8 +133,6 @@ target_market_share <- function(data,
   check_crucial_names(ald, "is_ultimate_owner")
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
-
-
   data <- aggregate_by_loan_id(data)
 
   summary_groups <- c(
@@ -148,6 +146,10 @@ target_market_share <- function(data,
 
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
+  if (nrow(data) == 0) {
+    return(empty_target_market_share_output())
+  }
+
   if (weight_production) {
     data <- summarize_weighted_production(
       data,
@@ -160,10 +162,6 @@ target_market_share <- function(data,
       data,
       !!!rlang::syms(summary_groups)
     )
-  }
-
-  if (nrow(data) == 0) {
-    return(empty_target_market_share_output())
   }
 
   target_groups <- c("sector_ald", "scenario", "region", "name_ald")

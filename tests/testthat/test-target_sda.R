@@ -20,6 +20,25 @@ test_that("with fake data outputs known value", {
   )
 
   expect_known_value(out, "ref-target_sda", update = FALSE)
+
+  out_company <- target_sda(
+    fake_matched(
+      sector_ald = "cement"
+    ),
+    ald = fake_ald(
+      sector = "cement",
+      technology = "cement",
+      year = c(2020, 2021, 2022),
+      emission_factor = c(1, 2, 3)
+    ),
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050),
+      emission_factor = c(0.6, 0.2)
+    ),
+    by_company = TRUE
+  )
+
+  expect_known_value(out_company, "ref-target_sda_company", update = TRUE)
 })
 
 test_that("outputs is ungrouped", {

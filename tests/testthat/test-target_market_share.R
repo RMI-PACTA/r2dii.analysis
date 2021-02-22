@@ -740,3 +740,58 @@ test_that("`technology_share` outputs consistently when multiple
   expect_equal(out$technology_share, out_split_dl$technology_share)
 
 })
+
+test_that("`technology_share` outputs consistently when multiple
+          loans at different levels match to a single company (#265)", {
+
+            matched_same_level <- fake_matched(
+              id_loan = c("L1", "L2", "L3"),
+              name_direct_loantaker = c("company a1", "company a2", "company b"),
+              name_ald = c("company a", "company a", "company b")
+            )
+
+            matched_diff_level <- matched_same_level %>%
+              mutate(
+                level = c("ultimate_parent", "direct_loantaker", "ultimate_parent")
+              )
+
+            ald <- fake_ald(
+              name_company = rep(c("company a","company b"), each = 2),
+              technology = rep(c("ice", "electric"), 2),
+              production = c(8, 2, 15, 5)
+            )
+
+            scenario <- fake_scenario(
+              technology = c("ice", "electric")
+            )
+
+            out_same_level <- target_market_share(
+              matched_same_level,
+              ald,
+              scenario,
+              region_isos_stable
+            ) %>%
+              filter(
+                metric == "projected",
+                year == 2025,
+                technology == "ice"
+              )
+
+            out_diff_level <- target_market_share(
+              matched_diff_level,
+              ald,
+              scenario,
+              region_isos_stable
+            ) %>%
+              filter(
+                metric == "projected",
+                year == 2025,
+                technology == "ice"
+              )
+
+            expect_equal(
+              out_same_level$technology_share,
+              out_diff_level$technology_share
+              )
+
+          })

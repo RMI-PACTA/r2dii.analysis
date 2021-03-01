@@ -65,7 +65,6 @@ summarize_unweighted_production <- function(data, ...) {
   data %>%
     select(-c(
       .data$id_loan,
-      .data$level,
       .data$loan_size_credit_limit,
       .data$loan_size_outstanding
     )) %>%

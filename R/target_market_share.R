@@ -403,7 +403,6 @@ aggregate_by_loan_id <- function(data) {
 
   data %>%
     group_by(
-      .data$level,
       .data$loan_size_outstanding_currency,
       .data$loan_size_credit_limit_currency,
       .data$name_ald,

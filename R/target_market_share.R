@@ -36,14 +36,17 @@
 #' library(r2dii.data)
 #' library(r2dii.match)
 #'
-#' matched <- loanbook_demo %>%
-#'   match_name(ald_demo) %>%
+#' loanbook <- head(loanbook_demo, 100)
+#' ald <- head(ald_demo, 100)
+#'
+#' matched <- loanbook %>%
+#'   match_name(ald) %>%
 #'   prioritize()
 #'
 #' # Calculate targets at portfolio level
 #' matched %>%
 #'   target_market_share(
-#'     ald = ald_demo,
+#'     ald = ald,
 #'     scenario = scenario_demo_2020,
 #'     region_isos = region_isos_demo
 #'   )
@@ -51,7 +54,7 @@
 #' # Calculate targets at company level
 #' matched %>%
 #'   target_market_share(
-#'     ald = ald_demo,
+#'     ald = ald,
 #'     scenario = scenario_demo_2020,
 #'     region_isos = region_isos_demo,
 #'     by_company = TRUE
@@ -59,7 +62,7 @@
 #'
 #' matched %>%
 #'   target_market_share(
-#'     ald = ald_demo,
+#'     ald = ald,
 #'     scenario = scenario_demo_2020,
 #'     region_isos = region_isos_demo,
 #'     # Calculate unweighted targets
@@ -154,7 +157,6 @@ target_market_share <- function(data,
       !!!rlang::syms(summary_groups),
       use_credit_limit = use_credit_limit
     )
-
   } else {
     data <- summarize_unweighted_production(
       data,
@@ -400,7 +402,6 @@ reweight_technology_share <- function(data, ...) {
 }
 
 aggregate_by_loan_id <- function(data) {
-
   data %>%
     group_by(
       .data$loan_size_outstanding_currency,

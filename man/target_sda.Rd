@@ -57,8 +57,9 @@ library(r2dii.match)
 library(r2dii.data)
 
 # Example datasets from r2dii.data
-loanbook <- loanbook_demo
-ald <- ald_demo
+loanbook <- head(loanbook_demo, 150)
+ald <- head(ald_demo, 100)
+
 co2_scenario <- co2_intensity_scenario_demo
 
 # WARNING: Remember to validate matches (see `?prioritize`)
@@ -87,6 +88,7 @@ out <- target_sda(
   co2_intensity_scenario = co2_scenario,
   by_company = TRUE
 )
+out
 }
 \seealso{
 Other functions to calculate scenario targets: 

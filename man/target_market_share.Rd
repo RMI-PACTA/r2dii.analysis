@@ -59,14 +59,17 @@ if (!installed) stop("Please install r2dii.match and r2dii.data")
 library(r2dii.data)
 library(r2dii.match)
 
-matched <- loanbook_demo \%>\%
-  match_name(ald_demo) \%>\%
+loanbook <- head(loanbook_demo, 100)
+ald <- head(ald_demo, 100)
+
+matched <- loanbook \%>\%
+  match_name(ald) \%>\%
   prioritize()
 
 # Calculate targets at portfolio level
 matched \%>\%
   target_market_share(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
@@ -74,7 +77,7 @@ matched \%>\%
 # Calculate targets at company level
 matched \%>\%
   target_market_share(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo,
     by_company = TRUE
@@ -82,7 +85,7 @@ matched \%>\%
 
 matched \%>\%
   target_market_share(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo,
     # Calculate unweighted targets

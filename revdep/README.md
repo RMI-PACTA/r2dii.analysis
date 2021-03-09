@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |America/Los_Angeles          |
-|date     |2021-03-08                   |
+|date     |2021-03-09                   |
 
 # Dependencies
 
@@ -40,7 +40,7 @@
 |tidyselect     |1.1.0  |1.1.0      |   |
 |utf8           |1.1.4  |1.1.4      |   |
 |vctrs          |0.3.6  |0.3.6      |   |
-|zoo            |1.8-8  |1.8-8      |   |
+|zoo            |1.8-9  |1.8-9      |   |
 
 # Revdeps
 

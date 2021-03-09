@@ -224,75 +224,77 @@ companies would cause percent-change percentage to be infinite, which is wrong.<
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://2degreesinvesting.github.io/r2dii.data/'>r2dii.data</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://2degreesinvesting.github.io/r2dii.match/'>r2dii.match</a></span><span class='op'>)</span>
 
-<span class='va'>master</span> <span class='op'>&lt;-</span> <span class='va'>loanbook_demo</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span><span class='op'>(</span><span class='va'>ald_demo</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>loanbook</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>loanbook_demo</span>, <span class='fl'>150</span><span class='op'>)</span>
+<span class='va'>ald</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ald_demo</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>master</span> <span class='op'>&lt;-</span> <span class='va'>loanbook</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span><span class='op'>(</span><span class='va'>ald</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='join_ald_scenario.html'>join_ald_scenario</a></span><span class='op'>(</span>
-    ald <span class='op'>=</span> <span class='va'>ald_demo</span>,
+    ald <span class='op'>=</span> <span class='va'>ald</span>,
     scenario <span class='op'>=</span> <span class='va'>scenario_demo_2020</span>,
     region_isos <span class='op'>=</span> <span class='va'>region_isos_demo</span>
   <span class='op'>)</span>
 
 <span class='fu'>summarize_weighted_production</span><span class='op'>(</span><span class='va'>master</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 138 x 5</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 x 5</span><span>
 #&gt;    sector_ald technology  year weighted_production weighted_technology_share
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>                     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>020             </span><span style='text-decoration: underline;'>973</span><span>775.                     0.114
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>021            1</span><span style='text-decoration: underline;'>018</span><span>967.                     0.118
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>022            1</span><span style='text-decoration: underline;'>064</span><span>159.                     0.122
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>023            1</span><span style='text-decoration: underline;'>109</span><span>351.                     0.126
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>024            1</span><span style='text-decoration: underline;'>154</span><span>543.                     0.130
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>025            1</span><span style='text-decoration: underline;'>199</span><span>735.                     0.133
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>026            1</span><span style='text-decoration: underline;'>244</span><span>926.                     0.137
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020            1</span><span style='text-decoration: underline;'>886</span><span>042.                     0.221
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021            1</span><span style='text-decoration: underline;'>709</span><span>634.                     0.198
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022            1</span><span style='text-decoration: underline;'>533</span><span>226.                     0.176
-#&gt; </span><span style='color: #949494;'># … with 128 more rows</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>020             </span><span style='text-decoration: underline;'>212</span><span>163.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>021             </span><span style='text-decoration: underline;'>209</span><span>081.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>022             </span><span style='text-decoration: underline;'>205</span><span>999.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>023             </span><span style='text-decoration: underline;'>202</span><span>916.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>024             </span><span style='text-decoration: underline;'>199</span><span>834.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>025             </span><span style='text-decoration: underline;'>196</span><span>752.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>026             </span><span style='text-decoration: underline;'>193</span><span>669.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>027             </span><span style='text-decoration: underline;'>190</span><span>587.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>028             </span><span style='text-decoration: underline;'>187</span><span>505.                      1.75
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>029             </span><span style='text-decoration: underline;'>184</span><span>423.                      1.75
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div><div class='input'>
 <span class='fu'>summarize_weighted_production</span><span class='op'>(</span><span class='va'>master</span>, use_credit_limit <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 138 x 5</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 42 x 5</span><span>
 #&gt;    sector_ald technology  year weighted_production weighted_technology_share
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>                     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>020             </span><span style='text-decoration: underline;'>973</span><span>775.                     0.114
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>021            1</span><span style='text-decoration: underline;'>018</span><span>967.                     0.118
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>022            1</span><span style='text-decoration: underline;'>064</span><span>159.                     0.122
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>023            1</span><span style='text-decoration: underline;'>109</span><span>351.                     0.126
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>024            1</span><span style='text-decoration: underline;'>154</span><span>543.                     0.130
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>025            1</span><span style='text-decoration: underline;'>199</span><span>735.                     0.133
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>026            1</span><span style='text-decoration: underline;'>244</span><span>926.                     0.137
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020            1</span><span style='text-decoration: underline;'>886</span><span>042.                     0.221
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021            1</span><span style='text-decoration: underline;'>709</span><span>634.                     0.198
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022            1</span><span style='text-decoration: underline;'>533</span><span>226.                     0.176
-#&gt; </span><span style='color: #949494;'># … with 128 more rows</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>020             </span><span style='text-decoration: underline;'>185</span><span>181.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>021             </span><span style='text-decoration: underline;'>182</span><span>491.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>022             </span><span style='text-decoration: underline;'>179</span><span>800.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>023             </span><span style='text-decoration: underline;'>177</span><span>110.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>024             </span><span style='text-decoration: underline;'>174</span><span>420.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>025             </span><span style='text-decoration: underline;'>171</span><span>729.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>026             </span><span style='text-decoration: underline;'>169</span><span>039.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>027             </span><span style='text-decoration: underline;'>166</span><span>349.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>028             </span><span style='text-decoration: underline;'>163</span><span>659.                      1.53
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>029             </span><span style='text-decoration: underline;'>160</span><span>968.                      1.53
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div><div class='input'>
 <span class='fu'>summarize_weighted_percent_change</span><span class='op'>(</span><span class='va'>master</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 138 x 4</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 42 x 4</span><span>
 #&gt;    sector_ald technology  year weighted_percent_change
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>020                  0     
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>021                  0.088</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>022                  0.176 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>023                  0.264 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>024                  0.352 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>025                  0.440 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>026                  0.528 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020                  1.78  
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021                  1.43  
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022                  1.09  
-#&gt; </span><span style='color: #949494;'># … with 128 more rows</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>020                   0    
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>021                  -</span><span style='color: #BB0000;'>0.760</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>022                  -</span><span style='color: #BB0000;'>1.52</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>023                  -</span><span style='color: #BB0000;'>2.28</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>024                  -</span><span style='color: #BB0000;'>3.04</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>025                  -</span><span style='color: #BB0000;'>3.80</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>026                  -</span><span style='color: #BB0000;'>4.56</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>027                  -</span><span style='color: #BB0000;'>5.32</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>028                  -</span><span style='color: #BB0000;'>6.08</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>029                  -</span><span style='color: #BB0000;'>6.84</span><span> 
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div><div class='input'>
 <span class='fu'>summarize_weighted_percent_change</span><span class='op'>(</span><span class='va'>master</span>, use_credit_limit <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 138 x 4</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 42 x 4</span><span>
 #&gt;    sector_ald technology  year weighted_percent_change
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>020                  0     
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>021                  0.088</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>022                  0.176 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>023                  0.264 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>024                  0.352 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>025                  0.440 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> automotive electric    </span><span style='text-decoration: underline;'>2</span><span>026                  0.528 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>020                  1.78  
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>021                  1.43  
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> automotive hybrid      </span><span style='text-decoration: underline;'>2</span><span>022                  1.09  
-#&gt; </span><span style='color: #949494;'># … with 128 more rows</span><span></div></span></pre>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>020                   0    
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>021                  -</span><span style='color: #BB0000;'>0.663</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>022                  -</span><span style='color: #BB0000;'>1.33</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>023                  -</span><span style='color: #BB0000;'>1.99</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>024                  -</span><span style='color: #BB0000;'>2.65</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>025                  -</span><span style='color: #BB0000;'>3.32</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>026                  -</span><span style='color: #BB0000;'>3.98</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>027                  -</span><span style='color: #BB0000;'>4.64</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>028                  -</span><span style='color: #BB0000;'>5.31</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> power      hydrocap    </span><span style='text-decoration: underline;'>2</span><span>029                  -</span><span style='color: #BB0000;'>5.97</span><span> 
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

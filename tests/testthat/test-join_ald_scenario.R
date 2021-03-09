@@ -248,13 +248,13 @@ test_that("include/excludes `plant_location` inside/outside a region", {
 test_that("outputs the same with upper/lower ald$sector or ald$technology", {
   # From r2dii.match fake_lbk()
   lbk <- tibble(
-    sector_classification_system = c("NACE"),
-    id_ultimate_parent = c("UP15"),
-    name_ultimate_parent = c("Alpine Knits India Pvt. Limited", NA),
-    id_direct_loantaker = c("C294"),
-    name_direct_loantaker = c("Yuamen Xinneng Thermal Power Co Ltd", NA),
-    sector_classification_direct_loantaker = c(3511),
-    id_loan = c(1)
+    sector_classification_system = "NACE",
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_direct_loantaker = 3511,
+    id_loan = 1
   )
   # Based on r2dii.match fake_ald()
   ald <- tibble(

@@ -647,10 +647,10 @@ test_that("w/ multiple match `level`, unweighted production is equal to ALD prod
   )
 
   ald_production <- fake_ald() %>%
-    pull(production)
+    dplyr::pull(production)
 
   out_production <- filter(out, metric == "projected") %>%
-    pull(production)
+    dplyr::pull(production)
 
   expect_equal(ald_production, out_production)
 })

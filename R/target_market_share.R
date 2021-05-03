@@ -175,14 +175,16 @@ target_market_share <- function(data,
     mutate(sector_weighted_production = sum(.data$weighted_production)) %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(target_groups)) %>%
-    mutate(initial_sector_production = first(.data$sector_weighted_production))
+    mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
+    select(-.data$sector_weighted_production)
 
   data <- data %>%
     group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
     mutate(technology_weighted_production = sum(.data$weighted_production)) %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
-    mutate(initial_technology_production = first(.data$technology_weighted_production))
+    mutate(initial_technology_production = first(.data$technology_weighted_production)) %>%
+    select(-.data$technology_weighted_production)
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()

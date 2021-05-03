@@ -34,11 +34,13 @@
 #' library(r2dii.data)
 #' library(r2dii.match)
 #'
-#' master <- loanbook_demo %>%
-#'   match_name(ald_demo) %>%
+#' loanbook <- head(loanbook_demo, 150)
+#' ald <- head(ald_demo, 100)
+#' master <- loanbook %>%
+#'   match_name(ald) %>%
 #'   prioritize() %>%
 #'   join_ald_scenario(
-#'     ald = ald_demo,
+#'     ald = ald,
 #'     scenario = scenario_demo_2020,
 #'     region_isos = region_isos_demo
 #'   )
@@ -72,7 +74,6 @@ summarize_unweighted_production <- function(data, ...) {
   data %>%
     select(-c(
       .data$id_loan,
-      .data$level,
       .data$loan_size_credit_limit,
       .data$loan_size_outstanding
     )) %>%

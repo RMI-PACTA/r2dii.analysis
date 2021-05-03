@@ -1,7 +1,7 @@
 Package: r2dii.analysis
-Title: Tools to Calculate Climate Targets for Financial
+Title: Tools to Measure Climate Scenario Alignment of Corporate Lending
     Portfolios
-Version: 0.1.5.9000
+Version: 0.1.6.9000
 Authors@R: 
     c(person(given = "Jackson",
              family = "Hoffart",
@@ -20,18 +20,18 @@ Authors@R:
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: These tools help you to assess if a financial
-    portfolio aligns with climate goals. They summarize key metrics
-    attributed to the portfolio (e.g. production, emission factors), and
-    calculate targets based on climate scenarios. They implement in R the
-    last step of the free software 'PACTA' (Paris Agreement Capital
-    Transition Assessment; <https://2degrees-investing.org/>). Financial
-    institutions use 'PACTA' to study how their capital allocation impacts
-    the climate.
+Description: These tools help you to assess if a corporate lending
+    portfolio aligns with climate goals. They summarize key climate
+    indicators attributed to the portfolio (e.g. production, emission
+    factors), and calculate alignment targets based on climate scenarios.
+    They implement in R the last step of the free software 'PACTA' (Paris
+    Agreement Capital Transition Assessment;
+    <https://2degrees-investing.org/>). Financial institutions use 'PACTA'
+    to study how their capital allocation decisions align with climate
+    change mitigation goals.
 License: MIT + file LICENSE
 URL: https://github.com/2DegreesInvesting/r2dii.analysis
-BugReports: 
-    https://github.com/2DegreesInvesting/r2dii.analysis/issues
+BugReports: https://github.com/2DegreesInvesting/r2dii.analysis/issues
 Depends:
     R (>= 3.4)
 Imports: 

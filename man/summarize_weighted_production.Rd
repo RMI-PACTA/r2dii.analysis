@@ -44,11 +44,13 @@ if (!installed) stop("Please install r2dii.match and r2dii.data")
 library(r2dii.data)
 library(r2dii.match)
 
-master <- loanbook_demo \%>\%
-  match_name(ald_demo) \%>\%
+loanbook <- head(loanbook_demo, 150)
+ald <- head(ald_demo, 100)
+master <- loanbook \%>\%
+  match_name(ald) \%>\%
   prioritize() \%>\%
   join_ald_scenario(
-    ald = ald_demo,
+    ald = ald,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )

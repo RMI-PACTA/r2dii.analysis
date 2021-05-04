@@ -226,7 +226,7 @@ output the unweighted production values.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with the summarized columns <code>metric</code>, <code>production</code> and
+    <p>A tibble including the summarized columns <code>metric</code>, <code>production</code> and
 <code>technology_share</code>. If <code>by_company = TRUE</code>, the output will also have the
 column <code>name_ald</code>.</p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
@@ -286,22 +286,20 @@ column <code>name_ald</code>.</p>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
 #&gt; <span class='warning'>This will result in company-level results, weighted by the portfolio</span>
 #&gt; <span class='warning'>loan size, which is rarely useful. Did you mean to set one of these</span>
-#&gt; <span class='warning'>arguments to `FALSE`?</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 291 x 11</span><span>
-#&gt;    sector technology   year region scenario_source name_ald    sector_weighted_…
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop…            </span><span style='text-decoration: underline;'>70</span><span>721.
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop…            </span><span style='text-decoration: underline;'>70</span><span>721.
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop…            </span><span style='text-decoration: underline;'>70</span><span>721.
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop…            </span><span style='text-decoration: underline;'>70</span><span>721.
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r…             </span><span style='text-decoration: underline;'>5</span><span>872.
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r…             </span><span style='text-decoration: underline;'>5</span><span>872.
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r…             </span><span style='text-decoration: underline;'>5</span><span>872.
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r…             </span><span style='text-decoration: underline;'>5</span><span>872.
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       aba hydrop…            </span><span style='text-decoration: underline;'>69</span><span>694.
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       aba hydrop…            </span><span style='text-decoration: underline;'>69</span><span>694.
-#&gt; </span><span style='color: #949494;'># … with 281 more rows, and 4 more variables:</span><span>
-#&gt; </span><span style='color: #949494;'>#   technology_weighted_production &lt;dbl&gt;, metric &lt;chr&gt;, production &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   technology_share &lt;dbl&gt;</span><span></div><div class='input'>
+#&gt; <span class='warning'>arguments to `FALSE`?</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 291 x 9</span><span>
+#&gt;    sector technology   year region scenario_source name_ald    metric production
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop… proje…     </span><span style='text-decoration: underline;'>70</span><span>721.
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop… targe…     </span><span style='text-decoration: underline;'>70</span><span>721.
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop… targe…     </span><span style='text-decoration: underline;'>70</span><span>721.
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       aba hydrop… targe…     </span><span style='text-decoration: underline;'>70</span><span>721.
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r… proje…      </span><span style='text-decoration: underline;'>5</span><span>872.
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r… targe…      </span><span style='text-decoration: underline;'>5</span><span>872.
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r… targe…      </span><span style='text-decoration: underline;'>5</span><span>872.
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> power  renewables…  </span><span style='text-decoration: underline;'>2</span><span>020 global demo_2020       affinity r… targe…      </span><span style='text-decoration: underline;'>5</span><span>872.
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       aba hydrop… proje…     </span><span style='text-decoration: underline;'>69</span><span>694.
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> power  hydrocap     </span><span style='text-decoration: underline;'>2</span><span>021 global demo_2020       aba hydrop… targe…     </span><span style='text-decoration: underline;'>70</span><span>778.
+#&gt; </span><span style='color: #949494;'># … with 281 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span><span></div><div class='input'>
 <span class='va'>matched</span> <span class='op'>%&gt;%</span>
   <span class='fu'>target_market_share</span><span class='op'>(</span>
     ald <span class='op'>=</span> <span class='va'>ald</span>,

@@ -2,7 +2,7 @@
 
 * `target_market_share()` no longer outputs columms
   `sector_weighted_production` or `technology_weighted_production`. Those
-  columns are internal so they shouldn't face users.
+  columns are internal so they shouldn't face users (#291).
 
 # r2dii.analysis 0.1.6
 

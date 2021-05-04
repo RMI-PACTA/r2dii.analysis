@@ -72,9 +72,11 @@ summarize_unweighted_production <- function(data, ...) {
     )) %>%
     distinct() %>%
     group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
-    summarize(weighted_production = sum(.data$production), .groups = "keep") %>%
+    # FIXME: The name `weighted_production` is confusing because here it holds
+    # unweighted_production.
+    summarize(weighted_production = .data$production / sum(.data$production), .groups = "keep") %>%
     ungroup(.data$technology) %>%
-    mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
+    mutate(weighted_technology_share = .data$weighted_production) %>%
     group_by(!!!dplyr::groups(data))
 }
 

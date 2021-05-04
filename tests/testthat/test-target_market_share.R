@@ -226,6 +226,7 @@ test_that("with known input outputs as expected, at company level", {
   )
 })
 
+# FIXME: This requirement conflicts with #291. Which one is correct?
 test_that("with known input outputs as expected, ald benchmark", {
   portfolio <- fake_matched()
 
@@ -789,5 +790,71 @@ test_that("`technology_share` outputs consistently when multiple
   expect_equal(
     out_same_level$technology_share,
     out_diff_level$technology_share
+  )
+})
+
+test_that("projects technology share as 'production / total production' when
+          computing by company, unweighted by ralative loan size (#288)", {
+  .production <- c(1, 10)
+  .year <- 2022
+  .company <- "toyota motor corp"
+  .sector <- "automotive"
+  .technology <- c("hybrid", "ice")
+
+  ald <- tibble(
+    production = .production,
+    name_company = .company,
+    technology = .technology,
+    sector = .sector,
+    year = .year,
+    plant_location = c("US"),
+    emission_factor = 1,
+    is_ultimate_owner = TRUE
+  )
+
+  matched <- tibble(
+    sector = .sector,
+    sector_ald = .sector,
+    name_ald = .company,
+    id_loan = "L1",
+    loan_size_outstanding = 1,
+    loan_size_outstanding_currency = "XYZ",
+    loan_size_credit_limit = 1,
+    loan_size_credit_limit_currency = "XYZ",
+    id_2dii = "DL1",
+    level = "direct_loantaker",
+    score = 1
+  )
+
+  scenario <- tibble(
+    sector = .sector,
+    scenario = "cps",
+    technology = .technology,
+    region = "global",
+    year = .year,
+    tmsr = 1,
+    smsp = c(0.100, 0.101),
+    scenario_source = "demo_2020"
+  )
+
+  region <- tibble(
+    region = "global",
+    isos = "us",
+    source = "demo_2020"
+  )
+
+  out <- matched %>%
+    target_market_share(
+      ald = ald,
+      scenario = scenario,
+      region_isos = region,
+      by_company = TRUE,
+      weight_production = FALSE
+    ) %>%
+    filter(metric == "projected")
+
+  expect_equal(
+    out$technology_share,
+    out$production / sum(out$production)
   )
 })

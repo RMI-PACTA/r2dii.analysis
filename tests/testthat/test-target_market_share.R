@@ -381,6 +381,29 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   )
 })
 
+test_that("w/ `by_company = TRUE` outputs additional `name_ald` (#291)", {
+  by_company_false <- target_market_share(
+    data = fake_matched(),
+    ald = fake_ald(),
+    scenario = fake_scenario(),
+    region_isos = region_isos_stable,
+    by_company = FALSE
+  )
+
+  by_company_true <- suppressWarnings(
+    target_market_share(
+      data = fake_matched(),
+      ald = fake_ald(),
+      scenario = fake_scenario(),
+      region_isos = region_isos_stable,
+      by_company = TRUE
+    )
+  )
+
+  additional_column <- setdiff(names(by_company_true), names(by_company_false))
+  expect_equal(additional_column, "name_ald")
+})
+
 test_that("outputs same names regardless of the value of `weight_production` (#186)", {
   out_weighted <- target_market_share(
     fake_matched(),

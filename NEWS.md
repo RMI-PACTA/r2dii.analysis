@@ -1,5 +1,9 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` no longer outputs columms
+  `sector_weighted_production` or `technology_weighted_production`. Those
+  columns are internal so they shouldn't face users.
+
 # r2dii.analysis 0.1.6
 
 * `target_market_share()` now correctly outputs `technology_share` with

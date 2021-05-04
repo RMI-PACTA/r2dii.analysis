@@ -1,6 +1,6 @@
 # r2dii.analysis (development version)
 
-* `target_market_share()` not correclty projects technology share as
+* `target_market_share()` now correclty projects technology share as
   'production / total production' when computing by company, 
   unweighted by ralative loan size (@KapitanKombajn #288).
 

@@ -81,7 +81,7 @@ test_that("with bad but unused loan_size_column is error free", {
 
   bad_unused <- rename(fake_master(), bad = "loan_size_outstanding")
   expect_error_free(
-    add_weighted_loan_production(bad_unused, use_credit_limit = TRUE)
+    summarize_weighted_production(bad_unused, use_credit_limit = TRUE)
   )
 })
 
@@ -306,7 +306,7 @@ test_that("with bad but unused loan_size_column is error free", {
 
   bad_unused <- rename(fake_master(), bad = "loan_size_outstanding")
   expect_error_free(
-    add_weighted_loan_percent_change(bad_unused, use_credit_limit = TRUE)
+    summarize_weighted_percent_change(bad_unused, use_credit_limit = TRUE)
   )
 })
 

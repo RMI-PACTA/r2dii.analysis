@@ -53,14 +53,21 @@
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
-  summarize_weighted_metric(
-    data = data,
-    group_dots = rlang::enquos(...),
-    use_credit_limit = use_credit_limit,
-    .f = add_weighted_loan_production,
-    weighted_production = sum(.data$weighted_loan_production),
-    weighted_technology_share = sum(.data$weighted_technology_share)
-  )
+  stopifnot(is.data.frame(data))
+
+  data %>%
+    ungroup() %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    add_technology_share() %>%
+    calculate_weighted_loan_metric("production") %>%
+    calculate_weighted_loan_metric("technology_share") %>%
+    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+    summarize(
+      weighted_production = sum(.data$weighted_loan_production),
+      weighted_technology_share = sum(.data$weighted_loan_technology_share)
+    ) %>%
+    # Restore old groups
+    group_by(!!!dplyr::groups(data))
 }
 
 summarize_unweighted_production <- function(data, ...) {
@@ -82,50 +89,50 @@ summarize_unweighted_production <- function(data, ...) {
 #' @rdname summarize_weighted_production
 #' @export
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
-  summarize_weighted_metric(
-    data = data,
-    group_dots = rlang::enquos(...),
-    use_credit_limit = use_credit_limit,
-    .f = add_weighted_loan_percent_change,
-    weighted_percent_change = mean(.data$weighted_loan_percent_change)
-  )
-}
+  stopifnot(is.data.frame(data))
 
-summarize_weighted_metric <- function(data,
-                                      group_dots,
-                                      use_credit_limit,
-                                      .f,
-                                      ...) {
   data %>%
-    .f(use_credit_limit = use_credit_limit) %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, !!!group_dots) %>%
-    summarize(...) %>%
+    ungroup() %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    add_percent_change() %>%
+    calculate_weighted_loan_metric("percent_change") %>%
+    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+    summarize(
+      weighted_percent_change = mean(.data$weighted_loan_percent_change)
+      ) %>%
     # Restore old groups
     group_by(!!!dplyr::groups(data))
 }
 
-add_weighted_loan_percent_change <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, metric = "percent_change")
+summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FALSE) {
+  stopifnot(is.data.frame(data))
+
+  data %>%
+    ungroup() %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    calculate_weighted_loan_metric("emission_factor") %>%
+    group_by(.data$sector_ald, .data$year, ...) %>%
+    summarize(
+      emission_factor_projected = sum(.data$weighted_loan_emission_factor)
+    ) %>%
+    ungroup()
 }
 
-add_weighted_loan_production <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, metric = "production")
+calculate_weighted_loan_metric <- function(data, metric) {
+  crucial <- c(metric, "loan_weight")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  data %>%
+    mutate(
+      weighted_loan_metric = .data[[metric]] * .data$loan_weight
+    ) %>%
+    rename_metric(metric)
 }
 
-add_weighted_loan_emission_factor <- function(data, use_credit_limit = FALSE) {
-  add_weighted_loan_metric(data, use_credit_limit, metric = "emission_factor")
-}
-
-add_weighted_loan_metric <- function(data,
-                                     use_credit_limit,
-                                     metric = c(
-                                       "production",
-                                       "percent_change",
-                                       "emission_factor"
-                                     )) {
-  stopifnot(
-    is.data.frame(data), isTRUE(use_credit_limit) || isFALSE(use_credit_limit)
-  )
+add_loan_weight <- function(data, use_credit_limit) {
+  stopifnot(isTRUE(use_credit_limit) || isFALSE(use_credit_limit))
 
   type <- ifelse(use_credit_limit, "credit_limit", "outstanding")
   loan_size <- paste0("loan_size_", type)
@@ -133,30 +140,17 @@ add_weighted_loan_metric <- function(data,
   currency <- paste0(loan_size, "_currency") %>%
     check_single_currency(data)
 
-  metrics <- c("production", "percent_change", "emission_factor")
-  metric <- rlang::arg_match(metric, metrics)
-
   crucial <- c(
-    "id_loan", "production", "sector_ald", "year", loan_size, currency
+    "id_loan", "sector_ald", "year", loan_size, currency
   )
-  if (metric %in% c("production", "percent_change")) {
-    crucial <- c(crucial, "technology")
-  }
-  if (metric == "percent_change") {
-    crucial <- c(crucial, "scenario")
-  }
+
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
-  if (metric == "percent_change") {
-    check_zero_initial_production(data)
-  }
 
   old_groups <- dplyr::groups(data)
   data <- ungroup(data)
 
   distinct_loans_by_sector <- data %>%
-    ungroup() %>%
     group_by(.data$sector_ald) %>%
     distinct(.data$id_loan, .data[[loan_size]]) %>%
     check_unique_loan_size_values_per_id_loan()
@@ -164,36 +158,21 @@ add_weighted_loan_metric <- function(data,
   total_size_by_sector <- distinct_loans_by_sector %>%
     summarize(total_size = sum(.data[[loan_size]]))
 
-  out <- data
-
-  if (metric == "percent_change") {
-    out <- add_percent_change(out)
-  }
-
-  if (metric == "production") {
-    out <- add_technology_share(out)
-  }
-
-  out <- out %>%
+  data %>%
     left_join(total_size_by_sector, by = "sector_ald") %>%
     mutate(
-      loan_weight = .data[[loan_size]] / .data$total_size,
-      weighted_loan_metric = .data[[metric]] * .data$loan_weight
+      loan_weight = .data[[loan_size]] / .data$total_size
     )
-
-  if (metric == "production") {
-    out <- out %>%
-      mutate(
-        weighted_technology_share = .data$technology_share * .data$loan_weight
-      )
-  }
-
-  out %>%
-    group_by(!!!old_groups) %>%
-    rename_metric(metric)
 }
 
 add_percent_change <- function(data) {
+  crucial <- c("production", "sector_ald", "year", "technology", "scenario")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  check_zero_initial_production(data)
+
   green_or_brown <- r2dii.data::green_or_brown
 
   data %>%
@@ -221,6 +200,11 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
+  crucial <- c("production", "sector_ald", "year", "technology")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%

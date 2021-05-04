@@ -82,7 +82,7 @@ summarize_unweighted_production <- function(data, ...) {
     # FIXME: Confusing: `weighted_production` holds unweighted_production?
     summarize(weighted_production = .data$production, .groups = "keep") %>%
     ungroup(.data$technology, .data$tmsr, .data$smsp) %>%
-    mutate(weighted_technology_share = .data$weighted_production/sum(.data$weighted_production)) %>%
+    mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
     group_by(!!!dplyr::groups(data))
 }
 
@@ -99,7 +99,7 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
     group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
     summarize(
       weighted_percent_change = mean(.data$weighted_loan_percent_change)
-      ) %>%
+    ) %>%
     # Restore old groups
     group_by(!!!dplyr::groups(data))
 }

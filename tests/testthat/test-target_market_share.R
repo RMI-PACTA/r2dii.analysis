@@ -879,4 +879,9 @@ test_that("projects technology share as 'production / total production' when
     out$technology_share,
     out$production / sum(out$production)
   )
+
+  expect_equal(
+    out$production,
+    .production
+  )
 })

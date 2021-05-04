@@ -226,7 +226,6 @@ test_that("with known input outputs as expected, at company level", {
   )
 })
 
-# FIXME: This requirement conflicts with #291. Which one is correct?
 test_that("with known input outputs as expected, ald benchmark", {
   portfolio <- fake_matched()
 

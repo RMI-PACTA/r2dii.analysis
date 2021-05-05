@@ -145,7 +145,7 @@ target_sda <- function(data,
       summarize_weighted_emission_factor(
         use_credit_limit = use_credit_limit
       )
-    }
+  }
 
   data <- data %>%
     rename(sector = .data$sector_ald)

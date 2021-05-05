@@ -1,5 +1,9 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now correctly projects technology share as
+  'production / total production' when computing by company, 
+  unweighted by relative loan size (@KapitanKombajn #288).
+
 * `target_market_share()` no longer outputs columms
   `sector_weighted_production` or `technology_weighted_production`. Those
   columns are internal so they shouldn't face users (#291).

@@ -271,7 +271,9 @@ target_market_share <- function(data,
       weighted_production_projected = .data$weighted_production,
       weighted_technology_share_projected = .data$weighted_technology_share,
       sector = .data$sector_ald
-    ) %>%
+    )
+
+  data <- data %>%
     pivot_longer(cols = starts_with("weighted_")) %>%
     filter(!is.na(.data$value)) %>%
     separate_metric_from_name()

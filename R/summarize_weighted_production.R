@@ -211,6 +211,18 @@ add_technology_share <- function(data) {
     group_by(!!!dplyr::groups(data))
 }
 
+add_technology_share_target <- function(data) {
+  crucial <- c("production_target", "sector_ald", "year", "technology")
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  data %>%
+    group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
+    mutate(technology_share_target = .data$production_target / sum(.data$production_target)) %>%
+    group_by(!!!dplyr::groups(data))
+}
+
 check_zero_initial_production <- function(data) {
   companies_with_zero_initial_production <- data %>%
     group_by(.data$technology, .data$name_ald, .data$year) %>%

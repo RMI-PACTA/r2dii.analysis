@@ -140,6 +140,29 @@ target_market_share <- function(data,
 
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
+  crucial_groups <- c(
+    "id_loan",
+    "loan_size_outstanding",
+    "loan_size_outstanding_currency",
+    "loan_size_credit_limit",
+    "loan_size_credit_limit_currency",
+    "name_ald",
+    "sector_ald",
+    "technology",
+    "year",
+    "scenario",
+    "region",
+    "tmsr",
+    "smsp",
+    "scenario_source"
+  )
+
+  data <- data %>%
+    group_by(!!!rlang::syms(crucial_groups)) %>%
+    summarize(
+      production = sum(.data$production)
+    )
+
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
   }

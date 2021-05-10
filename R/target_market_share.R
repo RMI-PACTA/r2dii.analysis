@@ -144,54 +144,32 @@ target_market_share <- function(data,
     return(empty_target_market_share_output())
   }
 
-  summary_groups <- c(
-    "scenario",
-    "tmsr",
-    "smsp",
-    "region",
-    "scenario_source",
-    "name_ald"
-  )
-
-  if (weight_production) {
-    data <- summarize_weighted_production(
-      data,
-      !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
-    )
-  } else {
-    data <- summarize_unweighted_production(
-      data,
-      !!!rlang::syms(summary_groups)
-    )
-  }
-
   target_groups <- c("sector_ald", "scenario", "region", "name_ald")
 
   data <- data %>%
     group_by(!!!rlang::syms(c(target_groups, "year"))) %>%
-    mutate(sector_weighted_production = sum(.data$weighted_production)) %>%
+    mutate(sector_production = sum(.data$production)) %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(target_groups)) %>%
-    mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
-    select(-.data$sector_weighted_production)
+    mutate(initial_sector_production = first(.data$sector_production)) %>%
+    select(-.data$sector_production)
 
   data <- data %>%
     group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
-    mutate(technology_weighted_production = sum(.data$weighted_production)) %>%
+    mutate(technology_production = sum(.data$production)) %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
-    mutate(initial_technology_production = first(.data$technology_weighted_production)) %>%
-    select(-.data$technology_weighted_production)
+    mutate(initial_technology_production = first(.data$technology_production)) %>%
+    select(-.data$technology_production)
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
 
   data <- data %>%
     mutate(
-      tmsr_target_weighted_production = .data$initial_technology_production *
+      tmsr_target_production = .data$initial_technology_production *
         .data$tmsr,
-      smsp_target_weighted_production = .data$initial_technology_production +
+      smsp_target_production = .data$initial_technology_production +
         (.data$initial_sector_production * .data$smsp)
     ) %>%
     select(
@@ -204,10 +182,10 @@ target_market_share <- function(data,
     ) %>%
     pivot_longer(
       cols = c(
-        "tmsr_target_weighted_production", "smsp_target_weighted_production"
+        "tmsr_target_production", "smsp_target_production"
       ),
       names_to = "target_name",
-      values_to = "weighted_production_target"
+      values_to = "production_target"
     ) %>%
     left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
     inner_join(
@@ -219,6 +197,60 @@ target_market_share <- function(data,
       )
     ) %>%
     select(-.data$target_name, -.data$green_or_brown)
+
+  summary_groups <- c(
+    "scenario",
+    "region",
+    "scenario_source",
+    "name_ald"
+  )
+
+  if (weight_production) {
+    data <- data %>%
+      ungroup() %>%
+      add_loan_weight(use_credit_limit = use_credit_limit) %>%
+      add_technology_share() %>%
+      add_technology_share_target() %>%
+      calculate_weighted_loan_metric("production") %>%
+      calculate_weighted_loan_metric("technology_share") %>%
+      calculate_weighted_loan_metric("production_target") %>%
+      calculate_weighted_loan_metric("technology_share_target") %>%
+      group_by(
+        .data$sector_ald,
+        .data$technology,
+        .data$year,
+        !!!rlang::syms(summary_groups)
+        ) %>%
+      summarize(
+        weighted_production = sum(.data$weighted_loan_production),
+        weighted_technology_share = sum(.data$weighted_loan_technology_share),
+        weighted_production_target = sum(.data$weighted_loan_production_target),
+        weighted_technology_share_target = sum(.data$weighted_loan_technology_share_target)
+      ) %>%
+      # Restore old groups
+      group_by(!!!dplyr::groups(data))
+  } else {
+    data <- data %>%
+      select(-c(
+        .data$id_loan,
+        .data$loan_size_credit_limit,
+        .data$loan_size_outstanding
+      )) %>%
+      distinct() %>%
+      group_by(.data$sector_ald, .data$technology, .data$year, !!!rlang::syms(summary_groups)) %>%
+      # FIXME: Confusing: `weighted_production` holds unweighted_production?
+      summarize(
+        weighted_production = .data$production,
+        weighted_production_target = .data$production_target,
+        .groups = "keep"
+        ) %>%
+      ungroup(.data$technology) %>%
+      mutate(
+        weighted_technology_share = .data$weighted_production / sum(.data$weighted_production),
+        weighted_technology_share_target = .data$weighted_production_target / sum(.data$weighted_production_target)
+        ) %>%
+      group_by(!!!dplyr::groups(data))
+  }
 
   if (!by_company) {
     aggregate_company_groups <- c(
@@ -235,7 +267,8 @@ target_market_share <- function(data,
       summarize(
         weighted_production = sum(.data$weighted_production),
         weighted_production_target = sum(.data$weighted_production_target),
-        weighted_technology_share = sum(.data$weighted_technology_share)
+        weighted_technology_share = sum(.data$weighted_technology_share),
+        weighted_technology_share_target = sum(.data$weighted_technology_share_target)
       )
   }
 
@@ -248,14 +281,6 @@ target_market_share <- function(data,
     data,
     !!!rlang::syms(reweighting_groups)
   )
-
-  data <- data %>%
-    group_by(!!!rlang::syms(reweighting_groups)) %>%
-    mutate(
-      .x = .data$weighted_production_target,
-      weighted_technology_share_target = .data$.x / sum(.data$.x),
-      .x = NULL
-    )
 
   data <- data %>%
     pivot_wider2(
@@ -306,8 +331,8 @@ unnest_list_columns <- function(data) {
 tmsr_or_smsp <- function() {
   dplyr::tribble(
     ~which_metric, ~green_or_brown,
-    "tmsr_target_weighted_production", "brown",
-    "smsp_target_weighted_production", "green"
+    "tmsr_target_production", "brown",
+    "smsp_target_production", "green"
   )
 }
 
@@ -397,8 +422,11 @@ reweight_technology_share <- function(data, ...) {
     group_by(...) %>%
     mutate(
       .x = .data$weighted_technology_share,
+      .y = .data$weighted_technology_share_target,
       weighted_technology_share = .data$.x / sum(.data$.x),
-      .x = NULL
+      weighted_technology_share_target = .data$.y / sum(.data$.y),
+      .x = NULL,
+      .y = NULL
     ) %>%
     ungroup()
 }

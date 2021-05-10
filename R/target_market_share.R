@@ -243,7 +243,7 @@ target_market_share <- function(data,
         .data$technology,
         .data$year,
         !!!rlang::syms(summary_groups)
-        ) %>%
+      ) %>%
       summarize(
         weighted_production = sum(.data$weighted_loan_production),
         weighted_technology_share = sum(.data$weighted_loan_technology_share),
@@ -266,12 +266,12 @@ target_market_share <- function(data,
         weighted_production = .data$production,
         weighted_production_target = .data$production_target,
         .groups = "keep"
-        ) %>%
+      ) %>%
       ungroup(.data$technology) %>%
       mutate(
         weighted_technology_share = .data$weighted_production / sum(.data$weighted_production),
         weighted_technology_share_target = .data$weighted_production_target / sum(.data$weighted_production_target)
-        ) %>%
+      ) %>%
       group_by(!!!dplyr::groups(data))
   }
 

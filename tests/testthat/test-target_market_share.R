@@ -201,11 +201,12 @@ test_that("with known input outputs as expected, at company level", {
     production = c(10, 30, 20, 20, 90, 95, 100, 100)
   )
 
+  #FIXME: duplicated entries scenario
   scenario <- fake_scenario(
-    technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
-    year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
-    tmsr = c(1, 1, 1.85, 0.6, 1, 1, 1.85, 0.6),
-    smsp = c(0, 0, 0.34, -0.2, 0, 0, 0.34, -0.2)
+    technology = c("electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021),
+    tmsr = c(1, 1, 1.85, 0.6),
+    smsp = c(0, 0, 0.34, -0.2)
   )
 
   out <- target_market_share(
@@ -885,3 +886,55 @@ test_that("projects technology share as 'production / total production' when
     .production
   )
 })
+
+test_that("Initial value of technology_share consistent between `projected` and
+          `target_*` (#277)", {
+
+            matched <- fake_matched(
+              id_loan = c("L1", "L2"),
+              name_ald = c("company a", "company b")
+            )
+
+            ald <- fake_ald(
+              name_company = c("company a", "company b", "company a", "company b"),
+              technology = c("ice", "ice", "electric", "electric"),
+              production = c(100, 1, 100, 3),
+              year = 2020
+            )
+
+            scenario <- fake_scenario(
+              technology = c("ice", "electric"),
+              year = 2020,
+              tmsr = 1,
+              smsp = 0
+            )
+
+            out <- target_market_share(
+              matched,
+              ald,
+              scenario,
+              region_isos_stable
+              ) %>%
+              filter(
+                metric %in% c("projected", "target_sds"),
+                year == 2020
+              ) %>%
+              select(technology, metric, technology_share)
+
+            out_ice <- out %>%
+              filter(technology == "ice") %>%
+              split(.$metric)
+
+            out_electric <- out %>%
+              filter(technology == "electric") %>%
+              split(.$metric)
+
+            expect_equal(
+              out_ice$projected$technology_share,
+              out_ice$target_sds$technology_share
+              )
+            expect_equal(
+              out_electric$projected$technology_share,
+              out_electric$target_sds$technology_share
+              )
+  })

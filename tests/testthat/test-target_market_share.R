@@ -466,7 +466,7 @@ test_that("with known input outputs `technology_share` as expected (#184, #262)"
 
   expect_equal(
     out$target_sds$technology_share,
-    c(0.923, 0.076),
+    c(0.914, 0.086),
     tolerance = 1e-3
   )
 

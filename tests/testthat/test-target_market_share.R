@@ -201,7 +201,6 @@ test_that("with known input outputs as expected, at company level", {
     production = c(10, 30, 20, 20, 90, 95, 100, 100)
   )
 
-  # FIXME: duplicated entries scenario
   scenario <- fake_scenario(
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021),

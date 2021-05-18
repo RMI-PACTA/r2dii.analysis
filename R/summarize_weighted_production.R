@@ -53,7 +53,24 @@
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
-  stopifnot(is.data.frame(data))
+  stopifnot(
+    is.data.frame(data),
+    is.logical(use_credit_limit)
+  )
+
+  crucial <- c(
+    "id_loan",
+    "loan_size_outstanding",
+    "loan_size_outstanding_currency",
+    "loan_size_credit_limit",
+    "loan_size_credit_limit_currency",
+    "sector_ald",
+    "name_ald",
+    "year",
+    "scenario"
+  )
+
+  check_crucial_names(data, crucial)
 
   data %>%
     ungroup() %>%
@@ -121,7 +138,6 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
 calculate_weighted_loan_metric <- function(data, metric) {
   crucial <- c(metric, "loan_weight")
 
-  check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
   data %>%
@@ -144,7 +160,6 @@ add_loan_weight <- function(data, use_credit_limit) {
     "id_loan", "sector_ald", "year", loan_size, currency
   )
 
-  check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
   old_groups <- dplyr::groups(data)
@@ -166,11 +181,6 @@ add_loan_weight <- function(data, use_credit_limit) {
 }
 
 add_percent_change <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology", "scenario")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   check_zero_initial_production(data)
 
   green_or_brown <- r2dii.data::green_or_brown
@@ -200,11 +210,6 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%
@@ -212,11 +217,6 @@ add_technology_share <- function(data) {
 }
 
 add_technology_share_target <- function(data) {
-  crucial <- c("production_target", "sector_ald", "year", "technology")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share_target = .data$production_target / sum(.data$production_target)) %>%

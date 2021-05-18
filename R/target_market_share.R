@@ -229,50 +229,16 @@ target_market_share <- function(data,
   )
 
   if (weight_production) {
-    data <- data %>%
-      ungroup() %>%
-      add_loan_weight(use_credit_limit = use_credit_limit) %>%
-      add_technology_share() %>%
-      add_technology_share_target() %>%
-      calculate_weighted_loan_metric("production") %>%
-      calculate_weighted_loan_metric("technology_share") %>%
-      calculate_weighted_loan_metric("production_target") %>%
-      calculate_weighted_loan_metric("technology_share_target") %>%
-      group_by(
-        .data$sector_ald,
-        .data$technology,
-        .data$year,
-        !!!rlang::syms(summary_groups)
-      ) %>%
-      summarize(
-        weighted_production = sum(.data$weighted_loan_production),
-        weighted_technology_share = sum(.data$weighted_loan_technology_share),
-        weighted_production_target = sum(.data$weighted_loan_production_target),
-        weighted_technology_share_target = sum(.data$weighted_loan_technology_share_target)
-      ) %>%
-      # Restore old groups
-      group_by(!!!dplyr::groups(data))
+    data <- summarize_weighted_production_and_targets(
+      data,
+      !!!rlang::syms(summary_groups),
+      use_credit_limit = use_credit_limit
+      )
   } else {
-    data <- data %>%
-      select(-c(
-        .data$id_loan,
-        .data$loan_size_credit_limit,
-        .data$loan_size_outstanding
-      )) %>%
-      distinct() %>%
-      group_by(.data$sector_ald, .data$technology, .data$year, !!!rlang::syms(summary_groups)) %>%
-      # FIXME: Confusing: `weighted_production` holds unweighted_production?
-      summarize(
-        weighted_production = .data$production,
-        weighted_production_target = .data$production_target,
-        .groups = "keep"
-      ) %>%
-      ungroup(.data$technology) %>%
-      mutate(
-        weighted_technology_share = .data$weighted_production / sum(.data$weighted_production),
-        weighted_technology_share_target = .data$weighted_production_target / sum(.data$weighted_production_target)
-      ) %>%
-      group_by(!!!dplyr::groups(data))
+    data <- summarize_unweighted_production_and_targets(
+      data,
+      !!!rlang::syms(summary_groups)
+    )
   }
 
   if (!by_company) {

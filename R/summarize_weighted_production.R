@@ -57,6 +57,15 @@ summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE, a
 
   old_groups <- dplyr::groups(data)
 
+  crucial <- c("production", "sector_ald", "year", "technology")
+
+  if (add_targets) {
+    crucial <- c(crucial, "production_target")
+  }
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
   data <- data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
@@ -247,11 +256,6 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%
@@ -259,11 +263,6 @@ add_technology_share <- function(data) {
 }
 
 add_technology_share_target <- function(data) {
-  crucial <- c("production_target", "sector_ald", "year", "technology")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share_target = .data$production_target / sum(.data$production_target)) %>%

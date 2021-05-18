@@ -52,7 +52,11 @@
 #' summarize_weighted_percent_change(master)
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
-summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE, add_targets = FALSE) {
+summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
+  summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, add_targets = FALSE)
+}
+
+summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, add_targets = FALSE) {
   stopifnot(is.data.frame(data))
 
   old_groups <- dplyr::groups(data)

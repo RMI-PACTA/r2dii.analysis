@@ -160,7 +160,7 @@ target_market_share <- function(data,
   data <- data %>%
     group_by(!!!rlang::syms(crucial_groups)) %>%
     summarize(
-      production = sum(.data$production, rm.na = TRUE)
+      production = sum(.data$production)
     )
 
   if (nrow(data) == 0) {
@@ -288,10 +288,10 @@ target_market_share <- function(data,
     data <- data %>%
       group_by(!!!rlang::syms(aggregate_company_groups)) %>%
       summarize(
-        weighted_production = sum(.data$weighted_production, rm.na = TRUE),
-        weighted_production_target = sum(.data$weighted_production_target, rm.na = TRUE),
-        weighted_technology_share = sum(.data$weighted_technology_share, rm.na = TRUE),
-        weighted_technology_share_target = sum(.data$weighted_technology_share_target, rm.na = TRUE)
+        weighted_production = sum(.data$weighted_production),
+        weighted_production_target = sum(.data$weighted_production_target),
+        weighted_technology_share = sum(.data$weighted_technology_share),
+        weighted_technology_share_target = sum(.data$weighted_technology_share_target)
       )
   }
 

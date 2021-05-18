@@ -229,15 +229,17 @@ target_market_share <- function(data,
   )
 
   if (weight_production) {
-    data <- summarize_weighted_production_and_targets(
+    data <- summarize_weighted_production(
       data,
       !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
+      use_credit_limit = use_credit_limit,
+      add_targets = TRUE
       )
   } else {
-    data <- summarize_unweighted_production_and_targets(
+    data <- summarize_unweighted_production(
       data,
-      !!!rlang::syms(summary_groups)
+      !!!rlang::syms(summary_groups),
+      add_targets = TRUE
     )
   }
 

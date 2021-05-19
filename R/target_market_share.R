@@ -300,7 +300,7 @@ target_market_share <- function(data,
   ald_with_benchmark <- calculate_ald_benchmark(ald, region_isos, by_company)
 
   data %>%
-    rbind(ald_with_benchmark) %>%
+    dplyr::bind_rows(ald_with_benchmark) %>%
     ungroup()
 }
 

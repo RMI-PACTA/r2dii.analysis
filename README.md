@@ -26,9 +26,9 @@ to study how their capital allocation impacts the climate.
 
 Before you install r2dii.analysis you may want to:
 
--   [Try an rstudio.cloud project with this package already
+  - [Try an rstudio.cloud project with this package already
     installed](https://rstudio.cloud/project/1424833).
--   [Learn how to minimize installation
+  - [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
 When you are ready, install the released version of r2dii.analysis from
@@ -50,11 +50,12 @@ issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-rai
 
 ## Example
 
--   Use `library()` to attach the packages you need. r2dii.analysis does
+  - Use `library()` to attach the packages you need. r2dii.analysis does
     not depend on the packages r2dii.data and r2dii.match; but we
-    suggest you install them – with
-    `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
-    reproduce our examples.
+    suggest you install them – with `install.packages(c("r2dii.data",
+    "r2dii.match"))` – so you can reproduce our examples.
+
+<!-- end list -->
 
 ``` r
 library(r2dii.data)
@@ -62,8 +63,10 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
--   Use `r2dii.match::match_name()` to identify matches between your
+  - Use `r2dii.match::match_name()` to identify matches between your
     loanbook and the asset level data.
+
+<!-- end list -->
 
 ``` r
 matched <- match_name(loanbook_demo, ald_demo) %>%
@@ -72,7 +75,9 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 
 ### Add Scenario Targets
 
--   Use `target_sda()` to calculate SDA targets of CO2 emissions.
+  - Use `target_sda()` to calculate SDA targets of CO2 emissions.
+
+<!-- end list -->
 
 ``` r
 matched %>%
@@ -97,8 +102,10 @@ matched %>%
 #> # … with 498 more rows
 ```
 
--   Use `target_market_share` to calculate market-share scenario targets
+  - Use `target_market_share` to calculate market-share scenario targets
     at the portfolio level:
+
+<!-- end list -->
 
 ``` r
 matched %>%
@@ -123,7 +130,9 @@ matched %>%
 #> # … with 3,632 more rows, and 1 more variable: technology_share <dbl>
 ```
 
--   Or at the company level:
+  - Or at the company level:
+
+<!-- end list -->
 
 ``` r
 matched %>%
@@ -144,12 +153,12 @@ matched %>%
 #>  2 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
 #>  3 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
 #>  4 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
-#>  5 automo… hybrid      2020 global demo_2020       toyota mot… proje…    628681.
-#>  6 automo… hybrid      2020 global demo_2020       toyota mot… targe…    628681.
-#>  7 automo… hybrid      2020 global demo_2020       toyota mot… targe…    628681.
-#>  8 automo… hybrid      2020 global demo_2020       toyota mot… targe…    628681.
-#>  9 automo… ice         2020 global demo_2020       toyota mot… proje…   3322586.
-#> 10 automo… ice         2020 global demo_2020       toyota mot… targe…   3322586.
+#>  5 automo… electric    2021 global demo_2020       toyota mot… proje…    339656.
+#>  6 automo… electric    2021 global demo_2020       toyota mot… targe…    329191.
+#>  7 automo… electric    2021 global demo_2020       toyota mot… targe…    352505.
+#>  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.
+#>  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.
+#> 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.
 #> # … with 14,744 more rows, and 1 more variable: technology_share <dbl>
 ```
 
@@ -158,8 +167,10 @@ matched %>%
 The `target_*()` functions provide shortcuts for common operations. They
 wrap some utility functions that you may also use directly:
 
--   Use `join_ald_scenario()` to join a matched dataset to the relevant
+  - Use `join_ald_scenario()` to join a matched dataset to the relevant
     scenario data, and to pick assets in the relevant regions.
+
+<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario <- matched %>%
@@ -170,8 +181,10 @@ loanbook_joined_to_ald_scenario <- matched %>%
   )
 ```
 
--   Use `summarize_weighted_production()` with different grouping
+  - Use `summarize_weighted_production()` with different grouping
     arguments to calculate scenario-targets:
+
+<!-- end list -->
 
 ``` r
 # portfolio level
@@ -218,7 +231,7 @@ started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analy
 ## Funding
 
 This project has received funding from the [European Union LIFE
-program](https://ec.europa.eu/easme/en/life) and the [International
+program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/) and the [International
 Climate Initiative
 (IKI)](https://www.international-climate-initiative.com/en/details/project/measuring-paris-agreement-alignment-and-financial-risk-in-financial-markets-18_I_351-2982).
 The Federal Ministry for the Environment, Nature Conservation and

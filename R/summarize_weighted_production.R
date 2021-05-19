@@ -122,8 +122,10 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
     )) %>%
     distinct() %>%
     group_by(.data$sector_ald, .data$technology, .data$year, ...)
-    # FIXME: Confusing: `weighted_production` holds unweighted_production?
 
+  # FIXME: Though production here is unweighted, we still name the variables
+  # `weighted_*`. This is to allow easier reshaping of the output data at the
+  # end of `target_market_share()`.
   if (with_targets) {
     data %>%
       summarize(

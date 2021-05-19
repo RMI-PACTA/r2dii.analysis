@@ -1,4 +1,4 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.1.7
 
 * `target_market_share()` now correctly outputs target `technology share`, in 
   line with methodology (@georgeharris2deg #277).

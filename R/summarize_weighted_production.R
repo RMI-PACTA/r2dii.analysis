@@ -53,17 +53,17 @@
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
-  summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, add_targets = FALSE)
+  summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)
 }
 
-summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, add_targets = FALSE) {
+summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, with_targets = FALSE) {
   stopifnot(is.data.frame(data))
 
   old_groups <- dplyr::groups(data)
 
   crucial <- c("production", "sector_ald", "year", "technology")
 
-  if (add_targets) {
+  if (with_targets) {
     crucial <- c(crucial, "production_target")
   }
 
@@ -75,7 +75,7 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     add_technology_share()
 
-  if (add_targets) {
+  if (with_targets) {
     data %>%
       add_technology_share_target() %>%
       calculate_weighted_loan_metric("production") %>%
@@ -111,7 +111,7 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
 
 }
 
-summarize_unweighted_production <- function(data, ..., add_targets = FALSE) {
+summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
   old_groups <- dplyr::groups(data)
 
   data <- data %>%
@@ -124,7 +124,7 @@ summarize_unweighted_production <- function(data, ..., add_targets = FALSE) {
     group_by(.data$sector_ald, .data$technology, .data$year, ...)
     # FIXME: Confusing: `weighted_production` holds unweighted_production?
 
-  if (add_targets) {
+  if (with_targets) {
     data %>%
       summarize(
         weighted_production = .data$production,

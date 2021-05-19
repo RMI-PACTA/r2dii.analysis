@@ -233,13 +233,13 @@ target_market_share <- function(data,
       data,
       !!!rlang::syms(summary_groups),
       use_credit_limit = use_credit_limit,
-      add_targets = TRUE
+      with_targets = TRUE
       )
   } else {
     data <- summarize_unweighted_production(
       data,
       !!!rlang::syms(summary_groups),
-      add_targets = TRUE
+      with_targets = TRUE
     )
   }
 

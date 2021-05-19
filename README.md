@@ -26,9 +26,9 @@ to study how their capital allocation impacts the climate.
 
 Before you install r2dii.analysis you may want to:
 
-  - [Try an rstudio.cloud project with this package already
+-   [Try an rstudio.cloud project with this package already
     installed](https://rstudio.cloud/project/1424833).
-  - [Learn how to minimize installation
+-   [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
 When you are ready, install the released version of r2dii.analysis from
@@ -50,12 +50,11 @@ issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-rai
 
 ## Example
 
-  - Use `library()` to attach the packages you need. r2dii.analysis does
+-   Use `library()` to attach the packages you need. r2dii.analysis does
     not depend on the packages r2dii.data and r2dii.match; but we
-    suggest you install them – with `install.packages(c("r2dii.data",
-    "r2dii.match"))` – so you can reproduce our examples.
-
-<!-- end list -->
+    suggest you install them – with
+    `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
+    reproduce our examples.
 
 ``` r
 library(r2dii.data)
@@ -63,10 +62,8 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-  - Use `r2dii.match::match_name()` to identify matches between your
+-   Use `r2dii.match::match_name()` to identify matches between your
     loanbook and the asset level data.
-
-<!-- end list -->
 
 ``` r
 matched <- match_name(loanbook_demo, ald_demo) %>%
@@ -75,9 +72,7 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 
 ### Add Scenario Targets
 
-  - Use `target_sda()` to calculate SDA targets of CO2 emissions.
-
-<!-- end list -->
+-   Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ``` r
 matched %>%
@@ -102,10 +97,8 @@ matched %>%
 #> # … with 498 more rows
 ```
 
-  - Use `target_market_share` to calculate market-share scenario targets
+-   Use `target_market_share` to calculate market-share scenario targets
     at the portfolio level:
-
-<!-- end list -->
 
 ``` r
 matched %>%
@@ -130,9 +123,7 @@ matched %>%
 #> # … with 3,632 more rows, and 1 more variable: technology_share <dbl>
 ```
 
-  - Or at the company level:
-
-<!-- end list -->
+-   Or at the company level:
 
 ``` r
 matched %>%
@@ -146,22 +137,20 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 14,754 x 11
-#>    sector  technology  year region scenario_source name_ald   sector_weighted_p…
-#>    <chr>   <chr>      <int> <chr>  <chr>           <chr>                   <dbl>
-#>  1 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  2 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  3 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  4 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  5 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  6 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  7 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  8 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  9 automo… ice         2020 global demo_2020       toyota mo…           4275858.
-#> 10 automo… ice         2020 global demo_2020       toyota mo…           4275858.
-#> # … with 14,744 more rows, and 4 more variables:
-#> #   technology_weighted_production <dbl>, metric <chr>, production <dbl>,
-#> #   technology_share <dbl>
+#> # A tibble: 14,754 x 9
+#>    sector  technology  year region scenario_source name_ald    metric production
+#>    <chr>   <chr>      <int> <chr>  <chr>           <chr>       <chr>       <dbl>
+#>  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.
+#>  2 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
+#>  3 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
+#>  4 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
+#>  5 automo… hybrid      2020 global demo_2020       toyota mot… proje…    628681.
+#>  6 automo… hybrid      2020 global demo_2020       toyota mot… targe…    628681.
+#>  7 automo… hybrid      2020 global demo_2020       toyota mot… targe…    628681.
+#>  8 automo… hybrid      2020 global demo_2020       toyota mot… targe…    628681.
+#>  9 automo… ice         2020 global demo_2020       toyota mot… proje…   3322586.
+#> 10 automo… ice         2020 global demo_2020       toyota mot… targe…   3322586.
+#> # … with 14,744 more rows, and 1 more variable: technology_share <dbl>
 ```
 
 ### Utility Functions
@@ -169,10 +158,8 @@ matched %>%
 The `target_*()` functions provide shortcuts for common operations. They
 wrap some utility functions that you may also use directly:
 
-  - Use `join_ald_scenario()` to join a matched dataset to the relevant
+-   Use `join_ald_scenario()` to join a matched dataset to the relevant
     scenario data, and to pick assets in the relevant regions.
-
-<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario <- matched %>%
@@ -183,10 +170,8 @@ loanbook_joined_to_ald_scenario <- matched %>%
   )
 ```
 
-  - Use `summarize_weighted_production()` with different grouping
+-   Use `summarize_weighted_production()` with different grouping
     arguments to calculate scenario-targets:
-
-<!-- end list -->
 
 ``` r
 # portfolio level

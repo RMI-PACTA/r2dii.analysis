@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now correctly outputs target `technology share`, in 
+  line with methodology (@georgeharris2deg #277).
+
 * `target_market_share()` now correctly projects technology share as
   'production / total production' when computing by company, 
   unweighted by relative loan size (@KapitanKombajn #288).

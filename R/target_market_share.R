@@ -140,58 +140,59 @@ target_market_share <- function(data,
 
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
-  if (nrow(data) == 0) {
-    return(empty_target_market_share_output())
-  }
-
-  summary_groups <- c(
+  crucial_groups <- c(
+    "id_loan",
+    "loan_size_outstanding",
+    "loan_size_outstanding_currency",
+    "loan_size_credit_limit",
+    "loan_size_credit_limit_currency",
+    "name_ald",
+    "sector_ald",
+    "technology",
+    "year",
     "scenario",
+    "region",
     "tmsr",
     "smsp",
-    "region",
-    "scenario_source",
-    "name_ald"
+    "scenario_source"
   )
 
-  if (weight_production) {
-    data <- summarize_weighted_production(
-      data,
-      !!!rlang::syms(summary_groups),
-      use_credit_limit = use_credit_limit
+  data <- data %>%
+    group_by(!!!rlang::syms(crucial_groups)) %>%
+    summarize(
+      production = sum(.data$production)
     )
-  } else {
-    data <- summarize_unweighted_production(
-      data,
-      !!!rlang::syms(summary_groups)
-    )
+
+  if (nrow(data) == 0) {
+    return(empty_target_market_share_output())
   }
 
   target_groups <- c("sector_ald", "scenario", "region", "name_ald")
 
   data <- data %>%
     group_by(!!!rlang::syms(c(target_groups, "year"))) %>%
-    mutate(sector_weighted_production = sum(.data$weighted_production)) %>%
+    mutate(sector_production = sum(.data$production)) %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(target_groups)) %>%
-    mutate(initial_sector_production = first(.data$sector_weighted_production)) %>%
-    select(-.data$sector_weighted_production)
+    mutate(initial_sector_production = first(.data$sector_production)) %>%
+    select(-.data$sector_production)
 
   data <- data %>%
     group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
-    mutate(technology_weighted_production = sum(.data$weighted_production)) %>%
+    mutate(technology_production = sum(.data$production)) %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
-    mutate(initial_technology_production = first(.data$technology_weighted_production)) %>%
-    select(-.data$technology_weighted_production)
+    mutate(initial_technology_production = first(.data$technology_production)) %>%
+    select(-.data$technology_production)
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
 
   data <- data %>%
     mutate(
-      tmsr_target_weighted_production = .data$initial_technology_production *
+      tmsr_target_production = .data$initial_technology_production *
         .data$tmsr,
-      smsp_target_weighted_production = .data$initial_technology_production +
+      smsp_target_production = .data$initial_technology_production +
         (.data$initial_sector_production * .data$smsp)
     ) %>%
     select(
@@ -204,10 +205,10 @@ target_market_share <- function(data,
     ) %>%
     pivot_longer(
       cols = c(
-        "tmsr_target_weighted_production", "smsp_target_weighted_production"
+        "tmsr_target_production", "smsp_target_production"
       ),
       names_to = "target_name",
-      values_to = "weighted_production_target"
+      values_to = "production_target"
     ) %>%
     left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
     inner_join(
@@ -219,6 +220,28 @@ target_market_share <- function(data,
       )
     ) %>%
     select(-.data$target_name, -.data$green_or_brown)
+
+  summary_groups <- c(
+    "scenario",
+    "region",
+    "scenario_source",
+    "name_ald"
+  )
+
+  if (weight_production) {
+    data <- summarize_weighted_production_(
+      data,
+      !!!rlang::syms(summary_groups),
+      use_credit_limit = use_credit_limit,
+      with_targets = TRUE
+      )
+  } else {
+    data <- summarize_unweighted_production(
+      data,
+      !!!rlang::syms(summary_groups),
+      with_targets = TRUE
+    )
+  }
 
   if (!by_company) {
     aggregate_company_groups <- c(
@@ -235,7 +258,8 @@ target_market_share <- function(data,
       summarize(
         weighted_production = sum(.data$weighted_production),
         weighted_production_target = sum(.data$weighted_production_target),
-        weighted_technology_share = sum(.data$weighted_technology_share)
+        weighted_technology_share = sum(.data$weighted_technology_share),
+        weighted_technology_share_target = sum(.data$weighted_technology_share_target)
       )
   }
 
@@ -248,14 +272,6 @@ target_market_share <- function(data,
     data,
     !!!rlang::syms(reweighting_groups)
   )
-
-  data <- data %>%
-    group_by(!!!rlang::syms(reweighting_groups)) %>%
-    mutate(
-      .x = .data$weighted_production_target,
-      weighted_technology_share_target = .data$.x / sum(.data$.x),
-      .x = NULL
-    )
 
   data <- data %>%
     pivot_wider2(
@@ -284,7 +300,7 @@ target_market_share <- function(data,
   ald_with_benchmark <- calculate_ald_benchmark(ald, region_isos, by_company)
 
   data %>%
-    rbind(ald_with_benchmark) %>%
+    dplyr::bind_rows(ald_with_benchmark) %>%
     ungroup()
 }
 
@@ -306,8 +322,8 @@ unnest_list_columns <- function(data) {
 tmsr_or_smsp <- function() {
   dplyr::tribble(
     ~which_metric, ~green_or_brown,
-    "tmsr_target_weighted_production", "brown",
-    "smsp_target_weighted_production", "green"
+    "tmsr_target_production", "brown",
+    "smsp_target_production", "green"
   )
 }
 
@@ -397,8 +413,11 @@ reweight_technology_share <- function(data, ...) {
     group_by(...) %>%
     mutate(
       .x = .data$weighted_technology_share,
+      .y = .data$weighted_technology_share_target,
       weighted_technology_share = .data$.x / sum(.data$.x),
-      .x = NULL
+      weighted_technology_share_target = .data$.y / sum(.data$.y),
+      .x = NULL,
+      .y = NULL
     ) %>%
     ungroup()
 }

@@ -53,37 +53,99 @@
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
-  stopifnot(is.data.frame(data))
-
-  data %>%
-    ungroup() %>%
-    add_loan_weight(use_credit_limit = use_credit_limit) %>%
-    add_technology_share() %>%
-    calculate_weighted_loan_metric("production") %>%
-    calculate_weighted_loan_metric("technology_share") %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
-    summarize(
-      weighted_production = sum(.data$weighted_loan_production),
-      weighted_technology_share = sum(.data$weighted_loan_technology_share)
-    ) %>%
-    # Restore old groups
-    group_by(!!!dplyr::groups(data))
+  summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)
 }
 
-summarize_unweighted_production <- function(data, ...) {
-  data %>%
+summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, with_targets = FALSE) {
+  stopifnot(is.data.frame(data))
+
+  old_groups <- dplyr::groups(data)
+
+  crucial <- c("production", "sector_ald", "year", "technology")
+
+  if (with_targets) {
+    crucial <- c(crucial, "production_target")
+  }
+
+  check_crucial_names(data, crucial)
+  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+
+  data <- data %>%
+    ungroup() %>%
+    add_loan_weight(use_credit_limit = use_credit_limit) %>%
+    add_technology_share()
+
+  if (with_targets) {
+    data %>%
+      add_technology_share_target() %>%
+      calculate_weighted_loan_metric("production") %>%
+      calculate_weighted_loan_metric("technology_share") %>%
+      calculate_weighted_loan_metric("production_target") %>%
+      calculate_weighted_loan_metric("technology_share_target") %>%
+      group_by(
+        .data$sector_ald,
+        .data$technology,
+        .data$year,
+        ...
+      ) %>%
+      summarize(
+        weighted_production = sum(.data$weighted_loan_production),
+        weighted_technology_share = sum(.data$weighted_loan_technology_share),
+        weighted_production_target = sum(.data$weighted_loan_production_target),
+        weighted_technology_share_target = sum(.data$weighted_loan_technology_share_target)
+      ) %>%
+      # Restore old groups
+      group_by(!!!old_groups)
+  } else {
+    data %>%
+      calculate_weighted_loan_metric("production") %>%
+      calculate_weighted_loan_metric("technology_share") %>%
+      group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+      summarize(
+        weighted_production = sum(.data$weighted_loan_production),
+        weighted_technology_share = sum(.data$weighted_loan_technology_share)
+      ) %>%
+      # Restore old groups
+      group_by(!!!old_groups)
+  }
+
+}
+
+summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
+  old_groups <- dplyr::groups(data)
+
+  data <- data %>%
     select(-c(
       .data$id_loan,
       .data$loan_size_credit_limit,
       .data$loan_size_outstanding
     )) %>%
     distinct() %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
-    # FIXME: Confusing: `weighted_production` holds unweighted_production?
-    summarize(weighted_production = .data$production, .groups = "keep") %>%
-    ungroup(.data$technology, .data$tmsr, .data$smsp) %>%
-    mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
-    group_by(!!!dplyr::groups(data))
+    group_by(.data$sector_ald, .data$technology, .data$year, ...)
+
+  # FIXME: Though production here is unweighted, we still name the variables
+  # `weighted_*`. This is to allow easier reshaping of the output data at the
+  # end of `target_market_share()`.
+  if (with_targets) {
+    data %>%
+      summarize(
+        weighted_production = .data$production,
+        weighted_production_target = .data$production_target,
+        .groups = "keep"
+      ) %>%
+      ungroup(.data$technology) %>%
+      mutate(
+        weighted_technology_share = .data$weighted_production / sum(.data$weighted_production),
+        weighted_technology_share_target = .data$weighted_production_target / sum(.data$weighted_production_target)
+      ) %>%
+      group_by(!!!old_groups)
+  } else {
+    data %>%
+      summarize(weighted_production = .data$production, .groups = "keep") %>%
+      ungroup(.data$technology, .data$tmsr, .data$smsp) %>%
+      mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
+      group_by(!!!old_groups)
+  }
 }
 
 #' @rdname summarize_weighted_production
@@ -200,14 +262,16 @@ add_percent_change <- function(data) {
 }
 
 add_technology_share <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology")
-
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
-
   data %>%
     group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%
+    group_by(!!!dplyr::groups(data))
+}
+
+add_technology_share_target <- function(data) {
+  data %>%
+    group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
+    mutate(technology_share_target = .data$production_target / sum(.data$production_target)) %>%
     group_by(!!!dplyr::groups(data))
 }
 

@@ -146,22 +146,20 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 14,754 x 11
-#>    sector  technology  year region scenario_source name_ald   sector_weighted_p…
-#>    <chr>   <chr>      <int> <chr>  <chr>           <chr>                   <dbl>
-#>  1 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  2 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  3 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  4 automo… electric    2020 global demo_2020       toyota mo…           4275858.
-#>  5 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  6 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  7 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  8 automo… hybrid      2020 global demo_2020       toyota mo…           4275858.
-#>  9 automo… ice         2020 global demo_2020       toyota mo…           4275858.
-#> 10 automo… ice         2020 global demo_2020       toyota mo…           4275858.
-#> # … with 14,744 more rows, and 4 more variables:
-#> #   technology_weighted_production <dbl>, metric <chr>, production <dbl>,
-#> #   technology_share <dbl>
+#> # A tibble: 14,754 x 9
+#>    sector  technology  year region scenario_source name_ald    metric production
+#>    <chr>   <chr>      <int> <chr>  <chr>           <chr>       <chr>       <dbl>
+#>  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.
+#>  2 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
+#>  3 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
+#>  4 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.
+#>  5 automo… electric    2021 global demo_2020       toyota mot… proje…    339656.
+#>  6 automo… electric    2021 global demo_2020       toyota mot… targe…    329191.
+#>  7 automo… electric    2021 global demo_2020       toyota mot… targe…    352505.
+#>  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.
+#>  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.
+#> 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.
+#> # … with 14,744 more rows, and 1 more variable: technology_share <dbl>
 ```
 
 ### Utility Functions
@@ -233,8 +231,8 @@ started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analy
 ## Funding
 
 This project has received funding from the [European Union LIFE
-program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/) and the [International
-Climate Initiative
+program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
+and the [International Climate Initiative
 (IKI)](https://www.international-climate-initiative.com/en/details/project/measuring-paris-agreement-alignment-and-financial-risk-in-financial-markets-18_I_351-2982).
 The Federal Ministry for the Environment, Nature Conservation and
 Nuclear Safety (BMU) supports this initiative on the basis of a decision

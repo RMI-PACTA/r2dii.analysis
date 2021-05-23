@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
       </span>
     </div>
 
@@ -164,9 +164,33 @@
       <small>Source: <a href='https://github.com/2DegreesInvesting/r2dii.analysis/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="r2diianalysis-018" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.8">
+<a href="#r2diianalysis-018" class="anchor"></a>r2dii.analysis 0.1.8<small> 2021-05-22 </small>
+</h1>
+</div>
+    <div id="r2diianalysis-017" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.7">
+<a href="#r2diianalysis-017" class="anchor"></a>r2dii.analysis 0.1.7<small> Unreleased </small>
+</h1>
+<ul>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now correctly outputs target <code>technology share</code>, in line with methodology (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/277'>#277</a>).</p></li>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now correctly projects technology share as ‘production / total production’ when computing by company, unweighted by relative loan size (<a href='https://github.com/KapitanKombajn'>@KapitanKombajn</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/288'>#288</a>).</p></li>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> no longer outputs columns <code>sector_weighted_production</code> or <code>technology_weighted_production</code>. Those columns are internal so they shouldn’t face users (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/291'>#291</a>).</p></li>
+</ul>
+</div>
+    <div id="r2diianalysis-016" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.6">
+<a href="#r2diianalysis-016" class="anchor"></a>r2dii.analysis 0.1.6<small> 2021-03-10 </small>
+</h1>
+<ul>
+<li>
+<code><a href="../reference/target_market_share.html">target_market_share()</a></code> now correctly outputs <code>technology_share</code> with multiple loans at different <code>level</code> to the same company (<a href='https://github.com/ab-bbva'>@ab-bbva</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/265'>#265</a>).</li>
+</ul>
+</div>
     <div id="r2diianalysis-015" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.5">
-<a href="#r2diianalysis-015" class="anchor"></a>r2dii.analysis 0.1.5<small> Unreleased </small>
+<a href="#r2diianalysis-015" class="anchor"></a>r2dii.analysis 0.1.5<small> 2021-01-22 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now errors if input <code>data</code> has an unexpected column (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/267'>#267</a>).</p></li>

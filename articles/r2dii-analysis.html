@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
       </span>
     </div>
 
@@ -140,12 +140,12 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
 <p>We also recommend packages in the <a href="https://www.tidyverse.org/">tidyverse</a>; they are optional but useful.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</span>
 <span class="co">#&gt; ✔ ggplot2 3.3.3     ✔ purrr   0.3.4</span>
-<span class="co">#&gt; ✔ tibble  3.0.5     ✔ dplyr   1.0.3</span>
-<span class="co">#&gt; ✔ tidyr   1.1.2     ✔ stringr 1.4.0</span>
-<span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.0</span>
+<span class="co">#&gt; ✔ tibble  3.1.2     ✔ dplyr   1.0.6</span>
+<span class="co">#&gt; ✔ tidyr   1.1.3     ✔ stringr 1.4.0</span>
+<span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.1</span>
 <span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
@@ -163,20 +163,20 @@
 <span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">ald</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 217 x 28</span>
-<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L13     C297             Yuba City Cogen… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  3 L20     C287             Ytl Powerseraya… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L21     C286             Ytl Power Inter… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L22     C285             Ytl Corp Bhd     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L23     C283             Ypic Internatio… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L24     C282             Ypfb Corporacion &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # A tibble: 218 x 28</span>
+<span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L13     C297              Yuba City Cogene… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  3 L20     C287              Ytl Powerseraya … &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  4 L21     C286              Ytl Power Intern… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L22     C285              Ytl Corp Bhd      &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L23     C283              Ypic Internation… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L24     C282              Ypfb Corporacion  &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L25     C281              Ypf Sa            &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L26     C280              Ypf Energia Elec… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; 10 L27     C278              Younicos Ag       &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 208 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -209,20 +209,20 @@
   <span class="op">)</span>
 
 <span class="va">market_share_targets_portfolio</span>
-<span class="co">#&gt; # A tibble: 3,492 x 8</span>
-<span class="co">#&gt;    sector technology  year region scenario_source metric production</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       proje…    324592.</span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       targe…    324592.</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       targe…    324592.</span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       targe…    324592.</span>
-<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       proje…    339656.</span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       targe…    329191.</span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       targe…    352505.</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       targe…    330435.</span>
-<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       proje…    354720.</span>
-<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       targe…    333693.</span>
-<span class="co">#&gt; # … with 3,482 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 3,642 x 8</span>
+<span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     324592.</span>
+<span class="co">#&gt;  2 automotive electric    2020 global demo_2020       target_cps    324592.</span>
+<span class="co">#&gt;  3 automotive electric    2020 global demo_2020       target_sds    324592.</span>
+<span class="co">#&gt;  4 automotive electric    2020 global demo_2020       target_sps    324592.</span>
+<span class="co">#&gt;  5 automotive electric    2021 global demo_2020       projected     339656.</span>
+<span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps    329191.</span>
+<span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds    352505.</span>
+<span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    330435.</span>
+<span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected     354720.</span>
+<span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    333693.</span>
+<span class="co">#&gt; # … with 3,632 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
@@ -239,20 +239,20 @@
 <span class="co">#&gt; arguments to `FALSE`?</span>
 
 <span class="va">market_share_targets_company</span>
-<span class="co">#&gt; # A tibble: 14,604 x 9</span>
-<span class="co">#&gt;    sector technology  year region scenario_source name_ald metric production</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 autom… electric    2020 global demo_2020       toyota … proje…    324592.</span>
-<span class="co">#&gt;  2 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
-<span class="co">#&gt;  3 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
-<span class="co">#&gt;  4 autom… electric    2020 global demo_2020       toyota … targe…    324592.</span>
-<span class="co">#&gt;  5 autom… electric    2021 global demo_2020       toyota … proje…    339656.</span>
-<span class="co">#&gt;  6 autom… electric    2021 global demo_2020       toyota … targe…    329191.</span>
-<span class="co">#&gt;  7 autom… electric    2021 global demo_2020       toyota … targe…    352505.</span>
-<span class="co">#&gt;  8 autom… electric    2021 global demo_2020       toyota … targe…    330435.</span>
-<span class="co">#&gt;  9 autom… electric    2022 global demo_2020       toyota … proje…    354720.</span>
-<span class="co">#&gt; 10 autom… electric    2022 global demo_2020       toyota … targe…    333693.</span>
-<span class="co">#&gt; # … with 14,594 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 14,754 x 9</span>
+<span class="co">#&gt;    sector  technology  year region scenario_source name_ald    metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.</span>
+<span class="co">#&gt;  2 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.</span>
+<span class="co">#&gt;  3 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.</span>
+<span class="co">#&gt;  4 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.</span>
+<span class="co">#&gt;  5 automo… electric    2021 global demo_2020       toyota mot… proje…    339656.</span>
+<span class="co">#&gt;  6 automo… electric    2021 global demo_2020       toyota mot… targe…    329191.</span>
+<span class="co">#&gt;  7 automo… electric    2021 global demo_2020       toyota mot… targe…    352505.</span>
+<span class="co">#&gt;  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.</span>
+<span class="co">#&gt;  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.</span>
+<span class="co">#&gt; 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.</span>
+<span class="co">#&gt; # … with 14,744 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">
@@ -382,8 +382,8 @@
     <span class="op">)</span>
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning -</span>
-<span class="co">#&gt; Inf</span>
+<span class="co">#&gt; Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning</span>
+<span class="co">#&gt; -Inf</span>
 <span class="co">#&gt; Warning: Removed 35 row(s) containing missing values (geom_path).</span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/plot-year-versus-weithed-production-value-1.png" width="100%"></p>
 </div>

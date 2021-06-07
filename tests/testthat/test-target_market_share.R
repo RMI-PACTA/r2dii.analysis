@@ -966,4 +966,4 @@ test_that("Initial value of technology_share consistent between `projected` and
     ),
     class = "multiple_currencies"
   )
-          })
+})

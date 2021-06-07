@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now fails if input data has inconsistent values in the `loan_size_*_currency` (#279)
+
 # r2dii.analysis 0.1.8
 
 * `target_market_share()` now correctly outputs target `technology share`, in 

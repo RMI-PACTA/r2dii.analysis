@@ -936,3 +936,34 @@ test_that("Initial value of technology_share consistent between `projected` and
     out_electric$target_sds$technology_share
   )
 })
+
+test_that("Initial value of technology_share consistent between `projected` and
+          `target_*` (#277)", {
+  matched <- fake_matched(
+    loan_size_outstanding_currency = c("USD", "EUR"),
+    loan_size_credit_limit_currency = c("USD", "EUR")
+  )
+
+  # test outstanding
+  expect_error(
+    target_market_share(
+      matched,
+      fake_ald(),
+      fake_scenario(),
+      region_isos_stable
+    ),
+    class = "multiple_currencies"
+  )
+
+  # test credit limit
+  expect_error(
+    target_market_share(
+      matched,
+      fake_ald(),
+      fake_scenario(),
+      region_isos_stable,
+      use_credit_limit = TRUE
+    ),
+    class = "multiple_currencies"
+  )
+})

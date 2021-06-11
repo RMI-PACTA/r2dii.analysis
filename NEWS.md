@@ -1,6 +1,7 @@
 # r2dii.analysis (development version)
 
-* `target_sda()` now outputs targets for the range of years in the input `co2_intenstiy_scenario` (#307). 
+* `target_sda()` now outputs targets for the range of years in the input 
+  `co2_intenstiy_scenario` (#307). 
 
 # r2dii.analysis 0.1.8
 

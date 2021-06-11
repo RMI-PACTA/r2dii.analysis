@@ -323,6 +323,13 @@ pivot_emission_factors_longer <- function(data) {
 }
 
 format_and_combine_output <- function(lbk, corporate_economy, targets, scen, by_company = FALSE) {
+  scenario_sectors <- scen$sector %>%
+    unique()
+
+  lbk <- filter(lbk, .data$sector %in% scenario_sectors)
+  corporate_economy <- filter(corporate_economy, .data$sector %in% scenario_sectors)
+  targets <- filter(targets, .data$sector %in% scenario_sectors)
+
   projected <- pivot_emission_factors_longer(lbk)
 
   corporate_economy <- pivot_emission_factors_longer(corporate_economy)

@@ -2,6 +2,10 @@
 
 # r2dii.analysis 0.1.8
 
+* `target_sda()` now correctly outputs targets for the range of years in the 
+  input `co2_intenstiy_scenario` only, and will not calculate targets for `ald` 
+  data that is outside that range. 
+
 * `target_market_share()` now correctly outputs target `technology share`, in 
   line with methodology (@georgeharris2deg #277).
 

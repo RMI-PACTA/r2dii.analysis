@@ -255,7 +255,7 @@ calculated portfolio target emissions factors (see column
 <span class='co'># You may need to clean your data</span>
 <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span><span class='op'>(</span><span class='va'>ald</span><span class='op'>$</span><span class='va'>emission_factor</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>target_sda</span><span class='op'>(</span><span class='va'>matched</span>, <span class='va'>ald</span>, co2_intensity_scenario <span class='op'>=</span> <span class='va'>co2_scenario</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 171 x 4</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 114 x 4</span>
 #&gt;    sector    year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> shipping  <span style='text-decoration: underline;'>2</span>013 projected                          39<span style='text-decoration: underline;'>034</span>906.
@@ -268,7 +268,7 @@ calculated portfolio target emissions factors (see column
 #&gt; <span style='color: #BCBCBC;'> 8</span> shipping  <span style='text-decoration: underline;'>2</span>020 projected                          33<span style='text-decoration: underline;'>184</span>437.
 #&gt; <span style='color: #BCBCBC;'> 9</span> shipping  <span style='text-decoration: underline;'>2</span>021 projected                          32<span style='text-decoration: underline;'>348</span>656.
 #&gt; <span style='color: #BCBCBC;'>10</span> shipping  <span style='text-decoration: underline;'>2</span>022 projected                          31<span style='text-decoration: underline;'>512</span>874.
-#&gt; <span style='color: #949494;'># … with 161 more rows</span></div><div class='input'>
+#&gt; <span style='color: #949494;'># … with 104 more rows</span></div><div class='input'>
 <span class='va'>ald2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>ald</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>emission_factor</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span><span class='op'>(</span><span class='va'>ald2</span><span class='op'>$</span><span class='va'>emission_factor</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
@@ -278,7 +278,7 @@ calculated portfolio target emissions factors (see column
 <span class='co'># scenario pathway emissions factors, and the portfolio's target emissions</span>
 <span class='co'># factors.</span>
 <span class='va'>out</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 171 x 4</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 114 x 4</span>
 #&gt;    sector    year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> shipping  <span style='text-decoration: underline;'>2</span>013 projected                          39<span style='text-decoration: underline;'>034</span>906.
@@ -291,7 +291,7 @@ calculated portfolio target emissions factors (see column
 #&gt; <span style='color: #BCBCBC;'> 8</span> shipping  <span style='text-decoration: underline;'>2</span>020 projected                          33<span style='text-decoration: underline;'>184</span>437.
 #&gt; <span style='color: #BCBCBC;'> 9</span> shipping  <span style='text-decoration: underline;'>2</span>021 projected                          32<span style='text-decoration: underline;'>348</span>656.
 #&gt; <span style='color: #BCBCBC;'>10</span> shipping  <span style='text-decoration: underline;'>2</span>022 projected                          31<span style='text-decoration: underline;'>512</span>874.
-#&gt; <span style='color: #949494;'># … with 161 more rows</span></div><div class='input'>
+#&gt; <span style='color: #949494;'># … with 104 more rows</span></div><div class='input'>
 <span class='co'># Split-view by metric</span>
 <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>out</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>emission_factor_metric</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $adjusted_scenario_demo
@@ -345,36 +345,20 @@ calculated portfolio target emissions factors (see column
 #&gt; <span style='color: #BCBCBC;'>13</span> shipping  <span style='text-decoration: underline;'>2</span>025 projected                          29<span style='text-decoration: underline;'>005</span>531.
 #&gt; 
 #&gt; $target_demo
-#&gt; <span style='color: #949494;'># A tibble: 44 x 4</span>
-#&gt;    sector    year emission_factor_metric emission_factor_value
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> shipping  <span style='text-decoration: underline;'>2</span>013 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span> shipping  <span style='text-decoration: underline;'>2</span>014 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span> shipping  <span style='text-decoration: underline;'>2</span>015 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 4</span> shipping  <span style='text-decoration: underline;'>2</span>016 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 5</span> shipping  <span style='text-decoration: underline;'>2</span>017 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span> shipping  <span style='text-decoration: underline;'>2</span>018 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 7</span> shipping  <span style='text-decoration: underline;'>2</span>019 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span> shipping  <span style='text-decoration: underline;'>2</span>020 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span> cement    <span style='text-decoration: underline;'>2</span>020 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'>10</span> shipping  <span style='text-decoration: underline;'>2</span>021 target_demo                               <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #949494;'># … with 34 more rows</span>
-#&gt; 
-#&gt; $target_NA
-#&gt; <span style='color: #949494;'># A tibble: 44 x 4</span>
-#&gt;    sector    year emission_factor_metric emission_factor_value
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> shipping  <span style='text-decoration: underline;'>2</span>013 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span> shipping  <span style='text-decoration: underline;'>2</span>014 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span> shipping  <span style='text-decoration: underline;'>2</span>015 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 4</span> shipping  <span style='text-decoration: underline;'>2</span>016 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 5</span> shipping  <span style='text-decoration: underline;'>2</span>017 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span> shipping  <span style='text-decoration: underline;'>2</span>018 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 7</span> shipping  <span style='text-decoration: underline;'>2</span>019 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span> shipping  <span style='text-decoration: underline;'>2</span>020 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span> cement    <span style='text-decoration: underline;'>2</span>020 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #BCBCBC;'>10</span> shipping  <span style='text-decoration: underline;'>2</span>021 target_NA                                 <span style='color: #BB0000;'>NA</span>
-#&gt; <span style='color: #949494;'># … with 34 more rows</span>
+#&gt; <span style='color: #949494;'># A tibble: 31 x 4</span>
+#&gt;    sector  year emission_factor_metric emission_factor_value
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>020 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> cement  <span style='text-decoration: underline;'>2</span>021 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> cement  <span style='text-decoration: underline;'>2</span>022 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> cement  <span style='text-decoration: underline;'>2</span>023 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> cement  <span style='text-decoration: underline;'>2</span>024 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> cement  <span style='text-decoration: underline;'>2</span>025 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> cement  <span style='text-decoration: underline;'>2</span>026 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> cement  <span style='text-decoration: underline;'>2</span>027 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> cement  <span style='text-decoration: underline;'>2</span>028 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> cement  <span style='text-decoration: underline;'>2</span>029 target_demo                               <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #949494;'># … with 21 more rows</span>
 #&gt; </div><div class='input'>
 <span class='co'># Calculate company-level targets</span>
 <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>target_sda</span><span class='op'>(</span>
@@ -383,7 +367,7 @@ calculated portfolio target emissions factors (see column
   by_company <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 <span class='va'>out</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 171 x 5</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 114 x 5</span>
 #&gt;    sector    year name_ald            emission_factor_metr… emission_factor_val…
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> shipping  <span style='text-decoration: underline;'>2</span>013 africon shipping sa projected                        39<span style='text-decoration: underline;'>034</span>906.
@@ -396,7 +380,7 @@ calculated portfolio target emissions factors (see column
 #&gt; <span style='color: #BCBCBC;'> 8</span> shipping  <span style='text-decoration: underline;'>2</span>020 africon shipping sa projected                        33<span style='text-decoration: underline;'>184</span>437.
 #&gt; <span style='color: #BCBCBC;'> 9</span> shipping  <span style='text-decoration: underline;'>2</span>021 africon shipping sa projected                        32<span style='text-decoration: underline;'>348</span>656.
 #&gt; <span style='color: #BCBCBC;'>10</span> shipping  <span style='text-decoration: underline;'>2</span>022 africon shipping sa projected                        31<span style='text-decoration: underline;'>512</span>874.
-#&gt; <span style='color: #949494;'># … with 161 more rows</span></div></pre>
+#&gt; <span style='color: #949494;'># … with 104 more rows</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

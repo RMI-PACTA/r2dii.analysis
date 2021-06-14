@@ -108,7 +108,6 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
       # Restore old groups
       group_by(!!!old_groups)
   }
-
 }
 
 summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {

@@ -587,10 +587,32 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
   out <- target_sda(matched, ald, co2_scenario)
 
   out_sectors <- unique(out$sector)
-  scenario_sectors <- co2_scenario$sector %>% unique()
+  scenario_sectors <- unique(co2_scenario$sector)
 
   expect_equal(
     setdiff(out_sectors, scenario_sectors),
     character(0)
+  )
+})
+
+test_that("doesn't output NAs if ald and scenario years are misaligned (#307)", {
+  matched <- fake_matched(
+    sector_ald = "cement"
+  )
+
+  ald <- fake_ald(
+    sector = "cement",
+    year = c(2024, 2025)
+  )
+
+  co2_scenario <- fake_co2_scenario(
+    emission_factor = c(1, 0.6),
+    year = c(2025, 2026)
+  )
+
+  out <- target_sda(matched, ald, co2_scenario)
+
+  expect_false(
+    any(is.na(out$emission_factor_value))
   )
 })

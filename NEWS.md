@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_sda()` now only outputs `sector` values that are present in the input 
+  `co2_intensity_scenario` data (#308). 
+  
 * `target_sda()` now outputs targets for the range of years in the input 
   `co2_intenstiy_scenario` (#307). 
 

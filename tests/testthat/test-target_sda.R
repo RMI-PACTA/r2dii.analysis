@@ -586,7 +586,7 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
 
   out <- target_sda(matched, ald, co2_scenario)
 
-  out_sectors <- out$sector %>% unique()
+  out_sectors <- unique(out$sector)
   scenario_sectors <- co2_scenario$sector %>% unique()
 
   expect_equal(

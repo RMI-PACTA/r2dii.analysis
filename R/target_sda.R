@@ -295,7 +295,7 @@ compute_loanbook_targets <- function(data,
                                      scenario_with_p,
                                      ...) {
   data %>%
-    full_join(scenario_with_p, by = c("year", "sector")) %>%
+    right_join(scenario_with_p, by = c("year", "sector")) %>%
     group_by(...) %>%
     arrange(.data$year) %>%
     mutate(

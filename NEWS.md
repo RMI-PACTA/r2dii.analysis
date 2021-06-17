@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_sda()` now outputs columns `metric` and `emission_factor` instead of 
+  `emission_factor_metric` and `emission_factor_value` respectively (#313).
+
 * `target_sda()` now only outputs `sector` values that are present in the input 
   `co2_intensity_scenario` data (#308). 
   

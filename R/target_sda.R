@@ -18,14 +18,14 @@
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
 #' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
-#'   `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
-#'   `weighted_production_value` at the company-level.
+#'   `emission_factor` at the portfolio-level. Set to `TRUE` to output
+#'   `emission_factor` at the company-level.
 #'
 #' @return  A tibble with the CO2 emissions factors attributed to
 #' the portfolio. These values include the portfolio's actual projected CO2
 #' emissions factors, the scenario pathway CO2 emissions factors and the SDA
 #' calculated portfolio target emissions factors (see column
-#' `emission_factor_metric`).
+#' `metric`).
 #'
 #' @export
 #'
@@ -63,7 +63,7 @@
 #' out
 #'
 #' # Split-view by metric
-#' split(out, out$emission_factor_metric)
+#' split(out, out$metric)
 #'
 #' # Calculate company-level targets
 #' out <- target_sda(
@@ -317,8 +317,8 @@ pivot_emission_factors_longer <- function(data) {
     pivot_longer(
       cols = tidyr::starts_with("emission_factor_"),
       names_prefix = "emission_factor_",
-      names_to = "emission_factor_metric",
-      values_to = "emission_factor_value"
+      names_to = "metric",
+      values_to = "emission_factor"
     )
 }
 
@@ -374,8 +374,8 @@ empty_target_sda_output <- function() {
   tibble(
     sector = character(0),
     year = integer(0),
-    emission_factor_metric = character(0),
-    emission_factor_value = numeric(0)
+    metric = character(0),
+    emission_factor = numeric(0)
   )
 }
 

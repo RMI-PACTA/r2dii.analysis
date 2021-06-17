@@ -209,8 +209,8 @@ ggplot(
   data = sda_targets, 
   mapping = aes(
     x = year, 
-    y = emission_factor_value, 
-    color = emission_factor_metric)
+    y = emission_factor, 
+    color = metric)
 ) +
   geom_line() +
   facet_wrap(~ sector)

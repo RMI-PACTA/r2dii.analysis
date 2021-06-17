@@ -38,7 +38,7 @@ test_that("with fake data outputs known value", {
     by_company = TRUE
   )
 
-  expect_known_value(out_company, "ref-target_sda_company", update = TRUE)
+  expect_known_value(out_company, "ref-target_sda_company", update = FALSE)
 })
 
 test_that("outputs is ungrouped", {
@@ -169,10 +169,10 @@ test_that("properly weights emissions factors", {
   initial_data <- out %>%
     filter(
       year == 2020,
-      emission_factor_metric == "projected"
+      metric == "projected"
     )
 
-  expect_equal(initial_data$emission_factor_value, 1.5)
+  expect_equal(initial_data$emission_factor, 1.5)
 })
 
 test_that("outputs expected names", {
@@ -189,7 +189,7 @@ test_that("outputs expected names", {
     )
   )
 
-  exp <- c("sector", "year", "emission_factor_metric", "emission_factor_value")
+  exp <- c("sector", "year", "metric", "emission_factor")
   expect_named(out, exp)
 })
 
@@ -213,26 +213,26 @@ test_that("with known input outputs as expected", {
 
   out <- target_sda(matched, ald, co2_intensity_scenario) %>%
     arrange(.data$year) %>%
-    split(.$emission_factor_metric)
+    split(.$metric)
 
-  expect_equal(out$projected$emission_factor_value, c(0.9, 0.9, 0.8, 0.5))
+  expect_equal(out$projected$emission_factor, c(0.9, 0.9, 0.8, 0.5))
   expect_equal(
-    out$corporate_economy$emission_factor_value, c(6.45, 0.9, 0.8, 0.5)
+    out$corporate_economy$emission_factor, c(6.45, 0.9, 0.8, 0.5)
   )
   expect_equal(
-    round(out$adjusted_scenario_b2ds$emission_factor_value, 2),
+    round(out$adjusted_scenario_b2ds$emission_factor, 2),
     c(6.45, 5.42, 4.39, 3.35, 2.32, 1.29)
   )
   expect_equal(
-    round(out$adjusted_scenario_sds$emission_factor_value, 2),
+    round(out$adjusted_scenario_sds$emission_factor, 2),
     c(6.45, 6.19, 5.93, 5.68, 5.42, 5.16)
   )
   expect_equal(
-    round(out$target_b2ds$emission_factor_value, 2),
+    round(out$target_b2ds$emission_factor, 2),
     c(0.9, 0.98, 1.06, 1.13, 1.21, 1.29)
   )
   expect_equal(
-    round(out$target_sds$emission_factor_value, 2),
+    round(out$target_sds$emission_factor, 2),
     c(0.9, 1.75, 2.60, 3.46, 4.31, 5.16)
   )
 })
@@ -401,10 +401,10 @@ test_that("with multiple technologies weights emission_factor as expected (#160)
     scen
   ) %>%
     filter(year == min(year)) %>%
-    split(.$emission_factor_metric)
+    split(.$metric)
 
-  expect_equal(out$projected$emission_factor_value, 2)
-  expect_equal(out$target_b2ds$emission_factor_value, 2)
+  expect_equal(out$projected$emission_factor, 2)
+  expect_equal(out$target_b2ds$emission_factor, 2)
 })
 
 test_that("with multiple technologies, aggregates production-weighted emission_factor (#160)", {
@@ -421,9 +421,9 @@ test_that("with multiple technologies, aggregates production-weighted emission_f
       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
     )
   ) %>%
-    split(.$emission_factor_metric)
+    split(.$metric)
 
-  expect_equal(out$corporate_economy$emission_factor_value, 100)
+  expect_equal(out$corporate_economy$emission_factor, 100)
 })
 
 test_that("with multiple plant_location, aggregates production-weighted emission_factor (#160)", {
@@ -440,9 +440,9 @@ test_that("with multiple plant_location, aggregates production-weighted emission
       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
     )
   ) %>%
-    split(.$emission_factor_metric)
+    split(.$metric)
 
-  expect_equal(out$corporate_economy$emission_factor_value, 100)
+  expect_equal(out$corporate_economy$emission_factor, 100)
 })
 
 test_that("filters and warns when input-data has NAs", {
@@ -469,8 +469,8 @@ test_that("filters and warns when input-data has NAs", {
   }
   do.call(expect_warning, args)
 
-  out <- split(out, out$emission_factor_metric)
-  expect_equal(out$corporate_economy$emission_factor_value, c(1, 2))
+  out <- split(out, out$metric)
+  expect_equal(out$corporate_economy$emission_factor, c(1, 2))
 })
 
 test_that(
@@ -495,7 +495,7 @@ test_that(
 )
 
 test_that("with multiple values of `country_of_domicile` outputs the expected
-          `emission_factor_value` (#171)", {
+          `emission_factor` (#171)", {
   this_company <- "company"
   this_sector <- "steel"
   ald <- fake_ald(
@@ -514,9 +514,9 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
 
   out <- matched %>%
     target_sda(ald, co2_intensity_scenario_demo) %>%
-    split(.$emission_factor_metric)
+    split(.$metric)
 
-  expect_equal(out$projected$emission_factor_value, 0.5)
+  expect_equal(out$projected$emission_factor, 0.5)
 })
 
 test_that("outputs same target regardless of years present in ald", {
@@ -553,18 +553,18 @@ test_that("outputs same target regardless of years present in ald", {
   out_ten_year <- target_sda(matched, ald_ten_year, co2_scenario) %>%
     filter(
       year == 2030,
-      emission_factor_metric == "target_b2ds"
+      metric == "target_b2ds"
     )
 
   out_thirty_year <- target_sda(matched, ald_thirty_year, co2_scenario) %>%
     filter(
       year == 2030,
-      emission_factor_metric == "target_b2ds"
+      metric == "target_b2ds"
     )
 
   expect_equal(
-    out_ten_year$emission_factor_value,
-    out_thirty_year$emission_factor_value
+    out_ten_year$emission_factor,
+    out_thirty_year$emission_factor
   )
 })
 
@@ -613,6 +613,6 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307)", 
   out <- target_sda(matched, ald, co2_scenario)
 
   expect_false(
-    any(is.na(out$emission_factor_value))
+    any(is.na(out$emission_factor))
   )
 })

@@ -74,7 +74,8 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     add_technology_share()
-
+  View(data %>%
+             add_technology_share_target())
   if (with_targets) {
     data %>%
       add_technology_share_target() %>%
@@ -262,14 +263,14 @@ add_percent_change <- function(data) {
 
 add_technology_share <- function(data) {
   data %>%
-    group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
+    group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald, .data$region) %>%
     mutate(technology_share = .data$production / sum(.data$production)) %>%
     group_by(!!!dplyr::groups(data))
 }
 
 add_technology_share_target <- function(data) {
   data %>%
-    group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald) %>%
+    group_by(.data$sector_ald, .data$year, .data$scenario, .data$name_ald, .data$region) %>%
     mutate(technology_share_target = .data$production_target / sum(.data$production_target)) %>%
     group_by(!!!dplyr::groups(data))
 }

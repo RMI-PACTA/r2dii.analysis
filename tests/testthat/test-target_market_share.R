@@ -967,3 +967,23 @@ test_that("Initial value of technology_share consistent between `projected` and
     class = "multiple_currencies"
   )
 })
+
+test_that("technology_share doesn't increase monotonically with time (#315)", {
+  some_names <- c(
+    "dynegy midwest generation, inc.",
+    "noshiro forest resources utilization cooperative association"
+  )
+  matched <- loanbook_demo %>%
+    match_name(ald_demo) %>%
+    prioritize() %>%
+    filter (sector_ald == "power", name_ald %in% some_names)
+
+  out <- matched %>%
+    target_market_share(ald_demo, scenario_demo_2020, region_isos_demo) %>%
+    filter(metric == "target_sds", by_company = TRUE, technology == "coalcap") %>%
+    select(technology, year, technology_share) %>%
+    arrange(year)
+
+  is_monotonically_increasing <- function(x) all(x == cummax(x))
+  expect_true(!is_monotonically_increasing(out$technology_share))
+})

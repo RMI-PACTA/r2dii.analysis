@@ -74,8 +74,6 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     add_technology_share()
-  View(data %>%
-             add_technology_share_target())
   if (with_targets) {
     data %>%
       add_technology_share_target() %>%

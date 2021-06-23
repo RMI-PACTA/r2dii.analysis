@@ -1,5 +1,9 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now groups by region. This fixes a bug by which
+`technology_share` unexpectedly increased monotonically with time
+(@Antoine-Lalechere #315).
+
 * `target_sda()` now only outputs `sector` values that are present in the input 
   `co2_intensity_scenario` data (#308). 
   

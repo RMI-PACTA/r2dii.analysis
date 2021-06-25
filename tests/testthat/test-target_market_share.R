@@ -967,3 +967,47 @@ test_that("Initial value of technology_share consistent between `projected` and
     class = "multiple_currencies"
   )
 })
+
+test_that("with only green techs outputs only green techs", {
+  scenario <- fake_scenario(
+    year = rep(c(2020, 2025), 2),
+    tmsr = c(1, 0.5, 1, 2),
+    smsp = c(0, -0.5, 0, 0.5),
+    technology = rep(c("ice", "electric"), each = 2),
+  )
+  ald_green <- fake_ald(technology = "electric")
+  ald_brown <- fake_ald(technology = "ice")
+
+  out_green <- target_market_share(
+    fake_matched(),
+    ald_green,
+    scenario,
+    region_isos_demo
+  )
+
+  expect_equal(
+    setdiff(c("electric"), unique(out_green$technology)), character(0)
+  )
+})
+
+test_that("with only brown techs outputs both green and brown techs (#318)", {
+  scenario <- fake_scenario(
+    year = rep(c(2020, 2025), 2),
+    tmsr = c(1, 0.5, 1, 2),
+    smsp = c(0, -0.5, 0, 0.5),
+    technology = rep(c("ice", "electric"), each = 2),
+  )
+  ald_green <- fake_ald(technology = "electric")
+  ald_brown <- fake_ald(technology = "ice")
+
+  out_brown <- target_market_share(
+    fake_matched(),
+    ald_brown,
+    scenario,
+    region_isos_demo
+  )
+
+  expect_equal(
+    setdiff(c("ice", "electric"), unique(out_brown$technology)), character(0)
+  )
+})

@@ -137,7 +137,6 @@ target_market_share <- function(data,
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   data <- aggregate_by_loan_id(data)
-
   data <- join_ald_scenario(data, ald, scenario, region_isos)
 
   crucial_groups <- c(
@@ -162,7 +161,6 @@ target_market_share <- function(data,
     summarize(
       production = sum(.data$production)
     )
-
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
   }
@@ -187,13 +185,15 @@ target_market_share <- function(data,
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
-
   data <- data %>%
     mutate(
       tmsr_target_production = .data$initial_technology_production *
         .data$tmsr,
-      smsp_target_production = .data$initial_technology_production +
-        (.data$initial_sector_production * .data$smsp)
+      smsp_target_production = ifelse(.data$initial_technology_production +
+                                        (.data$initial_sector_production * .data$smsp)>0,
+                                      .data$initial_technology_production +
+                                        (.data$initial_sector_production * .data$smsp),
+                                      0)
     ) %>%
     select(
       -c(
@@ -220,14 +220,12 @@ target_market_share <- function(data,
       )
     ) %>%
     select(-.data$target_name, -.data$green_or_brown)
-
   summary_groups <- c(
     "scenario",
     "region",
     "scenario_source",
     "name_ald"
   )
-
   if (weight_production) {
     data <- summarize_weighted_production_(
       data,
@@ -252,7 +250,6 @@ target_market_share <- function(data,
       "region",
       "scenario_source"
     )
-
     data <- data %>%
       group_by(!!!rlang::syms(aggregate_company_groups)) %>%
       summarize(
@@ -262,7 +259,6 @@ target_market_share <- function(data,
         weighted_technology_share_target = sum(.data$weighted_technology_share_target)
       )
   }
-
   reweighting_groups <- maybe_add_name_ald(
     c("sector_ald", "region", "scenario", "scenario_source", "year"),
     by_company
@@ -303,6 +299,7 @@ target_market_share <- function(data,
     dplyr::bind_rows(ald_with_benchmark) %>%
     ungroup()
 }
+
 
 pivot_wider2 <- function(data, ...) {
   abort_if_has_list_colums(data)

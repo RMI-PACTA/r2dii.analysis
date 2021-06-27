@@ -54,7 +54,7 @@ join_ald_scenario <- function(data,
   all_company <- unique(out$name_ald)
   all_region <- unique(out$region)
   for (one_region in all_region) {
-    print(one_region)
+    # print(one_region)
     for (company in all_company) {
       filtered_data <- out %>%
         filter(

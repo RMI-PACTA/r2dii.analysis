@@ -190,10 +190,11 @@ target_market_share <- function(data,
       tmsr_target_production = .data$initial_technology_production *
         .data$tmsr,
       smsp_target_production = ifelse(.data$initial_technology_production +
-                                        (.data$initial_sector_production * .data$smsp)>0,
-                                      .data$initial_technology_production +
-                                        (.data$initial_sector_production * .data$smsp),
-                                      0)
+        (.data$initial_sector_production * .data$smsp) > 0,
+      .data$initial_technology_production +
+        (.data$initial_sector_production * .data$smsp),
+      0
+      )
     ) %>%
     select(
       -c(

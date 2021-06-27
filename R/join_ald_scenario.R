@@ -48,14 +48,85 @@ join_ald_scenario <- function(data,
   ald <- modify_at_(ald, "technology", tolower)
   out <- data %>%
     left_join(ald, by = ald_columns()) %>%
-    inner_join(scenario, by = scenario_columns()) %>%
-    warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.") %>%
-    mutate(plant_location = tolower(.data$plant_location)) %>%
-    inner_join(
-      region_isos,
-      by = c("region", "plant_location" = "isos", "scenario_source")
-    ) %>%
+    mutate(plant_location=tolower(plant_location)) %>%
+    left_join(region_isos, by=c("plant_location" = "isos")) %>%
     warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.")
+  all_company<-unique(out$name_ald)
+  all_region<-unique(out$region)
+  for (one_region in all_region){
+    print(one_region)
+    for (company in all_company){
+      filtered_data<-out%>%
+        filter(
+          name_ald==company
+        )
+      sector_company<-filtered_data$sector_ald[1]
+      all_tech<-green_or_brown%>%
+        filter(sector==sector_company)
+      all_tech<-all_tech$technology
+      green_tech<-green_or_brown%>%
+        filter(sector==sector_company,
+               green_or_brown=="green")
+      green_tech<-green_tech$technology
+      if (sector_company=="automotive"){
+        green_tech<-c()
+        if (filtered_data%>%
+            filter(
+              technology=="ice",
+              region==one_region
+            )%>%
+            nrow()>0){
+          green_tech<-c(green_tech,"electric","hybrid","fuelcell")
+        }
+        if (filtered_data%>%
+            filter(
+              technology=="ice_hdv",
+              region==one_region
+            )%>%
+            nrow()>0){
+          green_tech<-c(green_tech,"electric_hdv","hybrid_hdv","fuelcell_hdv")
+        }
+      }
+      main_tech<-0
+      max<-0
+      for (i in all_tech){
+        if (filtered_data%>%
+            filter(
+              technology==i,
+              region==one_region)%>%
+            nrow() >max){
+          max<-filtered_data%>%
+            filter(
+              technology==i,
+              region==one_region)%>%
+            nrow()
+          main_tech<-i
+        }
+      }
+      if (max >0){
+        for (tech in green_tech){
+          if(out%>%
+             filter(
+               technology==tech,
+               name_ald==company,
+               region==one_region)%>%
+             nrow() ==0){
+            out<-rbind(out, out%>%
+                         filter(
+                           name_ald==company,
+                           technology==main_tech,
+                           region==one_region) %>%
+                         mutate(technology=tech,
+                                production=0))
+          }
+        }
+      }
+    }
+  }
+  out<- out%>%
+    inner_join(scenario, by = c(scenario_columns(),"scenario_source", "region")) %>%
+    warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.") %>%
+    mutate(plant_location = tolower(.data$plant_location)) #%>%
   out
 }
 

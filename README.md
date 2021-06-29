@@ -86,20 +86,20 @@ matched %>%
     co2_intensity_scenario = co2_intensity_scenario_demo
   )
 #> Warning: Removing ald rows where `emission_factor` is NA
-#> # A tibble: 508 x 4
-#>    sector      year emission_factor_metric emission_factor_value
-#>    <chr>      <dbl> <chr>                                  <dbl>
-#>  1 automotive  2002 projected                              0.397
-#>  2 automotive  2003 projected                              0.389
-#>  3 automotive  2004 projected                              0.381
-#>  4 automotive  2005 projected                              0.373
-#>  5 automotive  2006 projected                              0.365
-#>  6 automotive  2007 projected                              0.358
-#>  7 automotive  2008 projected                              0.350
-#>  8 automotive  2009 projected                              0.342
-#>  9 automotive  2010 projected                              0.334
-#> 10 automotive  2011 projected                              0.326
-#> # … with 498 more rows
+#> # A tibble: 163 x 4
+#>    sector  year emission_factor_metric emission_factor_value
+#>    <chr>  <dbl> <chr>                                  <dbl>
+#>  1 cement  2013 projected                              0.658
+#>  2 cement  2014 projected                              0.659
+#>  3 cement  2015 projected                              0.660
+#>  4 cement  2016 projected                              0.661
+#>  5 cement  2017 projected                              0.662
+#>  6 cement  2018 projected                              0.662
+#>  7 cement  2019 projected                              0.663
+#>  8 cement  2020 projected                              0.664
+#>  9 cement  2021 projected                              0.665
+#> 10 cement  2022 projected                              0.666
+#> # … with 153 more rows
 ```
 
   - Use `target_market_share` to calculate market-share scenario targets
@@ -114,7 +114,7 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> # A tibble: 3,642 x 8
+#> # A tibble: 3,692 x 8
 #>    sector     technology  year region scenario_source metric     production
 #>    <chr>      <chr>      <int> <chr>  <chr>           <chr>           <dbl>
 #>  1 automotive electric    2020 global demo_2020       projected     324592.
@@ -127,7 +127,7 @@ matched %>%
 #>  8 automotive electric    2021 global demo_2020       target_sps    330435.
 #>  9 automotive electric    2022 global demo_2020       projected     354720.
 #> 10 automotive electric    2022 global demo_2020       target_cps    333693.
-#> # … with 3,632 more rows, and 1 more variable: technology_share <dbl>
+#> # … with 3,682 more rows, and 1 more variable: technology_share <dbl>
 ```
 
   - Or at the company level:
@@ -146,7 +146,7 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 14,754 x 9
+#> # A tibble: 14,804 x 9
 #>    sector  technology  year region scenario_source name_ald    metric production
 #>    <chr>   <chr>      <int> <chr>  <chr>           <chr>       <chr>       <dbl>
 #>  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.
@@ -159,7 +159,7 @@ matched %>%
 #>  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.
 #>  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.
 #> 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.
-#> # … with 14,744 more rows, and 1 more variable: technology_share <dbl>
+#> # … with 14,794 more rows, and 1 more variable: technology_share <dbl>
 ```
 
 ### Utility Functions

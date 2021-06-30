@@ -74,7 +74,7 @@ the analysis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@ the analysis." />
 </li>
 <li>
   <a href="https://github.com/2DegreesInvesting/r2dii.analysis">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -225,34 +225,33 @@ scenario.</p>
     scenario <span class='op'>=</span> <span class='va'>scenario_demo_2020</span>,
     region_isos <span class='op'>=</span> <span class='va'>region_isos_demo</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9,099 x 45</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9,099 x 45</span>
 #&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> L6      C304              Yukon Developmen… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
-#&gt; </span><span style='color: #949494;'># … with 9,089 more rows, and 40 more variables: id_ultimate_parent &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   sector_classification_input_type &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;, id_company &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   technology &lt;chr&gt;, production_unit &lt;chr&gt;, year &lt;int&gt;, production &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   emission_factor &lt;dbl&gt;, country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   is_ultimate_owner &lt;lgl&gt;, is_ultimate_listed_owner &lt;lgl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   ald_timestamp &lt;chr&gt;, ald_emission_factor_unit &lt;chr&gt;, scenario &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   region &lt;chr&gt;, tmsr &lt;dbl&gt;, smsp &lt;dbl&gt;, scenario_source &lt;chr&gt;</span><span></div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 2</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 3</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 4</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 5</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 6</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 7</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 8</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'> 9</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #BCBCBC;'>10</span> L6      C304              Yukon Developmen… <span style='color: #BB0000;'>NA</span>               <span style='color: #BB0000;'>NA</span>              
+#&gt; <span style='color: #949494;'># … with 9,089 more rows, and 40 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   sector_classification_input_type &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;, company_id &lt;chr&gt;, lei &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   technology &lt;chr&gt;, production_unit &lt;chr&gt;, year &lt;int&gt;, production &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   emission_factor &lt;dbl&gt;, country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   is_ultimate_owner &lt;lgl&gt;, ald_timestamp &lt;chr&gt;, emission_factor_unit &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   scenario &lt;chr&gt;, region &lt;chr&gt;, tmsr &lt;dbl&gt;, smsp &lt;dbl&gt;, scenario_source &lt;chr&gt;</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

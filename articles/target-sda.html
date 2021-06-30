@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
 </li>
 <li>
   <a href="https://github.com/2DegreesInvesting/r2dii.analysis">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -186,7 +186,7 @@
   <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 218 x 28</span>
+<span class="co">#&gt; # A tibble: 217 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -199,7 +199,7 @@
 <span class="co">#&gt;  8 L25     C281              Ypf Sa            &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L26     C280              Ypf Energia Elec… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L27     C278              Younicos Ag       &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 208 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -217,20 +217,20 @@
 
 <span class="va">matched</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span><span class="op">(</span><span class="va">ald</span>, <span class="va">co2_intensity</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
-<span class="co">#&gt; # A tibble: 508 x 4</span>
-<span class="co">#&gt;    sector      year emission_factor_metric emission_factor_value</span>
-<span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automotive  2002 projected                              0.397</span>
-<span class="co">#&gt;  2 automotive  2003 projected                              0.389</span>
-<span class="co">#&gt;  3 automotive  2004 projected                              0.381</span>
-<span class="co">#&gt;  4 automotive  2005 projected                              0.373</span>
-<span class="co">#&gt;  5 automotive  2006 projected                              0.365</span>
-<span class="co">#&gt;  6 automotive  2007 projected                              0.358</span>
-<span class="co">#&gt;  7 automotive  2008 projected                              0.350</span>
-<span class="co">#&gt;  8 automotive  2009 projected                              0.342</span>
-<span class="co">#&gt;  9 automotive  2010 projected                              0.334</span>
-<span class="co">#&gt; 10 automotive  2011 projected                              0.326</span>
-<span class="co">#&gt; # … with 498 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 163 x 4</span>
+<span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 cement  2013 projected                              0.658</span>
+<span class="co">#&gt;  2 cement  2014 projected                              0.659</span>
+<span class="co">#&gt;  3 cement  2015 projected                              0.660</span>
+<span class="co">#&gt;  4 cement  2016 projected                              0.661</span>
+<span class="co">#&gt;  5 cement  2017 projected                              0.662</span>
+<span class="co">#&gt;  6 cement  2018 projected                              0.662</span>
+<span class="co">#&gt;  7 cement  2019 projected                              0.663</span>
+<span class="co">#&gt;  8 cement  2020 projected                              0.664</span>
+<span class="co">#&gt;  9 cement  2021 projected                              0.665</span>
+<span class="co">#&gt; 10 cement  2022 projected                              0.666</span>
+<span class="co">#&gt; # … with 153 more rows</span></code></pre></div>
 </div>
   </div>
 

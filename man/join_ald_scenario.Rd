@@ -4,7 +4,13 @@
 \alias{join_ald_scenario}
 \title{Join a data-loanbook object to the ald and scenario}
 \usage{
-join_ald_scenario(data, ald, scenario, region_isos = r2dii.data::region_isos)
+join_ald_scenario(
+  data,
+  ald,
+  scenario,
+  region_isos = r2dii.data::region_isos,
+  add_green_technologies = FALSE
+)
 }
 \arguments{
 \item{data}{A data frame like the output of
@@ -15,6 +21,11 @@ join_ald_scenario(data, ald, scenario, region_isos = r2dii.data::region_isos)
 \item{scenario}{A scenario data frame like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
 
 \item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
+
+\item{add_green_technologies}{Logical vector of length 1. \code{FALSE} defaults to
+outputting only technologies that are present in both \code{data} and \code{ald}. Set
+to \code{FALSE} to add rows of all possible green technologies (with 0
+production).}
 }
 \value{
 Returns a fully joined data frame, linking portfolio, ald and

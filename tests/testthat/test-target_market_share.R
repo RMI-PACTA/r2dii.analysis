@@ -970,7 +970,6 @@ test_that("Initial value of technology_share consistent between `projected` and
 
 test_that("`target_market_share` only outputs sectors that are present in the
           input `data` (#329)", {
-
   matched <- fake_matched(
     sector_ald = "automotive"
   )
@@ -995,5 +994,4 @@ test_that("`target_market_share` only outputs sectors that are present in the
     unique(out$sector),
     "automotive"
   )
-
 })

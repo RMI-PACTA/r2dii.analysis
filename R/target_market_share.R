@@ -297,10 +297,15 @@ target_market_share <- function(data,
   data <- data %>%
     pivot_wider2()
 
-  ald_with_benchmark <- calculate_ald_benchmark(ald, region_isos, by_company)
+  corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
+
+  relevant_sectors <- unique(data$sector)
+
+  relevant_corporate_economy <- corporate_economy %>%
+    filter(.data$sector %in% relevant_sectors)
 
   data %>%
-    dplyr::bind_rows(ald_with_benchmark) %>%
+    dplyr::bind_rows(relevant_corporate_economy) %>%
     ungroup()
 }
 

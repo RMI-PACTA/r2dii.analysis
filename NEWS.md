@@ -1,7 +1,7 @@
 # r2dii.analysis (development version)
 
-* `target_market_share()` now correctly groups by `region` when 
-calculating `technology_share` (#315 @Antoine-Lalechere). 
+* `target_market_share()` now correctly groups by `region` when calculating 
+`technology_share` (#315 @Antoine-Lalechere). 
 
 # r2dii.analysis 0.1.9
 

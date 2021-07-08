@@ -9,6 +9,10 @@
 #' @param ald An asset level data frame like [r2dii.data::ald_demo].
 #' @param scenario A scenario data frame like [r2dii.data::scenario_demo_2020].
 #' @param region_isos A data frame like [r2dii.data::region_isos] (default).
+#' @param add_green_technologies Logical vector of length 1. `FALSE` defaults to
+#' outputting only technologies that are present in both `data` and `ald`. Set
+#' to `FALSE` to add rows of all possible green technologies (with 0
+#' production).
 #'
 #' @return Returns a fully joined data frame, linking portfolio, ald and
 #'   scenario.
@@ -37,7 +41,8 @@
 join_ald_scenario <- function(data,
                               ald,
                               scenario,
-                              region_isos = r2dii.data::region_isos) {
+                              region_isos = r2dii.data::region_isos,
+                              add_green_technologies = FALSE) {
   check_portfolio_ald_scenario(data, ald, scenario)
 
   # Track provenance to avoid clash in the column name "source"
@@ -46,6 +51,11 @@ join_ald_scenario <- function(data,
 
   ald <- modify_at_(ald, "sector", tolower)
   ald <- modify_at_(ald, "technology", tolower)
+
+  if (add_green_technologies) {
+    ald <- add_green_technologies_to_ald(ald, scenario)
+  }
+
   out <- data %>%
     left_join(ald, by = ald_columns()) %>%
     inner_join(scenario, by = scenario_columns()) %>%
@@ -84,6 +94,33 @@ check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
   )
 
   invisible(valid_matches)
+}
+
+add_green_technologies_to_ald <- function(data, scenario) {
+
+  green_techs <- r2dii.data::green_or_brown %>%
+    filter(.data$green_or_brown == "green") %>%
+    select(-.data$green_or_brown)
+
+  green_techs_in_scenario <- scenario %>%
+    select(.data$sector, .data$technology) %>%
+    unique() %>%
+    inner_join(green_techs, by = c("sector", "technology"))
+
+  green_rows_to_add <- data %>%
+    group_by(
+      .data$name_company,
+      .data$sector,
+      .data$year,
+      .data$plant_location,
+      .data$is_ultimate_owner
+    ) %>%
+    summarize() %>%
+    left_join(green_techs_in_scenario, by = "sector") %>%
+    mutate(production = 0)
+
+  dplyr::bind_rows(data, green_rows_to_add)
+
 }
 
 ald_columns <- function() {

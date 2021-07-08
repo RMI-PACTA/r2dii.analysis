@@ -144,7 +144,7 @@ target_market_share <- function(data,
     scenario,
     region_isos,
     add_green_technologies = TRUE
-    )
+  )
 
   crucial_groups <- c(
     "id_loan",

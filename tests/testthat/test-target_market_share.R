@@ -967,3 +967,46 @@ test_that("Initial value of technology_share consistent between `projected` and
     class = "multiple_currencies"
   )
 })
+
+test_that("technology_share is calculated per region (#315)", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    name_ald = c("green", "brown")
+  )
+
+  ald <- fake_ald(
+    name_company = c("brown", "green"),
+    technology = c("ice", "electric"),
+    plant_location = c("US", "FR"),
+  )
+
+  scenario <- fake_scenario(
+    technology = rep(c("electric", "ice"), 2),
+    region = rep(c("europe", "global"), each = 2),
+    tmsr = 1,
+    smsp = 0,
+    year = 2025
+  )
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_stable
+  ) %>%
+    filter(
+      metric != "corporate_economy",
+      region == "global"
+    ) %>%
+    split(.$metric)
+
+  expect_equal(
+    out$projected$technology_share,
+    c(0.5, 0.5)
+  )
+
+  expect_equal(
+    out$target_sds$technology_share,
+    c(0.5, 0.5)
+  )
+})

@@ -138,7 +138,13 @@ target_market_share <- function(data,
 
   data <- aggregate_by_loan_id(data)
 
-  data <- join_ald_scenario(data, ald, scenario, region_isos)
+  data <- join_ald_scenario(
+    data,
+    ald,
+    scenario,
+    region_isos,
+    add_green_technologies = TRUE
+    )
 
   crucial_groups <- c(
     "id_loan",

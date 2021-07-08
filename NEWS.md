@@ -3,6 +3,10 @@
 * `target_market_share()` now only outputs `sector` values that are present in 
   all of `data`, `ald` and `scenario` (#329). 
 
+* `target_market_share()` now always adds targets for green technologies 
+  (defined by `r2dii.data::green_or_brown`), even when not present in input 
+  `data` (#318 @Antoine-Lalechere). 
+
 * `target_market_share()` now correctly groups by `region` when calculating 
 `technology_share` (#315 @Antoine-Lalechere). 
 

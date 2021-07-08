@@ -189,7 +189,8 @@ target_market_share <- function(data,
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
     mutate(initial_technology_production = first(.data$technology_production)) %>%
-    select(-.data$technology_production)
+    select(-.data$technology_production) %>%
+    ungroup()
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()

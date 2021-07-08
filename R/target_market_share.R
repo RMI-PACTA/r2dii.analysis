@@ -204,9 +204,9 @@ target_market_share <- function(data,
     ) %>%
     mutate(
       smsp_target_production = ifelse(
-        smsp_target_production < 0,
+        .data$smsp_target_production < 0,
         0,
-        smsp_target_production
+        .data$smsp_target_production
       )
     ) %>%
     select(

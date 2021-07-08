@@ -3,6 +3,10 @@
 * `target_market_share()` now only outputs `sector` values that are present in 
   all of `data`, `ald` and `scenario` (#329). 
 
+* `target_market_share()` now correctly groups by `region` when calculating 
+`technology_share` (#315 @Antoine-Lalechere). 
+
+
 # r2dii.analysis 0.1.9
 
 * `target_sda()` now only outputs `sector` values that are present in the input 

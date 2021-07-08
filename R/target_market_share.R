@@ -225,7 +225,12 @@ target_market_share <- function(data,
         green_or_brown = "green_or_brown"
       )
     ) %>%
+    warn_if_has_zero_rows("Joining `r2dii.data::green_or_brown` outputs 0 rows") %>%
     select(-.data$target_name, -.data$green_or_brown)
+
+  if (nrow(data) == 0) {
+    return(empty_target_market_share_output())
+  }
 
   summary_groups <- c(
     "scenario",

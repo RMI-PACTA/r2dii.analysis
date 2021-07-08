@@ -1075,3 +1075,28 @@ test_that("Input with only brown technologies, outputs both green  and brown
   )
 
 })
+
+test_that("Input with unexpected sectors errors gracefully (#329)", {
+
+  matched <- fake_matched(
+    sector_ald = "a"
+  )
+
+  ald <- fake_ald(
+    sector = "a"
+  )
+
+  scenario <- fake_scenario(
+    sector = "a"
+  )
+
+  expect_warning(
+    target_market_share(
+      matched,
+      ald,
+      scenario,
+      region_isos_stable
+    ),
+    class = "has_zero_rows"
+  )
+})

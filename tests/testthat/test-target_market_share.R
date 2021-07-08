@@ -1128,3 +1128,26 @@ test_that("`target_market_share` only outputs sectors that are present in the
     "automotive"
   )
 })
+
+test_that("`target_market_share` outputs only positive values of `production`(#336)", {
+
+  ald <- fake_ald(
+    year = c(2025, 2026)
+  )
+
+  scenario <- fake_scenario(
+    technology = rep(c("ice", "electric"), 2),
+    smsp = rep(c(0, -1), each = 2),
+    year = rep(c(2025, 2026), each = 2)
+  )
+
+  out <- target_market_share(
+    fake_matched(),
+    ald,
+    scenario,
+    region_isos_stable
+  )
+
+  expect_false(any(out$production < 0))
+
+})

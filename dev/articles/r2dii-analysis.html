@@ -210,7 +210,7 @@
   <span class="op">)</span>
 
 <span class="va">market_share_targets_portfolio</span>
-<span class="co">#&gt; # A tibble: 3,692 x 8</span>
+<span class="co">#&gt; # A tibble: 3,860 x 8</span>
 <span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     324592.</span>
@@ -223,7 +223,7 @@
 <span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    330435.</span>
 <span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected     354720.</span>
 <span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    333693.</span>
-<span class="co">#&gt; # … with 3,682 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # … with 3,850 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
@@ -240,7 +240,7 @@
 <span class="co">#&gt; arguments to `FALSE`?</span>
 
 <span class="va">market_share_targets_company</span>
-<span class="co">#&gt; # A tibble: 14,804 x 9</span>
+<span class="co">#&gt; # A tibble: 34,472 x 9</span>
 <span class="co">#&gt;    sector  technology  year region scenario_source name_ald    metric production</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.</span>
@@ -253,7 +253,7 @@
 <span class="co">#&gt;  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.</span>
 <span class="co">#&gt;  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.</span>
 <span class="co">#&gt; 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.</span>
-<span class="co">#&gt; # … with 14,794 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # … with 34,462 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">

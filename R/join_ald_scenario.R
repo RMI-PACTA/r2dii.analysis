@@ -97,7 +97,6 @@ check_portfolio_ald_scenario <- function(valid_matches, ald, scenario) {
 }
 
 add_green_technologies_to_ald <- function(data, scenario) {
-
   green_techs <- r2dii.data::green_or_brown %>%
     filter(.data$green_or_brown == "green") %>%
     select(-.data$green_or_brown)
@@ -120,7 +119,6 @@ add_green_technologies_to_ald <- function(data, scenario) {
     mutate(production = 0)
 
   dplyr::bind_rows(data, green_rows_to_add)
-
 }
 
 ald_columns <- function() {

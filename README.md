@@ -26,9 +26,9 @@ to study how their capital allocation impacts the climate.
 
 Before you install r2dii.analysis you may want to:
 
-  - [Try an rstudio.cloud project with this package already
+-   [Try an rstudio.cloud project with this package already
     installed](https://rstudio.cloud/project/1424833).
-  - [Learn how to minimize installation
+-   [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
 When you are ready, install the released version of r2dii.analysis from
@@ -50,12 +50,11 @@ issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-rai
 
 ## Example
 
-  - Use `library()` to attach the packages you need. r2dii.analysis does
+-   Use `library()` to attach the packages you need. r2dii.analysis does
     not depend on the packages r2dii.data and r2dii.match; but we
-    suggest you install them – with `install.packages(c("r2dii.data",
-    "r2dii.match"))` – so you can reproduce our examples.
-
-<!-- end list -->
+    suggest you install them – with
+    `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
+    reproduce our examples.
 
 ``` r
 library(r2dii.data)
@@ -63,10 +62,8 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-  - Use `r2dii.match::match_name()` to identify matches between your
+-   Use `r2dii.match::match_name()` to identify matches between your
     loanbook and the asset level data.
-
-<!-- end list -->
 
 ``` r
 matched <- match_name(loanbook_demo, ald_demo) %>%
@@ -75,9 +72,7 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 
 ### Add Scenario Targets
 
-  - Use `target_sda()` to calculate SDA targets of CO2 emissions.
-
-<!-- end list -->
+-   Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ``` r
 matched %>%
@@ -102,10 +97,8 @@ matched %>%
 #> # … with 153 more rows
 ```
 
-  - Use `target_market_share` to calculate market-share scenario targets
+-   Use `target_market_share` to calculate market-share scenario targets
     at the portfolio level:
-
-<!-- end list -->
 
 ``` r
 matched %>%
@@ -114,7 +107,7 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> # A tibble: 3,692 x 8
+#> # A tibble: 2,334 x 8
 #>    sector     technology  year region scenario_source metric     production
 #>    <chr>      <chr>      <int> <chr>  <chr>           <chr>           <dbl>
 #>  1 automotive electric    2020 global demo_2020       projected     324592.
@@ -127,12 +120,10 @@ matched %>%
 #>  8 automotive electric    2021 global demo_2020       target_sps    330435.
 #>  9 automotive electric    2022 global demo_2020       projected     354720.
 #> 10 automotive electric    2022 global demo_2020       target_cps    333693.
-#> # … with 3,682 more rows, and 1 more variable: technology_share <dbl>
+#> # … with 2,324 more rows, and 1 more variable: technology_share <dbl>
 ```
 
-  - Or at the company level:
-
-<!-- end list -->
+-   Or at the company level:
 
 ``` r
 matched %>%
@@ -146,7 +137,7 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 14,804 x 9
+#> # A tibble: 32,946 x 9
 #>    sector  technology  year region scenario_source name_ald    metric production
 #>    <chr>   <chr>      <int> <chr>  <chr>           <chr>       <chr>       <dbl>
 #>  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.
@@ -159,7 +150,7 @@ matched %>%
 #>  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.
 #>  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.
 #> 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.
-#> # … with 14,794 more rows, and 1 more variable: technology_share <dbl>
+#> # … with 32,936 more rows, and 1 more variable: technology_share <dbl>
 ```
 
 ### Utility Functions
@@ -167,10 +158,8 @@ matched %>%
 The `target_*()` functions provide shortcuts for common operations. They
 wrap some utility functions that you may also use directly:
 
-  - Use `join_ald_scenario()` to join a matched dataset to the relevant
+-   Use `join_ald_scenario()` to join a matched dataset to the relevant
     scenario data, and to pick assets in the relevant regions.
-
-<!-- end list -->
 
 ``` r
 loanbook_joined_to_ald_scenario <- matched %>%
@@ -181,10 +170,8 @@ loanbook_joined_to_ald_scenario <- matched %>%
   )
 ```
 
-  - Use `summarize_weighted_production()` with different grouping
+-   Use `summarize_weighted_production()` with different grouping
     arguments to calculate scenario-targets:
-
-<!-- end list -->
 
 ``` r
 # portfolio level

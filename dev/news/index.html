@@ -169,6 +169,7 @@
 <a href="#r2diianalysis-development-version" class="anchor"></a>r2dii.analysis (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now never calculates <code>smsp</code> targets that are less than zero (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/336'>#336</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now only outputs <code>sector</code> values that are present in all of <code>data</code>, <code>ald</code> and <code>scenario</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/329'>#329</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now always adds targets for green technologies (defined by <code><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/green_or_brown.html">r2dii.data::green_or_brown</a></code>), even when not present in input <code>data</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/318'>#318</a> <a href='https://github.com/Antoine-Lalechere'>@Antoine-Lalechere</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now correctly groups by <code>region</code> when calculating <code>technology_share</code> (<a href='https://github.com/2DegreesInvesting/r2dii.analysis/issues/315'>#315</a> <a href='https://github.com/Antoine-Lalechere'>@Antoine-Lalechere</a>).</p></li>

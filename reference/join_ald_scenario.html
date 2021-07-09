@@ -74,7 +74,7 @@ the analysis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
       </span>
     </div>
 
@@ -174,7 +174,13 @@ the analysis." />
 the analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>join_ald_scenario</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>ald</span>, <span class='va'>scenario</span>, region_isos <span class='op'>=</span> <span class='fu'>r2dii.data</span><span class='fu'>::</span><span class='va'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos.html'>region_isos</a></span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>join_ald_scenario</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>ald</span>,
+  <span class='va'>scenario</span>,
+  region_isos <span class='op'>=</span> <span class='fu'>r2dii.data</span><span class='fu'>::</span><span class='va'><a href='https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos.html'>region_isos</a></span>,
+  add_green_technologies <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,6 +201,13 @@ the analysis.</p>
     <tr>
       <th>region_isos</th>
       <td><p>A data frame like <a href='https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos.html'>r2dii.data::region_isos</a> (default).</p></td>
+    </tr>
+    <tr>
+      <th>add_green_technologies</th>
+      <td><p>Logical vector of length 1. <code>FALSE</code> defaults to
+outputting only technologies that are present in both <code>data</code> and <code>ald</code>. Set
+to <code>FALSE</code> to add rows of all possible green technologies (with 0
+production).</p></td>
     </tr>
     </table>
 

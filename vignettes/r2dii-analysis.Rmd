@@ -20,6 +20,12 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
+To plot your results, you may also load the package [r2dii.plot](https://2degreesinvesting.github.io/r2dii.plot).
+
+``` {r use-r2dii.plot}
+library(r2dii.plot)
+```
+
 We also recommend packages in the [tidyverse](https://www.tidyverse.org/); they are optional but useful.
 
 ``` {r use-tidyverse}
@@ -98,7 +104,7 @@ sda_targets
 
 ## Visualization
 
-There are a large variety of possible visualizations stemming from the outputs of `target_market_share()` and `target_sda()`. Below, we have highlighted a couple of common plots, along with the minimum code necessary to reproduce them.
+There are a large variety of possible visualizations stemming from the outputs of `target_market_share()` and `target_sda()`. Below, we highlight a couple of common plots that can easily be achieved using the `r2dii.plot` package. `
 
 ### Market Share: Sector-level technology mix
 
@@ -106,112 +112,39 @@ From the market share output, you can plot the portfolio's exposure to various c
 
 ```{r technoloy-mix-portfolio}
 # Pick the targets you want to plot.
-tech_mix_data <- market_share_targets_portfolio %>%
-  filter(
-    sector == "power",
-    year == max(year)
-  )
-```
+data <- filter(
+  market_share_targets_portfolio,
+  scenario_source == "demo_2020",
+  sector == "power",
+  region == "global",
+  metric %in% c("projected", "corporate_economy", "target_sds")
+)
 
-```{r plot-metric-versus-weighted-capacity}
-ggplot(
-  data = tech_mix_data, 
-  mapping = aes(
-    x = metric, 
-    y = technology_share, 
-    fill = technology
-  )
-) +
-  geom_col(position = "fill") +
-  labs(x = "Metric", y = "Weighted Capacity [%]")
+# Plot the technology mix
+plot_techmix(data)
 ```
 
 ### Market Share: Technology-level volume trajectory
 
-You can also plot the technology-specific volume trend. All benchmarks must first be normalized to the initial portfolio value, so that we are effectively comparing ambition.
+You can also plot the technology-specific volume trend. All starting values are internally normalized to 1, to emphasize that we are really comparing the rates of buildout/ retirement. 
 
-```{r targets-and-ceiling}
-  market_share_targets_portfolio <- market_share_targets_portfolio %>% 
-  select(-technology_share) %>% 
-  pivot_wider(names_from = metric, 
-              values_from = production) %>% 
-  arrange(year) %>% 
-  group_by(sector, technology, region, scenario_source) %>% 
-  mutate(normalized_corporate_economy = corporate_economy * (first(projected)/first(corporate_economy))) %>% 
-  select(-corporate_economy) %>% 
-  pivot_longer(names_to = "metric",
-               cols = projected:normalized_corporate_economy,
-               values_to = "production")
-
-renewables_data <- filter(
+```{r trajetory-portfolio}
+data <- filter(
   market_share_targets_portfolio,
   sector == "power",
   technology == "renewablescap",
-  region == "global"
+  region == "global",
+  scenario_source == "demo_2020"
 )
 
-just_targets <- renewables_data %>%
-  filter(str_detect(metric, "target_"))
-
-ceiling <- just_targets %>%
-  group_by(sector, technology, year, region, scenario_source) %>%
-  summarize(
-    metric = "target_ceiling",
-    production = max(production)
-  ) %>%
-  group_by(sector, technology, region, scenario_source) %>%
-  mutate(production = max(production))
-
-just_data <- renewables_data %>%
-  filter(!str_detect(metric, "target_"))
-
-targets_and_ceiling <- just_targets %>%
-  bind_rows(ceiling) %>%
-  group_by(year) %>%
-  arrange(year, production) %>%
-  mutate(
-    previous_value = lag(production, default = 0)
-  ) %>%
-  filter(region == "global")
+plot_trajectory(data)
 ```
-
-```{r plot-year-versus-weithed-production-value}
-ggplot(
-  data = targets_and_ceiling,
-  mapping = aes(
-    x = year,
-    y = production,
-    fill = metric
-  )
-) +
-  geom_ribbon(
-    data = targets_and_ceiling,
-    mapping = aes(ymin = previous_value, ymax = production)
-  ) +
-  geom_line(
-    data = just_data, 
-    mapping = aes(
-      x = year, 
-      y = production, 
-      linetype = metric
-    )
-  ) +
-  facet_wrap(vars(sector, technology))
-```
-
 
 ### SDA Target
 
 From the SDA output, we can compare the projected average emission intensity attributed to the portfolio, with the actual emission intensity scenario, and the scenario compliant SDA pathway that the portfolio must follow to achieve the scenario ambition by 2050.
 
 ```{r sda plot}
-ggplot(
-  data = sda_targets, 
-  mapping = aes(
-    x = year, 
-    y = emission_factor_value, 
-    color = emission_factor_metric)
-) +
-  geom_line() +
-  facet_wrap(~ sector)
+data <- filter(sda_targets, sector == "cement")
+plot_emission_intensity(data)
 ```

@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now never calculates `smsp` targets that are less than 
+  zero (#336). 
+
 * `target_market_share()` now only outputs `sector` values that are present in 
   all of `data`, `ald` and `scenario` (#329). 
 

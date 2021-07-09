@@ -970,9 +970,8 @@ test_that("Initial value of technology_share consistent between `projected` and
 
 test_that("Input with only green technologies, outputs only green technologies
           (#318)", {
-
   scenario <- fake_scenario(
-    year = rep(c(2020, 2025),2),
+    year = rep(c(2020, 2025), 2),
     tmsr = c(1, 0.5, 1, 2),
     smsp = c(0, -0.5, 0, 0.5),
     technology = rep(c("ice", "electric"), each = 2),
@@ -997,7 +996,6 @@ test_that("Input with only green technologies, outputs only green technologies
     ),
     character(0)
   )
-
 })
 
 test_that("technology_share is calculated per region (#315)", {
@@ -1041,14 +1039,12 @@ test_that("technology_share is calculated per region (#315)", {
     out$target_sds$technology_share,
     c(0.5, 0.5)
   )
-
 })
 
 test_that("Input with only brown technologies, outputs both green  and brown
           technologies (#318)", {
-
   scenario <- fake_scenario(
-    year = rep(c(2020, 2025),2),
+    year = rep(c(2020, 2025), 2),
     tmsr = c(1, 0.5, 1, 2),
     smsp = c(0, -0.5, 0, 0.5),
     technology = rep(c("ice", "electric"), each = 2),
@@ -1073,11 +1069,9 @@ test_that("Input with only brown technologies, outputs both green  and brown
     ),
     character(0)
   )
-
 })
 
 test_that("Input with unexpected sectors errors gracefully (#329)", {
-
   matched <- fake_matched(
     sector_ald = "a"
   )
@@ -1127,4 +1121,25 @@ test_that("`target_market_share` only outputs sectors that are present in the
     unique(out$sector),
     "automotive"
   )
+})
+
+test_that("`target_market_share` outputs only positive values of `production`(#336)", {
+  ald <- fake_ald(
+    year = c(2025, 2026)
+  )
+
+  scenario <- fake_scenario(
+    technology = rep(c("ice", "electric"), 2),
+    smsp = rep(c(0, -1), each = 2),
+    year = rep(c(2025, 2026), each = 2)
+  )
+
+  out <- target_market_share(
+    fake_matched(),
+    ald,
+    scenario,
+    region_isos_stable
+  )
+
+  expect_false(any(out$production < 0))
 })

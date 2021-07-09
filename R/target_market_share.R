@@ -144,7 +144,7 @@ target_market_share <- function(data,
     scenario,
     region_isos,
     add_green_technologies = TRUE
-    )
+  )
 
   crucial_groups <- c(
     "id_loan",
@@ -189,7 +189,8 @@ target_market_share <- function(data,
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
     mutate(initial_technology_production = first(.data$technology_production)) %>%
-    select(-.data$technology_production)
+    select(-.data$technology_production) %>%
+    ungroup()
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
@@ -200,6 +201,13 @@ target_market_share <- function(data,
         .data$tmsr,
       smsp_target_production = .data$initial_technology_production +
         (.data$initial_sector_production * .data$smsp)
+    ) %>%
+    mutate(
+      smsp_target_production = ifelse(
+        .data$smsp_target_production < 0,
+        0,
+        .data$smsp_target_production
+      )
     ) %>%
     select(
       -c(

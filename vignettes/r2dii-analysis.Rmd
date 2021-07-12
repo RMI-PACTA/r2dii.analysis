@@ -104,7 +104,7 @@ sda_targets
 
 ## Visualization
 
-There are a large variety of possible visualizations stemming from the outputs of `target_market_share()` and `target_sda()`. Below, we highlight a couple of common plots that can easily be achieved using the `r2dii.plot` package. `
+There are a large variety of possible visualizations stemming from the outputs of `target_market_share()` and `target_sda()`. Below, we highlight a couple of common plots that can easily be created using the `r2dii.plot` package. `
 
 ### Market Share: Sector-level technology mix
 
@@ -126,7 +126,7 @@ plot_techmix(data)
 
 ### Market Share: Technology-level volume trajectory
 
-You can also plot the technology-specific volume trend. All starting values are internally normalized to 1, to emphasize that we are really comparing the rates of buildout/ retirement. 
+You can also plot the technology-specific volume trend. All starting values are normalized to 1, to emphasize that we are comparing the rates of buildout and/or retirement. 
 
 ```{r trajetory-portfolio}
 data <- filter(

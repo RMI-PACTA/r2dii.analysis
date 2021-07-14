@@ -307,7 +307,7 @@
 <span class="op">)</span>
 
 <span class="co"># Plot the technology mix</span>
-<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/plot_techmix.html">plot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_techmix.html">qplot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; Removing data before 2020 -- the start year of 'projected'.</span>
 <span class="co">#&gt; The `technology_share` values are plotted for extreme years.</span>
 <span class="co">#&gt; Do you want to plot different years? E.g. filter data with:`subset(data, year %in% c(2020, 2030))`.</span></code></pre></div>
@@ -326,7 +326,7 @@
   <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/plot_trajectory.html">plot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_trajectory.html">qplot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; Removing data before 2020 -- the start year of 'projected'.</span>
 <span class="co">#&gt; Normalizing `production` values to 2020 -- the start year.</span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/trajetory-portfolio-1.png" width="100%"></p>
@@ -337,7 +337,7 @@
 <p>From the SDA output, we can compare the projected average emission intensity attributed to the portfolio, with the actual emission intensity scenario, and the scenario compliant SDA pathway that the portfolio must follow to achieve the scenario ambition by 2050.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sda_targets</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/plot_emission_intensity.html">plot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_emission_intensity.html">qplot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>

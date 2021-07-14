@@ -121,7 +121,7 @@ data <- filter(
 )
 
 # Plot the technology mix
-plot_techmix(data)
+qplot_techmix(data)
 ```
 
 ### Market Share: Technology-level volume trajectory
@@ -137,7 +137,7 @@ data <- filter(
   scenario_source == "demo_2020"
 )
 
-plot_trajectory(data)
+qplot_trajectory(data)
 ```
 
 ### SDA Target
@@ -146,5 +146,5 @@ From the SDA output, we can compare the projected average emission intensity att
 
 ```{r sda plot}
 data <- filter(sda_targets, sector == "cement")
-plot_emission_intensity(data)
+qplot_emission_intensity(data)
 ```

@@ -263,6 +263,7 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy) {
     ungroup()
 
   data %>%
+    filter(.data$year >= min(corporate_economy$year)) %>%
     inner_join(corporate_economy_baseline, by = "sector") %>%
     group_by(.data$scenario, .data$sector) %>%
     arrange(.data$year) %>%

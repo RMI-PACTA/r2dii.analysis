@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_sda()` now filters `scenario` start year to be consistent with `ald` 
+  start year (#346). 
+
 # r2dii.analysis 0.1.10
 
 * `target_market_share()` now sets all negative `smsp` targets to zero (#336). 

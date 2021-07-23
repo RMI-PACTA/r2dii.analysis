@@ -74,7 +74,6 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     add_technology_share()
-
   if (with_targets) {
     data %>%
       add_technology_share_target() %>%
@@ -248,7 +247,7 @@ add_percent_change <- function(data) {
     mutate(
       brown_percent_change =
         (.data$production - first(.data$production)) /
-          first(.data$production) * 100,
+        first(.data$production) * 100,
       green_percent_change = (.data$production - first(.data$production)) /
         first(.data$sector_production) * 100
     ) %>%
@@ -269,7 +268,9 @@ add_technology_share <- function(data) {
       .data$name_ald,
       .data$region
     ) %>%
-    mutate(technology_share = .data$production / sum(.data$production)) %>%
+    mutate(prod_total_company=sum(.data$production),
+           tech_share=.data$production / sum(.data$production),
+           technology_share = ifelse(prod_total_company!=0,tech_share,0)) %>%
     group_by(!!!dplyr::groups(data))
 }
 
@@ -282,7 +283,9 @@ add_technology_share_target <- function(data) {
       .data$name_ald,
       .data$region
     ) %>%
-    mutate(technology_share_target = .data$production_target / sum(.data$production_target)) %>%
+    mutate(prod_total_company_target=sum(.data$production_target),
+           tech_share_target = .data$production_target / sum(.data$production_target),
+           technology_share_target = ifelse(prod_total_company_target!=0, tech_share_target, 0)) %>%
     group_by(!!!dplyr::groups(data))
 }
 

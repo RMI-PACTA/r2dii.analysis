@@ -12,7 +12,12 @@ knitr::opts_chunk$set(
 
 ## Load your r2dii libraries
 
-The first step in your analysis will be to load in the recommended r2dii packages into your current R session. [r2dii.data](https://2degreesinvesting.github.io/r2dii.data) includes fake data to help demonstrate the tool and [r2dii.match](https://2degreesinvesting.github.io/r2dii.match) provides functions to help you easily match your loanbook to asset-level data.
+The first step in your analysis will be to load in the recommended r2dii 
+packages into your current R session.
+[r2dii.data](https://2degreesinvesting.github.io/r2dii.data) includes fake data 
+to help demonstrate the tool and 
+[r2dii.match](https://2degreesinvesting.github.io/r2dii.match) provides 
+functions to help you easily match your loanbook to asset-level data.
 
 ``` {r use-r2dii}
 library(r2dii.data)
@@ -20,13 +25,15 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
-To plot your results, you may also load the package [r2dii.plot](https://2degreesinvesting.github.io/r2dii.plot).
+To plot your results, you may also load the package 
+[r2dii.plot](https://2degreesinvesting.github.io/r2dii.plot).
 
 ``` {r use-r2dii.plot}
 library(r2dii.plot)
 ```
 
-We also recommend packages in the [tidyverse](https://www.tidyverse.org/); they are optional but useful.
+We also recommend packages in the [tidyverse](https://www.tidyverse.org/); they 
+are optional but useful.
 
 ``` {r use-tidyverse}
 library(tidyverse)
@@ -34,7 +41,8 @@ library(tidyverse)
 
 ## Match your loanbook to climate-related asset-level data
 
-See [r2dii.match](https://2degreesinvesting.github.io/r2dii.match) for a more complete description of this process. 
+See [r2dii.match](https://2degreesinvesting.github.io/r2dii.match) for a more 
+complete description of this process. 
 
 ```{r matched}
 # Use these datasets to practice but eventually you should use your own data.
@@ -49,11 +57,16 @@ matched
 
 ## Calculate targets
 
-You can calculate scenario targets using two different approaches: Market Share Approach, or Sectoral Decarbonization Approach.
+You can calculate scenario targets using two different approaches: Market Share 
+Approach, or Sectoral Decarbonization Approach.
 
 ### Market Share Approach
 
-The [Market Share Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-market-share.html) is used to calculate scenario targets for the `production` of a technology in a sector. For example, we can use this approach to set targets for the production of electric vehicles in the automotive sector. This approach is recommended for sectors where a granular technology scenario roadmap exists.
+The [Market Share Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-market-share.html) is used to calculate scenario targets for the 
+`production` of a technology in a sector. For example, we can use this approach 
+to set targets for the production of electric vehicles in the automotive sector. 
+This approach is recommended for sectors where a granular technology scenario 
+roadmap exists.
 
 Targets can be set at the portfolio level:
 
@@ -89,7 +102,11 @@ market_share_targets_company
 
 ### Sectoral Decarbonization Approach
 
-The [Sectoral Decarbonization Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-sda.html) is used to calculate scenario targets for the `emission_factor` of a sector. For example, you can use this approach to set targets for the average emission factor of the cement sector. This approach is recommended for sectors lacking technology roadmaps.
+The [Sectoral Decarbonization Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-sda.html) 
+is used to calculate scenario targets for the `emission_factor` of a sector. For
+example, you can use this approach to set targets for the average emission 
+factor of the cement sector. This approach is recommended for sectors lacking 
+technology roadmaps.
 
 ```{r sda-targets}
 # Use this dataset to practice but eventually you should use your own data.
@@ -104,11 +121,15 @@ sda_targets
 
 ## Visualization
 
-There are a large variety of possible visualizations stemming from the outputs of `target_market_share()` and `target_sda()`. Below, we highlight a couple of common plots that can easily be created using the `r2dii.plot` package. `
+There are a large variety of possible visualizations stemming from the outputs 
+of `target_market_share()` and `target_sda()`. Below, we highlight a couple of 
+common plots that can easily be created using the `r2dii.plot` package.
 
 ### Market Share: Sector-level technology mix
 
-From the market share output, you can plot the portfolio's exposure to various climate sensitive technologies (`projected`), and compare with the corporate economy, or against various scenario targets.
+From the market share output, you can plot the portfolio's exposure to various 
+climate sensitive technologies (`projected`), and compare with the corporate 
+economy, or against various scenario targets.
 
 ```{r technoloy-mix-portfolio}
 # Pick the targets you want to plot.
@@ -126,7 +147,9 @@ qplot_techmix(data)
 
 ### Market Share: Technology-level volume trajectory
 
-You can also plot the technology-specific volume trend. All starting values are normalized to 1, to emphasize that we are comparing the rates of buildout and/or retirement. 
+You can also plot the technology-specific volume trend. All starting values are
+normalized to 1, to emphasize that we are comparing the rates of buildout and/or
+retirement. 
 
 ```{r trajetory-portfolio}
 data <- filter(
@@ -142,7 +165,10 @@ qplot_trajectory(data)
 
 ### SDA Target
 
-From the SDA output, we can compare the projected average emission intensity attributed to the portfolio, with the actual emission intensity scenario, and the scenario compliant SDA pathway that the portfolio must follow to achieve the scenario ambition by 2050.
+From the SDA output, we can compare the projected average emission intensity 
+attributed to the portfolio, with the actual emission intensity scenario, and 
+the scenario compliant SDA pathway that the portfolio must follow to achieve 
+the scenario ambition by 2050.
 
 ```{r sda plot}
 data <- filter(sda_targets, sector == "cement")

@@ -1,7 +1,7 @@
 # r2dii.analysis (development version)
 
 * `target_sda()` now filters `scenario` start year to be consistent with `ald` 
-  start year (#346). 
+  start year (#346 @waltjl). 
 
 # r2dii.analysis 0.1.10
 

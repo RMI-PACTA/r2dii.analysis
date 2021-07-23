@@ -261,7 +261,7 @@ column <code>name_ald</code>.</p>
     scenario <span class='op'>=</span> <span class='va'>scenario_demo_2020</span>,
     region_isos <span class='op'>=</span> <span class='va'>region_isos_demo</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 336 x 8</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 336 × 8</span>
 #&gt;    sector technology  year region scenario_source metric     production
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> power  hydrocap    <span style='text-decoration: underline;'>2</span>020 global demo_2020       projected      <span style='text-decoration: underline;'>70</span>721.
@@ -286,7 +286,7 @@ column <code>name_ald</code>.</p>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
 #&gt; <span class='warning'>This will result in company-level results, weighted by the portfolio</span>
 #&gt; <span class='warning'>loan size, which is rarely useful. Did you mean to set one of these</span>
-#&gt; <span class='warning'>arguments to `FALSE`?</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 588 x 9</span>
+#&gt; <span class='warning'>arguments to `FALSE`?</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 588 × 9</span>
 #&gt;    sector technology  year region scenario_source name_ald     metric production
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> power  hydrocap    <span style='text-decoration: underline;'>2</span>020 global demo_2020       aba hydropo… proje…     <span style='text-decoration: underline;'>70</span>721.
@@ -308,7 +308,7 @@ column <code>name_ald</code>.</p>
     <span class='co'># Calculate unweighted targets</span>
     weight_production <span class='op'>=</span> <span class='cn'>FALSE</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 336 x 8</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 336 × 8</span>
 #&gt;    sector technology  year region scenario_source metric     production
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> power  hydrocap    <span style='text-decoration: underline;'>2</span>020 global demo_2020       projected     <span style='text-decoration: underline;'>121</span>032.

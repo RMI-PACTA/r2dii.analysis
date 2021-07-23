@@ -255,7 +255,7 @@ calculated portfolio target emissions factors (see column
 <span class='co'># You may need to clean your data</span>
 <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>anyNA</a></span><span class='op'>(</span><span class='va'>ald</span><span class='op'>$</span><span class='va'>emission_factor</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>target_sda</span><span class='op'>(</span><span class='va'>matched</span>, <span class='va'>ald</span>, co2_intensity_scenario <span class='op'>=</span> <span class='va'>co2_scenario</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 x 4</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removing ald rows where `emission_factor` is NA</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 × 4</span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>013 corporate_economy                      0.643
@@ -278,7 +278,7 @@ calculated portfolio target emissions factors (see column
 <span class='co'># scenario pathway emissions factors, and the portfolio's target emissions</span>
 <span class='co'># factors.</span>
 <span class='va'>out</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 x 4</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 × 4</span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>013 corporate_economy                      0.643
@@ -295,7 +295,7 @@ calculated portfolio target emissions factors (see column
 <span class='co'># Split-view by metric</span>
 <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>out</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>emission_factor_metric</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $adjusted_scenario_demo
-#&gt; <span style='color: #949494;'># A tibble: 31 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 31 × 4</span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>020 adjusted_scenario_demo                 0.643
@@ -311,7 +311,7 @@ calculated portfolio target emissions factors (see column
 #&gt; <span style='color: #949494;'># … with 21 more rows</span>
 #&gt; 
 #&gt; $corporate_economy
-#&gt; <span style='color: #949494;'># A tibble: 13 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 13 × 4</span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>013 corporate_economy                      0.643
@@ -329,7 +329,7 @@ calculated portfolio target emissions factors (see column
 #&gt; <span style='color: #BCBCBC;'>13</span> cement  <span style='text-decoration: underline;'>2</span>025 corporate_economy                      0.781
 #&gt; 
 #&gt; $target_demo
-#&gt; <span style='color: #949494;'># A tibble: 31 x 4</span>
+#&gt; <span style='color: #949494;'># A tibble: 31 × 4</span>
 #&gt;    sector  year emission_factor_metric emission_factor_value
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>020 target_demo                               <span style='color: #BB0000;'>NA</span>
@@ -351,7 +351,7 @@ calculated portfolio target emissions factors (see column
   by_company <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 <span class='va'>out</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 x 5</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 × 5</span>
 #&gt;    sector  year emission_factor_metric emission_factor_value name_ald
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   
 #&gt; <span style='color: #BCBCBC;'> 1</span> cement  <span style='text-decoration: underline;'>2</span>013 corporate_economy                      0.643 market  

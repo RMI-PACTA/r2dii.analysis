@@ -255,7 +255,7 @@ calculate_market_average <- function(data) {
 compute_ald_adjusted_scenario <- function(data, corporate_economy) {
   corporate_economy_baseline <- corporate_economy %>%
     group_by(.data$sector) %>%
-    filter(.data$year == min(.data$year)) %>%
+    filter(.data$year == min(.data$year, na.rm = TRUE)) %>%
     select(
       .data$sector,
       baseline_emission_factor = .data$emission_factor_corporate_economy

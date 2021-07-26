@@ -247,7 +247,7 @@ add_percent_change <- function(data) {
     mutate(
       brown_percent_change =
         (.data$production - first(.data$production)) /
-        first(.data$production) * 100,
+          first(.data$production) * 100,
       green_percent_change = (.data$production - first(.data$production)) /
         first(.data$sector_production) * 100
     ) %>%
@@ -274,7 +274,7 @@ add_technology_share <- function(data) {
         .x == 0,
         0,
         .data$production / .x
-        ),
+      ),
       .x = NULL
     ) %>%
     group_by(!!!dplyr::groups(data))

@@ -408,7 +408,7 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
         .sum_X == 0,
         0,
         .data$.x / .sum_X
-        ),
+      ),
       .x = NULL,
       .sum_X = NULL,
       metric = "corporate_economy"

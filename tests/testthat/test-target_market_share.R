@@ -1146,7 +1146,7 @@ test_that("`target_market_share` outputs only positive values of `production`(#3
 
 test_that("outputs 0 `technology_share` if no inital sectoral production
           (ADO876)", {
-  ald <- fake_ald(year = c(2020, 2021), production = c(0,1))
+  ald <- fake_ald(year = c(2020, 2021), production = c(0, 1))
 
   scenario <- fake_scenario(year = c(2020, 2021))
 

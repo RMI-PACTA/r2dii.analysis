@@ -1155,5 +1155,3 @@ test_that("NA in technology share (ADO876)", {
 
   expect_false(any(is.na(out$technology_share)))
 })
-
-

@@ -403,8 +403,14 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
     ) %>%
     mutate(
       .x = .data$production,
-      technology_share = .data$.x / sum(.data$.x),
+      .sum_X = sum(.data$production),
+      technology_share = ifelse(
+        .sum_X == 0,
+        0,
+        .data$.x / .sum_X
+        ),
       .x = NULL,
+      .sum_X = NULL,
       metric = "corporate_economy"
     ) %>%
     rename(

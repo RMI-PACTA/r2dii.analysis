@@ -268,9 +268,15 @@ add_technology_share <- function(data) {
       .data$name_ald,
       .data$region
     ) %>%
-    mutate(prod_total_company=sum(.data$production),
-           tech_share=.data$production / sum(.data$production),
-           technology_share = ifelse(prod_total_company!=0,tech_share,0)) %>%
+    mutate(
+      .x = sum(.data$production),
+      technology_share = ifelse(
+        .x == 0,
+        0,
+        .data$production / .x
+        ),
+      .x = NULL
+    ) %>%
     group_by(!!!dplyr::groups(data))
 }
 
@@ -283,9 +289,15 @@ add_technology_share_target <- function(data) {
       .data$name_ald,
       .data$region
     ) %>%
-    mutate(prod_total_company_target=sum(.data$production_target),
-           tech_share_target = .data$production_target / sum(.data$production_target),
-           technology_share_target = ifelse(prod_total_company_target!=0, tech_share_target, 0)) %>%
+    mutate(
+      .x = sum(.data$production_target),
+      technology_share_target = ifelse(
+        .x == 0,
+        0,
+        .data$production_target / .x
+      ),
+      .x = NULL
+    ) %>%
     group_by(!!!dplyr::groups(data))
 }
 

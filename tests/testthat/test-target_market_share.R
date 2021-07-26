@@ -1145,22 +1145,15 @@ test_that("`target_market_share` outputs only positive values of `production`(#3
 })
 
 test_that("NA in technology share (ADO876)", {
-  ald <- tibble::tribble(
-    ~company_id, ~name_company, ~is_ultimate_owner,  ~sector,           ~technology, ~year, ~plant_location, ~production,   ~production_unit,  ~emission_factor,               ~emission_factor_unit, ~ald_timestamp,
-    38998,  "parc eolien de bel air",              FALSE, "power", "renewablescap",  2020,            "FR",      0, "MW",  0.74613363337134, "tonnes of CO2 per MWh",      "2021 Q1",
-    38998,  "parc eolien de bel air",              FALSE, "power", "renewablescap",  2021,            "FR",      1, "MW",  0.74613363337134, "tonnes of CO2 per MWh",      "2021 Q1"
-  )
-  matched <- tibble::tribble(
-    ~id_loan, ~loan_size_outstanding, ~loan_size_outstanding_currency, ~loan_size_credit_limit, ~loan_size_credit_limit_currency, ~id_2dii,            ~level, ~score,      ~sector,      ~name_ald,  ~sector_ald,
-    "L162",                      1,                           "EUR",                       2,                            "EUR",    "UP1", "ultimate_parent",      1, "power", "parc eolien de bel air", "power"
-  )
-  out <- target_market_share(
-    matched,
-    ald,
-    scenario_demo_2020,
-    region_isos_demo)
+  ald <- fake_ald(year = c(2020, 2021), production = c(0,1))
 
-  expect_equal(any(out$technology_share),"NA")
+  scenario <- fake_scenario(year = c(2020, 2021))
+
+  expect_error_free({
+    out <- target_market_share(fake_matched(), ald, scenario, region_isos_stable)
+  })
+
+  expect_false(any(is.na(out$technology_share)))
 })
 
 

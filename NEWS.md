@@ -1,5 +1,9 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now removes companies from the analysis, if their 
+  initial production is 0 (by `sector` and `plant_location`) (#306 
+  @Antoine-Lalechere, @EvgenyPetrovsky).
+
 * `target_sda()` now filters `scenario` start year to be consistent with `ald` 
   start year (#346 @waltjl). 
 

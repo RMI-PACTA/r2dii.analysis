@@ -138,6 +138,8 @@ target_market_share <- function(data,
 
   data <- aggregate_by_loan_id(data)
 
+  ald <- remove_companies_with_no_market_share(ald, scenario)
+
   data <- join_ald_scenario(
     data,
     ald,
@@ -460,6 +462,34 @@ aggregate_by_loan_id <- function(data) {
       loan_size_credit_limit = sum(.data$loan_size_credit_limit)
     ) %>%
     ungroup()
+}
+
+remove_companies_with_no_market_share <- function(ald, scenario){
+  scenario_start_year <- scenario %>%
+    group_by(.data$sector) %>%
+    summarize(year = min(.data$year))
+
+  companies_to_remove <- ald %>%
+    inner_join(scenario_start_year, by = c("sector", "year")) %>%
+    group_by(
+      .data$name_company,
+      .data$sector,
+      .data$plant_location
+    ) %>%
+    summarize(initial_production = sum(.data$production)) %>%
+    filter(.data$initial_production == 0)
+
+  if (nrow(companies_to_remove) > 0L) {
+    warn(
+      message = "Removing companies with zero initial sectoral production",
+      class = "has_no_initial_sectoral_production"
+    )
+
+    filter(ald, !(.data$name_company %in% companies_to_remove$name_company))
+
+  } else {
+    ald
+  }
 }
 
 check_valid_columns <- function(data, valid_columns) {

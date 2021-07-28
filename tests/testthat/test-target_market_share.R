@@ -1144,7 +1144,8 @@ test_that("`target_market_share` outputs only positive values of `production`(#3
   expect_false(any(out$production < 0))
 })
 
-test_that("`target_market_share` outputs as expected for companies with 0 initial sectoral production (#306)", {
+test_that("`target_market_share` outputs as expected for companies with 0
+          initial sectoral production (#306)", {
   ald <- fake_ald(
     production = c(0, 1),
     year = c(2020, 2021)

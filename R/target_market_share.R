@@ -402,8 +402,8 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
       .data$sector, .data$year, .data$region, .data$source
     ) %>%
     mutate(
-      .x = .data$production,
-      technology_share = .data$.x / sum(.data$.x),
+      .x = sum(.data$production),
+      technology_share = ifelse(.data$.x == 0, 0, .data$production / .data$.x),
       .x = NULL,
       metric = "corporate_economy"
     ) %>%
@@ -437,11 +437,15 @@ reweight_technology_share <- function(data, ...) {
     group_by(...) %>%
     mutate(
       .x = .data$weighted_technology_share,
+      .sum_x = sum(.data$.x),
       .y = .data$weighted_technology_share_target,
-      weighted_technology_share = .data$.x / sum(.data$.x),
-      weighted_technology_share_target = .data$.y / sum(.data$.y),
+      .sum_y = sum(.data$.y),
+      weighted_technology_share = ifelse(.data$.sum_x == 0, 0, .data$.x / .data$.sum_x),
+      weighted_technology_share_target = ifelse(.data$.sum_y == 0, 0, .data$.y / .data$.sum_y),
       .x = NULL,
-      .y = NULL
+      .sum_x = NULL,
+      .y = NULL,
+      .sum_y = NULL
     ) %>%
     ungroup()
 }

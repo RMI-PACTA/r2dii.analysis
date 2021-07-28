@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now outputs 0 `technology_share`, for companies with 
+  0 sectoral production (#306 @Antoine-Lalechere). 
+
 * `target_sda()` now filters `scenario` start year to be consistent with `ald` 
   start year (#346 @waltjl). 
 

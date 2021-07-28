@@ -1143,3 +1143,35 @@ test_that("`target_market_share` outputs only positive values of `production`(#3
 
   expect_false(any(out$production < 0))
 })
+
+test_that("`target_market_share` outputs as expected for companies with 0
+          initial sectoral production (#306)", {
+  ald <- fake_ald(
+    production = c(0, 1),
+    year = c(2020, 2021)
+  )
+
+  scenario <- fake_scenario(
+    tmsr = c(1, 0.5),
+    year = c(2020, 2021)
+  )
+
+  out <- target_market_share(
+    fake_matched(),
+    ald,
+    scenario,
+    region_isos_stable
+  ) %>%
+    arrange(.$year) %>%
+    split(.$metric)
+
+
+  expect_equal(out$corporate_economy$production, c(0, 1))
+  expect_equal(out$projected$production, c(0, 1))
+  expect_equal(out$target_sds$production, c(0, 0))
+
+
+  expect_equal(out$corporate_economy$technology_share, c(0, 1))
+  expect_equal(out$projected$technology_share, c(0, 1))
+  expect_equal(out$target_sds$technology_share, c(0, 0))
+})

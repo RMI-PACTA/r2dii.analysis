@@ -440,8 +440,16 @@ reweight_technology_share <- function(data, ...) {
       .sum_x = sum(.data$.x),
       .y = .data$weighted_technology_share_target,
       .sum_y = sum(.data$.y),
-      weighted_technology_share = ifelse(.data$.sum_x == 0, 0, .data$.x / .data$.sum_x),
-      weighted_technology_share_target = ifelse(.data$.sum_y == 0, 0, .data$.y / .data$.sum_y),
+      weighted_technology_share = ifelse(
+        .data$.sum_x == 0,
+        0,
+        .data$.x / .data$.sum_x
+        ),
+      weighted_technology_share_target = ifelse(
+        .data$.sum_y == 0,
+        0,
+        .data$.y / .data$.sum_y
+        ),
       .x = NULL,
       .sum_x = NULL,
       .y = NULL,

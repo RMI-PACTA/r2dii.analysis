@@ -436,24 +436,20 @@ reweight_technology_share <- function(data, ...) {
   data %>%
     group_by(...) %>%
     mutate(
-      .x = .data$weighted_technology_share,
-      .sum_x = sum(.data$.x),
-      .y = .data$weighted_technology_share_target,
-      .sum_y = sum(.data$.y),
+      .x = sum(.data$weighted_technology_share),
+      .y = sum(.data$weighted_technology_share_target),
       weighted_technology_share = ifelse(
-        .data$.sum_x == 0,
+        .data$.x == 0,
         0,
-        .data$.x / .data$.sum_x
+        .data$weighted_technology_share / .data$.x
         ),
       weighted_technology_share_target = ifelse(
-        .data$.sum_y == 0,
+        .data$.y == 0,
         0,
-        .data$.y / .data$.sum_y
+        .data$weighted_technology_share_target / .data$.y
         ),
       .x = NULL,
-      .sum_x = NULL,
       .y = NULL,
-      .sum_y = NULL
     ) %>%
     ungroup()
 }

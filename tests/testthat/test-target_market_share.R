@@ -293,7 +293,9 @@ test_that("outputs identical values at start year (#47, #87)", {
   ) %>%
     filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
-    summarize(distinct_intial_values = n_distinct(production)) %>%
+    summarize(
+      distinct_intial_values = n_distinct(production), .groups = "drop"
+    ) %>%
     mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))

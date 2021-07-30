@@ -1,4 +1,4 @@
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 library(r2dii.match)
 

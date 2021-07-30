@@ -49,8 +49,7 @@ test_that("with fake data outputs known value", {
     fake_scenario(),
     region_isos_stable
   )
-
-  expect_known_value(out, "ref-target_market_share", update = FALSE)
+  expect_snapshot("out")
 })
 
 test_that("with data lacking crucial columns errors with informative message", {

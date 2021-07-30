@@ -19,7 +19,7 @@ test_that("with fake data outputs known value", {
     )
   )
 
-  expect_known_value(out, "ref-target_sda", update = FALSE)
+  expect_snapshot(out)
 
   out_company <- target_sda(
     fake_matched(
@@ -38,7 +38,7 @@ test_that("with fake data outputs known value", {
     by_company = TRUE
   )
 
-  expect_known_value(out_company, "ref-target_sda_company", update = TRUE)
+  expect_snapshot(out_company)
 })
 
 test_that("outputs is ungrouped", {

@@ -9,8 +9,7 @@ test_that("with fake data outputs known value", {
     scenario = fake_scenario(),
     region_isos = region_isos_stable
   )
-
-  expect_known_value(out, "ref-join_ald_scenario", update = FALSE)
+  expect_snapshot(out)
 })
 
 test_that("returns visibly", {

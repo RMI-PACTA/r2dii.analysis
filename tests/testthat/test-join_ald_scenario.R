@@ -126,7 +126,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
 })
 
 test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
-  bad <- function(data, x) rename(data, bad = x)
+  bad <- function(data, x) rename(data, bad = all_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
                                          ald = fake_ald(),

@@ -57,7 +57,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name) {
     bad_scenario <- rename(
       fake_scenario(),
-      bad = name
+      bad = all_of(name)
     )
 
     expect_error(

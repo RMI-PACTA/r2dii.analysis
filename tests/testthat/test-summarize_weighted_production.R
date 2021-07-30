@@ -31,7 +31,7 @@ test_that("with bad use_credit_limit errors with informative message", {
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name, use_credit_limit = FALSE) {
-    data <- rename(fake_master(), bad = name)
+    data <- rename(fake_master(), bad = all_of(name))
 
     expect_error(
       class = "missing_names",
@@ -250,7 +250,7 @@ test_that("with bad use_credit_limit errors with informative message", {
 
 test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names <- function(name, use_credit_limit = FALSE) {
-    data <- rename(fake_master(), bad = name)
+    data <- rename(fake_master(), bad = all_of(name))
 
     expect_error(
       class = "missing_names",

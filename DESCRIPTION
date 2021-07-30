@@ -42,7 +42,6 @@ Imports:
     rlang,
     tidyr,
     tidyselect,
-    withr,
     zoo
 Suggests: 
     covr,

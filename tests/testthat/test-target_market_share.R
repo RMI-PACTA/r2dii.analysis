@@ -49,7 +49,7 @@ test_that("with fake data outputs known value", {
     fake_scenario(),
     region_isos_stable
   )
-  expect_snapshot("out")
+  expect_snapshot(out)
 })
 
 test_that("with data lacking crucial columns errors with informative message", {

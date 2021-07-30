@@ -15,7 +15,7 @@ test_that("outputs a tibble", {
     fake_scenario(),
     region_isos_stable
   )
-  expect_is(out, "tbl_df")
+  expect_s3_class(out, "tbl_df")
 })
 
 test_that("outputs is ungrouped", {

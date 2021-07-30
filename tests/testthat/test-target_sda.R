@@ -1,5 +1,4 @@
 library(r2dii.data)
-library(r2dii.match)
 library(dplyr, warn.conflicts = FALSE)
 
 test_that("with fake data outputs known value", {

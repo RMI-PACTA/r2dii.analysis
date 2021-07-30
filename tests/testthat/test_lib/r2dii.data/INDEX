@@ -1,0 +1,27 @@
+ald_demo                An asset level dataset for demonstration
+co2_intensity_scenario_demo
+                        A prepared co2 intensity climate scenario
+                        dataset for demonstration
+data_dictionary         Column definitions of all datasets
+gics_classification     Dataset to bridge (translate) common
+                        sector-classification codes
+green_or_brown          Determine if a technology is green or brown
+isic_classification     Dataset to bridge (translate) common
+                        sector-classification codes
+iso_codes               Countries and codes
+loanbook_demo           A loanbook dataset for demonstration
+nace_classification     Dataset to bridge (translate) common
+                        sector-classification codes
+naics_classification    Dataset to bridge (translate) common
+                        sector-classification codes
+overwrite_demo          A demonstration dataset used to overwrite
+                        specific entity names or sectors
+region_isos             A dataset outlining various region definitions
+region_isos_demo        A dataset outlining various region definitions
+scenario_demo_2020      A prepared climate scenario dataset for
+                        demonstration
+sector_classifications
+                        A view of available sector classification
+                        datasets
+sic_classification      Dataset to bridge (translate) common
+                        sector-classification codes

@@ -1,5 +1,4 @@
 library(r2dii.data)
-library(r2dii.match)
 
 # Production --------------------------------------------------------------
 
@@ -186,17 +185,7 @@ test_that("preserves groups passed to ...", {
 })
 
 test_that("for production, with demo data returns known value", {
-  allows_reserved_columns <- exists(
-    "allow_reserved_columns",
-    where = asNamespace("r2dii.match"),
-    mode = "function"
-  )
-  skip_if_not(allows_reserved_columns)
-
-  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
-  on.exit(options(restore), add = TRUE)
-
-  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
+  master <- matched_stable %>%
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,
@@ -385,17 +374,7 @@ test_that("with zero initial production errors with informative message", {
 })
 
 test_that("for percent-change, with demo data returns known value", {
-  allows_reserved_columns <- exists(
-    "allow_reserved_columns",
-    where = asNamespace("r2dii.match"),
-    mode = "function"
-  )
-  skip_if_not(allows_reserved_columns)
-
-  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
-  on.exit(options(restore), add = TRUE)
-
-  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
+  master <- matched_stable %>%
     join_ald_scenario(
       ald = ald_demo,
       scenario = scenario_demo_2020,

@@ -4,37 +4,53 @@
 # of the columns `sector` and `borderline` may change if the classification
 # system is updated (see #227).
 
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
+library(glue, warn.conflicts = FALSE)
 library(fs)
 library(withr)
+library(r2dii.match)
 
-# Access older version of r2dii.data without changing current version
-temp_lib <- local_tempdir()
-fs::dir_create(temp_lib)
+use_r2dii_data <- function(version) {
+  library("r2dii.data", lib.loc = test_path("test_lib"))
+  on.exit(unloadNamespace("r2dii.data"), add = TRUE)
+  stopifnot(packageVersion("r2dii.data") == version)
 
-withr::with_libpaths(temp_lib, {
-  remotes::install_version("r2dii.data", version = "0.1.4")
-  region_isos_demo <- r2dii.data::region_isos_demo
-  nace_classification <- r2dii.data::nace_classification
-  loanbook_demo <- r2dii.data::loanbook_demo
-})
+  region <- r2dii.data::region_isos_demo
 
-region_isos_stable <- region_isos_demo
+  loanbook_demo <- r2dii.data::loanbook_demo %>%
+    mutate(across(.data$sector_classification_direct_loantaker, as.character))
 
-nace_classification <- nace_classification %>%
-  select(.data$code, .data$sector, .data$borderline)
+  nace_classification <- r2dii.data::nace_classification %>%
+    select(.data$code, .data$sector, .data$borderline)
 
-loanbook_demo <- loanbook_demo %>%
-  mutate(across(.data$sector_classification_direct_loantaker, as.character))
+  loanbook <- nace_classification %>%
+    rename(sector_classification_direct_loantaker = .data$code) %>%
+    mutate(across(sector_classification_direct_loantaker, as.character)) %>%
+    right_join(loanbook_demo)
 
-loanbook_stable <- left_join(
-  loanbook_demo, nace_classification,
-  by = c(sector_classification_direct_loantaker = "code")
-)
+  local_options(r2dii.match.allow_reserved_columns = TRUE)
+  matched <- match_name(loanbook, r2dii.data::ald_demo) %>%
+    prioritize()
+
+  list(
+    region = region,
+    loanbook = loanbook,
+    matched = matched
+  )
+}
+
+stable <- use_r2dii_data(version = "0.1.4")
+region_isos_stable <- stable$region
+loanbook_stable <- stable$loanbook
+matched_stable <- stable$matched
 
 usethis::use_data(
   region_isos_stable,
   loanbook_stable,
+  matched_stable,
   internal = TRUE,
   overwrite = TRUE
 )
+
+installed_version_remains_the_same <- packageVersion("r2dii.data") > "0.1.4"
+stopifnot(installed_version_remains_the_same)

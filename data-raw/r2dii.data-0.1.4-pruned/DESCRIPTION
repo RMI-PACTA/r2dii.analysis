@@ -1,7 +1,7 @@
 Package: r2dii.data
 Title: A Pruned Verison With Only Minimal Data
 Version: 0.1.4
-Authors@R: c(person(given = "Mauro", family = "Lepore", role = "ctr")
+Authors@R: person(given = "Mauro", family = "Lepore", role = "ctr")
 Description: A pruned version with only minimal data.
 License: CC0
 Encoding: UTF-8

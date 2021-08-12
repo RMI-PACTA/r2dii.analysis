@@ -32,44 +32,42 @@
 #'   requireNamespace("r2dii.match", quietly = TRUE)
 #'
 #' if (installed) {
+#'   library(r2dii.data)
+#'   library(r2dii.match)
 #'
-#' library(r2dii.data)
-#' library(r2dii.match)
+#'   loanbook <- head(loanbook_demo, 100)
+#'   ald <- head(ald_demo, 100)
 #'
-#' loanbook <- head(loanbook_demo, 100)
-#' ald <- head(ald_demo, 100)
+#'   matched <- loanbook %>%
+#'     match_name(ald) %>%
+#'     prioritize()
 #'
-#' matched <- loanbook %>%
-#'   match_name(ald) %>%
-#'   prioritize()
+#'   # Calculate targets at portfolio level
+#'   matched %>%
+#'     target_market_share(
+#'       ald = ald,
+#'       scenario = scenario_demo_2020,
+#'       region_isos = region_isos_demo
+#'     )
 #'
-#' # Calculate targets at portfolio level
-#' matched %>%
-#'   target_market_share(
-#'     ald = ald,
-#'     scenario = scenario_demo_2020,
-#'     region_isos = region_isos_demo
-#'   )
+#'   # Calculate targets at company level
+#'   matched %>%
+#'     target_market_share(
+#'       ald = ald,
+#'       scenario = scenario_demo_2020,
+#'       region_isos = region_isos_demo,
+#'       by_company = TRUE
+#'     )
 #'
-#' # Calculate targets at company level
-#' matched %>%
-#'   target_market_share(
-#'     ald = ald,
-#'     scenario = scenario_demo_2020,
-#'     region_isos = region_isos_demo,
-#'     by_company = TRUE
-#'   )
-#'
-#' matched %>%
-#'   target_market_share(
-#'     ald = ald,
-#'     scenario = scenario_demo_2020,
-#'     region_isos = region_isos_demo,
-#'     # Calculate unweighted targets
-#'     weight_production = FALSE
-#'   )
+#'   matched %>%
+#'     target_market_share(
+#'       ald = ald,
+#'       scenario = scenario_demo_2020,
+#'       region_isos = region_isos_demo,
+#'       # Calculate unweighted targets
+#'       weight_production = FALSE
+#'     )
 #' }
-
 target_market_share <- function(data,
                                 ald,
                                 scenario,
@@ -444,12 +442,12 @@ reweight_technology_share <- function(data, ...) {
         .data$.x == 0,
         0,
         .data$weighted_technology_share / .data$.x
-        ),
+      ),
       weighted_technology_share_target = ifelse(
         .data$.y == 0,
         0,
         .data$weighted_technology_share_target / .data$.y
-        ),
+      ),
       .x = NULL,
       .y = NULL,
     ) %>%

@@ -25,21 +25,20 @@
 #'   requireNamespace("r2dii.match", quietly = TRUE)
 #'
 #' if (installed) {
-#' library(r2dii.data)
-#' library(r2dii.match)
+#'   library(r2dii.data)
+#'   library(r2dii.match)
 #'
-#' valid_matches <- match_name(loanbook_demo, ald_demo) %>%
-#'   # WARNING: Remember to validate matches (see `?prioritize`)
-#'   prioritize()
+#'   valid_matches <- match_name(loanbook_demo, ald_demo) %>%
+#'     # WARNING: Remember to validate matches (see `?prioritize`)
+#'     prioritize()
 #'
-#' valid_matches %>%
-#'   join_ald_scenario(
-#'     ald = ald_demo,
-#'     scenario = scenario_demo_2020,
-#'     region_isos = region_isos_demo
-#'   )
+#'   valid_matches %>%
+#'     join_ald_scenario(
+#'       ald = ald_demo,
+#'       scenario = scenario_demo_2020,
+#'       region_isos = region_isos_demo
+#'     )
 #' }
-#'
 join_ald_scenario <- function(data,
                               ald,
                               scenario,

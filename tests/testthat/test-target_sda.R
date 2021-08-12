@@ -616,4 +616,3 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
     any(is.na(out$emission_factor_value))
   )
 })
-

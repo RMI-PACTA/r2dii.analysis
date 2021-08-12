@@ -219,68 +219,29 @@ companies would cause percent-change percentage to be infinite, which is wrong.<
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>installed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"r2dii.data"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span>
   <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"r2dii.match"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='va'>installed</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"Please install r2dii.match and r2dii.data"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='va'>installed</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://2degreesinvesting.github.io/r2dii.data/'>r2dii.data</a></span><span class='op'>)</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://2degreesinvesting.github.io/r2dii.match/'>r2dii.match</a></span><span class='op'>)</span>
 
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://2degreesinvesting.github.io/r2dii.data/'>r2dii.data</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://2degreesinvesting.github.io/r2dii.match/'>r2dii.match</a></span><span class='op'>)</span>
+  <span class='va'>loanbook</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>loanbook_demo</span>, <span class='fl'>150</span><span class='op'>)</span>
+  <span class='va'>ald</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ald_demo</span>, <span class='fl'>100</span><span class='op'>)</span>
+  <span class='va'>master</span> <span class='op'>&lt;-</span> <span class='va'>loanbook</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span><span class='op'>(</span><span class='va'>ald</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='join_ald_scenario.html'>join_ald_scenario</a></span><span class='op'>(</span>
+      ald <span class='op'>=</span> <span class='va'>ald</span>,
+      scenario <span class='op'>=</span> <span class='va'>scenario_demo_2020</span>,
+      region_isos <span class='op'>=</span> <span class='va'>region_isos_demo</span>
+    <span class='op'>)</span>
 
-<span class='va'>loanbook</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>loanbook_demo</span>, <span class='fl'>150</span><span class='op'>)</span>
-<span class='va'>ald</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ald_demo</span>, <span class='fl'>100</span><span class='op'>)</span>
-<span class='va'>master</span> <span class='op'>&lt;-</span> <span class='va'>loanbook</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a></span><span class='op'>(</span><span class='va'>ald</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='join_ald_scenario.html'>join_ald_scenario</a></span><span class='op'>(</span>
-    ald <span class='op'>=</span> <span class='va'>ald</span>,
-    scenario <span class='op'>=</span> <span class='va'>scenario_demo_2020</span>,
-    region_isos <span class='op'>=</span> <span class='va'>region_isos_demo</span>
-  <span class='op'>)</span>
+  <span class='fu'>summarize_weighted_production</span><span class='op'>(</span><span class='va'>master</span><span class='op'>)</span>
 
-<span class='fu'>summarize_weighted_production</span><span class='op'>(</span><span class='va'>master</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 × 5</span>
-#&gt;    sector_ald technology  year weighted_production weighted_technology_share
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>020             <span style='text-decoration: underline;'>212</span>163.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 2</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>021             <span style='text-decoration: underline;'>209</span>081.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 3</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>022             <span style='text-decoration: underline;'>205</span>999.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 4</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>023             <span style='text-decoration: underline;'>202</span>916.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 5</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>024             <span style='text-decoration: underline;'>199</span>834.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 6</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>025             <span style='text-decoration: underline;'>196</span>752.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 7</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>026             <span style='text-decoration: underline;'>193</span>669.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 8</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>027             <span style='text-decoration: underline;'>190</span>587.                      1.75
-#&gt; <span style='color: #BCBCBC;'> 9</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>028             <span style='text-decoration: underline;'>187</span>505.                      1.75
-#&gt; <span style='color: #BCBCBC;'>10</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>029             <span style='text-decoration: underline;'>184</span>423.                      1.75
-#&gt; <span style='color: #949494;'># … with 32 more rows</span></div><div class='input'>
-<span class='fu'>summarize_weighted_production</span><span class='op'>(</span><span class='va'>master</span>, use_credit_limit <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 × 5</span>
-#&gt;    sector_ald technology  year weighted_production weighted_technology_share
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>020             <span style='text-decoration: underline;'>185</span>181.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 2</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>021             <span style='text-decoration: underline;'>182</span>491.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 3</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>022             <span style='text-decoration: underline;'>179</span>800.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 4</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>023             <span style='text-decoration: underline;'>177</span>110.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 5</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>024             <span style='text-decoration: underline;'>174</span>420.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 6</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>025             <span style='text-decoration: underline;'>171</span>729.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 7</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>026             <span style='text-decoration: underline;'>169</span>039.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 8</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>027             <span style='text-decoration: underline;'>166</span>349.                      1.53
-#&gt; <span style='color: #BCBCBC;'> 9</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>028             <span style='text-decoration: underline;'>163</span>659.                      1.53
-#&gt; <span style='color: #BCBCBC;'>10</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>029             <span style='text-decoration: underline;'>160</span>968.                      1.53
-#&gt; <span style='color: #949494;'># … with 32 more rows</span></div><div class='input'>
-<span class='fu'>summarize_weighted_percent_change</span><span class='op'>(</span><span class='va'>master</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 × 4</span>
-#&gt;    sector_ald technology  year weighted_percent_change
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>                   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>020                   0    
-#&gt; <span style='color: #BCBCBC;'> 2</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>021                  -<span style='color: #BB0000;'>0.760</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>022                  -<span style='color: #BB0000;'>1.52</span> 
-#&gt; <span style='color: #BCBCBC;'> 4</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>023                  -<span style='color: #BB0000;'>2.28</span> 
-#&gt; <span style='color: #BCBCBC;'> 5</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>024                  -<span style='color: #BB0000;'>3.04</span> 
-#&gt; <span style='color: #BCBCBC;'> 6</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>025                  -<span style='color: #BB0000;'>3.80</span> 
-#&gt; <span style='color: #BCBCBC;'> 7</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>026                  -<span style='color: #BB0000;'>4.56</span> 
-#&gt; <span style='color: #BCBCBC;'> 8</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>027                  -<span style='color: #BB0000;'>5.32</span> 
-#&gt; <span style='color: #BCBCBC;'> 9</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>028                  -<span style='color: #BB0000;'>6.08</span> 
-#&gt; <span style='color: #BCBCBC;'>10</span> power      hydrocap    <span style='text-decoration: underline;'>2</span>029                  -<span style='color: #BB0000;'>6.84</span> 
-#&gt; <span style='color: #949494;'># … with 32 more rows</span></div><div class='input'>
-<span class='fu'>summarize_weighted_percent_change</span><span class='op'>(</span><span class='va'>master</span>, use_credit_limit <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'>summarize_weighted_production</span><span class='op'>(</span><span class='va'>master</span>, use_credit_limit <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+  <span class='fu'>summarize_weighted_percent_change</span><span class='op'>(</span><span class='va'>master</span><span class='op'>)</span>
+
+  <span class='fu'>summarize_weighted_percent_change</span><span class='op'>(</span><span class='va'>master</span>, use_credit_limit <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 42 × 4</span>
 #&gt;    sector_ald technology  year weighted_percent_change
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>                   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>

@@ -24,12 +24,7 @@ to study how their capital allocation impacts the climate.
 
 ## Installation
 
-Before you install r2dii.analysis you may want to [learn how to minimize
-installation
-errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
-
-When you are ready, install the released version of r2dii.analysis from
-CRAN with:
+Install the released version of r2dii.analysis from CRAN with:
 
 ``` r
 install.packages("r2dii.analysis")

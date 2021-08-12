@@ -5,7 +5,7 @@
 #' the analysis.
 #'
 #' @param data A data frame like the output of
-#'   [r2dii.match::prioritize()].
+#'   `r2dii.match::prioritize`.
 #' @param ald An asset level data frame like [r2dii.data::ald_demo].
 #' @param scenario A scenario data frame like [r2dii.data::scenario_demo_2020].
 #' @param region_isos A data frame like [r2dii.data::region_isos] (default).
@@ -23,21 +23,22 @@
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE)
-#' if (!installed) stop("Please install r2dii.match and r2dii.data")
 #'
-#' library(r2dii.data)
-#' library(r2dii.match)
+#' if (installed) {
+#'   library(r2dii.data)
+#'   library(r2dii.match)
 #'
-#' valid_matches <- match_name(loanbook_demo, ald_demo) %>%
-#'   # WARNING: Remember to validate matches (see `?prioritize`)
-#'   prioritize()
+#'   valid_matches <- match_name(loanbook_demo, ald_demo) %>%
+#'     # WARNING: Remember to validate matches (see `?prioritize`)
+#'     prioritize()
 #'
-#' valid_matches %>%
-#'   join_ald_scenario(
-#'     ald = ald_demo,
-#'     scenario = scenario_demo_2020,
-#'     region_isos = region_isos_demo
-#'   )
+#'   valid_matches %>%
+#'     join_ald_scenario(
+#'       ald = ald_demo,
+#'       scenario = scenario_demo_2020,
+#'       region_isos = region_isos_demo
+#'     )
+#' }
 join_ald_scenario <- function(data,
                               ald,
                               scenario,

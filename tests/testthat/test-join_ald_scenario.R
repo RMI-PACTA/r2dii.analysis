@@ -1,6 +1,5 @@
 library(dplyr)
 library(r2dii.data)
-library(r2dii.match)
 
 test_that("with fake data outputs known value", {
   out <- join_ald_scenario(
@@ -246,28 +245,9 @@ test_that("include/excludes `plant_location` inside/outside a region", {
 })
 
 test_that("outputs the same with upper/lower ald$sector or ald$technology", {
-  # From r2dii.match fake_lbk()
-  lbk <- tibble(
-    sector_classification_system = "NACE",
-    id_ultimate_parent = "UP15",
-    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
-    id_direct_loantaker = "C294",
-    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
-    sector_classification_direct_loantaker = 3511,
-    id_loan = 1
-  )
-  # Based on r2dii.match fake_ald()
-  ald <- tibble(
-    name_company = "alpine knits india pvt. limited",
-    sector = "power",
-    alias_ald = "alpineknitsindiapvt ltd",
-    plant_location = "dm",
-    technology = "renewablescap",
-    year = 2020
-  )
-  matched <- prioritize(match_name(lbk, ald))
-
-  scenario <- r2dii.data::scenario_demo_2020
+  matched <- fake_matched()
+  ald <- fake_ald()
+  scenario <- fake_scenario()
   regions <- region_isos_stable
 
   out_lower <- join_ald_scenario(matched, ald, scenario, regions)

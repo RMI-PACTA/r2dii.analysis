@@ -15,8 +15,7 @@ target_market_share(
 )
 }
 \arguments{
-\item{data}{A "data.frame" like the output of
-\code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
+\item{data}{A "data.frame" like the output of \code{r2dii.match::prioritize}.}
 
 \item{ald}{An asset level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
@@ -54,43 +53,44 @@ This function ignores existing groups and outputs ungrouped data.
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.data")
 
-library(r2dii.data)
-library(r2dii.match)
+if (installed) {
+  library(r2dii.data)
+  library(r2dii.match)
 
-loanbook <- head(loanbook_demo, 100)
-ald <- head(ald_demo, 100)
+  loanbook <- head(loanbook_demo, 100)
+  ald <- head(ald_demo, 100)
 
-matched <- loanbook \%>\%
-  match_name(ald) \%>\%
-  prioritize()
+  matched <- loanbook \%>\%
+    match_name(ald) \%>\%
+    prioritize()
 
-# Calculate targets at portfolio level
-matched \%>\%
-  target_market_share(
-    ald = ald,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo
-  )
+  # Calculate targets at portfolio level
+  matched \%>\%
+    target_market_share(
+      ald = ald,
+      scenario = scenario_demo_2020,
+      region_isos = region_isos_demo
+    )
 
-# Calculate targets at company level
-matched \%>\%
-  target_market_share(
-    ald = ald,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo,
-    by_company = TRUE
-  )
+  # Calculate targets at company level
+  matched \%>\%
+    target_market_share(
+      ald = ald,
+      scenario = scenario_demo_2020,
+      region_isos = region_isos_demo,
+      by_company = TRUE
+    )
 
-matched \%>\%
-  target_market_share(
-    ald = ald,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo,
-    # Calculate unweighted targets
-    weight_production = FALSE
-  )
+  matched \%>\%
+    target_market_share(
+      ald = ald,
+      scenario = scenario_demo_2020,
+      region_isos = region_isos_demo,
+      # Calculate unweighted targets
+      weight_production = FALSE
+    )
+}
 }
 \seealso{
 Other functions to calculate scenario targets: 

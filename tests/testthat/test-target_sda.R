@@ -1,6 +1,5 @@
-library(r2dii.data)
-library(r2dii.match)
 library(dplyr)
+library(r2dii.data)
 
 test_that("with fake data outputs known value", {
   out <- target_sda(
@@ -617,4 +616,3 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
     any(is.na(out$emission_factor_value))
   )
 })
-

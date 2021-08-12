@@ -29,29 +29,29 @@
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE)
-#' if (!installed) stop("Please install r2dii.match and r2dii.data")
+#' if (installed) {
+#'   library(r2dii.data)
+#'   library(r2dii.match)
 #'
-#' library(r2dii.data)
-#' library(r2dii.match)
+#'   loanbook <- head(loanbook_demo, 150)
+#'   ald <- head(ald_demo, 100)
+#'   master <- loanbook %>%
+#'     match_name(ald) %>%
+#'     prioritize() %>%
+#'     join_ald_scenario(
+#'       ald = ald,
+#'       scenario = scenario_demo_2020,
+#'       region_isos = region_isos_demo
+#'     )
 #'
-#' loanbook <- head(loanbook_demo, 150)
-#' ald <- head(ald_demo, 100)
-#' master <- loanbook %>%
-#'   match_name(ald) %>%
-#'   prioritize() %>%
-#'   join_ald_scenario(
-#'     ald = ald,
-#'     scenario = scenario_demo_2020,
-#'     region_isos = region_isos_demo
-#'   )
+#'   summarize_weighted_production(master)
 #'
-#' summarize_weighted_production(master)
+#'   summarize_weighted_production(master, use_credit_limit = TRUE)
 #'
-#' summarize_weighted_production(master, use_credit_limit = TRUE)
+#'   summarize_weighted_percent_change(master)
 #'
-#' summarize_weighted_percent_change(master)
-#'
-#' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+#'   summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+#' }
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)
 }

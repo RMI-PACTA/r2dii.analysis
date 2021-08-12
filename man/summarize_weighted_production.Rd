@@ -39,8 +39,7 @@ companies would cause percent-change percentage to be infinite, which is wrong.
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.data")
-
+if (installed) {
 library(r2dii.data)
 library(r2dii.match)
 
@@ -62,6 +61,7 @@ summarize_weighted_production(master, use_credit_limit = TRUE)
 summarize_weighted_percent_change(master)
 
 summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+}
 }
 \seealso{
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.

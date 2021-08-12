@@ -10,7 +10,7 @@
 #' @template ignores-existing-groups
 #'
 #' @param data A dataframe like the output of
-#'   [r2dii.match::prioritize()].
+#'   `r2dii.match::prioritize()`.
 #' @param ald An asset-level data frame like [r2dii.data::ald_demo].
 #' @param co2_intensity_scenario A scenario data frame like
 #'   [r2dii.data::co2_intensity_scenario_demo].
@@ -34,8 +34,7 @@
 #' @examples
 #' installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
 #'   requireNamespace("r2dii.data", quietly = TRUE)
-#' if (!installed) stop("Please install r2dii.match and r2dii.data")
-#'
+#' if (installed) {
 #' library(r2dii.match)
 #' library(r2dii.data)
 #'
@@ -72,6 +71,9 @@
 #'   by_company = TRUE
 #' )
 #' out
+#' }
+#'
+
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,

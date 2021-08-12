@@ -15,8 +15,7 @@ target_market_share(
 )
 }
 \arguments{
-\item{data}{A "data.frame" like the output of
-\code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
+\item{data}{A "data.frame" like the output of \code{r2dii.match::prioritize}.}
 
 \item{ald}{An asset level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
@@ -54,7 +53,8 @@ This function ignores existing groups and outputs ungrouped data.
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.data")
+
+if (installed) {
 
 library(r2dii.data)
 library(r2dii.match)
@@ -91,6 +91,7 @@ matched \%>\%
     # Calculate unweighted targets
     weight_production = FALSE
   )
+}
 }
 \seealso{
 Other functions to calculate scenario targets: 

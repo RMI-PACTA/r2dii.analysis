@@ -29,8 +29,7 @@
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE)
-#' if (!installed) stop("Please install r2dii.match and r2dii.data")
-#'
+#' if (installed) {
 #' library(r2dii.data)
 #' library(r2dii.match)
 #'
@@ -52,6 +51,8 @@
 #' summarize_weighted_percent_change(master)
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+#' }
+
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)
 }

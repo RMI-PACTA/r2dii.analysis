@@ -1,5 +1,4 @@
 library(r2dii.data)
-library(r2dii.match)
 
 # Production --------------------------------------------------------------
 
@@ -185,38 +184,6 @@ test_that("preserves groups passed to ...", {
   expect_equal(dplyr::group_vars(out), "plant_location")
 })
 
-test_that("with demo data returns known value", {
-  allows_reserved_columns <- exists(
-    "allow_reserved_columns",
-    where = asNamespace("r2dii.match"),
-    mode = "function"
-  )
-  skip_if_not(allows_reserved_columns)
-
-  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
-  on.exit(options(restore), add = TRUE)
-
-  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
-    join_ald_scenario(
-      ald = ald_demo,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_stable
-    )
-
-  credit_limit0 <- summarize_weighted_production(master)
-  file0 <- "ref-summarize_weighted_production-credit_limit0"
-  expect_known_value(credit_limit0, file0, update = FALSE)
-  # Clearer output when this test fails
-  expect_equal(readRDS(test_path(file0)), credit_limit0)
-
-  credit_limit1 <- master %>%
-    summarize_weighted_production(use_credit_limit = TRUE)
-  file1 <- "ref-summarize_weighted_production-credit_limit1"
-  expect_known_value(credit_limit1, file1, update = FALSE)
-  # Clearer output when this test fails
-  expect_equal(readRDS(test_path(file1)), credit_limit1)
-})
-
 # Percent-change ---------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {
@@ -388,38 +355,6 @@ test_that("with zero initial production errors with informative message", {
     class = "zero_initial_production",
     summarize_weighted_percent_change(data)
   )
-})
-
-test_that("with demo data returns known value", {
-  allows_reserved_columns <- exists(
-    "allow_reserved_columns",
-    where = asNamespace("r2dii.match"),
-    mode = "function"
-  )
-  skip_if_not(allows_reserved_columns)
-
-  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
-  on.exit(options(restore), add = TRUE)
-
-  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
-    join_ald_scenario(
-      ald = ald_demo,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_stable
-    )
-
-  credit_limit0 <- summarize_weighted_percent_change(master)
-  file0 <- "ref-summarize_weighted_percent_change-credit_limit0"
-  expect_known_value(credit_limit0, file0, update = FALSE)
-  # Clearer output when this test fails
-  expect_equal(readRDS(test_path(file0)), credit_limit0)
-
-  credit_limit1 <- master %>%
-    summarize_weighted_percent_change(use_credit_limit = TRUE)
-  file1 <- "ref-summarize_weighted_percent_change-credit_limit1"
-  expect_known_value(credit_limit1, file1, update = FALSE)
-  # Clearer output when this test fails
-  expect_equal(readRDS(test_path(file1)), credit_limit1)
 })
 
 test_that("with known input outputs as expected", {

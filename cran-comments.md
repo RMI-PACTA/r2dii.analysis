@@ -15,3 +15,5 @@
 * CRAN repository db overrides:
     X-CRAN-Comment: Archived on 2021-08-08 as check problems were not
     corrected in time.
+* This package was archived because of the unconditional use of one
+    package in Suggests. The use of that package is now conditional.

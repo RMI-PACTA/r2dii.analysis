@@ -39,7 +39,7 @@ Imports:
     glue,
     magrittr,
     r2dii.data,
-    rlang,
+    rlang (>= 0.1.2),
     tidyr,
     tidyselect,
     zoo

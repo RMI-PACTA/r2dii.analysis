@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.analysis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.12</span>
       </span>
     </div>
 
@@ -138,14 +138,17 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
-<p>We also recommend packages in the <a href="https://www.tidyverse.org/">tidyverse</a>; they are optional but useful.</p>
+<p>To plot your results, you may also load the package <a href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.plot">r2dii.plot</a></span><span class="op">)</span></code></pre></div>
+<p>We also recommend packages in the <a href="https://www.tidyverse.org/">tidyverse</a>; they are optional but useful.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</span>
 <span class="co">#&gt; ✔ ggplot2 3.3.5     ✔ purrr   0.3.4</span>
-<span class="co">#&gt; ✔ tibble  3.1.2     ✔ dplyr   1.0.7</span>
+<span class="co">#&gt; ✔ tibble  3.1.3     ✔ dplyr   1.0.7</span>
 <span class="co">#&gt; ✔ tidyr   1.1.3     ✔ stringr 1.4.0</span>
-<span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.1</span>
+<span class="co">#&gt; ✔ readr   2.0.1     ✔ forcats 0.5.1</span>
 <span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
@@ -154,7 +157,7 @@
 <h2 class="hasAnchor">
 <a href="#match-your-loanbook-to-climate-related-asset-level-data" class="anchor"></a>Match your loanbook to climate-related asset-level data</h2>
 <p>See <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a> for a more complete description of this process.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use these datasets to practice but eventually you should use your own data.</span>
 <span class="co"># The optional syntax `package::data` is to clarify where the data comes from.</span>
 <span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/loanbook_demo.html">loanbook_demo</a></span>
@@ -163,7 +166,7 @@
 <span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">ald</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 217 x 28</span>
+<span class="co">#&gt; # A tibble: 217 × 28</span>
 <span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -182,10 +185,7 @@
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
-<span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
+<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></code></pre></div>
 </div>
 <div id="calculate-targets" class="section level2">
 <h2 class="hasAnchor">
@@ -196,7 +196,7 @@
 <a href="#market-share-approach" class="anchor"></a>Market Share Approach</h3>
 <p>The <a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/target-market-share.html">Market Share Approach</a> is used to calculate scenario targets for the <code>production</code> of a technology in a sector. For example, we can use this approach to set targets for the production of electric vehicles in the automotive sector. This approach is recommended for sectors where a granular technology scenario roadmap exists.</p>
 <p>Targets can be set at the portfolio level:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use these datasets to practice but eventually you should use your own data.</span>
 <span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/scenario_demo_2020.html">scenario_demo_2020</a></span>
 <span class="va">regions</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/region_isos_demo.html">region_isos_demo</a></span>
@@ -209,7 +209,7 @@
   <span class="op">)</span>
 
 <span class="va">market_share_targets_portfolio</span>
-<span class="co">#&gt; # A tibble: 2,334 x 8</span>
+<span class="co">#&gt; # A tibble: 2,334 × 8</span>
 <span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span>
 <span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     324592.</span>
@@ -224,7 +224,7 @@
 <span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    333693.</span>
 <span class="co">#&gt; # … with 2,324 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 <p>Or at the company level:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
     ald <span class="op">=</span> <span class="va">ald</span>,
@@ -239,26 +239,26 @@
 <span class="co">#&gt; arguments to `FALSE`?</span>
 
 <span class="va">market_share_targets_company</span>
-<span class="co">#&gt; # A tibble: 32,946 x 9</span>
-<span class="co">#&gt;    sector  technology  year region scenario_source name_ald    metric production</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automo… electric    2020 global demo_2020       toyota mot… proje…    324592.</span>
-<span class="co">#&gt;  2 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.</span>
-<span class="co">#&gt;  3 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.</span>
-<span class="co">#&gt;  4 automo… electric    2020 global demo_2020       toyota mot… targe…    324592.</span>
-<span class="co">#&gt;  5 automo… electric    2021 global demo_2020       toyota mot… proje…    339656.</span>
-<span class="co">#&gt;  6 automo… electric    2021 global demo_2020       toyota mot… targe…    329191.</span>
-<span class="co">#&gt;  7 automo… electric    2021 global demo_2020       toyota mot… targe…    352505.</span>
-<span class="co">#&gt;  8 automo… electric    2021 global demo_2020       toyota mot… targe…    330435.</span>
-<span class="co">#&gt;  9 automo… electric    2022 global demo_2020       toyota mot… proje…    354720.</span>
-<span class="co">#&gt; 10 automo… electric    2022 global demo_2020       toyota mot… targe…    333693.</span>
+<span class="co">#&gt; # A tibble: 32,946 × 9</span>
+<span class="co">#&gt;    sector     technology  year region scenario_source name_ald metric production</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 automotive electric    2020 global demo_2020       toyota … proje…    324592.</span>
+<span class="co">#&gt;  2 automotive electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  3 automotive electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  4 automotive electric    2020 global demo_2020       toyota … targe…    324592.</span>
+<span class="co">#&gt;  5 automotive electric    2021 global demo_2020       toyota … proje…    339656.</span>
+<span class="co">#&gt;  6 automotive electric    2021 global demo_2020       toyota … targe…    329191.</span>
+<span class="co">#&gt;  7 automotive electric    2021 global demo_2020       toyota … targe…    352505.</span>
+<span class="co">#&gt;  8 automotive electric    2021 global demo_2020       toyota … targe…    330435.</span>
+<span class="co">#&gt;  9 automotive electric    2022 global demo_2020       toyota … proje…    354720.</span>
+<span class="co">#&gt; 10 automotive electric    2022 global demo_2020       toyota … targe…    333693.</span>
 <span class="co">#&gt; # … with 32,936 more rows, and 1 more variable: technology_share &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="sectoral-decarbonization-approach" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sectoral-decarbonization-approach" class="anchor"></a>Sectoral Decarbonization Approach</h3>
 <p>The <a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/target-sda.html">Sectoral Decarbonization Approach</a> is used to calculate scenario targets for the <code>emission_factor</code> of a sector. For example, you can use this approach to set targets for the average emission factor of the cement sector. This approach is recommended for sectors lacking technology roadmaps.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use this dataset to practice but eventually you should use your own data.</span>
 <span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/co2_intensity_scenario_demo.html">co2_intensity_scenario_demo</a></span>
 
@@ -268,7 +268,7 @@
 <span class="co">#&gt; Warning: Removing ald rows where `emission_factor` is NA</span>
 
 <span class="va">sda_targets</span>
-<span class="co">#&gt; # A tibble: 74 x 4</span>
+<span class="co">#&gt; # A tibble: 74 × 4</span>
 <span class="co">#&gt;    sector  year emission_factor_metric emission_factor_value</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                                  &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 cement  2020 projected                              0.664</span>
@@ -287,120 +287,53 @@
 <div id="visualization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualization" class="anchor"></a>Visualization</h2>
-<p>There are a large variety of possible visualizations stemming from the outputs of <code><a href="../reference/target_market_share.html">target_market_share()</a></code> and <code><a href="../reference/target_sda.html">target_sda()</a></code>. Below, we have highlighted a couple of common plots, along with the minimum code necessary to reproduce them.</p>
+<p>There are a large variety of possible visualizations stemming from the outputs of <code><a href="../reference/target_market_share.html">target_market_share()</a></code> and <code><a href="../reference/target_sda.html">target_sda()</a></code>. Below, we highlight a couple of common plots that can easily be created using the <code>r2dii.plot</code> package.</p>
 <div id="market-share-sector-level-technology-mix" class="section level3">
 <h3 class="hasAnchor">
 <a href="#market-share-sector-level-technology-mix" class="anchor"></a>Market Share: Sector-level technology mix</h3>
 <p>From the market share output, you can plot the portfolio’s exposure to various climate sensitive technologies (<code>projected</code>), and compare with the corporate economy, or against various scenario targets.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Pick the targets you want to plot.</span>
-<span class="va">tech_mix_data</span> <span class="op">&lt;-</span> <span class="va">market_share_targets_portfolio</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span>
-    <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,
-    <span class="va">year</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">tech_mix_data</span>, 
-  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
-    x <span class="op">=</span> <span class="va">metric</span>, 
-    y <span class="op">=</span> <span class="va">technology_share</span>, 
-    fill <span class="op">=</span> <span class="va">technology</span>
-  <span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_col</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Metric"</span>, y <span class="op">=</span> <span class="st">"Weighted Capacity [%]"</span><span class="op">)</span></code></pre></div>
-<p><img src="r2dii-analysis_files/figure-html/plot-metric-versus-weighted-capacity-1.png" width="100%"></p>
+<code class="sourceCode R"><span class="co"># Pick the targets you want to plot.</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span>
+  <span class="va">market_share_targets_portfolio</span>,
+  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span>,
+  <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,
+  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>,
+  <span class="va">metric</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"projected"</span>, <span class="st">"corporate_economy"</span>, <span class="st">"target_sds"</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="co"># Plot the technology mix</span>
+<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_techmix.html">qplot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+<span class="co">#&gt; Removing data before 2020 -- the start year of 'projected'.</span>
+<span class="co">#&gt; The `technology_share` values are plotted for extreme years.</span>
+<span class="co">#&gt; Do you want to plot different years? E.g. filter data with:`subset(data, year %in% c(2020, 2030))`.</span></code></pre></div>
+<p><img src="r2dii-analysis_files/figure-html/technoloy-mix-portfolio-1.png" width="100%"></p>
 </div>
 <div id="market-share-technology-level-volume-trajectory" class="section level3">
 <h3 class="hasAnchor">
 <a href="#market-share-technology-level-volume-trajectory" class="anchor"></a>Market Share: Technology-level volume trajectory</h3>
-<p>You can also plot the technology-specific volume trend. All benchmarks must first be normalized to the initial portfolio value, so that we are effectively comparing ambition.</p>
+<p>You can also plot the technology-specific volume trend. All starting values are normalized to 1, to emphasize that we are comparing the rates of buildout and/or retirement.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="va">market_share_targets_portfolio</span> <span class="op">&lt;-</span> <span class="va">market_share_targets_portfolio</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">technology_share</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">metric</span>, 
-              values_from <span class="op">=</span> <span class="va">production</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span>, <span class="va">region</span>, <span class="va">scenario_source</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>normalized_corporate_economy <span class="op">=</span> <span class="va">corporate_economy</span> <span class="op">*</span> <span class="op">(</span><span class="fu">first</span><span class="op">(</span><span class="va">projected</span><span class="op">)</span><span class="op">/</span><span class="fu">first</span><span class="op">(</span><span class="va">corporate_economy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">corporate_economy</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">pivot_longer</span><span class="op">(</span>names_to <span class="op">=</span> <span class="st">"metric"</span>,
-               cols <span class="op">=</span> <span class="va">projected</span><span class="op">:</span><span class="va">normalized_corporate_economy</span>,
-               values_to <span class="op">=</span> <span class="st">"production"</span><span class="op">)</span>
-
-<span class="va">renewables_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span>
   <span class="va">market_share_targets_portfolio</span>,
   <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,
   <span class="va">technology</span> <span class="op">==</span> <span class="st">"renewablescap"</span>,
-  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>
+  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>,
+  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span>
 <span class="op">)</span>
 
-<span class="va">just_targets</span> <span class="op">&lt;-</span> <span class="va">renewables_data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">metric</span>, <span class="st">"target_"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">ceiling</span> <span class="op">&lt;-</span> <span class="va">just_targets</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span>, <span class="va">year</span>, <span class="va">region</span>, <span class="va">scenario_source</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarize</span><span class="op">(</span>
-    metric <span class="op">=</span> <span class="st">"target_ceiling"</span>,
-    production <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">production</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span>, <span class="va">region</span>, <span class="va">scenario_source</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>production <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">production</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` has grouped output by 'sector', 'technology', 'year', 'region'. You can override using the `.groups` argument.</span>
-
-<span class="va">just_data</span> <span class="op">&lt;-</span> <span class="va">renewables_data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">metric</span>, <span class="st">"target_"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">targets_and_ceiling</span> <span class="op">&lt;-</span> <span class="va">just_targets</span> <span class="op">%&gt;%</span>
-  <span class="fu">bind_rows</span><span class="op">(</span><span class="va">ceiling</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">year</span>, <span class="va">production</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    previous_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">production</span>, default <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">targets_and_ceiling</span>,
-  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
-    x <span class="op">=</span> <span class="va">year</span>,
-    y <span class="op">=</span> <span class="va">production</span>,
-    fill <span class="op">=</span> <span class="va">metric</span>
-  <span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_ribbon</span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">targets_and_ceiling</span>,
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">previous_value</span>, ymax <span class="op">=</span> <span class="va">production</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">just_data</span>, 
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
-      x <span class="op">=</span> <span class="va">year</span>, 
-      y <span class="op">=</span> <span class="va">production</span>, 
-      linetype <span class="op">=</span> <span class="va">metric</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">sector</span>, <span class="va">technology</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning</span>
-<span class="co">#&gt; -Inf</span>
-<span class="co">#&gt; Warning: Removed 35 row(s) containing missing values (geom_path).</span></code></pre></div>
-<p><img src="r2dii-analysis_files/figure-html/plot-year-versus-weithed-production-value-1.png" width="100%"></p>
+<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_trajectory.html">qplot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+<span class="co">#&gt; Removing data before 2020 -- the start year of 'projected'.</span>
+<span class="co">#&gt; Normalizing `production` values to 2020 -- the start year.</span></code></pre></div>
+<p><img src="r2dii-analysis_files/figure-html/trajetory-portfolio-1.png" width="100%"></p>
 </div>
 <div id="sda-target" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sda-target" class="anchor"></a>SDA Target</h3>
 <p>From the SDA output, we can compare the projected average emission intensity attributed to the portfolio, with the actual emission intensity scenario, and the scenario compliant SDA pathway that the portfolio must follow to achieve the scenario ambition by 2050.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">sda_targets</span>, 
-  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
-    x <span class="op">=</span> <span class="va">year</span>, 
-    y <span class="op">=</span> <span class="va">emission_factor_value</span>, 
-    color <span class="op">=</span> <span class="va">emission_factor_metric</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">sector</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sda_targets</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_emission_intensity.html">qplot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>

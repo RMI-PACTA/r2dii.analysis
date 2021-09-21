@@ -62,6 +62,9 @@ navbar:
         href: https://2degreesinvesting.github.io/r2dii.match
       - text: "r2dii.analysis"
         href: https://2degreesinvesting.github.io/r2dii.analysis
+      - text: "r2dii.plot"
+        href: https://2degreesinvesting.github.io/r2dii.plot
+
 
     - icon: fa-github
       href: https://github.com/2DegreesInvesting/r2dii.analysis

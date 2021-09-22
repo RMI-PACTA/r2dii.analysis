@@ -43,7 +43,12 @@ navbar:
       href: articles/production-percent-change.html
 
   - text: "News"
-    href: news/index.html
+    menu:
+    - text: "r2dii blog posts"
+      href: https://2degreesinvesting.github.io/#category:r2dii
+    - text: "----------------------"
+    - text: "Change log"
+      href: news/index.html
 
   right:
     - text: "Packages"

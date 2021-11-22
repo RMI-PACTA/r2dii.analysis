@@ -16,8 +16,15 @@ The goal of this article is to define the _market-share-approach_ for allocating
 Say that you want to study how a portfolio would perform in a specific climate scenario. How can you allocate scenario efforts to the production profile of your portfolio? You can do that in two ways -- by technology, or by sector.
 
 ### 1. Market-share by technology
+We define the market-share by technology as: 
 
-$$p_{i}^{tmsr}(t) = p_{i}(t_0) * \dfrac{s_i(t)}{s_i(t_0)}$$
+$$p_{i}^{tmsr}(t) = p_{i}(t_{0}) +  p_{i}(t_{0}) * \frac{s_i(t) - s_{i}(t_0)}{s_i(t_0)}$$
+
+We can see that this reduces to:
+
+$$p_{i}^{tmsr}(t) = p_{i}(t_{0}) \left(1 + \frac{s_i(t) - s_{i}(t_0)}{s_i(t_0)} \right) \\
+p_{i}^{tmsr}(t) = p_{i}(t_{0}) \left(1 + \frac{s_i(t)}{s_i(t_0)} -1 \right) \\
+p_{i}^{tmsr}(t) = p_{i}(t_{0}) * \frac{s_i(t)}{s_i(t_0)}$$
 
 where:
 
@@ -28,9 +35,10 @@ where:
 We define the "Technology Market Share Ratio" as:
 
 $$\dfrac{s_i(t)}{s_i(t_0)}$$
+This method is used to set targets for "decreasing" (ie. brown) technologies. 
 
 ### 2. Market-share by sector
-
+To calculate the market-share by sector, we use the initial production of both the portfolio and scenario at the sector-level instead. 
 $$p_{i}^{smsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)$$
 where:
 
@@ -40,6 +48,7 @@ where:
 We define the "Sector Market Share Percentage" as:
 
 $$\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}$$
+This method is used to calculate targets for "increasing" (ie. green) technologies. 
 
 ## How to calculate market-share targets for a given scenario
 

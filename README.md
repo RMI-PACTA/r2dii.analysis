@@ -5,7 +5,7 @@ output: github_document
 
 
 
-# r2dii.analysis
+# r2dii.analysis <img src="man/figures/logo.svg" align="right" width="120" />
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)

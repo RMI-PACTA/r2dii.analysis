@@ -1175,3 +1175,29 @@ test_that("`target_market_share` outputs as expected for companies with 0
   expect_equal(out$projected$technology_share, c(0, 1))
   expect_equal(out$target_sds$technology_share, c(0, 0))
 })
+
+test_that("outputs columns `percent_change_by_scope` and `scope`", {
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_stable
+  )
+
+  expected_added_columns <- c("percent_change_by_scope", "scope")
+
+  expect_equal(setdiff(expected_added_columns, names(out)),character(0))
+})
+
+test_that("outputs columns `percent_change_by_scope` and `scope`", {
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_stable
+  )
+
+  expected_added_columns <- c("percent_change_by_scope", "scope")
+
+  expect_equal(setdiff(expected_added_columns, names(out)),character(0))
+})

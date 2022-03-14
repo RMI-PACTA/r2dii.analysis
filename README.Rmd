@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# r2dii.analysis <a href='https://github.com/2DegreesInvesting/r2dii.analysis'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
+# r2dii.analysis <img src="man/figures/logo.svg" align="right" width="120" />
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)

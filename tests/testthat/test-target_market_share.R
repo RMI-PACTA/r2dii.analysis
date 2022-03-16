@@ -1201,3 +1201,64 @@ test_that("outputs columns `percent_change_by_scope` and `scope`", {
 
   expect_equal(setdiff(expected_added_columns, names(out)),character(0))
 })
+
+test_that("with known input outputs `percent_of_initial_production_by_scope` as
+          expected, at company level", {
+  portfolio <- fake_matched(
+    name_ald = c("comp1", "comp2")
+  )
+
+  ald <- fake_ald(
+    technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
+    name_company = paste0("comp", c(rep(1, 4), rep(2, 4))),
+    production = c(10, 30, 20, 20, 90, 95, 100, 100)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021),
+    tmsr = c(1, 1, 1.85, 0.6),
+    smsp = c(0, 0, 0.34, -0.2)
+  )
+
+  out <- target_market_share(
+    portfolio,
+    ald,
+    scenario,
+    region_isos_stable,
+    by_company = TRUE,
+    weight_production = FALSE
+  )
+
+  out_percent <- out %>%
+    filter(.$year == 2021) %>%
+    arrange(.$name_ald) %>%
+    split(.$metric)
+
+  expect_equal(
+    round(
+      out_percent$corporate_economy$percentage_of_initial_production_by_scope,
+      3
+    ),
+    c(0.089, -0.040)
+  )
+
+  expect_equal(
+    round(
+      out_percent$projected$percentage_of_initial_production_by_scope,
+      3
+    ),
+    c(0.025, -0.333, 0.054, 0.053)
+  )
+
+  expect_equal(
+    round(
+      out_percent$target_sds$percentage_of_initial_production_by_scope,
+      3
+    ),
+    c(0.34, -0.40, 0.34, -0.40)
+  )
+
+
+})

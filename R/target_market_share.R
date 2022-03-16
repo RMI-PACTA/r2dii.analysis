@@ -233,8 +233,7 @@ target_market_share <- function(data,
         green_or_brown = "green_or_brown"
       )
     ) %>%
-    warn_if_has_zero_rows("Joining `r2dii.data::green_or_brown` outputs 0 rows") %>%
-    select(-.data$target_name, -.data$green_or_brown)
+    warn_if_has_zero_rows("Joining `r2dii.data::green_or_brown` outputs 0 rows")
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
@@ -244,7 +243,8 @@ target_market_share <- function(data,
     "scenario",
     "region",
     "scenario_source",
-    "name_ald"
+    "name_ald",
+    "target_name"
   )
 
   if (weight_production) {
@@ -269,7 +269,8 @@ target_market_share <- function(data,
       "year",
       "scenario",
       "region",
-      "scenario_source"
+      "scenario_source",
+      "target_name"
     )
 
     data <- data %>%
@@ -283,7 +284,7 @@ target_market_share <- function(data,
   }
 
   reweighting_groups <- maybe_add_name_ald(
-    c("sector_ald", "region", "scenario", "scenario_source", "year"),
+    c("sector_ald", "region", "scenario", "scenario_source", "year", "target_name"),
     by_company
   )
 
@@ -323,8 +324,59 @@ target_market_share <- function(data,
   relevant_corporate_economy <- corporate_economy %>%
     filter(.data$sector %in% relevant_sectors)
 
+  relevant_corporate_economy <- relevant_corporate_economy %>%
+    left_join(green_or_brown, by = c("sector", "technology")) %>%
+    left_join(tmsr_or_smsp, by = "green_or_brown") %>%
+    rename(target_name = .data$which_metric) %>%
+    select(-.data$green_or_brown)
+
+  data <- data %>%
+    dplyr::bind_rows(relevant_corporate_economy)
+
+  percent_by_sector_groups <- maybe_add_name_ald(
+    c("sector", "region", "scenario_source", "metric"),
+    by_company
+  )
+
+  data <- data %>%
+    group_by(!!!rlang::syms(c(percent_by_sector_groups, "technology"))) %>%
+    arrange(.data$year) %>%
+    mutate(initial_technology_production = first(.data$production)) %>%
+    group_by(!!!rlang::syms(c(percent_by_sector_groups, "year"))) %>%
+    mutate(
+      .sector_production = sum(.data$production)
+      ) %>%
+    group_by(!!!rlang::syms(percent_by_sector_groups)) %>%
+    mutate(
+      initial_sector_production = first(.data$.sector_production),
+      .sector_production = NULL
+      ) %>%
+    ungroup() %>%
+    mutate(
+      percentage_of_initial_technology_production = (.data$production - .data$initial_technology_production) / .data$initial_technology_production,
+      percentage_of_initial_sector_production  = (.data$production - .data$initial_technology_production) / .data$initial_sector_production,
+      initial_technology_production = NULL,
+      initial_sector_production = NULL
+    ) %>%
+    mutate(
+      scope = dplyr::case_when(
+        target_name == "tmsr_target_production" ~ "technology",
+        target_name == "smsp_target_production" ~ "sector"
+      ),
+      percentage_of_initial_production_by_scope = dplyr::case_when(
+        scope == "technology" ~ percentage_of_initial_technology_production,
+        scope == "sector" ~ percentage_of_initial_sector_production
+      )
+    ) %>%
+    select(
+      -.data$target_name,
+      -.data$percentage_of_initial_technology_production,
+      -.data$percentage_of_initial_sector_production
+      )
+
+
+
   data %>%
-    dplyr::bind_rows(relevant_corporate_economy) %>%
     ungroup()
 }
 

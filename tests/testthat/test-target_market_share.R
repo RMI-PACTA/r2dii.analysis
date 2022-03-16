@@ -157,7 +157,9 @@ test_that("outputs expected names", {
       "scenario_source",
       "metric",
       "production",
-      "technology_share"
+      "technology_share",
+      "scope",
+      "percentage_of_initial_production_by_scope"
     )
   )
 })
@@ -816,7 +818,7 @@ test_that("`technology_share` outputs consistently when multiple
 })
 
 test_that("projects technology share as 'production / total production' when
-          computing by company, unweighted by ralative loan size (#288)", {
+          computing by company, unweighted by relative loan size (#288)", {
   .production <- c(1, 10)
   .year <- 2022
   .company <- "toyota motor corp"
@@ -1184,20 +1186,7 @@ test_that("outputs columns `percent_change_by_scope` and `scope`", {
     region_isos_stable
   )
 
-  expected_added_columns <- c("percent_change_by_scope", "scope")
-
-  expect_equal(setdiff(expected_added_columns, names(out)),character(0))
-})
-
-test_that("outputs columns `percent_change_by_scope` and `scope`", {
-  out <- target_market_share(
-    fake_matched(),
-    fake_ald(),
-    fake_scenario(),
-    region_isos_stable
-  )
-
-  expected_added_columns <- c("percent_change_by_scope", "scope")
+  expected_added_columns <- c( "scope", "percentage_of_initial_production_by_scope")
 
   expect_equal(setdiff(expected_added_columns, names(out)),character(0))
 })
@@ -1308,7 +1297,7 @@ test_that("with known input outputs `percent_of_initial_production_by_scope` as
       out_percent$projected$percentage_of_initial_production_by_scope,
       3
     ),
-    c(0.025, -0.333, 0.054, 0.053)
+    c(0.25, -0.333, 0.054, 0.053)
   )
 
   expect_equal(

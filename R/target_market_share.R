@@ -243,8 +243,7 @@ target_market_share <- function(data,
     "scenario",
     "region",
     "scenario_source",
-    "name_ald",
-    "target_name"
+    "name_ald"
   )
 
   if (weight_production) {
@@ -269,8 +268,7 @@ target_market_share <- function(data,
       "year",
       "scenario",
       "region",
-      "scenario_source",
-      "target_name"
+      "scenario_source"
     )
 
     data <- data %>%
@@ -284,7 +282,7 @@ target_market_share <- function(data,
   }
 
   reweighting_groups <- maybe_add_name_ald(
-    c("sector_ald", "region", "scenario", "scenario_source", "year", "target_name"),
+    c("sector_ald", "region", "scenario", "scenario_source", "year"),
     by_company
   )
 
@@ -316,6 +314,12 @@ target_market_share <- function(data,
 
   data <- data %>%
     pivot_wider2()
+
+  data <- data %>%
+    left_join(green_or_brown, by = c("sector", "technology")) %>%
+    left_join(tmsr_or_smsp, by = "green_or_brown") %>%
+    rename(target_name = .data$which_metric) %>%
+    select(-.data$green_or_brown)
 
   corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
 

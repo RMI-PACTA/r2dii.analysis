@@ -342,20 +342,17 @@ target_market_share <- function(data,
 
   data <- data %>%
     group_by(!!!rlang::syms(c(percent_by_sector_groups, "technology"))) %>%
-    mutate(initial_technology_production = first(.data$production, order_by = .data$year)) %>%
-    group_by(!!!rlang::syms(c(percent_by_sector_groups, "year"))) %>%
-    mutate(.sector_production = sum(.data$production)) %>%
-    group_by(!!!rlang::syms(percent_by_sector_groups)) %>%
     mutate(
-      initial_sector_production = first(.data$.sector_production),
-      .sector_production = NULL
-    ) %>%
+      initial_technology_production = first(.data$production, order_by = .data$year)
+      ) %>%
+    group_by(!!!rlang::syms(c(percent_by_sector_groups, "year"))) %>%
+    mutate(sector_production = sum(.data$production)) %>%
+    group_by(!!!rlang::syms(percent_by_sector_groups)) %>%
+    mutate(initial_sector_production = first(.data$sector_production)) %>%
     ungroup() %>%
     mutate(
       percentage_of_initial_technology_production = (.data$production - .data$initial_technology_production) / .data$initial_technology_production,
-      percentage_of_initial_sector_production = (.data$production - .data$initial_technology_production) / .data$initial_sector_production,
-      initial_technology_production = NULL,
-      initial_sector_production = NULL
+      percentage_of_initial_sector_production = (.data$production - .data$initial_technology_production) / .data$initial_sector_production
     ) %>%
     mutate(
       scope = dplyr::case_when(
@@ -369,6 +366,9 @@ target_market_share <- function(data,
     ) %>%
     select(
       -.data$target_name,
+      -.data$sector_production,
+      -.data$initial_technology_production,
+      -.data$initial_sector_production,
       -.data$percentage_of_initial_technology_production,
       -.data$percentage_of_initial_sector_production
     )

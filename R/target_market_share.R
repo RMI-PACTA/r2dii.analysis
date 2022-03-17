@@ -160,7 +160,7 @@ target_market_share <- function(data,
 
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
-  data <- aggregate_by_loan_id(data)
+  data <- aggregate_by_name_ald(data)
 
   data <- join_ald_scenario(
     data,
@@ -478,7 +478,7 @@ reweight_technology_share <- function(data, ...) {
     ungroup()
 }
 
-aggregate_by_loan_id <- function(data) {
+aggregate_by_name_ald <- function(data) {
   data %>%
     group_by(
       .data$loan_size_outstanding_currency,

@@ -98,67 +98,7 @@ target_market_share <- function(data,
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
-  valid_columns <- c(
-    "id_loan",
-    "id_direct_loantaker",
-    "name_direct_loantaker",
-    "id_intermediate_parent_1",
-    "name_intermediate_parent_1",
-    "id_ultimate_parent",
-    "name_ultimate_parent",
-    "loan_size_outstanding",
-    "loan_size_outstanding_currency",
-    "loan_size_credit_limit",
-    "loan_size_credit_limit_currency",
-    "sector_classification_system",
-    "sector_classification_input_type",
-    "sector_classification_direct_loantaker",
-    "fi_type",
-    "flag_project_finance_loan",
-    "name_project",
-    "lei_direct_loantaker",
-    "isin_direct_loantaker",
-    "id_2dii",
-    "level",
-    "sector",
-    "sector_ald",
-    "name",
-    "name_ald",
-    "score",
-    "source",
-    "borderline"
-  )
-
-  check_valid_columns(data, valid_columns)
-
-  crucial_all <- c(
-    "sector",
-    "technology",
-    "year"
-  )
-
-  crucial_scenario <- c(
-    crucial_all,
-    "scenario",
-    "region",
-    "tmsr",
-    "smsp",
-    "scenario_source"
-    )
-
-  check_crucial_names(scenario, crucial_scenario)
-
-  crucial_ald <- c(
-    crucial_all,
-    "name_company",
-    "production",
-    "plant_location",
-    "is_ultimate_owner"
-  )
-
-  check_crucial_names(ald, crucial_ald)
-
-  walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
+  check_input_for_crucial_columns(data, ald, scenario)
 
   data <- aggregate_by_name_ald(data)
 
@@ -189,9 +129,7 @@ target_market_share <- function(data,
 
   data <- data %>%
     group_by(!!!rlang::syms(crucial_groups)) %>%
-    summarize(
-      production = sum(.data$production)
-    )
+    summarize( production = sum(.data$production))
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
@@ -447,6 +385,70 @@ separate_metric_from_name <- function(data) {
       name = sub("(technology_share)_", "\\1-", .data$name)
     ) %>%
     tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
+}
+
+check_input_for_crucial_columns <- function(data, ald, scenario){
+  valid_columns <- c(
+    "id_loan",
+    "id_direct_loantaker",
+    "name_direct_loantaker",
+    "id_intermediate_parent_1",
+    "name_intermediate_parent_1",
+    "id_ultimate_parent",
+    "name_ultimate_parent",
+    "loan_size_outstanding",
+    "loan_size_outstanding_currency",
+    "loan_size_credit_limit",
+    "loan_size_credit_limit_currency",
+    "sector_classification_system",
+    "sector_classification_input_type",
+    "sector_classification_direct_loantaker",
+    "fi_type",
+    "flag_project_finance_loan",
+    "name_project",
+    "lei_direct_loantaker",
+    "isin_direct_loantaker",
+    "id_2dii",
+    "level",
+    "sector",
+    "sector_ald",
+    "name",
+    "name_ald",
+    "score",
+    "source",
+    "borderline"
+  )
+
+  check_valid_columns(data, valid_columns)
+
+  crucial_all <- c(
+    "sector",
+    "technology",
+    "year"
+  )
+
+  crucial_scenario <- c(
+    crucial_all,
+    "scenario",
+    "region",
+    "tmsr",
+    "smsp",
+    "scenario_source"
+  )
+
+  check_crucial_names(scenario, crucial_scenario)
+
+  crucial_ald <- c(
+    crucial_all,
+    "name_company",
+    "production",
+    "plant_location",
+    "is_ultimate_owner"
+  )
+
+  check_crucial_names(ald, crucial_ald)
+
+  walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 }
 
 check_valid_columns <- function(data, valid_columns) {

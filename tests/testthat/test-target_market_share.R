@@ -53,8 +53,37 @@ test_that("with fake data outputs known value", {
   expect_known_value(out, "ref-target_market_share", update = FALSE)
 })
 
-test_that("with data lacking crucial columns errors with informative message", {
-  expect_error_missing_names <- function(name) {
+test_that("with ald data lacking crucial columns errors with useful message", {
+
+  expect_error_ald_missing_names <- function(name) {
+    bad_ald <- rename(
+      fake_ald(),
+      bad = name
+    )
+
+    expect_error(
+      class = "missing_names",
+      target_market_share(
+        fake_matched(),
+        bad_ald,
+        fake_scenario()
+      )
+    )
+  }
+
+  expect_error_ald_missing_names("sector")
+  expect_error_ald_missing_names("technology")
+  expect_error_ald_missing_names("year")
+  expect_error_ald_missing_names("name_company")
+  expect_error_ald_missing_names("production")
+  expect_error_ald_missing_names("plant_location")
+  expect_error_ald_missing_names("is_ultimate_owner")
+})
+
+
+test_that("with scenario data lacking crucial columns errors with useful message", {
+
+  expect_error_scenario_missing_names <- function(name) {
     bad_scenario <- rename(
       fake_scenario(),
       bad = name
@@ -70,8 +99,14 @@ test_that("with data lacking crucial columns errors with informative message", {
     )
   }
 
-  expect_error_missing_names("tmsr")
-  expect_error_missing_names("smsp")
+  expect_error_scenario_missing_names("sector")
+  expect_error_scenario_missing_names("technology")
+  expect_error_scenario_missing_names("year")
+  expect_error_scenario_missing_names("scenario")
+  expect_error_scenario_missing_names("region")
+  expect_error_scenario_missing_names("tmsr")
+  expect_error_scenario_missing_names("smsp")
+  expect_error_scenario_missing_names("scenario_source")
 })
 
 test_that("with NAs in crucial columns errors with informative message", {

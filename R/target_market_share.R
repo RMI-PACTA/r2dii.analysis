@@ -131,9 +131,33 @@ target_market_share <- function(data,
 
   check_valid_columns(data, valid_columns)
 
-  crucial_scenario <- c("scenario", "tmsr", "smsp")
+  crucial_all <- c(
+    "sector",
+    "technology",
+    "year"
+  )
+
+  crucial_scenario <- c(
+    crucial_all,
+    "scenario",
+    "region",
+    "tmsr",
+    "smsp",
+    "scenario_source"
+    )
+
   check_crucial_names(scenario, crucial_scenario)
-  check_crucial_names(ald, "is_ultimate_owner")
+
+  crucial_ald <- c(
+    crucial_all,
+    "name_company",
+    "production",
+    "plant_location",
+    "is_ultimate_owner"
+  )
+
+  check_crucial_names(ald, crucial_ald)
+
   walk_(crucial_scenario, ~ check_no_value_is_missing(scenario, .x))
 
   data <- aggregate_by_loan_id(data)

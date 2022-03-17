@@ -199,66 +199,12 @@ target_market_share <- function(data,
 
   target_groups <- c("sector_ald", "scenario", "region", "name_ald")
 
-  data <- data %>%
-    group_by(!!!rlang::syms(c(target_groups, "year"))) %>%
-    mutate(sector_production = sum(.data$production)) %>%
-    arrange(.data$year) %>%
-    group_by(!!!rlang::syms(target_groups)) %>%
-    mutate(initial_sector_production = first(.data$sector_production)) %>%
-    select(-.data$sector_production)
-
-  data <- data %>%
-    group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
-    mutate(technology_production = sum(.data$production)) %>%
-    arrange(.data$year) %>%
-    group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
-    mutate(initial_technology_production = first(.data$technology_production)) %>%
-    select(-.data$technology_production) %>%
-    ungroup()
+  data <- calculate_targets(data, target_groups)
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
 
-  data <- data %>%
-    mutate(
-      tmsr_target_production = .data$initial_technology_production *
-        .data$tmsr,
-      smsp_target_production = .data$initial_technology_production +
-        (.data$initial_sector_production * .data$smsp)
-    ) %>%
-    mutate(
-      smsp_target_production = ifelse(
-        .data$smsp_target_production < 0,
-        0,
-        .data$smsp_target_production
-      )
-    ) %>%
-    select(
-      -c(
-        .data$tmsr,
-        .data$smsp,
-        .data$initial_technology_production,
-        .data$initial_sector_production
-      )
-    ) %>%
-    pivot_longer(
-      cols = c(
-        "tmsr_target_production", "smsp_target_production"
-      ),
-      names_to = "target_name",
-      values_to = "production_target"
-    ) %>%
-    left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
-    inner_join(
-      green_or_brown,
-      by = c(
-        sector_ald = "sector",
-        technology = "technology",
-        green_or_brown = "green_or_brown"
-      )
-    ) %>%
-    warn_if_has_zero_rows("Joining `r2dii.data::green_or_brown` outputs 0 rows") %>%
-    select(-.data$target_name, -.data$green_or_brown)
+  data <- pick_sms_or_tms_target(data, green_or_brown, tmsr_or_smsp)
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
@@ -316,95 +262,59 @@ target_market_share <- function(data,
     !!!rlang::syms(reweighting_groups)
   )
 
-  data <- data %>%
-    pivot_wider2(
-      names_from = .data$scenario,
-      values_from = c(
-        .data$weighted_production_target,
-        .data$weighted_technology_share_target
-      )
-    )
-
-  data <- data %>%
-    rename(
-      weighted_production_projected = .data$weighted_production,
-      weighted_technology_share_projected = .data$weighted_technology_share,
-      sector = .data$sector_ald
-    )
-
-  data <- data %>%
-    pivot_longer(cols = starts_with("weighted_")) %>%
-    filter(!is.na(.data$value)) %>%
-    separate_metric_from_name()
-
-  data <- data %>%
-    pivot_wider2()
+  data <- format_output_dataframe(data)
 
   corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
 
-  relevant_sectors <- unique(data$sector)
-
   relevant_corporate_economy <- corporate_economy %>%
-    filter(.data$sector %in% relevant_sectors)
+    filter(.data$sector %in% unique(data$sector))
 
   data %>%
     dplyr::bind_rows(relevant_corporate_economy) %>%
     ungroup()
 }
 
-pivot_wider2 <- function(data, ...) {
-  abort_if_has_list_colums(data)
-
-  out <- suppressWarnings(pivot_wider(data, ...))
-  unnest_list_columns(out)
-}
-
-unnest_list_columns <- function(data) {
-  if (utils::packageVersion("tidyr") < "1.1.2") {
-    suppressWarnings(unnest(data))
-  } else {
-    unnest(data, where(is.list))
-  }
-}
-
-tmsr_or_smsp <- function() {
-  dplyr::tribble(
-    ~which_metric, ~green_or_brown,
-    "tmsr_target_production", "brown",
-    "smsp_target_production", "green"
-  )
-}
-
-separate_metric_from_name <- function(data) {
+calculate_targets <- function(data, target_groups){
   data %>%
+    arrange(.data$year) %>%
+    group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
+    mutate(technology_production = sum(.data$production)) %>%
+    group_by(!!!rlang::syms(c(target_groups, "year"))) %>%
+    mutate(sector_production = sum(.data$production)) %>%
+    group_by(!!!rlang::syms(c(target_groups, "technology"))) %>%
     mutate(
-      name = sub("weighted_", "", .data$name),
-      name = sub("(production)_", "\\1-", .data$name),
-      name = sub("(technology_share)_", "\\1-", .data$name)
+      initial_technology_production = first(.data$technology_production),
+      technology_production = NULL
     ) %>%
-    tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
-}
-
-maybe_add_name_ald <- function(data, by_company = FALSE) {
-  out <- data
-
-  if (by_company) {
-    out <- c(data, "name_ald")
-  }
-
-  return(out)
-}
-
-abort_if_has_list_colums <- function(data) {
-  if (has_list_colum(data)) {
-    abort("`data` must have no list column.")
-  }
-
-  invisible(data)
-}
-
-has_list_colum <- function(data) {
-  any(vapply(data, is.list, logical(1)))
+    group_by(!!!rlang::syms(target_groups)) %>%
+    mutate(
+      initial_sector_production = first(.data$sector_production),
+      sector_production = NULL) %>%
+    ungroup() %>%
+    mutate(
+      tmsr_target_production = .data$initial_technology_production *
+        .data$tmsr,
+      smsp_target_production = .data$initial_technology_production +
+        (.data$initial_sector_production * .data$smsp),
+      tmsr = NULL,
+      initial_technology_production = NULL,
+      initial_sector_production = NULL,
+      smsp = NULL
+    ) %>%
+    mutate(
+      smsp_target_production = ifelse(
+        .data$smsp_target_production < 0,
+        0,
+        .data$smsp_target_production
+      )
+    ) %>%
+    pivot_longer(
+      cols = c(
+        "tmsr_target_production", "smsp_target_production"
+      ),
+      names_to = "target_name",
+      values_to = "production_target"
+    )
 }
 
 calculate_ald_benchmark <- function(ald, region_isos, by_company) {
@@ -443,6 +353,39 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
   out
 }
 
+maybe_add_name_ald <- function(data, by_company = FALSE) {
+  out <- data
+
+  if (by_company) {
+    out <- c(data, "name_ald")
+  }
+
+  return(out)
+}
+
+pick_sms_or_tms_target <- function(data, green_or_brown, tmsr_or_smsp){
+  data %>%
+    left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
+    inner_join(
+      green_or_brown,
+      by = c(
+        sector_ald = "sector",
+        technology = "technology",
+        green_or_brown = "green_or_brown"
+      )
+    ) %>%
+    warn_if_has_zero_rows("Joining `r2dii.data::green_or_brown` outputs 0 rows") %>%
+    select(-.data$target_name, -.data$green_or_brown)
+}
+
+tmsr_or_smsp <- function() {
+  dplyr::tribble(
+    ~which_metric, ~green_or_brown,
+    "tmsr_target_production", "brown",
+    "smsp_target_production", "green"
+  )
+}
+
 empty_target_market_share_output <- function() {
   tibble(
     sector = character(0),
@@ -454,6 +397,96 @@ empty_target_market_share_output <- function() {
     production = numeric(0),
     technology_share = numeric(0)
   )
+}
+
+aggregate_by_name_ald <- function(data) {
+  data %>%
+    group_by(
+      .data$loan_size_outstanding_currency,
+      .data$loan_size_credit_limit_currency,
+      .data$name_ald,
+      .data$sector_ald
+    ) %>%
+    summarize(
+      id_loan = first(.data$id_loan),
+      loan_size_outstanding = sum(.data$loan_size_outstanding),
+      loan_size_credit_limit = sum(.data$loan_size_credit_limit)
+    ) %>%
+    ungroup()
+}
+
+format_output_dataframe <- function(data){
+  data <- data %>%
+    pivot_wider2(
+      names_from = .data$scenario,
+      values_from = c(
+        .data$weighted_production_target,
+        .data$weighted_technology_share_target
+      )
+    )
+
+  data <- data %>%
+    rename(
+      weighted_production_projected = .data$weighted_production,
+      weighted_technology_share_projected = .data$weighted_technology_share,
+      sector = .data$sector_ald
+    )
+
+  data %>%
+    pivot_longer(cols = starts_with("weighted_")) %>%
+    filter(!is.na(.data$value)) %>%
+    separate_metric_from_name() %>%
+    pivot_wider2()
+}
+
+separate_metric_from_name <- function(data) {
+  data %>%
+    mutate(
+      name = sub("weighted_", "", .data$name),
+      name = sub("(production)_", "\\1-", .data$name),
+      name = sub("(technology_share)_", "\\1-", .data$name)
+    ) %>%
+    tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
+}
+
+check_valid_columns <- function(data, valid_columns) {
+  invalid_columns <- setdiff(names(data), valid_columns)
+
+  if (length(invalid_columns) != 0) {
+    abort(
+      glue("Loanbook has unexpected names: `{invalid_columns}`."),
+      class = "invalid_columns"
+    )
+  }
+
+  invisible(data)
+}
+
+pivot_wider2 <- function(data, ...) {
+  abort_if_has_list_colums(data)
+
+  out <- suppressWarnings(pivot_wider(data, ...))
+  unnest_list_columns(out)
+}
+
+unnest_list_columns <- function(data) {
+  if (utils::packageVersion("tidyr") < "1.1.2") {
+    suppressWarnings(unnest(data))
+  } else {
+    unnest(data, where(is.list))
+  }
+}
+
+abort_if_has_list_colums <- function(data) {
+  if (has_list_colum(data)) {
+    abort("`data` must have no list column.")
+  }
+
+  invisible(data)
+}
+
+has_list_colum <- function(data) {
+  any(vapply(data, is.list, logical(1)))
 }
 
 reweight_technology_share <- function(data, ...) {
@@ -476,33 +509,4 @@ reweight_technology_share <- function(data, ...) {
       .y = NULL,
     ) %>%
     ungroup()
-}
-
-aggregate_by_name_ald <- function(data) {
-  data %>%
-    group_by(
-      .data$loan_size_outstanding_currency,
-      .data$loan_size_credit_limit_currency,
-      .data$name_ald,
-      .data$sector_ald
-    ) %>%
-    summarize(
-      id_loan = first(.data$id_loan),
-      loan_size_outstanding = sum(.data$loan_size_outstanding),
-      loan_size_credit_limit = sum(.data$loan_size_credit_limit)
-    ) %>%
-    ungroup()
-}
-
-check_valid_columns <- function(data, valid_columns) {
-  invalid_columns <- setdiff(names(data), valid_columns)
-
-  if (length(invalid_columns) != 0) {
-    abort(
-      glue("Loanbook has unexpected names: `{invalid_columns}`."),
-      class = "invalid_columns"
-    )
-  }
-
-  invisible(data)
 }

@@ -344,18 +344,16 @@ target_market_share <- function(data,
     group_by(!!!rlang::syms(c(percent_by_sector_groups, "technology"))) %>%
     mutate(initial_technology_production = first(.data$production, order_by = .data$year)) %>%
     group_by(!!!rlang::syms(c(percent_by_sector_groups, "year"))) %>%
-    mutate(
-      .sector_production = sum(.data$production)
-      ) %>%
+    mutate(.sector_production = sum(.data$production)) %>%
     group_by(!!!rlang::syms(percent_by_sector_groups)) %>%
     mutate(
       initial_sector_production = first(.data$.sector_production),
       .sector_production = NULL
-      ) %>%
+    ) %>%
     ungroup() %>%
     mutate(
       percentage_of_initial_technology_production = (.data$production - .data$initial_technology_production) / .data$initial_technology_production,
-      percentage_of_initial_sector_production  = (.data$production - .data$initial_technology_production) / .data$initial_sector_production,
+      percentage_of_initial_sector_production = (.data$production - .data$initial_technology_production) / .data$initial_sector_production,
       initial_technology_production = NULL,
       initial_sector_production = NULL
     ) %>%
@@ -373,7 +371,7 @@ target_market_share <- function(data,
       -.data$target_name,
       -.data$percentage_of_initial_technology_production,
       -.data$percentage_of_initial_sector_production
-      )
+    )
 
 
 

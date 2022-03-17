@@ -332,7 +332,7 @@ test_that("outputs identical values at start year (#47, #87)", {
   expect_true(all(out$initial_values_are_equal))
 })
 
-test_that("corporate economy benchmark only aggregates ultimate owners (#103)", {
+test_that("corporate economy only aggregates ultimate owners (#103)", {
   out <- target_market_share(
     fake_matched(name_ald = c("company a", "company b")),
     fake_ald(
@@ -351,19 +351,18 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
   expect_equal(corporate_economy_value$production, c(50, 100))
 })
 
-test_that(
-  "`sector` column is not used from data (should only use `sector_ald`) (#178)",
-  {
-    expect_error_free(
-      target_market_share(
-        fake_matched() %>% select(-sector),
-        fake_ald(),
-        fake_scenario(),
-        region_isos_stable
-      )
+test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)", {
+
+  expect_error_free(
+    target_market_share(
+      fake_matched() %>% select(-sector),
+      fake_ald(),
+      fake_scenario(),
+      region_isos_stable
     )
-  }
-)
+  )
+
+})
 
 test_that("outputs known value with `weight_production` (#131)", {
   matched <- fake_matched(
@@ -414,7 +413,7 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   )
 })
 
-test_that("w/ `by_company = TRUE` outputs additional `name_ald` (#291)", {
+test_that("w/ `by_company = TRUE` outputs additional column `name_ald` (#291)", {
   by_company_false <- target_market_share(
     data = fake_matched(),
     ald = fake_ald(),
@@ -669,11 +668,11 @@ test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)",
 
 test_that("w/ multiple loans to same company, `technology_share` sums to one (#218)", {
   shares_sum_to_one <- function(data) {
-    technology_share_sum <- data %>%
+    out <- data %>%
       group_by(sector, metric) %>%
-      summarize(share_sum = sum(technology_share), .groups = "drop")
+      summarize(sum_of_shares = sum(technology_share), .groups = "drop")
 
-    all(technology_share_sum$share_sum == 1)
+    all(out$sum_of_shares == 1)
   }
 
   # multiple loans to same company
@@ -970,8 +969,7 @@ test_that("Initial value of technology_share consistent between `projected` and
   )
 })
 
-test_that("Initial value of technology_share consistent between `projected` and
-          `target_*` (#277)", {
+test_that("with different currencies in input errors with informative message (#279)", {
   matched <- fake_matched(
     loan_size_outstanding_currency = c("USD", "EUR"),
     loan_size_credit_limit_currency = c("USD", "EUR")

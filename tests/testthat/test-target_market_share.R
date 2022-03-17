@@ -53,36 +53,8 @@ test_that("with fake data outputs known value", {
   expect_known_value(out, "ref-target_market_share", update = FALSE)
 })
 
-test_that("with ald lacking crucial columns errors with informative message", {
-
-  expect_error_ald_missing_names <- function(name) {
-    bad_ald <- rename(
-      fake_ald(),
-      bad = name
-    )
-
-    expect_error(
-      class = "missing_names",
-      target_market_share(
-        fake_matched(),
-        bad_ald,
-        fake_scenario()
-      )
-    )
-  }
-
-  expect_error_ald_missing_names("sector")
-  expect_error_ald_missing_names("technology")
-  expect_error_ald_missing_names("year")
-  expect_error_ald_missing_names("name_company")
-  expect_error_ald_missing_names("production")
-  expect_error_ald_missing_names("plant_location")
-  expect_error_ald_missing_names("is_ultimate_owner")
-})
-
-test_that("with scenario lacking crucial columns errors with informative message", {
-
-  expect_error_scenario_missing_names <- function(name) {
+test_that("with data lacking crucial columns errors with informative message", {
+  expect_error_missing_names <- function(name) {
     bad_scenario <- rename(
       fake_scenario(),
       bad = name
@@ -98,14 +70,8 @@ test_that("with scenario lacking crucial columns errors with informative message
     )
   }
 
-  expect_error_scenario_missing_names("sector")
-  expect_error_scenario_missing_names("technology")
-  expect_error_scenario_missing_names("year")
-  expect_error_scenario_missing_names("scenario")
-  expect_error_scenario_missing_names("region")
-  expect_error_scenario_missing_names("tmsr")
-  expect_error_scenario_missing_names("smsp")
-  expect_error_scenario_missing_names("scenario_source")
+  expect_error_missing_names("tmsr")
+  expect_error_missing_names("smsp")
 })
 
 test_that("with NAs in crucial columns errors with informative message", {
@@ -174,17 +140,6 @@ test_that("with NAs in crucial columns errors with informative message", {
 })
 
 test_that("outputs expected names", {
-  expected_output_names <- c(
-    "sector",
-    "technology",
-    "year",
-    "region",
-    "scenario_source",
-    "metric",
-    "production",
-    "technology_share"
-  )
-
   out <- target_market_share(
     fake_matched(),
     fake_ald(),
@@ -192,10 +147,22 @@ test_that("outputs expected names", {
     region_isos_stable
   )
 
-  expect_named(out, expected_output_names)
+  expect_named(
+    out,
+    c(
+      "sector",
+      "technology",
+      "year",
+      "region",
+      "scenario_source",
+      "metric",
+      "production",
+      "technology_share"
+    )
+  )
 })
 
-test_that("with known input outputs target production as expected", {
+test_that("with known input outputs as expected", {
   portfolio <- fake_matched(
     name_ald = "comp1"
   )
@@ -222,7 +189,7 @@ test_that("with known input outputs target production as expected", {
   expect_equal(out_target$production, c(200, 353, 250, 150))
 })
 
-test_that("with known input outputs target production as expected, at company level", {
+test_that("with known input outputs as expected, at company level", {
   portfolio <- fake_matched(
     name_ald = c("comp1", "comp2")
   )
@@ -259,7 +226,7 @@ test_that("with known input outputs target production as expected, at company le
   )
 })
 
-test_that("with known input outputs corporate_economy production as expected", {
+test_that("with known input outputs as expected, ald benchmark", {
   portfolio <- fake_matched()
 
   ald <- fake_ald(
@@ -285,12 +252,12 @@ test_that("with known input outputs corporate_economy production as expected", {
     weight_production = FALSE
   )
 
-  out_corporate_economy <- out %>%
+  out_benchmark <- out %>%
     filter(metric == "corporate_economy") %>%
     arrange(.data$technology, .data$year)
 
   expect_equal(
-    out_corporate_economy$production,
+    out_benchmark$production,
     c(rep(30, 3), rep(90, 3))
   )
 })
@@ -332,7 +299,7 @@ test_that("outputs identical values at start year (#47, #87)", {
   expect_true(all(out$initial_values_are_equal))
 })
 
-test_that("corporate economy only aggregates ultimate owners (#103)", {
+test_that("corporate economy benchmark only aggregates ultimate owners (#103)", {
   out <- target_market_share(
     fake_matched(name_ald = c("company a", "company b")),
     fake_ald(
@@ -351,18 +318,19 @@ test_that("corporate economy only aggregates ultimate owners (#103)", {
   expect_equal(corporate_economy_value$production, c(50, 100))
 })
 
-test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)", {
-
-  expect_error_free(
-    target_market_share(
-      fake_matched() %>% select(-sector),
-      fake_ald(),
-      fake_scenario(),
-      region_isos_stable
+test_that(
+  "`sector` column is not used from data (should only use `sector_ald`) (#178)",
+  {
+    expect_error_free(
+      target_market_share(
+        fake_matched() %>% select(-sector),
+        fake_ald(),
+        fake_scenario(),
+        region_isos_stable
+      )
     )
-  )
-
-})
+  }
+)
 
 test_that("outputs known value with `weight_production` (#131)", {
   matched <- fake_matched(
@@ -413,7 +381,7 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   )
 })
 
-test_that("w/ `by_company = TRUE` outputs additional column `name_ald` (#291)", {
+test_that("w/ `by_company = TRUE` outputs additional `name_ald` (#291)", {
   by_company_false <- target_market_share(
     data = fake_matched(),
     ald = fake_ald(),
@@ -668,11 +636,11 @@ test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)",
 
 test_that("w/ multiple loans to same company, `technology_share` sums to one (#218)", {
   shares_sum_to_one <- function(data) {
-    out <- data %>%
+    technology_share_sum <- data %>%
       group_by(sector, metric) %>%
-      summarize(sum_of_shares = sum(technology_share), .groups = "drop")
+      summarize(share_sum = sum(technology_share), .groups = "drop")
 
-    all(out$sum_of_shares == 1)
+    all(technology_share_sum$share_sum == 1)
   }
 
   # multiple loans to same company
@@ -969,7 +937,8 @@ test_that("Initial value of technology_share consistent between `projected` and
   )
 })
 
-test_that("with different currencies in input errors with informative message (#279)", {
+test_that("Initial value of technology_share consistent between `projected` and
+          `target_*` (#277)", {
   matched <- fake_matched(
     loan_size_outstanding_currency = c("USD", "EUR"),
     loan_size_credit_limit_currency = c("USD", "EUR")

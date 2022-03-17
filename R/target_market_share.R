@@ -110,6 +110,10 @@ target_market_share <- function(data,
     add_green_technologies = TRUE
   )
 
+  if (nrow(data) == 0) {
+    return(empty_target_market_share_output())
+  }
+
   crucial_groups <- c(
     "id_loan",
     "loan_size_outstanding",
@@ -131,13 +135,7 @@ target_market_share <- function(data,
     group_by(!!!rlang::syms(crucial_groups)) %>%
     summarize( production = sum(.data$production))
 
-  if (nrow(data) == 0) {
-    return(empty_target_market_share_output())
-  }
-
-  target_groups <- c("sector_ald", "scenario", "region", "name_ald")
-
-  data <- calculate_targets(data, target_groups)
+  data <- calculate_targets(data)
 
   green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
@@ -190,29 +188,25 @@ target_market_share <- function(data,
       )
   }
 
-  reweighting_groups <- maybe_add_name_ald(
-    c("sector_ald", "region", "scenario", "scenario_source", "year"),
-    by_company
-  )
-
-  data <- reweight_technology_share(
-    data,
-    !!!rlang::syms(reweighting_groups)
-  )
+  data <- reweight_technology_share(data, by_company)
 
   data <- format_output_dataframe(data)
 
   corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
 
-  relevant_corporate_economy <- corporate_economy %>%
-    filter(.data$sector %in% unique(data$sector))
+  relevant_corporate_economy <- filter(
+    corporate_economy,
+    .data$sector %in% unique(data$sector)
+    )
 
   data %>%
     dplyr::bind_rows(relevant_corporate_economy) %>%
     ungroup()
 }
 
-calculate_targets <- function(data, target_groups){
+calculate_targets <- function(data){
+  target_groups <- c("sector_ald", "scenario", "region", "name_ald")
+
   data %>%
     arrange(.data$year) %>%
     group_by(!!!rlang::syms(c(target_groups, "technology", "year"))) %>%
@@ -291,14 +285,12 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
   out
 }
 
-maybe_add_name_ald <- function(data, by_company = FALSE) {
-  out <- data
-
+add_name_ald_if_by_company <- function(data, by_company = FALSE) {
   if (by_company) {
-    out <- c(data, "name_ald")
+    data <- c(data, "name_ald")
   }
 
-  return(out)
+  data
 }
 
 pick_sms_or_tms_target <- function(data, green_or_brown, tmsr_or_smsp){
@@ -491,9 +483,14 @@ has_list_colum <- function(data) {
   any(vapply(data, is.list, logical(1)))
 }
 
-reweight_technology_share <- function(data, ...) {
+reweight_technology_share <- function(data, by_company) {
+  reweighting_groups <- add_name_ald_if_by_company(
+    c("sector_ald", "region", "scenario", "scenario_source", "year"),
+    by_company
+  )
+
   data %>%
-    group_by(...) %>%
+    group_by(!!!rlang::syms(reweighting_groups)) %>%
     mutate(
       .x = sum(.data$weighted_technology_share),
       .y = sum(.data$weighted_technology_share_target),

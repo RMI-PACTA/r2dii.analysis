@@ -53,7 +53,7 @@ test_that("with fake data outputs known value", {
   expect_known_value(out, "ref-target_market_share", update = FALSE)
 })
 
-test_that("with ald data lacking crucial columns errors with useful message", {
+test_that("with ald lacking crucial columns errors with informative message", {
 
   expect_error_ald_missing_names <- function(name) {
     bad_ald <- rename(
@@ -80,8 +80,7 @@ test_that("with ald data lacking crucial columns errors with useful message", {
   expect_error_ald_missing_names("is_ultimate_owner")
 })
 
-
-test_that("with scenario data lacking crucial columns errors with useful message", {
+test_that("with scenario lacking crucial columns errors with informative message", {
 
   expect_error_scenario_missing_names <- function(name) {
     bad_scenario <- rename(
@@ -175,6 +174,17 @@ test_that("with NAs in crucial columns errors with informative message", {
 })
 
 test_that("outputs expected names", {
+  expected_output_names <- c(
+    "sector",
+    "technology",
+    "year",
+    "region",
+    "scenario_source",
+    "metric",
+    "production",
+    "technology_share"
+  )
+
   out <- target_market_share(
     fake_matched(),
     fake_ald(),
@@ -182,22 +192,10 @@ test_that("outputs expected names", {
     region_isos_stable
   )
 
-  expect_named(
-    out,
-    c(
-      "sector",
-      "technology",
-      "year",
-      "region",
-      "scenario_source",
-      "metric",
-      "production",
-      "technology_share"
-    )
-  )
+  expect_named(out, expected_output_names)
 })
 
-test_that("with known input outputs as expected", {
+test_that("with known input outputs target production as expected", {
   portfolio <- fake_matched(
     name_ald = "comp1"
   )
@@ -224,7 +222,7 @@ test_that("with known input outputs as expected", {
   expect_equal(out_target$production, c(200, 353, 250, 150))
 })
 
-test_that("with known input outputs as expected, at company level", {
+test_that("with known input outputs target production as expected, at company level", {
   portfolio <- fake_matched(
     name_ald = c("comp1", "comp2")
   )
@@ -261,7 +259,7 @@ test_that("with known input outputs as expected, at company level", {
   )
 })
 
-test_that("with known input outputs as expected, ald benchmark", {
+test_that("with known input outputs corporate_economy production as expected", {
   portfolio <- fake_matched()
 
   ald <- fake_ald(
@@ -287,12 +285,12 @@ test_that("with known input outputs as expected, ald benchmark", {
     weight_production = FALSE
   )
 
-  out_benchmark <- out %>%
+  out_corporate_economy <- out %>%
     filter(metric == "corporate_economy") %>%
     arrange(.data$technology, .data$year)
 
   expect_equal(
-    out_benchmark$production,
+    out_corporate_economy$production,
     c(rep(30, 3), rep(90, 3))
   )
 })

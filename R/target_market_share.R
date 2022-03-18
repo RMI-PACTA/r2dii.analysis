@@ -204,6 +204,16 @@ target_market_share <- function(data,
   data <- data %>%
     dplyr::bind_rows(relevant_corporate_economy)
 
+  data <- add_percentage_of_initial_production_by_scope(data, green_or_brown, tmsr_or_smsp, by_company)
+
+  data %>%
+    ungroup()
+}
+
+add_percentage_of_initial_production_by_scope <- function(data,
+                                                          green_or_brown,
+                                                          tmsr_or_smsp,
+                                                          by_company) {
   data <- data %>%
     left_join(green_or_brown, by = c("sector", "technology")) %>%
     left_join(tmsr_or_smsp, by = "green_or_brown") %>%
@@ -215,7 +225,7 @@ target_market_share <- function(data,
     by_company
   )
 
-  data <- data %>%
+  data %>%
     group_by(!!!rlang::syms(c(percent_by_sector_groups, "technology"))) %>%
     mutate(
       initial_technology_production = first(.data$production, order_by = .data$year)
@@ -248,8 +258,6 @@ target_market_share <- function(data,
       -.data$percentage_of_initial_sector_production
     )
 
-  data %>%
-    ungroup()
 }
 
 calculate_targets <- function(data) {

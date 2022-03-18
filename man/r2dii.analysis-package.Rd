@@ -4,8 +4,7 @@
 \name{r2dii.analysis-package}
 \alias{r2dii.analysis}
 \alias{r2dii.analysis-package}
-\title{r2dii.analysis: Tools to Measure Climate Scenario Alignment of Corporate Lending
-    Portfolios}
+\title{r2dii.analysis: Measure Climate Scenario Alignment of Corporate Loans}
 \description{
 These tools help you to assess if a corporate lending
     portfolio aligns with climate goals. They summarize key climate

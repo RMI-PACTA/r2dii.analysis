@@ -1,14 +1,11 @@
 destination: docs
-
 development:
   mode: auto
-
 template:
+  bootstrap: 5
   params:
     bootswatch: flatly
-
-url: https://github.com/2DegreesInvesting/r2dii.analysis/
-
+url: https://2degreesinvesting.github.io/r2dii.analysis
 authors:
   Mauro Lepore:
     href: https://github.com/maurolepore/
@@ -16,63 +13,49 @@ authors:
     href: https://github.com/jdhoffa/
   2 Degrees Investing Initiative:
     href: https://2degrees-investing.org/
-
 home:
   links:
   - text: Learn more
     href: https://2degrees-investing.org/
-
 navbar:
-
   type: default
-
   left:
-  - text: "Get started"
+  - text: Get started
     href: articles/r2dii-analysis.html
-
-  - text: "Reference"
+  - text: Reference
     href: reference/index.html
-
-  - text: "Articles"
+  - text: Articles
     menu:
-    - text: "Sectoral Decarbonization Approach (SDA)"
+    - text: Sectoral Decarbonization Approach (SDA)
       href: articles/target-sda.html
-    - text: "Market Share Approach"
+    - text: Market Share Approach
       href: articles/target-market-share.html
-    - text: "Indicator Choices: Weighted Production vs. Weighted Percent Change in Production"
+    - text: 'Indicator Choices: Weighted Production vs. Weighted Percent Change in
+        Production'
       href: articles/production-percent-change.html
-
-  - text: "News"
+  - text: News
     menu:
-    - text: "Releases"
-    - text: "Version 0.1.0"
-      href: https://2degreesinvesting.github.io/posts/2020-09-08-r2dii-analysis-0-1-0-is-now-on-cran/
-    - text: "Version 0.0.1"
-      href: https://2degreesinvesting.github.io/posts/2020-06-29-r2dii-analysis-0-0-1/
-    - text: "----------------------"
-    - text: "Change log"
+    - text: r2dii blog posts
+      href: https://2degreesinvesting.github.io/#category:r2dii
+    - text: '----------------------'
+    - text: Change log
       href: news/index.html
-
   right:
-    - text: "Packages"
-      menu:
-      - text: "r2dii.data"
-        href: https://2degreesinvesting.github.io/r2dii.data
-      - text: "r2dii.match"
-        href: https://2degreesinvesting.github.io/r2dii.match
-      - text: "r2dii.analysis"
-        href: https://2degreesinvesting.github.io/r2dii.analysis
-
-    - icon: fa-github
-      href: https://github.com/2DegreesInvesting/r2dii.analysis
-
+  - text: Packages
+    menu:
+    - text: r2dii.data
+      href: https://2degreesinvesting.github.io/r2dii.data
+    - text: r2dii.match
+      href: https://2degreesinvesting.github.io/r2dii.match
+    - text: r2dii.analysis
+      href: https://2degreesinvesting.github.io/r2dii.analysis
+    - text: r2dii.plot
+      href: https://2degreesinvesting.github.io/r2dii.plot
+  - icon: fa-github
+    href: https://github.com/2DegreesInvesting/r2dii.analysis
 reference:
-
-  - title: Calculate scenario targets
-    contents:
-      - has_concept("functions to calculate scenario targets")
-
-  - title: Utility functions
-    contents:
-      - has_concept("utility functions")
+- title: Calculate scenario targets
+  contents: has_concept("functions to calculate scenario targets")
+- title: Utility functions
+  contents: has_concept("utility functions")
 

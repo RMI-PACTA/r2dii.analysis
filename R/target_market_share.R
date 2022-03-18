@@ -194,17 +194,19 @@ target_market_share <- function(data,
 
   corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
 
+  sectors_with_data <- unique(data$sector)
+
   relevant_corporate_economy <- filter(
     corporate_economy,
-    .data$sector %in% unique(data$sector)
-    )
+    .data$sector %in% sectors_with_data
+  )
 
   data %>%
     dplyr::bind_rows(relevant_corporate_economy) %>%
     ungroup()
 }
 
-calculate_targets <- function(data){
+calculate_targets <- function(data) {
   target_groups <- c("sector_ald", "scenario", "region", "name_ald")
 
   data %>%
@@ -221,7 +223,8 @@ calculate_targets <- function(data){
     group_by(!!!rlang::syms(target_groups)) %>%
     mutate(
       initial_sector_production = first(.data$sector_production),
-      sector_production = NULL) %>%
+      sector_production = NULL
+    ) %>%
     ungroup() %>%
     mutate(
       tmsr_target_production = .data$initial_technology_production *
@@ -293,7 +296,7 @@ add_name_ald_if_by_company <- function(data, by_company = FALSE) {
   data
 }
 
-pick_sms_or_tms_target <- function(data, green_or_brown, tmsr_or_smsp){
+pick_sms_or_tms_target <- function(data, green_or_brown, tmsr_or_smsp) {
   data %>%
     left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
     inner_join(
@@ -345,7 +348,7 @@ aggregate_by_name_ald <- function(data) {
     ungroup()
 }
 
-format_output_dataframe <- function(data){
+format_output_dataframe <- function(data) {
   data <- data %>%
     pivot_wider2(
       names_from = .data$scenario,
@@ -379,7 +382,7 @@ separate_metric_from_name <- function(data) {
     tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
 }
 
-check_input_for_crucial_columns <- function(data, ald, scenario){
+check_input_for_crucial_columns <- function(data, ald, scenario) {
   valid_columns <- c(
     "id_loan",
     "id_direct_loantaker",

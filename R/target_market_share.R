@@ -244,9 +244,7 @@ calculate_targets <- function(data) {
       )
     ) %>%
     pivot_longer(
-      cols = c(
-        "tmsr_target_production", "smsp_target_production"
-      ),
+      cols = c("tmsr_target_production", "smsp_target_production"),
       names_to = "target_name",
       values_to = "production_target"
     )

@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+# r2dii.analysis 0.1.12
+
 * `target_market_share()` now outputs 0 `technology_share`, for companies with 
   0 sectoral production (#306 @Antoine-Lalechere). 
 

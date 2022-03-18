@@ -286,12 +286,12 @@ calculate_ald_benchmark <- function(ald, region_isos, by_company) {
   out
 }
 
-add_name_ald_if_by_company <- function(data, by_company = FALSE) {
+add_name_ald_if_by_company <- function(list, by_company = FALSE) {
   if (by_company) {
-    data <- c(data, "name_ald")
+    list <- c(list, "name_ald")
   }
 
-  data
+  list
 }
 
 pick_sms_or_tms_target <- function(data, green_or_brown, tmsr_or_smsp) {

@@ -133,7 +133,7 @@ target_market_share <- function(data,
 
   data <- data %>%
     group_by(!!!rlang::syms(crucial_groups)) %>%
-    summarize( production = sum(.data$production))
+    summarize(production = sum(.data$production))
 
   data <- calculate_targets(data)
 

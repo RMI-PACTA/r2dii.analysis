@@ -192,12 +192,6 @@ target_market_share <- function(data,
 
   data <- format_output_dataframe(data)
 
-  data <- data %>%
-    left_join(green_or_brown, by = c("sector", "technology")) %>%
-    left_join(tmsr_or_smsp, by = "green_or_brown") %>%
-    rename(target_name = .data$which_metric) %>%
-    select(-.data$green_or_brown)
-
   corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
 
   sectors_with_data <- unique(data$sector)
@@ -207,14 +201,14 @@ target_market_share <- function(data,
     .data$sector %in% sectors_with_data
   )
 
-  relevant_corporate_economy <- relevant_corporate_economy %>%
+  data <- data %>%
+    dplyr::bind_rows(relevant_corporate_economy)
+
+  data <- data %>%
     left_join(green_or_brown, by = c("sector", "technology")) %>%
     left_join(tmsr_or_smsp, by = "green_or_brown") %>%
     rename(target_name = .data$which_metric) %>%
     select(-.data$green_or_brown)
-
-  data <- data %>%
-    dplyr::bind_rows(relevant_corporate_economy)
 
   percent_by_sector_groups <- maybe_add_name_ald(
     c("sector", "region", "scenario_source", "metric"),

@@ -72,6 +72,13 @@
 #'   )
 #'   out
 #' }
+#'
+
+if ( is.double(typeof(ald_demo$emission_factor)) ) stop(
+  "The column emission_factor does not have the type 'double'.
+      The user is advised to change the variable in the column emission_factor to avoid further errors."
+)
+
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,

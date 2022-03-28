@@ -1,6 +1,6 @@
 library(r2dii.data)
 
-test_that("with bad `data` errors with informative message", {
+test_that("w/ bad `data`, errors with informative message", {
   expect_error(target_market_share(
     "bad",
     fake_ald(),
@@ -42,7 +42,7 @@ test_that("warns when input data is grouped", {
   )
 })
 
-test_that("with fake data outputs known value", {
+test_that("w/ fake data, outputs known value", {
   out <- target_market_share(
     fake_matched(),
     fake_ald(),
@@ -53,7 +53,7 @@ test_that("with fake data outputs known value", {
   expect_known_value(out, "ref-target_market_share", update = FALSE)
 })
 
-test_that("with ald lacking crucial columns errors with informative message", {
+test_that("w/ ald lacking crucial columns, errors with informative message", {
 
   expect_error_ald_missing_names <- function(name) {
     bad_ald <- rename(
@@ -80,7 +80,7 @@ test_that("with ald lacking crucial columns errors with informative message", {
   expect_error_ald_missing_names("is_ultimate_owner")
 })
 
-test_that("with scenario lacking crucial columns errors with informative message", {
+test_that("w/ scenario lacking crucial columns, errors with informative message", {
 
   expect_error_scenario_missing_names <- function(name) {
     bad_scenario <- rename(
@@ -108,7 +108,7 @@ test_that("with scenario lacking crucial columns errors with informative message
   expect_error_scenario_missing_names("scenario_source")
 })
 
-test_that("with NAs in crucial columns errors with informative message", {
+test_that("w/ NAs in crucial columns, errors with informative message", {
   expect_error_crucial_NAs_portfolio <- function(name) {
     data <- fake_matched(
       id_loan = c("i1", "i2", "i1", "i2"),
@@ -195,7 +195,7 @@ test_that("outputs expected names", {
   expect_named(out, expected_output_names)
 })
 
-test_that("with known input outputs target production as expected", {
+test_that("w/ known input, outputs target production as expected", {
   portfolio <- fake_matched(
     name_ald = "comp1"
   )
@@ -222,7 +222,7 @@ test_that("with known input outputs target production as expected", {
   expect_equal(out_target$production, c(200, 353, 250, 150))
 })
 
-test_that("with known input outputs target production as expected, at company level", {
+test_that("w/ known input, outputs target production as expected, at company level", {
   portfolio <- fake_matched(
     name_ald = c("comp1", "comp2")
   )
@@ -259,7 +259,7 @@ test_that("with known input outputs target production as expected, at company le
   )
 })
 
-test_that("with known input outputs corporate_economy production as expected", {
+test_that("w/ known input, outputs corporate_economy production as expected", {
   portfolio <- fake_matched()
 
   ald <- fake_ald(
@@ -458,7 +458,7 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
   expect_equal(diff_names, character(0))
 })
 
-test_that("with known input outputs `technology_share` as expected (#184, #262)", {
+test_that("w/ known input, outputs `technology_share` as expected (#184, #262)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
     loan_size_outstanding = c(1, 3),
@@ -572,7 +572,7 @@ test_that("with known input outputs `technology_share` as expected (#184, #262)"
   )
 })
 
-test_that("w/ some region missing some scenario outputs expected `production`
+test_that("w/ some region missing some scenario, outputs expected `production`
           values (#203)", {
   scenario <- fake_scenario(
     scenario = c("cps", "sds", "sds"),
@@ -732,7 +732,7 @@ test_that("for one company with multiple loans of different size, unweighted
   expect_equal(projected$production, fake_ald()$production)
 })
 
-test_that("with bad column errors with informative message (#267)", {
+test_that("w/ bad column, errors with informative message (#267)", {
   bad_matched <- fake_matched(
     bad_column = "bad"
   )
@@ -969,7 +969,7 @@ test_that("Initial value of technology_share consistent between `projected` and
   )
 })
 
-test_that("with different currencies in input errors with informative message (#279)", {
+test_that("w/ different currencies in input, errors with informative message (#279)", {
   matched <- fake_matched(
     loan_size_outstanding_currency = c("USD", "EUR"),
     loan_size_credit_limit_currency = c("USD", "EUR")
@@ -1072,7 +1072,7 @@ test_that("technology_share is calculated per region (#315)", {
   )
 })
 
-test_that("Input with only brown technologies, outputs both green  and brown
+test_that("input with only brown technologies, outputs both green  and brown
           technologies (#318)", {
   scenario <- fake_scenario(
     year = rep(c(2020, 2025), 2),
@@ -1102,7 +1102,7 @@ test_that("Input with only brown technologies, outputs both green  and brown
   )
 })
 
-test_that("Input with unexpected sectors errors gracefully (#329)", {
+test_that("input with unexpected sectors errors gracefully (#329)", {
   matched <- fake_matched(
     sector_ald = "a"
   )

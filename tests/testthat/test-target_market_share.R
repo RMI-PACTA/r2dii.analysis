@@ -920,7 +920,7 @@ test_that("projects technology share as 'production / total production' when
   )
 })
 
-test_that("Initial value of technology_share consistent between `projected` and
+test_that("initial value of technology_share consistent between `projected` and
           `target_*` (#277)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
@@ -1001,7 +1001,7 @@ test_that("w/ different currencies in input, errors with informative message (#2
   )
 })
 
-test_that("Input with only green technologies, outputs only green technologies
+test_that("input with only green technologies, outputs only green technologies
           (#318)", {
   scenario <- fake_scenario(
     year = rep(c(2020, 2025), 2),
@@ -1128,8 +1128,7 @@ test_that("input with unexpected sectors errors gracefully (#329)", {
   )
 })
 
-test_that("`target_market_share` only outputs sectors that are present in the
-          input `data` (#329)", {
+test_that("outputs only sectors that are present in the input `data` (#329)", {
   matched <- fake_matched(
     sector_ald = "automotive"
   )
@@ -1156,7 +1155,7 @@ test_that("`target_market_share` only outputs sectors that are present in the
   )
 })
 
-test_that("`target_market_share` outputs only positive values of `production`(#336)", {
+test_that("utputs only positive values of `production`(#336)", {
   ald <- fake_ald(
     year = c(2025, 2026)
   )
@@ -1177,8 +1176,7 @@ test_that("`target_market_share` outputs only positive values of `production`(#3
   expect_false(any(out$production < 0))
 })
 
-test_that("`target_market_share` outputs as expected for companies with 0
-          initial sectoral production (#306)", {
+test_that("outputs as expected for companies with 0 initial sectoral production (#306)", {
   ald <- fake_ald(
     production = c(0, 1),
     year = c(2020, 2021)
@@ -1222,7 +1220,7 @@ test_that("outputs columns `percent_change_by_scope` and `scope`", {
   expect_equal(setdiff(expected_added_columns, names(out)), character(0))
 })
 
-test_that("with known input outputs `percent_of_initial_production_by_scope` as
+test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
           expected, at portfolio level", {
   portfolio <- fake_matched(
     name_ald = c("comp1", "comp2")
@@ -1274,7 +1272,7 @@ test_that("with known input outputs `percent_of_initial_production_by_scope` as
   )
 })
 
-test_that("with known input outputs `percent_of_initial_production_by_scope` as
+test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
           expected, at company level", {
   portfolio <- fake_matched(
     name_ald = c("comp1", "comp2")

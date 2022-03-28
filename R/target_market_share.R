@@ -220,7 +220,7 @@ add_percentage_of_initial_production_by_scope <- function(data,
     rename(target_name = .data$which_metric) %>%
     select(-.data$green_or_brown)
 
-  percent_by_sector_groups <- maybe_add_name_ald(
+  percent_by_sector_groups <- add_name_ald_if_by_company(
     c("sector", "region", "scenario_source", "metric"),
     by_company
   )

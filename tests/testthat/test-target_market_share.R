@@ -1151,7 +1151,7 @@ test_that("outputs only sectors that are present in the input `data` (#329)", {
   )
 })
 
-test_that("utputs only positive values of `production`(#336)", {
+test_that("outputs only positive values of `production`(#336)", {
   ald <- fake_ald(
     year = c(2025, 2026)
   )

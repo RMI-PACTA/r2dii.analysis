@@ -257,7 +257,6 @@ add_percentage_of_initial_production_by_scope <- function(data,
       -.data$percentage_of_initial_technology_production,
       -.data$percentage_of_initial_sector_production
     )
-
 }
 
 calculate_targets <- function(data) {

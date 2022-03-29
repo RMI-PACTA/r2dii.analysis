@@ -36,9 +36,10 @@ outputting production, weighted by relative loan-size. Set to \code{FALSE} to
 output the unweighted production values.}
 }
 \value{
-A tibble including the summarized columns \code{metric}, \code{production} and
-\code{technology_share}. If \code{by_company = TRUE}, the output will also have the
-column \code{name_ald}.
+A tibble including the summarized columns \code{metric}, \code{production},
+\code{technology_share}, \code{percentage_of_initial_production_by_scope} and
+\code{scope}. If \code{by_company = TRUE}, the output will also have the column
+\code{name_ald}.
 }
 \description{
 This function calculates the portfolio-level production targets, as

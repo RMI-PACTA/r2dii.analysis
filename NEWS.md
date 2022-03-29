@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now outputs two new columns, `percentage_of_initial_production_by_scope` 
+and `scope` (ADO #4143). 
+
 # r2dii.analysis 0.1.12
 
 * `target_market_share()` now outputs 0 `technology_share`, for companies with 

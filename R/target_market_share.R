@@ -20,9 +20,10 @@
 #' outputting production, weighted by relative loan-size. Set to `FALSE` to
 #' output the unweighted production values.
 #'
-#' @return A tibble including the summarized columns `metric`, `production` and
-#'   `technology_share`. If `by_company = TRUE`, the output will also have the
-#'   column `name_ald`.
+#' @return A tibble including the summarized columns `metric`, `production`,
+#'   `technology_share`, `percentage_of_initial_production_by_scope` and
+#'   `scope`. If `by_company = TRUE`, the output will also have the column
+#'   `name_ald`.
 #' @export
 #'
 #' @family functions to calculate scenario targets
@@ -201,9 +202,62 @@ target_market_share <- function(data,
     .data$sector %in% sectors_with_data
   )
 
+  data <- data %>%
+    dplyr::bind_rows(relevant_corporate_economy)
+
+  data <- add_percentage_of_initial_production_by_scope(data, green_or_brown, tmsr_or_smsp, by_company)
+
   data %>%
-    dplyr::bind_rows(relevant_corporate_economy) %>%
     ungroup()
+}
+
+add_percentage_of_initial_production_by_scope <- function(data,
+                                                          green_or_brown,
+                                                          tmsr_or_smsp,
+                                                          by_company) {
+  data <- data %>%
+    left_join(green_or_brown, by = c("sector", "technology")) %>%
+    left_join(tmsr_or_smsp, by = "green_or_brown") %>%
+    rename(target_name = .data$which_metric) %>%
+    select(-.data$green_or_brown)
+
+  percent_by_sector_groups <- add_name_ald_if_by_company(
+    c("sector", "region", "scenario_source", "metric"),
+    by_company
+  )
+
+  data %>%
+    group_by(!!!rlang::syms(c(percent_by_sector_groups, "technology"))) %>%
+    mutate(
+      initial_technology_production = first(.data$production, order_by = .data$year)
+    ) %>%
+    group_by(!!!rlang::syms(c(percent_by_sector_groups, "year"))) %>%
+    mutate(sector_production = sum(.data$production)) %>%
+    group_by(!!!rlang::syms(percent_by_sector_groups)) %>%
+    mutate(initial_sector_production = first(.data$sector_production)) %>%
+    ungroup() %>%
+    mutate(
+      percentage_of_initial_technology_production = (.data$production - .data$initial_technology_production) / .data$initial_technology_production,
+      percentage_of_initial_sector_production = (.data$production - .data$initial_technology_production) / .data$initial_sector_production
+    ) %>%
+    mutate(
+      scope = dplyr::case_when(
+        target_name == "tmsr_target_production" ~ "technology",
+        target_name == "smsp_target_production" ~ "sector"
+      ),
+      percentage_of_initial_production_by_scope = dplyr::case_when(
+        scope == "technology" ~ percentage_of_initial_technology_production,
+        scope == "sector" ~ percentage_of_initial_sector_production
+      )
+    ) %>%
+    select(
+      -.data$target_name,
+      -.data$sector_production,
+      -.data$initial_technology_production,
+      -.data$initial_sector_production,
+      -.data$percentage_of_initial_technology_production,
+      -.data$percentage_of_initial_sector_production
+    )
 }
 
 calculate_targets <- function(data) {

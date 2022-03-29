@@ -54,7 +54,6 @@ test_that("w/ fake data, outputs known value", {
 })
 
 test_that("w/ ald lacking crucial columns, errors with informative message", {
-
   expect_error_ald_missing_names <- function(name) {
     bad_ald <- rename(
       fake_ald(),
@@ -81,7 +80,6 @@ test_that("w/ ald lacking crucial columns, errors with informative message", {
 })
 
 test_that("w/ scenario lacking crucial columns, errors with informative message", {
-
   expect_error_scenario_missing_names <- function(name) {
     bad_scenario <- rename(
       fake_scenario(),
@@ -182,7 +180,9 @@ test_that("outputs expected names", {
     "scenario_source",
     "metric",
     "production",
-    "technology_share"
+    "technology_share",
+    "scope",
+    "percentage_of_initial_production_by_scope"
   )
 
   out <- target_market_share(
@@ -352,7 +352,6 @@ test_that("corporate economy only aggregates ultimate owners (#103)", {
 })
 
 test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)", {
-
   expect_error_free(
     target_market_share(
       fake_matched() %>% select(-sector),
@@ -361,7 +360,6 @@ test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)"
       region_isos_stable
     )
   )
-
 })
 
 test_that("outputs known value with `weight_production` (#131)", {
@@ -848,7 +846,7 @@ test_that("`technology_share` outputs consistently when multiple
 })
 
 test_that("projects technology share as 'production / total production' when
-          computing by company, unweighted by ralative loan size (#288)", {
+          computing by company, unweighted by relative loan size (#288)", {
   .production <- c(1, 10)
   .year <- 2022
   .company <- "toyota motor corp"
@@ -918,7 +916,7 @@ test_that("projects technology share as 'production / total production' when
   )
 })
 
-test_that("Initial value of technology_share consistent between `projected` and
+test_that("initial value of technology_share consistent between `projected` and
           `target_*` (#277)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
@@ -999,7 +997,7 @@ test_that("w/ different currencies in input, errors with informative message (#2
   )
 })
 
-test_that("Input with only green technologies, outputs only green technologies
+test_that("input with only green technologies, outputs only green technologies
           (#318)", {
   scenario <- fake_scenario(
     year = rep(c(2020, 2025), 2),
@@ -1126,8 +1124,7 @@ test_that("input with unexpected sectors errors gracefully (#329)", {
   )
 })
 
-test_that("`target_market_share` only outputs sectors that are present in the
-          input `data` (#329)", {
+test_that("outputs only sectors that are present in the input `data` (#329)", {
   matched <- fake_matched(
     sector_ald = "automotive"
   )
@@ -1154,7 +1151,7 @@ test_that("`target_market_share` only outputs sectors that are present in the
   )
 })
 
-test_that("`target_market_share` outputs only positive values of `production`(#336)", {
+test_that("outputs only positive values of `production`(#336)", {
   ald <- fake_ald(
     year = c(2025, 2026)
   )
@@ -1175,8 +1172,7 @@ test_that("`target_market_share` outputs only positive values of `production`(#3
   expect_false(any(out$production < 0))
 })
 
-test_that("`target_market_share` outputs as expected for companies with 0
-          initial sectoral production (#306)", {
+test_that("outputs as expected for companies with 0 initial sectoral production (#306)", {
   ald <- fake_ald(
     production = c(0, 1),
     year = c(2020, 2021)
@@ -1205,4 +1201,122 @@ test_that("`target_market_share` outputs as expected for companies with 0
   expect_equal(out$corporate_economy$technology_share, c(0, 1))
   expect_equal(out$projected$technology_share, c(0, 1))
   expect_equal(out$target_sds$technology_share, c(0, 0))
+})
+
+test_that("outputs columns `percent_change_by_scope` and `scope`", {
+  out <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_stable
+  )
+
+  expected_added_columns <- c("scope", "percentage_of_initial_production_by_scope")
+
+  expect_equal(setdiff(expected_added_columns, names(out)), character(0))
+})
+
+test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
+          expected, at portfolio level", {
+  portfolio <- fake_matched(
+    name_ald = c("comp1", "comp2")
+  )
+
+  ald <- fake_ald(
+    technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
+    name_company = paste0("comp", c(rep(1, 4), rep(2, 4))),
+    production = c(10, 30, 20, 20, 90, 95, 100, 100)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021),
+    tmsr = c(1, 1, 1.85, 0.6),
+    smsp = c(0, 0, 0.34, -0.2)
+  )
+
+  out <- target_market_share(
+    portfolio,
+    ald,
+    scenario,
+    region_isos_stable,
+    by_company = FALSE,
+    weight_production = FALSE
+  )
+
+  out_percent <- out %>%
+    filter(.$year == 2021) %>%
+    split(.$metric)
+
+  expect_equal(
+    out_percent$corporate_economy$percentage_of_initial_production_by_scope,
+    c(0.089, -0.040),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out_percent$projected$percentage_of_initial_production_by_scope,
+    c(0.089, -0.040),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out_percent$target_sds$percentage_of_initial_production_by_scope,
+    c(0.34, -0.40),
+    tolerance = 1e-3
+  )
+})
+
+test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
+          expected, at company level", {
+  portfolio <- fake_matched(
+    name_ald = c("comp1", "comp2")
+  )
+
+  ald <- fake_ald(
+    technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
+    name_company = paste0("comp", c(rep(1, 4), rep(2, 4))),
+    production = c(10, 30, 20, 20, 90, 95, 100, 100)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("electric", "ice", "electric", "ice"),
+    year = c(2020, 2020, 2021, 2021),
+    tmsr = c(1, 1, 1.85, 0.6),
+    smsp = c(0, 0, 0.34, -0.2)
+  )
+
+  out <- target_market_share(
+    portfolio,
+    ald,
+    scenario,
+    region_isos_stable,
+    by_company = TRUE,
+    weight_production = FALSE
+  )
+
+  out_percent <- out %>%
+    filter(.$year == 2021) %>%
+    arrange(.$name_ald) %>%
+    split(.$metric)
+
+  expect_equal(
+    out_percent$corporate_economy$percentage_of_initial_production_by_scope,
+    c(0.089, -0.040),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out_percent$projected$percentage_of_initial_production_by_scope,
+    c(0.25, -0.333, 0.054, 0.053),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out_percent$target_sds$percentage_of_initial_production_by_scope,
+    c(0.34, -0.40, 0.34, -0.40),
+    tolerance = 1e-3
+  )
 })

@@ -15,7 +15,7 @@ test_that("outputs a tibble", {
     fake_scenario(),
     region_isos_stable
   )
-  expect_is(out, "tbl_df")
+  expect_s3_class(out, "tbl_df")
 })
 
 test_that("outputs is ungrouped", {
@@ -49,15 +49,14 @@ test_that("w/ fake data, outputs known value", {
     fake_scenario(),
     region_isos_stable
   )
-
-  expect_known_value(out, "ref-target_market_share", update = FALSE)
+  expect_snapshot(out)
 })
 
 test_that("w/ ald lacking crucial columns, errors with informative message", {
   expect_error_ald_missing_names <- function(name) {
     bad_ald <- rename(
       fake_ald(),
-      bad = name
+      bad = all_of(name)
     )
 
     expect_error(
@@ -83,7 +82,7 @@ test_that("w/ scenario lacking crucial columns, errors with informative message"
   expect_error_scenario_missing_names <- function(name) {
     bad_scenario <- rename(
       fake_scenario(),
-      bad = name
+      bad = all_of(name)
     )
 
     expect_error(
@@ -326,7 +325,9 @@ test_that("outputs identical values at start year (#47, #87)", {
   ) %>%
     filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
-    summarize(distinct_intial_values = n_distinct(production)) %>%
+    summarize(
+      distinct_intial_values = n_distinct(production), .groups = "drop"
+    ) %>%
     mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
@@ -487,10 +488,11 @@ test_that("w/ known input, outputs `technology_share` as expected (#184, #262)",
     c(0.6875, 0.3125)
   )
 
+  FIXME <- 1e-2  # Do we need 1e-3?
   expect_equal(
     out$corporate_economy$technology_share,
     c(0.666, 0.333),
-    tolerance = 1e-3
+    tolerance = FIXME
   )
 
   expect_equal(
@@ -1252,19 +1254,19 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
   expect_equal(
     out_percent$corporate_economy$percentage_of_initial_production_by_scope,
     c(0.089, -0.040),
-    tolerance = 1e-3
+    tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$projected$percentage_of_initial_production_by_scope,
     c(0.089, -0.040),
-    tolerance = 1e-3
+    tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$target_sds$percentage_of_initial_production_by_scope,
     c(0.34, -0.40),
-    tolerance = 1e-3
+    tolerance = 1e-2
   )
 })
 
@@ -1305,18 +1307,18 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
   expect_equal(
     out_percent$corporate_economy$percentage_of_initial_production_by_scope,
     c(0.089, -0.040),
-    tolerance = 1e-3
+    tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$projected$percentage_of_initial_production_by_scope,
     c(0.25, -0.333, 0.054, 0.053),
-    tolerance = 1e-3
+    tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$target_sds$percentage_of_initial_production_by_scope,
     c(0.34, -0.40, 0.34, -0.40),
-    tolerance = 1e-3
+    tolerance = 1e-2
   )
 })

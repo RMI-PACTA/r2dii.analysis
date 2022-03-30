@@ -9,7 +9,7 @@ library(fs)
 library(withr)
 
 # Access older version of r2dii.data without changing current version
-temp_lib <- tempdir()
+temp_lib <- local_tempdir()
 fs::dir_create(temp_lib)
 
 withr::with_libpaths(temp_lib, {
@@ -24,6 +24,9 @@ region_isos_stable <- region_isos_demo
 nace_classification <- nace_classification %>%
   select(.data$code, .data$sector, .data$borderline)
 
+loanbook_demo <- loanbook_demo %>%
+  mutate(across(.data$sector_classification_direct_loantaker, as.character))
+
 loanbook_stable <- left_join(
   loanbook_demo, nace_classification,
   by = c(sector_classification_direct_loantaker = "code")
@@ -35,5 +38,3 @@ usethis::use_data(
   internal = TRUE,
   overwrite = TRUE
 )
-
-fs::dir_delete(temp_lib)

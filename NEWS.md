@@ -1,5 +1,30 @@
 # r2dii.analysis (development version)
 
+* `target_market_share()` now outputs two new columns, `percentage_of_initial_production_by_scope` 
+and `scope` (ADO #4143). 
+
+# r2dii.analysis 0.1.12
+
+* `target_market_share()` now outputs 0 `technology_share`, for companies with 
+  0 sectoral production (#306 @Antoine-Lalechere). 
+
+* `target_sda()` now filters `scenario` start year to be consistent with `ald` 
+  start year (#346 @waltjl). 
+
+# r2dii.analysis 0.1.10
+
+* `target_market_share()` now sets all negative `smsp` targets to zero (#336). 
+
+* `target_market_share()` now only outputs `sector`s that are present in all 
+  input datasets (#329). 
+
+* `target_market_share()` now always adds targets for green technologies 
+  (defined by `r2dii.data::green_or_brown`), even when not present in input 
+  `data` (#318 @Antoine-Lalechere). 
+
+* `target_market_share()` now correctly groups by `region` when calculating 
+  `technology_share` (#315 @Antoine-Lalechere). 
+
 # r2dii.analysis 0.1.9
 
 * `target_sda()` now only outputs `sector` values that are present in the input 

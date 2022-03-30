@@ -4,17 +4,28 @@
 \alias{join_ald_scenario}
 \title{Join a data-loanbook object to the ald and scenario}
 \usage{
-join_ald_scenario(data, ald, scenario, region_isos = r2dii.data::region_isos)
+join_ald_scenario(
+  data,
+  ald,
+  scenario,
+  region_isos = r2dii.data::region_isos,
+  add_green_technologies = FALSE
+)
 }
 \arguments{
 \item{data}{A data frame like the output of
-\code{\link[r2dii.match:prioritize]{r2dii.match::prioritize()}}.}
+\code{r2dii.match::prioritize}.}
 
 \item{ald}{An asset level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{scenario}{A scenario data frame like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
 
 \item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
+
+\item{add_green_technologies}{Logical vector of length 1. \code{FALSE} defaults to
+outputting only technologies that are present in both \code{data} and \code{ald}. Set
+to \code{FALSE} to add rows of all possible green technologies (with 0
+production).}
 }
 \value{
 Returns a fully joined data frame, linking portfolio, ald and
@@ -28,21 +39,22 @@ the analysis.
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.data")
 
-library(r2dii.data)
-library(r2dii.match)
+if (installed) {
+  library(r2dii.data)
+  library(r2dii.match)
 
-valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
-  # WARNING: Remember to validate matches (see `?prioritize`)
-  prioritize()
+  valid_matches <- match_name(loanbook_demo, ald_demo) \%>\%
+    # WARNING: Remember to validate matches (see `?prioritize`)
+    prioritize()
 
-valid_matches \%>\%
-  join_ald_scenario(
-    ald = ald_demo,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo
-  )
+  valid_matches \%>\%
+    join_ald_scenario(
+      ald = ald_demo,
+      scenario = scenario_demo_2020,
+      region_isos = region_isos_demo
+    )
+}
 }
 \seealso{
 Other utility functions: 

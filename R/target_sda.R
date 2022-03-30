@@ -10,7 +10,7 @@
 #' @template ignores-existing-groups
 #'
 #' @param data A dataframe like the output of
-#'   [r2dii.match::prioritize()].
+#'   `r2dii.match::prioritize()`.
 #' @param ald An asset-level data frame like [r2dii.data::ald_demo].
 #' @param co2_intensity_scenario A scenario data frame like
 #'   [r2dii.data::co2_intensity_scenario_demo].
@@ -34,44 +34,44 @@
 #' @examples
 #' installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
 #'   requireNamespace("r2dii.data", quietly = TRUE)
-#' if (!installed) stop("Please install r2dii.match and r2dii.data")
+#' if (installed) {
+#'   library(r2dii.match)
+#'   library(r2dii.data)
 #'
-#' library(r2dii.match)
-#' library(r2dii.data)
+#'   # Example datasets from r2dii.data
+#'   loanbook <- head(loanbook_demo, 150)
+#'   ald <- head(ald_demo, 100)
 #'
-#' # Example datasets from r2dii.data
-#' loanbook <- head(loanbook_demo, 150)
-#' ald <- head(ald_demo, 100)
+#'   co2_scenario <- co2_intensity_scenario_demo
 #'
-#' co2_scenario <- co2_intensity_scenario_demo
+#'   # WARNING: Remember to validate matches (see `?prioritize`)
+#'   matched <- prioritize(match_name(loanbook, ald))
 #'
-#' # WARNING: Remember to validate matches (see `?prioritize`)
-#' matched <- prioritize(match_name(loanbook, ald))
+#'   # You may need to clean your data
+#'   anyNA(ald$emission_factor)
+#'   try(target_sda(matched, ald, co2_intensity_scenario = co2_scenario))
 #'
-#' # You may need to clean your data
-#' anyNA(ald$emission_factor)
-#' try(target_sda(matched, ald, co2_intensity_scenario = co2_scenario))
+#'   ald2 <- subset(ald, !is.na(emission_factor))
+#'   anyNA(ald2$emission_factor)
 #'
-#' ald2 <- subset(ald, !is.na(emission_factor))
-#' anyNA(ald2$emission_factor)
+#'   out <- target_sda(matched, ald2, co2_intensity_scenario = co2_scenario)
 #'
-#' out <- target_sda(matched, ald2, co2_intensity_scenario = co2_scenario)
+#'   # The output includes the portfolio's actual projected emissions factors, the
+#'   # scenario pathway emissions factors, and the portfolio's target emissions
+#'   # factors.
+#'   out
 #'
-#' # The output includes the portfolio's actual projected emissions factors, the
-#' # scenario pathway emissions factors, and the portfolio's target emissions
-#' # factors.
-#' out
+#'   # Split-view by metric
+#'   split(out, out$emission_factor_metric)
 #'
-#' # Split-view by metric
-#' split(out, out$emission_factor_metric)
-#'
-#' # Calculate company-level targets
-#' out <- target_sda(
-#'   matched, ald2,
-#'   co2_intensity_scenario = co2_scenario,
-#'   by_company = TRUE
-#' )
-#' out
+#'   # Calculate company-level targets
+#'   out <- target_sda(
+#'     matched, ald2,
+#'     co2_intensity_scenario = co2_scenario,
+#'     by_company = TRUE
+#'   )
+#'   out
+#' }
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
@@ -255,7 +255,7 @@ calculate_market_average <- function(data) {
 compute_ald_adjusted_scenario <- function(data, corporate_economy) {
   corporate_economy_baseline <- corporate_economy %>%
     group_by(.data$sector) %>%
-    filter(.data$year == min(.data$year)) %>%
+    filter(.data$year == min(.data$year, na.rm = TRUE)) %>%
     select(
       .data$sector,
       baseline_emission_factor = .data$emission_factor_corporate_economy
@@ -263,6 +263,7 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy) {
     ungroup()
 
   data %>%
+    filter(.data$year >= min(corporate_economy$year)) %>%
     inner_join(corporate_economy_baseline, by = "sector") %>%
     group_by(.data$scenario, .data$sector) %>%
     arrange(.data$year) %>%

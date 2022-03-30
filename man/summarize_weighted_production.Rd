@@ -39,29 +39,29 @@ companies would cause percent-change percentage to be infinite, which is wrong.
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE)
-if (!installed) stop("Please install r2dii.match and r2dii.data")
+if (installed) {
+  library(r2dii.data)
+  library(r2dii.match)
 
-library(r2dii.data)
-library(r2dii.match)
+  loanbook <- head(loanbook_demo, 150)
+  ald <- head(ald_demo, 100)
+  master <- loanbook \%>\%
+    match_name(ald) \%>\%
+    prioritize() \%>\%
+    join_ald_scenario(
+      ald = ald,
+      scenario = scenario_demo_2020,
+      region_isos = region_isos_demo
+    )
 
-loanbook <- head(loanbook_demo, 150)
-ald <- head(ald_demo, 100)
-master <- loanbook \%>\%
-  match_name(ald) \%>\%
-  prioritize() \%>\%
-  join_ald_scenario(
-    ald = ald,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo
-  )
+  summarize_weighted_production(master)
 
-summarize_weighted_production(master)
+  summarize_weighted_production(master, use_credit_limit = TRUE)
 
-summarize_weighted_production(master, use_credit_limit = TRUE)
+  summarize_weighted_percent_change(master)
 
-summarize_weighted_percent_change(master)
-
-summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+  summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+}
 }
 \seealso{
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.

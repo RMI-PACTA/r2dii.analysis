@@ -1,6 +1,5 @@
+library(dplyr)
 library(r2dii.data)
-library(r2dii.match)
-library(dplyr, warn.conflicts = FALSE)
 
 test_that("with fake data outputs known value", {
   out <- target_sda(
@@ -595,7 +594,8 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
   )
 })
 
-test_that("doesn't output NAs if ald and scenario years are misaligned (#307)", {
+test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
+          #346)", {
   matched <- fake_matched(
     sector_ald = "cement"
   )
@@ -606,8 +606,8 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307)", 
   )
 
   co2_scenario <- fake_co2_scenario(
-    emission_factor = c(1, 0.6),
-    year = c(2025, 2026)
+    emission_factor = c(1, 0.6, 0.4),
+    year = c(2023, 2025, 2026)
   )
 
   out <- target_sda(matched, ald, co2_scenario)

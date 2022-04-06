@@ -205,7 +205,7 @@ target_sda <- function(data,
 
 check_type_emission_factor <- function(ald) {
   if (!is.double(ald$emission_factor)) {
-  abort("The column emission_factor does not have the type double", class = "crucial_column_wrong_type")
+  abort("The column emission_factor of the asset-level data frame (`ald`) does not have the type double", class = "crucial_column_wrong_type")
   }
 }
 

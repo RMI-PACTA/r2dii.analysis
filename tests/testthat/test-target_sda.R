@@ -622,7 +622,7 @@ test_that("output useful error message when emission_factor is not of type doubl
     ~id_loan, ~loan_size_outstanding, ~loan_size_outstanding_currency, ~loan_size_credit_limit, ~loan_size_credit_limit_currency, ~id_2dii,            ~level, ~score,      ~sector,      ~name_ald, ~sector_ald,
     "L162",                      1,                           "EUR",                       2,                            "EUR",    "UP1", "ultimate_parent",      1, "automotive", "shaanxi auto",    "cement"
   )
-  bad_ald = tibble::tribble(
+  ald = tibble::tribble(
     ~name_company,  ~sector, ~technology, ~year, ~production, ~emission_factor, ~plant_location, ~is_ultimate_owner,
     "shaanxi auto", "cement",    "cement",  2020,           1,                1,            "BF",               TRUE,
     "shaanxi auto", "cement",    "cement",  2021,           1,                2,            "BF",               TRUE,

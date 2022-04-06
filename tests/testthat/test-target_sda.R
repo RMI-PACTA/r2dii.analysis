@@ -618,25 +618,15 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
 })
 
 test_that("output useful error message when emission_factor is not of type double (#224)", {
-  matched <- tibble::tribble(
-    ~id_loan, ~loan_size_outstanding, ~loan_size_outstanding_currency, ~loan_size_credit_limit, ~loan_size_credit_limit_currency, ~id_2dii,            ~level, ~score,      ~sector,      ~name_ald, ~sector_ald,
-    "L162",                      1,                           "EUR",                       2,                            "EUR",    "UP1", "ultimate_parent",      1, "automotive", "shaanxi auto",    "cement"
-  )
-  ald = tibble::tribble(
-    ~name_company,  ~sector, ~technology, ~year, ~production, ~emission_factor, ~plant_location, ~is_ultimate_owner,
-    "shaanxi auto", "cement",    "cement",  2020,           1,                1,            "BF",               TRUE,
-    "shaanxi auto", "cement",    "cement",  2021,           1,                2,            "BF",               TRUE,
-    "shaanxi auto", "cement",    "cement",  2022,           1,                3,            "BF",               TRUE
-  )
-  co2_intensity_scenario <- tibble::tribble(
-    ~scenario,  ~sector,  ~region, ~year, ~emission_factor,           ~emission_factor_unit, ~scenario_source,
-    "b2ds", "cement", "global",  2020,              0.6, "tons of CO2 per ton of cement",      "demo_2020",
-    "b2ds", "cement", "global",  2050,              0.2, "tons of CO2 per ton of cement",      "demo_2020"
-  )
+  matched <- fake_matched()
+  ald <- fake_ald()
+  co2_intensity_scenario <- fake_co2_scenario()
+
   bad_ald <- ald %>%
     mutate(
       emission_factor = as.character(emission_factor)
     )
+
   expect_error(
     class = "crucial_column_wrong_type",
     target_sda(matched,bad_ald,co2_intensity_scenario)

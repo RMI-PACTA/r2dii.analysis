@@ -617,6 +617,22 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
   )
 })
 
+test_that("output useful error message when emission_factor is not of type double (#224)", {
+  matched <- fake_matched()
+  ald <- fake_ald()
+  co2_intensity_scenario <- fake_co2_scenario()
+
+  bad_ald <- ald %>%
+    mutate(
+      emission_factor = as.character(emission_factor)
+    )
+
+  expect_error(
+    class = "crucial_column_wrong_type",
+    target_sda(matched, bad_ald, co2_intensity_scenario)
+  )
+})
+
 test_that("argument `weight_emission_factor` outputs correctly with known input (#376)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),

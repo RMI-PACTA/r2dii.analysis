@@ -54,7 +54,6 @@ test_that("w/ fake data, outputs known value", {
 })
 
 test_that("w/ ald lacking crucial columns, errors with informative message", {
-
   expect_error_ald_missing_names <- function(name) {
     bad_ald <- rename(
       fake_ald(),
@@ -81,7 +80,6 @@ test_that("w/ ald lacking crucial columns, errors with informative message", {
 })
 
 test_that("w/ scenario lacking crucial columns, errors with informative message", {
-
   expect_error_scenario_missing_names <- function(name) {
     bad_scenario <- rename(
       fake_scenario(),
@@ -352,7 +350,6 @@ test_that("corporate economy only aggregates ultimate owners (#103)", {
 })
 
 test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)", {
-
   expect_error_free(
     target_market_share(
       fake_matched() %>% select(-sector),
@@ -361,7 +358,6 @@ test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)"
       region_isos_stable
     )
   )
-
 })
 
 test_that("outputs known value with `weight_production` (#131)", {

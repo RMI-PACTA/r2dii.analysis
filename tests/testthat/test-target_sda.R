@@ -629,6 +629,6 @@ test_that("output useful error message when emission_factor is not of type doubl
 
   expect_error(
     class = "crucial_column_wrong_type",
-    target_sda(matched,bad_ald,co2_intensity_scenario)
+    target_sda(matched, bad_ald, co2_intensity_scenario)
   )
 })

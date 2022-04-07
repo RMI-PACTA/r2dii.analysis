@@ -91,6 +91,8 @@ target_sda <- function(data,
     is.logical(by_company)
   )
 
+  warn_if_by_company_and_weight_production(by_company, weight_production)
+
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_portfolio <- c(

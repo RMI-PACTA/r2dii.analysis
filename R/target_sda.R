@@ -20,6 +20,10 @@
 #' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
 #'   `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #'   `weighted_production_value` at the company-level.
+#' @param weight_emission_factor Logical vector of length 1. `TRUE` defaults to
+#'   outputting emission_factor, weighted by relative loan-size. Set to `FALSE`
+#'   to output the unweighted emission_factor values.
+#'
 #'
 #' @return  A tibble with the CO2 emissions factors attributed to
 #' the portfolio. These values include the portfolio's actual projected CO2
@@ -76,7 +80,8 @@ target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
                        use_credit_limit = FALSE,
-                       by_company = FALSE) {
+                       by_company = FALSE,
+                       weight_emission_factor = TRUE) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(ald),

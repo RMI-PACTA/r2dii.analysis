@@ -1322,3 +1322,30 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
     tolerance = 1e-2
   )
 })
+
+test_that("w/ ald input with start year prior to ", {
+  ald <- fake_ald(
+    year = c(2000, 2020, 2021),
+    production = c(10, 30, 40)
+  )
+
+  scenario <- fake_scenario(
+    technology = "ice",
+    year = c(2020, 2021),
+    tmsr = c(1, 0.6),
+    smsp = c(0, -0.2)
+  )
+
+  out <- target_market_share(
+    fake_matched(),
+    ald,
+    scenario,
+    region_isos_stable,
+    by_company = FALSE,
+    weight_production = FALSE
+  ) %>%
+    filter(metric == "corporate_economy")
+
+  expect_equal(min(out$year), 2020L)
+
+})

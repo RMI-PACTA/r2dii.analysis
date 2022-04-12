@@ -34,7 +34,8 @@ test_that("with fake data outputs known value", {
       year = c(2020, 2050),
       emission_factor = c(0.6, 0.2)
     ),
-    by_company = TRUE
+    by_company = TRUE,
+    weight_emission_factor = FALSE
   )
 
   expect_snapshot(out_company)

@@ -237,8 +237,10 @@ add_percentage_of_initial_production_by_scope <- function(data,
     mutate(initial_sector_production = first(.data$sector_production)) %>%
     ungroup() %>%
     mutate(
-      percentage_of_initial_technology_production = (.data$production - .data$initial_technology_production) / .data$initial_technology_production,
-      percentage_of_initial_sector_production = (.data$production - .data$initial_technology_production) / .data$initial_sector_production
+      percentage_of_initial_technology_production =
+        (.data$production - .data$initial_technology_production) / .data$initial_technology_production * 100,
+      percentage_of_initial_sector_production =
+        (.data$production - .data$initial_technology_production) / .data$initial_sector_production * 100
     ) %>%
     mutate(
       scope = dplyr::case_when(

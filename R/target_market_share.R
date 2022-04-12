@@ -196,10 +196,12 @@ target_market_share <- function(data,
   corporate_economy <- calculate_ald_benchmark(ald, region_isos, by_company)
 
   sectors_with_data <- unique(data$sector)
+  years_in_data <- unique(data$year)
 
   relevant_corporate_economy <- filter(
     corporate_economy,
-    .data$sector %in% sectors_with_data
+    .data$sector %in% sectors_with_data,
+    .data$year %in% years_in_data
   )
 
   data <- data %>%

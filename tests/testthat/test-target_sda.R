@@ -671,7 +671,7 @@ test_that("argument `weight_emission_factor` outputs correctly with known input 
     )
 
   expect_equal(
-    out$`american cement`$emission_factor_value,
+    out$`boral cement`$emission_factor_value,
     ald$`boral cement`$emission_factor
   )
 })

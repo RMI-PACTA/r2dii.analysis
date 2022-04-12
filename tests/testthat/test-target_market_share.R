@@ -1253,19 +1253,19 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 
   expect_equal(
     out_percent$corporate_economy$percentage_of_initial_production_by_scope,
-    c(0.089, -0.040),
+    c(8.9, -4.0),
     tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$projected$percentage_of_initial_production_by_scope,
-    c(0.089, -0.040),
+    c(8.9, -4.0),
     tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$target_sds$percentage_of_initial_production_by_scope,
-    c(0.34, -0.40),
+    c(34, -40),
     tolerance = 1e-2
   )
 })
@@ -1306,19 +1306,19 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 
   expect_equal(
     out_percent$corporate_economy$percentage_of_initial_production_by_scope,
-    c(0.089, -0.040),
+    c(8.9, -4.0),
     tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$projected$percentage_of_initial_production_by_scope,
-    c(0.25, -0.333, 0.054, 0.053),
+    c(25, -33.3, 5.4, 5.3),
     tolerance = 1e-2
   )
 
   expect_equal(
     out_percent$target_sds$percentage_of_initial_production_by_scope,
-    c(0.34, -0.40, 0.34, -0.40),
+    c(34, -40, 34, -40),
     tolerance = 1e-2
   )
 })

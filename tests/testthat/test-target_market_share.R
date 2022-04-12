@@ -1323,7 +1323,8 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
   )
 })
 
-test_that("w/ ald input with start year prior to ", {
+test_that("w/ ald with older years than scenarios, outputs 0 percent change in
+          start year", {
   ald <- fake_ald(
     year = c(2000, 2020, 2021),
     production = c(10, 30, 40)
@@ -1343,9 +1344,28 @@ test_that("w/ ald input with start year prior to ", {
     region_isos_stable,
     by_company = FALSE,
     weight_production = FALSE
-  ) %>%
-    filter(metric == "corporate_economy")
+  )
 
   expect_equal(min(out$year), 2020L)
+
+  initial_out <- out %>%
+    filter(year == 2020L)
+
+  initial_out <- split(initial_out, initial_out$metric)
+
+  expect_equal(
+    initial_out$corporate_economy$percentage_of_initial_production_by_scope,
+    0L
+    )
+
+  expect_equal(
+    initial_out$projected$percentage_of_initial_production_by_scope,
+    0L
+  )
+
+  expect_equal(
+    initial_out$target_sds$percentage_of_initial_production_by_scope,
+    0L
+  )
 
 })

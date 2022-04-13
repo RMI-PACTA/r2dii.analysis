@@ -137,16 +137,12 @@ target_sda <- function(data,
 
   data <- inner_join(data, ald_by_sector, by = ald_columns())
 
-  if (!by_company) {
-    data <- summarize_weighted_emission_factor(
-      data,
-      use_credit_limit = use_credit_limit,
-    )
+  if (by_company) {
+    data <- data %>%
+      summarize_unweighted_emission_factor(!!!rlang::syms("name_ald"))
   } else {
-    data <- summarize_unweighted_emission_factor(
-      data,
-      !!!rlang::syms("name_ald")
-    )
+    data <- data %>%
+      summarize_weighted_emission_factor(use_credit_limit = use_credit_limit)
   }
 
   data <- data %>%

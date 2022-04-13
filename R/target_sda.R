@@ -141,10 +141,9 @@ target_sda <- function(data,
 
   data <- inner_join(data, ald_by_sector, by = ald_columns())
 
-  if (weight_emission_factor) {
+  if (!by_company) {
     data <- summarize_weighted_emission_factor(
       data,
-      !!!rlang::syms("name_ald"),
       use_credit_limit = use_credit_limit,
     )
   } else {
@@ -152,20 +151,6 @@ target_sda <- function(data,
       data,
       !!!rlang::syms("name_ald")
     )
-  }
-
-  if (!by_company) {
-    aggregate_company_groups <- c(
-      "sector_ald",
-      "year"
-    )
-
-    data <- data %>%
-      group_by(!!!rlang::syms(aggregate_company_groups)) %>%
-      summarize(
-        emission_factor_projected = mean(.data$emission_factor_projected)
-      ) %>%
-      ungroup()
   }
 
   data <- data %>%

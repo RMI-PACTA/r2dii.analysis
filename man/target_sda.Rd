@@ -89,6 +89,7 @@ if (installed) {
   )
   out
 }
+
 }
 \seealso{
 Other functions to calculate scenario targets: 

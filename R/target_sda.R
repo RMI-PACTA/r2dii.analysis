@@ -21,7 +21,6 @@
 #'   `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #'   `weighted_production_value` at the company-level.
 #'
-#'
 #' @return  A tibble with the CO2 emissions factors attributed to
 #' the portfolio. These values include the portfolio's actual projected CO2
 #' emissions factors, the scenario pathway CO2 emissions factors and the SDA

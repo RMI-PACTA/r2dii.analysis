@@ -91,11 +91,6 @@ target_sda <- function(data,
     weight_emission_factor <- FALSE
   }
 
-  warn_if_by_company_and_weight_production(
-    by_company,
-    weight_emission_factor
-    )
-
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_portfolio <- c(

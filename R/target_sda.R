@@ -20,9 +20,6 @@
 #' @param by_company Logical vector of length 1. `FALSE` defaults to outputting
 #'   `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #'   `weighted_production_value` at the company-level.
-#' @param weight_emission_factor Logical vector of length 1. `TRUE` defaults to
-#'   outputting emission_factor, weighted by relative loan-size. Set to `FALSE`
-#'   to output the unweighted emission_factor values.
 #'
 #'
 #' @return  A tibble with the CO2 emissions factors attributed to
@@ -81,8 +78,7 @@ target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
                        use_credit_limit = FALSE,
-                       by_company = FALSE,
-                       weight_emission_factor = TRUE) {
+                       by_company = FALSE) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(ald),
@@ -91,7 +87,14 @@ target_sda <- function(data,
     is.logical(by_company)
   )
 
-  warn_if_by_company_and_weight_production(by_company, weight_production)
+  if (by_company) {
+    weight_emission_factor <- FALSE
+  }
+
+  warn_if_by_company_and_weight_production(
+    by_company,
+    weight_emission_factor
+    )
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
@@ -143,17 +146,31 @@ target_sda <- function(data,
 
   data <- inner_join(data, ald_by_sector, by = ald_columns())
 
-  if (by_company) {
-    data <- data %>%
-      summarize_weighted_emission_factor(
-        !!!rlang::syms("name_ald"),
-        use_credit_limit = use_credit_limit
-      )
+  if (weight_emission_factor) {
+    data <- summarize_weighted_emission_factor(
+      data,
+      !!!rlang::syms("name_ald"),
+      use_credit_limit = use_credit_limit,
+    )
   } else {
+    data <- summarize_unweighted_emission_factor(
+      data,
+      !!!rlang::syms("name_ald")
+    )
+  }
+
+  if (!by_company) {
+    aggregate_company_groups <- c(
+      "sector_ald",
+      "year"
+    )
+
     data <- data %>%
-      summarize_weighted_emission_factor(
-        use_credit_limit = use_credit_limit
-      )
+      group_by(!!!rlang::syms(aggregate_company_groups)) %>%
+      summarize(
+        emission_factor_projected = mean(.data$emission_factor_projected)
+      ) %>%
+      ungroup()
   }
 
   data <- data %>%

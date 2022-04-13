@@ -34,8 +34,7 @@ test_that("with fake data outputs known value", {
       year = c(2020, 2050),
       emission_factor = c(0.6, 0.2)
     ),
-    by_company = TRUE,
-    weight_emission_factor = FALSE
+    by_company = TRUE
   )
 
   expect_snapshot(out_company)
@@ -654,8 +653,7 @@ test_that("argument `weight_emission_factor` outputs correctly with known input 
     target_sda(
       ald,
       fake_co2_scenario(year = c(2020, 2021), emission_factor = c(1, 0.7)),
-      by_company = TRUE,
-      weight_emission_factor = FALSE
+      by_company = TRUE
     ) %>%
     filter(year == 2020, emission_factor_metric == "target_b2ds") %>%
     split(.$name_ald)

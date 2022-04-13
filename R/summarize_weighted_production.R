@@ -188,8 +188,8 @@ summarize_unweighted_emission_factor <- function(data, ...) {
       .data$loan_size_outstanding
     )) %>%
     distinct() %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
-    summarize(emission_factor_projected = mean(.data$weighted_loan_emission_factor)) %>%
+    group_by(.data$sector_ald, .data$year, ...) %>%
+    summarize(emission_factor_projected = mean(.data$emission_factor)) %>%
     ungroup()
 
 }

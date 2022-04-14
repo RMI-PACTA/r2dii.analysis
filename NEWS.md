@@ -3,8 +3,11 @@
 * `target_sda()` now outputs unweighted `emission_factor` if `by_company` is 
   `TRUE` (#376). 
 
-* `target_market_share()` now outputs two new columns, `percentage_of_initial_production_by_scope` 
-and `scope` (ADO #4143). 
+* `target_market_share()` now only outputs values for years that are in both 
+  `ald` and `scenario` inputs (#394). 
+
+* `target_market_share()` now outputs two new columns, `percentage_of_initial_production_by_scope`
+  and `scope` (ADO #4143). 
 
 # r2dii.analysis 0.1.12
 

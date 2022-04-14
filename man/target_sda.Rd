@@ -9,6 +9,7 @@ target_sda(
   data,
   ald,
   co2_intensity_scenario,
+  region_isos = r2dii.data::region_isos,
   use_credit_limit = FALSE,
   by_company = FALSE
 )
@@ -21,6 +22,8 @@ target_sda(
 
 \item{co2_intensity_scenario}{A scenario data frame like
 \link[r2dii.data:co2_intensity_scenario_demo]{r2dii.data::co2_intensity_scenario_demo}.}
+
+\item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
 
 \item{use_credit_limit}{Logical vector of length 1. \code{FALSE} defaults to using
 the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the column
@@ -89,6 +92,7 @@ if (installed) {
   )
   out
 }
+
 }
 \seealso{
 Other functions to calculate scenario targets: 

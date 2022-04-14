@@ -271,7 +271,13 @@ test_that("with no matching data warns", {
 
   bad_scenario <- fake_co2_scenario(sector = "bad")
   expect_warning(
-    target_sda(fake_matched(), fake_ald(), bad_scenario, region_isos_demo), "no scenario"
+    target_sda(
+      fake_matched(),
+      fake_ald(),
+      bad_scenario,
+      region_isos = region_isos_demo
+      ),
+    "no scenario"
   )
 })
 

@@ -22,11 +22,9 @@
 #'   `weighted_production_value` at the portfolio-level. Set to `TRUE` to output
 #'   `weighted_production_value` at the company-level.
 #'
-#' @return  A tibble with the CO2 emissions factors attributed to
-#' the portfolio. These values include the portfolio's actual projected CO2
-#' emissions factors, the scenario pathway CO2 emissions factors and the SDA
-#' calculated portfolio target emissions factors (see column
-#' `emission_factor_metric`).
+#' @return A tibble including the summarized columns `emission_factor_metric` and
+#'   `emission_factor_value`. If `by_company = TRUE`, the output will also have
+#'   the column `name_ald`.
 #'
 #' @export
 #'
@@ -77,9 +75,9 @@
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
-                       region_isos = r2dii.data::region_isos,
                        use_credit_limit = FALSE,
-                       by_company = FALSE) {
+                       by_company = FALSE,
+                       region_isos = r2dii.data::region_isos) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(ald),

@@ -1,4 +1,5 @@
 # r2dii.analysis (development version)
+* `target_sda()` gains `region` argument (#323).
 
 * `target_market_share()` now only outputs values for years that are in both 
   `ald` and `scenario` inputs (#394). 

@@ -15,7 +15,8 @@ test_that("with fake data outputs known value", {
     co2_intensity_scenario = fake_co2_scenario(
       year = c(2020, 2050),
       emission_factor = c(0.6, 0.2)
-    )
+    ),
+    region_isos = region_isos_stable
   )
 
   expect_snapshot(out)
@@ -34,7 +35,8 @@ test_that("with fake data outputs known value", {
       year = c(2020, 2050),
       emission_factor = c(0.6, 0.2)
     ),
-    by_company = TRUE
+    by_company = TRUE,
+    region_isos = region_isos_stable
   )
 
   expect_snapshot(out_company)
@@ -52,7 +54,8 @@ test_that("outputs is ungrouped", {
     co2_intensity_scenario = fake_co2_scenario(
       emission_factor = c(1, 2),
       year = c(2020, 2050)
-    )
+    ),
+    region_isos = region_isos_stable
   )
   expect_false(dplyr::is_grouped_df(out))
 })
@@ -70,7 +73,8 @@ test_that("warns when input data is grouped", {
       co2_intensity_scenario = fake_co2_scenario(
         emission_factor = c(1, 2),
         year = c(2020, 2050)
-      )
+      ),
+      region_isos = region_isos_stable
     )
   }
 
@@ -138,7 +142,8 @@ test_that("without `sector` throws no error", {
     target_sda(
       without_sector,
       ald = fake_ald(sector = "cement"),
-      co2_intensity_scenario = fake_co2_scenario()
+      co2_intensity_scenario = fake_co2_scenario(),
+      region_isos = region_isos_stable
     )
   )
 })
@@ -162,7 +167,8 @@ test_that("properly weights emissions factors", {
     co2_intensity_scenario = fake_co2_scenario(
       year = c(2020, 2050),
       emission_factor = c(0.6, 0.2)
-    )
+    ),
+    region_isos = region_isos_stable
   )
 
   initial_data <- out %>%
@@ -185,11 +191,19 @@ test_that("outputs expected names", {
     ),
     co2_intensity_scenario = fake_co2_scenario(
       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
-    )
+    ),
+    region_isos = region_isos_stable
   )
 
-  exp <- c("sector", "year", "emission_factor_metric", "emission_factor_value")
-  expect_named(out, exp)
+  expected_names <- c(
+    "sector",
+    "year",
+    "region",
+    "scenario_source",
+    "emission_factor_metric",
+    "emission_factor_value"
+    )
+  expect_named(out, expected_names)
 })
 
 test_that("with known input outputs as expected", {
@@ -210,7 +224,12 @@ test_that("with known input outputs as expected", {
     emission_factor = c(0.5, 0.1, 0.5, 0.4)
   )
 
-  out <- target_sda(matched, ald, co2_intensity_scenario) %>%
+  out <- target_sda(
+    matched,
+    ald,
+    co2_intensity_scenario,
+    region_isos = region_isos_stable
+    ) %>%
     arrange(.data$year) %>%
     split(.$emission_factor_metric)
 
@@ -279,7 +298,8 @@ test_that("with duplicated id_loan weights emission_factor as expected (#160)", 
     target_sda(
       match_result,
       ald,
-      scen
+      scen,
+      region_isos = region_isos_stable
     ) %>%
       filter(year == min(year)),
     class = "unique_ids"
@@ -306,7 +326,8 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
       target_sda(
         data,
         ald,
-        scen
+        scen,
+        region_isos = region_isos_stable
       )
     )
   }
@@ -331,7 +352,8 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
       target_sda(
         match_result,
         data,
-        scen
+        scen,
+        region_isos = region_isos_stable
       )
     )
   }
@@ -356,7 +378,8 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
       target_sda(
         match_result,
         ald,
-        data
+        data,
+        region_isos = region_isos_stable
       )
     )
   }
@@ -397,7 +420,8 @@ test_that("with multiple technologies weights emission_factor as expected (#160)
   out <- target_sda(
     match_result,
     ald,
-    scen
+    scen,
+    region_isos = region_isos_stable
   ) %>%
     filter(year == min(year)) %>%
     split(.$emission_factor_metric)
@@ -418,7 +442,8 @@ test_that("with multiple technologies, aggregates production-weighted emission_f
     ),
     co2_intensity_scenario = fake_co2_scenario(
       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
-    )
+    ),
+    region_isos = region_isos_stable
   ) %>%
     split(.$emission_factor_metric)
 
@@ -437,7 +462,8 @@ test_that("with multiple plant_location, aggregates production-weighted emission
     ),
     co2_intensity_scenario = fake_co2_scenario(
       year = c(2020, 2050), emission_factor = c(0.6, 0.2)
-    )
+    ),
+    region_isos = region_isos_stable
   ) %>%
     split(.$emission_factor_metric)
 
@@ -458,7 +484,8 @@ test_that("filters and warns when input-data has NAs", {
       ),
       co2_intensity_scenario = fake_co2_scenario(
         year = c(2020, 2050), emission_factor = c(0.6, 0.2)
-      )
+      ),
+      region_isos = region_isos_stable
     )
   )
   if (packageVersion("testthat") >= "2.99.0.9000") {
@@ -487,7 +514,8 @@ test_that(
         co2_intensity_scenario = fake_co2_scenario(
           emission_factor = c(1, 2),
           year = c(2020, 2050)
-        )
+        ),
+        region_isos = region_isos_stable
       )
     )
   }
@@ -512,7 +540,11 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
   )
 
   out <- matched %>%
-    target_sda(ald, co2_intensity_scenario_demo) %>%
+    target_sda(
+      ald,
+      co2_intensity_scenario_demo,
+      region_isos = region_isos_stable
+      ) %>%
     split(.$emission_factor_metric)
 
   expect_equal(out$projected$emission_factor_value, 0.5)
@@ -549,13 +581,23 @@ test_that("outputs same target regardless of years present in ald", {
     emission_factor = c(2, 1.9, 1.8, 0.25)
   )
 
-  out_ten_year <- target_sda(matched, ald_ten_year, co2_scenario) %>%
+  out_ten_year <- target_sda(
+    matched,
+    ald_ten_year,
+    co2_scenario,
+    region_isos = region_isos_stable
+    ) %>%
     filter(
       year == 2030,
       emission_factor_metric == "target_b2ds"
     )
 
-  out_thirty_year <- target_sda(matched, ald_thirty_year, co2_scenario) %>%
+  out_thirty_year <- target_sda(
+    matched,
+    ald_thirty_year,
+    co2_scenario,
+    region_isos = region_isos_stable
+    ) %>%
     filter(
       year == 2030,
       emission_factor_metric == "target_b2ds"
@@ -583,7 +625,12 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
     year = c(2025, 2026)
   )
 
-  out <- target_sda(matched, ald, co2_scenario)
+  out <- target_sda(
+    matched,
+    ald,
+    co2_scenario,
+    region_isos = region_isos_stable
+    )
 
   out_sectors <- unique(out$sector)
   scenario_sectors <- unique(co2_scenario$sector)
@@ -610,7 +657,12 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
     year = c(2023, 2025, 2026)
   )
 
-  out <- target_sda(matched, ald, co2_scenario)
+  out <- target_sda(
+    matched,
+    ald,
+    co2_scenario,
+    region_isos = region_isos_stable
+    )
 
   expect_false(
     any(is.na(out$emission_factor_value))
@@ -629,6 +681,11 @@ test_that("output useful error message when emission_factor is not of type doubl
 
   expect_error(
     class = "crucial_column_wrong_type",
-    target_sda(matched, bad_ald, co2_intensity_scenario)
+    target_sda(
+      matched,
+      bad_ald,
+      co2_intensity_scenario,
+      region_isos = region_isos_stable
+      )
   )
 })

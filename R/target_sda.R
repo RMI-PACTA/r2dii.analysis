@@ -14,6 +14,7 @@
 #' @param ald An asset-level data frame like [r2dii.data::ald_demo].
 #' @param co2_intensity_scenario A scenario data frame like
 #'   [r2dii.data::co2_intensity_scenario_demo].
+#' @param region_isos A data frame like [r2dii.data::region_isos] (default).
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
@@ -76,6 +77,7 @@
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
+                       region_isos = r2dii.data::region_isos,
                        use_credit_limit = FALSE,
                        by_company = FALSE) {
   stopifnot(

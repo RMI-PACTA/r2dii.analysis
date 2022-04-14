@@ -133,20 +133,39 @@ target_sda <- function(data,
   check_crucial_names(co2_intensity_scenario, crucial_scenario)
   walk_(crucial_scenario, ~ check_no_value_is_missing(co2_intensity_scenario, .x))
 
+  region_isos <- region_isos %>%
+    filter(source %in% unique(co2_intensity_scenario$scenario_source))
+
+  if (identical(nrow(region_isos), 0L)) {
+    warn("Found no matching regions for input scenario", class = "no_match")
+    return(empty_target_sda_output())
+  }
+
+  ald <- ald %>%
+    mutate(plant_location = tolower(.data$plant_location)) %>%
+    left_join(region_isos, by = c(plant_location = "isos")) %>%
+    rename(scenario_source = "source")
+
   ald_by_sector <- ald %>%
     aggregate_excluding(c("technology", "plant_location", "country_of_domicile"))
 
   data <- inner_join(data, ald_by_sector, by = ald_columns())
 
+  summary_groups <- c(
+    "region",
+    "scenario_source"
+  )
+
   if (by_company) {
     data <- data %>%
       summarize_weighted_emission_factor(
-        !!!rlang::syms("name_ald"),
+        !!!rlang::syms(c(summary_groups,"name_ald")),
         use_credit_limit = use_credit_limit
       )
   } else {
     data <- data %>%
       summarize_weighted_emission_factor(
+        !!!rlang::syms(summary_groups),
         use_credit_limit = use_credit_limit
       )
   }
@@ -161,7 +180,7 @@ target_sda <- function(data,
 
   corporate_economy <- calculate_market_average(ald_by_sector)
 
-  interpolate_groups <- c("scenario", "sector", "region")
+  interpolate_groups <- c("scenario_source", "scenario", "sector", "region")
 
   interpolated_scenario <- interpolate_scenario_yearly(
     co2_intensity_scenario,
@@ -181,7 +200,7 @@ target_sda <- function(data,
   adjusted_scenario_with_p <- add_p_to_scenario(adjusted_scenario)
 
   target_summary_groups <- maybe_add_name_ald(
-    c("sector", "scenario"),
+    c("sector", "scenario", "region", "scenario_source"),
     by_company
   )
 
@@ -249,14 +268,14 @@ maybe_add_name_ald <- function(data, by_company = FALSE) {
 
 calculate_market_average <- function(data) {
   data %>%
-    group_by(.data$sector, .data$year) %>%
+    group_by(.data$sector, .data$year, .data$region, .data$scenario_source) %>%
     summarize(
       sector_total_production = sum(.data$production),
       # Alias emission_factor_corporate_economy
       .x = list(.data$production * .data$emission_factor)
     ) %>%
     unnest(cols = .data$.x) %>%
-    group_by(.data$sector, .data$year) %>%
+    group_by(.data$sector, .data$year, .data$region, .data$scenario_source) %>%
     summarize(.x = sum(.data$.x / .data$sector_total_production)) %>%
     rename(emission_factor_corporate_economy = .data$.x) %>%
     ungroup()
@@ -264,18 +283,27 @@ calculate_market_average <- function(data) {
 
 compute_ald_adjusted_scenario <- function(data, corporate_economy) {
   corporate_economy_baseline <- corporate_economy %>%
-    group_by(.data$sector) %>%
+    group_by(.data$sector, .data$scenario_source, .data$region) %>%
     filter(.data$year == min(.data$year, na.rm = TRUE)) %>%
     select(
       .data$sector,
+      .data$scenario_source,
+      .data$region,
       baseline_emission_factor = .data$emission_factor_corporate_economy
     ) %>%
     ungroup()
 
   data %>%
     filter(.data$year >= min(corporate_economy$year)) %>%
-    inner_join(corporate_economy_baseline, by = "sector") %>%
-    group_by(.data$scenario, .data$sector) %>%
+    inner_join(
+      corporate_economy_baseline, by = c("sector", "scenario_source", "region")
+      ) %>%
+    group_by(
+      .data$scenario,
+      .data$sector,
+      .data$scenario_source,
+      .data$region
+      ) %>%
     arrange(.data$year) %>%
     mutate(
       baseline_adjustment =
@@ -287,6 +315,8 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy) {
     select(
       .data$scenario,
       .data$sector,
+      .data$scenario_source,
+      .data$region,
       .data$year,
       .data$emission_factor_adjusted_scenario
     )
@@ -296,7 +326,12 @@ add_p_to_scenario <- function(data) {
   p <- function(x) (x - last(x)) / (first(x) - last(x))
 
   data %>%
-    group_by(.data$sector, .data$scenario) %>%
+    group_by(
+      .data$sector,
+      .data$scenario,
+      .data$region,
+      .data$scenario_source
+      ) %>%
     arrange(.data$year) %>%
     mutate(p = p(.data$emission_factor_adjusted_scenario)) %>%
     ungroup()
@@ -306,7 +341,10 @@ compute_loanbook_targets <- function(data,
                                      scenario_with_p,
                                      ...) {
   data %>%
-    right_join(scenario_with_p, by = c("year", "sector")) %>%
+    right_join(
+      scenario_with_p,
+      by = c("year", "sector", "region", "scenario_source")
+      ) %>%
     group_by(...) %>%
     arrange(.data$year) %>%
     mutate(

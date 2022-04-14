@@ -73,7 +73,7 @@
 #'   )
 #'   out
 #' }
-
+#'
 target_sda <- function(data,
                        ald,
                        co2_intensity_scenario,
@@ -159,7 +159,7 @@ target_sda <- function(data,
   if (by_company) {
     data <- data %>%
       summarize_weighted_emission_factor(
-        !!!rlang::syms(c(summary_groups,"name_ald")),
+        !!!rlang::syms(c(summary_groups, "name_ald")),
         use_credit_limit = use_credit_limit
       )
   } else {
@@ -226,7 +226,7 @@ target_sda <- function(data,
 
 check_type_emission_factor <- function(ald) {
   if (!is.double(ald$emission_factor)) {
-  abort("The column emission_factor of the asset-level data frame (`ald`) does not have the type double", class = "crucial_column_wrong_type")
+    abort("The column emission_factor of the asset-level data frame (`ald`) does not have the type double", class = "crucial_column_wrong_type")
   }
 }
 
@@ -296,14 +296,15 @@ compute_ald_adjusted_scenario <- function(data, corporate_economy) {
   data %>%
     filter(.data$year >= min(corporate_economy$year)) %>%
     inner_join(
-      corporate_economy_baseline, by = c("sector", "scenario_source", "region")
-      ) %>%
+      corporate_economy_baseline,
+      by = c("sector", "scenario_source", "region")
+    ) %>%
     group_by(
       .data$scenario,
       .data$sector,
       .data$scenario_source,
       .data$region
-      ) %>%
+    ) %>%
     arrange(.data$year) %>%
     mutate(
       baseline_adjustment =
@@ -331,7 +332,7 @@ add_p_to_scenario <- function(data) {
       .data$scenario,
       .data$region,
       .data$scenario_source
-      ) %>%
+    ) %>%
     arrange(.data$year) %>%
     mutate(p = p(.data$emission_factor_adjusted_scenario)) %>%
     ungroup()
@@ -344,7 +345,7 @@ compute_loanbook_targets <- function(data,
     right_join(
       scenario_with_p,
       by = c("year", "sector", "region", "scenario_source")
-      ) %>%
+    ) %>%
     group_by(...) %>%
     arrange(.data$year) %>%
     mutate(

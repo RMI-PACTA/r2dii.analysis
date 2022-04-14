@@ -202,7 +202,7 @@ test_that("outputs expected names", {
     "scenario_source",
     "emission_factor_metric",
     "emission_factor_value"
-    )
+  )
   expect_named(out, expected_names)
 })
 
@@ -229,7 +229,7 @@ test_that("with known input outputs as expected", {
     ald,
     co2_intensity_scenario,
     region_isos = region_isos_stable
-    ) %>%
+  ) %>%
     arrange(.data$year) %>%
     split(.$emission_factor_metric)
 
@@ -545,7 +545,7 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
       ald,
       co2_intensity_scenario_demo,
       region_isos = region_isos_stable
-      ) %>%
+    ) %>%
     split(.$emission_factor_metric)
 
   expect_equal(out$projected$emission_factor_value, 0.5)
@@ -587,7 +587,7 @@ test_that("outputs same target regardless of years present in ald", {
     ald_ten_year,
     co2_scenario,
     region_isos = region_isos_stable
-    ) %>%
+  ) %>%
     filter(
       year == 2030,
       emission_factor_metric == "target_b2ds"
@@ -598,7 +598,7 @@ test_that("outputs same target regardless of years present in ald", {
     ald_thirty_year,
     co2_scenario,
     region_isos = region_isos_stable
-    ) %>%
+  ) %>%
     filter(
       year == 2030,
       emission_factor_metric == "target_b2ds"
@@ -631,7 +631,7 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
     ald,
     co2_scenario,
     region_isos = region_isos_stable
-    )
+  )
 
   out_sectors <- unique(out$sector)
   scenario_sectors <- unique(co2_scenario$sector)
@@ -663,7 +663,7 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
     ald,
     co2_scenario,
     region_isos = region_isos_stable
-    )
+  )
 
   expect_false(
     any(is.na(out$emission_factor_value))
@@ -687,6 +687,6 @@ test_that("output useful error message when emission_factor is not of type doubl
       bad_ald,
       co2_intensity_scenario,
       region_isos = region_isos_stable
-      )
+    )
   )
 })

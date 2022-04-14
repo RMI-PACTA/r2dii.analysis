@@ -271,7 +271,7 @@ test_that("with no matching data warns", {
 
   bad_scenario <- fake_co2_scenario(sector = "bad")
   expect_warning(
-    target_sda(fake_matched(), fake_ald(), bad_scenario), "no scenario"
+    target_sda(fake_matched(), fake_ald(), bad_scenario, region_isos_demo), "no scenario"
   )
 })
 
@@ -465,6 +465,7 @@ test_that("with multiple plant_location, aggregates production-weighted emission
     ),
     region_isos = region_isos_stable
   ) %>%
+    filter(region == "global") %>%
     split(.$emission_factor_metric)
 
   expect_equal(out$corporate_economy$emission_factor_value, 100)

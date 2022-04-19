@@ -696,3 +696,46 @@ test_that("output useful error message when emission_factor is not of type doubl
     )
   )
 })
+
+test_that("argument `weight_emission_factor` outputs correctly with known input (#376)", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    name_ald = c("american cement", "boral cement"),
+    sector = "cement",
+    sector_ald = "cement"
+  )
+
+  ald <- fake_ald(
+    name_company = rep(c("american cement", "boral cement"), 2),
+    sector = "cement",
+    technology = "cement integrated facility",
+    year = rep(c(2020, 2021), each = 2),
+    emission_factor = rep(c(0.7, 0.5), 2)
+  )
+
+  out <- matched %>%
+    target_sda(
+      ald,
+      fake_co2_scenario(year = c(2020, 2021), emission_factor = c(1, 0.7)),
+      by_company = TRUE,
+      region_isos = region_isos_stable
+    ) %>%
+    filter(year == 2020, emission_factor_metric == "target_b2ds") %>%
+    split(.$name_ald)
+
+
+  ald <- ald %>%
+    filter(!is.na(emission_factor), year == 2020) %>%
+    select(name_company, year, emission_factor) %>%
+    split(.$name_company)
+
+  expect_equal(
+    out$`american cement`$emission_factor_value,
+    ald$`american cement`$emission_factor
+  )
+
+  expect_equal(
+    out$`boral cement`$emission_factor_value,
+    ald$`boral cement`$emission_factor
+  )
+})

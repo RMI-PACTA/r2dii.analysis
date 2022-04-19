@@ -15,6 +15,20 @@ warn_grouped <- function(data, message) {
   invisible(data)
 }
 
+warn_if_by_company_and_weight_production <- function(by_company,
+                                                     weight_production) {
+  if (by_company & weight_production) {
+    warn(
+      glue(
+        "You've supplied `by_company = TRUE` and `weight_production = TRUE`.
+        This will result in company-level results, weighted by the portfolio
+        loan size, which is rarely useful. Did you mean to set one of these
+        arguments to `FALSE`?"
+      )
+    )
+  }
+}
+
 # Avoid dependency on purrr
 walk_ <- function(.x, .f, ...) {
   .f <- rlang::as_function(.f)

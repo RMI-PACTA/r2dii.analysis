@@ -86,16 +86,7 @@ target_market_share <- function(data,
     is.logical(weight_production)
   )
 
-  if (by_company & weight_production) {
-    warn(
-      glue(
-        "You've supplied `by_company = TRUE` and `weight_production = TRUE`.
-        This will result in company-level results, weighted by the portfolio
-        loan size, which is rarely useful. Did you mean to set one of these
-        arguments to `FALSE`?"
-      )
-    )
-  }
+  warn_if_by_company_and_weight_production(by_company, weight_production)
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 

@@ -179,6 +179,19 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
     ungroup()
 }
 
+summarize_unweighted_emission_factor <- function(data, ...) {
+  data <- data %>%
+    select(-c(
+      .data$id_loan,
+      .data$loan_size_credit_limit,
+      .data$loan_size_outstanding
+    )) %>%
+    distinct() %>%
+    group_by(.data$sector_ald, .data$year, ...) %>%
+    summarize(emission_factor_projected = mean(.data$emission_factor)) %>%
+    ungroup()
+}
+
 calculate_weighted_loan_metric <- function(data, metric) {
   crucial <- c(metric, "loan_weight")
 

@@ -717,7 +717,8 @@ test_that("argument `weight_emission_factor` outputs correctly with known input 
     target_sda(
       ald,
       fake_co2_scenario(year = c(2020, 2021), emission_factor = c(1, 0.7)),
-      by_company = TRUE
+      by_company = TRUE,
+      region_isos = region_isos_stable
     ) %>%
     filter(year == 2020, emission_factor_metric == "target_b2ds") %>%
     split(.$name_ald)

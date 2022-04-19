@@ -156,10 +156,9 @@ target_sda <- function(data,
 
   if (by_company) {
     data <- data %>%
-      summarize_weighted_emission_factor(
-        !!!rlang::syms(c(summary_groups, "name_ald")),
-        use_credit_limit = use_credit_limit
-      )
+      summarize_unweighted_emission_factor(
+        !!!rlang::syms(c(summary_groups, "name_ald"))
+        )
   } else {
     data <- data %>%
       summarize_weighted_emission_factor(

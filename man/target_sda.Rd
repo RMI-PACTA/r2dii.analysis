@@ -10,7 +10,8 @@ target_sda(
   ald,
   co2_intensity_scenario,
   use_credit_limit = FALSE,
-  by_company = FALSE
+  by_company = FALSE,
+  region_isos = r2dii.data::region_isos
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 \item{by_company}{Logical vector of length 1. \code{FALSE} defaults to outputting
 \code{weighted_production_value} at the portfolio-level. Set to \code{TRUE} to output
 \code{weighted_production_value} at the company-level.}
+
+\item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
 }
 \value{
 A tibble with the CO2 emissions factors attributed to
@@ -89,6 +92,7 @@ if (installed) {
   )
   out
 }
+
 }
 \seealso{
 Other functions to calculate scenario targets: 

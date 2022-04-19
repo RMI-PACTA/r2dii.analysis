@@ -1356,7 +1356,7 @@ test_that("w/ ald with older years than scenarios, outputs 0 percent change in
   expect_equal(
     initial_out$corporate_economy$percentage_of_initial_production_by_scope,
     0L
-    )
+  )
 
   expect_equal(
     initial_out$projected$percentage_of_initial_production_by_scope,
@@ -1367,5 +1367,4 @@ test_that("w/ ald with older years than scenarios, outputs 0 percent change in
     initial_out$target_sds$percentage_of_initial_production_by_scope,
     0L
   )
-
 })

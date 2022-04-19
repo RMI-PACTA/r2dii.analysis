@@ -1,7 +1,8 @@
 # r2dii.analysis (development version)
-
 * `target_sda()` now outputs unweighted `emission_factor` if `by_company` is 
   `TRUE` (#376). 
+
+* `target_sda()` gains `region_isos` argument (#323).
 
 * `target_market_share()` now only outputs values for years that are in both 
   `ald` and `scenario` inputs (#394). 

@@ -10,7 +10,8 @@ target_sda(
   ald,
   co2_intensity_scenario,
   use_credit_limit = FALSE,
-  by_company = FALSE
+  by_company = FALSE,
+  region_isos = r2dii.data::region_isos
 )
 }
 \arguments{
@@ -29,13 +30,13 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 \item{by_company}{Logical vector of length 1. \code{FALSE} defaults to outputting
 \code{weighted_production_value} at the portfolio-level. Set to \code{TRUE} to output
 \code{weighted_production_value} at the company-level.}
+
+\item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
 }
 \value{
-A tibble with the CO2 emissions factors attributed to
-the portfolio. These values include the portfolio's actual projected CO2
-emissions factors, the scenario pathway CO2 emissions factors and the SDA
-calculated portfolio target emissions factors (see column
-\code{emission_factor_metric}).
+A tibble including the summarized columns \code{emission_factor_metric} and
+\code{emission_factor_value}. If \code{by_company = TRUE}, the output will also have
+the column \code{name_ald}.
 }
 \description{
 This function calculates targets of CO2 emissions per unit production at the

@@ -170,6 +170,20 @@ test_that("w/ NAs in crucial columns, errors with informative message", {
   expect_error_crucial_NAs_scenario("smsp")
 })
 
+test_that("filters and warns when input-data has NAs", {
+  matched <- fake_matched()
+  ald <- fake_ald(production = c(1, NA))
+  scenario <- fake_scenario()
+
+  expect_warning(
+    target_market_share(
+      matched,
+      ald,
+      scenario,
+      region_isos_stable,
+      class = "na_input_data"))
+})
+
 test_that("outputs expected names", {
   expected_output_names <- c(
     "sector",

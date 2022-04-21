@@ -52,43 +52,34 @@ This function ignores existing groups and outputs ungrouped data.
 \examples{
 installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
   requireNamespace("r2dii.data", quietly = TRUE)
+
 if (installed) {
   library(r2dii.match)
   library(r2dii.data)
 
-  # Example datasets from r2dii.data
   loanbook <- head(loanbook_demo, 150)
   ald <- head(ald_demo, 100)
 
-  co2_scenario <- co2_intensity_scenario_demo
+  matched <- loanbook \%>\%
+    match_name(ald) \%>\%
+    prioritize()
 
-  # WARNING: Remember to validate matches (see `?prioritize`)
-  matched <- prioritize(match_name(loanbook, ald))
+  # Calculate targets at portfolio level
+  matched \%>\%
+    target_sda(
+      ald = ald,
+      co2_intensity_scenario = co2_intensity_scenario_demo,
+      region_isos = region_isos_demo
+    )
 
-  # You may need to clean your data
-  anyNA(ald$emission_factor)
-  try(target_sda(matched, ald, co2_intensity_scenario = co2_scenario))
-
-  ald2 <- subset(ald, !is.na(emission_factor))
-  anyNA(ald2$emission_factor)
-
-  out <- target_sda(matched, ald2, co2_intensity_scenario = co2_scenario)
-
-  # The output includes the portfolio's actual projected emissions factors, the
-  # scenario pathway emissions factors, and the portfolio's target emissions
-  # factors.
-  out
-
-  # Split-view by metric
-  split(out, out$emission_factor_metric)
-
-  # Calculate company-level targets
-  out <- target_sda(
-    matched, ald2,
-    co2_intensity_scenario = co2_scenario,
-    by_company = TRUE
-  )
-  out
+  # Calculate targets at company level
+  matched \%>\%
+    target_sda(
+      ald = ald,
+      co2_intensity_scenario = co2_intensity_scenario_demo,
+      region_isos = region_isos_demo,
+      by_company = TRUE
+    )
 }
 
 }

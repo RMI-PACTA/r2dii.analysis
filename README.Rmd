@@ -71,7 +71,8 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 matched %>%
   target_sda(
     ald = ald_demo,
-    co2_intensity_scenario = co2_intensity_scenario_demo
+    co2_intensity_scenario = co2_intensity_scenario_demo,
+    region_isos = region_isos_demo
   )
 ```
 

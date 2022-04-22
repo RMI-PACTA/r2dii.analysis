@@ -113,7 +113,7 @@ technology roadmaps.
 co2 <- r2dii.data::co2_intensity_scenario_demo
 
 sda_targets <- matched %>%
-  target_sda(ald = ald, co2_intensity_scenario = co2) %>% 
+  target_sda(ald = ald, co2_intensity_scenario = co2, region_isos = regions) %>% 
   filter(sector == "cement", year >= 2020)
 
 sda_targets
@@ -171,6 +171,6 @@ the scenario compliant SDA pathway that the portfolio must follow to achieve
 the scenario ambition by 2050.
 
 ```{r sda plot}
-data <- filter(sda_targets, sector == "cement")
+data <- filter(sda_targets, sector == "cement", region == "global")
 qplot_emission_intensity(data)
 ```

@@ -101,21 +101,15 @@ target_sda <- function(data,
     "emission_factor"
   )
 
+  warn_and_filter_na(ald, "production")
+  warn_and_filter_na(ald, "emission_factor")
+
   check_crucial_names(data, crucial_portfolio)
   check_unique_id(data, "id_loan")
   walk_(crucial_portfolio, ~ check_no_value_is_missing(data, .x))
 
   check_crucial_names(ald, crucial_ald)
   check_type_emission_factor(ald)
-
-  if (any(is.na(ald$emission_factor))) {
-    warn(
-      "Removing ald rows where `emission_factor` is NA",
-      class = "na_emission_factor"
-    )
-
-    ald <- filter(ald, !is.na(.data$emission_factor))
-  }
 
   walk_(crucial_ald, ~ check_no_value_is_missing(ald, .x))
 

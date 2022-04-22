@@ -30,7 +30,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::., tidyverse, r2dii.plot
+          extra-packages: any::pkgdown, local::., tidyverse::., r2dii.plot::.
           needs: website
 
       - name: Build site

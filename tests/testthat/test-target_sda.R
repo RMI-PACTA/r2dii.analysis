@@ -496,7 +496,7 @@ test_that("filters and warns when input-data has NAs", {
     )
   )
   if (packageVersion("testthat") >= "2.99.0.9000") {
-    args <- list(object = .object, class = "na_emission_factor")
+    args <- list(object = .object, class = "na_crucial_economic_input")
   } else {
     args <- list(object = .object, regexp = "emission_factor.*NA")
   }

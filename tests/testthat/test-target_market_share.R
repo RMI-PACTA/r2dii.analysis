@@ -181,7 +181,7 @@ test_that("filters and warns when input-data has NAs", {
       ald,
       scenario,
       region_isos_stable,
-      class = "na_input_data"))
+      class = "na_crucial_economic_input"))
 })
 
 test_that("outputs expected names", {

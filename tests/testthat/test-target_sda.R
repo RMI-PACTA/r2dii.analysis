@@ -277,7 +277,7 @@ test_that("with no matching data warns", {
       bad_scenario,
       region_isos = region_isos_stable
       ),
-    "no scenario"
+    class = "no_match"
   )
 })
 

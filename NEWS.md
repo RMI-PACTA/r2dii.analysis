@@ -1,4 +1,7 @@
 # r2dii.analysis (development version)
+* `target_sda()` now only outputs data for `sector` values that are in all three 
+  input datasets (`data`, `ald` and `co2_intensity_scenario`) (#390). 
+
 * `target_sda()` now outputs unweighted `emission_factor` if `by_company` is 
   `TRUE` (#376). 
 

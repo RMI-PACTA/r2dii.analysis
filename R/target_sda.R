@@ -166,12 +166,23 @@ target_sda <- function(data,
     return(empty_target_sda_output())
   }
 
-  corporate_economy <- calculate_market_average(ald_by_sector)
+  relevant_ald_by_sector <- ald_by_sector %>%
+    filter(sector %in% unique(data$sector))
+
+  corporate_economy <- calculate_market_average(relevant_ald_by_sector)
 
   interpolate_groups <- c("scenario_source", "scenario", "sector", "region")
 
+  relevant_scenario <- co2_intensity_scenario %>%
+    filter(sector %in% unique(data$sector))
+
+  if (identical(nrow(relevant_scenario), 0L)) {
+    warn("Found no match between loanbook and scenario.", class = "no_match")
+    return(empty_target_sda_output())
+  }
+
   interpolated_scenario <- interpolate_scenario_yearly(
-    co2_intensity_scenario,
+    relevant_scenario,
     !!!rlang::syms(interpolate_groups)
   )
 

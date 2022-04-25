@@ -739,3 +739,28 @@ test_that("argument `weight_emission_factor` outputs correctly with known input 
     ald$`boral cement`$emission_factor
   )
 })
+
+test_that("outputs empty tibble for sectors in `scenario` and `ald` but not
+          `data` (#390)", {
+
+  ald <- fake_ald(
+    sector = c("cement", "steel")
+  )
+
+  scenario <- fake_co2_scenario(
+    sector = rep(c("cement", "steel"), each = 2),
+    year = rep(c(2025, 2026), 2),
+    emission_factor = rep(c(1, 2), 2)
+  )
+
+  out <- target_sda(
+    fake_matched(sector_ald = "cement"),
+    ald,
+    scenario,
+    region_isos = region_isos_stable
+  )
+
+  out_steel <- filter(out, sector == "steel")
+
+  expect_equal(nrow(out_steel), 0L)
+})

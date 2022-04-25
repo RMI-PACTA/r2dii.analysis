@@ -275,7 +275,7 @@ test_that("with no matching data warns", {
       fake_matched(),
       fake_ald(),
       bad_scenario,
-      region_isos = region_isos_demo
+      region_isos = region_isos_stable
       ),
     "no scenario"
   )

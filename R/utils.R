@@ -9,7 +9,7 @@ check_no_value_is_missing <- function(data, column) {
   invisible(data)
 }
 
-warn_and_filter_na <- function(data, column) {
+filter_and_warn_na <- function(data, column) {
   if (anyNA(data[[column]])) {
     name_dataset <- deparse(substitute(data))
     warning_message = paste("Removing rows in", name_dataset, "where `{column}` is NA")

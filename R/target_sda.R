@@ -101,8 +101,8 @@ target_sda <- function(data,
     "emission_factor"
   )
 
-  warn_and_filter_na(ald, "production")
-  warn_and_filter_na(ald, "emission_factor")
+  filter_and_warn_na(ald, "production")
+  filter_and_warn_na(ald, "emission_factor")
 
   check_crucial_names(data, crucial_portfolio)
   check_unique_id(data, "id_loan")

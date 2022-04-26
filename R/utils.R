@@ -20,8 +20,7 @@ filter_and_warn_na <- function(data, column) {
 
     data <- filter(data, !is.na(.data[[column]]))
 
-    invisible(data)
-
+    return(data)
   }
 }
 

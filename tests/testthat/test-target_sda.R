@@ -505,6 +505,33 @@ test_that("filters and warns when input-data has NAs", {
   expect_equal(out$corporate_economy$emission_factor_value, c(1, 2))
 })
 
+test_that("filters and warns when input-data (production in ald) has NAs #304", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    sector_ald = c("cement", "power")
+  )
+
+  ald <- fake_ald(
+    sector = c("cement", "power"),
+    production = c(1,NA)
+  )
+
+  co2_scenario <- fake_co2_scenario(
+    sector = "cement",
+    emission_factor = c(1, 0.6),
+    year = c(2025, 2026)
+  )
+
+  expect_warning(
+    target_sda(
+      matched,
+      ald,
+      co2_scenario,
+      region_isos = region_isos_stable),
+    class = "na_crucial_economic_input")
+})
+
+
 test_that(
   "`sector` column is not used from data (should only use `sector_ald`) (#178)",
   {

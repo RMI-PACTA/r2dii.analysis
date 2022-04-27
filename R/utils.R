@@ -19,9 +19,8 @@ filter_and_warn_na <- function(data, column) {
     )
 
     data <- filter(data, !is.na(.data[[column]]))
-
-    return(data)
   }
+  return(data)
 }
 
 warn_grouped <- function(data, message) {

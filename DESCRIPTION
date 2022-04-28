@@ -37,6 +37,7 @@ Depends:
 Imports: 
     dplyr (>= 0.8.5),
     glue,
+    lifecycle,
     magrittr,
     r2dii.data,
     rlang (>= 0.1.2),

@@ -2,6 +2,7 @@ library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
 test_that("with fake data outputs known value", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   out <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
@@ -12,6 +13,7 @@ test_that("with fake data outputs known value", {
 })
 
 test_that("returns visibly", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_visible(
     join_ald_scenario(
       fake_matched(),
@@ -23,6 +25,7 @@ test_that("returns visibly", {
 })
 
 test_that("outputs expected names", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expected <- setdiff(
     c(
       names(fake_matched()),
@@ -58,6 +61,7 @@ test_that("outputs expected names", {
 })
 
 test_that("is sensitive to region_isos", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   out1 <- join_ald_scenario(
     fake_matched(),
     ald = fake_ald(),
@@ -76,6 +80,7 @@ test_that("is sensitive to region_isos", {
 })
 
 test_that("is case-insensitive to `plant_location` inputs", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   lowercase <- "a"
   out1 <- join_ald_scenario(
     fake_matched(),
@@ -96,6 +101,7 @@ test_that("is case-insensitive to `plant_location` inputs", {
 })
 
 test_that("outputs a number of rows equal to matches by `scenario_source`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   matching_0 <- suppressWarnings(
     join_ald_scenario(
       fake_matched(),
@@ -124,6 +130,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
 })
 
 test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   bad <- function(data, x) rename(data, bad = all_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
@@ -135,8 +142,8 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
     )
   }
 
-  expect_error_missing_names(match_result = bad(fake_matched(), "name_ald"))
-  expect_error_missing_names(match_result = bad(fake_matched(), "sector_ald"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "name_abcd"))
+  expect_error_missing_names(match_result = bad(fake_matched(), "sector_abcd"))
 
   expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
   expect_error_missing_names(ald = bad(fake_ald(), "sector"))
@@ -151,6 +158,7 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
 })
 
 test_that("without `sector` throws no error", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
   without_sector <- select(fake_matched(), -sector)
   expect_error_free(
@@ -164,6 +172,7 @@ test_that("without `sector` throws no error", {
 })
 
 test_that("warns 0-rows caused by scenario or region_isos", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   join_ald_scenario2 <- function(l, scenario = NULL, region_isos = NULL) {
     scenario <- scenario %||% fake_scenario(
       region = l$region, sector = l$sector, scenario_source = l$source
@@ -173,7 +182,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
     )
 
     join_ald_scenario(
-      fake_matched(sector_ald = l$sector),
+      fake_matched(sector_abcd = l$sector),
       ald = fake_ald(plant_location = l$isos, sector = l$sector),
       scenario = scenario,
       region_isos = region_isos
@@ -216,6 +225,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 })
 
 test_that("include/excludes `plant_location` inside/outside a region", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   # styler: off
   region_isos_toy <- tribble(
     ~region,         ~isos, ~source,
@@ -244,6 +254,7 @@ test_that("include/excludes `plant_location` inside/outside a region", {
 })
 
 test_that("outputs the same with upper/lower ald$sector or ald$technology", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   matched <- fake_matched()
   ald <- fake_ald()
   scenario <- fake_scenario()

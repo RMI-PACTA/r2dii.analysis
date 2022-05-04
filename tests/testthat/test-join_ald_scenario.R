@@ -5,7 +5,7 @@ test_that("with fake data outputs known value", {
   withr::local_options(lifecycle_verbosity = "quiet")
   out <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(),
+    ald = fake_abcd(),
     scenario = fake_scenario(),
     region_isos = region_isos_stable
   )
@@ -17,7 +17,7 @@ test_that("returns visibly", {
   expect_visible(
     join_ald_scenario(
       fake_matched(),
-      ald = fake_ald(),
+      ald = fake_abcd(),
       scenario = fake_scenario(),
       region_isos = region_isos_stable
     )
@@ -29,7 +29,7 @@ test_that("outputs expected names", {
   expected <- setdiff(
     c(
       names(fake_matched()),
-      names(fake_ald()),
+      names(fake_abcd()),
       names(fake_scenario()),
       # Comes from region_isos which is used internally
       "scenario_source"
@@ -39,7 +39,7 @@ test_that("outputs expected names", {
 
   out <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(),
+    ald = fake_abcd(),
     scenario = fake_scenario(),
     region_isos = region_isos_stable
   )
@@ -50,7 +50,7 @@ test_that("outputs expected names", {
 
   out2 <- join_ald_scenario(
     fake_matched(new_column = "anything"),
-    ald = fake_ald(),
+    ald = fake_abcd(),
     scenario = fake_scenario(),
     region_isos = region_isos_stable
   )
@@ -64,14 +64,14 @@ test_that("is sensitive to region_isos", {
   withr::local_options(lifecycle_verbosity = "quiet")
   out1 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(),
+    ald = fake_abcd(),
     scenario = fake_scenario(scenario_source = "weo_2019"),
     region_isos = r2dii.data::region_isos
   )
 
   out2 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(),
+    ald = fake_abcd(),
     scenario = fake_scenario(scenario_source = "demo_2020"),
     region_isos = region_isos_stable
   )
@@ -84,7 +84,7 @@ test_that("is case-insensitive to `plant_location` inputs", {
   lowercase <- "a"
   out1 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = lowercase),
+    ald = fake_abcd(plant_location = lowercase),
     scenario = fake_scenario(region = "b", scenario_source = "c"),
     region_isos = tibble(isos = "a", region = "b", source = "c")
   )
@@ -92,7 +92,7 @@ test_that("is case-insensitive to `plant_location` inputs", {
   uppercase <- "A"
   out2 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = uppercase),
+    ald = fake_abcd(plant_location = uppercase),
     scenario = fake_scenario(region = "b", scenario_source = "c"),
     region_isos = tibble(isos = "a", region = "b", source = "c")
   )
@@ -105,7 +105,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
   matching_0 <- suppressWarnings(
     join_ald_scenario(
       fake_matched(),
-      ald = fake_ald(plant_location = "a"),
+      ald = fake_abcd(plant_location = "a"),
       scenario = fake_scenario(region = "b", scenario_source = "c"),
       region_isos = tibble(isos = "a", region = "b", source = "-")
     )
@@ -114,7 +114,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
 
   matching_1 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = "a"),
+    ald = fake_abcd(plant_location = "a"),
     scenario = fake_scenario(region = "b", scenario_source = "c"),
     region_isos = tibble(isos = "a", region = "b", source = "c")
   )
@@ -122,7 +122,7 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
 
   matching_2 <- join_ald_scenario(
     fake_matched(),
-    ald = fake_ald(plant_location = "a"),
+    ald = fake_abcd(plant_location = "a"),
     scenario = fake_scenario(region = "b", scenario_source = c("c", "c")),
     region_isos = tibble(isos = "a", region = "b", source = "c")
   )
@@ -134,7 +134,7 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   bad <- function(data, x) rename(data, bad = all_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
-                                         ald = fake_ald(),
+                                         ald = fake_abcd(),
                                          scenario = fake_scenario()) {
     expect_error(
       class = "missing_names",
@@ -145,10 +145,10 @@ test_that("w/ loanbook, ald or scenario with missing names errors gracefully", {
   expect_error_missing_names(match_result = bad(fake_matched(), "name_abcd"))
   expect_error_missing_names(match_result = bad(fake_matched(), "sector_abcd"))
 
-  expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
-  expect_error_missing_names(ald = bad(fake_ald(), "sector"))
-  expect_error_missing_names(ald = bad(fake_ald(), "technology"))
-  expect_error_missing_names(ald = bad(fake_ald(), "year"))
+  expect_error_missing_names(ald = bad(fake_abcd(), "name_company"))
+  expect_error_missing_names(ald = bad(fake_abcd(), "sector"))
+  expect_error_missing_names(ald = bad(fake_abcd(), "technology"))
+  expect_error_missing_names(ald = bad(fake_abcd(), "year"))
 
   expect_error_missing_names(scenario = bad(fake_scenario(), "sector"))
   expect_error_missing_names(scenario = bad(fake_scenario(), "technology"))
@@ -164,7 +164,7 @@ test_that("without `sector` throws no error", {
   expect_error_free(
     join_ald_scenario(
       without_sector,
-      ald = fake_ald(),
+      ald = fake_abcd(),
       scenario = fake_scenario(),
       region_isos = region_isos_stable
     )
@@ -183,7 +183,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 
     join_ald_scenario(
       fake_matched(sector_abcd = l$sector),
-      ald = fake_ald(plant_location = l$isos, sector = l$sector),
+      ald = fake_abcd(plant_location = l$isos, sector = l$sector),
       scenario = scenario,
       region_isos = region_isos
     )
@@ -241,7 +241,7 @@ test_that("include/excludes `plant_location` inside/outside a region", {
     # We have isos to match all countries and regions;
     region_isos = region_isos_toy,
     # And we have asset-level data from all countries;
-    ald = fake_ald(plant_location = c("de", "fr", "cn", "us")),
+    ald = fake_abcd(plant_location = c("de", "fr", "cn", "us")),
     # But our scenario if is only relevant to Europe and China -- not US
     scenario = fake_scenario(region = c("oecd", "china"))
   )
@@ -256,7 +256,7 @@ test_that("include/excludes `plant_location` inside/outside a region", {
 test_that("outputs the same with upper/lower ald$sector or ald$technology", {
   withr::local_options(lifecycle_verbosity = "quiet")
   matched <- fake_matched()
-  ald <- fake_ald()
+  ald <- fake_abcd()
   scenario <- fake_scenario()
   regions <- region_isos_stable
 

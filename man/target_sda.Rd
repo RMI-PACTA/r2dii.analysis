@@ -7,18 +7,19 @@ using the SDA approach}
 \usage{
 target_sda(
   data,
-  ald,
+  abcd,
   co2_intensity_scenario,
   use_credit_limit = FALSE,
   by_company = FALSE,
-  region_isos = r2dii.data::region_isos
+  region_isos = r2dii.data::region_isos,
+  ald = deprecated()
 )
 }
 \arguments{
 \item{data}{A dataframe like the output of
 \code{r2dii.match::prioritize()}.}
 
-\item{ald}{An asset-level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
+\item{abcd}{An asset-level data frame like \link[r2dii.data:abcd_demo]{r2dii.data::abcd_demo}.}
 
 \item{co2_intensity_scenario}{A scenario data frame like
 \link[r2dii.data:co2_intensity_scenario_demo]{r2dii.data::co2_intensity_scenario_demo}.}
@@ -32,11 +33,14 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 \code{weighted_production_value} at the company-level.}
 
 \item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
+
+\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
+\code{abcd}.}
 }
 \value{
 A tibble including the summarized columns \code{emission_factor_metric} and
 \code{emission_factor_value}. If \code{by_company = TRUE}, the output will also have
-the column \code{name_ald}.
+the column \code{name_abcd}.
 }
 \description{
 This function calculates targets of CO2 emissions per unit production at the
@@ -58,16 +62,16 @@ if (installed) {
   library(r2dii.data)
 
   loanbook <- head(loanbook_demo, 150)
-  ald <- head(ald_demo, 100)
+  abcd <- head(abcd_demo, 100)
 
   matched <- loanbook \%>\%
-    match_name(ald) \%>\%
+    match_name(abcd) \%>\%
     prioritize()
 
   # Calculate targets at portfolio level
   matched \%>\%
     target_sda(
-      ald = ald,
+      abcd = abcd,
       co2_intensity_scenario = co2_intensity_scenario_demo,
       region_isos = region_isos_demo
     )
@@ -75,7 +79,7 @@ if (installed) {
   # Calculate targets at company level
   matched \%>\%
     target_sda(
-      ald = ald,
+      abcd = abcd,
       co2_intensity_scenario = co2_intensity_scenario_demo,
       region_isos = region_isos_demo,
       by_company = TRUE

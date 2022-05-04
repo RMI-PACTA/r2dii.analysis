@@ -67,6 +67,6 @@ if (installed) {
 \code{\link[=join_ald_scenario]{join_ald_scenario()}}.
 
 Other utility functions: 
-\code{\link{join_ald_scenario}()}
+\code{\link{join_abcd_scenario}()}
 }
 \concept{utility functions}

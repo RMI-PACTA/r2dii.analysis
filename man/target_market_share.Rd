@@ -6,18 +6,19 @@
 \usage{
 target_market_share(
   data,
-  ald,
+  abcd,
   scenario,
   region_isos = r2dii.data::region_isos,
   use_credit_limit = FALSE,
   by_company = FALSE,
-  weight_production = TRUE
+  weight_production = TRUE,
+  ald = deprecated()
 )
 }
 \arguments{
 \item{data}{A "data.frame" like the output of \code{r2dii.match::prioritize}.}
 
-\item{ald}{An asset level data frame like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
+\item{abcd}{An asset level data frame like \link[r2dii.data:abcd_demo]{r2dii.data::abcd_demo}.}
 
 \item{scenario}{A scenario data frame like \link[r2dii.data:scenario_demo_2020]{r2dii.data::scenario_demo_2020}.}
 
@@ -34,12 +35,15 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \item{weight_production}{Logical vector of length 1. \code{TRUE} defaults to
 outputting production, weighted by relative loan-size. Set to \code{FALSE} to
 output the unweighted production values.}
+
+\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
+\code{abcd}.}
 }
 \value{
 A tibble including the summarized columns \code{metric}, \code{production},
 \code{technology_share}, \code{percentage_of_initial_production_by_scope} and
 \code{scope}. If \code{by_company = TRUE}, the output will also have the column
-\code{name_ald}.
+\code{name_abcd}.
 }
 \description{
 This function calculates the portfolio-level production targets, as
@@ -60,16 +64,16 @@ if (installed) {
   library(r2dii.match)
 
   loanbook <- head(loanbook_demo, 100)
-  ald <- head(ald_demo, 100)
+  abcd <- head(abcd_demo, 100)
 
   matched <- loanbook \%>\%
-    match_name(ald) \%>\%
+    match_name(abcd) \%>\%
     prioritize()
 
   # Calculate targets at portfolio level
   matched \%>\%
     target_market_share(
-      ald = ald,
+      abcd = abcd,
       scenario = scenario_demo_2020,
       region_isos = region_isos_demo
     )
@@ -77,7 +81,7 @@ if (installed) {
   # Calculate targets at company level
   matched \%>\%
     target_market_share(
-      ald = ald,
+      abcd = abcd,
       scenario = scenario_demo_2020,
       region_isos = region_isos_demo,
       by_company = TRUE
@@ -85,7 +89,7 @@ if (installed) {
 
   matched \%>\%
     target_market_share(
-      ald = ald,
+      abcd = abcd,
       scenario = scenario_demo_2020,
       region_isos = region_isos_demo,
       # Calculate unweighted targets

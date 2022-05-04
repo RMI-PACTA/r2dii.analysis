@@ -61,51 +61,7 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
 
   old_groups <- dplyr::groups(data)
 
-  if (all(c("sector_ald", "sector_abcd") %in% names(data))) {
-
-    rlang::abort(
-      "too_many_sectors",
-      message = glue(
-        "Column `sector_ald` is deprecated as of r2dii.match 0.1.0, please use
-        `sector_abcd` instead."
-      )
-    )
-
-  } else if ("sector_ald" %in% names(data)) {
-
-    rlang::warn(
-      "deprecated_name",
-      message = glue(
-        "Column `sector_ald` is deprecated as of r2dii.match 0.1.0, please use
-        `sector_abcd` instead."
-      )
-    )
-
-    data <- dplyr::rename(data, sector_abcd = .data$sector_ald)
-  }
-
-  if (all(c("name_ald", "name_abcd") %in% names(data))) {
-
-    rlang::abort(
-      "too_many_sectors",
-      message = glue(
-        "Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
-        `name_abcd` instead."
-      )
-    )
-
-  } else if ("name_ald" %in% names(data)) {
-
-    rlang::warn(
-      "deprecated_name",
-      message = glue(
-        "Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
-        `name_abcd` instead."
-      )
-    )
-
-    data <- dplyr::rename(data, name_abcd = .data$name_ald)
-  }
+  data <- rename_and_warn_ald_names(data)
 
   crucial <- c("production", "sector_abcd", "year", "technology")
 
@@ -198,6 +154,8 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
   stopifnot(is.data.frame(data))
 
+  data <- rename_and_warn_ald_names(data)
+
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
@@ -214,6 +172,8 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
 summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FALSE) {
   stopifnot(is.data.frame(data))
 
+  data <- rename_and_warn_ald_names(data)
+
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
@@ -226,6 +186,9 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
 }
 
 summarize_unweighted_emission_factor <- function(data, ...) {
+
+  data <- rename_and_warn_ald_names(data)
+
   data <- data %>%
     select(-c(
       .data$id_loan,

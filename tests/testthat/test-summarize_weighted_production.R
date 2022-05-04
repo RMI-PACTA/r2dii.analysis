@@ -43,7 +43,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("loan_size_outstanding")
   expect_error_missing_names("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_missing_names("production")
-  expect_error_missing_names("sector_ald")
+  expect_error_missing_names("sector_abcd")
   expect_error_missing_names("technology")
   expect_error_missing_names("year")
 })
@@ -68,7 +68,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs("loan_size_outstanding")
   expect_error_crucial_NAs("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_crucial_NAs("production")
-  expect_error_crucial_NAs("sector_ald")
+  expect_error_crucial_NAs("sector_abcd")
   expect_error_crucial_NAs("technology")
   expect_error_crucial_NAs("year")
 })
@@ -129,7 +129,7 @@ test_that("outputs expected names", {
   expect_named(
     summarize_weighted_production(fake_master()),
     c(
-      "sector_ald",
+      "sector_abcd",
       "technology",
       "year",
       "weighted_production",
@@ -163,10 +163,10 @@ test_that("with multiple years outputs as expected", {
 
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
-    group_by(.data$sector_ald) %>%
+    group_by(.data$sector_abcd) %>%
     summarize_weighted_production()
 
-  expect_equal(dplyr::group_vars(out), "sector_ald")
+  expect_equal(dplyr::group_vars(out), "sector_abcd")
 })
 
 test_that("can group by `plant_location`", {
@@ -233,7 +233,7 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("loan_size_outstanding")
   expect_error_missing_names("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_missing_names("production")
-  expect_error_missing_names("sector_ald")
+  expect_error_missing_names("sector_abcd")
   expect_error_missing_names("technology")
   expect_error_missing_names("year")
 })
@@ -261,7 +261,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   expect_error_crucial_NAs("loan_size_outstanding")
   expect_error_crucial_NAs("loan_size_credit_limit", use_credit_limit = TRUE)
   expect_error_crucial_NAs("production")
-  expect_error_crucial_NAs("sector_ald")
+  expect_error_crucial_NAs("sector_abcd")
   expect_error_crucial_NAs("technology")
   expect_error_crucial_NAs("year")
 })
@@ -296,32 +296,32 @@ test_that("with duplicated loan_size by id_loan throws error", {
 test_that("outputs expected names", {
   expect_named(
     summarize_weighted_percent_change(fake_master()),
-    c("sector_ald", "technology", "year", "weighted_percent_change")
+    c("sector_abcd", "technology", "year", "weighted_percent_change")
   )
 })
 
 test_that("is sensitive to `use_credit_limit`", {
   data <- fake_master(
-    name_ald = rep(c("company a", "company b"), 2),
+    name_abcd = rep(c("company a", "company b"), 2),
     year = c(2020, 2020, 2021, 2021),
     id_loan = c("i1", "i2", "i1", "i2"),
     loan_size_credit_limit = c(20, 30, 20, 30),
     production = c(10, 10, 20, 40),
   )
   out2 <- data %>%
-    summarize_weighted_percent_change(name_ald, use_credit_limit = TRUE)
+    summarize_weighted_percent_change(name_abcd, use_credit_limit = TRUE)
   out3 <- data %>%
-    summarize_weighted_percent_change(name_ald, use_credit_limit = FALSE)
+    summarize_weighted_percent_change(name_abcd, use_credit_limit = FALSE)
 
   expect_false(identical(out2, out3))
 })
 
 test_that("with grouped data returns same groups as input", {
   out <- fake_master() %>%
-    group_by(.data$sector_ald) %>%
+    group_by(.data$sector_abcd) %>%
     summarize_weighted_percent_change()
 
-  expect_equal(dplyr::group_vars(out), "sector_ald")
+  expect_equal(dplyr::group_vars(out), "sector_abcd")
 })
 
 test_that("can group by `plant_location`", {
@@ -369,9 +369,9 @@ test_that("for percent-change, with demo data returns known value", {
   restore <- options(r2dii.match.allow_reserved_columns = TRUE)
   on.exit(options(restore), add = TRUE)
 
-  master <- prioritize(match_name(loanbook_stable, ald_demo)) %>%
-    join_ald_scenario(
-      ald = ald_demo,
+  master <- prioritize(match_name(loanbook_stable, abcd_demo)) %>%
+    join_abcd_scenario(
+      abcd = abcd_demo,
       scenario = scenario_demo_2020,
       region_isos = region_isos_stable
     )
@@ -386,26 +386,26 @@ test_that("for percent-change, with demo data returns known value", {
 
 test_that("with known input outputs as expected", {
   data <- fake_master(
-    name_ald = rep(c("company a", "company b"), 2),
+    name_abcd = rep(c("company a", "company b"), 2),
     year = c(2020, 2020, 2021, 2021),
     id_loan = c("i1", "i2", "i1", "i2"),
     production = c(10, 10, 20, 40),
   )
-  out1 <- summarize_weighted_percent_change(data, name_ald)
+  out1 <- summarize_weighted_percent_change(data, name_abcd)
   out1$weighted_percent_change
   expect_equal(out1$weighted_percent_change, c(0, 0, 50, 150))
 
   # Is sensitive to `use_credit_limit`
   # Reversing loan_size and production outputs reverse result
   data2 <- fake_master(
-    name_ald = rep(c("company a", "company b"), 2),
+    name_abcd = rep(c("company a", "company b"), 2),
     year = c(2020, 2020, 2021, 2021),
     id_loan = c("i1", "i2", "i1", "i2"),
     loan_size_credit_limit = c(20, 30, 20, 30),
     production = c(10, 10, 20, 40),
   )
   out2 <- data2 %>%
-    summarize_weighted_percent_change(name_ald, use_credit_limit = TRUE)
+    summarize_weighted_percent_change(name_abcd, use_credit_limit = TRUE)
   expect_equal(out2$weighted_percent_change, c(0, 0, 40, 180))
 })
 

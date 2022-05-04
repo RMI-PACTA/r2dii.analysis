@@ -1,4 +1,4 @@
-#' Minimal explicit loanbook and ald datasets that allow overwriting values
+#' Minimal explicit loanbook and abcd datasets that allow overwriting values
 #'
 #' These funtions are developer-oriented. They all call [tibble()] so
 #' you can expect all the goodies that come with that.
@@ -40,8 +40,8 @@ fake_matched <- function(id_loan = NULL,
                          level = NULL,
                          score = NULL,
                          sector = NULL,
-                         name_ald = NULL,
-                         sector_ald = NULL,
+                         name_abcd = NULL,
+                         sector_abcd = NULL,
                          ...) {
   tibble(
     id_loan = id_loan %||% "L162",
@@ -53,8 +53,8 @@ fake_matched <- function(id_loan = NULL,
     level = level %||% "ultimate_parent",
     score = score %||% 1,
     sector = sector %||% "automotive",
-    name_ald = name_ald %||% "shaanxi auto",
-    sector_ald = sector_ald %||% "automotive",
+    name_abcd = name_abcd %||% "shaanxi auto",
+    sector_abcd = sector_abcd %||% "automotive",
     ...
   )
 }
@@ -62,6 +62,30 @@ fake_matched <- function(id_loan = NULL,
 #' See `fake_matched()`
 #' @noRd
 fake_ald <- function(name_company = NULL,
+                     sector = NULL,
+                     technology = NULL,
+                     year = NULL,
+                     production = NULL,
+                     emission_factor = NULL,
+                     plant_location = NULL,
+                     is_ultimate_owner = NULL,
+                     ...) {
+  tibble(
+    name_company = name_company %||% "shaanxi auto",
+    sector = sector %||% "automotive",
+    technology = technology %||% "ice",
+    year = year %||% 2025,
+    production = production %||% 1,
+    emission_factor = emission_factor %||% 1,
+    plant_location = plant_location %||% "BF",
+    is_ultimate_owner = is_ultimate_owner %||% TRUE,
+    ...
+  )
+}
+
+#' See `fake_matched()`
+#' @noRd
+fake_abcd <- function(name_company = NULL,
                      sector = NULL,
                      technology = NULL,
                      year = NULL,
@@ -134,8 +158,8 @@ fake_master <- function(id_loan = NULL,
                         loan_size_outstanding_currency = NULL,
                         loan_size_credit_limit = NULL,
                         loan_size_credit_limit_currency = NULL,
-                        sector_ald = NULL,
-                        name_ald = NULL,
+                        sector_abcd = NULL,
+                        name_abcd = NULL,
                         technology = NULL,
                         year = NULL,
                         production = NULL,
@@ -151,8 +175,8 @@ fake_master <- function(id_loan = NULL,
     loan_size_outstanding_currency =  loan_size_outstanding_currency %||% "EUR",
     loan_size_credit_limit =  loan_size_credit_limit %||% 2,
     loan_size_credit_limit_currency =  loan_size_credit_limit_currency %||% "EUR",
-    sector_ald =   sector_ald %||% "automotive",
-    name_ald = name_ald %||% "shaanxi auto",
+    sector_abcd =   sector_abcd %||% "automotive",
+    name_abcd = name_abcd %||% "shaanxi auto",
     technology =   technology %||% "ice",
     year =  year %||% 2025,
     production =  production %||% 1,

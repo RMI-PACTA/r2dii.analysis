@@ -82,9 +82,9 @@ target_sda <- function(data,
 
   if (lifecycle::is_present(ald)) {
     lifecycle::deprecate_warn(
-      "0.1.0 (expected July 2022)",
-      "match_name(ald)",
-      "match_name(abcd)"
+      "0.2.0 (expected July 2022)",
+      "target_market_share(ald)",
+      "target_market_share(abcd)"
     )
     abcd <- ald
   }

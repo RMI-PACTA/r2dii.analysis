@@ -4,9 +4,9 @@ library(r2dii.data)
 test_that("with fake data outputs known value", {
   out <- target_sda(
     fake_matched(
-      sector_ald = "cement"
+      sector_abcd = "cement"
     ),
-    ald = fake_ald(
+    abcd = fake_abcd(
       sector = "cement",
       technology = "cement",
       year = c(2020, 2021, 2022),
@@ -23,9 +23,9 @@ test_that("with fake data outputs known value", {
 
   out_company <- target_sda(
     fake_matched(
-      sector_ald = "cement"
+      sector_abcd = "cement"
     ),
-    ald = fake_ald(
+    abcd = fake_abcd(
       sector = "cement",
       technology = "cement",
       year = c(2020, 2021, 2022),
@@ -45,9 +45,9 @@ test_that("with fake data outputs known value", {
 test_that("outputs is ungrouped", {
   out <- target_sda(
     fake_matched(
-      sector_ald = "cement"
+      sector_abcd = "cement"
     ),
-    fake_ald(
+    fake_abcd(
       sector = "cement",
       year = c(2020, 2050)
     ),
@@ -61,12 +61,12 @@ test_that("outputs is ungrouped", {
 })
 
 test_that("warns when input data is grouped", {
-  grouped_data <- group_by(fake_matched(sector_ald = "cement"), id_loan)
+  grouped_data <- group_by(fake_matched(sector_abcd = "cement"), id_loan)
 
   out <- function() {
     target_sda(
       grouped_data,
-      ald = fake_ald(
+      abcd = fake_abcd(
         sector = "cement",
         year = c(2020, 2050)
       ),
@@ -83,7 +83,7 @@ test_that("warns when input data is grouped", {
 
 test_that("with bad `data` errors with informative message", {
   expect_error(
-    target_sda("bad", fake_ald(), fake_co2_scenario()),
+    target_sda("bad", fake_abcd(), fake_co2_scenario()),
     "data.frame.*not.*TRUE"
   )
   expect_error(
@@ -91,13 +91,13 @@ test_that("with bad `data` errors with informative message", {
     "data.frame.*not.*TRUE"
   )
   expect_error(
-    target_sda(fake_matched(), fake_ald(), "bad"),
+    target_sda(fake_matched(), fake_abcd(), "bad"),
     "data.frame.*not.*TRUE"
   )
   expect_error(
     target_sda(
       fake_matched(),
-      ald = fake_ald(),
+      abcd = fake_abcd(),
       co2_intensity_scenario = fake_co2_scenario(),
       use_credit_limit = "bad"
     ),
@@ -109,25 +109,25 @@ test_that("w/ missing crucial names errors gracefully", {
   bad <- function(data, x) rename(data, bad = dplyr::one_of(x))
 
   expect_error_missing_names <- function(match_result = fake_matched(),
-                                         ald = fake_ald(),
+                                         abcd = fake_abcd(),
                                          scenario = fake_co2_scenario()) {
     expect_error(
       class = "missing_names",
-      target_sda(match_result, ald, scenario)
+      target_sda(match_result, abcd, scenario)
     )
   }
 
   mch <- fake_matched()
   expect_error_missing_names(match_result = bad(mch, "loan_size_outstanding"))
   expect_error_missing_names(match_result = bad(mch, "loan_size_credit_limit"))
-  expect_error_missing_names(match_result = bad(mch, "name_ald"))
-  expect_error_missing_names(match_result = bad(mch, "sector_ald"))
+  expect_error_missing_names(match_result = bad(mch, "name_abcd"))
+  expect_error_missing_names(match_result = bad(mch, "sector_abcd"))
 
-  expect_error_missing_names(ald = bad(fake_ald(), "name_company"))
-  expect_error_missing_names(ald = bad(fake_ald(), "sector"))
-  expect_error_missing_names(ald = bad(fake_ald(), "year"))
-  expect_error_missing_names(ald = bad(fake_ald(), "emission_factor"))
-  expect_error_missing_names(ald = bad(fake_ald(), "production"))
+  expect_error_missing_names(abcd = bad(fake_abcd(), "name_company"))
+  expect_error_missing_names(abcd = bad(fake_abcd(), "sector"))
+  expect_error_missing_names(abcd = bad(fake_abcd(), "year"))
+  expect_error_missing_names(abcd = bad(fake_abcd(), "emission_factor"))
+  expect_error_missing_names(abcd = bad(fake_abcd(), "production"))
 
   scen <- fake_co2_scenario()
   expect_error_missing_names(scenario = bad(scen, "sector"))
@@ -137,11 +137,11 @@ test_that("w/ missing crucial names errors gracefully", {
 
 test_that("without `sector` throws no error", {
   # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
-  without_sector <- select(fake_matched(sector_ald = "cement"), -sector)
+  without_sector <- select(fake_matched(sector_abcd = "cement"), -sector)
   expect_error_free(
     target_sda(
       without_sector,
-      ald = fake_ald(sector = "cement"),
+      abcd = fake_abcd(sector = "cement"),
       co2_intensity_scenario = fake_co2_scenario(),
       region_isos = region_isos_stable
     )
@@ -154,10 +154,10 @@ test_that("properly weights emissions factors", {
   out <- target_sda(
     fake_matched(
       id_loan = c(1, 2),
-      name_ald = companies,
-      sector_ald = "cement"
+      name_abcd = companies,
+      sector_abcd = "cement"
     ),
-    ald = fake_ald(
+    abcd = fake_abcd(
       name_company = companies,
       sector = "cement",
       technology = "cement",
@@ -182,8 +182,8 @@ test_that("properly weights emissions factors", {
 
 test_that("outputs expected names", {
   out <- target_sda(
-    fake_matched(sector_ald = "cement"),
-    ald = fake_ald(
+    fake_matched(sector_abcd = "cement"),
+    abcd = fake_abcd(
       sector = "cement",
       technology = "cement",
       year = c(2020, 2021, 2022),
@@ -208,9 +208,9 @@ test_that("outputs expected names", {
 
 test_that("with known input outputs as expected", {
   # TODO: Re-factor this test into smaller isolated expected output tests
-  matched <- fake_matched(sector_ald = "cement")
+  matched <- fake_matched(sector_abcd = "cement")
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = "cement",
     technology = "cement",
     name_company = c(rep("shaanxi auto", 4), "company 2"),
@@ -226,7 +226,7 @@ test_that("with known input outputs as expected", {
 
   out <- target_sda(
     matched,
-    ald,
+    abcd,
     co2_intensity_scenario,
     region_isos = region_isos_stable
   ) %>%
@@ -256,16 +256,16 @@ test_that("with known input outputs as expected", {
 })
 
 test_that("with no matching data warns", {
-  no_matches <- fake_matched(sector_ald = "bad")
+  no_matches <- fake_matched(sector_abcd = "bad")
 
   if (packageVersion("testthat") >= "2.99.0.9000") {
     expect_warning(
       class = "no_match",
-      target_sda(no_matches, fake_ald(), fake_co2_scenario())
+      target_sda(no_matches, fake_abcd(), fake_co2_scenario())
     )
   } else {
     expect_warning(
-      target_sda(no_matches, fake_ald(), fake_co2_scenario()), "no match"
+      target_sda(no_matches, fake_abcd(), fake_co2_scenario()), "no match"
     )
   }
 
@@ -273,7 +273,7 @@ test_that("with no matching data warns", {
   expect_warning(
     target_sda(
       fake_matched(),
-      fake_ald(),
+      fake_abcd(),
       bad_scenario,
       region_isos = region_isos_stable
       ),
@@ -284,11 +284,11 @@ test_that("with no matching data warns", {
 test_that("with duplicated id_loan weights emission_factor as expected (#160)", {
   match_result <- fake_matched(
     id_loan = c(1, 1),
-    name_ald = rep("large company", 2),
-    sector_ald = "cement"
+    name_abcd = rep("large company", 2),
+    sector_abcd = "cement"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = "cement",
     name_company = "large company",
     emission_factor = 2,
@@ -303,7 +303,7 @@ test_that("with duplicated id_loan weights emission_factor as expected (#160)", 
   expect_error(
     target_sda(
       match_result,
-      ald,
+      abcd,
       scen,
       region_isos = region_isos_stable
     ) %>%
@@ -314,9 +314,9 @@ test_that("with duplicated id_loan weights emission_factor as expected (#160)", 
 
 test_that("with NAs in crucial columns errors with informative message (#146)", {
   expect_error_crucial_NAs_portfolio <- function(name) {
-    data <- fake_matched(sector_ald = "cement")
+    data <- fake_matched(sector_abcd = "cement")
 
-    ald <- fake_ald(
+    abcd <- fake_abcd(
       sector = "cement",
       year = c(2020, 2050)
     )
@@ -331,17 +331,17 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
       class = "some_value_is_missing",
       target_sda(
         data,
-        ald,
+        abcd,
         scen,
         region_isos = region_isos_stable
       )
     )
   }
 
-  expect_error_crucial_NAs_ald <- function(name) {
-    match_result <- fake_matched(sector_ald = "cement")
+  expect_error_crucial_NAs_abcd <- function(name) {
+    match_result <- fake_matched(sector_abcd = "cement")
 
-    data <- fake_ald(
+    data <- fake_abcd(
       sector = "cement",
       year = c(2020, 2050)
     )
@@ -365,9 +365,9 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
   }
 
   expect_error_crucial_NAs_scenario <- function(name) {
-    match_result <- fake_matched(sector_ald = "cement")
+    match_result <- fake_matched(sector_abcd = "cement")
 
-    ald <- fake_ald(
+    abcd <- fake_abcd(
       sector = "cement",
       year = c(2020, 2050)
     )
@@ -383,20 +383,20 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
       class = "some_value_is_missing",
       target_sda(
         match_result,
-        ald,
+        abcd,
         data,
         region_isos = region_isos_stable
       )
     )
   }
 
-  expect_error_crucial_NAs_portfolio("name_ald")
-  expect_error_crucial_NAs_portfolio("sector_ald")
+  expect_error_crucial_NAs_portfolio("name_abcd")
+  expect_error_crucial_NAs_portfolio("sector_abcd")
 
-  expect_error_crucial_NAs_ald("name_company")
-  expect_error_crucial_NAs_ald("production")
-  expect_error_crucial_NAs_ald("sector")
-  expect_error_crucial_NAs_ald("year")
+  expect_error_crucial_NAs_abcd("name_company")
+  expect_error_crucial_NAs_abcd("production")
+  expect_error_crucial_NAs_abcd("sector")
+  expect_error_crucial_NAs_abcd("year")
 
   expect_error_crucial_NAs_scenario("sector")
   expect_error_crucial_NAs_scenario("year")
@@ -406,11 +406,11 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
 test_that("with multiple technologies weights emission_factor as expected (#160)", {
   match_result <- fake_matched(
     id_loan = c(1, 2),
-    name_ald = rep("large company", 2),
-    sector_ald = "cement"
+    name_abcd = rep("large company", 2),
+    sector_abcd = "cement"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = "cement",
     name_company = "large company",
     technology = rep(c("a", "b"), 2),
@@ -425,7 +425,7 @@ test_that("with multiple technologies weights emission_factor as expected (#160)
 
   out <- target_sda(
     match_result,
-    ald,
+    abcd,
     scen,
     region_isos = region_isos_stable
   ) %>%
@@ -438,8 +438,8 @@ test_that("with multiple technologies weights emission_factor as expected (#160)
 
 test_that("with multiple technologies, aggregates production-weighted emission_factor (#160)", {
   out <- target_sda(
-    fake_matched(sector_ald = "cement"),
-    ald = fake_ald(
+    fake_matched(sector_abcd = "cement"),
+    abcd = fake_abcd(
       sector = "cement",
       technology = c("cement 1", "cement 2"),
       year = 2020,
@@ -458,8 +458,8 @@ test_that("with multiple technologies, aggregates production-weighted emission_f
 
 test_that("with multiple plant_location, aggregates production-weighted emission_factor (#160)", {
   out <- target_sda(
-    fake_matched(sector_ald = "cement"),
-    ald = fake_ald(
+    fake_matched(sector_abcd = "cement"),
+    abcd = fake_abcd(
       sector = "cement",
       plant_location = c("de", "fr"),
       year = 2020,
@@ -482,8 +482,8 @@ test_that("filters and warns when input-data has NAs", {
   # https://gist.github.com/maurolepore/c04388c6d4795561fb168172e75154c0
   .object <- rlang::expr(
     out <- target_sda(
-      fake_matched(sector_ald = "cement"),
-      ald = fake_ald(
+      fake_matched(sector_abcd = "cement"),
+      abcd = fake_abcd(
         sector = "cement",
         technology = rep(c("cement", "bad"), 2),
         year = rep(c(2020, 2050), 2),
@@ -507,14 +507,14 @@ test_that("filters and warns when input-data has NAs", {
 })
 
 test_that(
-  "`sector` column is not used from data (should only use `sector_ald`) (#178)",
+  "`sector` column is not used from data (should only use `sector_abcd`) (#178)",
   {
     expect_error_free(
       target_sda(
         fake_matched(
-          sector_ald = "cement"
+          sector_abcd = "cement"
         ) %>% select(-sector),
-        fake_ald(
+        fake_abcd(
           sector = "cement",
           year = c(2020, 2050)
         ),
@@ -532,7 +532,7 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
           `emission_factor_value` (#171)", {
   this_company <- "company"
   this_sector <- "steel"
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     country_of_domicile = c("a", "b"),
     emission_factor = 0.5,
     year = 2020,
@@ -541,14 +541,14 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
   )
 
   matched <- fake_matched(
-    name_ald = this_company,
+    name_abcd = this_company,
     sector = this_sector,
-    sector_ald = this_sector
+    sector_abcd = this_sector
   )
 
   out <- matched %>%
     target_sda(
-      ald,
+      abcd,
       co2_intensity_scenario_demo,
       region_isos = region_isos_stable
     ) %>%
@@ -557,14 +557,14 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
   expect_equal(out$projected$emission_factor_value, 0.5)
 })
 
-test_that("outputs same target regardless of years present in ald", {
+test_that("outputs same target regardless of years present in abcd", {
   matched <- fake_matched(
-    name_ald = "company a",
-    sector_ald = "steel"
+    name_abcd = "company a",
+    sector_abcd = "steel"
   )
 
 
-  ald_ten_year <- fake_ald(
+  abcd_ten_year <- fake_abcd(
     sector = "steel",
     technology = "steel",
     name_company = c(rep("company a", 3), rep("company b", 3)),
@@ -573,7 +573,7 @@ test_that("outputs same target regardless of years present in ald", {
     plant_location = "DE"
   )
 
-  ald_thirty_year <- fake_ald(
+  abcd_thirty_year <- fake_abcd(
     sector = "steel",
     technology = "steel",
     name_company = c(rep("company a", 4), rep("company b", 4)),
@@ -590,7 +590,7 @@ test_that("outputs same target regardless of years present in ald", {
 
   out_ten_year <- target_sda(
     matched,
-    ald_ten_year,
+    abcd_ten_year,
     co2_scenario,
     region_isos = region_isos_stable
   ) %>%
@@ -601,7 +601,7 @@ test_that("outputs same target regardless of years present in ald", {
 
   out_thirty_year <- target_sda(
     matched,
-    ald_thirty_year,
+    abcd_thirty_year,
     co2_scenario,
     region_isos = region_isos_stable
   ) %>%
@@ -619,10 +619,10 @@ test_that("outputs same target regardless of years present in ald", {
 test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
-    sector_ald = c("cement", "power")
+    sector_abcd = c("cement", "power")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = c("cement", "power"),
   )
 
@@ -634,7 +634,7 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
 
   out <- target_sda(
     matched,
-    ald,
+    abcd,
     co2_scenario,
     region_isos = region_isos_stable
   )
@@ -648,13 +648,13 @@ test_that("outputs only sectors present in `co2_intensity_scenario` (#308)", {
   )
 })
 
-test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
+test_that("doesn't output NAs if abcd and scenario years are misaligned (#307,
           #346)", {
   matched <- fake_matched(
-    sector_ald = "cement"
+    sector_abcd = "cement"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = "cement",
     year = c(2024, 2025)
   )
@@ -666,7 +666,7 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
 
   out <- target_sda(
     matched,
-    ald,
+    abcd,
     co2_scenario,
     region_isos = region_isos_stable
   )
@@ -678,10 +678,10 @@ test_that("doesn't output NAs if ald and scenario years are misaligned (#307,
 
 test_that("output useful error message when emission_factor is not of type double (#224)", {
   matched <- fake_matched()
-  ald <- fake_ald()
+  abcd <- fake_abcd()
   co2_intensity_scenario <- fake_co2_scenario()
 
-  bad_ald <- ald %>%
+  bad_abcd <- abcd %>%
     mutate(
       emission_factor = as.character(emission_factor)
     )
@@ -690,7 +690,7 @@ test_that("output useful error message when emission_factor is not of type doubl
     class = "crucial_column_wrong_type",
     target_sda(
       matched,
-      bad_ald,
+      bad_abcd,
       co2_intensity_scenario,
       region_isos = region_isos_stable
     )
@@ -700,12 +700,12 @@ test_that("output useful error message when emission_factor is not of type doubl
 test_that("argument `weight_emission_factor` outputs correctly with known input (#376)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
-    name_ald = c("american cement", "boral cement"),
+    name_abcd = c("american cement", "boral cement"),
     sector = "cement",
-    sector_ald = "cement"
+    sector_abcd = "cement"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = rep(c("american cement", "boral cement"), 2),
     sector = "cement",
     technology = "cement integrated facility",
@@ -715,35 +715,35 @@ test_that("argument `weight_emission_factor` outputs correctly with known input 
 
   out <- matched %>%
     target_sda(
-      ald,
+      abcd,
       fake_co2_scenario(year = c(2020, 2021), emission_factor = c(1, 0.7)),
       by_company = TRUE,
       region_isos = region_isos_stable
     ) %>%
     filter(year == 2020, emission_factor_metric == "target_b2ds") %>%
-    split(.$name_ald)
+    split(.$name_abcd)
 
 
-  ald <- ald %>%
+  abcd <- abcd %>%
     filter(!is.na(emission_factor), year == 2020) %>%
     select(name_company, year, emission_factor) %>%
     split(.$name_company)
 
   expect_equal(
     out$`american cement`$emission_factor_value,
-    ald$`american cement`$emission_factor
+    abcd$`american cement`$emission_factor
   )
 
   expect_equal(
     out$`boral cement`$emission_factor_value,
-    ald$`boral cement`$emission_factor
+    abcd$`boral cement`$emission_factor
   )
 })
 
-test_that("outputs empty tibble for sectors in `scenario` and `ald` but not
+test_that("outputs empty tibble for sectors in `scenario` and `abcd` but not
           `data` (#390)", {
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = c("cement", "steel")
   )
 
@@ -754,8 +754,8 @@ test_that("outputs empty tibble for sectors in `scenario` and `ald` but not
   )
 
   out <- target_sda(
-    fake_matched(sector_ald = "cement"),
-    ald,
+    fake_matched(sector_abcd = "cement"),
+    abcd,
     scenario,
     region_isos = region_isos_stable
   )

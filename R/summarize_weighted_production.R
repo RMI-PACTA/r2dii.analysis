@@ -4,13 +4,13 @@
 #' `summarize_weighted_production()` and `summarize_weighted_percent_change()`
 #' summarize the production and percent-change, respectively.
 #'
-#' @param data A data frame like the output of [join_ald_scenario()].
+#' @param data A data frame like the output of [join_abcd_scenario()].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
 #' @param ... Variables to group by.
 #'
-#' @seealso [join_ald_scenario()].
+#' @seealso [join_abcd_scenario()].
 #'
 #' @export
 #'
@@ -34,12 +34,12 @@
 #'   library(r2dii.match)
 #'
 #'   loanbook <- head(loanbook_demo, 150)
-#'   ald <- head(ald_demo, 100)
+#'   abcd <- head(abcd_demo, 100)
 #'   master <- loanbook %>%
-#'     match_name(ald) %>%
+#'     match_name(abcd) %>%
 #'     prioritize() %>%
-#'     join_ald_scenario(
-#'       ald = ald,
+#'     join_abcd_scenario(
+#'       abcd = abcd,
 #'       scenario = scenario_demo_2020,
 #'       region_isos = region_isos_demo
 #'     )

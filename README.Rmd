@@ -60,7 +60,7 @@ library(r2dii.analysis)
 * Use `r2dii.match::match_name()` to identify matches between your loanbook and the asset level data.
 
 ```{r}
-matched <- match_name(loanbook_demo, ald_demo) %>%
+matched <- match_name(loanbook_demo, abcd_demo) %>%
   prioritize()
 ```
 
@@ -71,7 +71,7 @@ matched <- match_name(loanbook_demo, ald_demo) %>%
 ```{r}
 matched %>%
   target_sda(
-    ald = ald_demo,
+    abcd = abcd_demo,
     co2_intensity_scenario = co2_intensity_scenario_demo,
     region_isos = region_isos_demo
   )
@@ -82,7 +82,7 @@ matched %>%
 ```{r}
 matched %>%
   target_market_share(
-    ald = ald_demo,
+    abcd = abcd_demo,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
@@ -93,7 +93,7 @@ matched %>%
 ```{r}
 matched %>%
   target_market_share(
-    ald = ald_demo,
+    abcd = abcd_demo,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo,
     by_company = TRUE
@@ -104,13 +104,13 @@ matched %>%
 
 The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
 
-* Use `join_ald_scenario()` to join a matched dataset to the relevant 
+* Use `join_abcd_scenario()` to join a matched dataset to the relevant 
 scenario data, and to pick assets in the relevant regions. 
 
 ```{r}
-loanbook_joined_to_ald_scenario <- matched %>%
-  join_ald_scenario(
-    ald = ald_demo,
+loanbook_joined_to_abcd_scenario <- matched %>%
+  join_abcd_scenario(
+    abcd = abcd_demo,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
@@ -121,12 +121,12 @@ calculate scenario-targets:
 
 ```{r}
 # portfolio level
-loanbook_joined_to_ald_scenario %>%
+loanbook_joined_to_abcd_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
 
 # company level
-loanbook_joined_to_ald_scenario %>%
-  summarize_weighted_production(scenario, tmsr, smsp, region, name_ald)
+loanbook_joined_to_abcd_scenario %>%
+  summarize_weighted_production(scenario, tmsr, smsp, region, name_abcd)
 ```
 
 [Get started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).

@@ -37,6 +37,7 @@ Depends:
 Imports: 
     dplyr (>= 0.8.5),
     glue,
+    lifecycle,
     magrittr,
     r2dii.data,
     rlang (>= 0.1.2),
@@ -49,7 +50,8 @@ Suggests:
     rmarkdown,
     roxygen2,
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US

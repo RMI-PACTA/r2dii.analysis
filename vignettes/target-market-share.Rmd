@@ -66,9 +66,9 @@ library(r2dii.analysis)
 
 ```{r}
 loanbook <- r2dii.data::loanbook_demo
-ald <- r2dii.data::ald_demo
+abcd <- r2dii.data::abcd_demo
 
-matched <- match_name(loanbook, ald) %>%
+matched <- match_name(loanbook, abcd) %>%
   # WARNING: Remember to validate the output of match_name() before prioritize()
   prioritize()
 
@@ -83,11 +83,11 @@ scenario <- r2dii.data::scenario_demo_2020
 regions <- r2dii.data::region_isos_demo
 
 
-matched %>% target_market_share(ald, scenario, regions)
+matched %>% target_market_share(abcd, scenario, regions)
 ```
 
 * Calculate market-share targets for production at the company level.
 
 ```{r}
-matched %>% target_market_share(ald, scenario, regions, by_company = TRUE)
+matched %>% target_market_share(abcd, scenario, regions, by_company = TRUE)
 ```

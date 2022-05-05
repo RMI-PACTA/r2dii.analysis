@@ -10,7 +10,7 @@ summarize_weighted_production(data, ..., use_credit_limit = FALSE)
 summarize_weighted_percent_change(data, ..., use_credit_limit = FALSE)
 }
 \arguments{
-\item{data}{A data frame like the output of \code{\link[=join_ald_scenario]{join_ald_scenario()}}.}
+\item{data}{A data frame like the output of \code{\link[=join_abcd_scenario]{join_abcd_scenario()}}.}
 
 \item{...}{Variables to group by.}
 
@@ -38,18 +38,20 @@ companies would cause percent-change percentage to be infinite, which is wrong.
 
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-  requireNamespace("r2dii.match", quietly = TRUE)
+  requireNamespace("r2dii.match", quietly = TRUE) &&
+  packageVersion("r2dii.match") >= "0.1.0"
+
 if (installed) {
   library(r2dii.data)
   library(r2dii.match)
 
   loanbook <- head(loanbook_demo, 150)
-  ald <- head(ald_demo, 100)
+  abcd <- head(abcd_demo, 100)
   master <- loanbook \%>\%
-    match_name(ald) \%>\%
+    match_name(abcd) \%>\%
     prioritize() \%>\%
-    join_ald_scenario(
-      ald = ald,
+    join_abcd_scenario(
+      abcd = abcd,
       scenario = scenario_demo_2020,
       region_isos = region_isos_demo
     )
@@ -64,9 +66,9 @@ if (installed) {
 }
 }
 \seealso{
-\code{\link[=join_ald_scenario]{join_ald_scenario()}}.
+\code{\link[=join_abcd_scenario]{join_abcd_scenario()}}.
 
 Other utility functions: 
-\code{\link{join_ald_scenario}()}
+\code{\link{join_abcd_scenario}()}
 }
 \concept{utility functions}

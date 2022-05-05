@@ -3,7 +3,7 @@ library(r2dii.data)
 test_that("w/ bad `data`, errors with informative message", {
   expect_error(target_market_share(
     "bad",
-    fake_ald(),
+    fake_abcd(),
     fake_scenario()
   ), "data.frame.*not.*TRUE")
 })
@@ -11,7 +11,7 @@ test_that("w/ bad `data`, errors with informative message", {
 test_that("outputs a tibble", {
   out <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable
   )
@@ -21,7 +21,7 @@ test_that("outputs a tibble", {
 test_that("outputs is ungrouped", {
   out <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable
   )
@@ -34,7 +34,7 @@ test_that("warns when input data is grouped", {
   expect_warning(
     target_market_share(
       grouped_data,
-      fake_ald(),
+      fake_abcd(),
       fake_scenario(),
       region_isos_stable
     ),
@@ -45,17 +45,17 @@ test_that("warns when input data is grouped", {
 test_that("w/ fake data, outputs known value", {
   out <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable
   )
   expect_snapshot(out)
 })
 
-test_that("w/ ald lacking crucial columns, errors with informative message", {
-  expect_error_ald_missing_names <- function(name) {
-    bad_ald <- rename(
-      fake_ald(),
+test_that("w/ abcd lacking crucial columns, errors with informative message", {
+  expect_error_abcd_missing_names <- function(name) {
+    bad_abcd <- rename(
+      fake_abcd(),
       bad = all_of(name)
     )
 
@@ -63,19 +63,19 @@ test_that("w/ ald lacking crucial columns, errors with informative message", {
       class = "missing_names",
       target_market_share(
         fake_matched(),
-        bad_ald,
+        bad_abcd,
         fake_scenario()
       )
     )
   }
 
-  expect_error_ald_missing_names("sector")
-  expect_error_ald_missing_names("technology")
-  expect_error_ald_missing_names("year")
-  expect_error_ald_missing_names("name_company")
-  expect_error_ald_missing_names("production")
-  expect_error_ald_missing_names("plant_location")
-  expect_error_ald_missing_names("is_ultimate_owner")
+  expect_error_abcd_missing_names("sector")
+  expect_error_abcd_missing_names("technology")
+  expect_error_abcd_missing_names("year")
+  expect_error_abcd_missing_names("name_company")
+  expect_error_abcd_missing_names("production")
+  expect_error_abcd_missing_names("plant_location")
+  expect_error_abcd_missing_names("is_ultimate_owner")
 })
 
 test_that("w/ scenario lacking crucial columns, errors with informative message", {
@@ -89,7 +89,7 @@ test_that("w/ scenario lacking crucial columns, errors with informative message"
       class = "missing_names",
       target_market_share(
         fake_matched(),
-        fake_ald(),
+        fake_abcd(),
         bad_scenario
       )
     )
@@ -117,15 +117,15 @@ test_that("w/ NAs in crucial columns, errors with informative message", {
       class = "some_value_is_missing",
       target_market_share(
         data,
-        fake_ald(),
+        fake_abcd(),
         fake_scenario(),
         region_isos_stable
       )
     )
   }
 
-  expect_error_crucial_NAs_ald <- function(name) {
-    data <- fake_ald(
+  expect_error_crucial_NAs_abcd <- function(name) {
+    data <- fake_abcd(
       technology = c("ice", "ice", "ice", "ice"),
       production = c(10, 30, 20, 40)
     )
@@ -151,19 +151,19 @@ test_that("w/ NAs in crucial columns, errors with informative message", {
       class = "some_value_is_missing",
       target_market_share(
         fake_matched(),
-        fake_ald(),
+        fake_abcd(),
         data,
         region_isos_stable
       )
     )
   }
 
-  expect_error_crucial_NAs_portfolio("name_ald")
-  expect_error_crucial_NAs_portfolio("sector_ald")
+  expect_error_crucial_NAs_portfolio("name_abcd")
+  expect_error_crucial_NAs_portfolio("sector_abcd")
 
-  expect_error_crucial_NAs_ald("production")
-  expect_error_crucial_NAs_ald("sector")
-  expect_error_crucial_NAs_ald("year")
+  expect_error_crucial_NAs_abcd("production")
+  expect_error_crucial_NAs_abcd("sector")
+  expect_error_crucial_NAs_abcd("year")
 
   expect_error_crucial_NAs_scenario("scenario")
   expect_error_crucial_NAs_scenario("tmsr")
@@ -186,7 +186,7 @@ test_that("outputs expected names", {
 
   out <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable
   )
@@ -196,10 +196,10 @@ test_that("outputs expected names", {
 
 test_that("w/ known input, outputs target production as expected", {
   portfolio <- fake_matched(
-    name_ald = "comp1"
+    name_abcd = "comp1"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     technology = c("electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021),
     name_company = paste0("comp", rep(1, 4)),
@@ -213,7 +213,7 @@ test_that("w/ known input, outputs target production as expected", {
     smsp = c(0, 0, 0.34, -0.2)
   )
 
-  out <- target_market_share(portfolio, ald, scenario, region_isos_stable)
+  out <- target_market_share(portfolio, abcd, scenario, region_isos_stable)
   out_target <- out %>%
     filter(metric == "target_sds") %>%
     arrange(.data$technology, .data$year)
@@ -223,10 +223,10 @@ test_that("w/ known input, outputs target production as expected", {
 
 test_that("w/ known input, outputs target production as expected, at company level", {
   portfolio <- fake_matched(
-    name_ald = c("comp1", "comp2")
+    name_abcd = c("comp1", "comp2")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
     name_company = paste0("comp", c(rep(1, 4), rep(2, 4))),
@@ -242,7 +242,7 @@ test_that("w/ known input, outputs target production as expected, at company lev
 
   out <- target_market_share(
     portfolio,
-    ald,
+    abcd,
     scenario,
     region_isos_stable,
     by_company = TRUE,
@@ -250,7 +250,7 @@ test_that("w/ known input, outputs target production as expected, at company lev
   )
   out_target <- out %>%
     filter(metric == "target_sds") %>%
-    arrange(.data$technology, .data$year, .data$name_ald)
+    arrange(.data$technology, .data$year, .data$name_abcd)
 
   expect_equal(
     out_target$production,
@@ -261,7 +261,7 @@ test_that("w/ known input, outputs target production as expected, at company lev
 test_that("w/ known input, outputs corporate_economy production as expected", {
   portfolio <- fake_matched()
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = c("shaanxi auto", "unmatched company", "shaanxi auto", "unmatched company"),
     technology = c("electric", "electric", "electric", "electric"),
     production = c(10, 20, 20, 70),
@@ -277,7 +277,7 @@ test_that("w/ known input, outputs corporate_economy production as expected", {
 
   out <- target_market_share(
     portfolio,
-    ald,
+    abcd,
     scenario,
     region_isos_stable,
     by_company = TRUE,
@@ -297,10 +297,10 @@ test_that("w/ known input, outputs corporate_economy production as expected", {
 test_that("outputs identical values at start year (#47, #87)", {
   matched <- fake_matched(
     sector = c("power", "automotive"),
-    sector_ald = c("power", "automotive")
+    sector_abcd = c("power", "automotive")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = rep(c("automotive", "power"), times = 2, each = 2),
     technology = rep(c("electric", "ice", "renewablescap", "coalcap"), 2),
     year = 2020,
@@ -319,7 +319,7 @@ test_that("outputs identical values at start year (#47, #87)", {
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -335,8 +335,8 @@ test_that("outputs identical values at start year (#47, #87)", {
 
 test_that("corporate economy only aggregates ultimate owners (#103)", {
   out <- target_market_share(
-    fake_matched(name_ald = c("company a", "company b")),
-    fake_ald(
+    fake_matched(name_abcd = c("company a", "company b")),
+    fake_abcd(
       name_company = c("company a", "company b", "company a", "company b"),
       is_ultimate_owner = c(T, F, T, F),
       production = c(50, 100, 100, 50),
@@ -352,11 +352,11 @@ test_that("corporate economy only aggregates ultimate owners (#103)", {
   expect_equal(corporate_economy_value$production, c(50, 100))
 })
 
-test_that("`data$sector` is not used (should only use `data$sector_ald`) (#178)", {
+test_that("`data$sector` is not used (should only use `data$sector_abcd`) (#178)", {
   expect_error_free(
     target_market_share(
       fake_matched() %>% select(-sector),
-      fake_ald(),
+      fake_abcd(),
       fake_scenario(),
       region_isos_stable
     )
@@ -367,17 +367,17 @@ test_that("outputs known value with `weight_production` (#131)", {
   matched <- fake_matched(
     id_loan = c(1, 2),
     loan_size_outstanding = c(1, 9),
-    name_ald = c("a", "b")
+    name_abcd = c("a", "b")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = c("a", "b"),
     production = c(1, 2)
   )
 
   out_weighted <- target_market_share(
     matched,
-    ald = ald,
+    abcd = abcd,
     scenario = fake_scenario(),
     region_isos = region_isos_stable,
     weight_production = TRUE
@@ -388,7 +388,7 @@ test_that("outputs known value with `weight_production` (#131)", {
 
   out_unweighted <- target_market_share(
     matched,
-    ald = ald,
+    abcd = abcd,
     scenario = fake_scenario(),
     region_isos = region_isos_stable,
     weight_production = FALSE
@@ -402,7 +402,7 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   expect_warning(
     target_market_share(
       fake_matched(),
-      ald = fake_ald(),
+      abcd = fake_abcd(),
       scenario = fake_scenario(),
       region_isos = region_isos_stable,
       by_company = TRUE,
@@ -412,10 +412,10 @@ test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
   )
 })
 
-test_that("w/ `by_company = TRUE` outputs additional column `name_ald` (#291)", {
+test_that("w/ `by_company = TRUE` outputs additional column `name_abcd` (#291)", {
   by_company_false <- target_market_share(
     data = fake_matched(),
-    ald = fake_ald(),
+    abcd = fake_abcd(),
     scenario = fake_scenario(),
     region_isos = region_isos_stable,
     by_company = FALSE
@@ -424,7 +424,7 @@ test_that("w/ `by_company = TRUE` outputs additional column `name_ald` (#291)", 
   by_company_true <- suppressWarnings(
     target_market_share(
       data = fake_matched(),
-      ald = fake_ald(),
+      abcd = fake_abcd(),
       scenario = fake_scenario(),
       region_isos = region_isos_stable,
       by_company = TRUE
@@ -432,13 +432,13 @@ test_that("w/ `by_company = TRUE` outputs additional column `name_ald` (#291)", 
   )
 
   additional_column <- setdiff(names(by_company_true), names(by_company_false))
-  expect_equal(additional_column, "name_ald")
+  expect_equal(additional_column, "name_abcd")
 })
 
 test_that("outputs same names regardless of the value of `weight_production` (#186)", {
   out_weighted <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable,
     weight_production = TRUE
@@ -446,7 +446,7 @@ test_that("outputs same names regardless of the value of `weight_production` (#1
 
   out_unweighted <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable,
     weight_production = FALSE
@@ -461,10 +461,10 @@ test_that("w/ known input, outputs `technology_share` as expected (#184, #262)",
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
     loan_size_outstanding = c(1, 3),
-    name_ald = c("a", "b")
+    name_abcd = c("a", "b")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = rep(c("a", "b"), each = 2),
     technology = rep(c("ice", "electric"), 2),
     production = c(1, 1, 1, 3)
@@ -477,7 +477,7 @@ test_that("w/ known input, outputs `technology_share` as expected (#184, #262)",
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -506,13 +506,13 @@ test_that("w/ known input, outputs `technology_share` as expected (#184, #262)",
   matched <- fake_matched(
     id_loan = c("L1", "L2", "L3"),
     loan_size_outstanding = c(1000, 15000, 1200),
-    name_ald = c("a", "b", "a"),
+    name_abcd = c("a", "b", "a"),
     id_2dii = c("DL1", "DL2", "DL1"),
     sector = "power",
-    sector_ald = "power"
+    sector_abcd = "power"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = rep(c("a", "b"), each = 6),
     sector = "power",
     technology = rep(
@@ -547,7 +547,7 @@ test_that("w/ known input, outputs `technology_share` as expected (#184, #262)",
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -580,7 +580,7 @@ test_that("w/ some region missing some scenario, outputs expected `production`
     scenario_source = "weo_2019"
   )
 
-  out <- target_market_share(fake_matched(), fake_ald(), scenario)
+  out <- target_market_share(fake_matched(), fake_abcd(), scenario)
 
   target_cps <- out %>%
     filter(metric == "target_cps") %>%
@@ -598,7 +598,7 @@ test_that("w/ no matching regions, outputs empty named tibble", {
   out <- suppressWarnings(
     target_market_share(
       fake_matched(),
-      fake_ald(),
+      fake_abcd(),
       fake_scenario()
     )
   )
@@ -608,7 +608,7 @@ test_that("w/ no matching regions, outputs empty named tibble", {
   good_names <- names(
     target_market_share(
       fake_matched(),
-      fake_ald(),
+      fake_abcd(),
       fake_scenario(),
       region_isos_stable
     )
@@ -617,12 +617,12 @@ test_that("w/ no matching regions, outputs empty named tibble", {
   expect_equal(setdiff(names(out), good_names), character(0))
 })
 
-test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
+test_that("w/ technology in abcd but not loanbook, outputs all techs (#235)", {
   matched <- fake_matched(
-    name_ald = "company a"
+    name_abcd = "company a"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = c("company a", "company b"),
     technology = c("ice", "electric"),
     production = c(1, 3)
@@ -634,7 +634,7 @@ test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   )
@@ -649,12 +649,12 @@ test_that("w/ technology in ald but not loanbook, outputs all techs (#235)", {
 
 test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)", {
   matched <- fake_matched(id_loan = c("L1", "L2"))
-  ald <- fake_ald()
+  abcd <- fake_abcd()
   scenario <- fake_scenario()
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable,
     by_company = TRUE,
@@ -663,7 +663,7 @@ test_that("w/ unweighted company flags & multi loans, outputs correctly (#239)",
 
   projected <- filter(out, metric == "projected")
 
-  expect_equal(projected$production, ald$production)
+  expect_equal(projected$production, abcd$production)
 })
 
 test_that("w/ multiple loans to same company, `technology_share` sums to one (#218)", {
@@ -678,7 +678,7 @@ test_that("w/ multiple loans to same company, `technology_share` sums to one (#2
   # multiple loans to same company
   out <- target_market_share(
     fake_matched(id_loan = c("L1", "L2")),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable
   )
@@ -686,7 +686,7 @@ test_that("w/ multiple loans to same company, `technology_share` sums to one (#2
   expect_true(shares_sum_to_one(out))
 })
 
-test_that("w/ multiple match `level`, unweighted production is equal to ALD production (#249)", {
+test_that("w/ multiple match `level`, unweighted production is equal to abcd production (#249)", {
   matched <- fake_matched(
     id_loan = c(1, 2),
     level = c("direct_loantaker", "ultimate_parent"),
@@ -694,24 +694,24 @@ test_that("w/ multiple match `level`, unweighted production is equal to ALD prod
 
   out <- target_market_share(
     matched,
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     r2dii.data::region_isos_demo,
     by_company = TRUE,
     weight_production = FALSE
   )
 
-  ald_production <- fake_ald() %>%
+  abcd_production <- fake_abcd() %>%
     dplyr::pull(production)
 
   out_production <- filter(out, metric == "projected") %>%
     dplyr::pull(production)
 
-  expect_equal(ald_production, out_production)
+  expect_equal(abcd_production, out_production)
 })
 
 test_that("for one company with multiple loans of different size, unweighted
-          production by company equals ald-production (#239)", {
+          production by company equals abcd-production (#239)", {
   different_loan_size <- 1:2
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
@@ -721,7 +721,7 @@ test_that("for one company with multiple loans of different size, unweighted
 
   projected <- target_market_share(
     matched,
-    fake_ald(),
+    fake_abcd(),
     scenario = fake_scenario(),
     region_isos = region_isos_stable,
     by_company = TRUE,
@@ -729,7 +729,7 @@ test_that("for one company with multiple loans of different size, unweighted
   ) %>%
     filter(metric == "projected")
 
-  expect_equal(projected$production, fake_ald()$production)
+  expect_equal(projected$production, fake_abcd()$production)
 })
 
 test_that("w/ bad column, errors with informative message (#267)", {
@@ -741,7 +741,7 @@ test_that("w/ bad column, errors with informative message (#267)", {
     class = "invalid_columns",
     target_market_share(
       bad_matched,
-      fake_ald(),
+      fake_abcd(),
       fake_scenario()
     )
   )
@@ -751,13 +751,13 @@ test_that("`technology_share` outputs consistently when multiple
           direct_loantakers match to a single company (#265)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2", "L3", "L4", "L5"),
-    name_ald = c(rep("company a", 4), "company b")
+    name_abcd = c(rep("company a", 4), "company b")
   )
 
   matched_split_dl <- matched %>%
     mutate(name_direct_loantaker = c("company a1", "company a2", "company a3", "company a4", "company b"))
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = rep(c("company a", "company b"), each = 2),
     technology = rep(c("ice", "electric"), 2),
     production = c(8, 2, 15, 5)
@@ -769,7 +769,7 @@ test_that("`technology_share` outputs consistently when multiple
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -781,7 +781,7 @@ test_that("`technology_share` outputs consistently when multiple
 
   out_split_dl <- target_market_share(
     matched_split_dl,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -799,7 +799,7 @@ test_that("`technology_share` outputs consistently when multiple
   matched_same_level <- fake_matched(
     id_loan = c("L1", "L2", "L3"),
     name_direct_loantaker = c("company a1", "company a2", "company b"),
-    name_ald = c("company a", "company a", "company b")
+    name_abcd = c("company a", "company a", "company b")
   )
 
   matched_diff_level <- matched_same_level %>%
@@ -807,7 +807,7 @@ test_that("`technology_share` outputs consistently when multiple
       level = c("ultimate_parent", "direct_loantaker", "ultimate_parent")
     )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = rep(c("company a", "company b"), each = 2),
     technology = rep(c("ice", "electric"), 2),
     production = c(8, 2, 15, 5)
@@ -819,7 +819,7 @@ test_that("`technology_share` outputs consistently when multiple
 
   out_same_level <- target_market_share(
     matched_same_level,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -831,7 +831,7 @@ test_that("`technology_share` outputs consistently when multiple
 
   out_diff_level <- target_market_share(
     matched_diff_level,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -855,7 +855,7 @@ test_that("projects technology share as 'production / total production' when
   .sector <- "automotive"
   .technology <- c("hybrid", "ice")
 
-  ald <- tibble(
+  abcd <- tibble(
     production = .production,
     name_company = .company,
     technology = .technology,
@@ -868,8 +868,8 @@ test_that("projects technology share as 'production / total production' when
 
   matched <- tibble(
     sector = .sector,
-    sector_ald = .sector,
-    name_ald = .company,
+    sector_abcd = .sector,
+    name_abcd = .company,
     id_loan = "L1",
     loan_size_outstanding = 1,
     loan_size_outstanding_currency = "XYZ",
@@ -899,7 +899,7 @@ test_that("projects technology share as 'production / total production' when
 
   out <- matched %>%
     target_market_share(
-      ald = ald,
+      abcd = abcd,
       scenario = scenario,
       region_isos = region,
       by_company = TRUE,
@@ -922,10 +922,10 @@ test_that("initial value of technology_share consistent between `projected` and
           `target_*` (#277)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
-    name_ald = c("company a", "company b")
+    name_abcd = c("company a", "company b")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = c("company a", "company b", "company a", "company b"),
     technology = c("ice", "ice", "electric", "electric"),
     production = c(100, 1, 100, 3),
@@ -941,7 +941,7 @@ test_that("initial value of technology_share consistent between `projected` and
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -979,7 +979,7 @@ test_that("w/ different currencies in input, errors with informative message (#2
   expect_error(
     target_market_share(
       matched,
-      fake_ald(),
+      fake_abcd(),
       fake_scenario(),
       region_isos_stable
     ),
@@ -990,7 +990,7 @@ test_that("w/ different currencies in input, errors with informative message (#2
   expect_error(
     target_market_share(
       matched,
-      fake_ald(),
+      fake_abcd(),
       fake_scenario(),
       region_isos_stable,
       use_credit_limit = TRUE
@@ -1008,14 +1008,14 @@ test_that("input with only green technologies, outputs only green technologies
     technology = rep(c("ice", "electric"), each = 2),
   )
 
-  ald_green <- fake_ald(
+  abcd_green <- fake_abcd(
     technology = "electric"
   )
 
   # testing that input with only green techs outputs only green techs
   out <- target_market_share(
     fake_matched(),
-    ald_green,
+    abcd_green,
     scenario,
     region_isos_stable
   )
@@ -1032,10 +1032,10 @@ test_that("input with only green technologies, outputs only green technologies
 test_that("technology_share is calculated per region (#315)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
-    name_ald = c("green", "brown")
+    name_abcd = c("green", "brown")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     name_company = c("brown", "green"),
     technology = c("ice", "electric"),
     plant_location = c("US", "FR"),
@@ -1051,7 +1051,7 @@ test_that("technology_share is calculated per region (#315)", {
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -1081,14 +1081,14 @@ test_that("input with only brown technologies, outputs both green  and brown
     technology = rep(c("ice", "electric"), each = 2),
   )
 
-  ald_brown <- fake_ald(
+  abcd_brown <- fake_abcd(
     technology = "ice"
   )
 
   # testing that input with only brown techs outputs both green and brown techs
   out <- target_market_share(
     fake_matched(),
-    ald_brown,
+    abcd_brown,
     scenario,
     region_isos_demo
   )
@@ -1104,10 +1104,10 @@ test_that("input with only brown technologies, outputs both green  and brown
 
 test_that("input with unexpected sectors errors gracefully (#329)", {
   matched <- fake_matched(
-    sector_ald = "a"
+    sector_abcd = "a"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = "a"
   )
 
@@ -1118,7 +1118,7 @@ test_that("input with unexpected sectors errors gracefully (#329)", {
   expect_warning(
     target_market_share(
       matched,
-      ald,
+      abcd,
       scenario,
       region_isos_stable
     ),
@@ -1128,10 +1128,10 @@ test_that("input with unexpected sectors errors gracefully (#329)", {
 
 test_that("outputs only sectors that are present in the input `data` (#329)", {
   matched <- fake_matched(
-    sector_ald = "automotive"
+    sector_abcd = "automotive"
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     sector = c("automotive", "power"),
     technology = c("ice", "coalcap")
   )
@@ -1142,7 +1142,7 @@ test_that("outputs only sectors that are present in the input `data` (#329)", {
 
   out <- target_market_share(
     matched,
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   )
@@ -1154,7 +1154,7 @@ test_that("outputs only sectors that are present in the input `data` (#329)", {
 })
 
 test_that("outputs only positive values of `production`(#336)", {
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     year = c(2025, 2026)
   )
 
@@ -1166,7 +1166,7 @@ test_that("outputs only positive values of `production`(#336)", {
 
   out <- target_market_share(
     fake_matched(),
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   )
@@ -1175,7 +1175,7 @@ test_that("outputs only positive values of `production`(#336)", {
 })
 
 test_that("outputs as expected for companies with 0 initial sectoral production (#306)", {
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     production = c(0, 1),
     year = c(2020, 2021)
   )
@@ -1187,7 +1187,7 @@ test_that("outputs as expected for companies with 0 initial sectoral production 
 
   out <- target_market_share(
     fake_matched(),
-    ald,
+    abcd,
     scenario,
     region_isos_stable
   ) %>%
@@ -1208,7 +1208,7 @@ test_that("outputs as expected for companies with 0 initial sectoral production 
 test_that("outputs columns `percent_change_by_scope` and `scope`", {
   out <- target_market_share(
     fake_matched(),
-    fake_ald(),
+    fake_abcd(),
     fake_scenario(),
     region_isos_stable
   )
@@ -1221,10 +1221,10 @@ test_that("outputs columns `percent_change_by_scope` and `scope`", {
 test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
           expected, at portfolio level", {
   portfolio <- fake_matched(
-    name_ald = c("comp1", "comp2")
+    name_abcd = c("comp1", "comp2")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
     name_company = paste0("comp", c(rep(1, 4), rep(2, 4))),
@@ -1240,7 +1240,7 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 
   out <- target_market_share(
     portfolio,
-    ald,
+    abcd,
     scenario,
     region_isos_stable,
     by_company = FALSE,
@@ -1273,10 +1273,10 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
           expected, at company level", {
   portfolio <- fake_matched(
-    name_ald = c("comp1", "comp2")
+    name_abcd = c("comp1", "comp2")
   )
 
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     technology = c("electric", "ice", "electric", "ice", "electric", "ice", "electric", "ice"),
     year = c(2020, 2020, 2021, 2021, 2020, 2020, 2021, 2021),
     name_company = paste0("comp", c(rep(1, 4), rep(2, 4))),
@@ -1292,7 +1292,7 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 
   out <- target_market_share(
     portfolio,
-    ald,
+    abcd,
     scenario,
     region_isos_stable,
     by_company = TRUE,
@@ -1301,7 +1301,7 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 
   out_percent <- out %>%
     filter(.$year == 2021) %>%
-    arrange(.$name_ald) %>%
+    arrange(.$name_abcd) %>%
     split(.$metric)
 
   expect_equal(
@@ -1323,9 +1323,9 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
   )
 })
 
-test_that("w/ ald with older years than scenarios, outputs 0 percent change in
+test_that("w/ abcd with older years than scenarios, outputs 0 percent change in
           start year", {
-  ald <- fake_ald(
+  abcd <- fake_abcd(
     year = c(2000, 2020, 2021),
     production = c(10, 30, 40)
   )
@@ -1339,7 +1339,7 @@ test_that("w/ ald with older years than scenarios, outputs 0 percent change in
 
   out <- target_market_share(
     fake_matched(),
-    ald,
+    abcd,
     scenario,
     region_isos_stable,
     by_company = FALSE,

@@ -4,13 +4,13 @@
 #' `summarize_weighted_production()` and `summarize_weighted_percent_change()`
 #' summarize the production and percent-change, respectively.
 #'
-#' @param data A data frame like the output of [join_ald_scenario()].
+#' @param data A data frame like the output of [join_abcd_scenario()].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
 #'   the column `loan_size_outstanding`. Set to `TRUE` to instead use the column
 #'   `loan_size_credit_limit`.
 #' @param ... Variables to group by.
 #'
-#' @seealso [join_ald_scenario()].
+#' @seealso [join_abcd_scenario()].
 #'
 #' @export
 #'
@@ -28,18 +28,20 @@
 #'
 #' @examples
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-#'   requireNamespace("r2dii.match", quietly = TRUE)
+#'   requireNamespace("r2dii.match", quietly = TRUE) &&
+#'   packageVersion("r2dii.match") >= "0.1.0"
+#'
 #' if (installed) {
 #'   library(r2dii.data)
 #'   library(r2dii.match)
 #'
 #'   loanbook <- head(loanbook_demo, 150)
-#'   ald <- head(ald_demo, 100)
+#'   abcd <- head(abcd_demo, 100)
 #'   master <- loanbook %>%
-#'     match_name(ald) %>%
+#'     match_name(abcd) %>%
 #'     prioritize() %>%
-#'     join_ald_scenario(
-#'       ald = ald,
+#'     join_abcd_scenario(
+#'       abcd = abcd,
 #'       scenario = scenario_demo_2020,
 #'       region_isos = region_isos_demo
 #'     )
@@ -61,7 +63,9 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
 
   old_groups <- dplyr::groups(data)
 
-  crucial <- c("production", "sector_ald", "year", "technology")
+  data <- rename_and_warn_ald_names(data)
+
+  crucial <- c("production", "sector_abcd", "year", "technology")
 
   if (with_targets) {
     crucial <- c(crucial, "production_target")
@@ -83,7 +87,7 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
       calculate_weighted_loan_metric("production_target") %>%
       calculate_weighted_loan_metric("technology_share_target") %>%
       group_by(
-        .data$sector_ald,
+        .data$sector_abcd,
         .data$technology,
         .data$year,
         ...
@@ -100,7 +104,7 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
     data %>%
       calculate_weighted_loan_metric("production") %>%
       calculate_weighted_loan_metric("technology_share") %>%
-      group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+      group_by(.data$sector_abcd, .data$technology, .data$year, ...) %>%
       summarize(
         weighted_production = sum(.data$weighted_loan_production),
         weighted_technology_share = sum(.data$weighted_loan_technology_share)
@@ -120,7 +124,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
       .data$loan_size_outstanding
     )) %>%
     distinct() %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, ...)
+    group_by(.data$sector_abcd, .data$technology, .data$year, ...)
 
   # FIXME: Though production here is unweighted, we still name the variables
   # `weighted_*`. This is to allow easier reshaping of the output data at the
@@ -152,12 +156,14 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
   stopifnot(is.data.frame(data))
 
+  data <- rename_and_warn_ald_names(data)
+
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     add_percent_change() %>%
     calculate_weighted_loan_metric("percent_change") %>%
-    group_by(.data$sector_ald, .data$technology, .data$year, ...) %>%
+    group_by(.data$sector_abcd, .data$technology, .data$year, ...) %>%
     summarize(
       weighted_percent_change = mean(.data$weighted_loan_percent_change)
     ) %>%
@@ -168,11 +174,13 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
 summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FALSE) {
   stopifnot(is.data.frame(data))
 
+  data <- rename_and_warn_ald_names(data)
+
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
     calculate_weighted_loan_metric("emission_factor") %>%
-    group_by(.data$sector_ald, .data$year, ...) %>%
+    group_by(.data$sector_abcd, .data$year, ...) %>%
     summarize(
       emission_factor_projected = sum(.data$weighted_loan_emission_factor)
     ) %>%
@@ -180,6 +188,9 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
 }
 
 summarize_unweighted_emission_factor <- function(data, ...) {
+
+  data <- rename_and_warn_ald_names(data)
+
   data <- data %>%
     select(-c(
       .data$id_loan,
@@ -187,7 +198,7 @@ summarize_unweighted_emission_factor <- function(data, ...) {
       .data$loan_size_outstanding
     )) %>%
     distinct() %>%
-    group_by(.data$sector_ald, .data$year, ...) %>%
+    group_by(.data$sector_abcd, .data$year, ...) %>%
     summarize(emission_factor_projected = mean(.data$emission_factor)) %>%
     ungroup()
 }
@@ -215,7 +226,7 @@ add_loan_weight <- function(data, use_credit_limit) {
     check_single_currency(data)
 
   crucial <- c(
-    "id_loan", "sector_ald", "year", loan_size, currency
+    "id_loan", "sector_abcd", "year", loan_size, currency
   )
 
   check_crucial_names(data, crucial)
@@ -225,7 +236,7 @@ add_loan_weight <- function(data, use_credit_limit) {
   data <- ungroup(data)
 
   distinct_loans_by_sector <- data %>%
-    group_by(.data$sector_ald) %>%
+    group_by(.data$sector_abcd) %>%
     distinct(.data$id_loan, .data[[loan_size]]) %>%
     check_unique_loan_size_values_per_id_loan()
 
@@ -233,14 +244,14 @@ add_loan_weight <- function(data, use_credit_limit) {
     summarize(total_size = sum(.data[[loan_size]]))
 
   data %>%
-    left_join(total_size_by_sector, by = "sector_ald") %>%
+    left_join(total_size_by_sector, by = "sector_abcd") %>%
     mutate(
       loan_weight = .data[[loan_size]] / .data$total_size
     )
 }
 
 add_percent_change <- function(data) {
-  crucial <- c("production", "sector_ald", "year", "technology", "scenario")
+  crucial <- c("production", "sector_abcd", "year", "technology", "scenario")
 
   check_crucial_names(data, crucial)
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
@@ -251,13 +262,13 @@ add_percent_change <- function(data) {
 
   data %>%
     inner_join(green_or_brown, by = c(
-      sector_ald = "sector",
+      sector_abcd = "sector",
       technology = "technology"
     )) %>%
-    group_by(.data$sector_ald, .data$year, .data$scenario) %>%
+    group_by(.data$sector_abcd, .data$year, .data$scenario) %>%
     mutate(sector_production = sum(.data$production)) %>%
-    group_by(.data$sector_ald, .data$name_ald) %>%
-    arrange(.data$name_ald, .data$year) %>%
+    group_by(.data$sector_abcd, .data$name_abcd) %>%
+    arrange(.data$name_abcd, .data$year) %>%
     mutate(
       brown_percent_change =
         (.data$production - first(.data$production)) /
@@ -276,10 +287,10 @@ add_percent_change <- function(data) {
 add_technology_share <- function(data) {
   data %>%
     group_by(
-      .data$sector_ald,
+      .data$sector_abcd,
       .data$year,
       .data$scenario,
-      .data$name_ald,
+      .data$name_abcd,
       .data$region
     ) %>%
     mutate(
@@ -293,10 +304,10 @@ add_technology_share <- function(data) {
 add_technology_share_target <- function(data) {
   data %>%
     group_by(
-      .data$sector_ald,
+      .data$sector_abcd,
       .data$year,
       .data$scenario,
-      .data$name_ald,
+      .data$name_abcd,
       .data$region
     ) %>%
     mutate(
@@ -309,7 +320,7 @@ add_technology_share_target <- function(data) {
 
 check_zero_initial_production <- function(data) {
   companies_with_zero_initial_production <- data %>%
-    group_by(.data$technology, .data$name_ald, .data$year) %>%
+    group_by(.data$technology, .data$name_abcd, .data$year) %>%
     arrange(.data$year) %>%
     filter(.data$year == first(.data$year)) %>%
     summarize(production_at_start_year = sum(.data$production)) %>%
@@ -318,7 +329,7 @@ check_zero_initial_production <- function(data) {
   if (nrow(companies_with_zero_initial_production) > 0L) {
     abort(
       class = "zero_initial_production",
-      "No `name_ald` by `technology` can have initial `production` values of 0."
+      "No `name_abcd` by `technology` can have initial `production` values of 0."
     )
   }
 
@@ -327,7 +338,7 @@ check_zero_initial_production <- function(data) {
 
 check_unique_loan_size_values_per_id_loan <- function(data) {
   dups <- data %>%
-    group_by(.data$sector_ald, .data$id_loan) %>%
+    group_by(.data$sector_abcd, .data$id_loan) %>%
     mutate(is_duplicated = any(duplicated(.data$id_loan))) %>%
     ungroup() %>%
     filter(.data$is_duplicated)

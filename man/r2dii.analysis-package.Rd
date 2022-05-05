@@ -12,7 +12,7 @@ These tools help you to assess if a corporate lending portfolio aligns with clim
 Useful links:
 \itemize{
   \item \url{https://github.com/2DegreesInvesting/r2dii.analysis}
-  \item \url{https://2degreesinvesting.github.io/r2dii.analysis}
+  \item \url{https://2degreesinvesting.github.io/r2dii.analysis/}
   \item Report bugs at \url{https://github.com/2DegreesInvesting/r2dii.analysis/issues}
 }
 

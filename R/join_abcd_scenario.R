@@ -45,6 +45,8 @@ join_abcd_scenario <- function(data,
                               scenario,
                               region_isos = r2dii.data::region_isos,
                               add_green_technologies = FALSE) {
+  data <- rename_and_warn_ald_names(data)
+
   check_portfolio_abcd_scenario(data, abcd, scenario)
 
   # Track provenance to avoid clash in the column name "source"

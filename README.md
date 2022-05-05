@@ -75,6 +75,10 @@ matched %>%
     co2_intensity_scenario = co2_intensity_scenario_demo,
     region_isos = region_isos_demo
   )
+#> Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
+#> `name_abcd` instead.
+#> Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use
+#> `sector_abcd` instead.
 #> Warning: Removing abcd rows where `emission_factor` is NA
 #> # A tibble: 166 × 6
 #>    sector  year region         scenario_source emission_factor… emission_factor…
@@ -102,6 +106,10 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
+#> Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
+#> `name_abcd` instead.
+#> Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use
+#> `sector_abcd` instead.
 #> # A tibble: 1,790 × 10
 #>    sector     technology  year region scenario_source metric     production
 #>    <chr>      <chr>      <int> <chr>  <chr>           <chr>           <dbl>
@@ -129,6 +137,10 @@ matched %>%
     region_isos = region_isos_demo,
     by_company = TRUE
   )
+#> Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
+#> `name_abcd` instead.
+#> Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use
+#> `sector_abcd` instead.
 #> Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
@@ -165,6 +177,10 @@ loanbook_joined_to_abcd_scenario <- matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
+#> Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
+#> `name_abcd` instead.
+#> Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use
+#> `sector_abcd` instead.
 ```
 
 -   Use `summarize_weighted_production()` with different grouping

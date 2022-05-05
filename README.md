@@ -10,7 +10,7 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 [![Codecov test
-coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/main/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=main)
+coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=main)
 [![Codecov test
 coverage](https://codecov.io/gh/2DegreesInvesting/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2DegreesInvesting/r2dii.analysis?branch=main)
 [![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.analysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions/workflows/R-CMD-check.yaml)
@@ -233,7 +233,7 @@ started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analy
 This project has received funding from the [European Union LIFE
 program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
 and the [International Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/details/project/measuring-paris-agreement-alignment-and-financial-risk-in-financial-markets-18_I_351-2982).
+(IKI)](https://www.international-climate-initiative.com/en/search-project/).
 The Federal Ministry for the Environment, Nature Conservation and
 Nuclear Safety (BMU) supports this initiative on the basis of a decision
 adopted by the German Bundestag. The views expressed are the sole

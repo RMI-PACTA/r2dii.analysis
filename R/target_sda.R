@@ -90,6 +90,8 @@ target_sda <- function(data,
     abcd <- ald
   }
 
+  data <- rename_and_warn_ald_names(data)
+
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   crucial_portfolio <- c(

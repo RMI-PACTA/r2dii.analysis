@@ -20,7 +20,8 @@ for more information.
 }
 \examples{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-  requireNamespace("r2dii.match", quietly = TRUE)
+  requireNamespace("r2dii.match", quietly = TRUE) &&
+  packageVersion("r2dii.match") >= "0.1.0"
 
 if (installed) {
   library(r2dii.data)

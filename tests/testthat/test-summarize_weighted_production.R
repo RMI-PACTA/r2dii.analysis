@@ -358,32 +358,6 @@ test_that("with zero initial production errors with informative message", {
   )
 })
 
-test_that("for percent-change, with demo data returns known value", {
-  allows_reserved_columns <- exists(
-    "allow_reserved_columns",
-    where = asNamespace("r2dii.match"),
-    mode = "function"
-  )
-  skip_if_not(allows_reserved_columns)
-
-  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
-  on.exit(options(restore), add = TRUE)
-
-  master <- prioritize(match_name(loanbook_stable, abcd_demo)) %>%
-    join_abcd_scenario(
-      abcd = abcd_demo,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_stable
-    )
-
-  credit_limit0 <- summarize_weighted_percent_change(master)
-  expect_snapshot(credit_limit0)
-
-  credit_limit1 <- master %>%
-    summarize_weighted_percent_change(use_credit_limit = TRUE)
-  expect_snapshot(credit_limit1)
-})
-
 test_that("with known input outputs as expected", {
   data <- fake_master(
     name_abcd = rep(c("company a", "company b"), 2),

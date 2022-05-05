@@ -1,4 +1,5 @@
 # r2dii.analysis (development version)
+
 * New argument `abcd` of `target_market_share()` and `target_sda` supersedes the 
   argument `ald` (#404).
 

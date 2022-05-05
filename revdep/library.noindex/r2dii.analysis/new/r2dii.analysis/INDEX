@@ -1,4 +1,4 @@
-join_ald_scenario       Join a data-loanbook object to the ald and
+join_abcd_scenario      Join a data-loanbook object to the abcd and
                         scenario
 summarize_weighted_production
                         Summaries based on the weight of each loan per

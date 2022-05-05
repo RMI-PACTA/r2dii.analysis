@@ -173,20 +173,22 @@ target_sda <- function(data,
   data <- data %>%
     rename(sector = .data$sector_abcd)
 
+  relevant_sectors <- data$sector
+
   if (identical(nrow(data), 0L)) {
     warn("Found no match between loanbook and abcd.", class = "no_match")
     return(empty_target_sda_output())
   }
 
   relevant_abcd_by_sector <- abcd_by_sector %>%
-    filter(sector %in% unique(data$sector))
+    filter(.data$sector %in% unique(relevant_sectors))
 
   corporate_economy <- calculate_market_average(relevant_abcd_by_sector)
 
   interpolate_groups <- c("scenario_source", "scenario", "sector", "region")
 
   relevant_scenario <- co2_intensity_scenario %>%
-    filter(sector %in% unique(data$sector))
+    filter(.data$sector %in% unique(relevant_sectors))
 
   if (identical(nrow(relevant_scenario), 0L)) {
     warn("Found no match between loanbook and scenario.", class = "no_match")

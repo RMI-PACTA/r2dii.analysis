@@ -38,7 +38,7 @@ $$I^{Target}(t) = \left( d * p (t) * m (t) \right) + I^{Sc}(2050)$$
 
 ## PACTA Assumptions
 
-The SDA applied in PACTA differs slightly from the way it is applied by the SBTI. In particular, we must align the top-down approach laid out by climate scenarios with the bottom-up asset-level data used in the PACTA analysis.
+The SDA applied in PACTA differs slightly from the way it is applied by the SBTI. In particular, we must align the top-down approach laid out by climate scenarios with the bottom-up asset-based company data used in the PACTA analysis.
 
 **Assumption: Market share stays constant ($m(t)$ = 1)**
 
@@ -52,12 +52,12 @@ $$I^{Target}(t) = \left( d * p (t) \right) + I^{Sc}(2050)$$
 
 **Approximation: Adjust base year scenario emission intensity**
 
-In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. These implement a global economy top-down approach which applies an absolute emissions value in the year 2050 and then converts this to yearly emission intensities. However, there may be discrepancies between the Scenario projected emission intensities, and the bottom-up ALD emission intensities. To reflect this discrepancy, we adjust the scenario projections by the following factor, 
+In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. These implement a global economy top-down approach which applies an absolute emissions value in the year 2050 and then converts this to yearly emission intensities. However, there may be discrepancies between the Scenario projected emission intensities, and the bottom-up ABCD emission intensities. To reflect this discrepancy, we adjust the scenario projections by the following factor, 
 
-$$\dfrac{I^{ALD}(t_0)}{I^{Sc}(t_0)}$$
+$$\dfrac{I^{ABCD}(t_0)}{I^{Sc}(t_0)}$$
 yielding the adjusted scenario pathway: 
 
-$$I'^{Sc}(t) = \left(\dfrac{I^{ALD}(t_0)}{I^{Sc}(t_0)}\right) * I^{Sc}(t)$$
+$$I'^{Sc}(t) = \left(\dfrac{I^{ABCD}(t_0)}{I^{Sc}(t_0)}\right) * I^{Sc}(t)$$
 This yields the final PACTA SDA target equation:
 
 $$I^{Target}(t) = \left( d * p (t) \right) + I'^{Sc}(t)$$
@@ -79,9 +79,9 @@ library(r2dii.analysis)
 
 ```{r}
 loanbook <- r2dii.data::loanbook_demo
-ald <- r2dii.data::ald_demo
+abcd <- r2dii.data::abcd_demo
 
-matched <- match_name(loanbook, ald) %>%
+matched <- match_name(loanbook, abcd) %>%
   # WARNING: Remember to validate the output of match_name() before prioritize()
   prioritize()
 
@@ -93,5 +93,5 @@ matched
 ```{r}
 co2_intensity <- r2dii.data::co2_intensity_scenario_demo
 
-matched %>% target_sda(ald, co2_intensity)
+matched %>% target_sda(abcd, co2_intensity)
 ```

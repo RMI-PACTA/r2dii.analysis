@@ -24,7 +24,7 @@
       out_company
     Output
       # A tibble: 68 x 7
-         sector  year region scenario_source name_ald     emission_factor_metric
+         sector  year region scenario_source name_abcd    emission_factor_metric
          <chr>  <dbl> <chr>  <chr>           <chr>        <chr>                 
        1 cement  2020 global demo_2020       shaanxi auto projected             
        2 cement  2021 global demo_2020       shaanxi auto projected             

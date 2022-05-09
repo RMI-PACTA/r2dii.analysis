@@ -1381,3 +1381,17 @@ test_that("w/ abcd with older years than scenarios, outputs 0 percent change in
     0L
   )
 })
+
+test_that("production column in scenario dataset is removed with a warning #372", {
+  bad_scenario <- fake_scenario(production = 1)
+
+  expect_warning(
+    class = "scenario_production_column_removed",
+    target_market_share(
+      fake_matched(),
+      fake_abcd(),
+      bad_scenario,
+      region_isos_stable
+    )
+  )
+})

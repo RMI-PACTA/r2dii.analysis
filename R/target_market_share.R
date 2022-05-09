@@ -110,7 +110,8 @@ target_market_share <- function(data,
     warn("The column `production` has been removed from the dataset `scenario`.
          The columns `tmsr` and `smsp` will be used instead",
          class = "scenario_production_column_removed")
-    scenario = subset(scenario, select = -c(production))
+    scenario <- subset(scenario, select = -c(production))
+    return(scenario)
   }
 
   crucial_groups <- c(

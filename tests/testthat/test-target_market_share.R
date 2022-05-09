@@ -1389,7 +1389,7 @@ test_that("production column in scenario dataset is removed with a warning #372"
     class = "scenario_production_column_removed",
     target_market_share(
       fake_matched(),
-      fake_ald(),
+      fake_abcd(),
       bad_scenario,
       region_isos_stable
     )

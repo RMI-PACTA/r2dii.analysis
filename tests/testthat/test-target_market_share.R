@@ -161,13 +161,26 @@ test_that("w/ NAs in crucial columns, errors with informative message", {
   expect_error_crucial_NAs_portfolio("name_abcd")
   expect_error_crucial_NAs_portfolio("sector_abcd")
 
-  expect_error_crucial_NAs_abcd("production")
   expect_error_crucial_NAs_abcd("sector")
   expect_error_crucial_NAs_abcd("year")
 
   expect_error_crucial_NAs_scenario("scenario")
   expect_error_crucial_NAs_scenario("tmsr")
   expect_error_crucial_NAs_scenario("smsp")
+})
+
+test_that("filters and warns when input-data has NAs", {
+  matched <- fake_matched()
+  abcd <- fake_abcd(production = c(1, NA))
+  scenario <- fake_scenario()
+
+  expect_warning(
+    target_market_share(
+      matched,
+      abcd,
+      scenario,
+      region_isos_stable),
+      class = "na_crucial_economic_input")
 })
 
 test_that("outputs expected names", {

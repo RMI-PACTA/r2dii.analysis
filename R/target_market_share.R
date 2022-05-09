@@ -101,6 +101,8 @@ target_market_share <- function(data,
 
   data <- rename_and_warn_ald_names(data)
 
+  abcd <- filter_and_warn_na(abcd, "production")
+
   warn_if_by_company_and_weight_production(by_company, weight_production)
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))

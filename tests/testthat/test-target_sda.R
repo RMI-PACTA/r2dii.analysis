@@ -394,7 +394,6 @@ test_that("with NAs in crucial columns errors with informative message (#146)", 
   expect_error_crucial_NAs_portfolio("sector_abcd")
 
   expect_error_crucial_NAs_abcd("name_company")
-  expect_error_crucial_NAs_abcd("production")
   expect_error_crucial_NAs_abcd("sector")
   expect_error_crucial_NAs_abcd("year")
 
@@ -496,7 +495,7 @@ test_that("filters and warns when input-data has NAs", {
     )
   )
   if (packageVersion("testthat") >= "2.99.0.9000") {
-    args <- list(object = .object, class = "na_emission_factor")
+    args <- list(object = .object, class = "na_crucial_economic_input")
   } else {
     args <- list(object = .object, regexp = "emission_factor.*NA")
   }
@@ -505,6 +504,34 @@ test_that("filters and warns when input-data has NAs", {
   out <- split(out, out$emission_factor_metric)
   expect_equal(out$corporate_economy$emission_factor_value, c(1, 2))
 })
+
+test_that("filters and warns when input-data (production in abcd) has NAs #304", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    sector_abcd = c("cement", "power")
+  )
+
+  abcd <- fake_abcd(
+    sector = c("cement", "power"),
+    production = c(1,NA)
+  )
+
+  co2_scenario <- fake_co2_scenario(
+    sector = "cement",
+    emission_factor = c(1, 0.6),
+    year = c(2025, 2026)
+  )
+
+  expect_warning(
+    target_sda(
+      matched,
+      abcd,
+      co2_scenario,
+      region_isos = region_isos_stable),
+    class = "na_crucial_economic_input"
+    )
+})
+
 
 test_that(
   "`sector` column is not used from data (should only use `sector_abcd`) (#178)",

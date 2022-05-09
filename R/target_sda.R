@@ -123,14 +123,8 @@ target_sda <- function(data,
   check_crucial_names(abcd, crucial_abcd)
   check_type_emission_factor(abcd)
 
-  if (any(is.na(abcd$emission_factor))) {
-    warn(
-      "Removing abcd rows where `emission_factor` is NA",
-      class = "na_emission_factor"
-    )
-
-    abcd <- filter(abcd, !is.na(.data$emission_factor))
-  }
+  abcd <- filter_and_warn_na(abcd, "production")
+  abcd <- filter_and_warn_na(abcd, "emission_factor")
 
   walk_(crucial_abcd, ~ check_no_value_is_missing(abcd, .x))
 

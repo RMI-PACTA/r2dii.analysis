@@ -9,6 +9,20 @@ check_no_value_is_missing <- function(data, column) {
   invisible(data)
 }
 
+filter_and_warn_na <- function(data, column) {
+  if (anyNA(data[[column]])) {
+    name_dataset <- deparse(substitute(data))
+    warning_message = paste("Removing rows in", name_dataset, "where `{column}` is NA")
+    warn(
+      glue(warning_message),
+      class = "na_crucial_economic_input"
+    )
+
+    data <- filter(data, !is.na(.data[[column]]))
+  }
+  return(data)
+}
+
 warn_grouped <- function(data, message) {
   if (dplyr::is_grouped_df(data)) warn(message)
 

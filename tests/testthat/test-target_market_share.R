@@ -1370,8 +1370,7 @@ test_that("w/ ald with older years than scenarios, outputs 0 percent change in
 })
 
 test_that("production column in scenario dataset is removed with a warning #372", {
-  bad_scenario <- fake_scenario()
-  bad_scenario$production <- 1
+  bad_scenario <- fake_scenario(production = 1)
 
   expect_warning(
     class = "scenario_production_column_removed",

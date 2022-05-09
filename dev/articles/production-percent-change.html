@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.12.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,33 +116,33 @@
 <p>Effectively, this is a loan-weighted average of the production attributed to each company in your portfolio. A significant result of this indicator choice is that small companies (with little production) will be favorably weighted, given that the loan to that company is sufficiently large. This can be useful to reflect large investments into green start-ups.</p>
 <p>To calculate the weighted production:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/" class="external-link">r2dii.match</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span>
 
 <span class="va">master</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">ald_demo</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/join_ald_scenario.html">join_ald_scenario</a></span><span class="op">(</span>
-    ald <span class="op">=</span> <span class="va">ald_demo</span>,
+  <span class="fu"><a href="../reference/join_abcd_scenario.html">join_abcd_scenario</a></span><span class="op">(</span>
+    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,
     scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
     region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>
   <span class="op">)</span>
 
 <span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 138 × 5</span></span>
-<span class="co">#&gt;    sector_ald technology  year weighted_production weighted_technology_share</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric    <span style="text-decoration: underline;">2</span>020             <span style="text-decoration: underline;">973</span>775.                     0.114</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric    <span style="text-decoration: underline;">2</span>021            1<span style="text-decoration: underline;">018</span>967.                     0.118</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric    <span style="text-decoration: underline;">2</span>022            1<span style="text-decoration: underline;">064</span>159.                     0.122</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric    <span style="text-decoration: underline;">2</span>023            1<span style="text-decoration: underline;">109</span>351.                     0.126</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric    <span style="text-decoration: underline;">2</span>024            1<span style="text-decoration: underline;">154</span>543.                     0.130</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric    <span style="text-decoration: underline;">2</span>025            1<span style="text-decoration: underline;">199</span>735.                     0.133</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric    <span style="text-decoration: underline;">2</span>026            1<span style="text-decoration: underline;">244</span>926.                     0.137</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive hybrid      <span style="text-decoration: underline;">2</span>020            1<span style="text-decoration: underline;">886</span>042.                     0.221</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive hybrid      <span style="text-decoration: underline;">2</span>021            1<span style="text-decoration: underline;">709</span>634.                     0.198</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive hybrid      <span style="text-decoration: underline;">2</span>022            1<span style="text-decoration: underline;">533</span>226.                     0.176</span>
+<span class="co">#&gt;    sector_abcd technology  year weighted_production weighted_technology_share</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive  electric    <span style="text-decoration: underline;">2</span>020             <span style="text-decoration: underline;">973</span>775.                     0.114</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive  electric    <span style="text-decoration: underline;">2</span>021            1<span style="text-decoration: underline;">018</span>967.                     0.118</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive  electric    <span style="text-decoration: underline;">2</span>022            1<span style="text-decoration: underline;">064</span>159.                     0.122</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive  electric    <span style="text-decoration: underline;">2</span>023            1<span style="text-decoration: underline;">109</span>351.                     0.126</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive  electric    <span style="text-decoration: underline;">2</span>024            1<span style="text-decoration: underline;">154</span>543.                     0.130</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive  electric    <span style="text-decoration: underline;">2</span>025            1<span style="text-decoration: underline;">199</span>735.                     0.133</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive  electric    <span style="text-decoration: underline;">2</span>026            1<span style="text-decoration: underline;">244</span>926.                     0.137</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive  hybrid      <span style="text-decoration: underline;">2</span>020            1<span style="text-decoration: underline;">886</span>042.                     0.221</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive  hybrid      <span style="text-decoration: underline;">2</span>021            1<span style="text-decoration: underline;">709</span>634.                     0.198</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive  hybrid      <span style="text-decoration: underline;">2</span>022            1<span style="text-decoration: underline;">533</span>226.                     0.176</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 128 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -158,18 +158,18 @@
 <code class="sourceCode R"><span class="co"># using the master dataset defined in the previous chunk:</span>
 <span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 138 × 4</span></span>
-<span class="co">#&gt;    sector_ald technology  year weighted_percent_change</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric    <span style="text-decoration: underline;">2</span>020                  0     </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric    <span style="text-decoration: underline;">2</span>021                  0.088<span style="text-decoration: underline;">1</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric    <span style="text-decoration: underline;">2</span>022                  0.176 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric    <span style="text-decoration: underline;">2</span>023                  0.264 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric    <span style="text-decoration: underline;">2</span>024                  0.352 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric    <span style="text-decoration: underline;">2</span>025                  0.440 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric    <span style="text-decoration: underline;">2</span>026                  0.528 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive hybrid      <span style="text-decoration: underline;">2</span>020                  1.78  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive hybrid      <span style="text-decoration: underline;">2</span>021                  1.43  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive hybrid      <span style="text-decoration: underline;">2</span>022                  1.09  </span>
+<span class="co">#&gt;    sector_abcd technology  year weighted_percent_change</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive  electric    <span style="text-decoration: underline;">2</span>020                  0     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive  electric    <span style="text-decoration: underline;">2</span>021                  0.088<span style="text-decoration: underline;">1</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive  electric    <span style="text-decoration: underline;">2</span>022                  0.176 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive  electric    <span style="text-decoration: underline;">2</span>023                  0.264 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive  electric    <span style="text-decoration: underline;">2</span>024                  0.352 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive  electric    <span style="text-decoration: underline;">2</span>025                  0.440 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive  electric    <span style="text-decoration: underline;">2</span>026                  0.528 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive  hybrid      <span style="text-decoration: underline;">2</span>020                  1.78  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive  hybrid      <span style="text-decoration: underline;">2</span>021                  1.43  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive  hybrid      <span style="text-decoration: underline;">2</span>022                  1.09  </span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 128 more rows</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -185,7 +185,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>

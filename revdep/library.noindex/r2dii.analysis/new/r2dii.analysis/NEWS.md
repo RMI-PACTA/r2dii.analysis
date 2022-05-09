@@ -1,5 +1,137 @@
 # r2dii.analysis (development version)
 
+* New argument `abcd` of `target_market_share()` and `target_sda` supersedes the 
+  argument `ald` (#404).
+
+* `target_sda()` now only outputs data for `sector` values that are in all three 
+  input datasets (`data`, `ald` and `co2_intensity_scenario`) (#390). 
+
+* `target_sda()` now outputs unweighted `emission_factor` if `by_company` is 
+  `TRUE` (#376). 
+
+* `target_sda()` gains `region_isos` argument (#323).
+
+* `target_market_share()` now only outputs values for years that are in both 
+  `ald` and `scenario` inputs (#394). 
+
+* `target_market_share()` now outputs two new columns, `percentage_of_initial_production_by_scope`
+  and `scope` (ADO #4143). 
+
+# r2dii.analysis 0.1.12
+
+* `target_market_share()` now outputs 0 `technology_share`, for companies with 
+  0 sectoral production (#306 @Antoine-Lalechere). 
+
+* `target_sda()` now filters `scenario` start year to be consistent with `ald` 
+  start year (#346 @waltjl). 
+
+# r2dii.analysis 0.1.10
+
+* `target_market_share()` now sets all negative `smsp` targets to zero (#336). 
+
+* `target_market_share()` now only outputs `sector`s that are present in all 
+  input datasets (#329). 
+
+* `target_market_share()` now always adds targets for green technologies 
+  (defined by `r2dii.data::green_or_brown`), even when not present in input 
+  `data` (#318 @Antoine-Lalechere). 
+
+* `target_market_share()` now correctly groups by `region` when calculating 
+  `technology_share` (#315 @Antoine-Lalechere). 
+
+# r2dii.analysis 0.1.9
+
+* `target_sda()` now only outputs `sector` values that are present in the input 
+  `co2_intensity_scenario` data (#308). 
+  
+* `target_sda()` now outputs targets for the range of years in the input 
+  `co2_intenstiy_scenario` (#307). 
+
+# r2dii.analysis 0.1.8
+
+* `target_market_share()` now correctly outputs target `technology share`, in 
+  line with methodology (@georgeharris2deg #277).
+
+* `target_market_share()` now correctly projects technology share as
+  'production / total production' when computing by company, 
+  unweighted by relative loan size (@KapitanKombajn #288).
+
+* `target_market_share()` no longer outputs columns
+  `sector_weighted_production` or `technology_weighted_production`. Those
+  columns are internal so they shouldn't face users (#291).
+
+# r2dii.analysis 0.1.6
+
+* `target_market_share()` now correctly outputs `technology_share` with
+  multiple loans at different `level` to the same company (@ab-bbva #265).
+
+# r2dii.analysis 0.1.5
+
+* `target_market_share()` now errors if input `data` has an unexpected column
+  (@georgeharris2deg #267).
+
+* `target_market_share()` now correctly outputs `technology_share` with
+  multiple loans to the same company (@georgeharris2deg #262, @ab-bbva #265).
+
+# r2dii.analysis 0.1.4
+
+* `target_market_share()` now correctly outputs unweighted production by
+  company, equal to ald-production for one company with multiple loans of
+  different size (#255 @georgeharris2deg).
+
+# r2dii.analysis 0.1.3
+
+* `target_market_share()` now correctly outputs unweighted production when 
+  multiple levels exist for the same company (#249).
+
+# r2dii.analysis 0.1.2
+
+* `target_market_share()` now outputs `weighted_technology_share` that 
+  correctly sums to 1 when grouped by `sector`, `metric` and `scenario` (#218).
+
+* `target_market_share()` now correctly outputs unweighted production when 
+  multiple loans exist for the same company (#239).
+
+* `target_market_share()` now outputs empty named tibble if no matching region 
+  definitions can be found (#236).
+  
+* `target_market_share` now outputs all technologies present in `ald`, even if 
+  they are not present in `data` (#235).
+
+* `target_sda()` now interpolates input scenario file by year and correctly 
+  calculates target, regardless of the time-horizon of `ald` (#234).
+
+* Hyperlinks on the "Get Started" tab of the website now points to correct links 
+  (#222 @apmanning).
+
+* Depend on dplyr >= 0.8.5, explicitly. We commit to this version because the
+  newer dplyr 1 is still relatively new, and represents a major change which
+  some users initially resist.
+
+* Relax dependency on rlang, as it is mostly driven dynamically by the 
+  by our recursive dependencies. For example, dplyr 0.8.5 depends on a specific
+  version of rlang that is more recent than the version we explicitly 
+  depended on -- which suggests that being explicit about rlang is unhelpful and
+  misleading.
+
+* New internal data `loanbook_stable` and `region_isos_stable` make regression
+  tests more stable (#227).
+
+# r2dii.analysis 0.1.1
+
+* Change license to MIT.
+
+* The website's home page now thanks founders.
+
+* `target_market_share()` now works as expected when some value of the column
+`scenario` is missing for some value of the column `region`. It no longer
+results in output columns `production` and `technology_share` of type "list"
+(#203).
+
+* The website now shows the News tab.
+
+# r2dii.analysis 0.1.0
+
 * `target_sda()` now correctly handles differing `country_of_domicile` inputs 
   (#171).
 

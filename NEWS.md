@@ -1,4 +1,13 @@
 # r2dii.analysis (development version)
+
+# r2dii.analysis 0.2.0
+
+* New argument `abcd` of `target_market_share()` and `target_sda` supersedes the 
+  argument `ald` (#404).
+
+* `target_sda()` now only outputs data for `sector` values that are in all three 
+  input datasets (`data`, `ald` and `co2_intensity_scenario`) (#390). 
+
 * `target_sda()` now outputs unweighted `emission_factor` if `by_company` is 
   `TRUE` (#376). 
 

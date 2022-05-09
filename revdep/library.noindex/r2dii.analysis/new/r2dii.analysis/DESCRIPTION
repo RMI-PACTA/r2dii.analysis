@@ -1,6 +1,6 @@
 Package: r2dii.analysis
-Title: Tools to Calculate Climate Targets for Financial Portfolios
-Version: 0.0.1.9000
+Title: Measure Climate Scenario Alignment of Corporate Loans
+Version: 0.1.12.9000
 Authors@R: 
     c(person(given = "Jackson",
              family = "Hoffart",
@@ -19,35 +19,36 @@ Authors@R:
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: These tools help you to assess if a financial
-    portfolio aligns with climate goals. They summarize key metrics
-    attributed to the portfolio (e.g. production, emission factors), and
-    calculate targets based on climate scenarios. They implement in R the
-    last step of the free software 'PACTA' (Paris Agreement Capital
-    Transition Assessment; <https://2degrees-investing.org/>). Financial
-    institutions use 'PACTA' to study how their capital allocation impacts
-    the climate.
-License: GPL-3
-URL: https://github.com/2DegreesInvesting/r2dii.analysis
+Description: These tools help you to assess if a corporate lending
+    portfolio aligns with climate goals. They summarize key climate
+    indicators attributed to the portfolio (e.g. production, emission
+    factors), and calculate alignment targets based on climate scenarios.
+    They implement in R the last step of the free software 'PACTA' (Paris
+    Agreement Capital Transition Assessment;
+    <https://2degrees-investing.org/>). Financial institutions use 'PACTA'
+    to study how their capital allocation decisions align with climate
+    change mitigation goals.
+License: MIT + file LICENSE
+URL: https://github.com/2DegreesInvesting/r2dii.analysis,
+        https://2degreesinvesting.github.io/r2dii.analysis/
 BugReports: https://github.com/2DegreesInvesting/r2dii.analysis/issues
 Depends: R (>= 3.4)
-Imports: dplyr, glue, magrittr, r2dii.data, rlang (>= 0.1.2), tidyr,
-        tidyselect
+Imports: dplyr (>= 0.8.5), glue, lifecycle, magrittr, r2dii.data, rlang
+        (>= 0.1.2), tidyr, tidyselect, zoo
 Suggests: covr, r2dii.match, rmarkdown, roxygen2, spelling, testthat
-        (>= 2.1.0)
+        (>= 3.0.0), withr
+Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 RemoteType: local
-RemoteUrl:
-        /Users/jdhoffa/Documents/github/2DegreesInvesting/r2dii.analysis
+RemoteUrl: /Users/jdhoffa/Documents/github/2dii/r2dii.analysis
 NeedsCompilation: no
-Packaged: 2020-09-03 12:56:03 UTC; jdhoffa
+Packaged: 2022-05-05 11:51:49 UTC; jdhoffa
 Author: Jackson Hoffart [aut, cre] (<https://orcid.org/0000-0002-8600-5042>),
   Mauro Lepore [aut, ctr] (<https://orcid.org/0000-0002-1986-7988>),
   Klaus Hogedorn [aut],
   2 Degrees Investing Initiative [cph, fnd]
 Maintainer: Jackson Hoffart <jackson.hoffart@gmail.com>
-Built: R 4.0.2; ; 2020-09-03 12:56:04 UTC; unix
+Built: R 4.2.0; ; 2022-05-05 11:51:49 UTC; unix

@@ -8,23 +8,11 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 3 notes
+0 errors | 0 warnings | 0 notes
+    
+## revdepcheck results
 
-* New submission
-* Package was archived on CRAN
-* CRAN repository db overrides:
-    X-CRAN-Comment: Archived on 2021-08-08 as check problems were not
-    corrected in time.
+We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
-## Resubmission
-
-This package was archived because of the unconditional use of one package
-in Suggests. The use of that package in Suggests is now conditional.
-
-In this version we have:
-
-* Reduced the length of the title to less than 65 characters.
-* Added \value to .Rd files regarding exported methods and
-    explaining the functions results in the documentation.
-* Explained above that the issue why this package was archived has
-    been fixed.
+ * We saw 0 new problems
+ * We failed to check 0 packages

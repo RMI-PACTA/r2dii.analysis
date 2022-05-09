@@ -1,3 +1,4 @@
+r2dii.analysis-package	r2dii.analysis-package
 %>%	pipe
 .data	tidyeval
 :=	tidyeval
@@ -7,6 +8,8 @@ enquo	tidyeval
 enquos	tidyeval
 expr	tidyeval
 join_ald_scenario	join_ald_scenario
+r2dii.analysis	r2dii.analysis-package
+summarize_weighted_percent_change	summarize_weighted_production
 summarize_weighted_production	summarize_weighted_production
 sym	tidyeval
 syms	tidyeval

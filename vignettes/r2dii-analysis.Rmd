@@ -48,9 +48,9 @@ complete description of this process.
 # Use these datasets to practice but eventually you should use your own data.
 # The optional syntax `package::data` is to clarify where the data comes from.
 loanbook <- r2dii.data::loanbook_demo
-ald <- r2dii.data::ald_demo
+abcd <- r2dii.data::abcd_demo
 
-matched <- match_name(loanbook, ald) %>% prioritize()
+matched <- match_name(loanbook, abcd) %>% prioritize()
 
 matched
 ```
@@ -77,7 +77,7 @@ regions <- r2dii.data::region_isos_demo
 
 market_share_targets_portfolio <- matched %>%
   target_market_share(
-    ald = ald,
+    abcd = abcd,
     scenario = scenario,
     region_isos = regions
   )
@@ -90,7 +90,7 @@ Or at the company level:
 ```{r market-share-targets-company}
 market_share_targets_company <- matched %>%
   target_market_share(
-    ald = ald,
+    abcd = abcd,
     scenario = scenario,
     region_isos = regions,
     # Output results at company-level.
@@ -113,7 +113,7 @@ technology roadmaps.
 co2 <- r2dii.data::co2_intensity_scenario_demo
 
 sda_targets <- matched %>%
-  target_sda(ald = ald, co2_intensity_scenario = co2) %>% 
+  target_sda(abcd = abcd, co2_intensity_scenario = co2, region_isos = regions) %>% 
   filter(sector == "cement", year >= 2020)
 
 sda_targets
@@ -171,6 +171,6 @@ the scenario compliant SDA pathway that the portfolio must follow to achieve
 the scenario ambition by 2050.
 
 ```{r sda plot}
-data <- filter(sda_targets, sector == "cement")
+data <- filter(sda_targets, sector == "cement", region == "global")
 qplot_emission_intensity(data)
 ```

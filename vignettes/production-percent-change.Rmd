@@ -29,10 +29,10 @@ library(r2dii.match)
 library(r2dii.analysis)
 
 master <- loanbook_demo %>%
-  match_name(ald_demo) %>%
+  match_name(abcd_demo) %>%
   prioritize() %>%
-  join_ald_scenario(
-    ald = ald_demo,
+  join_abcd_scenario(
+    abcd = abcd_demo,
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )

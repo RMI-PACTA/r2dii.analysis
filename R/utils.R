@@ -55,3 +55,55 @@ modify_at_ <- function(.x, .at, .f) {
   .x[[.at]] <- .f(.x[[.at]])
   .x
 }
+
+rename_and_warn_ald_names <- function(data) {
+
+  if (all(c("name_ald", "name_abcd") %in% names(data))) {
+
+    rlang::abort(
+      "too_many_sectors",
+      message = glue(
+        "Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
+        `name_abcd` instead."
+      )
+    )
+
+  } else if ("name_ald" %in% names(data)) {
+
+    rlang::warn(
+      "deprecated_name",
+      message = glue(
+        "Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use
+        `name_abcd` instead."
+      )
+    )
+
+    data <- dplyr::rename(data, name_abcd = .data$name_ald)
+  }
+
+  if (all(c("sector_ald", "sector_abcd") %in% names(data))) {
+
+    rlang::abort(
+      "too_many_sectors",
+      message = glue(
+        "Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use
+        `sector_abcd` instead."
+      )
+    )
+
+  } else if ("sector_ald" %in% names(data)) {
+
+    rlang::warn(
+      "deprecated_name",
+      message = glue(
+        "Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use
+        `sector_abcd` instead."
+      )
+    )
+
+    data <- dplyr::rename(data, sector_abcd = .data$sector_ald)
+  }
+
+  data
+
+}

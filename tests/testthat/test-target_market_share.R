@@ -1401,7 +1401,7 @@ test_that("region_isos only has lowercase isos #398", {
   bad_region_isos <- mutate(region_isos_demo, isos = toupper(isos))
 
   expect_warning(
-    class = "region_isos_not_lowercase",
+    class = "column_not_in_lowercase",
     target_market_share(
       fake_matched(),
       fake_abcd(),

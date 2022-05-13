@@ -103,6 +103,8 @@ target_market_share <- function(data,
 
   abcd <- filter_and_warn_na(abcd, "production")
 
+  region_isos <- change_to_lowercase_and_warn(region_isos, "isos")
+
   warn_if_by_company_and_weight_production(by_company, weight_production)
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))

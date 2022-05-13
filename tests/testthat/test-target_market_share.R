@@ -1395,3 +1395,18 @@ test_that("production column in scenario dataset is removed with a warning #372"
     )
   )
 })
+
+test_that("region_isos only has lowercase isos #398", {
+
+  bad_region_isos <- mutate(region_isos_demo, isos = toupper(isos))
+
+  expect_warning(
+    class = "region_isos_not_lowercase",
+    target_market_share(
+      fake_matched(),
+      fake_abcd(),
+      fake_scenario(),
+      bad_region_isos
+    )
+  )
+})

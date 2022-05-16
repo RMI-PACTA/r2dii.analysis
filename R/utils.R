@@ -107,3 +107,18 @@ rename_and_warn_ald_names <- function(data) {
   data
 
 }
+
+change_to_lowercase_and_warn <- function(data, column) {
+  if(any(data[[column]] != tolower(data[[column]]), na.rm = TRUE)) {
+    name_dataset <- deparse(substitute(data))
+    warning_message = paste("The column `{column}` of", name_dataset, "has been updated to only contain lower-cases.")
+    warn(
+      glue(warning_message),
+      class = "column_not_in_lowercase"
+    )
+    data[[column]] <- tolower(data[[column]])
+  }
+
+  return(data)
+
+}

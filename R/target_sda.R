@@ -126,6 +126,8 @@ target_sda <- function(data,
   abcd <- filter_and_warn_na(abcd, "production")
   abcd <- filter_and_warn_na(abcd, "emission_factor")
 
+  region_isos <- change_to_lowercase_and_warn(region_isos, "isos")
+
   walk_(crucial_abcd, ~ check_no_value_is_missing(abcd, .x))
 
   check_crucial_names(co2_intensity_scenario, crucial_scenario)

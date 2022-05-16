@@ -791,3 +791,18 @@ test_that("outputs empty tibble for sectors in `scenario` and `abcd` but not
 
   expect_equal(nrow(out_steel), 0L)
 })
+
+test_that("region_isos only has lowercase isos #398", {
+
+  bad_region_isos <- mutate(region_isos_demo, isos = toupper(isos))
+
+  expect_warning(
+    class = "column_not_in_lowercase",
+    target_sda(
+      fake_matched(sector_abcd = "cement", "steel"),
+      fake_abcd(sector = c("cement", "steel")),
+      fake_co2_scenario(),
+      region_isos = bad_region_isos
+    )
+  )
+})

@@ -118,11 +118,9 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
   old_groups <- dplyr::groups(data)
 
   data <- data %>%
-    select(-c(
-      .data$id_loan,
-      .data$loan_size_credit_limit,
-      .data$loan_size_outstanding
-    )) %>%
+    select(
+      -all_of(c("id_loan", "loan_size_credit_limit", "loan_size_outstanding"))
+      ) %>%
     distinct() %>%
     group_by(.data$sector_abcd, .data$technology, .data$year, ...)
 
@@ -192,11 +190,9 @@ summarize_unweighted_emission_factor <- function(data, ...) {
   data <- rename_and_warn_ald_names(data)
 
   data <- data %>%
-    select(-c(
-      .data$id_loan,
-      .data$loan_size_credit_limit,
-      .data$loan_size_outstanding
-    )) %>%
+    select(
+      -all_of(c("id_loan", "loan_size_credit_limit", "loan_size_outstanding"))
+      ) %>%
     distinct() %>%
     group_by(.data$sector_abcd, .data$year, ...) %>%
     summarize(emission_factor_projected = mean(.data$emission_factor)) %>%

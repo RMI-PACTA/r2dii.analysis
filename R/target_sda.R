@@ -286,7 +286,7 @@ calculate_market_average <- function(data) {
       # Alias emission_factor_corporate_economy
       .x = list(.data$production * .data$emission_factor)
     ) %>%
-    unnest(cols = .data$.x) %>%
+    unnest(cols = ".x") %>%
     group_by(.data$sector, .data$year, .data$region, .data$scenario_source) %>%
     summarize(.x = sum(.data$.x / .data$sector_total_production)) %>%
     rename(emission_factor_corporate_economy = ".x") %>%

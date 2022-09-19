@@ -170,7 +170,7 @@ target_sda <- function(data,
   }
 
   data <- data %>%
-    rename(sector = .data$sector_abcd)
+    rename(sector = "sector_abcd")
 
   relevant_sectors <- data$sector
 
@@ -289,7 +289,7 @@ calculate_market_average <- function(data) {
     unnest(cols = .data$.x) %>%
     group_by(.data$sector, .data$year, .data$region, .data$scenario_source) %>%
     summarize(.x = sum(.data$.x / .data$sector_total_production)) %>%
-    rename(emission_factor_corporate_economy = .data$.x) %>%
+    rename(emission_factor_corporate_economy = ".x") %>%
     ungroup()
 }
 

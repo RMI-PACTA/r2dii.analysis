@@ -51,7 +51,7 @@ join_abcd_scenario <- function(data,
 
   # Track provenance to avoid clash in the column name "source"
   region_isos <- region_isos %>%
-    rename(scenario_source = .data$source)
+    rename(scenario_source = "source")
 
   abcd <- modify_at_(abcd, "sector", tolower)
   abcd <- modify_at_(abcd, "technology", tolower)

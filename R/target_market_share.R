@@ -235,7 +235,7 @@ add_percentage_of_initial_production_by_scope <- function(data,
   data <- data %>%
     left_join(green_or_brown, by = c("sector", "technology")) %>%
     left_join(tmsr_or_smsp, by = "green_or_brown") %>%
-    rename(target_name = .data$which_metric) %>%
+    rename(target_name = "which_metric") %>%
     select(-.data$green_or_brown)
 
   percent_by_sector_groups <- add_name_abcd_if_by_company(
@@ -429,9 +429,9 @@ format_output_dataframe <- function(data) {
 
   data <- data %>%
     rename(
-      weighted_production_projected = .data$weighted_production,
-      weighted_technology_share_projected = .data$weighted_technology_share,
-      sector = .data$sector_abcd
+      weighted_production_projected = "weighted_production",
+      weighted_technology_share_projected = "weighted_technology_share",
+      sector = "sector_abcd"
     )
 
   data %>%

@@ -50,11 +50,11 @@ join_ald_scenario <- function(data,
     )
 
   if ("name_ald" %in% names(data)) {
-    data <- rename(data, name_abcd = .data$name_ald)
+    data <- rename(data, name_abcd = "name_ald")
   }
 
   if ("sector_ald" %in% names(data)) {
-    data <- rename(data, sector_abcd = .data$sector_ald)
+    data <- rename(data, sector_abcd = "sector_ald")
   }
 
   join_abcd_scenario(data, ald, scenario, region_isos, add_green_technologies)

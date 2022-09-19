@@ -134,7 +134,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
         weighted_production_target = .data$production_target,
         .groups = "keep"
       ) %>%
-      ungroup(.data$technology) %>%
+      ungroup("technology") %>%
       mutate(
         weighted_technology_share = .data$weighted_production / sum(.data$weighted_production),
         weighted_technology_share_target = .data$weighted_production_target / sum(.data$weighted_production_target)
@@ -143,7 +143,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
   } else {
     data %>%
       summarize(weighted_production = .data$production, .groups = "keep") %>%
-      ungroup(.data$technology, .data$tmsr, .data$smsp) %>%
+      ungroup(all_of(c("technology", "tmsr","smsp"))) %>%
       mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
       group_by(!!!old_groups)
   }

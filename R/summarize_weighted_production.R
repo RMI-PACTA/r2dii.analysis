@@ -120,7 +120,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
   data <- data %>%
     select(
       -all_of(c("id_loan", "loan_size_credit_limit", "loan_size_outstanding"))
-      ) %>%
+    ) %>%
     distinct() %>%
     group_by(.data$sector_abcd, .data$technology, .data$year, ...)
 

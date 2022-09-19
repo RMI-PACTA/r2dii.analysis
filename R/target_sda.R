@@ -402,17 +402,17 @@ format_and_combine_output <- function(lbk, corporate_economy, targets, scen, by_
 
   targets <- targets %>%
     pivot_wider(
-      names_from = .data$scenario,
+      names_from = "scenario",
       names_prefix = "emission_factor_target_",
-      values_from = .data$emission_factor_target
+      values_from = "emission_factor_target"
     ) %>%
     pivot_emission_factors_longer()
 
   scenario <- scen %>%
     pivot_wider(
-      names_from = .data$scenario,
+      names_from = "scenario",
       names_prefix = "emission_factor_adjusted_scenario_",
-      values_from = .data$emission_factor_adjusted_scenario
+      values_from = "emission_factor_adjusted_scenario"
     ) %>%
     pivot_emission_factors_longer() %>%
     mutate(name_abcd = NULL)

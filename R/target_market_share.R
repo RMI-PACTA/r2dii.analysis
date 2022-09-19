@@ -424,10 +424,10 @@ aggregate_by_name_abcd <- function(data) {
 format_output_dataframe <- function(data) {
   data <- data %>%
     pivot_wider2(
-      names_from = .data$scenario,
+      names_from = "scenario",
       values_from = c(
-        .data$weighted_production_target,
-        .data$weighted_technology_share_target
+        "weighted_production_target",
+        "weighted_technology_share_target"
       )
     )
 

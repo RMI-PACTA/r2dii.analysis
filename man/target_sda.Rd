@@ -45,7 +45,7 @@ the column \code{name_abcd}.
 \description{
 This function calculates targets of CO2 emissions per unit production at the
 portfolio-level, otherwise referred to as "emissions factors". It uses the
-\href{https://2degreesinvesting.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}
+\href{https://rmi-pacta.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}
 to calculate these targets.
 }
 \section{Handling grouped data}{

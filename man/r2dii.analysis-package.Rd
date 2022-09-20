@@ -6,14 +6,16 @@
 \alias{r2dii.analysis-package}
 \title{r2dii.analysis: Measure Climate Scenario Alignment of Corporate Loans}
 \description{
-These tools help you to assess if a corporate lending portfolio aligns with climate goals. They summarize key climate indicators attributed to the portfolio (e.g. production, emission factors), and calculate alignment targets based on climate scenarios. They implement in R the last step of the free software 'PACTA' (Paris Agreement Capital Transition Assessment; \url{https://2degrees-investing.org/}). Financial institutions use 'PACTA' to study how their capital allocation decisions align with climate change mitigation goals.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+These tools help you to assess if a corporate lending portfolio aligns with climate goals. They summarize key climate indicators attributed to the portfolio (e.g. production, emission factors), and calculate alignment targets based on climate scenarios. They implement in R the last step of the free software 'PACTA' (Paris Agreement Capital Transition Assessment; \url{https://transitionmonitor.com/}). Financial institutions use 'PACTA' to study how their capital allocation decisions align with climate change mitigation goals.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/2DegreesInvesting/r2dii.analysis}
-  \item \url{https://2degreesinvesting.github.io/r2dii.analysis/}
-  \item Report bugs at \url{https://github.com/2DegreesInvesting/r2dii.analysis/issues}
+  \item \url{https://github.com/RMI-PACTA/r2dii.analysis}
+  \item \url{https://rmi-pacta.github.io/r2dii.analysis/}
+  \item Report bugs at \url{https://github.com/RMI-PACTA/r2dii.analysis/issues}
 }
 
 }
@@ -28,7 +30,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item 2 Degrees Investing Initiative \email{contact@2degrees-investing.org} [copyright holder, funder]
+  \item Rocky Mountain Institute \email{PACTA4banks@rmi.org} [copyright holder, funder]
 }
 
 }

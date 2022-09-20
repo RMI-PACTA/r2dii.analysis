@@ -118,11 +118,9 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
   old_groups <- dplyr::groups(data)
 
   data <- data %>%
-    select(-c(
-      .data$id_loan,
-      .data$loan_size_credit_limit,
-      .data$loan_size_outstanding
-    )) %>%
+    select(
+      -all_of(c("id_loan", "loan_size_credit_limit", "loan_size_outstanding"))
+    ) %>%
     distinct() %>%
     group_by(.data$sector_abcd, .data$technology, .data$year, ...)
 
@@ -136,7 +134,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
         weighted_production_target = .data$production_target,
         .groups = "keep"
       ) %>%
-      ungroup(.data$technology) %>%
+      ungroup("technology") %>%
       mutate(
         weighted_technology_share = .data$weighted_production / sum(.data$weighted_production),
         weighted_technology_share_target = .data$weighted_production_target / sum(.data$weighted_production_target)
@@ -145,7 +143,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
   } else {
     data %>%
       summarize(weighted_production = .data$production, .groups = "keep") %>%
-      ungroup(.data$technology, .data$tmsr, .data$smsp) %>%
+      ungroup(all_of(c("technology", "tmsr","smsp"))) %>%
       mutate(weighted_technology_share = .data$weighted_production / sum(.data$weighted_production)) %>%
       group_by(!!!old_groups)
   }
@@ -192,11 +190,9 @@ summarize_unweighted_emission_factor <- function(data, ...) {
   data <- rename_and_warn_ald_names(data)
 
   data <- data %>%
-    select(-c(
-      .data$id_loan,
-      .data$loan_size_credit_limit,
-      .data$loan_size_outstanding
-    )) %>%
+    select(
+      -all_of(c("id_loan", "loan_size_credit_limit", "loan_size_outstanding"))
+      ) %>%
     distinct() %>%
     group_by(.data$sector_abcd, .data$year, ...) %>%
     summarize(emission_factor_projected = mean(.data$emission_factor)) %>%

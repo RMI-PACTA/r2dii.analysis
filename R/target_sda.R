@@ -170,7 +170,7 @@ target_sda <- function(data,
   }
 
   data <- data %>%
-    rename(sector = .data$sector_abcd)
+    rename(sector = "sector_abcd")
 
   relevant_sectors <- data$sector
 
@@ -286,10 +286,10 @@ calculate_market_average <- function(data) {
       # Alias emission_factor_corporate_economy
       .x = list(.data$production * .data$emission_factor)
     ) %>%
-    unnest(cols = .data$.x) %>%
+    unnest(cols = ".x") %>%
     group_by(.data$sector, .data$year, .data$region, .data$scenario_source) %>%
     summarize(.x = sum(.data$.x / .data$sector_total_production)) %>%
-    rename(emission_factor_corporate_economy = .data$.x) %>%
+    rename(emission_factor_corporate_economy = ".x") %>%
     ungroup()
 }
 
@@ -298,11 +298,16 @@ compute_abcd_adjusted_scenario <- function(data, corporate_economy) {
     group_by(.data$sector, .data$scenario_source, .data$region) %>%
     filter(.data$year == min(.data$year, na.rm = TRUE)) %>%
     select(
-      .data$sector,
-      .data$scenario_source,
-      .data$region,
-      baseline_emission_factor = .data$emission_factor_corporate_economy
+      all_of(
+        c(
+          "sector",
+          "scenario_source",
+          "region",
+          "emission_factor_corporate_economy"
+        )
+      )
     ) %>%
+    rename(baseline_emission_factor = "emission_factor_corporate_economy") %>%
     ungroup()
 
   data %>%
@@ -326,12 +331,16 @@ compute_abcd_adjusted_scenario <- function(data, corporate_economy) {
     ) %>%
     ungroup() %>%
     select(
-      .data$scenario,
-      .data$sector,
-      .data$scenario_source,
-      .data$region,
-      .data$year,
-      .data$emission_factor_adjusted_scenario
+      all_of(
+        c(
+          "scenario",
+          "sector",
+          "scenario_source",
+          "region",
+          "year",
+          "emission_factor_adjusted_scenario"
+        )
+      )
     )
 }
 
@@ -367,11 +376,7 @@ compute_loanbook_targets <- function(data,
         last(.data$emission_factor_adjusted_scenario)
     ) %>%
     ungroup() %>%
-    select(
-      ...,
-      .data$year,
-      .data$emission_factor_target
-    )
+    select(..., all_of(c("year", "emission_factor_target")))
 }
 
 pivot_emission_factors_longer <- function(data) {
@@ -397,17 +402,17 @@ format_and_combine_output <- function(lbk, corporate_economy, targets, scen, by_
 
   targets <- targets %>%
     pivot_wider(
-      names_from = .data$scenario,
+      names_from = "scenario",
       names_prefix = "emission_factor_target_",
-      values_from = .data$emission_factor_target
+      values_from = "emission_factor_target"
     ) %>%
     pivot_emission_factors_longer()
 
   scenario <- scen %>%
     pivot_wider(
-      names_from = .data$scenario,
+      names_from = "scenario",
       names_prefix = "emission_factor_adjusted_scenario_",
-      values_from = .data$emission_factor_adjusted_scenario
+      values_from = "emission_factor_adjusted_scenario"
     ) %>%
     pivot_emission_factors_longer() %>%
     mutate(name_abcd = NULL)

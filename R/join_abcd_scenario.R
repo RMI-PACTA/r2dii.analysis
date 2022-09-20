@@ -51,7 +51,7 @@ join_abcd_scenario <- function(data,
 
   # Track provenance to avoid clash in the column name "source"
   region_isos <- region_isos %>%
-    rename(scenario_source = .data$source)
+    rename(scenario_source = "source")
 
   abcd <- modify_at_(abcd, "sector", tolower)
   abcd <- modify_at_(abcd, "technology", tolower)
@@ -103,10 +103,10 @@ check_portfolio_abcd_scenario <- function(valid_matches, abcd, scenario) {
 add_green_technologies_to_abcd <- function(data, scenario) {
   green_techs <- r2dii.data::green_or_brown %>%
     filter(.data$green_or_brown == "green") %>%
-    select(-.data$green_or_brown)
+    select(-all_of("green_or_brown"))
 
   green_techs_in_scenario <- scenario %>%
-    select(.data$sector, .data$technology) %>%
+    select(all_of(c("sector", "technology"))) %>%
     unique() %>%
     inner_join(green_techs, by = c("sector", "technology"))
 

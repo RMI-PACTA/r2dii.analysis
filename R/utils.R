@@ -78,7 +78,7 @@ rename_and_warn_ald_names <- function(data) {
       )
     )
 
-    data <- dplyr::rename(data, name_abcd = .data$name_ald)
+    data <- dplyr::rename(data, name_abcd = "name_ald")
   }
 
   if (all(c("sector_ald", "sector_abcd") %in% names(data))) {
@@ -101,7 +101,7 @@ rename_and_warn_ald_names <- function(data) {
       )
     )
 
-    data <- dplyr::rename(data, sector_abcd = .data$sector_ald)
+    data <- dplyr::rename(data, sector_abcd = "sector_ald")
   }
 
   data

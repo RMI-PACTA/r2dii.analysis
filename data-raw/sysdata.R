@@ -22,7 +22,7 @@ withr::with_libpaths(temp_lib, {
 region_isos_stable <- region_isos_demo
 
 nace_classification <- nace_classification %>%
-  select(.data$code, .data$sector, .data$borderline)
+  select(all_of(c("code", "sector", "borderline")))
 
 loanbook_demo <- loanbook_demo %>%
   mutate(across(.data$sector_classification_direct_loantaker, as.character))

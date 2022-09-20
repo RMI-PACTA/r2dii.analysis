@@ -6,7 +6,7 @@
 \alias{r2dii.analysis-package}
 \title{r2dii.analysis: Measure Climate Scenario Alignment of Corporate Loans}
 \description{
-These tools help you to assess if a corporate lending portfolio aligns with climate goals. They summarize key climate indicators attributed to the portfolio (e.g. production, emission factors), and calculate alignment targets based on climate scenarios. They implement in R the last step of the free software 'PACTA' (Paris Agreement Capital Transition Assessment; <https://2degrees-investing.org/>). Financial institutions use 'PACTA' to study how their capital allocation decisions align with climate change mitigation goals.
+These tools help you to assess if a corporate lending portfolio aligns with climate goals. They summarize key climate indicators attributed to the portfolio (e.g. production, emission factors), and calculate alignment targets based on climate scenarios. They implement in R the last step of the free software 'PACTA' (Paris Agreement Capital Transition Assessment; \url{https://2degrees-investing.org/}). Financial institutions use 'PACTA' to study how their capital allocation decisions align with climate change mitigation goals.
 }
 \seealso{
 Useful links:

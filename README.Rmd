@@ -45,8 +45,6 @@ Or install the development version of r2dii.analysis from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.analysis")
 ```
 
-[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
-
 ## Example
 
 * Use `library()` to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them -- with `install.packages(c("r2dii.data", "r2dii.match"))` -- so you can reproduce our examples.

@@ -1,5 +1,8 @@
 # r2dii.analysis (development version)
 
+* `r2dii.analysis` has transferred to a new organization: 
+https://github.com/RMI-PACTA/.
+
 # r2dii.analysis 0.2.0
 
 * New argument `abcd` of `target_market_share()` and `target_sda` supersedes the 

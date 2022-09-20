@@ -5,18 +5,18 @@ template:
   bootstrap: 5
   params:
     bootswatch: flatly
-url: https://2degreesinvesting.github.io/r2dii.analysis
+url: https://rmi-pacta.github.io/r2dii.analysis
 authors:
   Mauro Lepore:
     href: https://github.com/maurolepore/
   Jackson Hoffart:
     href: https://github.com/jdhoffa/
-  2 Degrees Investing Initiative:
-    href: https://2degrees-investing.org/
+  Rocky Mountain Institute:
+    href: https://rmi.org/
 home:
   links:
   - text: Learn more
-    href: https://2degrees-investing.org/
+    href: https://transitionmonitor.com/
 navbar:
   type: default
   left:
@@ -36,7 +36,7 @@ navbar:
   - text: News
     menu:
     - text: r2dii blog posts
-      href: https://2degreesinvesting.github.io/#category:r2dii
+      href: https://rmi-pacta.github.io/#category:r2dii
     - text: '----------------------'
     - text: Change log
       href: news/index.html
@@ -44,15 +44,15 @@ navbar:
   - text: Packages
     menu:
     - text: r2dii.data
-      href: https://2degreesinvesting.github.io/r2dii.data
+      href: https://rmi-pacta.github.io/r2dii.data
     - text: r2dii.match
-      href: https://2degreesinvesting.github.io/r2dii.match
+      href: https://rmi-pacta.github.io/r2dii.match
     - text: r2dii.analysis
-      href: https://2degreesinvesting.github.io/r2dii.analysis
+      href: https://rmi-pacta.github.io/r2dii.analysis
     - text: r2dii.plot
-      href: https://2degreesinvesting.github.io/r2dii.plot
+      href: https://rmi-pacta.github.io/r2dii.plot
   - icon: fa-github
-    href: https://github.com/2DegreesInvesting/r2dii.analysis
+    href: https://github.com/RMI-PACTA/r2dii.analysis
 reference:
 - title: Calculate scenario targets
   contents: has_concept("functions to calculate scenario targets")

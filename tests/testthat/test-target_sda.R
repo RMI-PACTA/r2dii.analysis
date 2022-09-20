@@ -136,7 +136,7 @@ test_that("w/ missing crucial names errors gracefully", {
 })
 
 test_that("without `sector` throws no error", {
-  # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
+  # RMI-PACTA/r2dii.analysis/pull/62#issuecomment-634651157
   without_sector <- select(fake_matched(sector_abcd = "cement"), -sector)
   expect_error_free(
     target_sda(

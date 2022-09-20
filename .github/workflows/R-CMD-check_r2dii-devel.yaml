@@ -58,8 +58,8 @@ jobs:
 
       - name: Install devel version of other r2dii packages
         run: |
-          pak::pkg_install("2DegreesInvesting/r2dii.data")
-          pak::pkg_install("2DegreesInvesting/r2dii.match")
+          pak::pkg_install("RMI-PACTA/r2dii.data")
+          pak::pkg_install("RMI-PACTA/r2dii.match")
         shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2

@@ -52,7 +52,7 @@ This method is used to calculate targets for "increasing" (ie. green) technologi
 
 ## How to calculate market-share targets for a given scenario
 
-To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets. One of those datasets is a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
+To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets. One of those datasets is a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://rmi-pacta.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://rmi-pacta.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 
 * Use packages.
 

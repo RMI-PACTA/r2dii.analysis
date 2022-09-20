@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 
 The first step in your analysis will be to load in the recommended r2dii 
 packages into your current R session.
-[r2dii.data](https://2degreesinvesting.github.io/r2dii.data) includes fake data 
+[r2dii.data](https://rmi-pacta.github.io/r2dii.data) includes fake data 
 to help demonstrate the tool and 
-[r2dii.match](https://2degreesinvesting.github.io/r2dii.match) provides 
+[r2dii.match](https://rmi-pacta.github.io/r2dii.match) provides 
 functions to help you easily match your loanbook to asset-level data.
 
 ``` {r use-r2dii}
@@ -26,7 +26,7 @@ library(r2dii.analysis)
 ```
 
 To plot your results, you may also load the package 
-[r2dii.plot](https://2degreesinvesting.github.io/r2dii.plot).
+[r2dii.plot](https://rmi-pacta.github.io/r2dii.plot).
 
 ``` {r use-r2dii.plot}
 library(r2dii.plot)
@@ -41,7 +41,7 @@ library(tidyverse)
 
 ## Match your loanbook to climate-related asset-level data
 
-See [r2dii.match](https://2degreesinvesting.github.io/r2dii.match) for a more 
+See [r2dii.match](https://rmi-pacta.github.io/r2dii.match) for a more 
 complete description of this process. 
 
 ```{r matched}
@@ -62,7 +62,7 @@ Approach, or Sectoral Decarbonization Approach.
 
 ### Market Share Approach
 
-The [Market Share Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-market-share.html) is used to calculate scenario targets for the 
+The [Market Share Approach](https://rmi-pacta.github.io/r2dii.analysis/articles/target-market-share.html) is used to calculate scenario targets for the 
 `production` of a technology in a sector. For example, we can use this approach 
 to set targets for the production of electric vehicles in the automotive sector. 
 This approach is recommended for sectors where a granular technology scenario 
@@ -102,7 +102,7 @@ market_share_targets_company
 
 ### Sectoral Decarbonization Approach
 
-The [Sectoral Decarbonization Approach](https://2degreesinvesting.github.io/r2dii.analysis/articles/target-sda.html) 
+The [Sectoral Decarbonization Approach](https://rmi-pacta.github.io/r2dii.analysis/articles/target-sda.html) 
 is used to calculate scenario targets for the `emission_factor` of a sector. For
 example, you can use this approach to set targets for the average emission 
 factor of the cement sector. This approach is recommended for sectors lacking 

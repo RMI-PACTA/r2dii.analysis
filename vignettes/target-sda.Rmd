@@ -65,7 +65,7 @@ Note: $d$ and $p(t)$ also must be  re-calculated using this adjusted scenario in
 
 ## Calculating SDA Targets
 
-To calculate SDA targets you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/); they are fake but show how you should structure your own data.
+To calculate SDA targets you need to use the package r2dii.analysis and a number of datasets, including a "matched" dataset (loanbook + asset-level data) that you can get with the package [r2dii.match](https://rmi-pacta.github.io/r2dii.match/). The datasets I use here come from the package [r2dii.data](https://rmi-pacta.github.io/r2dii.data/); they are fake but show how you should structure your own data.
 
 * Use packages.
 

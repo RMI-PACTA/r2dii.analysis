@@ -151,7 +151,7 @@ test_that("w/ loanbook, abcd or scenario with missing names errors gracefully", 
 })
 
 test_that("without `sector` throws no error", {
-  # 2DegreesInvesting/r2dii.analysis/pull/62#issuecomment-634651157
+  # RMI-PACTA/r2dii.analysis/pull/62#issuecomment-634651157
   without_sector <- select(fake_matched(), -sector)
   expect_error_free(
     join_abcd_scenario(

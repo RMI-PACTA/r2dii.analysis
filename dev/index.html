@@ -22,8 +22,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Measure Climate Scenario Alignment of Corporate Loans">
 <meta property="og:description" content="These tools help you to assess if a corporate lending
@@ -121,11 +121,11 @@
 </h2>
 <p>Install the released version of r2dii.analysis from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.analysis"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.analysis"</span><span class="op">)</span></span></code></pre></div>
 <p>Or install the development version of r2dii.analysis from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.analysis"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.analysis"</span><span class="op">)</span></span></code></pre></div>
 <p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/" class="external-link">How to raise an issue?</a></p>
 </div>
 <div class="section level2">
@@ -133,102 +133,102 @@
 </h2>
 <ul><li>Use <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them – with <code>install.packages(c("r2dii.data", "r2dii.match"))</code> – so you can reproduce our examples.</li></ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
-<ul><li>Use <code><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html" class="external-link">r2dii.match::match_name()</a></code> to identify matches between your loanbook and the asset level data.</li></ul>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></span></code></pre></div>
+<ul><li>Use <code><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html" class="external-link">r2dii.match::match_name()</a></code> to identify matches between your loanbook and the asset level data.</li></ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="add-scenario-targets">Add Scenario Targets<a class="anchor" aria-label="anchor" href="#add-scenario-targets"></a>
 </h3>
 <ul><li>Use <code><a href="reference/target_sda.html">target_sda()</a></code> to calculate SDA targets of CO2 emissions.</li></ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/target_sda.html">target_sda</a></span><span class="op">(</span>
-    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,
-    co2_intensity_scenario <span class="op">=</span> <span class="va">co2_intensity_scenario_demo</span>,
-    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>
-  <span class="op">)</span>
-<span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span>
-<span class="co">#&gt; `name_abcd` instead.</span>
-<span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span>
-<span class="co">#&gt; `sector_abcd` instead.</span>
-<span class="co">#&gt; Warning: Removing abcd rows where `emission_factor` is NA</span>
-<span class="co">#&gt; # A tibble: 166 × 6</span>
-<span class="co">#&gt;    sector  year region         scenario_source emission_factor… emission_factor…</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;                       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 cement  2013 advanced econ… demo_2020       projected                  0.0217</span>
-<span class="co">#&gt;  2 cement  2013 developing as… demo_2020       projected                  0.0606</span>
-<span class="co">#&gt;  3 cement  2013 global         demo_2020       projected                  0.658 </span>
-<span class="co">#&gt;  4 cement  2014 advanced econ… demo_2020       projected                  0.0219</span>
-<span class="co">#&gt;  5 cement  2014 developing as… demo_2020       projected                  0.0604</span>
-<span class="co">#&gt;  6 cement  2014 global         demo_2020       projected                  0.659 </span>
-<span class="co">#&gt;  7 cement  2015 advanced econ… demo_2020       projected                  0.0221</span>
-<span class="co">#&gt;  8 cement  2015 developing as… demo_2020       projected                  0.0603</span>
-<span class="co">#&gt;  9 cement  2015 global         demo_2020       projected                  0.660 </span>
-<span class="co">#&gt; 10 cement  2016 advanced econ… demo_2020       projected                  0.0223</span>
-<span class="co">#&gt; # … with 156 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/target_sda.html">target_sda</a></span><span class="op">(</span></span>
+<span>    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span>
+<span>    co2_intensity_scenario <span class="op">=</span> <span class="va">co2_intensity_scenario_demo</span>,</span>
+<span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span></span>
+<span><span class="co">#&gt; `name_abcd` instead.</span></span>
+<span><span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span></span>
+<span><span class="co">#&gt; `sector_abcd` instead.</span></span>
+<span><span class="co">#&gt; Warning: Removing abcd rows where `emission_factor` is NA</span></span>
+<span><span class="co">#&gt; # A tibble: 166 × 6</span></span>
+<span><span class="co">#&gt;    sector  year region         scenario_source emission_factor… emission_factor…</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;                       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 cement  2013 advanced econ… demo_2020       projected                  0.0217</span></span>
+<span><span class="co">#&gt;  2 cement  2013 developing as… demo_2020       projected                  0.0606</span></span>
+<span><span class="co">#&gt;  3 cement  2013 global         demo_2020       projected                  0.658 </span></span>
+<span><span class="co">#&gt;  4 cement  2014 advanced econ… demo_2020       projected                  0.0219</span></span>
+<span><span class="co">#&gt;  5 cement  2014 developing as… demo_2020       projected                  0.0604</span></span>
+<span><span class="co">#&gt;  6 cement  2014 global         demo_2020       projected                  0.659 </span></span>
+<span><span class="co">#&gt;  7 cement  2015 advanced econ… demo_2020       projected                  0.0221</span></span>
+<span><span class="co">#&gt;  8 cement  2015 developing as… demo_2020       projected                  0.0603</span></span>
+<span><span class="co">#&gt;  9 cement  2015 global         demo_2020       projected                  0.660 </span></span>
+<span><span class="co">#&gt; 10 cement  2016 advanced econ… demo_2020       projected                  0.0223</span></span>
+<span><span class="co">#&gt; # … with 156 more rows</span></span></code></pre></div>
 <ul><li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li></ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
-    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,
-    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
-    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>
-  <span class="op">)</span>
-<span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span>
-<span class="co">#&gt; `name_abcd` instead.</span>
-<span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span>
-<span class="co">#&gt; `sector_abcd` instead.</span>
-<span class="co">#&gt; # A tibble: 1,790 × 10</span>
-<span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span>
-<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     324592.</span>
-<span class="co">#&gt;  2 automotive electric    2020 global demo_2020       target_cps    324592.</span>
-<span class="co">#&gt;  3 automotive electric    2020 global demo_2020       target_sds    324592.</span>
-<span class="co">#&gt;  4 automotive electric    2020 global demo_2020       target_sps    324592.</span>
-<span class="co">#&gt;  5 automotive electric    2021 global demo_2020       projected     339656.</span>
-<span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps    329191.</span>
-<span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds    352505.</span>
-<span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    330435.</span>
-<span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected     354720.</span>
-<span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    333693.</span>
-<span class="co">#&gt; # … with 1,780 more rows, and 3 more variables: technology_share &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   scope &lt;chr&gt;, percentage_of_initial_production_by_scope &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span><span class="op">(</span></span>
+<span>    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span>
+<span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span>
+<span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span></span>
+<span><span class="co">#&gt; `name_abcd` instead.</span></span>
+<span><span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span></span>
+<span><span class="co">#&gt; `sector_abcd` instead.</span></span>
+<span><span class="co">#&gt; # A tibble: 1,790 × 10</span></span>
+<span><span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     324592.</span></span>
+<span><span class="co">#&gt;  2 automotive electric    2020 global demo_2020       target_cps    324592.</span></span>
+<span><span class="co">#&gt;  3 automotive electric    2020 global demo_2020       target_sds    324592.</span></span>
+<span><span class="co">#&gt;  4 automotive electric    2020 global demo_2020       target_sps    324592.</span></span>
+<span><span class="co">#&gt;  5 automotive electric    2021 global demo_2020       projected     339656.</span></span>
+<span><span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps    329191.</span></span>
+<span><span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds    352505.</span></span>
+<span><span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    330435.</span></span>
+<span><span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected     354720.</span></span>
+<span><span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    333693.</span></span>
+<span><span class="co">#&gt; # … with 1,780 more rows, and 3 more variables: technology_share &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   scope &lt;chr&gt;, percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
 <ul><li>Or at the company level:</li></ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
-    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,
-    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
-    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>,
-    by_company <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span>
-<span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span>
-<span class="co">#&gt; `name_abcd` instead.</span>
-<span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span>
-<span class="co">#&gt; `sector_abcd` instead.</span>
-<span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
-<span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span>
-<span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span>
-<span class="co">#&gt; arguments to `FALSE`?</span>
-<span class="co">#&gt; # A tibble: 32,402 × 11</span>
-<span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span>
-<span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automoti… electric    2020 global demo_2020       toyota m… proje…    324592.</span>
-<span class="co">#&gt;  2 automoti… electric    2020 global demo_2020       toyota m… targe…    324592.</span>
-<span class="co">#&gt;  3 automoti… electric    2020 global demo_2020       toyota m… targe…    324592.</span>
-<span class="co">#&gt;  4 automoti… electric    2020 global demo_2020       toyota m… targe…    324592.</span>
-<span class="co">#&gt;  5 automoti… electric    2021 global demo_2020       toyota m… proje…    339656.</span>
-<span class="co">#&gt;  6 automoti… electric    2021 global demo_2020       toyota m… targe…    329191.</span>
-<span class="co">#&gt;  7 automoti… electric    2021 global demo_2020       toyota m… targe…    352505.</span>
-<span class="co">#&gt;  8 automoti… electric    2021 global demo_2020       toyota m… targe…    330435.</span>
-<span class="co">#&gt;  9 automoti… electric    2022 global demo_2020       toyota m… proje…    354720.</span>
-<span class="co">#&gt; 10 automoti… electric    2022 global demo_2020       toyota m… targe…    333693.</span>
-<span class="co">#&gt; # … with 32,392 more rows, and 3 more variables: technology_share &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   scope &lt;chr&gt;, percentage_of_initial_production_by_scope &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/target_market_share.html">target_market_share</a></span><span class="op">(</span></span>
+<span>    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span>
+<span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span>
+<span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>,</span>
+<span>    by_company <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span></span>
+<span><span class="co">#&gt; `name_abcd` instead.</span></span>
+<span><span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span></span>
+<span><span class="co">#&gt; `sector_abcd` instead.</span></span>
+<span><span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span></span>
+<span><span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span></span>
+<span><span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span></span>
+<span><span class="co">#&gt; arguments to `FALSE`?</span></span>
+<span><span class="co">#&gt; # A tibble: 32,402 × 11</span></span>
+<span><span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 automoti… electric    2020 global demo_2020       toyota m… proje…    324592.</span></span>
+<span><span class="co">#&gt;  2 automoti… electric    2020 global demo_2020       toyota m… targe…    324592.</span></span>
+<span><span class="co">#&gt;  3 automoti… electric    2020 global demo_2020       toyota m… targe…    324592.</span></span>
+<span><span class="co">#&gt;  4 automoti… electric    2020 global demo_2020       toyota m… targe…    324592.</span></span>
+<span><span class="co">#&gt;  5 automoti… electric    2021 global demo_2020       toyota m… proje…    339656.</span></span>
+<span><span class="co">#&gt;  6 automoti… electric    2021 global demo_2020       toyota m… targe…    329191.</span></span>
+<span><span class="co">#&gt;  7 automoti… electric    2021 global demo_2020       toyota m… targe…    352505.</span></span>
+<span><span class="co">#&gt;  8 automoti… electric    2021 global demo_2020       toyota m… targe…    330435.</span></span>
+<span><span class="co">#&gt;  9 automoti… electric    2022 global demo_2020       toyota m… proje…    354720.</span></span>
+<span><span class="co">#&gt; 10 automoti… electric    2022 global demo_2020       toyota m… targe…    333693.</span></span>
+<span><span class="co">#&gt; # … with 32,392 more rows, and 3 more variables: technology_share &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   scope &lt;chr&gt;, percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="utility-functions">Utility Functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a>
@@ -236,54 +236,54 @@
 <p>The <code>target_*()</code> functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:</p>
 <ul><li>Use <code><a href="reference/join_abcd_scenario.html">join_abcd_scenario()</a></code> to join a matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li></ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/join_abcd_scenario.html">join_abcd_scenario</a></span><span class="op">(</span>
-    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,
-    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,
-    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span>
-  <span class="op">)</span>
-<span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span>
-<span class="co">#&gt; `name_abcd` instead.</span>
-<span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span>
-<span class="co">#&gt; `sector_abcd` instead.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/join_abcd_scenario.html">join_abcd_scenario</a></span><span class="op">(</span></span>
+<span>    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span>
+<span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span>
+<span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Column `name_ald` is deprecated as of r2dii.match 0.1.0, please use</span></span>
+<span><span class="co">#&gt; `name_abcd` instead.</span></span>
+<span><span class="co">#&gt; Warning: Column `sector_ald` is deprecated as of r2dii.analysis 0.2.0, please use</span></span>
+<span><span class="co">#&gt; `sector_abcd` instead.</span></span></code></pre></div>
 <ul><li>Use <code><a href="reference/summarize_weighted_production.html">summarize_weighted_production()</a></code> with different grouping arguments to calculate scenario-targets:</li></ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># portfolio level</span>
-<span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 702 × 9</span>
-<span class="co">#&gt;    sector_abcd technology  year scenario  tmsr    smsp region weighted_producti…</span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 automotive  electric    2020 cps       1    0       global            324592.</span>
-<span class="co">#&gt;  2 automotive  electric    2020 sds       1    0       global            324592.</span>
-<span class="co">#&gt;  3 automotive  electric    2020 sps       1    0       global            324592.</span>
-<span class="co">#&gt;  4 automotive  electric    2021 cps       1.12 0.00108 global            339656.</span>
-<span class="co">#&gt;  5 automotive  electric    2021 sds       1.16 0.00653 global            339656.</span>
-<span class="co">#&gt;  6 automotive  electric    2021 sps       1.14 0.00137 global            339656.</span>
-<span class="co">#&gt;  7 automotive  electric    2022 cps       1.24 0.00213 global            354720.</span>
-<span class="co">#&gt;  8 automotive  electric    2022 sds       1.32 0.0131  global            354720.</span>
-<span class="co">#&gt;  9 automotive  electric    2022 sps       1.29 0.00273 global            354720.</span>
-<span class="co">#&gt; 10 automotive  electric    2023 cps       1.35 0.00316 global            369784.</span>
-<span class="co">#&gt; # … with 692 more rows, and 1 more variable: weighted_technology_share &lt;dbl&gt;</span>
-
-<span class="co"># company level</span>
-<span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span>, <span class="va">name_abcd</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 9,036 × 10</span>
-<span class="co">#&gt;    sector_abcd technology  year scenario  tmsr    smsp region name_abcd        </span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;            </span>
-<span class="co">#&gt;  1 automotive  electric    2020 cps       1    0       global toyota motor corp</span>
-<span class="co">#&gt;  2 automotive  electric    2020 sds       1    0       global toyota motor corp</span>
-<span class="co">#&gt;  3 automotive  electric    2020 sps       1    0       global toyota motor corp</span>
-<span class="co">#&gt;  4 automotive  electric    2021 cps       1.12 0.00108 global toyota motor corp</span>
-<span class="co">#&gt;  5 automotive  electric    2021 sds       1.16 0.00653 global toyota motor corp</span>
-<span class="co">#&gt;  6 automotive  electric    2021 sps       1.14 0.00137 global toyota motor corp</span>
-<span class="co">#&gt;  7 automotive  electric    2022 cps       1.24 0.00213 global toyota motor corp</span>
-<span class="co">#&gt;  8 automotive  electric    2022 sds       1.32 0.0131  global toyota motor corp</span>
-<span class="co">#&gt;  9 automotive  electric    2022 sps       1.29 0.00273 global toyota motor corp</span>
-<span class="co">#&gt; 10 automotive  electric    2023 cps       1.35 0.00316 global toyota motor corp</span>
-<span class="co">#&gt; # … with 9,026 more rows, and 2 more variables: weighted_production &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># portfolio level</span></span>
+<span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 702 × 9</span></span>
+<span><span class="co">#&gt;    sector_abcd technology  year scenario  tmsr    smsp region weighted_producti…</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 automotive  electric    2020 cps       1    0       global            324592.</span></span>
+<span><span class="co">#&gt;  2 automotive  electric    2020 sds       1    0       global            324592.</span></span>
+<span><span class="co">#&gt;  3 automotive  electric    2020 sps       1    0       global            324592.</span></span>
+<span><span class="co">#&gt;  4 automotive  electric    2021 cps       1.12 0.00108 global            339656.</span></span>
+<span><span class="co">#&gt;  5 automotive  electric    2021 sds       1.16 0.00653 global            339656.</span></span>
+<span><span class="co">#&gt;  6 automotive  electric    2021 sps       1.14 0.00137 global            339656.</span></span>
+<span><span class="co">#&gt;  7 automotive  electric    2022 cps       1.24 0.00213 global            354720.</span></span>
+<span><span class="co">#&gt;  8 automotive  electric    2022 sds       1.32 0.0131  global            354720.</span></span>
+<span><span class="co">#&gt;  9 automotive  electric    2022 sps       1.29 0.00273 global            354720.</span></span>
+<span><span class="co">#&gt; 10 automotive  electric    2023 cps       1.35 0.00316 global            369784.</span></span>
+<span><span class="co">#&gt; # … with 692 more rows, and 1 more variable: weighted_technology_share &lt;dbl&gt;</span></span>
+<span></span>
+<span><span class="co"># company level</span></span>
+<span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span>, <span class="va">name_abcd</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 9,036 × 10</span></span>
+<span><span class="co">#&gt;    sector_abcd technology  year scenario  tmsr    smsp region name_abcd        </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;            </span></span>
+<span><span class="co">#&gt;  1 automotive  electric    2020 cps       1    0       global toyota motor corp</span></span>
+<span><span class="co">#&gt;  2 automotive  electric    2020 sds       1    0       global toyota motor corp</span></span>
+<span><span class="co">#&gt;  3 automotive  electric    2020 sps       1    0       global toyota motor corp</span></span>
+<span><span class="co">#&gt;  4 automotive  electric    2021 cps       1.12 0.00108 global toyota motor corp</span></span>
+<span><span class="co">#&gt;  5 automotive  electric    2021 sds       1.16 0.00653 global toyota motor corp</span></span>
+<span><span class="co">#&gt;  6 automotive  electric    2021 sps       1.14 0.00137 global toyota motor corp</span></span>
+<span><span class="co">#&gt;  7 automotive  electric    2022 cps       1.24 0.00213 global toyota motor corp</span></span>
+<span><span class="co">#&gt;  8 automotive  electric    2022 sds       1.32 0.0131  global toyota motor corp</span></span>
+<span><span class="co">#&gt;  9 automotive  electric    2022 sps       1.29 0.00273 global toyota motor corp</span></span>
+<span><span class="co">#&gt; 10 automotive  electric    2023 cps       1.35 0.00316 global toyota motor corp</span></span>
+<span><span class="co">#&gt; # … with 9,026 more rows, and 2 more variables: weighted_production &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></span></code></pre></div>
 <p><a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
 </div>
 </div>
@@ -354,7 +354,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

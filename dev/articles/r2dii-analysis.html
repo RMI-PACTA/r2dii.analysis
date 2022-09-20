@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to r2dii.analysis">
 <meta property="og:description" content="r2dii.analysis">
@@ -97,7 +97,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Introduction to r2dii.analysis</h1>
             
       
@@ -112,57 +112,57 @@
 </h2>
 <p>The first step in your analysis will be to load in the recommended r2dii packages into your current R session. <a href="https://2degreesinvesting.github.io/r2dii.data" class="external-link">r2dii.data</a> includes fake data to help demonstrate the tool and <a href="https://2degreesinvesting.github.io/r2dii.match" class="external-link">r2dii.match</a> provides functions to help you easily match your loanbook to asset-level data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></span></code></pre></div>
 <p>To plot your results, you may also load the package <a href="https://2degreesinvesting.github.io/r2dii.plot" class="external-link">r2dii.plot</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.plot" class="external-link">r2dii.plot</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.plot" class="external-link">r2dii.plot</a></span><span class="op">)</span></span></code></pre></div>
 <p>We also recommend packages in the <a href="https://www.tidyverse.org/" class="external-link">tidyverse</a>; they are optional but useful.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.1 ──</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.6     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.7     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.9</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.4.0</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.1</span>
-<span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span>
-<span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span>
-<span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.2 ──</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.6      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4 </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.10</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.1      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.4.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.2      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.2 </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="match-your-loanbook-to-climate-related-asset-level-data">Match your loanbook to climate-related asset-level data<a class="anchor" aria-label="anchor" href="#match-your-loanbook-to-climate-related-asset-level-data"></a>
 </h2>
 <p>See <a href="https://2degreesinvesting.github.io/r2dii.match" class="external-link">r2dii.match</a> for a more complete description of this process.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Use these datasets to practice but eventually you should use your own data.</span>
-<span class="co"># The optional syntax `package::data` is to clarify where the data comes from.</span>
-<span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html" class="external-link">loanbook_demo</a></span>
-<span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/reference/abcd_demo.html" class="external-link">abcd_demo</a></span>
-
-<span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">abcd</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">matched</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 216 × 28</span></span>
-<span class="co">#&gt;    id_loan id_direct_loantak… name_direct_loa… id_intermediate… name_intermedia…</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304               Yukon Developme… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297               Yuba City Cogen… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287               Ytl Powerseraya… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286               Ytl Power Inter… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285               Ytl Corp Bhd     <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L23     C283               Ypic Internatio… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L24     C282               Ypfb Corporacion <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L25     C281               Ypf Sa           <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L26     C280               Ypf Energia Ele… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L27     C278               Younicos Ag      <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 206 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   sector_classification_input_type &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Use these datasets to practice but eventually you should use your own data.</span></span>
+<span><span class="co"># The optional syntax `package::data` is to clarify where the data comes from.</span></span>
+<span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/loanbook_demo.html" class="external-link">loanbook_demo</a></span></span>
+<span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/abcd_demo.html" class="external-link">abcd_demo</a></span></span>
+<span></span>
+<span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">abcd</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">matched</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 216 × 28</span></span></span>
+<span><span class="co">#&gt;    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304          Yukon … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP83    Earthp…  <span style="text-decoration: underline;">185</span>721 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297          Yuba C… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP69    Consor…  <span style="text-decoration: underline;">200</span>569 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287          Ytl Po… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP35    Bnb Re…  <span style="text-decoration: underline;">308</span>217 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286          Ytl Po… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP63    Cisa S…  <span style="text-decoration: underline;">226</span>553 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285          Ytl Co… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP187   Mr. La…  <span style="text-decoration: underline;">196</span>857 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L23     C283          Ypic I… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP297   Wallen…  <span style="text-decoration: underline;">195</span>929 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L24     C282          Ypfb C… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP209   Phoeni…  <span style="text-decoration: underline;">309</span>145 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L25     C281          Ypf Sa  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP296   Viridi…  <span style="text-decoration: underline;">266</span>457 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L26     C280          Ypf En… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP67    Coast …  <span style="text-decoration: underline;">199</span>641 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L27     C278          Younic… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP45    Ce Ene…  <span style="text-decoration: underline;">197</span>785 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 206 more rows, 19 more variables: loan_size_credit_limit &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_input_type &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calculate-targets">Calculate targets<a class="anchor" aria-label="anchor" href="#calculate-targets"></a>
@@ -174,93 +174,97 @@
 <p>The <a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/target-market-share.html">Market Share Approach</a> is used to calculate scenario targets for the <code>production</code> of a technology in a sector. For example, we can use this approach to set targets for the production of electric vehicles in the automotive sector. This approach is recommended for sectors where a granular technology scenario roadmap exists.</p>
 <p>Targets can be set at the portfolio level:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Use these datasets to practice but eventually you should use your own data.</span>
-<span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/reference/scenario_demo_2020.html" class="external-link">scenario_demo_2020</a></span>
-<span class="va">regions</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/reference/region_isos_demo.html" class="external-link">region_isos_demo</a></span>
-
-<span class="va">market_share_targets_portfolio</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
-    abcd <span class="op">=</span> <span class="va">abcd</span>,
-    scenario <span class="op">=</span> <span class="va">scenario</span>,
-    region_isos <span class="op">=</span> <span class="va">regions</span>
-  <span class="op">)</span>
-
-<span class="va">market_share_targets_portfolio</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,790 × 10</span></span>
-<span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected     <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_cps    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sds    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sps    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       projected     <span style="text-decoration: underline;">339</span>656.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_cps    <span style="text-decoration: underline;">329</span>191.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sds    <span style="text-decoration: underline;">352</span>505.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sps    <span style="text-decoration: underline;">330</span>435.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       projected     <span style="text-decoration: underline;">354</span>720.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       target_cps    <span style="text-decoration: underline;">333</span>693.</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 1,780 more rows, and 3 more variables: technology_share &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   scope &lt;chr&gt;, percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Use these datasets to practice but eventually you should use your own data.</span></span>
+<span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/scenario_demo_2020.html" class="external-link">scenario_demo_2020</a></span></span>
+<span><span class="va">regions</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/region_isos_demo.html" class="external-link">region_isos_demo</a></span></span>
+<span></span>
+<span><span class="va">market_share_targets_portfolio</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span></span>
+<span>    abcd <span class="op">=</span> <span class="va">abcd</span>,</span>
+<span>    scenario <span class="op">=</span> <span class="va">scenario</span>,</span>
+<span>    region_isos <span class="op">=</span> <span class="va">regions</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">market_share_targets_portfolio</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,790 × 10</span></span></span>
+<span><span class="co">#&gt;    sector     techno…¹  year region scena…² metric produ…³ techn…⁴ scope perce…⁵</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… proje… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… proje… <span style="text-decoration: underline;">339</span>656.  0.078<span style="text-decoration: underline;">6</span> sect… 0.003<span style="text-decoration: underline;">52</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… targe… <span style="text-decoration: underline;">329</span>191.  0.074<span style="text-decoration: underline;">4</span> sect… 0.001<span style="text-decoration: underline;">08</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… targe… <span style="text-decoration: underline;">352</span>505.  0.080<span style="text-decoration: underline;">9</span> sect… 0.006<span style="text-decoration: underline;">53</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… targe… <span style="text-decoration: underline;">330</span>435.  0.074<span style="text-decoration: underline;">7</span> sect… 0.001<span style="text-decoration: underline;">37</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… proje… <span style="text-decoration: underline;">354</span>720.  0.081<span style="text-decoration: underline;">3</span> sect… 0.007<span style="text-decoration: underline;">05</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… targe… <span style="text-decoration: underline;">333</span>693.  0.073<span style="text-decoration: underline;">0</span> sect… 0.002<span style="text-decoration: underline;">13</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 1,780 more rows, and abbreviated variable names ¹​technology,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​scenario_source, ³​production, ⁴​technology_share,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​percentage_of_initial_production_by_scope</span></span></span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span>
-    abcd <span class="op">=</span> <span class="va">abcd</span>,
-    scenario <span class="op">=</span> <span class="va">scenario</span>,
-    region_isos <span class="op">=</span> <span class="va">regions</span>,
-    <span class="co"># Output results at company-level.</span>
-    by_company <span class="op">=</span> <span class="cn">TRUE</span> 
-  <span class="op">)</span>
-<span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span>
-<span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span>
-<span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span>
-<span class="co">#&gt; arguments to `FALSE`?</span>
-
-<span class="va">market_share_targets_company</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 32,402 × 11</span></span>
-<span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">339</span>656.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">329</span>191.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">352</span>505.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">330</span>435.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">354</span>720.</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">333</span>693.</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 32,392 more rows, and 3 more variables: technology_share &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   scope &lt;chr&gt;, percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span></span>
+<span>    abcd <span class="op">=</span> <span class="va">abcd</span>,</span>
+<span>    scenario <span class="op">=</span> <span class="va">scenario</span>,</span>
+<span>    region_isos <span class="op">=</span> <span class="va">regions</span>,</span>
+<span>    <span class="co"># Output results at company-level.</span></span>
+<span>    by_company <span class="op">=</span> <span class="cn">TRUE</span> </span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.</span></span>
+<span><span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span></span>
+<span><span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span></span>
+<span><span class="co">#&gt; arguments to `FALSE`?</span></span>
+<span></span>
+<span><span class="va">market_share_targets_company</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32,402 × 11</span></span></span>
+<span><span class="co">#&gt;    sector     techno…¹  year region scena…² name_…³ metric produ…⁴ techn…⁵ scope</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… proje… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… proje… <span style="text-decoration: underline;">339</span>656.  0.078<span style="text-decoration: underline;">6</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… targe… <span style="text-decoration: underline;">329</span>191.  0.074<span style="text-decoration: underline;">4</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… targe… <span style="text-decoration: underline;">352</span>505.  0.080<span style="text-decoration: underline;">9</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… targe… <span style="text-decoration: underline;">330</span>435.  0.074<span style="text-decoration: underline;">7</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… toyota… proje… <span style="text-decoration: underline;">354</span>720.  0.081<span style="text-decoration: underline;">3</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… toyota… targe… <span style="text-decoration: underline;">333</span>693.  0.073<span style="text-decoration: underline;">0</span> sect…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 32,392 more rows, 1 more variable:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;, and abbreviated variable</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   names ¹​technology, ²​scenario_source, ³​name_abcd, ⁴​production,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​technology_share</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="sectoral-decarbonization-approach">Sectoral Decarbonization Approach<a class="anchor" aria-label="anchor" href="#sectoral-decarbonization-approach"></a>
 </h3>
 <p>The <a href="https://2degreesinvesting.github.io/r2dii.analysis/articles/target-sda.html">Sectoral Decarbonization Approach</a> is used to calculate scenario targets for the <code>emission_factor</code> of a sector. For example, you can use this approach to set targets for the average emission factor of the cement sector. This approach is recommended for sectors lacking technology roadmaps.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Use this dataset to practice but eventually you should use your own data.</span>
-<span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/reference/co2_intensity_scenario_demo.html" class="external-link">co2_intensity_scenario_demo</a></span>
-
-<span class="va">sda_targets</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span><span class="op">(</span>abcd <span class="op">=</span> <span class="va">abcd</span>, co2_intensity_scenario <span class="op">=</span> <span class="va">co2</span>, region_isos <span class="op">=</span> <span class="va">regions</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removing rows in abcd where `emission_factor` is NA</span>
-
-<span class="va">sda_targets</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 110 × 6</span></span>
-<span class="co">#&gt;    sector  year region         scenario_source emission_factor… emission_factor…</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cement  <span style="text-decoration: underline;">2</span>020 advanced econ… demo_2020       projected                  0.023<span style="text-decoration: underline;">0</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cement  <span style="text-decoration: underline;">2</span>020 developing as… demo_2020       projected                  0.059<span style="text-decoration: underline;">5</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> cement  <span style="text-decoration: underline;">2</span>020 global         demo_2020       projected                  0.664 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> cement  <span style="text-decoration: underline;">2</span>021 advanced econ… demo_2020       projected                  0.023<span style="text-decoration: underline;">2</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> cement  <span style="text-decoration: underline;">2</span>021 developing as… demo_2020       projected                  0.059<span style="text-decoration: underline;">4</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cement  <span style="text-decoration: underline;">2</span>021 global         demo_2020       projected                  0.665 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cement  <span style="text-decoration: underline;">2</span>022 advanced econ… demo_2020       projected                  0.023<span style="text-decoration: underline;">3</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cement  <span style="text-decoration: underline;">2</span>022 developing as… demo_2020       projected                  0.059<span style="text-decoration: underline;">2</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cement  <span style="text-decoration: underline;">2</span>022 global         demo_2020       projected                  0.666 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cement  <span style="text-decoration: underline;">2</span>023 advanced econ… demo_2020       projected                  0.023<span style="text-decoration: underline;">5</span></span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 100 more rows</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Use this dataset to practice but eventually you should use your own data.</span></span>
+<span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/co2_intensity_scenario_demo.html" class="external-link">co2_intensity_scenario_demo</a></span></span>
+<span></span>
+<span><span class="va">sda_targets</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span><span class="op">(</span>abcd <span class="op">=</span> <span class="va">abcd</span>, co2_intensity_scenario <span class="op">=</span> <span class="va">co2</span>, region_isos <span class="op">=</span> <span class="va">regions</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2020</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removing rows in abcd where `emission_factor` is NA</span></span>
+<span></span>
+<span><span class="va">sda_targets</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 110 × 6</span></span></span>
+<span><span class="co">#&gt;    sector  year region             scenario_source emission_factor_met…¹ emiss…²</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cement  <span style="text-decoration: underline;">2</span>020 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cement  <span style="text-decoration: underline;">2</span>020 developing asia    demo_2020       projected              0.059<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> cement  <span style="text-decoration: underline;">2</span>020 global             demo_2020       projected              0.664 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> cement  <span style="text-decoration: underline;">2</span>021 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> cement  <span style="text-decoration: underline;">2</span>021 developing asia    demo_2020       projected              0.059<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cement  <span style="text-decoration: underline;">2</span>021 global             demo_2020       projected              0.665 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cement  <span style="text-decoration: underline;">2</span>022 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cement  <span style="text-decoration: underline;">2</span>022 developing asia    demo_2020       projected              0.059<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cement  <span style="text-decoration: underline;">2</span>022 global             demo_2020       projected              0.666 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cement  <span style="text-decoration: underline;">2</span>023 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 100 more rows, and abbreviated variable names ¹​emission_factor_metric,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​emission_factor_value</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -272,19 +276,19 @@
 </h3>
 <p>From the market share output, you can plot the portfolio’s exposure to various climate sensitive technologies (<code>projected</code>), and compare with the corporate economy, or against various scenario targets.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Pick the targets you want to plot.</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span>
-  <span class="va">market_share_targets_portfolio</span>,
-  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span>,
-  <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,
-  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>,
-  <span class="va">metric</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"projected"</span>, <span class="st">"corporate_economy"</span>, <span class="st">"target_sds"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># Plot the technology mix</span>
-<span class="fu"><a href="https://2degreesinvesting.github.io/r2dii.plot/reference/qplot_techmix.html" class="external-link">qplot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-<span class="co">#&gt; The `technology_share` values are plotted for extreme years.</span>
-<span class="co">#&gt; Do you want to plot different years? E.g. filter data with:`subset(data, year %in% c(2020, 2030))`.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Pick the targets you want to plot.</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>  <span class="va">market_share_targets_portfolio</span>,</span>
+<span>  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span>,</span>
+<span>  <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,</span>
+<span>  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>,</span>
+<span>  <span class="va">metric</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"projected"</span>, <span class="st">"corporate_economy"</span>, <span class="st">"target_sds"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot the technology mix</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_techmix.html" class="external-link">qplot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The `technology_share` values are plotted for extreme years.</span></span>
+<span><span class="co">#&gt; Do you want to plot different years? E.g. filter data with:`subset(data, year %in% c(2020, 2030))`.</span></span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/technoloy-mix-portfolio-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -292,15 +296,15 @@
 </h3>
 <p>You can also plot the technology-specific volume trend. All starting values are normalized to 1, to emphasize that we are comparing the rates of buildout and/or retirement.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span>
-  <span class="va">market_share_targets_portfolio</span>,
-  <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,
-  <span class="va">technology</span> <span class="op">==</span> <span class="st">"renewablescap"</span>,
-  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>,
-  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="https://2degreesinvesting.github.io/r2dii.plot/reference/qplot_trajectory.html" class="external-link">qplot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>  <span class="va">market_share_targets_portfolio</span>,</span>
+<span>  <span class="va">sector</span> <span class="op">==</span> <span class="st">"power"</span>,</span>
+<span>  <span class="va">technology</span> <span class="op">==</span> <span class="st">"renewablescap"</span>,</span>
+<span>  <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span>,</span>
+<span>  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_trajectory.html" class="external-link">qplot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/trajetory-portfolio-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -308,8 +312,8 @@
 </h3>
 <p>From the SDA output, we can compare the projected average emission intensity attributed to the portfolio, with the actual emission intensity scenario, and the scenario compliant SDA pathway that the portfolio must follow to achieve the scenario ambition by 2050.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sda_targets</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span>, <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span><span class="op">)</span>
-<span class="fu"><a href="https://2degreesinvesting.github.io/r2dii.plot/reference/qplot_emission_intensity.html" class="external-link">qplot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sda_targets</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span>, <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_emission_intensity.html" class="external-link">qplot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>
@@ -326,7 +330,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

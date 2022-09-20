@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# r2dii.analysis <img src="man/figures/logo.svg" align="right" width="120" />
+# r2dii.analysis <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 
@@ -10,10 +10,10 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 [![Codecov test
-coverage](https://codecov.io/gh/2degreesinvesting/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2degreesinvesting/r2dii.analysis?branch=main)
+coverage](https://codecov.io/gh/rmi-pacta/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rmi-pacta/r2dii.analysis?branch=main)
 [![Codecov test
-coverage](https://codecov.io/gh/2DegreesInvesting/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2DegreesInvesting/r2dii.analysis?branch=main)
-[![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.analysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/r2dii.analysis/actions/workflows/R-CMD-check.yaml)
+coverage](https://codecov.io/gh/RMI-PACTA/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.analysis?branch=main)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 These tools help you to assess if a financial portfolio aligns with
@@ -21,8 +21,8 @@ climate goals. They summarize key metrics attributed to the portfolio
 (e.g. production, emission factors), and calculate targets based on
 climate scenarios. They implement in R the last step of the free
 software ‘PACTA’ (Paris Agreement Capital Transition Assessment;
-<https://2degrees-investing.org/>). Financial institutions use ‘PACTA’
-to study how their capital allocation impacts the climate.
+<https://transitionmonitor.com/>). Financial institutions use ‘PACTA’ to
+study how their capital allocation impacts the climate.
 
 ## Installation
 
@@ -36,7 +36,7 @@ Or install the development version of r2dii.analysis from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("2DegreesInvesting/r2dii.analysis")
+devtools::install_github("RMI-PACTA/r2dii.analysis")
 ```
 
 ## Example
@@ -213,7 +213,7 @@ loanbook_joined_to_abcd_scenario %>%
 ```
 
 [Get
-started](https://2degreesinvesting.github.io/r2dii.analysis/articles/r2dii-analysis.html).
+started](https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html).
 
 ## Funding
 

@@ -41,11 +41,11 @@ devtools::install_github("RMI-PACTA/r2dii.analysis")
 
 ## Example
 
--   Use `library()` to attach the packages you need. r2dii.analysis does
-    not depend on the packages r2dii.data and r2dii.match; but we
-    suggest you install them – with
-    `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
-    reproduce our examples.
+- Use `library()` to attach the packages you need. r2dii.analysis does
+  not depend on the packages r2dii.data and r2dii.match; but we suggest
+  you install them – with
+  `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
+  reproduce our examples.
 
 ``` r
 library(r2dii.data)
@@ -53,8 +53,8 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
--   Use `r2dii.match::match_name()` to identify matches between your
-    loanbook and the asset level data.
+- Use `r2dii.match::match_name()` to identify matches between your
+  loanbook and the asset level data.
 
 ``` r
 matched <- match_name(loanbook_demo, abcd_demo) %>%
@@ -63,7 +63,7 @@ matched <- match_name(loanbook_demo, abcd_demo) %>%
 
 ### Add Scenario Targets
 
--   Use `target_sda()` to calculate SDA targets of CO2 emissions.
+- Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ``` r
 matched %>%
@@ -90,8 +90,8 @@ matched %>%
 #> #   ²​emission_factor_value
 ```
 
--   Use `target_market_share` to calculate market-share scenario targets
-    at the portfolio level:
+- Use `target_market_share` to calculate market-share scenario targets
+  at the portfolio level:
 
 ``` r
 matched %>%
@@ -118,7 +118,7 @@ matched %>%
 #> #   ⁵​percentage_of_initial_production_by_scope
 ```
 
--   Or at the company level:
+- Or at the company level:
 
 ``` r
 matched %>%
@@ -156,8 +156,8 @@ matched %>%
 The `target_*()` functions provide shortcuts for common operations. They
 wrap some utility functions that you may also use directly:
 
--   Use `join_abcd_scenario()` to join a matched dataset to the relevant
-    scenario data, and to pick assets in the relevant regions.
+- Use `join_abcd_scenario()` to join a matched dataset to the relevant
+  scenario data, and to pick assets in the relevant regions.
 
 ``` r
 loanbook_joined_to_abcd_scenario <- matched %>%
@@ -168,8 +168,8 @@ loanbook_joined_to_abcd_scenario <- matched %>%
   )
 ```
 
--   Use `summarize_weighted_production()` with different grouping
-    arguments to calculate scenario-targets:
+- Use `summarize_weighted_production()` with different grouping
+  arguments to calculate scenario-targets:
 
 ``` r
 # portfolio level

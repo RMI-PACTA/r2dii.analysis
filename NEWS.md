@@ -1,4 +1,4 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.2.1
 
 * `r2dii.analysis` has transferred to a new organization: 
 https://github.com/RMI-PACTA/.

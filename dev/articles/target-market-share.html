@@ -107,63 +107,90 @@
 
     
     
-<p>The goal of this article is to define the <em>market-share-approach</em> for allocating scenario efforts and to show how to calculate the market-share target for a given scenario.</p>
+<p>The goal of this article is to define the
+<em>market-share-approach</em> for allocating scenario efforts and to
+show how to calculate the market-share target for a given scenario.</p>
 <div class="section level2">
 <h2 id="scenario-market-shares">Scenario market-shares<a class="anchor" aria-label="anchor" href="#scenario-market-shares"></a>
 </h2>
-<p>Say that you want to study how a portfolio would perform in a specific climate scenario. How can you allocate scenario efforts to the production profile of your portfolio? You can do that in two ways – by technology, or by sector.</p>
+<p>Say that you want to study how a portfolio would perform in a
+specific climate scenario. How can you allocate scenario efforts to the
+production profile of your portfolio? You can do that in two ways – by
+technology, or by sector.</p>
 <div class="section level3">
 <h3 id="market-share-by-technology">1. Market-share by technology<a class="anchor" aria-label="anchor" href="#market-share-by-technology"></a>
 </h3>
 <p>We define the market-share by technology as:</p>
-<p><span class="math display">\[p_{i}^{tmsr}(t) = p_{i}(t_{0}) +  p_{i}(t_{0}) * \frac{s_i(t) - s_{i}(t_0)}{s_i(t_0)}\]</span></p>
+<p><span class="math display">\[p_{i}^{tmsr}(t) = p_{i}(t_{0})
++  p_{i}(t_{0}) * \frac{s_i(t) - s_{i}(t_0)}{s_i(t_0)}\]</span></p>
 <p>We can see that this reduces to:</p>
-<p><span class="math display">\[p_{i}^{tmsr}(t) = p_{i}(t_{0}) \left(1 + \frac{s_i(t) - s_{i}(t_0)}{s_i(t_0)} \right) \\
-p_{i}^{tmsr}(t) = p_{i}(t_{0}) \left(1 + \frac{s_i(t)}{s_i(t_0)} -1 \right) \\
+<p><span class="math display">\[p_{i}^{tmsr}(t) = p_{i}(t_{0}) \left(1 +
+\frac{s_i(t) - s_{i}(t_0)}{s_i(t_0)} \right) \\
+p_{i}^{tmsr}(t) = p_{i}(t_{0}) \left(1 + \frac{s_i(t)}{s_i(t_0)} -1
+\right) \\
 p_{i}^{tmsr}(t) = p_{i}(t_{0}) * \frac{s_i(t)}{s_i(t_0)}\]</span></p>
 <p>where:</p>
 <ul>
 <li>
-<span class="math inline">\(s_i(t)\)</span> is the scenario production for technology <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span>,</li>
+<span class="math inline">\(s_i(t)\)</span> is the scenario
+production for technology <span class="math inline">\(i\)</span> at time
+<span class="math inline">\(t\)</span>,</li>
 <li>
-<span class="math inline">\(p_{i}(t_0)\)</span> is the production allocated to the portfolio for some technology, <span class="math inline">\(i\)</span> at time <span class="math inline">\(t_0\)</span>, and</li>
+<span class="math inline">\(p_{i}(t_0)\)</span> is the production
+allocated to the portfolio for some technology, <span class="math inline">\(i\)</span> at time <span class="math inline">\(t_0\)</span>, and</li>
 <li>
-<span class="math inline">\(p_{i}^{tmsr}(t)\)</span> is the portfolio-specific target production for that technology.</li>
+<span class="math inline">\(p_{i}^{tmsr}(t)\)</span> is the
+portfolio-specific target production for that technology.</li>
 </ul>
 <p>We define the “Technology Market Share Ratio” as:</p>
-<p><span class="math display">\[\dfrac{s_i(t)}{s_i(t_0)}\]</span> This method is used to set targets for “decreasing” (ie. brown) technologies.</p>
+<p><span class="math display">\[\dfrac{s_i(t)}{s_i(t_0)}\]</span> This
+method is used to set targets for “decreasing” (ie. brown)
+technologies.</p>
 </div>
 <div class="section level3">
 <h3 id="market-share-by-sector">2. Market-share by sector<a class="anchor" aria-label="anchor" href="#market-share-by-sector"></a>
 </h3>
-<p>To calculate the market-share by sector, we use the initial production of both the portfolio and scenario at the sector-level instead. <span class="math display">\[p_{i}^{smsp}(t) = p_{i}(t_0) +P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)\]</span> where:</p>
+<p>To calculate the market-share by sector, we use the initial
+production of both the portfolio and scenario at the sector-level
+instead. <span class="math display">\[p_{i}^{smsp}(t) = p_{i}(t_0)
++P(t_0) * \left( \dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\right)\]</span>
+where:</p>
 <ul>
 <li>
-<span class="math inline">\(P_i(t_0)\)</span> is the portfolio’s total production in the sector at <span class="math inline">\(t_0\)</span>, and</li>
+<span class="math inline">\(P_i(t_0)\)</span> is the portfolio’s
+total production in the sector at <span class="math inline">\(t_0\)</span>, and</li>
 <li>
-<span class="math inline">\(S(t_0)\)</span> is the scenario total production at <span class="math inline">\(t_0\)</span>.</li>
+<span class="math inline">\(S(t_0)\)</span> is the scenario total
+production at <span class="math inline">\(t_0\)</span>.</li>
 </ul>
 <p>We define the “Sector Market Share Percentage” as:</p>
-<p><span class="math display">\[\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\]</span> This method is used to calculate targets for “increasing” (ie. green) technologies.</p>
+<p><span class="math display">\[\dfrac{s_i(t)-s_i(t_0)}{S(t_0)}\]</span>
+This method is used to calculate targets for “increasing” (ie. green)
+technologies.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="how-to-calculate-market-share-targets-for-a-given-scenario">How to calculate market-share targets for a given scenario<a class="anchor" aria-label="anchor" href="#how-to-calculate-market-share-targets-for-a-given-scenario"></a>
 </h2>
-<p>To calculate market-share targets, you need to use the package r2dii.analysis and a number of datasets. One of those datasets is a “matched” dataset (loanbook + asset-level data) that you can get with the package <a href="https://rmi-pacta.github.io/r2dii.match/" class="external-link">r2dii.match</a>. The datasets I use here come from the package <a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a>; they are fake but show how you should structure your own data.</p>
+<p>To calculate market-share targets, you need to use the package
+r2dii.analysis and a number of datasets. One of those datasets is a
+“matched” dataset (loanbook + asset-level data) that you can get with
+the package <a href="https://rmi-pacta.github.io/r2dii.match/" class="external-link">r2dii.match</a>. The
+datasets I use here come from the package <a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a>; they are
+fake but show how you should structure your own data.</p>
 <ul>
 <li>Use packages.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RMI-PACTA/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Match the loanbook to asset level data.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/loanbook_demo.html" class="external-link">loanbook_demo</a></span></span>
-<span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/abcd_demo.html" class="external-link">abcd_demo</a></span></span>
+<code class="sourceCode R"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/loanbook_demo.html" class="external-link">loanbook_demo</a></span></span>
+<span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/abcd_demo.html" class="external-link">abcd_demo</a></span></span>
 <span></span>
 <span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">abcd</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># WARNING: Remember to validate the output of match_name() before prioritize()</span></span>
@@ -191,12 +218,13 @@ p_{i}^{tmsr}(t) = p_{i}(t_{0}) * \frac{s_i(t)}{s_i(t_0)}\]</span></p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></span></code></pre></div>
 <ul>
-<li>Calculate market-share targets for production at the portfolio level.</li>
+<li>Calculate market-share targets for production at the portfolio
+level.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># portfolio level targets</span></span>
-<span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/scenario_demo_2020.html" class="external-link">scenario_demo_2020</a></span></span>
-<span><span class="va">regions</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/region_isos_demo.html" class="external-link">region_isos_demo</a></span></span>
+<span><span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/scenario_demo_2020.html" class="external-link">scenario_demo_2020</a></span></span>
+<span><span class="va">regions</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/region_isos_demo.html" class="external-link">region_isos_demo</a></span></span>
 <span></span>
 <span></span>
 <span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span><span class="va">abcd</span>, <span class="va">scenario</span>, <span class="va">regions</span><span class="op">)</span></span>
@@ -217,7 +245,8 @@ p_{i}^{tmsr}(t) = p_{i}(t_{0}) * \frac{s_i(t)}{s_i(t_0)}\]</span></p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ²​scenario_source, ³​production, ⁴​technology_share,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​percentage_of_initial_production_by_scope</span></span></span></code></pre></div>
 <ul>
-<li>Calculate market-share targets for production at the company level.</li>
+<li>Calculate market-share targets for production at the company
+level.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span><span class="va">abcd</span>, <span class="va">scenario</span>, <span class="va">regions</span>, by_company <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>

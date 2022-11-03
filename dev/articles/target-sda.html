@@ -110,53 +110,122 @@
 <div class="section level2">
 <h2 id="sda-methodology">SDA Methodology<a class="anchor" aria-label="anchor" href="#sda-methodology"></a>
 </h2>
-<p>The Sectoral Decarbonization Approach (SDA) is a method for setting corporate CO2 emissions intensity reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative (<a href="https://sciencebasedtargets.org/" class="external-link">SBTI</a>), an international initiative on science-based target setting for companies initiated by <a href="https://www.cdp.net/en" class="external-link">CDP</a>, the <a href="https://www.unglobalcompact.org/" class="external-link">United Nations Global Compact</a>, the World Resources Institute (<a href="https://www.wri.org/" class="external-link">WRI</a>), and the Worldwide Fund for Nature (<a href="https://www.worldwildlife.org/" class="external-link">WWF</a>).</p>
-<p>In the context of PACTA, this methodology is used to calculate emission factor targets for homogenous sectors (i.e. sectors with no technology-level scenario pathways).</p>
-<p>First, the distance, <span class="math inline">\(d\)</span>, between the company’s CO2 emissions intensity per unit production (or emissions factor), <span class="math inline">\(I^{Co}(t)\)</span> at some base year, <span class="math inline">\(t_0\)</span>, and a scenario target intensity in 2050, <span class="math inline">\(I^{Sc}(2050)\)</span> is calculated. The target intensity in 2050 can be taken from any relevant climate scenario:</p>
-<p><span class="math display">\[d = I^{Co}(t_0) - I^{Sc}(2050)\]</span></p>
-<p>The company’s market share parameter, <span class="math inline">\(m(t)\)</span>, is defined as the company’s expected future activity, <span class="math inline">\(P^{Co}(t)\)</span> divided by the sector’s future activity, <span class="math inline">\(P^{Sc}(t)\)</span> to reflect the expected forward-looking market share of the company. This is given as a ratio to the company’s base year market share, derived from its activity, <span class="math inline">\(P^{Co}(t_0)\)</span> divided by the sector’s activity in the same year, <span class="math inline">\(P^{Sc}(t_0)\)</span>. In both cases the former is calculated per company, and the latter is determined from the climate scenario:</p>
-<p><span class="math display">\[m (t) = \dfrac{P^{Co}(t_0) / P^{Sc}(t_0)}{P^{Co}(t) / P^{Sc}(t)}\]</span></p>
-<p>It should be noted that this parameter does not capture the change in the market share of the company but rather the inverse. This is useful as it equates to a decreasing parameter when the company’s market share is increasing. This equates to larger reduction efforts when the companies market share is increasing over time.</p>
+<p>The Sectoral Decarbonization Approach (SDA) is a method for setting
+corporate CO2 emissions intensity reduction targets in line with climate
+science. This method was developed by the Science-Based Targets
+Initiative (<a href="https://sciencebasedtargets.org/" class="external-link">SBTI</a>), an
+international initiative on science-based target setting for companies
+initiated by <a href="https://www.cdp.net/en" class="external-link">CDP</a>, the <a href="https://www.unglobalcompact.org/" class="external-link">United Nations Global
+Compact</a>, the World Resources Institute (<a href="https://www.wri.org/" class="external-link">WRI</a>), and the Worldwide Fund for Nature
+(<a href="https://www.worldwildlife.org/" class="external-link">WWF</a>).</p>
+<p>In the context of PACTA, this methodology is used to calculate
+emission factor targets for homogenous sectors (i.e. sectors with no
+technology-level scenario pathways).</p>
+<p>First, the distance, <span class="math inline">\(d\)</span>, between
+the company’s CO2 emissions intensity per unit production (or emissions
+factor), <span class="math inline">\(I^{Co}(t)\)</span> at some base
+year, <span class="math inline">\(t_0\)</span>, and a scenario target
+intensity in 2050, <span class="math inline">\(I^{Sc}(2050)\)</span> is
+calculated. The target intensity in 2050 can be taken from any relevant
+climate scenario:</p>
+<p><span class="math display">\[d = I^{Co}(t_0) -
+I^{Sc}(2050)\]</span></p>
+<p>The company’s market share parameter, <span class="math inline">\(m(t)\)</span>, is defined as the company’s
+expected future activity, <span class="math inline">\(P^{Co}(t)\)</span>
+divided by the sector’s future activity, <span class="math inline">\(P^{Sc}(t)\)</span> to reflect the expected
+forward-looking market share of the company. This is given as a ratio to
+the company’s base year market share, derived from its activity, <span class="math inline">\(P^{Co}(t_0)\)</span> divided by the sector’s
+activity in the same year, <span class="math inline">\(P^{Sc}(t_0)\)</span>. In both cases the former is
+calculated per company, and the latter is determined from the climate
+scenario:</p>
+<p><span class="math display">\[m (t) = \dfrac{P^{Co}(t_0) /
+P^{Sc}(t_0)}{P^{Co}(t) / P^{Sc}(t)}\]</span></p>
+<p>It should be noted that this parameter does not capture the change in
+the market share of the company but rather the inverse. This is useful
+as it equates to a decreasing parameter when the company’s market share
+is increasing. This equates to larger reduction efforts when the
+companies market share is increasing over time.</p>
 <p>The sector decarbonization factor, <span class="math inline">\(p(t)\)</span> is defined as:</p>
-<p><span class="math display">\[ p(t) = \frac{I^{Sc}(t) - I^{Sc}(2050)}{I^{Sc}(t_0) - I^{Sc}(2050)}\]</span></p>
-<p>where <span class="math inline">\(I^{in}(t)\)</span> and <span class="math inline">\(I^{Sc}(t)\)</span> are the average market and scenario emission intensities respectively, at time <span class="math inline">\(t\)</span>.</p>
-<p>This variable captures the remaining effort needed from the market to meet the target in 2050, per year. Under the SDA assumptions the CO2 intensity for all companies in a sector converge in 2050. Note that <span class="math inline">\(p(t_0) = 1\)</span> and <span class="math inline">\(p(2050) = 0\)</span>, indicating that 100% of the expected decarbonization efforts are still to be met at the base year and 0% should be left at 2050.</p>
-<p>The company-level emission intensity target is then defined as: <span class="math display">\[I^{Target}(t) = \left( d * p (t) * m (t) \right) + I^{Sc}(2050)\]</span></p>
+<p><span class="math display">\[ p(t) = \frac{I^{Sc}(t) -
+I^{Sc}(2050)}{I^{Sc}(t_0) - I^{Sc}(2050)}\]</span></p>
+<p>where <span class="math inline">\(I^{in}(t)\)</span> and <span class="math inline">\(I^{Sc}(t)\)</span> are the average market and
+scenario emission intensities respectively, at time <span class="math inline">\(t\)</span>.</p>
+<p>This variable captures the remaining effort needed from the market to
+meet the target in 2050, per year. Under the SDA assumptions the CO2
+intensity for all companies in a sector converge in 2050. Note that
+<span class="math inline">\(p(t_0) = 1\)</span> and <span class="math inline">\(p(2050) = 0\)</span>, indicating that 100% of the
+expected decarbonization efforts are still to be met at the base year
+and 0% should be left at 2050.</p>
+<p>The company-level emission intensity target is then defined as: <span class="math display">\[I^{Target}(t) = \left( d * p (t) * m (t) \right)
++ I^{Sc}(2050)\]</span></p>
 </div>
 <div class="section level2">
 <h2 id="pacta-assumptions">PACTA Assumptions<a class="anchor" aria-label="anchor" href="#pacta-assumptions"></a>
 </h2>
-<p>The SDA applied in PACTA differs slightly from the way it is applied by the SBTI. In particular, we must align the top-down approach laid out by climate scenarios with the bottom-up asset-based company data used in the PACTA analysis.</p>
+<p>The SDA applied in PACTA differs slightly from the way it is applied
+by the SBTI. In particular, we must align the top-down approach laid out
+by climate scenarios with the bottom-up asset-based company data used in
+the PACTA analysis.</p>
 <p><strong>Assumption: Market share stays constant (<span class="math inline">\(m(t)\)</span> = 1)</strong></p>
-<p>Due to the lack of quantitative data on the expected market share changes throughout the entire time horizon up to 2050. <span class="math inline">\(m(t)\)</span> is set to 1 for all years. Under the SBTI method for calculating <span class="math inline">\(m(t)\)</span>, there will be a higher intensity reduction target in cases where the absolute pathway of the sector exceeds the scenario target. This makes sense. However, applying this at company level is counter-intuitive:</p>
+<p>Due to the lack of quantitative data on the expected market share
+changes throughout the entire time horizon up to 2050. <span class="math inline">\(m(t)\)</span> is set to 1 for all years. Under the
+SBTI method for calculating <span class="math inline">\(m(t)\)</span>,
+there will be a higher intensity reduction target in cases where the
+absolute pathway of the sector exceeds the scenario target. This makes
+sense. However, applying this at company level is counter-intuitive:</p>
 <blockquote>
-<p>Companies that decrease their market share would be allowed to have a higher CO2-Intensity than the average market actor. While, companies that are increasing their market share are forced to do more in terms of CO2-Intensity than ones whose market share remains constant. It follows that if a company reaches the targeted CO2-Intensity it would not be allowed to increase its share in the market. This is a desirable outcome.</p>
+<p>Companies that decrease their market share would be allowed to have a
+higher CO2-Intensity than the average market actor. While, companies
+that are increasing their market share are forced to do more in terms of
+CO2-Intensity than ones whose market share remains constant. It follows
+that if a company reaches the targeted CO2-Intensity it would not be
+allowed to increase its share in the market. This is a desirable
+outcome.</p>
 </blockquote>
 <p>Under this assumption, our target calculation reduces to:</p>
-<p><span class="math display">\[I^{Target}(t) = \left( d * p (t) \right) + I^{Sc}(2050)\]</span></p>
-<p><strong>Approximation: Adjust base year scenario emission intensity</strong></p>
-<p>In both the SBTI and the PACTA methodology the target emissions for the sector are taken from climate scenarios. These implement a global economy top-down approach which applies an absolute emissions value in the year 2050 and then converts this to yearly emission intensities. However, there may be discrepancies between the Scenario projected emission intensities, and the bottom-up ABCD emission intensities. To reflect this discrepancy, we adjust the scenario projections by the following factor,</p>
-<p><span class="math display">\[\dfrac{I^{ABCD}(t_0)}{I^{Sc}(t_0)}\]</span> yielding the adjusted scenario pathway:</p>
-<p><span class="math display">\[I'^{Sc}(t) = \left(\dfrac{I^{ABCD}(t_0)}{I^{Sc}(t_0)}\right) * I^{Sc}(t)\]</span> This yields the final PACTA SDA target equation:</p>
-<p><span class="math display">\[I^{Target}(t) = \left( d * p (t) \right) + I'^{Sc}(t)\]</span> Note: <span class="math inline">\(d\)</span> and <span class="math inline">\(p(t)\)</span> also must be re-calculated using this adjusted scenario intensity, <span class="math inline">\(I'^{Sc}\)</span>.</p>
+<p><span class="math display">\[I^{Target}(t) = \left( d * p (t) \right)
++ I^{Sc}(2050)\]</span></p>
+<p><strong>Approximation: Adjust base year scenario emission
+intensity</strong></p>
+<p>In both the SBTI and the PACTA methodology the target emissions for
+the sector are taken from climate scenarios. These implement a global
+economy top-down approach which applies an absolute emissions value in
+the year 2050 and then converts this to yearly emission intensities.
+However, there may be discrepancies between the Scenario projected
+emission intensities, and the bottom-up ABCD emission intensities. To
+reflect this discrepancy, we adjust the scenario projections by the
+following factor,</p>
+<p><span class="math display">\[\dfrac{I^{ABCD}(t_0)}{I^{Sc}(t_0)}\]</span>
+yielding the adjusted scenario pathway:</p>
+<p><span class="math display">\[I'^{Sc}(t) =
+\left(\dfrac{I^{ABCD}(t_0)}{I^{Sc}(t_0)}\right) * I^{Sc}(t)\]</span>
+This yields the final PACTA SDA target equation:</p>
+<p><span class="math display">\[I^{Target}(t) = \left( d * p (t) \right)
++ I'^{Sc}(t)\]</span> Note: <span class="math inline">\(d\)</span>
+and <span class="math inline">\(p(t)\)</span> also must be re-calculated
+using this adjusted scenario intensity, <span class="math inline">\(I'^{Sc}\)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="calculating-sda-targets">Calculating SDA Targets<a class="anchor" aria-label="anchor" href="#calculating-sda-targets"></a>
 </h2>
-<p>To calculate SDA targets you need to use the package r2dii.analysis and a number of datasets, including a “matched” dataset (loanbook + asset-level data) that you can get with the package <a href="https://rmi-pacta.github.io/r2dii.match/" class="external-link">r2dii.match</a>. The datasets I use here come from the package <a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a>; they are fake but show how you should structure your own data.</p>
+<p>To calculate SDA targets you need to use the package r2dii.analysis
+and a number of datasets, including a “matched” dataset (loanbook +
+asset-level data) that you can get with the package <a href="https://rmi-pacta.github.io/r2dii.match/" class="external-link">r2dii.match</a>. The
+datasets I use here come from the package <a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a>; they are
+fake but show how you should structure your own data.</p>
 <ul>
 <li>Use packages.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RMI-PACTA/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Match the loanbook to asset level data.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/loanbook_demo.html" class="external-link">loanbook_demo</a></span></span>
-<span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/abcd_demo.html" class="external-link">abcd_demo</a></span></span>
+<code class="sourceCode R"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/loanbook_demo.html" class="external-link">loanbook_demo</a></span></span>
+<span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/abcd_demo.html" class="external-link">abcd_demo</a></span></span>
 <span></span>
 <span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">abcd</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># WARNING: Remember to validate the output of match_name() before prioritize()</span></span>
@@ -187,7 +256,7 @@
 <li>Calculate SDA targets for CO2 emissions intensities:</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">co2_intensity</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/co2_intensity_scenario_demo.html" class="external-link">co2_intensity_scenario_demo</a></span></span>
+<code class="sourceCode R"><span><span class="va">co2_intensity</span> <span class="op">&lt;-</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/co2_intensity_scenario_demo.html" class="external-link">co2_intensity_scenario_demo</a></span></span>
 <span></span>
 <span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/target_sda.html">target_sda</a></span><span class="op">(</span><span class="va">abcd</span>, <span class="va">co2_intensity</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removing rows in abcd where `emission_factor` is NA</span></span>

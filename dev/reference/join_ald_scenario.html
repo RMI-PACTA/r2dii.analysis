@@ -86,7 +86,7 @@ for more information.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">ald</span>,</span>
 <span>  <span class="va">scenario</span>,</span>
-<span>  region_isos <span class="op">=</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/region_isos.html" class="external-link">region_isos</a></span>,</span>
+<span>  region_isos <span class="op">=</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/region_isos.html" class="external-link">region_isos</a></span>,</span>
 <span>  add_green_technologies <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -99,7 +99,7 @@ for more information.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"r2dii.match"</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"0.1.0"</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="va">installed</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/r2dii.match/man/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
@@ -126,7 +126,7 @@ for more information.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Read this blog post to learn more:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> https://2degreesinvesting.github.io/posts/2022-03-02-ald-becomes-abcd/</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`join_ald_scenario()` was deprecated in r2dii.analysis 0.2.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `join_abcd_scenario()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `join_abcd_scenario()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9,099 × 45</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>

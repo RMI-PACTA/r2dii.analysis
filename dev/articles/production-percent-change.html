@@ -99,7 +99,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Indicator Choices:</h1>
-            <h3 data-toc-skip class="subtitle">Weighted Production vs. Weighted Percent Change in Production</h3>
+            <h3 data-toc-skip class="subtitle">Weighted Production
+vs. Weighted Percent Change in Production</h3>
             
       
       <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/HEAD/vignettes/production-percent-change.Rmd" class="external-link"><code>vignettes/production-percent-change.Rmd</code></a></small>
@@ -111,12 +112,25 @@
 <div class="section level2">
 <h2 id="weighted-production">Weighted Production<a class="anchor" aria-label="anchor" href="#weighted-production"></a>
 </h2>
-<p>For most intents and purposes, we recommend calculating all targets using the loan weighted production as an indicator. In particular, we define the loan weighted production of a given company, <span class="math inline">\(j\)</span> as: <span class="math display">\[ \overline{p}_{i,j}(t) = p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j}\]</span> where <span class="math inline">\(p_{i,j}\)</span> is the production of company <span class="math inline">\(i\)</span> in technology <span class="math inline">\(j\)</span> and <span class="math inline">\(l_j\)</span> is the loan given to company <span class="math inline">\(j\)</span>.</p>
-<p>To calculate portfolio targets, we aggregate this value by summing over every company in the portfolio: <span class="math display">\[ \overline{p}_i (t) = \sum_j \left[  p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j} \right] \]</span></p>
-<p>Effectively, this is a loan-weighted average of the production attributed to each company in your portfolio. A significant result of this indicator choice is that small companies (with little production) will be favorably weighted, given that the loan to that company is sufficiently large. This can be useful to reflect large investments into green start-ups.</p>
+<p>For most intents and purposes, we recommend calculating all targets
+using the loan weighted production as an indicator. In particular, we
+define the loan weighted production of a given company, <span class="math inline">\(j\)</span> as: <span class="math display">\[
+\overline{p}_{i,j}(t) = p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j}\]</span>
+where <span class="math inline">\(p_{i,j}\)</span> is the production of
+company <span class="math inline">\(i\)</span> in technology <span class="math inline">\(j\)</span> and <span class="math inline">\(l_j\)</span> is the loan given to company <span class="math inline">\(j\)</span>.</p>
+<p>To calculate portfolio targets, we aggregate this value by summing
+over every company in the portfolio: <span class="math display">\[
+\overline{p}_i (t) = \sum_j \left[  p_{i,j}(t) * \dfrac{l_j}{\sum_j l_j}
+\right] \]</span></p>
+<p>Effectively, this is a loan-weighted average of the production
+attributed to each company in your portfolio. A significant result of
+this indicator choice is that small companies (with little production)
+will be favorably weighted, given that the loan to that company is
+sufficiently large. This can be useful to reflect large investments into
+green start-ups.</p>
 <p>To calculate the weighted production:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//" class="external-link">r2dii.match</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RMI-PACTA/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></span>
 <span></span>
@@ -148,11 +162,27 @@
 <div class="section level2">
 <h2 id="weighted-percent-change-in-production">Weighted Percent Change in Production<a class="anchor" aria-label="anchor" href="#weighted-percent-change-in-production"></a>
 </h2>
-<p>On the other-hand, if you’re more keen to understand if the large corporations in your portfolio are planning to make any significant changes, the percent change in production may be a more useful indicator.</p>
-<p>For each company, we define the percent change, <span class="math inline">\(\chi_i(t)\)</span>, as compared to the start year, <span class="math inline">\(t_0\)</span>:</p>
-<p><span class="math display">\[ \chi_i(t) =  \dfrac{p_{i}(t)-p_{i}(t_0)}{p_i(t_0)} * 100\]</span> where <span class="math inline">\(p_i(t)\)</span> is the indicator (production or capacity) of technology <span class="math inline">\(i\)</span>, and <span class="math inline">\(t0\)</span> is the start year of the analysis.</p>
-<p>We aggregate the percent-change in production for each company to the portfolio-level, by using the same loan-weighted average as above. In particular, for each loan <span class="math inline">\(l_j\)</span> to company <span class="math inline">\(j\)</span>, we have: <span class="math display">\[ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} * \dfrac{l_j}{\sum_j l_j} \right]\]</span></p>
-<p>It should be noted that the percent change, <span class="math inline">\(\chi\)</span>, is undefined for 0 initial production. Intuitively, this makes sense, since you would require an “infinite percent” build-out to grow to anything from 0. For this reason, any company having 0 initial production is filtered out prior to calculating the percent change indicator.</p>
+<p>On the other-hand, if you’re more keen to understand if the large
+corporations in your portfolio are planning to make any significant
+changes, the percent change in production may be a more useful
+indicator.</p>
+<p>For each company, we define the percent change, <span class="math inline">\(\chi_i(t)\)</span>, as compared to the start year,
+<span class="math inline">\(t_0\)</span>:</p>
+<p><span class="math display">\[ \chi_i(t)
+=  \dfrac{p_{i}(t)-p_{i}(t_0)}{p_i(t_0)} * 100\]</span> where <span class="math inline">\(p_i(t)\)</span> is the indicator (production or
+capacity) of technology <span class="math inline">\(i\)</span>, and
+<span class="math inline">\(t0\)</span> is the start year of the
+analysis.</p>
+<p>We aggregate the percent-change in production for each company to the
+portfolio-level, by using the same loan-weighted average as above. In
+particular, for each loan <span class="math inline">\(l_j\)</span> to
+company <span class="math inline">\(j\)</span>, we have: <span class="math display">\[ \overline{\chi_i} = \sum_j \left[ \chi_{i,j} *
+\dfrac{l_j}{\sum_j l_j} \right]\]</span></p>
+<p>It should be noted that the percent change, <span class="math inline">\(\chi\)</span>, is undefined for 0 initial
+production. Intuitively, this makes sense, since you would require an
+“infinite percent” build-out to grow to anything from 0. For this
+reason, any company having 0 initial production is filtered out prior to
+calculating the percent change indicator.</p>
 <p>To calculate the weighted percent change:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># using the master dataset defined in the previous chunk:</span></span>

@@ -21,7 +21,7 @@ climate goals. They summarize key metrics attributed to the portfolio
 (e.g. production, emission factors), and calculate targets based on
 climate scenarios. They implement in R the last step of the free
 software ‘PACTA’ (Paris Agreement Capital Transition Assessment;
-<https://transitionmonitor.com/>). Financial institutions use ‘PACTA’ to
+<https://www.transitionmonitor.com/>). Financial institutions use ‘PACTA’ to
 study how their capital allocation impacts the climate.
 
 ## Installation
@@ -41,11 +41,11 @@ devtools::install_github("RMI-PACTA/r2dii.analysis")
 
 ## Example
 
--   Use `library()` to attach the packages you need. r2dii.analysis does
-    not depend on the packages r2dii.data and r2dii.match; but we
-    suggest you install them – with
-    `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
-    reproduce our examples.
+- Use `library()` to attach the packages you need. r2dii.analysis does
+  not depend on the packages r2dii.data and r2dii.match; but we suggest
+  you install them – with
+  `install.packages(c("r2dii.data", "r2dii.match"))` – so you can
+  reproduce our examples.
 
 ``` r
 library(r2dii.data)
@@ -53,8 +53,8 @@ library(r2dii.match)
 library(r2dii.analysis)
 ```
 
--   Use `r2dii.match::match_name()` to identify matches between your
-    loanbook and the asset level data.
+- Use `r2dii.match::match_name()` to identify matches between your
+  loanbook and the asset level data.
 
 ``` r
 matched <- match_name(loanbook_demo, abcd_demo) %>%
@@ -63,7 +63,7 @@ matched <- match_name(loanbook_demo, abcd_demo) %>%
 
 ### Add Scenario Targets
 
--   Use `target_sda()` to calculate SDA targets of CO2 emissions.
+- Use `target_sda()` to calculate SDA targets of CO2 emissions.
 
 ``` r
 matched %>%
@@ -90,8 +90,8 @@ matched %>%
 #> #   ²​emission_factor_value
 ```
 
--   Use `target_market_share` to calculate market-share scenario targets
-    at the portfolio level:
+- Use `target_market_share` to calculate market-share scenario targets
+  at the portfolio level:
 
 ``` r
 matched %>%
@@ -118,7 +118,7 @@ matched %>%
 #> #   ⁵​percentage_of_initial_production_by_scope
 ```
 
--   Or at the company level:
+- Or at the company level:
 
 ``` r
 matched %>%
@@ -156,8 +156,8 @@ matched %>%
 The `target_*()` functions provide shortcuts for common operations. They
 wrap some utility functions that you may also use directly:
 
--   Use `join_abcd_scenario()` to join a matched dataset to the relevant
-    scenario data, and to pick assets in the relevant regions.
+- Use `join_abcd_scenario()` to join a matched dataset to the relevant
+  scenario data, and to pick assets in the relevant regions.
 
 ``` r
 loanbook_joined_to_abcd_scenario <- matched %>%
@@ -168,8 +168,8 @@ loanbook_joined_to_abcd_scenario <- matched %>%
   )
 ```
 
--   Use `summarize_weighted_production()` with different grouping
-    arguments to calculate scenario-targets:
+- Use `summarize_weighted_production()` with different grouping
+  arguments to calculate scenario-targets:
 
 ``` r
 # portfolio level
@@ -219,11 +219,10 @@ started](https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html
 
 This project has received funding from the [European Union LIFE
 program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
-and the [International Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/search-project/).
-The Federal Ministry for the Environment, Nature Conservation and
-Nuclear Safety (BMU) supports this initiative on the basis of a decision
-adopted by the German Bundestag. The views expressed are the sole
-responsibility of the authors and do not necessarily reflect the views
-of the funders. The funders are not responsible for any use that may be
-made of the information it contains.
+and the International Climate Initiative (IKI). The Federal Ministry for
+the Environment, Nature Conservation and Nuclear Safety (BMU) supports
+this initiative on the basis of a decision adopted by the German
+Bundestag. The views expressed are the sole responsibility of the
+authors and do not necessarily reflect the views of the funders. The
+funders are not responsible for any use that may be made of the
+information it contains.

@@ -25,7 +25,7 @@ Description: These tools help you to assess if a corporate lending
     factors), and calculate alignment targets based on climate scenarios.
     They implement in R the last step of the free software 'PACTA' (Paris
     Agreement Capital Transition Assessment;
-    <https://transitionmonitor.com/>). Financial institutions use 'PACTA'
+    <https://www.transitionmonitor.com/>). Financial institutions use 'PACTA'
     to study how their capital allocation decisions align with climate
     change mitigation goals.
 License: MIT + file LICENSE

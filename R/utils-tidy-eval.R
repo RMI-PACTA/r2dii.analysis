@@ -1,7 +1,6 @@
 #' Tidy eval helpers
 #'
-#' To learn more about tidy eval and how to use these tools, visit
-#' \url{https://tidyeval.tidyverse.org} and the
+#' To learn more about tidy eval and how to use these tools, check out the
 #' \href{https://adv-r.hadley.nz/metaprogramming.html}{Metaprogramming
 #' section} of \href{https://adv-r.hadley.nz}{Advanced R}.
 #'

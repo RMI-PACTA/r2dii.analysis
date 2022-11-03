@@ -21,7 +21,7 @@ climate goals. They summarize key metrics attributed to the portfolio
 (e.g. production, emission factors), and calculate targets based on
 climate scenarios. They implement in R the last step of the free
 software ‘PACTA’ (Paris Agreement Capital Transition Assessment;
-<https://transitionmonitor.com/>). Financial institutions use ‘PACTA’ to
+<https://www.transitionmonitor.com/>). Financial institutions use ‘PACTA’ to
 study how their capital allocation impacts the climate.
 
 ## Installation
@@ -219,11 +219,10 @@ started](https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html
 
 This project has received funding from the [European Union LIFE
 program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
-and the [International Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/search-project/).
-The Federal Ministry for the Environment, Nature Conservation and
-Nuclear Safety (BMU) supports this initiative on the basis of a decision
-adopted by the German Bundestag. The views expressed are the sole
-responsibility of the authors and do not necessarily reflect the views
-of the funders. The funders are not responsible for any use that may be
-made of the information it contains.
+and the International Climate Initiative (IKI). The Federal Ministry for
+the Environment, Nature Conservation and Nuclear Safety (BMU) supports
+this initiative on the basis of a decision adopted by the German
+Bundestag. The views expressed are the sole responsibility of the
+authors and do not necessarily reflect the views of the funders. The
+funders are not responsible for any use that may be made of the
+information it contains.

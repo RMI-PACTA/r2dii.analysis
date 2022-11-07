@@ -1,39 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//index.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/404.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/join_ald_scenario.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/pipe.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/r2dii.analysis-package.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/summarize_weighted_production.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/articles/production-percent-change.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_market_share.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/target_sda.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/articles/target-market-share.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//reference/tidyeval.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/articles/target-sda.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/production-percent-change.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/authors.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/r2dii-analysis.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/target-market-share.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/news/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.analysis//articles/target-sda.html</loc>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/join_abcd_scenario.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/join_ald_scenario.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/r2dii.analysis-package.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/summarize_weighted_production.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/target_market_share.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/target_sda.html</loc>
+  </url>
+  <url>
+    <loc>https://rmi-pacta.github.io/r2dii.analysis/reference/tidyeval.html</loc>
   </url>
 </urlset>

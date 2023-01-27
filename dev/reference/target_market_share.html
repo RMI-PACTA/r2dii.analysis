@@ -90,6 +90,7 @@ production forecast.</p>
 <span>  use_credit_limit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  by_company <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  weight_production <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  green_or_brown <span class="op">=</span> <span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/green_or_brown.html" class="external-link">green_or_brown</a></span>,</span>
 <span>  ald <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -128,6 +129,10 @@ the column <code>loan_size_outstanding</code>. Set to <code>TRUE</code> to use t
 <dd><p>Logical vector of length 1. <code>TRUE</code> defaults to
 outputting production, weighted by relative loan-size. Set to <code>FALSE</code> to
 output the unweighted production values.</p></dd>
+
+
+<dt>green_or_brown</dt>
+<dd><p>A data frame like <a href="https://rmi-pacta.github.io/r2dii.data/reference/green_or_brown.html" class="external-link">r2dii.data::green_or_brown</a>.</p></dd>
 
 
 <dt>ald</dt>

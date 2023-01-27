@@ -12,6 +12,7 @@ target_market_share(
   use_credit_limit = FALSE,
   by_company = FALSE,
   weight_production = TRUE,
+  green_or_brown = r2dii.data::green_or_brown,
   ald = deprecated()
 )
 }
@@ -35,6 +36,8 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 \item{weight_production}{Logical vector of length 1. \code{TRUE} defaults to
 outputting production, weighted by relative loan-size. Set to \code{FALSE} to
 output the unweighted production values.}
+
+\item{green_or_brown}{A data frame like \link[r2dii.data:green_or_brown]{r2dii.data::green_or_brown}.}
 
 \item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
 \code{abcd}.}

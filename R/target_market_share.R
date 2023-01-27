@@ -21,6 +21,7 @@
 #' output the unweighted production values.
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.
+#' @param green_or_brown A data frame like [r2dii.data::green_or_brown]. 
 #'
 #' @return A tibble including the summarized columns `metric`, `production`,
 #'   `technology_share`, `percentage_of_initial_production_by_scope` and
@@ -79,6 +80,7 @@ target_market_share <- function(data,
                                 use_credit_limit = FALSE,
                                 by_company = FALSE,
                                 weight_production = TRUE,
+                                green_or_brown = r2dii.data::green_or_brown,
                                 ald = deprecated()) {
   stopifnot(
     is.data.frame(data),
@@ -156,7 +158,6 @@ target_market_share <- function(data,
 
   data <- calculate_targets(data)
 
-  green_or_brown <- r2dii.data::green_or_brown
   tmsr_or_smsp <- tmsr_or_smsp()
 
   data <- pick_sms_or_tms_target(data, green_or_brown, tmsr_or_smsp)

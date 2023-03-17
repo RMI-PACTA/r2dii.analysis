@@ -16,6 +16,10 @@ Authors@R:
              family = "Hogedorn",
              role = "aut",
              email = "klaus@2degrees-investing.org"),
+      person(given = "Nicky",
+             family = "Halterman",
+             role = "aut",
+             email = "nicholas.i.halterman@gmail.com"),
       person(given = "Rocky Mountain Institute",
              role = c("cph", "fnd"),
              email = "PACTA4banks@rmi.org"))

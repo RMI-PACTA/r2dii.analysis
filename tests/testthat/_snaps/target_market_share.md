@@ -4,12 +4,11 @@
       out
     Output
       # A tibble: 3 x 10
-        sector     technol~1  year region scena~2 metric produ~3 techn~4 scope perce~5
-        <chr>      <chr>     <dbl> <chr>  <chr>   <chr>    <dbl>   <dbl> <chr>   <dbl>
-      1 automotive ice        2025 global demo_2~ proje~     1         1 tech~       0
-      2 automotive ice        2025 global demo_2~ targe~     0.5       1 tech~       0
-      3 automotive ice        2025 global demo_2~ corpo~     1         1 tech~       0
-      # ... with abbreviated variable names 1: technology, 2: scenario_source,
-      #   3: production, 4: technology_share,
-      #   5: percentage_of_initial_production_by_scope
+        sector     technology  year region scenario_source metric           production
+        <chr>      <chr>      <dbl> <chr>  <chr>           <chr>                 <dbl>
+      1 automotive ice         2025 global demo_2020       projected               1  
+      2 automotive ice         2025 global demo_2020       target_sds              0.5
+      3 automotive ice         2025 global demo_2020       corporate_econo~        1  
+      # i 3 more variables: technology_share <dbl>, scope <chr>,
+      #   percentage_of_initial_production_by_scope <dbl>
 

@@ -121,15 +121,15 @@ data.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RMI-PACTA/r2dii.analysis" class="external-link">r2dii.analysis</a></span><span class="op">)</span></span></code></pre></div>
 <p>To plot your results, you may also load the package <a href="https://rmi-pacta.github.io/r2dii.plot" class="external-link">r2dii.plot</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.plot" class="external-link">r2dii.plot</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RMI-PACTA/r2dii.plot" class="external-link">r2dii.plot</a></span><span class="op">)</span></span></code></pre></div>
 <p>We also recommend packages in the <a href="https://www.tidyverse.org/" class="external-link">tidyverse</a>; they are optional but
 useful.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.1.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.1.4</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.1.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.1.4</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.5.0</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 3.4.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.2.0</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 3.4.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.2.1</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.0</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.0.1     </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
@@ -152,25 +152,25 @@ for a more complete description of this process.</p>
 <span></span>
 <span><span class="va">matched</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 216 × 28</span></span></span>
-<span><span class="co">#&gt;    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304          Yukon … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP83    Earthp…  <span style="text-decoration: underline;">185</span>721 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297          Yuba C… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP69    Consor…  <span style="text-decoration: underline;">200</span>569 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287          Ytl Po… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP35    Bnb Re…  <span style="text-decoration: underline;">308</span>217 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286          Ytl Po… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP63    Cisa S…  <span style="text-decoration: underline;">226</span>553 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285          Ytl Co… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP187   Mr. La…  <span style="text-decoration: underline;">196</span>857 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L23     C283          Ypic I… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP297   Wallen…  <span style="text-decoration: underline;">195</span>929 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L24     C282          Ypfb C… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP209   Phoeni…  <span style="text-decoration: underline;">309</span>145 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L25     C281          Ypf Sa  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP296   Viridi…  <span style="text-decoration: underline;">266</span>457 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L26     C280          Ypf En… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP67    Coast …  <span style="text-decoration: underline;">199</span>641 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L27     C278          Younic… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP45    Ce Ene…  <span style="text-decoration: underline;">197</span>785 EUR    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 206 more rows, 19 more variables: loan_size_credit_limit &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_input_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304                Yukon Development Corp     <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297                Yuba City Cogeneration Pa… <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287                Ytl Powerseraya Pte Ltd    <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286                Ytl Power International B… <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285                Ytl Corp Bhd               <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L23     C283                Ypic International Energy… <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L24     C282                Ypfb Corporacion           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L25     C281                Ypf Sa                     <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L26     C280                Ypf Energia Electrica Sa   <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L27     C278                Younicos Ag                <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 206 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, …</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calculate-targets">Calculate targets<a class="anchor" aria-label="anchor" href="#calculate-targets"></a>
@@ -201,21 +201,21 @@ a granular technology scenario roadmap exists.</p>
 <span></span>
 <span><span class="va">market_share_targets_portfolio</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,790 × 10</span></span></span>
-<span><span class="co">#&gt;    sector     techno…¹  year region scena…² metric produ…³ techn…⁴ scope perce…⁵</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… proje… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect… 0      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… proje… <span style="text-decoration: underline;">339</span>656.  0.078<span style="text-decoration: underline;">6</span> sect… 0.003<span style="text-decoration: underline;">52</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… targe… <span style="text-decoration: underline;">329</span>191.  0.074<span style="text-decoration: underline;">4</span> sect… 0.001<span style="text-decoration: underline;">08</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… targe… <span style="text-decoration: underline;">352</span>505.  0.080<span style="text-decoration: underline;">9</span> sect… 0.006<span style="text-decoration: underline;">53</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… targe… <span style="text-decoration: underline;">330</span>435.  0.074<span style="text-decoration: underline;">7</span> sect… 0.001<span style="text-decoration: underline;">37</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… proje… <span style="text-decoration: underline;">354</span>720.  0.081<span style="text-decoration: underline;">3</span> sect… 0.007<span style="text-decoration: underline;">05</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… targe… <span style="text-decoration: underline;">333</span>693.  0.073<span style="text-decoration: underline;">0</span> sect… 0.002<span style="text-decoration: underline;">13</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 1,780 more rows, and abbreviated variable names ¹​technology,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​scenario_source, ³​production, ⁴​technology_share,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​percentage_of_initial_production_by_scope</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected     <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_cps    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sds    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sps    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       projected     <span style="text-decoration: underline;">339</span>656.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_cps    <span style="text-decoration: underline;">329</span>191.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sds    <span style="text-decoration: underline;">352</span>505.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sps    <span style="text-decoration: underline;">330</span>435.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       projected     <span style="text-decoration: underline;">354</span>720.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       target_cps    <span style="text-decoration: underline;">333</span>693.</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,780 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>Or at the company level:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">market_share_targets_company</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -233,22 +233,21 @@ a granular technology scenario roadmap exists.</p>
 <span></span>
 <span><span class="va">market_share_targets_company</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32,402 × 11</span></span></span>
-<span><span class="co">#&gt;    sector     techno…¹  year region scena…² name_…³ metric produ…⁴ techn…⁵ scope</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… proje… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive electric  <span style="text-decoration: underline;">2</span>020 global demo_2… toyota… targe… <span style="text-decoration: underline;">324</span>592.  0.075<span style="text-decoration: underline;">9</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… proje… <span style="text-decoration: underline;">339</span>656.  0.078<span style="text-decoration: underline;">6</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… targe… <span style="text-decoration: underline;">329</span>191.  0.074<span style="text-decoration: underline;">4</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… targe… <span style="text-decoration: underline;">352</span>505.  0.080<span style="text-decoration: underline;">9</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric  <span style="text-decoration: underline;">2</span>021 global demo_2… toyota… targe… <span style="text-decoration: underline;">330</span>435.  0.074<span style="text-decoration: underline;">7</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… toyota… proje… <span style="text-decoration: underline;">354</span>720.  0.081<span style="text-decoration: underline;">3</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric  <span style="text-decoration: underline;">2</span>022 global demo_2… toyota… targe… <span style="text-decoration: underline;">333</span>693.  0.073<span style="text-decoration: underline;">0</span> sect…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 32,392 more rows, 1 more variable:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;, and abbreviated variable</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   names ¹​technology, ²​scenario_source, ³​name_abcd, ⁴​production,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​technology_share</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">339</span>656.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">329</span>191.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">352</span>505.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">330</span>435.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">354</span>720.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">333</span>693.</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 32,392 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="sectoral-decarbonization-approach">Sectoral Decarbonization Approach<a class="anchor" aria-label="anchor" href="#sectoral-decarbonization-approach"></a>
@@ -270,20 +269,20 @@ technology roadmaps.</p>
 <span></span>
 <span><span class="va">sda_targets</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 110 × 6</span></span></span>
-<span><span class="co">#&gt;    sector  year region             scenario_source emission_factor_met…¹ emiss…²</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cement  <span style="text-decoration: underline;">2</span>020 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">0</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cement  <span style="text-decoration: underline;">2</span>020 developing asia    demo_2020       projected              0.059<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> cement  <span style="text-decoration: underline;">2</span>020 global             demo_2020       projected              0.664 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> cement  <span style="text-decoration: underline;">2</span>021 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> cement  <span style="text-decoration: underline;">2</span>021 developing asia    demo_2020       projected              0.059<span style="text-decoration: underline;">4</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cement  <span style="text-decoration: underline;">2</span>021 global             demo_2020       projected              0.665 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cement  <span style="text-decoration: underline;">2</span>022 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cement  <span style="text-decoration: underline;">2</span>022 developing asia    demo_2020       projected              0.059<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cement  <span style="text-decoration: underline;">2</span>022 global             demo_2020       projected              0.666 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cement  <span style="text-decoration: underline;">2</span>023 advanced economies demo_2020       projected              0.023<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 100 more rows, and abbreviated variable names ¹​emission_factor_metric,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​emission_factor_value</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    sector  year region             scenario_source emission_factor_metric</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> cement  <span style="text-decoration: underline;">2</span>020 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cement  <span style="text-decoration: underline;">2</span>020 developing asia    demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> cement  <span style="text-decoration: underline;">2</span>020 global             demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> cement  <span style="text-decoration: underline;">2</span>021 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> cement  <span style="text-decoration: underline;">2</span>021 developing asia    demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cement  <span style="text-decoration: underline;">2</span>021 global             demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cement  <span style="text-decoration: underline;">2</span>022 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cement  <span style="text-decoration: underline;">2</span>022 developing asia    demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cement  <span style="text-decoration: underline;">2</span>022 global             demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cement  <span style="text-decoration: underline;">2</span>023 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 100 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: emission_factor_value &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -312,7 +311,7 @@ targets.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot the technology mix</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_techmix.html" class="external-link">qplot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rmi-pacta.github.io/r2dii.plot/reference/qplot_techmix.html" class="external-link">qplot_techmix</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The `technology_share` values are plotted for extreme years.</span></span>
 <span><span class="co">#&gt; Do you want to plot different years? E.g. filter data with:`subset(data, year %in% c(2020, 2030))`.</span></span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/technoloy-mix-portfolio-1.png" width="100%"></p>
@@ -332,7 +331,7 @@ of buildout and/or retirement.</p>
 <span>  <span class="va">scenario_source</span> <span class="op">==</span> <span class="st">"demo_2020"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_trajectory.html" class="external-link">qplot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rmi-pacta.github.io/r2dii.plot/reference/qplot_trajectory.html" class="external-link">qplot_trajectory</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/trajetory-portfolio-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -344,7 +343,7 @@ intensity scenario, and the scenario compliant SDA pathway that the
 portfolio must follow to achieve the scenario ambition by 2050.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sda_targets</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"cement"</span>, <span class="va">region</span> <span class="op">==</span> <span class="st">"global"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/r2dii.plot/man/qplot_emission_intensity.html" class="external-link">qplot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rmi-pacta.github.io/r2dii.plot/reference/qplot_emission_intensity.html" class="external-link">qplot_emission_intensity</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="r2dii-analysis_files/figure-html/sda%20plot-1.png" width="100%"></p>
 </div>
 </div>

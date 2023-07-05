@@ -12,8 +12,9 @@ target_market_share(
   use_credit_limit = FALSE,
   by_company = FALSE,
   weight_production = TRUE,
-  green_or_brown = r2dii.data::green_or_brown,
-  ald = deprecated()
+  increasing_or_decreasing = r2dii.data::increasing_or_decreasing,
+  ald = deprecated(),
+  green_or_brown = deprecated()
 )
 }
 \arguments{
@@ -37,10 +38,14 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to use the column
 outputting production, weighted by relative loan-size. Set to \code{FALSE} to
 output the unweighted production values.}
 
-\item{green_or_brown}{A data frame like \link[r2dii.data:green_or_brown]{r2dii.data::green_or_brown}.}
+\item{increasing_or_decreasing}{A data frame like
+\link[r2dii.data:increasing_or_decreasing]{r2dii.data::increasing_or_decreasing}.}
 
 \item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
 \code{abcd}.}
+
+\item{green_or_brown}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{green_or_brown} has
+been superseded by \code{increasing_or_decreasing}.}
 }
 \value{
 A tibble including the summarized columns \code{metric}, \code{production},

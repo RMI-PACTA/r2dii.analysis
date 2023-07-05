@@ -114,7 +114,7 @@ target_market_share <- function(data,
     increasing_or_decreasing <- green_or_brown %>%
       dplyr::rename(increasing_or_decreasing = .data$green_or_brown) %>%
       mutate(
-        increasing_or_decreasing = case_when(
+        increasing_or_decreasing = dplyr::case_when(
           increasing_or_decreasing == "green" ~ "increasing",
           increasing_or_decreasing == "brown" ~ "decreasing"
         )
@@ -140,7 +140,7 @@ target_market_share <- function(data,
     abcd,
     scenario,
     region_isos,
-    add_increasing_technologies = TRUE
+    add_green_technologies = TRUE
   )
 
   if (nrow(data) == 0) {

@@ -23,8 +23,6 @@
 #' [r2dii.data::increasing_or_decreasing].
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.
-#' @param green_or_brown `r lifecycle::badge("superseded")` `green_or_brown` has
-#' been superseded by `increasing_or_decreasing`.
 #'
 #' @return A tibble including the summarized columns `metric`, `production`,
 #'   `technology_share`, `percentage_of_initial_production_by_scope` and
@@ -84,8 +82,7 @@ target_market_share <- function(data,
                                 by_company = FALSE,
                                 weight_production = TRUE,
                                 increasing_or_decreasing = r2dii.data::increasing_or_decreasing,
-                                ald = deprecated(),
-                                green_or_brown = deprecated()) {
+                                ald = deprecated()) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(abcd),
@@ -103,22 +100,6 @@ target_market_share <- function(data,
       "target_market_share(abcd)"
     )
     abcd <- ald
-  }
-
-  if (lifecycle::is_present(green_or_brown)) {
-    lifecycle::deprecate_warn(
-      "0.3.0",
-      "target_market_share(green_or_brown)",
-      "target_market_share(increasing_or_decreasing)"
-    )
-    increasing_or_decreasing <- green_or_brown %>%
-      dplyr::rename(increasing_or_decreasing = .data$green_or_brown) %>%
-      mutate(
-        increasing_or_decreasing = dplyr::case_when(
-          increasing_or_decreasing == "green" ~ "increasing",
-          increasing_or_decreasing == "brown" ~ "decreasing"
-        )
-      )
   }
 
   data <- rename_and_warn_ald_names(data)

@@ -13,8 +13,7 @@ target_market_share(
   by_company = FALSE,
   weight_production = TRUE,
   increasing_or_decreasing = r2dii.data::increasing_or_decreasing,
-  ald = deprecated(),
-  green_or_brown = deprecated()
+  ald = deprecated()
 )
 }
 \arguments{
@@ -43,9 +42,6 @@ output the unweighted production values.}
 
 \item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
 \code{abcd}.}
-
-\item{green_or_brown}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{green_or_brown} has
-been superseded by \code{increasing_or_decreasing}.}
 }
 \value{
 A tibble including the summarized columns \code{metric}, \code{production},

@@ -105,10 +105,10 @@ add_green_technologies_to_abcd <- function(data, scenario) {
     filter(.data$increasing_or_decreasing == "increasing") %>%
     select(-all_of("increasing_or_decreasing"))
 
-  green_techs_in_scenario <- scenario %>%
+  increasing_techs_in_scenario <- scenario %>%
     select(all_of(c("sector", "technology"))) %>%
     unique() %>%
-    inner_join(green_techs, by = c("sector", "technology"))
+    inner_join(increasing_techs, by = c("sector", "technology"))
 
   green_rows_to_add <- data %>%
     group_by(
@@ -119,7 +119,7 @@ add_green_technologies_to_abcd <- function(data, scenario) {
       .data$is_ultimate_owner
     ) %>%
     summarize() %>%
-    left_join(green_techs_in_scenario, by = "sector") %>%
+    left_join(increasing_techs_in_scenario, by = "sector") %>%
     mutate(production = 0)
 
   dplyr::bind_rows(data, green_rows_to_add)

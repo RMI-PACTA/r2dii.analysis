@@ -19,9 +19,10 @@
 #' @param weight_production Logical vector of length 1. `TRUE` defaults to
 #' outputting production, weighted by relative loan-size. Set to `FALSE` to
 #' output the unweighted production values.
+#' @param increasing_or_decreasing A data frame like
+#' [r2dii.data::increasing_or_decreasing].
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.
-#' @param green_or_brown A data frame like [r2dii.data::green_or_brown]. 
 #'
 #' @return A tibble including the summarized columns `metric`, `production`,
 #'   `technology_share`, `percentage_of_initial_production_by_scope` and
@@ -80,7 +81,7 @@ target_market_share <- function(data,
                                 use_credit_limit = FALSE,
                                 by_company = FALSE,
                                 weight_production = TRUE,
-                                green_or_brown = r2dii.data::green_or_brown,
+                                increasing_or_decreasing = r2dii.data::increasing_or_decreasing,
                                 ald = deprecated()) {
   stopifnot(
     is.data.frame(data),
@@ -160,7 +161,7 @@ target_market_share <- function(data,
 
   tmsr_or_smsp <- tmsr_or_smsp()
 
-  data <- pick_sms_or_tms_target(data, green_or_brown, tmsr_or_smsp)
+  data <- pick_sms_or_tms_target(data, increasing_or_decreasing, tmsr_or_smsp)
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
@@ -223,21 +224,21 @@ target_market_share <- function(data,
   data <- data %>%
     dplyr::bind_rows(relevant_corporate_economy)
 
-  data <- add_percentage_of_initial_production_by_scope(data, green_or_brown, tmsr_or_smsp, by_company)
+  data <- add_percentage_of_initial_production_by_scope(data, increasing_or_decreasing, tmsr_or_smsp, by_company)
 
   data %>%
     ungroup()
 }
 
 add_percentage_of_initial_production_by_scope <- function(data,
-                                                          green_or_brown,
+                                                          increasing_or_decreasing,
                                                           tmsr_or_smsp,
                                                           by_company) {
   data <- data %>%
-    left_join(green_or_brown, by = c("sector", "technology")) %>%
-    left_join(tmsr_or_smsp, by = "green_or_brown") %>%
+    left_join(increasing_or_decreasing, by = c("sector", "technology")) %>%
+    left_join(tmsr_or_smsp, by = "increasing_or_decreasing") %>%
     rename(target_name = "which_metric") %>%
-    select(-all_of("green_or_brown"))
+    select(-all_of("increasing_or_decreasing"))
 
   percent_by_sector_groups <- add_name_abcd_if_by_company(
     c("sector", "region", "scenario_source", "metric"),
@@ -371,26 +372,26 @@ add_name_abcd_if_by_company <- function(list, by_company = FALSE) {
   list
 }
 
-pick_sms_or_tms_target <- function(data, green_or_brown, tmsr_or_smsp) {
+pick_sms_or_tms_target <- function(data, increasing_or_decreasing, tmsr_or_smsp) {
   data %>%
     left_join(tmsr_or_smsp, by = c(target_name = "which_metric")) %>%
     inner_join(
-      green_or_brown,
+      increasing_or_decreasing,
       by = c(
         sector_abcd = "sector",
         technology = "technology",
-        green_or_brown = "green_or_brown"
+        increasing_or_decreasing = "increasing_or_decreasing"
       )
     ) %>%
-    warn_if_has_zero_rows("Joining `r2dii.data::green_or_brown` outputs 0 rows") %>%
-    select(-all_of(c("target_name", "green_or_brown")))
+    warn_if_has_zero_rows("Joining `r2dii.data::increasing_or_decreasing` outputs 0 rows") %>%
+    select(-all_of(c("target_name", "increasing_or_decreasing")))
 }
 
 tmsr_or_smsp <- function() {
   dplyr::tribble(
-    ~which_metric, ~green_or_brown,
-    "tmsr_target_production", "brown",
-    "smsp_target_production", "green"
+    ~which_metric, ~increasing_or_decreasing,
+    "tmsr_target_production", "decreasing",
+    "smsp_target_production", "increasing"
   )
 }
 

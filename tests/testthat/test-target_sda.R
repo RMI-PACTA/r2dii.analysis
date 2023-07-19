@@ -807,7 +807,7 @@ test_that("region_isos only has lowercase isos #398", {
   )
 })
 
-test_that("region_isos only has lowercase isos #398", {
+test_that("produces output with expected start years #439", {
 
   out <- target_sda(
       fake_matched(sector_abcd = "cement"),

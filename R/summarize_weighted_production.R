@@ -254,10 +254,10 @@ add_percent_change <- function(data) {
 
   check_zero_initial_production(data)
 
-  green_or_brown <- r2dii.data::green_or_brown
+  increasing_or_decreasing <- r2dii.data::increasing_or_decreasing
 
   data %>%
-    inner_join(green_or_brown, by = c(
+    inner_join(increasing_or_decreasing, by = c(
       sector_abcd = "sector",
       technology = "technology"
     )) %>%
@@ -266,15 +266,15 @@ add_percent_change <- function(data) {
     group_by(.data$sector_abcd, .data$name_abcd) %>%
     arrange(.data$name_abcd, .data$year) %>%
     mutate(
-      brown_percent_change =
+      decreasing_percent_change =
         (.data$production - first(.data$production)) /
           first(.data$production) * 100,
-      green_percent_change = (.data$production - first(.data$production)) /
+      increasing_percent_change = (.data$production - first(.data$production)) /
         first(.data$sector_production) * 100
     ) %>%
     mutate(percent_change = dplyr::case_when(
-      green_or_brown == "green" ~ green_percent_change,
-      green_or_brown == "brown" ~ brown_percent_change
+      increasing_percent_change == "increasing" ~ increasing_percent_change,
+      increasing_percent_change == "decreasing" ~ decreasing_percent_change
     )) %>%
     select(one_of(c(names(data), "percent_change"))) %>%
     ungroup()

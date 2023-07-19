@@ -273,8 +273,8 @@ add_percent_change <- function(data) {
         first(.data$sector_production) * 100
     ) %>%
     mutate(percent_change = dplyr::case_when(
-      increasing_percent_change == "increasing" ~ increasing_percent_change,
-      increasing_percent_change == "decreasing" ~ decreasing_percent_change
+      increasing_or_decreasing == "increasing" ~ increasing_percent_change,
+      increasing_or_decreasing == "decreasing" ~ decreasing_percent_change
     )) %>%
     select(one_of(c(names(data), "percent_change"))) %>%
     ungroup()

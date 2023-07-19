@@ -1045,11 +1045,11 @@ test_that("input with only green technologies, outputs only green technologies
 test_that("technology_share is calculated per region (#315)", {
   matched <- fake_matched(
     id_loan = c("L1", "L2"),
-    name_abcd = c("green", "brown")
+    name_abcd = c("increasing", "decreasing")
   )
 
   abcd <- fake_abcd(
-    name_company = c("brown", "green"),
+    name_company = c("decreasing", "increasing"),
     technology = c("ice", "electric"),
     plant_location = c("US", "FR"),
   )
@@ -1085,7 +1085,7 @@ test_that("technology_share is calculated per region (#315)", {
   )
 })
 
-test_that("input with only brown technologies, outputs both green  and brown
+test_that("input with only decreasing technologies, outputs both increasing  and decreasing
           technologies (#318)", {
   scenario <- fake_scenario(
     year = rep(c(2020, 2025), 2),
@@ -1094,14 +1094,14 @@ test_that("input with only brown technologies, outputs both green  and brown
     technology = rep(c("ice", "electric"), each = 2),
   )
 
-  abcd_brown <- fake_abcd(
+  abcd_decreasing <- fake_abcd(
     technology = "ice"
   )
 
-  # testing that input with only brown techs outputs both green and brown techs
+  # testing that input with only decreasing techs outputs both increasing and decreasing techs
   out <- target_market_share(
     fake_matched(),
-    abcd_brown,
+    abcd_decreasing,
     scenario,
     region_isos_demo
   )

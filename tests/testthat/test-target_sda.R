@@ -806,3 +806,15 @@ test_that("region_isos only has lowercase isos #398", {
     )
   )
 })
+
+test_that("region_isos only has lowercase isos #398", {
+
+  out <- target_sda(
+      fake_matched(sector_abcd = "cement"),
+      fake_abcd(sector = "cement", year = c(2024, 2025)),
+      fake_co2_scenario(year = 2024),
+      region_isos = region_isos_stable
+    )
+
+  expect_equal(min(out$year), 2025L)
+})

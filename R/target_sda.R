@@ -143,13 +143,22 @@ target_sda <- function(data,
 
   abcd <- abcd %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
-    left_join(region_isos, by = c(plant_location = "isos")) %>%
+    left_join(
+      region_isos,
+      by = c(plant_location = "isos"),
+      relationship = "many-to-many"
+      ) %>%
     rename(scenario_source = "source")
 
   abcd_by_sector <- abcd %>%
     aggregate_excluding(c("technology", "plant_location", "country_of_domicile"))
 
-  data <- inner_join(data, abcd_by_sector, by = abcd_columns())
+  data <- inner_join(
+    data,
+    abcd_by_sector,
+    by = abcd_columns(),
+    relationship = "many-to-many"
+    )
 
   summary_groups <- c(
     "region",

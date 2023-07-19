@@ -333,7 +333,8 @@ calculate_abcd_benchmark <- function(abcd, region_isos, by_company) {
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
       region_isos,
-      by = c("plant_location" = "isos")
+      by = c("plant_location" = "isos"),
+      relationship = "many-to-many"
     ) %>%
     warn_if_has_zero_rows("Joining `region_isos` outputs 0 rows.") %>%
     # Return visibly

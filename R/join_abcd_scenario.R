@@ -101,9 +101,9 @@ check_portfolio_abcd_scenario <- function(valid_matches, abcd, scenario) {
 }
 
 add_green_technologies_to_abcd <- function(data, scenario) {
-  green_techs <- r2dii.data::green_or_brown %>%
-    filter(.data$green_or_brown == "green") %>%
-    select(-all_of("green_or_brown"))
+  increasing_techs <- r2dii.data::increasing_or_decreasing %>%
+    filter(.data$increasing_or_decreasing == "increasing") %>%
+    select(-all_of("increasing_or_decreasing"))
 
   green_techs_in_scenario <- scenario %>%
     select(all_of(c("sector", "technology"))) %>%

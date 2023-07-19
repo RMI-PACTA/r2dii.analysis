@@ -812,9 +812,11 @@ test_that("region_isos only has lowercase isos #398", {
   out <- target_sda(
       fake_matched(sector_abcd = "cement"),
       fake_abcd(sector = "cement", year = c(2024, 2025)),
-      fake_co2_scenario(year = 2024),
+      fake_co2_scenario(year = c(2025, 2050), emission_factor = c(0.5, 0.2)),
       region_isos = region_isos_stable
     )
 
-  expect_equal(min(out$year), 2025L)
+  out_relevant <- filter(out, grepl("target", emission_factor_metric))
+
+  expect_equal(min(out_relevant$year), 2025L)
 })

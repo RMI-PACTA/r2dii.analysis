@@ -2,9 +2,13 @@ Package: r2dii.analysis
 Title: Measure Climate Scenario Alignment of Corporate Loans
 Version: 0.2.1.9000
 Authors@R: 
-    c(person(given = "Jackson",
-             family = "Hoffart",
+    c(person(given = "Alex",
+             family = "Axthelm",
              role = c("aut", "cre"),
+             email = "aaxthelm@rmi.org"),
+      person(given = "Jackson",
+             family = "Hoffart",
+             role = c("aut", "ctr"),
              email = "jackson.hoffart@gmail.com",
              comment = c(ORCID = "0000-0002-8600-5042")),
       person(given = "Mauro",

@@ -36,7 +36,7 @@
        7 cement  2020 global demo_2020       shaanxi auto target_b2ds           
        8 cement  2021 global demo_2020       shaanxi auto target_b2ds           
        9 cement  2022 global demo_2020       shaanxi auto target_b2ds           
-      10 cement  2023 global demo_2020       <NA>         target_b2ds           
+      10 cement  2023 global demo_2020       shaanxi auto target_b2ds           
       # i 58 more rows
       # i 1 more variable: emission_factor_value <dbl>
 

@@ -371,8 +371,6 @@ compute_loanbook_targets <- function(data,
                                      scenario_with_p,
                                      by_company,
                                      ...) {
-  # groups_to_use_total <- c("sector", "scenario", "region", "scenario_source")
-
   target_summary_groups <- maybe_add_name_abcd(..., by_company)
 
   max_year_data <- max(data$year)
@@ -395,21 +393,6 @@ compute_loanbook_targets <- function(data,
         by = c("year", "sector", "region", "scenario_source")
       ) %>%
       dplyr::filter(!is.na(.data$name_abcd))
-
-    # data <- data %>%
-    #   group_by(!!!rlang::syms(...)) %>%
-    #   arrange(.data$year) %>%
-    #   tidyr::complete(.data$name_abcd, tidyr::nesting(year, emission_factor_projected, emission_factor_adjusted_scenario, p)) %>%
-    #   # tidyr::complete(tidyr::nesting(name_abcd, emission_factor_projected), tidyr::nesting(year, emission_factor_adjusted_scenario, p)) %>%
-    #   dplyr::mutate(
-    #     emission_factor_projected = dplyr::if_else(
-    #       .data$year > .env$max_year_data,
-    #       NA_real_,
-    #       .data$emission_factor_projected
-    #     )
-    #   ) %>%
-    #   ungroup() %>%
-    #   dplyr::filter(!is.na(.data$name_abcd))
   }
 
   data <- data  %>%

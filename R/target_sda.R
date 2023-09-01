@@ -226,7 +226,6 @@ target_sda <- function(data,
     data,
     adjusted_scenario_with_p,
     by_company = by_company,
-    # !!!rlang::syms(target_summary_groups)
     target_summary_groups
   )
 
@@ -372,8 +371,6 @@ compute_loanbook_targets <- function(data,
                                      by_company,
                                      ...) {
   target_summary_groups <- maybe_add_name_abcd(..., by_company)
-
-  max_year_data <- max(data$year)
 
   data <- data %>%
     right_join(

@@ -1,5 +1,6 @@
 # r2dii.analysis (development version)
 
+# `target_sda` now uses final year of scenario as convergence target when `by_company = TRUE` (#445).
 # `target_market_share` gains argument `increasing_or_decreasing` (#426).
 
 # r2dii.analysis 0.2.1

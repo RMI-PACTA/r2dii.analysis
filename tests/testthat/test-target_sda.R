@@ -820,3 +820,196 @@ test_that("produces output with expected start years #439", {
 
   expect_equal(min(out_relevant$year), 2025L)
 })
+
+test_that("final year of emission intensity scenario matches final year of adjusted_scenario_* and target_* (#445)", {
+  matched <- fake_matched(sector_abcd = "cement")
+
+  abcd <- fake_abcd(
+    sector = "cement",
+    technology = "cement",
+    name_company = c(rep("shaanxi auto", 6), rep("company 2", 6)),
+    year = rep(2020:2025, 2),
+    emission_factor = c(0.9, 0.9, 0.8, 0.7, 0.6, 0.5, rep(2, 6))
+  )
+
+  co2_intensity_scenario <- fake_co2_scenario(
+    scenario = c(rep("nze_2050", 2), rep("steps", 2)),
+    year = rep(c(2020, 2050), 2),
+    emission_factor = c(0.5, 0.1, 0.5, 0.4)
+  )
+
+  out_lbk <- target_sda(
+    matched,
+    abcd,
+    co2_intensity_scenario,
+    region_isos = region_isos_stable
+  )
+
+  out_company <- target_sda(
+    matched,
+    abcd,
+    co2_intensity_scenario,
+    region_isos = region_isos_stable,
+    by_company = TRUE
+  )
+
+  final_co2_intensity_scenario <- co2_intensity_scenario %>%
+    dplyr::slice_max(
+      .data$year,
+      n = 1,
+      by = c("scenario", "sector", "region", "emission_factor_unit", "scenario_source")
+    )
+
+  final_out_lbk <- out_lbk %>%
+    dplyr::filter(
+      grepl("target_|adjusted_scenario_", .data$emission_factor_metric)
+    ) %>%
+    dplyr::slice_max(
+      .data$year,
+      n = 1,
+      by = c("sector", "region", "scenario_source", "emission_factor_metric")
+    )
+
+  final_out_company <- out_company %>%
+    dplyr::filter(
+      grepl("target_|adjusted_scenario_", .data$emission_factor_metric)
+    ) %>%
+    dplyr::slice_max(
+      .data$year,
+      n = 1,
+      by = c("sector", "region", "scenario_source", "name_abcd", "emission_factor_metric")
+    )
+
+  # final year of co2 intensity scenario is final year for all matching targets
+  final_year_lbk <- final_out_lbk %>%
+    tidyr::separate_wider_regex(
+      emission_factor_metric, c(metric = "target|adjusted_scenario", "_", scenario = ".*")
+    ) %>%
+    dplyr::inner_join(
+      final_co2_intensity_scenario,
+      by = c("sector", "scenario", "scenario_source", "region"),
+      suffix = c("_final_output", "_final_scenario")
+    ) %>%
+    dplyr::mutate(
+      final_year_correct = dplyr::if_else(
+        .data$year_final_output == .data$year_final_scenario,
+        TRUE,
+        FALSE
+      )
+    )
+
+  expect_equal(unique(final_year_lbk$final_year_correct), TRUE)
+
+  final_year_company <- final_out_company %>%
+    tidyr::separate_wider_regex(
+      emission_factor_metric, c(metric = "target|adjusted_scenario", "_", scenario = ".*")
+    ) %>%
+    dplyr::inner_join(
+      final_co2_intensity_scenario,
+      by = c("sector", "scenario", "scenario_source", "region"),
+      suffix = c("_final_output", "_final_scenario")
+    ) %>%
+    dplyr::mutate(
+      final_year_correct = dplyr::if_else(
+        .data$year_final_output == .data$year_final_scenario, TRUE, FALSE
+      )
+    )
+
+  expect_equal(unique(final_year_company$final_year_correct), TRUE)
+})
+
+test_that("target of final year always converges at final value of adjusted_scenario (#445)", {
+    matched <- fake_matched(sector_abcd = "cement")
+
+    abcd <- fake_abcd(
+      sector = "cement",
+      technology = "cement",
+      name_company = c(rep("shaanxi auto", 6), rep("company 2", 6)),
+      year = rep(2020:2025, 2),
+      emission_factor = c(0.9, 0.9, 0.8, 0.7, 0.6, 0.5, rep(2, 6))
+    )
+
+    co2_intensity_scenario <- fake_co2_scenario(
+      scenario = c(rep("nze_2050", 2), rep("steps", 2)),
+      year = rep(c(2020, 2050), 2),
+      emission_factor = c(0.5, 0.1, 0.5, 0.4)
+    )
+
+    out_lbk <- target_sda(
+      matched,
+      abcd,
+      co2_intensity_scenario,
+      region_isos = region_isos_stable
+    )
+
+    out_company <- target_sda(
+      matched,
+      abcd,
+      co2_intensity_scenario,
+      region_isos = region_isos_stable,
+      by_company = TRUE
+    )
+
+    final_out_lbk <- out_lbk %>%
+      dplyr::filter(
+        grepl("target_|adjusted_scenario_", .data$emission_factor_metric)
+      ) %>%
+      dplyr::slice_max(
+        .data$year,
+        n = 1,
+        by = c("sector", "region", "scenario_source", "emission_factor_metric")
+      )
+
+    final_out_company <- out_company %>%
+      dplyr::filter(
+        grepl("target_|adjusted_scenario_", .data$emission_factor_metric)
+      ) %>%
+      dplyr::slice_max(
+        .data$year,
+        n = 1,
+        by = c("sector", "region", "scenario_source", "name_abcd", "emission_factor_metric")
+      )
+
+  # final value of target_* is equal to final value of adjusted_scenario_* for loan book
+  final_targets_converge_lbk <- final_out_lbk %>%
+    tidyr::separate_wider_regex(
+      emission_factor_metric, c(metric = "target|adjusted_scenario", "_", scenario = ".*")
+    ) %>%
+    tidyr::pivot_wider(names_from = "metric", values_from = "emission_factor_value") %>%
+    dplyr::mutate(
+      targets_converge = dplyr::if_else(
+        .data$target == .data$adjusted_scenario, TRUE, FALSE
+      )
+    )
+
+  expect_equal(unique(final_targets_converge_lbk$targets_converge), TRUE)
+
+  # final value of target_* is equal to final value of adjusted_scenario_* for companies
+  final_targets_converge_company <- final_out_company %>%
+    tidyr::separate_wider_regex(
+      emission_factor_metric, c(metric = "target|adjusted_scenario", "_", scenario = ".*")
+    )
+
+  final_targets_converge_company_adjusted <- final_targets_converge_company %>%
+    dplyr::filter(grepl("adjusted_scenario", .data$metric)) %>%
+    tidyr::pivot_wider(names_from = "metric", values_from = "emission_factor_value")
+
+  final_targets_converge_company_target <- final_targets_converge_company %>%
+    dplyr::filter(grepl("target", .data$metric)) %>%
+    tidyr::pivot_wider(names_from = "metric", values_from = "emission_factor_value")
+
+  final_targets_converge_company <- final_targets_converge_company_target %>%
+    dplyr::inner_join(
+      final_targets_converge_company_adjusted,
+      by = c("sector", "scenario_source", "scenario", "region", "year"),
+      suffix = c("_target", "_adjusted")
+    ) %>%
+    dplyr::mutate(
+      targets_converge = dplyr::if_else(
+        .data$target == .data$adjusted_scenario, TRUE, FALSE
+      )
+    )
+
+  expect_equal(unique(final_targets_converge_company$targets_converge), TRUE)
+})
+

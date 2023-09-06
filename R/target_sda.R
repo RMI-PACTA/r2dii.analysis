@@ -384,10 +384,10 @@ compute_loanbook_targets <- function(data,
       arrange(.data$year) %>%
       tidyr::complete(.data$name_abcd, year) %>%
       ungroup() %>%
-      select(-all_of(c("scenario", "emission_factor_adjusted_scenario", "p"))) %>%
+      select(-all_of(c("emission_factor_adjusted_scenario", "p"))) %>%
       right_join(
         scenario_with_p,
-        by = c("year", "sector", "region", "scenario_source")
+        by = c("year", "sector", "region", "scenario_source", "scenario")
       ) %>%
       dplyr::filter(!is.na(.data$name_abcd))
   }

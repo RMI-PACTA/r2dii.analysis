@@ -54,7 +54,8 @@ if (installed) {
       abcd = abcd,
       scenario = scenario_demo_2020,
       region_isos = region_isos_demo
-    )
+    ) \%>\%
+    dplyr::filter(production != 0)
 
   summarize_weighted_production(master)
 

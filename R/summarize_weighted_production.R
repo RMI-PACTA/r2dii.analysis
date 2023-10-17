@@ -45,7 +45,7 @@
 #'       scenario = scenario_demo_2020,
 #'       region_isos = region_isos_demo
 #'     ) %>%
-#'     filter(production != 0)
+#'     dplyr::filter(production != 0)
 #'
 #'   summarize_weighted_production(master)
 #'

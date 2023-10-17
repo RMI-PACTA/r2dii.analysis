@@ -382,7 +382,7 @@ compute_loanbook_targets <- function(data,
     data <- data %>%
       group_by(!!!rlang::syms(...)) %>%
       arrange(.data$year) %>%
-      tidyr::complete(.data$name_abcd, year) %>%
+      tidyr::complete(.data$name_abcd, .data$year) %>%
       ungroup() %>%
       select(-all_of(c("emission_factor_adjusted_scenario", "p"))) %>%
       right_join(

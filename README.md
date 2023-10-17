@@ -21,8 +21,8 @@ climate goals. They summarize key metrics attributed to the portfolio
 (e.g. production, emission factors), and calculate targets based on
 climate scenarios. They implement in R the last step of the free
 software ‘PACTA’ (Paris Agreement Capital Transition Assessment;
-<https://www.transitionmonitor.com/>). Financial institutions use ‘PACTA’ to
-study how their capital allocation impacts the climate.
+<https://www.transitionmonitor.com/>). Financial institutions use
+‘PACTA’ to study how their capital allocation impacts the climate.
 
 ## Installation
 
@@ -73,21 +73,21 @@ matched %>%
     region_isos = region_isos_demo
   )
 #> Warning: Removing rows in abcd where `emission_factor` is NA
-#> # A tibble: 166 × 6
-#>    sector  year region             scenario_source emission_factor_met…¹ emiss…²
-#>    <chr>  <dbl> <chr>              <chr>           <chr>                   <dbl>
-#>  1 cement  2013 advanced economies demo_2020       projected              0.0217
-#>  2 cement  2013 developing asia    demo_2020       projected              0.0606
-#>  3 cement  2013 global             demo_2020       projected              0.658 
-#>  4 cement  2014 advanced economies demo_2020       projected              0.0219
-#>  5 cement  2014 developing asia    demo_2020       projected              0.0604
-#>  6 cement  2014 global             demo_2020       projected              0.659 
-#>  7 cement  2015 advanced economies demo_2020       projected              0.0221
-#>  8 cement  2015 developing asia    demo_2020       projected              0.0603
-#>  9 cement  2015 global             demo_2020       projected              0.660 
-#> 10 cement  2016 advanced economies demo_2020       projected              0.0223
-#> # … with 156 more rows, and abbreviated variable names ¹​emission_factor_metric,
-#> #   ²​emission_factor_value
+#> # A tibble: 96 × 6
+#>    sector  year region             scenario_source emission_factor_metric
+#>    <chr>  <dbl> <chr>              <chr>           <chr>                 
+#>  1 steel   2021 advanced economies demo_2020       projected             
+#>  2 steel   2021 global             demo_2020       projected             
+#>  3 steel   2022 advanced economies demo_2020       projected             
+#>  4 steel   2022 global             demo_2020       projected             
+#>  5 steel   2024 advanced economies demo_2020       projected             
+#>  6 steel   2024 global             demo_2020       projected             
+#>  7 steel   2025 advanced economies demo_2020       projected             
+#>  8 steel   2025 global             demo_2020       projected             
+#>  9 steel   2027 advanced economies demo_2020       projected             
+#> 10 steel   2027 global             demo_2020       projected             
+#> # ℹ 86 more rows
+#> # ℹ 1 more variable: emission_factor_value <dbl>
 ```
 
 - Use `target_market_share` to calculate market-share scenario targets
@@ -100,22 +100,22 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> # A tibble: 1,790 × 10
-#>    sector     techno…¹  year region scena…² metric produ…³ techn…⁴ scope perce…⁵
-#>    <chr>      <chr>    <int> <chr>  <chr>   <chr>    <dbl>   <dbl> <chr>   <dbl>
-#>  1 automotive electric  2020 global demo_2… proje… 324592.  0.0759 sect… 0      
-#>  2 automotive electric  2020 global demo_2… targe… 324592.  0.0759 sect… 0      
-#>  3 automotive electric  2020 global demo_2… targe… 324592.  0.0759 sect… 0      
-#>  4 automotive electric  2020 global demo_2… targe… 324592.  0.0759 sect… 0      
-#>  5 automotive electric  2021 global demo_2… proje… 339656.  0.0786 sect… 0.00352
-#>  6 automotive electric  2021 global demo_2… targe… 329191.  0.0744 sect… 0.00108
-#>  7 automotive electric  2021 global demo_2… targe… 352505.  0.0809 sect… 0.00653
-#>  8 automotive electric  2021 global demo_2… targe… 330435.  0.0747 sect… 0.00137
-#>  9 automotive electric  2022 global demo_2… proje… 354720.  0.0813 sect… 0.00705
-#> 10 automotive electric  2022 global demo_2… targe… 333693.  0.0730 sect… 0.00213
-#> # … with 1,780 more rows, and abbreviated variable names ¹​technology,
-#> #   ²​scenario_source, ³​production, ⁴​technology_share,
-#> #   ⁵​percentage_of_initial_production_by_scope
+#> # A tibble: 1,232 × 10
+#>    sector     technology  year region scenario_source metric     production
+#>    <chr>      <chr>      <dbl> <chr>  <chr>           <chr>           <dbl>
+#>  1 automotive electric    2020 global demo_2020       projected       3664.
+#>  2 automotive electric    2020 global demo_2020       target_cps      3664.
+#>  3 automotive electric    2020 global demo_2020       target_sds      3664.
+#>  4 automotive electric    2020 global demo_2020       target_sps      3664.
+#>  5 automotive electric    2021 global demo_2020       projected       8472.
+#>  6 automotive electric    2021 global demo_2020       target_cps      3845.
+#>  7 automotive electric    2021 global demo_2020       target_sds      4766.
+#>  8 automotive electric    2021 global demo_2020       target_sps      3894.
+#>  9 automotive electric    2022 global demo_2020       projected       8436.
+#> 10 automotive electric    2022 global demo_2020       target_cps      4023.
+#> # ℹ 1,222 more rows
+#> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
+#> #   percentage_of_initial_production_by_scope <dbl>
 ```
 
 - Or at the company level:
@@ -132,23 +132,22 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 32,402 × 11
-#>    sector     techno…¹  year region scena…² name_…³ metric produ…⁴ techn…⁵ scope
-#>    <chr>      <chr>    <int> <chr>  <chr>   <chr>   <chr>    <dbl>   <dbl> <chr>
-#>  1 automotive electric  2020 global demo_2… toyota… proje… 324592.  0.0759 sect…
-#>  2 automotive electric  2020 global demo_2… toyota… targe… 324592.  0.0759 sect…
-#>  3 automotive electric  2020 global demo_2… toyota… targe… 324592.  0.0759 sect…
-#>  4 automotive electric  2020 global demo_2… toyota… targe… 324592.  0.0759 sect…
-#>  5 automotive electric  2021 global demo_2… toyota… proje… 339656.  0.0786 sect…
-#>  6 automotive electric  2021 global demo_2… toyota… targe… 329191.  0.0744 sect…
-#>  7 automotive electric  2021 global demo_2… toyota… targe… 352505.  0.0809 sect…
-#>  8 automotive electric  2021 global demo_2… toyota… targe… 330435.  0.0747 sect…
-#>  9 automotive electric  2022 global demo_2… toyota… proje… 354720.  0.0813 sect…
-#> 10 automotive electric  2022 global demo_2… toyota… targe… 333693.  0.0730 sect…
-#> # … with 32,392 more rows, 1 more variable:
-#> #   percentage_of_initial_production_by_scope <dbl>, and abbreviated variable
-#> #   names ¹​technology, ²​scenario_source, ³​name_abcd, ⁴​production,
-#> #   ⁵​technology_share
+#> # A tibble: 3,200 × 11
+#>    sector    technology  year region scenario_source name_abcd metric production
+#>    <chr>     <chr>      <dbl> <chr>  <chr>           <chr>     <chr>       <dbl>
+#>  1 automoti… electric    2020 global demo_2020       large au… proje…       713.
+#>  2 automoti… electric    2020 global demo_2020       large au… targe…       713.
+#>  3 automoti… electric    2020 global demo_2020       large au… targe…       713.
+#>  4 automoti… electric    2020 global demo_2020       large au… targe…       713.
+#>  5 automoti… electric    2020 global demo_2020       large au… proje…       535.
+#>  6 automoti… electric    2020 global demo_2020       large au… targe…       535.
+#>  7 automoti… electric    2020 global demo_2020       large au… targe…       535.
+#>  8 automoti… electric    2020 global demo_2020       large au… targe…       535.
+#>  9 automoti… electric    2020 global demo_2020       large au… proje…       690.
+#> 10 automoti… electric    2020 global demo_2020       large au… targe…       690.
+#> # ℹ 3,190 more rows
+#> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
+#> #   percentage_of_initial_production_by_scope <dbl>
 ```
 
 ### Utility Functions
@@ -175,41 +174,42 @@ loanbook_joined_to_abcd_scenario <- matched %>%
 # portfolio level
 loanbook_joined_to_abcd_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
-#> # A tibble: 702 × 9
-#>    sector_abcd technology  year scenario  tmsr    smsp region weighted…¹ weigh…²
-#>    <chr>       <chr>      <int> <chr>    <dbl>   <dbl> <chr>       <dbl>   <dbl>
-#>  1 automotive  electric    2020 cps       1    0       global    324592.  0.0380
-#>  2 automotive  electric    2020 sds       1    0       global    324592.  0.0380
-#>  3 automotive  electric    2020 sps       1    0       global    324592.  0.0380
-#>  4 automotive  electric    2021 cps       1.12 0.00108 global    339656.  0.0393
-#>  5 automotive  electric    2021 sds       1.16 0.00653 global    339656.  0.0393
-#>  6 automotive  electric    2021 sps       1.14 0.00137 global    339656.  0.0393
-#>  7 automotive  electric    2022 cps       1.24 0.00213 global    354720.  0.0406
-#>  8 automotive  electric    2022 sds       1.32 0.0131  global    354720.  0.0406
-#>  9 automotive  electric    2022 sps       1.29 0.00273 global    354720.  0.0406
-#> 10 automotive  electric    2023 cps       1.35 0.00316 global    369784.  0.0419
-#> # … with 692 more rows, and abbreviated variable names ¹​weighted_production,
-#> #   ²​weighted_technology_share
+#> # A tibble: 558 × 9
+#>    sector_abcd technology  year scenario  tmsr    smsp region
+#>    <chr>       <chr>      <dbl> <chr>    <dbl>   <dbl> <chr> 
+#>  1 automotive  electric    2020 cps       1    0       global
+#>  2 automotive  electric    2020 sds       1    0       global
+#>  3 automotive  electric    2020 sps       1    0       global
+#>  4 automotive  electric    2021 cps       1.12 0.00108 global
+#>  5 automotive  electric    2021 sds       1.16 0.00653 global
+#>  6 automotive  electric    2021 sps       1.14 0.00137 global
+#>  7 automotive  electric    2022 cps       1.24 0.00213 global
+#>  8 automotive  electric    2022 sds       1.32 0.0131  global
+#>  9 automotive  electric    2022 sps       1.29 0.00273 global
+#> 10 automotive  electric    2023 cps       1.35 0.00316 global
+#> # ℹ 548 more rows
+#> # ℹ 2 more variables: weighted_production <dbl>,
+#> #   weighted_technology_share <dbl>
 
 # company level
 loanbook_joined_to_abcd_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_abcd)
-#> # A tibble: 9,036 × 10
-#>    sector_a…¹ techn…²  year scena…³  tmsr    smsp region name_…⁴ weigh…⁵ weigh…⁶
-#>    <chr>      <chr>   <int> <chr>   <dbl>   <dbl> <chr>  <chr>     <dbl>   <dbl>
-#>  1 automotive electr…  2020 cps      1    0       global toyota… 324592.  0.0380
-#>  2 automotive electr…  2020 sds      1    0       global toyota… 324592.  0.0380
-#>  3 automotive electr…  2020 sps      1    0       global toyota… 324592.  0.0380
-#>  4 automotive electr…  2021 cps      1.12 0.00108 global toyota… 339656.  0.0393
-#>  5 automotive electr…  2021 sds      1.16 0.00653 global toyota… 339656.  0.0393
-#>  6 automotive electr…  2021 sps      1.14 0.00137 global toyota… 339656.  0.0393
-#>  7 automotive electr…  2022 cps      1.24 0.00213 global toyota… 354720.  0.0406
-#>  8 automotive electr…  2022 sds      1.32 0.0131  global toyota… 354720.  0.0406
-#>  9 automotive electr…  2022 sps      1.29 0.00273 global toyota… 354720.  0.0406
-#> 10 automotive electr…  2023 cps      1.35 0.00316 global toyota… 369784.  0.0419
-#> # … with 9,026 more rows, and abbreviated variable names ¹​sector_abcd,
-#> #   ²​technology, ³​scenario, ⁴​name_abcd, ⁵​weighted_production,
-#> #   ⁶​weighted_technology_share
+#> # A tibble: 1,953 × 10
+#>    sector_abcd technology  year scenario  tmsr  smsp region name_abcd           
+#>    <chr>       <chr>      <dbl> <chr>    <dbl> <dbl> <chr>  <chr>               
+#>  1 automotive  electric    2020 cps          1     0 global large automotive co…
+#>  2 automotive  electric    2020 cps          1     0 global large automotive co…
+#>  3 automotive  electric    2020 cps          1     0 global large automotive co…
+#>  4 automotive  electric    2020 cps          1     0 global large hdv company t…
+#>  5 automotive  electric    2020 sds          1     0 global large automotive co…
+#>  6 automotive  electric    2020 sds          1     0 global large automotive co…
+#>  7 automotive  electric    2020 sds          1     0 global large automotive co…
+#>  8 automotive  electric    2020 sds          1     0 global large hdv company t…
+#>  9 automotive  electric    2020 sps          1     0 global large automotive co…
+#> 10 automotive  electric    2020 sps          1     0 global large automotive co…
+#> # ℹ 1,943 more rows
+#> # ℹ 2 more variables: weighted_production <dbl>,
+#> #   weighted_technology_share <dbl>
 ```
 
 [Get

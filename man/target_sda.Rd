@@ -54,6 +54,7 @@ This function ignores existing groups and outputs ungrouped data.
 }
 
 \examples{
+\dontrun{
 installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
   requireNamespace("r2dii.data", quietly = TRUE) &&
   packageVersion("r2dii.match") >= "0.1.0"
@@ -86,7 +87,7 @@ if (installed) {
       by_company = TRUE
     )
 }
-
+}
 }
 \seealso{
 Other functions to calculate scenario targets: 

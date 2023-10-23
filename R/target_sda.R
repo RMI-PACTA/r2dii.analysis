@@ -33,6 +33,7 @@
 #' @family functions to calculate scenario targets
 #'
 #' @examples
+#' \dontrun{
 #' installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
 #'   requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   packageVersion("r2dii.match") >= "0.1.0"
@@ -65,7 +66,7 @@
 #'       by_company = TRUE
 #'     )
 #' }
-#'
+#' }
 target_sda <- function(data,
                        abcd,
                        co2_intensity_scenario,

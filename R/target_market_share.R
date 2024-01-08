@@ -33,6 +33,7 @@
 #' @family functions to calculate scenario targets
 #'
 #' @examples
+#' \dontrun{
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE) &&
 #'   packageVersion("r2dii.match") >= "0.1.0"
@@ -73,6 +74,7 @@
 #'       # Calculate unweighted targets
 #'       weight_production = FALSE
 #'     )
+#' }
 #' }
 target_market_share <- function(data,
                                 abcd,

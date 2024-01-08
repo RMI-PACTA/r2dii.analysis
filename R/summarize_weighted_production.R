@@ -27,6 +27,7 @@
 #'   `summarize_weighted_percent_change()`, respectively.
 #'
 #' @examples
+#' \dontrun{
 #' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
 #'   requireNamespace("r2dii.match", quietly = TRUE) &&
 #'   packageVersion("r2dii.match") >= "0.1.0"
@@ -54,6 +55,7 @@
 #'   summarize_weighted_percent_change(master)
 #'
 #'   summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+#' }
 #' }
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)

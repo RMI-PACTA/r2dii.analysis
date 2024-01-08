@@ -60,6 +60,7 @@ This function ignores existing groups and outputs ungrouped data.
 }
 
 \examples{
+\dontrun{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE) &&
   packageVersion("r2dii.match") >= "0.1.0"
@@ -100,6 +101,7 @@ if (installed) {
       # Calculate unweighted targets
       weight_production = FALSE
     )
+}
 }
 }
 \seealso{

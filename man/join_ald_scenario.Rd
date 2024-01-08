@@ -19,6 +19,7 @@ This function was deprecated in favour of \code{\link[=join_abcd_scenario]{join_
 for more information.
 }
 \examples{
+\dontrun{
 installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
   requireNamespace("r2dii.match", quietly = TRUE) &&
   packageVersion("r2dii.match") >= "0.1.0"
@@ -45,6 +46,7 @@ if (installed) {
       scenario = scenario_demo_2020,
       region_isos = region_isos_demo
     )
+}
 }
 }
 \keyword{internal}

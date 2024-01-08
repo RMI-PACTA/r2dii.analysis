@@ -1,12 +1,12 @@
 pandoc: 2.19.2
-pkgdown: 2.0.6
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   production-percent-change: production-percent-change.html
   r2dii-analysis: r2dii-analysis.html
   target-market-share: target-market-share.html
   target-sda: target-sda.html
-last_built: 2022-11-07T10:44Z
+last_built: 2024-01-08T18:06Z
 urls:
   reference: https://rmi-pacta.github.io/r2dii.analysis/reference
   article: https://rmi-pacta.github.io/r2dii.analysis/articles

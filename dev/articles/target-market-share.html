@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Market Share Approach">
 <meta property="og:description" content="r2dii.analysis">
@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,20 +197,20 @@ fake but show how you should structure your own data.</p>
 <span>  <span class="fu"><a href="https://rmi-pacta.github.io/r2dii.match/reference/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">matched</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 216 × 28</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 28</span></span></span>
 <span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304                Yukon Development Corp     <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297                Yuba City Cogeneration Pa… <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287                Ytl Powerseraya Pte Ltd    <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286                Ytl Power International B… <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285                Ytl Corp Bhd               <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L23     C283                Ypic International Energy… <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L24     C282                Ypfb Corporacion           <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L25     C281                Ypf Sa                     <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L26     C280                Ypf Energia Electrica Sa   <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L27     C278                Younicos Ag                <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 206 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297                Ladeck                     <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287                Weinhold                   <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286                Gallo Group                <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285                Austermuhle GmbH           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L24     C282                Ferraro-Ferraro Group      <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L25     C281                Lockman, Lockman and Lock… <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L26     C280                Ankunding, Ankunding and … <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L27     C278                Donati-Donati Group        <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L28     C276                Ferraro, Ferraro e Ferrar… <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
@@ -228,7 +228,7 @@ level.</li>
 <span></span>
 <span></span>
 <span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/target_market_share.html">target_market_share</a></span><span class="op">(</span><span class="va">abcd</span>, <span class="va">scenario</span>, <span class="va">regions</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,790 × 10</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 792 × 10</span></span></span>
 <span><span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected     <span style="text-decoration: underline;">324</span>592.</span></span>
@@ -241,7 +241,7 @@ level.</li>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sps    <span style="text-decoration: underline;">330</span>435.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       projected     <span style="text-decoration: underline;">354</span>720.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       target_cps    <span style="text-decoration: underline;">333</span>693.</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,780 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 782 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></span></code></pre></div>
 <ul>
@@ -254,20 +254,20 @@ level.</li>
 <span><span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span></span>
 <span><span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span></span>
 <span><span class="co">#&gt; arguments to `FALSE`?</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32,402 × 11</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12,140 × 11</span></span></span>
 <span><span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">324</span>592.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">339</span>656.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">329</span>191.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">352</span>505.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">330</span>435.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       toyota m… proje…    <span style="text-decoration: underline;">354</span>720.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       toyota m… targe…    <span style="text-decoration: underline;">333</span>693.</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 32,392 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       Bernardi… proje…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automoti… electric    <span style="text-decoration: underline;">2</span>020 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">324</span>592.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       Bernardi… proje…    <span style="text-decoration: underline;">339</span>656.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">329</span>191.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">352</span>505.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automoti… electric    <span style="text-decoration: underline;">2</span>021 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">330</span>435.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       Bernardi… proje…    <span style="text-decoration: underline;">354</span>720.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automoti… electric    <span style="text-decoration: underline;">2</span>022 global demo_2020       Bernardi… targe…    <span style="text-decoration: underline;">333</span>693.</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12,130 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
@@ -279,7 +279,7 @@ level.</li>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a>, <a href="https://github.com/maurolepore/" class="external-link">Mauro Lepore</a>, Klaus Hogedorn, Nicky Halterman, <a href="https://rmi.org/" class="external-link">Rocky Mountain Institute</a>.</p>
+<p>Developed by Alex Axthelm, <a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a>, <a href="https://github.com/maurolepore/" class="external-link">Mauro Lepore</a>, Klaus Hogedorn, Nicky Halterman, <a href="https://rmi.org/" class="external-link">Rocky Mountain Institute</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

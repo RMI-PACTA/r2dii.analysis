@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
-[![Codecov test coverage](https://codecov.io/gh/rmi-pacta/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rmi-pacta/r2dii.analysis?branch=main)
 [![Codecov test coverage](https://codecov.io/gh/RMI-PACTA/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.analysis?branch=main)
 [![R-CMD-check](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
@@ -41,8 +40,8 @@ install.packages("r2dii.analysis")
 Or install the development version of r2dii.analysis from GitHub with:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("RMI-PACTA/r2dii.analysis")
+# install.packages("pak")
+pak::pak("RMI-PACTA/r2dii.analysis")
 ```
 
 ## Example

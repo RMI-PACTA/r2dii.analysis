@@ -1411,7 +1411,7 @@ test_that("region_isos only has lowercase isos #398", {
   )
 })
 
-test_that("with `abcd` with `NA` for start year, replaces `NA` with 0", {
+test_that("with `abcd` with `NA` for start year, replaces `NA` with 0 (#423)", {
   expect_warning(
     out <- target_market_share(
       fake_matched(),

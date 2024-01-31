@@ -49,13 +49,13 @@ Imports:
     lifecycle,
     magrittr,
     r2dii.data (>= 0.4.0),
+    r2dii.match,
     rlang (>= 0.1.2),
     tidyr,
     tidyselect,
     zoo
 Suggests: 
     covr,
-    r2dii.match,
     rmarkdown,
     roxygen2,
     spelling,

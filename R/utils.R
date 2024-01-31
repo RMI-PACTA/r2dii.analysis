@@ -23,6 +23,20 @@ filter_and_warn_na <- function(data, column) {
   return(data)
 }
 
+fill_and_warn_na <- function(data, column) {
+  if (anyNA(data[[column]])) {
+    name_dataset <- deparse(substitute(data))
+    warning_message = paste("Filling in rows of", name_dataset, "where `{column}` is NA with 0")
+    warn(
+      glue(warning_message),
+      class = "fill_nas_crucial_economic_input"
+    )
+
+    data <- mutate(data, across(.data[[column]], ~tidyr::replace_na(., 0)))
+  }
+  return(data)
+}
+
 warn_grouped <- function(data, message) {
   if (dplyr::is_grouped_df(data)) warn(message)
 

@@ -169,7 +169,7 @@ test_that("w/ NAs in crucial columns, errors with informative message", {
   expect_error_crucial_NAs_scenario("smsp")
 })
 
-test_that("filters and warns when input-data has NAs", {
+test_that("fills and warns when input-data has NAs", {
   matched <- fake_matched()
   abcd <- fake_abcd(production = c(1, NA))
   scenario <- fake_scenario()
@@ -180,7 +180,7 @@ test_that("filters and warns when input-data has NAs", {
       abcd,
       scenario,
       region_isos_stable),
-      class = "na_crucial_economic_input")
+      class = "fill_nas_crucial_economic_input")
 })
 
 test_that("outputs expected names", {

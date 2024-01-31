@@ -32,7 +32,7 @@ fill_and_warn_na <- function(data, column) {
       class = "fill_nas_crucial_economic_input"
     )
 
-    data <- mutate(data, across(.data[[column]], ~tidyr::replace_na(., 0)))
+    data[[column]] <- tidyr::replace_na(data[[column]], 0)
   }
   return(data)
 }

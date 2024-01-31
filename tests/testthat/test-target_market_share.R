@@ -1410,3 +1410,21 @@ test_that("region_isos only has lowercase isos #398", {
     )
   )
 })
+
+test_that("with `abcd` with `NA` for start year, replaces `NA` with 0", {
+  expect_warning(
+    out <- target_market_share(
+      fake_matched(),
+      fake_abcd(year = c(2020, 2025), production = c(NA_real_, 1)),
+      fake_scenario(year = c(2020, 2025)),
+      region_isos_stable
+    ),
+    class = "fill_nas_crucial_economic_input"
+  )
+
+  out <- out %>%
+    filter(metric == "projected") %>%
+    arrange(year)
+
+  expect_equal(out$production, c(0, 1))
+})

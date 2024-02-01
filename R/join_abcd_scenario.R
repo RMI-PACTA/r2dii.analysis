@@ -20,26 +20,20 @@
 #'
 #' @family utility functions
 #'
-#' @examples
-#' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-#'   requireNamespace("r2dii.match", versionCheck = "0.1.0", quietly = TRUE) &&
-#'   packageVersion("r2dii.match") >= "0.1.0"
+#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0)
+#' library(r2dii.data)
+#' library(r2dii.match)
 #'
-#' if (installed) {
-#'   library(r2dii.data)
-#'   library(r2dii.match)
+#' valid_matches <- match_name(loanbook_demo, abcd_demo) %>%
+#' # WARNING: Remember to validate matches (see `?prioritize`)
+#'   prioritize()
 #'
-#'   valid_matches <- match_name(loanbook_demo, abcd_demo) %>%
-#'     # WARNING: Remember to validate matches (see `?prioritize`)
-#'     prioritize()
-#'
-#'   valid_matches %>%
-#'     join_abcd_scenario(
-#'       abcd = abcd_demo,
-#'       scenario = scenario_demo_2020,
-#'       region_isos = region_isos_demo
-#'     )
-#' }
+#' valid_matches %>%
+#'   join_abcd_scenario(
+#'   abcd = abcd_demo,
+#'   scenario = scenario_demo_2020,
+#'   region_isos = region_isos_demo
+#'   )
 join_abcd_scenario <- function(data,
                               abcd,
                               scenario,

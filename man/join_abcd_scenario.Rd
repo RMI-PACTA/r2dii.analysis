@@ -36,27 +36,6 @@ scenario.
 \verb{dplyr::join_*()}, forming the master dataset to be used in later steps of
 the analysis.
 }
-\examples{
-installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-  requireNamespace("r2dii.match", versionCheck = "0.1.0", quietly = TRUE) &&
-  packageVersion("r2dii.match") >= "0.1.0"
-
-if (installed) {
-  library(r2dii.data)
-  library(r2dii.match)
-
-  valid_matches <- match_name(loanbook_demo, abcd_demo) \%>\%
-    # WARNING: Remember to validate matches (see `?prioritize`)
-    prioritize()
-
-  valid_matches \%>\%
-    join_abcd_scenario(
-      abcd = abcd_demo,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_demo
-    )
-}
-}
 \seealso{
 Other utility functions: 
 \code{\link{summarize_weighted_production}()}

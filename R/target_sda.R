@@ -32,41 +32,34 @@
 #'
 #' @family functions to calculate scenario targets
 #'
-#' @examples
-#' \dontrun{
-#' installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
-#'   requireNamespace("r2dii.data", quietly = TRUE) &&
-#'   packageVersion("r2dii.match") >= "0.1.0"
+#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0)
 #'
-#' if (installed) {
-#'   library(r2dii.match)
-#'   library(r2dii.data)
+#' library(r2dii.match)
+#' library(r2dii.data)
 #'
-#'   loanbook <- head(loanbook_demo, 150)
-#'   abcd <- head(abcd_demo, 100)
+#' loanbook <- head(loanbook_demo, 150)
+#' abcd <- head(abcd_demo, 100)
 #'
-#'   matched <- loanbook %>%
-#'     match_name(abcd) %>%
-#'     prioritize()
+#' matched <- loanbook %>%
+#'   match_name(abcd) %>%
+#'   prioritize()
 #'
-#'   # Calculate targets at portfolio level
-#'   matched %>%
-#'     target_sda(
-#'       abcd = abcd,
-#'       co2_intensity_scenario = co2_intensity_scenario_demo,
-#'       region_isos = region_isos_demo
-#'     )
+#' # Calculate targets at portfolio level
+#' matched %>%
+#'   target_sda(
+#'    abcd = abcd,
+#'    co2_intensity_scenario = co2_intensity_scenario_demo,
+#'    region_isos = region_isos_demo
+#'    )
 #'
-#'   # Calculate targets at company level
-#'   matched %>%
-#'     target_sda(
-#'       abcd = abcd,
-#'       co2_intensity_scenario = co2_intensity_scenario_demo,
-#'       region_isos = region_isos_demo,
-#'       by_company = TRUE
-#'     )
-#' }
-#' }
+#' # Calculate targets at company level
+#' matched %>%
+#'   target_sda(
+#'    abcd = abcd,
+#'    co2_intensity_scenario = co2_intensity_scenario_demo,
+#'    region_isos = region_isos_demo,
+#'    by_company = TRUE
+#'    )
 target_sda <- function(data,
                        abcd,
                        co2_intensity_scenario,

@@ -59,51 +59,6 @@ production forecast.
 This function ignores existing groups and outputs ungrouped data.
 }
 
-\examples{
-\dontrun{
-installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-  requireNamespace("r2dii.match", quietly = TRUE) &&
-  packageVersion("r2dii.match") >= "0.1.0"
-
-if (installed) {
-  library(r2dii.data)
-  library(r2dii.match)
-
-  loanbook <- head(loanbook_demo, 100)
-  abcd <- head(abcd_demo, 100)
-
-  matched <- loanbook \%>\%
-    match_name(abcd) \%>\%
-    prioritize()
-
-  # Calculate targets at portfolio level
-  matched \%>\%
-    target_market_share(
-      abcd = abcd,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_demo
-    )
-
-  # Calculate targets at company level
-  matched \%>\%
-    target_market_share(
-      abcd = abcd,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_demo,
-      by_company = TRUE
-    )
-
-  matched \%>\%
-    target_market_share(
-      abcd = abcd,
-      scenario = scenario_demo_2020,
-      region_isos = region_isos_demo,
-      # Calculate unweighted targets
-      weight_production = FALSE
-    )
-}
-}
-}
 \seealso{
 Other functions to calculate scenario targets: 
 \code{\link{target_sda}()}

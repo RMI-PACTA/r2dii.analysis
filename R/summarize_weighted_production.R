@@ -26,37 +26,29 @@
 #'   `weighted_production` for `summarize_weighted_production()` and
 #'   `summarize_weighted_percent_change()`, respectively.
 #'
-#' @examples
-#' \dontrun{
-#' installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-#'   requireNamespace("r2dii.match", quietly = TRUE) &&
-#'   packageVersion("r2dii.match") >= "0.1.0"
+#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0)
+#' library(r2dii.data)
+#' library(r2dii.match)
 #'
-#' if (installed) {
-#'   library(r2dii.data)
-#'   library(r2dii.match)
-#'
-#'   loanbook <- head(loanbook_demo, 150)
-#'   abcd <- head(abcd_demo, 100)
-#'   master <- loanbook %>%
-#'     match_name(abcd) %>%
-#'     prioritize() %>%
-#'     join_abcd_scenario(
-#'       abcd = abcd,
-#'       scenario = scenario_demo_2020,
-#'       region_isos = region_isos_demo
+#' loanbook <- head(loanbook_demo, 150)
+#' abcd <- head(abcd_demo, 100)
+#' master <- loanbook %>%
+#'   match_name(abcd) %>%
+#'   prioritize() %>%
+#'   join_abcd_scenario(
+#'     abcd = abcd,
+#'     scenario = scenario_demo_2020,
+#'     region_isos = region_isos_demo
 #'     ) %>%
-#'     dplyr::filter(production != 0)
+#'   dplyr::filter(production != 0)
 #'
-#'   summarize_weighted_production(master)
+#' summarize_weighted_production(master)
 #'
-#'   summarize_weighted_production(master, use_credit_limit = TRUE)
+#' summarize_weighted_production(master, use_credit_limit = TRUE)
 #'
-#'   summarize_weighted_percent_change(master)
+#' summarize_weighted_percent_change(master)
 #'
-#'   summarize_weighted_percent_change(master, use_credit_limit = TRUE)
-#' }
-#' }
+#' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
   summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)
 }

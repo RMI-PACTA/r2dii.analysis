@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* `target_market_share` now handles `abcd` with rows where `production` is `NA` by filling with `0` (#423).
+
 # r2dii.analysis 0.3.0
 
 * `target_sda` now uses final year of scenario as convergence target when `by_company = TRUE` (#445).

@@ -450,7 +450,12 @@ separate_metric_from_name <- function(data) {
       name = sub("(production)_", "\\1-", .data$name),
       name = sub("(technology_share)_", "\\1-", .data$name)
     ) %>%
-    tidyr::separate(.data$name, into = c("name", "metric"), sep = "-")
+    tidyr::separate(
+      .data$name,
+      into = c("name", "metric"),
+      sep = "-",
+      extra = "merge"
+      )
 }
 
 check_input_for_crucial_columns <- function(data, abcd, scenario) {

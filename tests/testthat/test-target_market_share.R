@@ -1428,3 +1428,17 @@ test_that("with `abcd` with `NA` for start year, replaces `NA` with 0 (#423)", {
 
   expect_equal(out$production, c(0, 1))
 })
+
+test_that("correctly splits scenario names with hyphen #425", {
+
+  out <- target_market_share(
+    fake_matched(),
+    fake_abcd(),
+    fake_scenario(scenario = "1.5c-scen"),
+    region_isos_stable
+  ) %>%
+    filter(grepl("target", metric))
+
+  expect_equal(unique(out$metric), "target_1.5c-scen")
+
+})

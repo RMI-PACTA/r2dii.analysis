@@ -99,7 +99,7 @@ target_market_share <- function(data,
 
   data <- rename_and_warn_ald_names(data)
 
-  abcd <- filter_and_warn_na(abcd, "production")
+  abcd <- fill_and_warn_na(abcd, "production")
 
   region_isos <- change_to_lowercase_and_warn(region_isos, "isos")
 

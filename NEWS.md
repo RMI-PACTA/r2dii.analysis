@@ -2,6 +2,8 @@
 
 * `target_market_share` now correctly handles input scenarios with a hyphen in their name (#425).
 
+* `target_market_share` now handles `abcd` with rows where `production` is `NA` by filling with `0` (#423).
+
 # r2dii.analysis 0.3.0
 
 * `target_sda` now uses final year of scenario as convergence target when `by_company = TRUE` (#445).

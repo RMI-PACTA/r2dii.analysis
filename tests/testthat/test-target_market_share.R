@@ -169,7 +169,7 @@ test_that("w/ NAs in crucial columns, errors with informative message", {
   expect_error_crucial_NAs_scenario("smsp")
 })
 
-test_that("filters and warns when input-data has NAs", {
+test_that("fills and warns when input-data has NAs", {
   matched <- fake_matched()
   abcd <- fake_abcd(production = c(1, NA))
   scenario <- fake_scenario()
@@ -180,7 +180,7 @@ test_that("filters and warns when input-data has NAs", {
       abcd,
       scenario,
       region_isos_stable),
-      class = "na_crucial_economic_input")
+      class = "fill_nas_crucial_economic_input")
 })
 
 test_that("outputs expected names", {
@@ -1409,6 +1409,24 @@ test_that("region_isos only has lowercase isos #398", {
       bad_region_isos
     )
   )
+})
+
+test_that("with `abcd` with `NA` for start year, replaces `NA` with 0 (#423)", {
+  expect_warning(
+    out <- target_market_share(
+      fake_matched(),
+      fake_abcd(year = c(2020, 2025), production = c(NA_real_, 1)),
+      fake_scenario(year = c(2020, 2025)),
+      region_isos_stable
+    ),
+    class = "fill_nas_crucial_economic_input"
+  )
+
+  out <- out %>%
+    filter(metric == "projected") %>%
+    arrange(year)
+
+  expect_equal(out$production, c(0, 1))
 })
 
 test_that("correctly splits scenario names with hyphen #425", {

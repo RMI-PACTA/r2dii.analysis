@@ -32,7 +32,7 @@
 #'
 #' @family functions to calculate scenario targets
 #'
-#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0)
+#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0")
 #'
 #' library(r2dii.match)
 #' library(r2dii.data)

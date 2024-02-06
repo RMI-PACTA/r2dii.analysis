@@ -26,7 +26,7 @@
 #'   `weighted_production` for `summarize_weighted_production()` and
 #'   `summarize_weighted_percent_change()`, respectively.
 #'
-#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0)
+#' @examplesIf rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0")
 #' library(r2dii.data)
 #' library(r2dii.match)
 #'

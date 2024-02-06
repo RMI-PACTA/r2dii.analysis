@@ -53,6 +53,37 @@ to calculate these targets.
 This function ignores existing groups and outputs ungrouped data.
 }
 
+\examples{
+\dontshow{if (rlang::is_installed("r2dii.data") && rlang::is_installed("r2dii.match", version = "0.1.0")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
+library(r2dii.match)
+library(r2dii.data)
+
+loanbook <- head(loanbook_demo, 150)
+abcd <- head(abcd_demo, 100)
+
+matched <- loanbook \%>\%
+  match_name(abcd) \%>\%
+  prioritize()
+
+# Calculate targets at portfolio level
+matched \%>\%
+  target_sda(
+   abcd = abcd,
+   co2_intensity_scenario = co2_intensity_scenario_demo,
+   region_isos = region_isos_demo
+   )
+
+# Calculate targets at company level
+matched \%>\%
+  target_sda(
+   abcd = abcd,
+   co2_intensity_scenario = co2_intensity_scenario_demo,
+   region_isos = region_isos_demo,
+   by_company = TRUE
+   )
+\dontshow{\}) # examplesIf}
+}
 \seealso{
 Other functions to calculate scenario targets: 
 \code{\link{target_market_share}()}

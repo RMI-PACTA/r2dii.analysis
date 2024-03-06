@@ -2,9 +2,7 @@ destination: docs
 development:
   mode: auto
 template:
-  bootstrap: 5
-  params:
-    bootswatch: flatly
+  package: pacta.pkgdown.rmitemplate
 url: https://rmi-pacta.github.io/r2dii.analysis
 authors:
   Mauro Lepore:

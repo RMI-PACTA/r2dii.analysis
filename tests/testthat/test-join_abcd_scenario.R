@@ -259,3 +259,16 @@ test_that("outputs the same with upper/lower abcd$sector or abcd$technology", {
   out_upper <- join_abcd_scenario(matched, upper_technology, scenario, regions)
   expect_equal(out_upper, out_lower)
 })
+
+test_that("outputs full timeline of scenario #157", {
+
+  out <- join_abcd_scenario(
+    fake_matched(),
+    fake_abcd(year = 2020),
+    fake_scenario(scenario = "1.5c-scen", year = c(2020, 2025)),
+    region_isos = region_isos_stable
+  )
+
+  expect_equal(max(out$year), 2025L)
+
+})

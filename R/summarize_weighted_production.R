@@ -58,8 +58,6 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
 
   old_groups <- dplyr::groups(data)
 
-  data <- rename_and_warn_ald_names(data)
-
   crucial <- c("production", "sector_abcd", "year", "technology")
 
   if (with_targets) {
@@ -149,8 +147,6 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
   stopifnot(is.data.frame(data))
 
-  data <- rename_and_warn_ald_names(data)
-
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
@@ -167,8 +163,6 @@ summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALS
 summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FALSE) {
   stopifnot(is.data.frame(data))
 
-  data <- rename_and_warn_ald_names(data)
-
   data %>%
     ungroup() %>%
     add_loan_weight(use_credit_limit = use_credit_limit) %>%
@@ -181,8 +175,6 @@ summarize_weighted_emission_factor <- function(data, ..., use_credit_limit = FAL
 }
 
 summarize_unweighted_emission_factor <- function(data, ...) {
-
-  data <- rename_and_warn_ald_names(data)
 
   data <- data %>%
     select(

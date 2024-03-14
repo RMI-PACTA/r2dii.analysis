@@ -12,8 +12,7 @@ target_market_share(
   use_credit_limit = FALSE,
   by_company = FALSE,
   weight_production = TRUE,
-  increasing_or_decreasing = r2dii.data::increasing_or_decreasing,
-  ald = deprecated()
+  increasing_or_decreasing = r2dii.data::increasing_or_decreasing
 )
 }
 \arguments{
@@ -39,9 +38,6 @@ output the unweighted production values.}
 
 \item{increasing_or_decreasing}{A data frame like
 \link[r2dii.data:increasing_or_decreasing]{r2dii.data::increasing_or_decreasing}.}
-
-\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
-\code{abcd}.}
 }
 \value{
 A tibble including the summarized columns \code{metric}, \code{production},

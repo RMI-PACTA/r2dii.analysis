@@ -71,7 +71,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="r2diianalysis-development-version">r2dii.analysis (development version)<a class="anchor" aria-label="anchor" href="#r2diianalysis-development-version"></a></h2>
-<ul><li><p><code>target_market_share</code> now correctly handles input scenarios with a hyphen in their name (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/425" class="external-link">#425</a>).</p></li>
+<ul><li><p>Completed deprecation of <code>ald</code> in favour of <code>abcd</code> (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/466" class="external-link">#466</a>).</p></li>
+<li><p><code>target_market_share</code> now correctly handles input scenarios with a hyphen in their name (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/425" class="external-link">#425</a>).</p></li>
 <li><p><code>target_market_share</code> now handles <code>abcd</code> with rows where <code>production</code> is <code>NA</code> by filling with <code>0</code> (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/423" class="external-link">#423</a>).</p></li>
 </ul></div>
     <div class="section level2">
@@ -161,11 +162,11 @@
 <h2 class="pkg-version" data-toc-text="0.1.0" id="r2diianalysis-010">r2dii.analysis 0.1.0<a class="anchor" aria-label="anchor" href="#r2diianalysis-010"></a></h2><p class="text-muted">CRAN release: 2020-09-03</p>
 <ul><li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now correctly handles differing <code>country_of_domicile</code> inputs (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/171" class="external-link">#171</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now outputs <code>technology_share</code> (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/184" class="external-link">#184</a>).</p></li>
-<li><p><code><a href="../reference/join_ald_scenario.html">join_ald_scenario()</a></code> now returns visibly with dev-magrittr (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/188" class="external-link">#188</a> <a href="https://github.com/lionel-" class="external-link">@lionel-</a>).</p></li>
+<li><p><code>join_ald_scenario()</code> now returns visibly with dev-magrittr (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/188" class="external-link">#188</a> <a href="https://github.com/lionel-" class="external-link">@lionel-</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> gains <code>weight_production</code> parameter (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/181" class="external-link">#181</a>).</p></li>
 <li><p><code><a href="../reference/target_market_share.html">target_market_share()</a></code> now correctly use <code>sector_ald</code> column from input <code>data</code> argument (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/178" class="external-link">#178</a>).</p></li>
 <li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now automatically filters out <code>ald</code> rows where the <code>emissions_factor</code> values are <code>NA</code> (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/173" class="external-link">#173</a>).</p></li>
-<li><p><code><a href="../reference/join_ald_scenario.html">join_ald_scenario()</a></code> now converts to lower case the values of the columns <code>sector_ald</code> and <code>technology</code> (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/172" class="external-link">#172</a>).</p></li>
+<li><p><code>join_ald_scenario()</code> now converts to lower case the values of the columns <code>sector_ald</code> and <code>technology</code> (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/172" class="external-link">#172</a>).</p></li>
 <li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now aggregates input <code>ald</code> by <code>technology</code> and <code>plant_location</code> prior to calculating targets (<a href="https://github.com/QianFeng2020" class="external-link">@QianFeng2020</a> <a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/160" class="external-link">#160</a>).</p></li>
 <li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> now errors if input data has any duplicated <code>id_loan</code> (<a href="https://github.com/QianFeng2020" class="external-link">@QianFeng2020</a> <a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/164" class="external-link">#164</a>).</p></li>
 <li><p><code><a href="../reference/target_sda.html">target_sda()</a></code> gains <code>by_company</code> parameter (<a href="https://github.com/RMI-PACTA/r2dii.analysis/issues/155" class="external-link">#155</a>).</p></li>
@@ -189,6 +190,7 @@
             <div class="col-10">
                 <div class="row">
                     <div class="col-md-4 col-xs-6">
+                        <a href="https://pacta.rmi.org/" target="_blank" class="external-link"><div class="icon fa fa-link"></div></a>
                         <a href="https://github.com/RMI-PACTA" target="_blank" class="external-link"><div class="icon fab fa-github"></div></a>
                         <a href="https://twitter.com/RockyMtnInst" target="_blank" class="external-link"><div class="icon fab fa-twitter"></div></a>
                         <a href="https://www.linkedin.com/showcase/rmi-pacta/" target="_blank" class="external-link"><div class="icon fab fa-linkedin-in"></div></a>

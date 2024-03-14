@@ -11,8 +11,7 @@ target_sda(
   co2_intensity_scenario,
   use_credit_limit = FALSE,
   by_company = FALSE,
-  region_isos = r2dii.data::region_isos,
-  ald = deprecated()
+  region_isos = r2dii.data::region_isos
 )
 }
 \arguments{
@@ -33,9 +32,6 @@ the column \code{loan_size_outstanding}. Set to \code{TRUE} to instead use the c
 \code{weighted_production_value} at the company-level.}
 
 \item{region_isos}{A data frame like \link[r2dii.data:region_isos]{r2dii.data::region_isos} (default).}
-
-\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
-\code{abcd}.}
 }
 \value{
 A tibble including the summarized columns \code{emission_factor_metric} and

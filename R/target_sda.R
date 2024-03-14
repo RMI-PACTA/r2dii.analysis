@@ -25,8 +25,6 @@
 #' @return A tibble including the summarized columns `emission_factor_metric` and
 #'   `emission_factor_value`. If `by_company = TRUE`, the output will also have
 #'   the column `name_abcd`.
-#' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
-#'   `abcd`.
 #'
 #' @export
 #'
@@ -65,8 +63,7 @@ target_sda <- function(data,
                        co2_intensity_scenario,
                        use_credit_limit = FALSE,
                        by_company = FALSE,
-                       region_isos = r2dii.data::region_isos,
-                       ald = deprecated()) {
+                       region_isos = r2dii.data::region_isos) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(abcd),
@@ -74,17 +71,6 @@ target_sda <- function(data,
     is.logical(use_credit_limit),
     is.logical(by_company)
   )
-
-  if (lifecycle::is_present(ald)) {
-    lifecycle::deprecate_warn(
-      "0.2.0 (expected July 2022)",
-      "target_market_share(ald)",
-      "target_market_share(abcd)"
-    )
-    abcd <- ald
-  }
-
-  data <- rename_and_warn_ald_names(data)
 
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 

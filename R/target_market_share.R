@@ -97,7 +97,7 @@ target_market_share <- function(data,
   abcd <- dplyr::summarize(
     abcd,
     production = sum(.data[["production"]]),
-    .by = -.data[["production"]]
+    .by = -"production"
   )
 
   data <- aggregate_by_name_abcd(data)

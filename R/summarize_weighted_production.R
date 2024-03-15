@@ -58,13 +58,13 @@ summarize_weighted_production_ <- function(data, ..., use_credit_limit = FALSE, 
 
   old_groups <- dplyr::groups(data)
 
-  crucial <- c("production", "sector_abcd", "year", "technology")
+  crucial <- c("sector_abcd", "year", "technology")
 
   if (with_targets) {
     crucial <- c(crucial, "production_target")
   }
 
-  check_crucial_names(data, crucial)
+  check_crucial_names(data, c("production", crucial))
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
   data <- data %>%
@@ -187,10 +187,9 @@ summarize_unweighted_emission_factor <- function(data, ...) {
 }
 
 calculate_weighted_loan_metric <- function(data, metric) {
-  crucial <- c(metric, "loan_weight")
 
-  check_crucial_names(data, crucial)
-  walk_(crucial, ~ check_no_value_is_missing(data, .x))
+  check_crucial_names(data, c(metric, "loan_weight"))
+  walk_("loan_weight", ~ check_no_value_is_missing(data, .x))
 
   data %>%
     mutate(
@@ -234,9 +233,9 @@ add_loan_weight <- function(data, use_credit_limit) {
 }
 
 add_percent_change <- function(data) {
-  crucial <- c("production", "sector_abcd", "year", "technology", "scenario")
+  crucial <- c("sector_abcd", "year", "technology", "scenario")
 
-  check_crucial_names(data, crucial)
+  check_crucial_names(data, c("production", crucial))
   walk_(crucial, ~ check_no_value_is_missing(data, .x))
 
   check_zero_initial_production(data)

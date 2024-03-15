@@ -109,17 +109,21 @@ check_portfolio_abcd_scenario <- function(valid_matches, abcd, scenario) {
   walk_(names(abcd_columns()), ~ check_no_value_is_missing(valid_matches, .x))
 
   check_crucial_names(
-    abcd, c("name_company", "plant_location", unname(scenario_columns()))
+    abcd,
+    c("name_company", "plant_location", "year", unname(scenario_columns()))
   )
   walk_(
-    c("name_company", unname(scenario_columns())),
+    c("name_company", "year", unname(scenario_columns())),
     ~ check_no_value_is_missing(abcd, .x)
   )
 
 
-  check_crucial_names(scenario, c(scenario_columns(), "scenario_source", "region"))
+  check_crucial_names(
+    scenario,
+    c(scenario_columns(), "scenario_source", "region", "year")
+    )
   walk_(
-    c(scenario_columns(), "scenario_source", "region"),
+    c(scenario_columns(), "scenario_source", "region", "year"),
     ~ check_no_value_is_missing(scenario, .x)
   )
 

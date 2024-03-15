@@ -217,7 +217,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 
 test_that("include/excludes `plant_location` inside/outside a region", {
   # styler: off
-  region_isos_toy <- tribble(
+  region_isos_toy <- dplyr::tribble(
     ~region,         ~isos, ~source,
     "north america", "us",  "demo_2020",
     "oecd",          "de",  "demo_2020",

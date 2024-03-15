@@ -102,6 +102,14 @@ target_market_share <- function(data,
 
   data <- aggregate_by_name_abcd(data)
 
+  if ("production" %in% colnames(scenario)) {
+    warn("The column `production` has been removed from the dataset `scenario`.
+         The columns `tmsr` and `smsp` will be used instead",
+         class = "scenario_production_column_removed")
+    scenario <- dplyr::select(scenario, -all_of("production"))
+    return(scenario)
+  }
+
   data <- join_abcd_scenario(
     data,
     abcd,
@@ -112,14 +120,6 @@ target_market_share <- function(data,
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
-  }
-
-  if ("production" %in% colnames(scenario)) {
-    warn("The column `production` has been removed from the dataset `scenario`.
-         The columns `tmsr` and `smsp` will be used instead",
-         class = "scenario_production_column_removed")
-    scenario <- dplyr::select(scenario, -all_of("production"))
-    return(scenario)
   }
 
   crucial_groups <- c(

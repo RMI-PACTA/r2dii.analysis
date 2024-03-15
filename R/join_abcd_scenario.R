@@ -103,6 +103,11 @@ add_green_technologies_to_abcd <- function(data, scenario) {
     unique() %>%
     inner_join(increasing_techs, by = c("sector", "technology"))
 
+  increasing_techs_not_in_abcd <- dplyr::filter(
+    increasing_techs_in_scenario,
+    !(technology %in% unique(data$technology))
+  )
+
   green_rows_to_add <- data %>%
     group_by(
       .data$name_company,
@@ -113,7 +118,7 @@ add_green_technologies_to_abcd <- function(data, scenario) {
     ) %>%
     summarize() %>%
     left_join(
-      increasing_techs_in_scenario,
+      increasing_techs_not_in_abcd,
       by = "sector",
       relationship = "many-to-many"
       ) %>%

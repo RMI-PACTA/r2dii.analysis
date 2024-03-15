@@ -21,8 +21,6 @@
 #' output the unweighted production values.
 #' @param increasing_or_decreasing A data frame like
 #' [r2dii.data::increasing_or_decreasing].
-#' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
-#'   `abcd`.
 #'
 #' @return A tibble including the summarized columns `metric`, `production`,
 #'   `technology_share`, `percentage_of_initial_production_by_scope` and
@@ -76,8 +74,7 @@ target_market_share <- function(data,
                                 use_credit_limit = FALSE,
                                 by_company = FALSE,
                                 weight_production = TRUE,
-                                increasing_or_decreasing = r2dii.data::increasing_or_decreasing,
-                                ald = deprecated()) {
+                                increasing_or_decreasing = r2dii.data::increasing_or_decreasing) {
   stopifnot(
     is.data.frame(data),
     is.data.frame(abcd),
@@ -87,17 +84,6 @@ target_market_share <- function(data,
     is.logical(by_company),
     is.logical(weight_production)
   )
-
-  if (lifecycle::is_present(ald)) {
-    lifecycle::deprecate_warn(
-      "0.2.0 (expected July 2022)",
-      "target_market_share(ald)",
-      "target_market_share(abcd)"
-    )
-    abcd <- ald
-  }
-
-  data <- rename_and_warn_ald_names(data)
 
   abcd <- fill_and_warn_na(abcd, "production")
 

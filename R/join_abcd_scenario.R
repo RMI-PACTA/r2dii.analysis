@@ -54,10 +54,43 @@ join_abcd_scenario <- function(data,
     abcd <- add_green_technologies_to_abcd(abcd, scenario)
   }
 
+  abcd_wide <- tidyr::pivot_wider(
+    abcd,
+    names_from = "year",
+    names_sep = "~",
+    values_from = c("production", "emission_factor"),
+    values_fill = list(production = 0)
+  )
+
+  scenario_wide <- tidyr::pivot_wider(
+    scenario,
+    names_from = "year",
+    names_sep = "~",
+    values_from = c("tmsr", "smsp"),
+    values_fill = list(production = 0)
+  )
+
+  data <- data %>%
+    left_join(abcd_wide, by = abcd_columns(), relationship = "many-to-many") %>%
+    right_join(scenario_wide, by = scenario_columns(), relationship = "many-to-many") %>%
+    warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.")
+
+  data <- tidyr::pivot_longer(
+    data,
+    cols = tidyr::contains("~"),
+    names_sep = "~",
+    names_to = c("metric", "year")
+  )
+
+  data <- dplyr::mutate(data, year = as.integer(.data[["year"]]))
+
+  data <- tidyr::pivot_wider(
+    data,
+    names_from = "metric",
+    values_from = "value"
+  )
+
   out <- data %>%
-    left_join(abcd, by = abcd_columns(), relationship = "many-to-many") %>%
-    inner_join(scenario, by = scenario_columns(), relationship = "many-to-many") %>%
-    warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.") %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
       region_isos,
@@ -133,7 +166,6 @@ abcd_columns <- function() {
 scenario_columns <- function() {
   c(
     sector_abcd = "sector",
-    technology = "technology",
-    year = "year"
+    technology = "technology"
   )
 }

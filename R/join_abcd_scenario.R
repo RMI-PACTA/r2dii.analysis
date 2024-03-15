@@ -61,6 +61,8 @@ join_abcd_scenario <- function(data,
     values_fill = list(production = 0)
   )
 
+  scenario <- dplyr::filter(scenario, .data[["year"]] >= min(abcd[["year"]]))
+
   scenario_wide <- tidyr::pivot_wider(
     scenario,
     names_from = "year",

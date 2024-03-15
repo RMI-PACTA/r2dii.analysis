@@ -117,8 +117,8 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
   matching_2 <- join_abcd_scenario(
     fake_matched(),
     abcd = fake_abcd(plant_location = "a"),
-    scenario = fake_scenario(region = "b", scenario_source = c("c", "c")),
-    region_isos = tibble(isos = "a", region = "b", source = "c")
+    scenario = fake_scenario(region = "b", scenario_source = c("c", "d")),
+    region_isos = tibble(isos = "a", region = "b", source = c("c", "d"))
   )
   expect_equal(nrow(matching_2), 2L)
 })

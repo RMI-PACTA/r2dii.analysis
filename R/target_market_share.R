@@ -85,13 +85,6 @@ target_market_share <- function(data,
     is.logical(weight_production)
   )
 
-  abcd <- fill_and_warn_na(abcd, "production")
-  abcd <- dplyr::summarize(
-    abcd,
-    production = sum(.data[["production"]]),
-    .by = -.data[["production"]]
-    )
-
   region_isos <- change_to_lowercase_and_warn(region_isos, "isos")
 
   warn_if_by_company_and_weight_production(by_company, weight_production)
@@ -99,6 +92,13 @@ target_market_share <- function(data,
   data <- ungroup(warn_grouped(data, "Ungrouping input data."))
 
   check_input_for_crucial_columns(data, abcd, scenario)
+
+  abcd <- fill_and_warn_na(abcd, "production")
+  abcd <- dplyr::summarize(
+    abcd,
+    production = sum(.data[["production"]]),
+    .by = -.data[["production"]]
+  )
 
   data <- aggregate_by_name_abcd(data)
 

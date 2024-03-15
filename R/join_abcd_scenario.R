@@ -53,6 +53,9 @@ join_abcd_scenario <- function(data,
     abcd <- add_green_technologies_to_abcd(abcd, scenario)
   }
 
+  abcd <- dplyr::filter(abcd, .data[["year"]] >= min(scenario[["year"]]))
+  scenario <- dplyr::filter(scenario, .data[["year"]] >= min(abcd[["year"]]))
+
   abcd_wide <- tidyr::pivot_wider(
     abcd,
     names_from = "year",
@@ -60,8 +63,6 @@ join_abcd_scenario <- function(data,
     values_from = c("production", "emission_factor"),
     values_fill = list(production = 0)
   )
-
-  scenario <- dplyr::filter(scenario, .data[["year"]] >= min(abcd[["year"]]))
 
   scenario_wide <- tidyr::pivot_wider(
     scenario,

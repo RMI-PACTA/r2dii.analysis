@@ -86,6 +86,11 @@ target_market_share <- function(data,
   )
 
   abcd <- fill_and_warn_na(abcd, "production")
+  abcd <- dplyr::summarize(
+    abcd,
+    production = sum(.data[["production"]]),
+    .by = -.data[["production"]]
+    )
 
   region_isos <- change_to_lowercase_and_warn(region_isos, "isos")
 

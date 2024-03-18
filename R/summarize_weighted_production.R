@@ -302,7 +302,7 @@ add_technology_share_target <- function(data) {
 
 check_zero_initial_production <- function(data) {
   companies_with_zero_initial_production <- data %>%
-    group_by(.data$technology, .data$name_abcd, .data$year) %>%
+    group_by(.data$technology, .data$name_abcd) %>%
     arrange(.data$year) %>%
     filter(.data$year == first(.data$year)) %>%
     summarize(production_at_start_year = sum(.data$production)) %>%

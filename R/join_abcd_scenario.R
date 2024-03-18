@@ -74,7 +74,7 @@ join_abcd_scenario <- function(data,
 
   data <- data %>%
     left_join(abcd_wide, by = abcd_columns(), relationship = "many-to-many") %>%
-    right_join(scenario_wide, by = scenario_columns(), relationship = "many-to-many") %>%
+    left_join(scenario_wide, by = scenario_columns(), relationship = "many-to-many") %>%
     warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.")
 
   data <- tidyr::pivot_longer(

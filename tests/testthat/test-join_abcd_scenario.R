@@ -272,3 +272,19 @@ test_that("outputs full timeline of scenario #157", {
   expect_equal(max(out$year), 2025L)
 
 })
+
+test_that("doesnt output sectors not in input data #157", {
+
+  out <- join_abcd_scenario(
+    fake_matched(sector_abcd = "power"),
+    fake_abcd(sector = "power", technology = "hydrocap"),
+    fake_scenario(
+      sector = c("power", "automotive"),
+      technology = c("hydrocap", "ice")
+      ),
+    region_isos = region_isos_stable
+  )
+
+  expect_equal(unique(out$sector_abcd), "power")
+
+})

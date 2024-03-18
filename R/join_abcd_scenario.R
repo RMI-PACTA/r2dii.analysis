@@ -56,9 +56,16 @@ join_abcd_scenario <- function(data,
   abcd <- abcd %>%
     arrange(.data[["year"]]) %>%
     mutate(
-      .start_year = first(.data[["year"]]),
+      .start_year_abcd = first(.data[["year"]]),
       .by = c("name_company", "sector", "plant_location")
       )
+
+  scenario <- scenario %>%
+    arrange(.data[["year"]]) %>%
+    mutate(
+      .start_year_scenario = first(.data[["year"]]),
+      .by = c("sector")
+    )
 
   abcd_wide <- tidyr::pivot_wider(
     abcd,
@@ -97,8 +104,12 @@ join_abcd_scenario <- function(data,
   )
 
   data <- data %>%
-    dplyr::filter(.data[["year"]] >= .data[[".start_year"]]) %>%
-    dplyr::mutate(.start_year = NULL)
+    dplyr::filter(.data[["year"]] >= .data[[".start_year_abcd"]]) %>%
+    dplyr::filter(.data[["year"]] >= .data[[".start_year_scenario"]]) %>%
+    dplyr::mutate(
+      .start_year_abcd = NULL,
+      .start_year_scenario = NULL
+      )
 
   out <- data %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%

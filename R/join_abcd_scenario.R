@@ -145,7 +145,7 @@ add_green_technologies_to_abcd <- function(data, scenario) {
 
   increasing_techs_not_in_abcd <- dplyr::filter(
     increasing_techs_in_scenario,
-    !(technology %in% unique(data$technology))
+    !(.data[["technology"]] %in% unique(data$technology))
   )
 
   green_rows_to_add <- data %>%

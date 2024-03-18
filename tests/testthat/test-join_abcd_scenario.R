@@ -273,7 +273,7 @@ test_that("outputs full timeline of scenario #157", {
 
 })
 
-test_that("doesnt output sectors not in input data #157", {
+test_that("doesnt output sectors that aren't in input data #157", {
 
   out <- join_abcd_scenario(
     fake_matched(sector_abcd = "power"),
@@ -286,5 +286,25 @@ test_that("doesnt output sectors not in input data #157", {
   )
 
   expect_equal(unique(out$sector_abcd), "power")
+
+})
+
+test_that("on fill in production timeline after t0 #157", {
+
+  out <- join_abcd_scenario(
+    fake_matched(name_abcd = c("a", "b")),
+    fake_abcd(
+      name_company = c("a", "b"),
+      year = c(2020, 2021)
+      ),
+    fake_scenario(year = c(2020, 2021)),
+    region_isos = region_isos_stable
+  )
+
+  out_a <- filter(out, name_abcd == "a")
+  out_b <- filter(out, name_abcd == "b")
+
+  expect_equal(max(out_a$year), 2021L)
+  expect_equal(min(out_b$year), 2021L)
 
 })

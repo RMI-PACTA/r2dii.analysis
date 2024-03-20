@@ -71,16 +71,14 @@ join_abcd_scenario <- function(data,
     abcd,
     names_from = "year",
     names_sep = "~",
-    values_from = c("production", "emission_factor"),
-    values_fill = list(production = 0)
+    values_from = c("production", "emission_factor")
   )
 
   scenario_wide <- tidyr::pivot_wider(
     scenario,
     names_from = "year",
     names_sep = "~",
-    values_from = c("tmsr", "smsp"),
-    values_fill = list(production = 0)
+    values_from = c("tmsr", "smsp")
   )
 
   data <- data %>%

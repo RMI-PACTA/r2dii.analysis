@@ -302,9 +302,17 @@ test_that("on fill in production timeline after t0 #157", {
   )
 
   out_a <- filter(out, name_abcd == "a")
+
   out_b <- filter(out, name_abcd == "b")
 
   expect_equal(max(out_a$year), 2021L)
   expect_equal(min(out_b$year), 2021L)
+
+  out_a <- split(out_a, out_a$year)
+  out_b <- split(out_b, out_b$year)
+
+  expect_equal(out_a$`2020`$production, 1)
+  expect_equal(out_a$`2021`$production, NA_real_)
+  expect_equal(out_b$`2021`$production, 1)
 
 })

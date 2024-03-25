@@ -85,8 +85,6 @@ target_market_share <- function(data,
     is.logical(weight_production)
   )
 
-  abcd <- fill_and_warn_na(abcd, "production")
-
   region_isos <- change_to_lowercase_and_warn(region_isos, "isos")
 
   warn_if_by_company_and_weight_production(by_company, weight_production)
@@ -95,7 +93,22 @@ target_market_share <- function(data,
 
   check_input_for_crucial_columns(data, abcd, scenario)
 
+  abcd <- fill_and_warn_na(abcd, "production")
+  abcd <- dplyr::summarize(
+    abcd,
+    production = sum(.data[["production"]]),
+    .by = -"production"
+  )
+
   data <- aggregate_by_name_abcd(data)
+
+  if ("production" %in% colnames(scenario)) {
+    warn("The column `production` has been removed from the dataset `scenario`.
+         The columns `tmsr` and `smsp` will be used instead",
+         class = "scenario_production_column_removed")
+    scenario <- dplyr::select(scenario, -all_of("production"))
+    return(scenario)
+  }
 
   data <- join_abcd_scenario(
     data,
@@ -107,14 +120,6 @@ target_market_share <- function(data,
 
   if (nrow(data) == 0) {
     return(empty_target_market_share_output())
-  }
-
-  if ("production" %in% colnames(scenario)) {
-    warn("The column `production` has been removed from the dataset `scenario`.
-         The columns `tmsr` and `smsp` will be used instead",
-         class = "scenario_production_column_removed")
-    scenario <- dplyr::select(scenario, -all_of("production"))
-    return(scenario)
   }
 
   crucial_groups <- c(

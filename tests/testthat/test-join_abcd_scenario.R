@@ -117,8 +117,8 @@ test_that("outputs a number of rows equal to matches by `scenario_source`", {
   matching_2 <- join_abcd_scenario(
     fake_matched(),
     abcd = fake_abcd(plant_location = "a"),
-    scenario = fake_scenario(region = "b", scenario_source = c("c", "c")),
-    region_isos = tibble(isos = "a", region = "b", source = "c")
+    scenario = fake_scenario(region = "b", scenario_source = c("c", "d")),
+    region_isos = tibble(isos = "a", region = "b", source = c("c", "d"))
   )
   expect_equal(nrow(matching_2), 2L)
 })
@@ -217,7 +217,7 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 
 test_that("include/excludes `plant_location` inside/outside a region", {
   # styler: off
-  region_isos_toy <- tribble(
+  region_isos_toy <- dplyr::tribble(
     ~region,         ~isos, ~source,
     "north america", "us",  "demo_2020",
     "oecd",          "de",  "demo_2020",
@@ -258,4 +258,61 @@ test_that("outputs the same with upper/lower abcd$sector or abcd$technology", {
   upper_technology <- modify_at_(abcd, "technology", toupper)
   out_upper <- join_abcd_scenario(matched, upper_technology, scenario, regions)
   expect_equal(out_upper, out_lower)
+})
+
+test_that("outputs full timeline of scenario #157", {
+
+  out <- join_abcd_scenario(
+    fake_matched(),
+    fake_abcd(year = 2020),
+    fake_scenario(scenario = "1.5c-scen", year = c(2020, 2025)),
+    region_isos = region_isos_stable
+  )
+
+  expect_equal(max(out$year), 2025L)
+
+})
+
+test_that("doesnt output sectors that aren't in input data #157", {
+
+  out <- join_abcd_scenario(
+    fake_matched(sector_abcd = "power"),
+    fake_abcd(sector = "power", technology = "hydrocap"),
+    fake_scenario(
+      sector = c("power", "automotive"),
+      technology = c("hydrocap", "ice")
+      ),
+    region_isos = region_isos_stable
+  )
+
+  expect_equal(unique(out$sector_abcd), "power")
+
+})
+
+test_that("only extend timeline beyond t0 of abcd #157", {
+
+  out <- join_abcd_scenario(
+    fake_matched(name_abcd = c("a", "b")),
+    fake_abcd(
+      name_company = c("a", "b"),
+      year = c(2020, 2021)
+      ),
+    fake_scenario(year = c(2020, 2021)),
+    region_isos = region_isos_stable
+  )
+
+  out_a <- filter(out, name_abcd == "a")
+
+  out_b <- filter(out, name_abcd == "b")
+
+  expect_equal(max(out_a$year), 2021L)
+  expect_equal(min(out_b$year), 2021L)
+
+  out_a <- split(out_a, out_a$year)
+  out_b <- split(out_b, out_b$year)
+
+  expect_equal(out_a$`2020`$production, 1)
+  expect_equal(out_a$`2021`$production, NA_real_)
+  expect_equal(out_b$`2021`$production, 1)
+
 })

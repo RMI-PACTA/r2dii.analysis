@@ -1442,3 +1442,17 @@ test_that("correctly splits scenario names with hyphen #425", {
   expect_equal(unique(out$metric), "target_1.5c-scen")
 
 })
+
+test_that("outputs `target` for full timeline of scenario #157", {
+
+  out <- target_market_share(
+    fake_matched(),
+    fake_abcd(year = 2020),
+    fake_scenario(scenario = "1.5c-scen", year = c(2020, 2025)),
+    region_isos_stable
+  ) %>%
+    filter(grepl("target", metric))
+
+  expect_equal(max(out$year), 2025L)
+
+})

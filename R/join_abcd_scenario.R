@@ -53,10 +53,63 @@ join_abcd_scenario <- function(data,
     abcd <- add_green_technologies_to_abcd(abcd, scenario)
   }
 
+  abcd <- abcd %>%
+    arrange(.data[["year"]]) %>%
+    mutate(
+      .start_year_abcd = first(.data[["year"]]),
+      .by = c("name_company", "sector", "plant_location")
+      )
+
+  scenario <- scenario %>%
+    arrange(.data[["year"]]) %>%
+    mutate(
+      .start_year_scenario = first(.data[["year"]]),
+      .by = c("sector")
+    )
+
+  abcd_wide <- tidyr::pivot_wider(
+    abcd,
+    names_from = "year",
+    names_sep = "~",
+    values_from = c("production", "emission_factor")
+  )
+
+  scenario_wide <- tidyr::pivot_wider(
+    scenario,
+    names_from = "year",
+    names_sep = "~",
+    values_from = c("tmsr", "smsp")
+  )
+
+  data <- data %>%
+    left_join(abcd_wide, by = abcd_columns(), relationship = "many-to-many") %>%
+    left_join(scenario_wide, by = scenario_columns(), relationship = "many-to-many") %>%
+    warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.")
+
+  data <- tidyr::pivot_longer(
+    data,
+    cols = tidyr::contains("~"),
+    names_sep = "~",
+    names_to = c("metric", "year")
+  )
+
+  data <- dplyr::mutate(data, year = as.integer(.data[["year"]]))
+
+  data <- tidyr::pivot_wider(
+    data,
+    names_from = "metric",
+    values_from = "value"
+  )
+
+  data <- data %>%
+    dplyr::filter(.data[["year"]] >= .data[[".start_year_abcd"]]) %>%
+    dplyr::filter(.data[["year"]] >= .data[[".start_year_scenario"]]) %>%
+    dplyr::mutate(
+      .start_year_abcd = NULL,
+      .start_year_scenario = NULL
+      )
+
   out <- data %>%
-    left_join(abcd, by = abcd_columns(), relationship = "many-to-many") %>%
-    inner_join(scenario, by = scenario_columns(), relationship = "many-to-many") %>%
-    warn_if_has_zero_rows("Joining `scenario` outputs 0 rows.") %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
     inner_join(
       region_isos,
@@ -76,17 +129,21 @@ check_portfolio_abcd_scenario <- function(valid_matches, abcd, scenario) {
   walk_(names(abcd_columns()), ~ check_no_value_is_missing(valid_matches, .x))
 
   check_crucial_names(
-    abcd, c("name_company", "plant_location", unname(scenario_columns()))
+    abcd,
+    c("name_company", "plant_location", "year", unname(scenario_columns()))
   )
   walk_(
-    c("name_company", unname(scenario_columns())),
+    c("name_company", "year", unname(scenario_columns())),
     ~ check_no_value_is_missing(abcd, .x)
   )
 
 
-  check_crucial_names(scenario, c(scenario_columns(), "scenario_source", "region"))
+  check_crucial_names(
+    scenario,
+    c(scenario_columns(), "scenario_source", "region", "year")
+    )
   walk_(
-    c(scenario_columns(), "scenario_source", "region"),
+    c(scenario_columns(), "scenario_source", "region", "year"),
     ~ check_no_value_is_missing(scenario, .x)
   )
 
@@ -105,7 +162,7 @@ add_green_technologies_to_abcd <- function(data, scenario) {
 
   increasing_techs_not_in_abcd <- dplyr::filter(
     increasing_techs_in_scenario,
-    !(technology %in% unique(data$technology))
+    !(.data[["technology"]] %in% unique(data$technology))
   )
 
   green_rows_to_add <- data %>%
@@ -137,7 +194,6 @@ abcd_columns <- function() {
 scenario_columns <- function() {
   c(
     sector_abcd = "sector",
-    technology = "technology",
-    year = "year"
+    technology = "technology"
   )
 }

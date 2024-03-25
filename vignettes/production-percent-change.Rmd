@@ -34,7 +34,8 @@ master <- loanbook_demo %>%
   join_abcd_scenario(
     abcd = abcd_demo,
     scenario = scenario_demo_2020,
-    region_isos = region_isos_demo
+    region_isos = region_isos_demo,
+    add_green_technologies = FALSE
   )
 
 summarize_weighted_production(master)

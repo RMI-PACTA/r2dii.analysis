@@ -289,7 +289,7 @@ test_that("doesnt output sectors that aren't in input data #157", {
 
 })
 
-test_that("on fill in production timeline after t0 #157", {
+test_that("only extend timeline beyond t0 of abcd #157", {
 
   out <- join_abcd_scenario(
     fake_matched(name_abcd = c("a", "b")),

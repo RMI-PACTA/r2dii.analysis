@@ -189,7 +189,21 @@ summarize_unweighted_emission_factor <- function(data, ...) {
 calculate_weighted_loan_metric <- function(data, metric) {
 
   check_crucial_names(data, c(metric, "loan_weight"))
-  walk_("loan_weight", ~ check_no_value_is_missing(data, .x))
+
+  allowed_missing_vals <- c(
+    "production",
+    "production_target",
+    "technology_share",
+    "technology_share_target"
+  )
+
+  if (metric %in% allowed_missing_vals) {
+    no_missing_vals <- "loan_weight"
+  } else {
+    no_missing_vals <- c("loan_weight", metric)
+  }
+
+  walk_(no_missing_vals, ~ check_no_value_is_missing(data, .x))
 
   data %>%
     mutate(

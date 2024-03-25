@@ -194,7 +194,8 @@ calculate_weighted_loan_metric <- function(data, metric) {
     "production",
     "production_target",
     "technology_share",
-    "technology_share_target"
+    "technology_share_target",
+    "percent_change"
   )
 
   if (metric %in% allowed_missing_vals) {

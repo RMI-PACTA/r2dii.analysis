@@ -142,20 +142,20 @@ green start-ups.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 231 × 5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 5</span></span></span>
 <span><span class="co">#&gt;    sector_abcd technology  year weighted_production weighted_technology_share</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive  electric    <span style="text-decoration: underline;">2</span>020             <span style="text-decoration: underline;">973</span>775.                     0.114</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive  electric    <span style="text-decoration: underline;">2</span>021            1<span style="text-decoration: underline;">018</span>967.                     0.118</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive  electric    <span style="text-decoration: underline;">2</span>022            1<span style="text-decoration: underline;">064</span>159.                     0.122</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive  electric    <span style="text-decoration: underline;">2</span>023            1<span style="text-decoration: underline;">109</span>351.                     0.126</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive  electric    <span style="text-decoration: underline;">2</span>024            1<span style="text-decoration: underline;">154</span>543.                     0.130</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive  electric    <span style="text-decoration: underline;">2</span>025            1<span style="text-decoration: underline;">199</span>735.                     0.133</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive  electric    <span style="text-decoration: underline;">2</span>020             <span style="text-decoration: underline;">436</span>948.                     0.481</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive  electric    <span style="text-decoration: underline;">2</span>021             <span style="text-decoration: underline;">442</span>439.                     0.480</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive  electric    <span style="text-decoration: underline;">2</span>022             <span style="text-decoration: underline;">447</span>929.                     0.480</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive  electric    <span style="text-decoration: underline;">2</span>023             <span style="text-decoration: underline;">453</span>420.                     0.479</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive  electric    <span style="text-decoration: underline;">2</span>024             <span style="text-decoration: underline;">458</span>910.                     0.479</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive  electric    <span style="text-decoration: underline;">2</span>025             <span style="text-decoration: underline;">464</span>401.                     0.479</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive  electric    <span style="text-decoration: underline;">2</span>026                 <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span>    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive  electric    <span style="text-decoration: underline;">2</span>027                 <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span>    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive  electric    <span style="text-decoration: underline;">2</span>028                 <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span>    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive  electric    <span style="text-decoration: underline;">2</span>029                 <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 221 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="weighted-percent-change-in-production">Weighted Percent Change in Production<a class="anchor" aria-label="anchor" href="#weighted-percent-change-in-production"></a>
@@ -185,20 +185,20 @@ calculating the percent change indicator.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># using the master dataset defined in the previous chunk:</span></span>
 <span><span class="fu"><a href="../reference/summarize_weighted_production.html">summarize_weighted_percent_change</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 231 × 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 4</span></span></span>
 <span><span class="co">#&gt;    sector_abcd technology  year weighted_percent_change</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive  electric    <span style="text-decoration: underline;">2</span>020                  0     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive  electric    <span style="text-decoration: underline;">2</span>021                  0.088<span style="text-decoration: underline;">1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive  electric    <span style="text-decoration: underline;">2</span>022                  0.176 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive  electric    <span style="text-decoration: underline;">2</span>023                  0.264 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive  electric    <span style="text-decoration: underline;">2</span>024                  0.352 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive  electric    <span style="text-decoration: underline;">2</span>025                  0.440 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive  electric    <span style="text-decoration: underline;">2</span>026                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive  electric    <span style="text-decoration: underline;">2</span>027                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive  electric    <span style="text-decoration: underline;">2</span>028                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive  electric    <span style="text-decoration: underline;">2</span>029                 <span style="color: #BB0000;">NA</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 221 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> automotive  electric    <span style="text-decoration: underline;">2</span>020               0        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> automotive  electric    <span style="text-decoration: underline;">2</span>021               0.000<span style="text-decoration: underline;">062</span>6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> automotive  electric    <span style="text-decoration: underline;">2</span>022               0.000<span style="text-decoration: underline;">125</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> automotive  electric    <span style="text-decoration: underline;">2</span>023               0.000<span style="text-decoration: underline;">188</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> automotive  electric    <span style="text-decoration: underline;">2</span>024               0.000<span style="text-decoration: underline;">250</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> automotive  electric    <span style="text-decoration: underline;">2</span>025               0.000<span style="text-decoration: underline;">313</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> automotive  electric    <span style="text-decoration: underline;">2</span>026              <span style="color: #BB0000;">NA</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> automotive  electric    <span style="text-decoration: underline;">2</span>027              <span style="color: #BB0000;">NA</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> automotive  electric    <span style="text-decoration: underline;">2</span>028              <span style="color: #BB0000;">NA</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> automotive  electric    <span style="text-decoration: underline;">2</span>029              <span style="color: #BB0000;">NA</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

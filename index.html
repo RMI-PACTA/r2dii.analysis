@@ -15,17 +15,15 @@
     to study how their capital allocation decisions align with climate
     change mitigation goals.">
 <title>Measure Climate Scenario Alignment of Corporate Loans • r2dii.analysis</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/headshot_placeholder.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/headshot_placeholder.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/headshot_placeholder.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Overpass-0.4.9/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Measure Climate Scenario Alignment of Corporate Loans">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Measure Climate Scenario Alignment of Corporate Loans">
 <meta property="og:description" content="These tools help you to assess if a corporate lending
     portfolio aligns with climate goals. They summarize key climate
     indicators attributed to the portfolio (e.g. production, emission
@@ -36,20 +34,20 @@
     to study how their capital allocation decisions align with climate
     change mitigation goals.">
 <meta property="og:image" content="https://rmi-pacta.github.io/r2dii.analysis/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+<!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-info"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,8 +122,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.analysis"</span><span class="op">)</span></span></code></pre></div>
 <p>Or install the development version of r2dii.analysis from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"RMI-PACTA/r2dii.analysis"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"RMI-PACTA/r2dii.analysis"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -157,20 +155,20 @@
 <span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removing rows in abcd where `emission_factor` is NA</span></span>
-<span><span class="co">#&gt; # A tibble: 96 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 220 × 6</span></span>
 <span><span class="co">#&gt;    sector  year region             scenario_source emission_factor_metric</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt;                 </span></span>
-<span><span class="co">#&gt;  1 steel   2021 advanced economies demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  2 steel   2021 global             demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  3 steel   2022 advanced economies demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  4 steel   2022 global             demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  5 steel   2024 advanced economies demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  6 steel   2024 global             demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  7 steel   2025 advanced economies demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  8 steel   2025 global             demo_2020       projected             </span></span>
-<span><span class="co">#&gt;  9 steel   2027 advanced economies demo_2020       projected             </span></span>
-<span><span class="co">#&gt; 10 steel   2027 global             demo_2020       projected             </span></span>
-<span><span class="co">#&gt; # ℹ 86 more rows</span></span>
+<span><span class="co">#&gt;  1 cement  2020 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  2 cement  2020 developing asia    demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  3 cement  2020 global             demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  4 cement  2021 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  5 cement  2021 developing asia    demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  6 cement  2021 global             demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  7 cement  2022 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  8 cement  2022 developing asia    demo_2020       projected             </span></span>
+<span><span class="co">#&gt;  9 cement  2022 global             demo_2020       projected             </span></span>
+<span><span class="co">#&gt; 10 cement  2023 advanced economies demo_2020       projected             </span></span>
+<span><span class="co">#&gt; # ℹ 210 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: emission_factor_value &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
 <li>Use <code>target_market_share</code> to calculate market-share scenario targets at the portfolio level:</li>
@@ -182,20 +180,20 @@
 <span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span>
 <span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1,232 × 10</span></span>
+<span><span class="co">#&gt; # A tibble: 1,076 × 10</span></span>
 <span><span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected       3664.</span></span>
-<span><span class="co">#&gt;  2 automotive electric    2020 global demo_2020       target_cps      3664.</span></span>
-<span><span class="co">#&gt;  3 automotive electric    2020 global demo_2020       target_sds      3664.</span></span>
-<span><span class="co">#&gt;  4 automotive electric    2020 global demo_2020       target_sps      3664.</span></span>
-<span><span class="co">#&gt;  5 automotive electric    2021 global demo_2020       projected       8472.</span></span>
-<span><span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps      3845.</span></span>
-<span><span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds      4766.</span></span>
-<span><span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps      3894.</span></span>
-<span><span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected       8436.</span></span>
-<span><span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps      4023.</span></span>
-<span><span class="co">#&gt; # ℹ 1,222 more rows</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     145649.</span></span>
+<span><span class="co">#&gt;  2 automotive electric    2020 global demo_2020       target_cps    145649.</span></span>
+<span><span class="co">#&gt;  3 automotive electric    2020 global demo_2020       target_sds    145649.</span></span>
+<span><span class="co">#&gt;  4 automotive electric    2020 global demo_2020       target_sps    145649.</span></span>
+<span><span class="co">#&gt;  5 automotive electric    2021 global demo_2020       projected     147480.</span></span>
+<span><span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps    146915.</span></span>
+<span><span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds    153332.</span></span>
+<span><span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    147258.</span></span>
+<span><span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected     149310.</span></span>
+<span><span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    148155.</span></span>
+<span><span class="co">#&gt; # ℹ 1,066 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
@@ -213,20 +211,20 @@
 <span><span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span></span>
 <span><span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span></span>
 <span><span class="co">#&gt; arguments to `FALSE`?</span></span>
-<span><span class="co">#&gt; # A tibble: 3,200 × 11</span></span>
+<span><span class="co">#&gt; # A tibble: 14,505 × 11</span></span>
 <span><span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 automoti… electric    2020 global demo_2020       large au… proje…       713.</span></span>
-<span><span class="co">#&gt;  2 automoti… electric    2020 global demo_2020       large au… targe…       713.</span></span>
-<span><span class="co">#&gt;  3 automoti… electric    2020 global demo_2020       large au… targe…       713.</span></span>
-<span><span class="co">#&gt;  4 automoti… electric    2020 global demo_2020       large au… targe…       713.</span></span>
-<span><span class="co">#&gt;  5 automoti… electric    2020 global demo_2020       large au… proje…       535.</span></span>
-<span><span class="co">#&gt;  6 automoti… electric    2020 global demo_2020       large au… targe…       535.</span></span>
-<span><span class="co">#&gt;  7 automoti… electric    2020 global demo_2020       large au… targe…       535.</span></span>
-<span><span class="co">#&gt;  8 automoti… electric    2020 global demo_2020       large au… targe…       535.</span></span>
-<span><span class="co">#&gt;  9 automoti… electric    2020 global demo_2020       large au… proje…       690.</span></span>
-<span><span class="co">#&gt; 10 automoti… electric    2020 global demo_2020       large au… targe…       690.</span></span>
-<span><span class="co">#&gt; # ℹ 3,190 more rows</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 automoti… electric    2020 global demo_2020       Bernardi… proje…     17951.</span></span>
+<span><span class="co">#&gt;  2 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.</span></span>
+<span><span class="co">#&gt;  3 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.</span></span>
+<span><span class="co">#&gt;  4 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.</span></span>
+<span><span class="co">#&gt;  5 automoti… electric    2020 global demo_2020       Christia… proje…     11471.</span></span>
+<span><span class="co">#&gt;  6 automoti… electric    2020 global demo_2020       Christia… targe…     11471.</span></span>
+<span><span class="co">#&gt;  7 automoti… electric    2020 global demo_2020       Christia… targe…     11471.</span></span>
+<span><span class="co">#&gt;  8 automoti… electric    2020 global demo_2020       Christia… targe…     11471.</span></span>
+<span><span class="co">#&gt;  9 automoti… electric    2020 global demo_2020       Donati, … proje…      5611.</span></span>
+<span><span class="co">#&gt; 10 automoti… electric    2020 global demo_2020       Donati, … targe…      5611.</span></span>
+<span><span class="co">#&gt; # ℹ 14,495 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
 </div>
@@ -251,9 +249,9 @@
 <code class="sourceCode R"><span><span class="co"># portfolio level</span></span>
 <span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 558 × 9</span></span>
+<span><span class="co">#&gt; # A tibble: 756 × 9</span></span>
 <span><span class="co">#&gt;    sector_abcd technology  year scenario  tmsr    smsp region</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; </span></span>
 <span><span class="co">#&gt;  1 automotive  electric    2020 cps       1    0       global</span></span>
 <span><span class="co">#&gt;  2 automotive  electric    2020 sds       1    0       global</span></span>
 <span><span class="co">#&gt;  3 automotive  electric    2020 sps       1    0       global</span></span>
@@ -264,27 +262,27 @@
 <span><span class="co">#&gt;  8 automotive  electric    2022 sds       1.32 0.0131  global</span></span>
 <span><span class="co">#&gt;  9 automotive  electric    2022 sps       1.29 0.00273 global</span></span>
 <span><span class="co">#&gt; 10 automotive  electric    2023 cps       1.35 0.00316 global</span></span>
-<span><span class="co">#&gt; # ℹ 548 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 746 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 2 more variables: weighted_production &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></span>
 <span></span>
 <span><span class="co"># company level</span></span>
 <span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span>, <span class="va">name_abcd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1,953 × 10</span></span>
+<span><span class="co">#&gt; # A tibble: 13,023 × 10</span></span>
 <span><span class="co">#&gt;    sector_abcd technology  year scenario  tmsr  smsp region name_abcd           </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               </span></span>
-<span><span class="co">#&gt;  1 automotive  electric    2020 cps          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt;  2 automotive  electric    2020 cps          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt;  3 automotive  electric    2020 cps          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt;  4 automotive  electric    2020 cps          1     0 global large hdv company t…</span></span>
-<span><span class="co">#&gt;  5 automotive  electric    2020 sds          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt;  6 automotive  electric    2020 sds          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt;  7 automotive  electric    2020 sds          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt;  8 automotive  electric    2020 sds          1     0 global large hdv company t…</span></span>
-<span><span class="co">#&gt;  9 automotive  electric    2020 sps          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt; 10 automotive  electric    2020 sps          1     0 global large automotive co…</span></span>
-<span><span class="co">#&gt; # ℹ 1,943 more rows</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               </span></span>
+<span><span class="co">#&gt;  1 automotive  electric    2020 cps          1     0 global Bernardi, Bernardi …</span></span>
+<span><span class="co">#&gt;  2 automotive  electric    2020 cps          1     0 global Christiansen PLC    </span></span>
+<span><span class="co">#&gt;  3 automotive  electric    2020 cps          1     0 global Donati, Donati e Do…</span></span>
+<span><span class="co">#&gt;  4 automotive  electric    2020 cps          1     0 global DuBuque-DuBuque     </span></span>
+<span><span class="co">#&gt;  5 automotive  electric    2020 cps          1     0 global Ferrari-Ferrari SPA </span></span>
+<span><span class="co">#&gt;  6 automotive  electric    2020 cps          1     0 global Ferry and Sons      </span></span>
+<span><span class="co">#&gt;  7 automotive  electric    2020 cps          1     0 global Goyette-Goyette     </span></span>
+<span><span class="co">#&gt;  8 automotive  electric    2020 cps          1     0 global Guerra, Guerra e Gu…</span></span>
+<span><span class="co">#&gt;  9 automotive  electric    2020 cps          1     0 global Gutkowski, Gutkowsk…</span></span>
+<span><span class="co">#&gt; 10 automotive  electric    2020 cps          1     0 global Hilpert, Hilpert an…</span></span>
+<span><span class="co">#&gt; # ℹ 13,013 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 2 more variables: weighted_production &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></span></code></pre></div>
 <p><a href="https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
@@ -325,7 +323,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Alex Axthelm <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8579-8565" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://github.com/AlexAxthelm" class="external-link">Alex Axthelm</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8579-8565" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
 <a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a> <br><small class="roles"> Author, contractor </small> <a href="https://orcid.org/0000-0002-8600-5042" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
@@ -343,18 +342,36 @@
 </div>
 
 
-    <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Alex Axthelm, <a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a>, <a href="https://github.com/maurolepore/" class="external-link">Mauro Lepore</a>, Klaus Hogedorn, Nicky Halterman, <a href="https://rmi.org/" class="external-link">Rocky Mountain Institute</a>.</p>
+    <footer><!-- begin footer --><div class="footer">
+    <div class="container">
+        <div class="row start top-4 bottom-8">
+            <div class="col-2"> <img id="footerlogo" src="rmi_logo_stacked_tag_white.svg">
 </div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-md-4 col-xs-6">
+                        <a href="https://pacta.rmi.org/" target="_blank" class="external-link"><div class="icon fa fa-link"></div></a>
+                        <a href="https://github.com/RMI-PACTA" target="_blank" class="external-link"><div class="icon fab fa-github"></div></a>
+                        <a href="https://twitter.com/RockyMtnInst" target="_blank" class="external-link"><div class="icon fab fa-twitter"></div></a>
+                        <a href="https://www.linkedin.com/showcase/rmi-pacta/" target="_blank" class="external-link"><div class="icon fab fa-linkedin-in"></div></a>
+                    </div>
+                </div>
+                    <div class="col-md-4 col-xs-12">
+                        <h5 class="bottom-2"></h5>
 
-<div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
-</div>
+                        <p>© RMI</p>
 
-    </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 </div>
+<!-- / end footer -->
+
+    
+   
 
   
 

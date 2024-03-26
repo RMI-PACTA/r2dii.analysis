@@ -1,9 +1,8 @@
 # r2dii.analysis (development version)
 
-* Completed deprecation of `ald` in favour of `abcd` (#466).
-
+* `target_market_share` now outputs `target_*` value for all `year`s in `scenario` (#481).
+* Complete deprecation of `ald` in favour of `abcd` (#466).
 * `target_market_share` now correctly handles input scenarios with a hyphen in their name (#425).
-
 * `target_market_share` now handles `abcd` with rows where `production` is `NA` by filling with `0` (#423).
 
 # r2dii.analysis 0.3.0

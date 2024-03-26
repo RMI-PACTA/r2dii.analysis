@@ -98,20 +98,20 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
-#> # A tibble: 792 × 10
+#> # A tibble: 1,076 × 10
 #>    sector     technology  year region scenario_source metric     production
 #>    <chr>      <chr>      <int> <chr>  <chr>           <chr>           <dbl>
-#>  1 automotive electric    2020 global demo_2020       projected     324592.
-#>  2 automotive electric    2020 global demo_2020       target_cps    324592.
-#>  3 automotive electric    2020 global demo_2020       target_sds    324592.
-#>  4 automotive electric    2020 global demo_2020       target_sps    324592.
-#>  5 automotive electric    2021 global demo_2020       projected     339656.
-#>  6 automotive electric    2021 global demo_2020       target_cps    329191.
-#>  7 automotive electric    2021 global demo_2020       target_sds    352505.
-#>  8 automotive electric    2021 global demo_2020       target_sps    330435.
-#>  9 automotive electric    2022 global demo_2020       projected     354720.
-#> 10 automotive electric    2022 global demo_2020       target_cps    333693.
-#> # ℹ 782 more rows
+#>  1 automotive electric    2020 global demo_2020       projected     145649.
+#>  2 automotive electric    2020 global demo_2020       target_cps    145649.
+#>  3 automotive electric    2020 global demo_2020       target_sds    145649.
+#>  4 automotive electric    2020 global demo_2020       target_sps    145649.
+#>  5 automotive electric    2021 global demo_2020       projected     147480.
+#>  6 automotive electric    2021 global demo_2020       target_cps    146915.
+#>  7 automotive electric    2021 global demo_2020       target_sds    153332.
+#>  8 automotive electric    2021 global demo_2020       target_sps    147258.
+#>  9 automotive electric    2022 global demo_2020       projected     149310.
+#> 10 automotive electric    2022 global demo_2020       target_cps    148155.
+#> # ℹ 1,066 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 ```
@@ -130,20 +130,20 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 12,140 × 11
+#> # A tibble: 14,505 × 11
 #>    sector    technology  year region scenario_source name_abcd metric production
 #>    <chr>     <chr>      <int> <chr>  <chr>           <chr>     <chr>       <dbl>
-#>  1 automoti… electric    2020 global demo_2020       Bernardi… proje…    324592.
-#>  2 automoti… electric    2020 global demo_2020       Bernardi… targe…    324592.
-#>  3 automoti… electric    2020 global demo_2020       Bernardi… targe…    324592.
-#>  4 automoti… electric    2020 global demo_2020       Bernardi… targe…    324592.
-#>  5 automoti… electric    2021 global demo_2020       Bernardi… proje…    339656.
-#>  6 automoti… electric    2021 global demo_2020       Bernardi… targe…    329191.
-#>  7 automoti… electric    2021 global demo_2020       Bernardi… targe…    352505.
-#>  8 automoti… electric    2021 global demo_2020       Bernardi… targe…    330435.
-#>  9 automoti… electric    2022 global demo_2020       Bernardi… proje…    354720.
-#> 10 automoti… electric    2022 global demo_2020       Bernardi… targe…    333693.
-#> # ℹ 12,130 more rows
+#>  1 automoti… electric    2020 global demo_2020       Bernardi… proje…     17951.
+#>  2 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.
+#>  3 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.
+#>  4 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.
+#>  5 automoti… electric    2020 global demo_2020       Christia… proje…     11471.
+#>  6 automoti… electric    2020 global demo_2020       Christia… targe…     11471.
+#>  7 automoti… electric    2020 global demo_2020       Christia… targe…     11471.
+#>  8 automoti… electric    2020 global demo_2020       Christia… targe…     11471.
+#>  9 automoti… electric    2020 global demo_2020       Donati, … proje…      5611.
+#> 10 automoti… electric    2020 global demo_2020       Donati, … targe…      5611.
+#> # ℹ 14,495 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 ```
@@ -172,7 +172,7 @@ loanbook_joined_to_abcd_scenario <- matched %>%
 # portfolio level
 loanbook_joined_to_abcd_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region)
-#> # A tibble: 306 × 9
+#> # A tibble: 756 × 9
 #>    sector_abcd technology  year scenario  tmsr    smsp region
 #>    <chr>       <chr>      <int> <chr>    <dbl>   <dbl> <chr> 
 #>  1 automotive  electric    2020 cps       1    0       global
@@ -185,27 +185,27 @@ loanbook_joined_to_abcd_scenario %>%
 #>  8 automotive  electric    2022 sds       1.32 0.0131  global
 #>  9 automotive  electric    2022 sps       1.29 0.00273 global
 #> 10 automotive  electric    2023 cps       1.35 0.00316 global
-#> # ℹ 296 more rows
+#> # ℹ 746 more rows
 #> # ℹ 2 more variables: weighted_production <dbl>,
 #> #   weighted_technology_share <dbl>
 
 # company level
 loanbook_joined_to_abcd_scenario %>%
   summarize_weighted_production(scenario, tmsr, smsp, region, name_abcd)
-#> # A tibble: 4,005 × 10
-#>    sector_abcd technology  year scenario  tmsr    smsp region name_abcd         
-#>    <chr>       <chr>      <int> <chr>    <dbl>   <dbl> <chr>  <chr>             
-#>  1 automotive  electric    2020 cps       1    0       global Bernardi, Bernard…
-#>  2 automotive  electric    2020 sds       1    0       global Bernardi, Bernard…
-#>  3 automotive  electric    2020 sps       1    0       global Bernardi, Bernard…
-#>  4 automotive  electric    2021 cps       1.12 0.00108 global Bernardi, Bernard…
-#>  5 automotive  electric    2021 sds       1.16 0.00653 global Bernardi, Bernard…
-#>  6 automotive  electric    2021 sps       1.14 0.00137 global Bernardi, Bernard…
-#>  7 automotive  electric    2022 cps       1.24 0.00213 global Bernardi, Bernard…
-#>  8 automotive  electric    2022 sds       1.32 0.0131  global Bernardi, Bernard…
-#>  9 automotive  electric    2022 sps       1.29 0.00273 global Bernardi, Bernard…
-#> 10 automotive  electric    2023 cps       1.35 0.00316 global Bernardi, Bernard…
-#> # ℹ 3,995 more rows
+#> # A tibble: 13,023 × 10
+#>    sector_abcd technology  year scenario  tmsr  smsp region name_abcd           
+#>    <chr>       <chr>      <int> <chr>    <dbl> <dbl> <chr>  <chr>               
+#>  1 automotive  electric    2020 cps          1     0 global Bernardi, Bernardi …
+#>  2 automotive  electric    2020 cps          1     0 global Christiansen PLC    
+#>  3 automotive  electric    2020 cps          1     0 global Donati, Donati e Do…
+#>  4 automotive  electric    2020 cps          1     0 global DuBuque-DuBuque     
+#>  5 automotive  electric    2020 cps          1     0 global Ferrari-Ferrari SPA 
+#>  6 automotive  electric    2020 cps          1     0 global Ferry and Sons      
+#>  7 automotive  electric    2020 cps          1     0 global Goyette-Goyette     
+#>  8 automotive  electric    2020 cps          1     0 global Guerra, Guerra e Gu…
+#>  9 automotive  electric    2020 cps          1     0 global Gutkowski, Gutkowsk…
+#> 10 automotive  electric    2020 cps          1     0 global Hilpert, Hilpert an…
+#> # ℹ 13,013 more rows
 #> # ℹ 2 more variables: weighted_production <dbl>,
 #> #   weighted_technology_share <dbl>
 ```

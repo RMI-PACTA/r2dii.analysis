@@ -1,4 +1,4 @@
-# r2dii.analysis (development version)
+# r2dii.analysis 0.4.0
 
 * `target_market_share` now outputs `target_*` value for all `year`s in `scenario` (#481).
 * Complete deprecation of `ald` in favour of `abcd` (#466).

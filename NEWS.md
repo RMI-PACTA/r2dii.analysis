@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+r2dii.analysis is now [stable](https://lifecycle.r-lib.org/articles/stages.html).
+
 # r2dii.analysis 0.4.0
 
 * `target_market_share` now outputs `target_*` value for all `year`s in `scenario` (#481).

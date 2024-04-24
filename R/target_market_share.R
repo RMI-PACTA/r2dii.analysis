@@ -93,6 +93,8 @@ target_market_share <- function(data,
 
   check_input_for_crucial_columns(data, abcd, scenario)
 
+  check_unique_id(data, "id_loan")
+
   abcd <- fill_and_warn_na(abcd, "production")
   abcd <- dplyr::summarize(
     abcd,

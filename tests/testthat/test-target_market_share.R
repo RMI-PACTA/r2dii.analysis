@@ -108,8 +108,8 @@ test_that("w/ scenario lacking crucial columns, errors with informative message"
 test_that("w/ NAs in crucial columns, errors with informative message", {
   expect_error_crucial_NAs_portfolio <- function(name) {
     data <- fake_matched(
-      id_loan = c("i1", "i2", "i1", "i2"),
-      loan_size_outstanding = c(40, 10, 40, 10)
+      id_loan = c("i1", "i2"),
+      loan_size_outstanding = c(40, 10)
     )
 
     data[1, name] <- NA
@@ -236,6 +236,7 @@ test_that("w/ known input, outputs target production as expected", {
 
 test_that("w/ known input, outputs target production as expected, at company level", {
   portfolio <- fake_matched(
+    id_loan = c("i1", "i2"),
     name_abcd = c("comp1", "comp2")
   )
 
@@ -309,6 +310,7 @@ test_that("w/ known input, outputs corporate_economy production as expected", {
 
 test_that("outputs identical values at start year (#47, #87)", {
   matched <- fake_matched(
+    id_loan = c("i1", "i2"),
     sector = c("power", "automotive"),
     sector_abcd = c("power", "automotive")
   )
@@ -348,7 +350,10 @@ test_that("outputs identical values at start year (#47, #87)", {
 
 test_that("corporate economy only aggregates ultimate owners (#103)", {
   out <- target_market_share(
-    fake_matched(name_abcd = c("company a", "company b")),
+    fake_matched(
+      id_loan = c("i1", "i2"),
+      name_abcd = c("company a", "company b")
+    ),
     fake_abcd(
       name_company = c("company a", "company b", "company a", "company b"),
       is_ultimate_owner = c(T, F, T, F),
@@ -984,6 +989,7 @@ test_that("initial value of technology_share consistent between `projected` and
 
 test_that("w/ different currencies in input, errors with informative message (#279)", {
   matched <- fake_matched(
+    id_loan = c("i1", "i2"),
     loan_size_outstanding_currency = c("USD", "EUR"),
     loan_size_credit_limit_currency = c("USD", "EUR")
   )
@@ -1234,6 +1240,7 @@ test_that("outputs columns `percent_change_by_scope` and `scope`", {
 test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
           expected, at portfolio level", {
   portfolio <- fake_matched(
+    id_loan = c("i1", "i2"),
     name_abcd = c("comp1", "comp2")
   )
 
@@ -1286,6 +1293,7 @@ test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
 test_that("w/ known input, outputs `percent_of_initial_production_by_scope` as
           expected, at company level", {
   portfolio <- fake_matched(
+    id_loan = c("i1", "i2"),
     name_abcd = c("comp1", "comp2")
   )
 
@@ -1455,4 +1463,34 @@ test_that("outputs `target` for full timeline of scenario #157", {
 
   expect_equal(max(out$year), 2025L)
 
+})
+
+test_that("with duplicated id_loan throws informative error (#489)", {
+  match_result <- fake_matched(
+    id_loan = c(1, 1),
+    name_abcd = rep("large company", 2),
+    sector_abcd = "automotive"
+  )
+
+  abcd <- fake_abcd(
+    sector = "automotive",
+    technology = "ice",
+    name_company = "large company",
+    year = c(2020, 2025)
+  )
+
+  scen <- fake_scenario(
+    year = c(2020, 2025),
+    tmsr = c(1, 0.5)
+  )
+
+  expect_error(
+    target_market_share(
+      match_result,
+      abcd,
+      scen,
+      region_isos = region_isos_stable
+    ),
+    class = "unique_ids"
+  )
 })

@@ -160,9 +160,10 @@ add_green_technologies_to_abcd <- function(data, scenario) {
     unique() %>%
     inner_join(increasing_techs, by = c("sector", "technology"))
 
-  increasing_techs_not_in_abcd <- dplyr::filter(
+  increasing_techs_not_in_abcd <- dplyr::anti_join(
     increasing_techs_in_scenario,
-    !(.data[["technology"]] %in% unique(data$technology))
+    data,
+    by = c("sector", "technology")
   )
 
   green_rows_to_add <- data %>%

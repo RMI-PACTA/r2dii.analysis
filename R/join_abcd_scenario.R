@@ -166,7 +166,6 @@ add_green_technologies_to_abcd <- function(data, scenario) {
     by = c("sector", "technology")
   )
 
-  # TODO: the summarize should be replaced with a distinct. the left_join should be an inner_join to avoid adding NAs
   green_rows_to_add <- data %>%
     group_by(
       .data$name_company,

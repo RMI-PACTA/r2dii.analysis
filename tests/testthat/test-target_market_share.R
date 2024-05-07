@@ -1496,9 +1496,10 @@ test_that("with duplicated id_loan throws informative error (#489)", {
 })
 
 test_that("target_market_share() calculates target_* values for missing low carbon technologies (#495)", {
-  match_result <- fake_matched()
+  match_result <- fake_matched(name_abcd = "company a")
 
   abcd <- fake_abcd(
+    name_company = "company a",
     sector = c(rep("automotive", 2), rep("hdv", 6)),
     technology = c(rep("ice", 4), rep("hybrid", 2), rep("electric", 2)),
     year = rep(c(2020, 2025), 4)
@@ -1512,15 +1513,24 @@ test_that("target_market_share() calculates target_* values for missing low carb
     smsp = c(0, -0.08, 0, 0.1, 0, 0.1)
   )
 
-  results_tms_lbk <- target_market_share(
+  scen_technologies <- scen %>%
+    dplyr::filter(.data$sector == "automotive") %>%
+    dplyr::arrange(.data$technology) %>%
+    dplyr::distinct(.data$technology) %>%
+    dplyr::pull()
+
+  results_tms_comp <- target_market_share(
     match_result,
     abcd,
     scen,
-    region_isos = region_isos_stable
+    region_isos = region_isos_stable,
+    by_company = TRUE,
+    weight_production = FALSE
   )
 
-  results_tms_lbk_targets <- results_tms_lbk %>%
+  results_tms_comp_targets <- results_tms_comp %>%
     dplyr::filter(
+      .data$name_abcd == "company a",
       .data$sector == "automotive",
       grepl("target_", .data$metric)
     ) %>%
@@ -1528,8 +1538,25 @@ test_that("target_market_share() calculates target_* values for missing low carb
     dplyr::distinct(.data$technology) %>%
     dplyr::pull()
 
-  scen_technologies <- scen %>%
-    dplyr::filter(.data$sector == "automotive") %>%
+  expect_equal(
+    results_tms_comp_targets,
+    scen_technologies
+  )
+
+  results_tms_lbk <- target_market_share(
+    match_result,
+    abcd,
+    scen,
+    region_isos = region_isos_stable,
+    by_company = FALSE,
+    weight_production = TRUE
+  )
+
+  results_tms_lbk_targets <- results_tms_lbk %>%
+    dplyr::filter(
+      .data$sector == "automotive",
+      grepl("target_", .data$metric)
+    ) %>%
     dplyr::arrange(.data$technology) %>%
     dplyr::distinct(.data$technology) %>%
     dplyr::pull()

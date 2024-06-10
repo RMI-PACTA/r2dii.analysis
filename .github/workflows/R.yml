@@ -19,11 +19,11 @@ name: R
 jobs:
   R-package:
     name: R Package Checks
-    uses: RMI-PACTA/actions/.github/workflows/R.yml@main
+    uses: RMI-PACTA/actions/.github/workflows/R.yml@fix/93-malformed-description
 
   dev-r-cmd-check:
     name: R CMD Check (dev versions)
-    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@main
+    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@fix/93-malformed-description
     with:
       upgrade-packages: 'TRUE'
       cache-version: 'dev'

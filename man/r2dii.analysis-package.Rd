@@ -28,6 +28,7 @@ Authors:
   \item Mauro Lepore \email{maurolepore@gmail.com} (\href{https://orcid.org/0000-0002-1986-7988}{ORCID}) [contractor]
   \item Klaus Hogedorn \email{klaus@2degrees-investing.org}
   \item Nicky Halterman \email{nicholas.i.halterman@gmail.com}
+  \item Jacob Kastl \email{jacob.kastl@gmail.com} (\href{https://orcid.org/0009-0000-8281-8129}{ORCID}) [contractor]
 }
 
 Other contributors:

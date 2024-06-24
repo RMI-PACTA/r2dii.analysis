@@ -20,6 +20,7 @@ jobs:
   R-package:
     name: R Package Checks
     uses: RMI-PACTA/actions/.github/workflows/R.yml@main
+    secrets: inherit
     with:
       revdeps: |
           [

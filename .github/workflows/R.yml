@@ -21,6 +21,12 @@ jobs:
     name: R Package Checks
     uses: RMI-PACTA/actions/.github/workflows/R.yml@main
     secrets: inherit
+    with:
+      revdeps: |
+          [
+            {"pkg": "RMI-PACTA/r2dii.plot"},
+            {"pkg": "r2dii.plot"}
+          ]
 
   dev-r-cmd-check:
     name: R CMD Check (dev versions)

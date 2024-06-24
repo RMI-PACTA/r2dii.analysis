@@ -195,26 +195,26 @@ fake but show how you should structure your own data.</p>
 <span>  <span class="fu"><a href="https://rmi-pacta.github.io/r2dii.match/reference/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">matched</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 177 × 28</span></span></span>
-<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297                Ladeck                     <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287                Weinhold                   <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286                Gallo Group                <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285                Austermuhle GmbH           <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L24     C282                Ferraro-Ferraro Group      <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L25     C281                Lockman, Lockman and Lock… <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L26     C280                Ankunding, Ankunding and … <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L27     C278                Donati-Donati Group        <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L28     C276                Ferraro, Ferraro e Ferrar… <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 177 × 22</span></span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker          id_ultimate_parent</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L6      C304                Kassulke-Kassulke              UP83              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L13     C297                Ladeck                         UP69              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L20     C287                Weinhold                       UP35              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L21     C286                Gallo Group                    UP63              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L22     C285                Austermuhle GmbH               UP187             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L24     C282                Ferraro-Ferraro Group          UP209             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L25     C281                Lockman, Lockman and Lockman   UP296             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L26     C280                Ankunding, Ankunding and Anku… UP67              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L27     C278                Donati-Donati Group            UP45              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L28     C276                Ferraro, Ferraro e Ferraro SPA UP195             </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 167 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 18 more variables: name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;chr&gt;, lei_direct_loantaker &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   isin_direct_loantaker &lt;chr&gt;, id_2dii &lt;chr&gt;, level &lt;chr&gt;, sector &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_abcd &lt;chr&gt;, name &lt;chr&gt;, name_abcd &lt;chr&gt;, score &lt;dbl&gt;, …</span></span></span></code></pre></div>
 <ul>
 <li>Calculate market-share targets for production at the portfolio
 level.</li>

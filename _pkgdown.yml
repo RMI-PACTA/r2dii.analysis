@@ -4,53 +4,43 @@ development:
 template:
   package: pacta.pkgdown.rmitemplate
 url: https://rmi-pacta.github.io/r2dii.analysis
-authors:
-  Mauro Lepore:
-    href: https://github.com/maurolepore/
-  Jackson Hoffart:
-    href: https://github.com/jdhoffa/
-  Rocky Mountain Institute:
-    href: https://rmi.org/
 home:
   links:
   - text: Learn more
-    href: https://www.transitionmonitor.com/
+    href: https://pacta.rmi.org
 navbar:
-  type: default
-  left:
-  - text: Get started
-    href: articles/r2dii-analysis.html
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-    - text: Sectoral Decarbonization Approach (SDA)
-      href: articles/target-sda.html
-    - text: Market Share Approach
-      href: articles/target-market-share.html
-    - text: 'Indicator Choices: Weighted Production vs. Weighted Percent Change in
-        Production'
-      href: articles/production-percent-change.html
-  - text: News
-    menu:
-    - text: r2dii blog posts
-      href: https://rmi-pacta.github.io/#category:r2dii
-    - text: '----------------------'
-    - text: Change log
-      href: news/index.html
-  right:
-  - text: Packages
-    menu:
-    - text: r2dii.data
-      href: https://rmi-pacta.github.io/r2dii.data
-    - text: r2dii.match
-      href: https://rmi-pacta.github.io/r2dii.match
-    - text: r2dii.analysis
-      href: https://rmi-pacta.github.io/r2dii.analysis
-    - text: r2dii.plot
-      href: https://rmi-pacta.github.io/r2dii.plot
-  - icon: fa-github
-    href: https://github.com/RMI-PACTA/r2dii.analysis
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, packages, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: Sectoral Decarbonization Approach (SDA)
+        href: articles/target-sda.html
+      - text: Market Share Approach
+        href: articles/target-market-share.html
+      - text: 'Indicator Choices: Weighted Production vs. Weighted Percent Change in Production'
+        href: articles/production-percent-change.html
+    news:
+      text: News
+      menu:
+      - text: r2dii blog posts
+        href: https://rmi-pacta.github.io/#category:r2dii
+      - text: '----------------------'
+      - text: Change log
+        href: news/index.html
+    packages:
+      text: Packages
+      menu:
+      - text: r2dii.data
+        href: https://rmi-pacta.github.io/r2dii.data
+      - text: r2dii.match
+        href: https://rmi-pacta.github.io/r2dii.match
+      - text: r2dii.analysis
+        href: https://rmi-pacta.github.io/r2dii.analysis
+      - text: r2dii.plot
+        href: https://rmi-pacta.github.io/r2dii.plot
 reference:
 - title: Calculate scenario targets
   contents: has_concept("functions to calculate scenario targets")

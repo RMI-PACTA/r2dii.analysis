@@ -33,7 +33,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Rocky Mountain Institute \email{PACTA4banks@rmi.org} [copyright holder, funder]
+  \item RMI \email{PACTA4banks@rmi.org} [copyright holder, funder]
 }
 
 }

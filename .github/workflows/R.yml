@@ -22,6 +22,7 @@ jobs:
     uses: RMI-PACTA/actions/.github/workflows/R.yml@main
     secrets: inherit
     with:
+      do-compare-versions: false
       revdeps: |
           [
             {"pkg": "RMI-PACTA/r2dii.plot"},

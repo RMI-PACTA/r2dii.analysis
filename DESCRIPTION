@@ -30,7 +30,7 @@ Authors@R:
              role = c("aut", "ctr"),
              email = "jacob.kastl@gmail.com",
              comment = c(ORCID = "0009-0000-8281-8129")),
-      person(given = "Rocky Mountain Institute",
+      person(given = "RMI",
              role = c("cph", "fnd"),
              email = "PACTA4banks@rmi.org"))
 Description: These tools help you to assess if a corporate lending

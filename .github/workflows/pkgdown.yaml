@@ -46,7 +46,7 @@ jobs:
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4.6.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           clean: ${{ github.event_name == 'workflow_dispatch' && inputs.clean || false }}
           branch: gh-pages

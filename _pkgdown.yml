@@ -41,6 +41,8 @@ navbar:
         href: https://rmi-pacta.github.io/r2dii.analysis
       - text: r2dii.plot
         href: https://rmi-pacta.github.io/r2dii.plot
+      - text: pacta.multi.loanbook
+        href: https://rmi-pacta.github.io/pacta.multi.loanbook
 reference:
 - title: Calculate scenario targets
   contents: has_concept("functions to calculate scenario targets")

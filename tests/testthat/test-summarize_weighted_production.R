@@ -403,7 +403,7 @@ test_that("with different currencies errors with informative message (#137)", {
 })
 
 test_that("columns in output match what is documented in `data_dictionary`", {
-  out <- summarize_weighted_production(fake_master())
+  out <- summarize_weighted_production(data = fake_master())
 
   data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "summarize_weighted_production_output")
 
@@ -412,7 +412,7 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 })
 
 test_that("columns in output match what is documented in `data_dictionary`", {
-  out <- summarize_weighted_percent_change(fake_master())
+  out <- summarize_weighted_percent_change(data = fake_master())
 
   data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "summarize_weighted_percent_change_output")
 

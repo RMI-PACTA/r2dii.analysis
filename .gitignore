@@ -1,6 +1,12 @@
 .Rproj.user
 .Rhistory
+.Rapp.history
 .RData
+.RDataTmp
 .Ruserdata
+.Renviron
 docs
 revdep/
+
+# macOS
+.DS_Store

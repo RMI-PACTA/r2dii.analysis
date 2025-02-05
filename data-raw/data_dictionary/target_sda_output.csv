@@ -1,0 +1,7 @@
+dataset,column,typeof,definition
+target_sda_output,sector,character,
+target_sda_output,year,double,
+target_sda_output,region,character,
+target_sda_output,scenario_source,character,
+target_sda_output,emission_factor_metric,character,
+target_sda_output,emission_factor_value,double,

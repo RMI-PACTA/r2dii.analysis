@@ -48,4 +48,6 @@ reference:
   contents: has_concept("functions to calculate scenario targets")
 - title: Utility functions
   contents: has_concept("utility functions")
+- title: Data dictionary
+  contents: has_concept("data dictionary")
 

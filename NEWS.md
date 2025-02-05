@@ -1,5 +1,7 @@
 # r2dii.analysis (development version)
 
+* `data_dictionary` dataset added to define the columns in each dataset used or exported by the functions in this package
+
 r2dii.analysis is now [stable](https://lifecycle.r-lib.org/articles/stages.html).
 
 # r2dii.analysis 0.4.0

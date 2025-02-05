@@ -1,0 +1,11 @@
+dataset,column,typeof,definition
+target_market_share_output,sector,character,
+target_market_share_output,technology,character,
+target_market_share_output,year,double,
+target_market_share_output,region,character,
+target_market_share_output,scenario_source,character,
+target_market_share_output,metric,character,
+target_market_share_output,production,double,
+target_market_share_output,technology_share,double,
+target_market_share_output,scope,character,
+target_market_share_output,percentage_of_initial_production_by_scope,double,

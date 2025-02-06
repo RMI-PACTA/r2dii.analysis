@@ -1,7 +1,7 @@
 dataset,column,typeof,definition
-target_sda_output,sector,character,
-target_sda_output,year,double,
-target_sda_output,region,character,
-target_sda_output,scenario_source,character,
+target_sda_output,sector,character,the sector of the abcd company
+target_sda_output,year,double,the year at which the pathway value is prescribed
+target_sda_output,region,character,the region to which the pathway is relevant
+target_sda_output,scenario_source,character,the source publication from which the scenario was taken
 target_sda_output,emission_factor_metric,character,
 target_sda_output,emission_factor_value,double,

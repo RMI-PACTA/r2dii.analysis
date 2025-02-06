@@ -1,11 +1,11 @@
 dataset,column,typeof,definition
-target_market_share_output,sector,character,
-target_market_share_output,technology,character,
-target_market_share_output,year,double,
-target_market_share_output,region,character,
-target_market_share_output,scenario_source,character,
+target_market_share_output,sector,character,the sector of the abcd company
+target_market_share_output,technology,character,technology implemented by the asset
+target_market_share_output,year,double,the year at which the pathway value is prescribed
+target_market_share_output,region,character,the region to which the pathway is relevant
+target_market_share_output,scenario_source,character,the source publication from which the scenario was taken
 target_market_share_output,metric,character,
-target_market_share_output,production,double,
+target_market_share_output,production,double,company level production of the technology
 target_market_share_output,technology_share,double,
 target_market_share_output,scope,character,
 target_market_share_output,percentage_of_initial_production_by_scope,double,

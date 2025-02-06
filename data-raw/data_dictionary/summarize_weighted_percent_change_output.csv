@@ -1,5 +1,5 @@
 dataset,column,typeof,definition
-summarize_weighted_percent_change_output,sector_abcd,character,
-summarize_weighted_percent_change_output,technology,character,
-summarize_weighted_percent_change_output,year,double,
+summarize_weighted_percent_change_output,sector_abcd,character,the sector of the summarized assets
+summarize_weighted_percent_change_output,technology,character,the technology of the summarized assets
+summarize_weighted_percent_change_output,year,double,the year at which the pathway value is prescribed
 summarize_weighted_percent_change_output,weighted_percent_change,double,

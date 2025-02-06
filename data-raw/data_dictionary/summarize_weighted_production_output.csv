@@ -2,5 +2,5 @@ dataset,column,typeof,definition
 summarize_weighted_production_output,sector_abcd,character,the sector of the summarized assets
 summarize_weighted_production_output,technology,character,the technology of the summarized assets
 summarize_weighted_production_output,year,double,the year at which the pathway value is prescribed
-summarize_weighted_production_output,weighted_production,double,the weighted sum of the production associated with a loan, weighted by loan size
+summarize_weighted_production_output,weighted_production,double,"the weighted sum of the production associated with a loan, weighted by loan size"
 summarize_weighted_production_output,weighted_technology_share,double,

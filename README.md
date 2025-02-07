@@ -11,7 +11,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 status](https://www.r-pkg.org/badges/version/r2dii.analysis)](https://CRAN.R-project.org/package=r2dii.analysis)
 [![Codecov test
 coverage](https://codecov.io/gh/RMI-PACTA/r2dii.analysis/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.analysis?branch=main)
-[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R.yml/badge.svg)](https://github.com/RMI-PACTA/r2dii.analysis/actions/workflows/R.yml)
 <!-- badges: end -->
 
 These tools help you to assess if a financial portfolio aligns with

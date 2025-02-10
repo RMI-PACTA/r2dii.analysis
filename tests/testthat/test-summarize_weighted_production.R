@@ -401,3 +401,21 @@ test_that("with different currencies errors with informative message (#137)", {
     class = "multiple_currencies"
   )
 })
+
+test_that("columns in output match what is documented in `data_dictionary`", {
+  out <- summarize_weighted_production(data = fake_master())
+
+  data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "summarize_weighted_production_output")
+
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})
+
+test_that("columns in output match what is documented in `data_dictionary`", {
+  out <- summarize_weighted_percent_change(data = fake_master())
+
+  data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "summarize_weighted_percent_change_output")
+
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})

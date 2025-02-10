@@ -316,3 +316,17 @@ test_that("only extend timeline beyond t0 of abcd #157", {
   expect_equal(out_b$`2021`$production, 1)
 
 })
+
+test_that("columns in output match what is documented in `data_dictionary`", {
+  out <- join_abcd_scenario(
+    data = fake_matched(),
+    abcd = fake_abcd(),
+    scenario = fake_scenario(),
+    region_isos = region_isos_stable
+  )
+
+  data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "join_abcd_scenario_output")
+
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})

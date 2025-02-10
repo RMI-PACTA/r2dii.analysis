@@ -1013,3 +1013,26 @@ test_that("target of final year always converges at final value of adjusted_scen
   expect_equal(unique(final_targets_converge_company$targets_converge), TRUE)
 })
 
+test_that("columns in output match what is documented in `data_dictionary`", {
+  out <- target_sda(
+    data = fake_matched(
+      sector_abcd = "cement"
+    ),
+    abcd = fake_abcd(
+      sector = "cement",
+      technology = "cement",
+      year = c(2020, 2021, 2022),
+      emission_factor = c(1, 2, 3)
+    ),
+    co2_intensity_scenario = fake_co2_scenario(
+      year = c(2020, 2050),
+      emission_factor = c(0.6, 0.2)
+    ),
+    region_isos = region_isos_stable
+  )
+
+  data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "target_sda_output")
+
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})

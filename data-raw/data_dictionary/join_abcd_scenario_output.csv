@@ -1,0 +1,23 @@
+dataset,column,typeof,definition
+join_abcd_scenario_output,id_loan,character,Unique loan identifier
+join_abcd_scenario_output,loan_size_outstanding,double,Amount drawn by borrower from total credit limit
+join_abcd_scenario_output,loan_size_outstanding_currency,character,Currency corresponding to outstandings
+join_abcd_scenario_output,loan_size_credit_limit,double,Total credit limit or exposure at default
+join_abcd_scenario_output,loan_size_credit_limit_currency,character,Currency corresponding to credit limit
+join_abcd_scenario_output,id_2dii,character,an id used internally by match_name() to distinguish companies
+join_abcd_scenario_output,level,character,the level of granularity that the loan was matched at (e.g direct_loantaker or ultimate_parent)
+join_abcd_scenario_output,score,double,the score of the match (manually set this to 1 prior to calling prioritize() to validate the match)
+join_abcd_scenario_output,sector,character,the sector of the abcd company
+join_abcd_scenario_output,name_abcd,character,the name of the abcd company
+join_abcd_scenario_output,sector_abcd,character,the sector of the abcd company
+join_abcd_scenario_output,technology,character,Technology implemented by the asset
+join_abcd_scenario_output,plant_location,character,Country where asset is located
+join_abcd_scenario_output,is_ultimate_owner,logical,Flag if company is the ultimate parent in our database
+join_abcd_scenario_output,scenario,character,The name of the scenario
+join_abcd_scenario_output,region,character,The region to which the pathway is relevant
+join_abcd_scenario_output,scenario_source,character,The source publication from which the scenario was taken
+join_abcd_scenario_output,year,integer,The year at which the pathway value is prescribed
+join_abcd_scenario_output,production,double,Company level production of the technology
+join_abcd_scenario_output,emission_factor,double,Company level emission factor of the technology
+join_abcd_scenario_output,tmsr,double,Technology market share ratio of the pathway
+join_abcd_scenario_output,smsp,double,Sector market share percentage of the pathway

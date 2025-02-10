@@ -1566,3 +1566,17 @@ test_that("target_market_share() calculates target_* values for missing low carb
     scen_technologies
   )
 })
+
+test_that("columns in output match what is documented in `data_dictionary`", {
+  out <- target_market_share(
+    data = fake_matched(),
+    abcd = fake_abcd(),
+    scenario = fake_scenario(),
+    region_isos = region_isos_stable
+  )
+
+  data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "target_market_share_output")
+
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})

@@ -43,8 +43,8 @@ Description: These tools help you to assess if a corporate lending
     to study how their capital allocation decisions align with climate
     change mitigation goals.
 License: MIT + file LICENSE
-URL: https://github.com/RMI-PACTA/r2dii.analysis,
-    https://rmi-pacta.github.io/r2dii.analysis/
+URL: https://rmi-pacta.github.io/r2dii.analysis/,
+    https://github.com/RMI-PACTA/r2dii.analysis
 BugReports: https://github.com/RMI-PACTA/r2dii.analysis/issues
 Depends:
     R (>= 3.4)

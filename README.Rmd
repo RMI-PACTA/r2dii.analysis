@@ -97,35 +97,6 @@ matched %>%
   )
 ```
 
-### Utility Functions
-
-The `target_*()` functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:
-
-* Use `join_abcd_scenario()` to join a matched dataset to the relevant 
-scenario data, and to pick assets in the relevant regions. 
-
-```{r}
-loanbook_joined_to_abcd_scenario <- matched %>%
-  join_abcd_scenario(
-    abcd = abcd_demo,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo
-  )
-```
-
-* Use `summarize_weighted_production()` with different grouping arguments to 
-calculate scenario-targets:
-
-```{r}
-# portfolio level
-loanbook_joined_to_abcd_scenario %>%
-  summarize_weighted_production(scenario, tmsr, smsp, region)
-
-# company level
-loanbook_joined_to_abcd_scenario %>%
-  summarize_weighted_production(scenario, tmsr, smsp, region, name_abcd)
-```
-
 [Get started](https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html).
 
 ```{r echo=FALSE}

@@ -32,6 +32,13 @@ Returns a fully joined data frame, linking portfolio, abcd and
 scenario.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function was deprecated because it is not required as a user-facing
+function for PACTA for Banks. It is still used internally though.
+All relevant outputs of the PACTA for Banks analysis can be obtained using
+the target_market_share() and target_sda() functions.
+
 \code{join_abcd_scenario()} is a simple wrapper of several calls to
 \verb{dplyr::join_*()}, forming the master dataset to be used in later steps of
 the analysis.
@@ -58,3 +65,4 @@ Other utility functions:
 \code{\link{summarize_weighted_production}()}
 }
 \concept{utility functions}
+\keyword{internal}

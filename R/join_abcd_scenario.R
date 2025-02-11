@@ -1,8 +1,18 @@
 #' Join a data-loanbook object to the abcd and scenario
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function was deprecated because it is not required as a user-facing
+#' function for PACTA for Banks. It is still used internally though.
+#' All relevant outputs of the PACTA for Banks analysis can be obtained using
+#' the target_market_share() and target_sda() functions.
+#'
 #' `join_abcd_scenario()` is a simple wrapper of several calls to
 #' `dplyr::join_*()`, forming the master dataset to be used in later steps of
 #' the analysis.
+#'
+#' @keywords internal
 #'
 #' @param data A data frame like the output of
 #'   `r2dii.match::prioritize`.
@@ -39,6 +49,7 @@ join_abcd_scenario <- function(data,
                               scenario,
                               region_isos = r2dii.data::region_isos,
                               add_green_technologies = FALSE) {
+  lifecycle::deprecate_soft(when = "0.5.0", what = "join_abcd_scenario()")
 
   check_portfolio_abcd_scenario(data, abcd, scenario)
 

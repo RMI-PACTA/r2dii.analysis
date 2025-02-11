@@ -1,8 +1,20 @@
 #' Summaries based on the weight of each loan per sector per year
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' These functions (summarize_weighted_production() and
+#' summarize_weighted_percent_change()) were deprecated because they are not
+#' required as a user-facing function for PACTA for Banks.
+#' They are still used internally though.
+#' All relevant outputs of the PACTA for Banks analysis can be obtained using
+#' the target_market_share() and target_sda() functions.
+#'
 #' Based on on the weight of each loan per sector per year,
 #' `summarize_weighted_production()` and `summarize_weighted_percent_change()`
 #' summarize the production and percent-change, respectively.
+#'
+#' @keywords internal
 #'
 #' @param data A data frame like the output of [join_abcd_scenario()].
 #' @param use_credit_limit Logical vector of length 1. `FALSE` defaults to using
@@ -50,6 +62,7 @@
 #'
 #' summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 summarize_weighted_production <- function(data, ..., use_credit_limit = FALSE) {
+  lifecycle::deprecate_soft(when = "0.5.0", what = "summarize_weighted_production()")
   summarize_weighted_production_(data, ..., use_credit_limit = use_credit_limit, with_targets = FALSE)
 }
 
@@ -145,6 +158,7 @@ summarize_unweighted_production <- function(data, ..., with_targets = FALSE) {
 #' @rdname summarize_weighted_production
 #' @export
 summarize_weighted_percent_change <- function(data, ..., use_credit_limit = FALSE) {
+  lifecycle::deprecate_soft(when = "0.5.0", what = "summarize_weighted_percent_change()")
   stopifnot(is.data.frame(data))
 
   data %>%

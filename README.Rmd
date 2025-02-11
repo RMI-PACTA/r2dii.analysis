@@ -48,7 +48,7 @@ pak::pak("RMI-PACTA/r2dii.analysis")
 
 * Use `library()` to attach the packages you need. r2dii.analysis does not depend on the packages r2dii.data and r2dii.match; but we suggest you install them -- with `install.packages(c("r2dii.data", "r2dii.match"))` -- so you can reproduce our examples.
 
-```{r}
+```{r, message=FALSE}
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)

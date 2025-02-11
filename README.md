@@ -49,11 +49,6 @@ pak::pak("RMI-PACTA/r2dii.analysis")
 library(r2dii.data)
 library(r2dii.match)
 library(r2dii.analysis)
-#> 
-#> Attaching package: 'r2dii.analysis'
-#> The following object is masked from 'package:r2dii.data':
-#> 
-#>     data_dictionary
 ```
 
 - Use `r2dii.match::match_name()` to identify matches between your

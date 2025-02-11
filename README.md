@@ -148,68 +148,6 @@ matched %>%
 #> #   percentage_of_initial_production_by_scope <dbl>
 ```
 
-### Utility Functions
-
-The `target_*()` functions provide shortcuts for common operations. They
-wrap some utility functions that you may also use directly:
-
-- Use `join_abcd_scenario()` to join a matched dataset to the relevant
-  scenario data, and to pick assets in the relevant regions.
-
-``` r
-loanbook_joined_to_abcd_scenario <- matched %>%
-  join_abcd_scenario(
-    abcd = abcd_demo,
-    scenario = scenario_demo_2020,
-    region_isos = region_isos_demo
-  )
-```
-
-- Use `summarize_weighted_production()` with different grouping
-  arguments to calculate scenario-targets:
-
-``` r
-# portfolio level
-loanbook_joined_to_abcd_scenario %>%
-  summarize_weighted_production(scenario, tmsr, smsp, region)
-#> # A tibble: 756 × 9
-#>    sector_abcd technology  year scenario  tmsr    smsp region
-#>    <chr>       <chr>      <int> <chr>    <dbl>   <dbl> <chr> 
-#>  1 automotive  electric    2020 cps       1    0       global
-#>  2 automotive  electric    2020 sds       1    0       global
-#>  3 automotive  electric    2020 sps       1    0       global
-#>  4 automotive  electric    2021 cps       1.12 0.00108 global
-#>  5 automotive  electric    2021 sds       1.16 0.00653 global
-#>  6 automotive  electric    2021 sps       1.14 0.00137 global
-#>  7 automotive  electric    2022 cps       1.24 0.00213 global
-#>  8 automotive  electric    2022 sds       1.32 0.0131  global
-#>  9 automotive  electric    2022 sps       1.29 0.00273 global
-#> 10 automotive  electric    2023 cps       1.35 0.00316 global
-#> # ℹ 746 more rows
-#> # ℹ 2 more variables: weighted_production <dbl>,
-#> #   weighted_technology_share <dbl>
-
-# company level
-loanbook_joined_to_abcd_scenario %>%
-  summarize_weighted_production(scenario, tmsr, smsp, region, name_abcd)
-#> # A tibble: 13,023 × 10
-#>    sector_abcd technology  year scenario  tmsr  smsp region name_abcd           
-#>    <chr>       <chr>      <int> <chr>    <dbl> <dbl> <chr>  <chr>               
-#>  1 automotive  electric    2020 cps          1     0 global Bernardi, Bernardi …
-#>  2 automotive  electric    2020 cps          1     0 global Christiansen PLC    
-#>  3 automotive  electric    2020 cps          1     0 global Donati, Donati e Do…
-#>  4 automotive  electric    2020 cps          1     0 global DuBuque-DuBuque     
-#>  5 automotive  electric    2020 cps          1     0 global Ferrari-Ferrari SPA 
-#>  6 automotive  electric    2020 cps          1     0 global Ferry and Sons      
-#>  7 automotive  electric    2020 cps          1     0 global Goyette-Goyette     
-#>  8 automotive  electric    2020 cps          1     0 global Guerra, Guerra e Gu…
-#>  9 automotive  electric    2020 cps          1     0 global Gutkowski, Gutkowsk…
-#> 10 automotive  electric    2020 cps          1     0 global Hilpert, Hilpert an…
-#> # ℹ 13,013 more rows
-#> # ℹ 2 more variables: weighted_production <dbl>,
-#> #   weighted_technology_share <dbl>
-```
-
 [Get
 started](https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html).
 

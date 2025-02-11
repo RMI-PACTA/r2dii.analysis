@@ -25,6 +25,15 @@ A tibble with the same groups as the input (if any) and columns:
 \code{summarize_weighted_percent_change()}, respectively.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+These functions (summarize_weighted_production() and
+summarize_weighted_percent_change()) were deprecated because they are not
+required as a user-facing function for PACTA for Banks.
+They are still used internally though.
+All relevant outputs of the PACTA for Banks analysis can be obtained using
+the target_market_share() and target_sda() functions.
+
 Based on on the weight of each loan per sector per year,
 \code{summarize_weighted_production()} and \code{summarize_weighted_percent_change()}
 summarize the production and percent-change, respectively.
@@ -69,3 +78,4 @@ Other utility functions:
 \code{\link{join_abcd_scenario}()}
 }
 \concept{utility functions}
+\keyword{internal}

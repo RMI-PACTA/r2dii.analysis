@@ -205,64 +205,6 @@
 <span><span class="co">#&gt; # ℹ 14,495 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="utility-functions">Utility Functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a>
-</h3>
-<p>The <code>target_*()</code> functions provide shortcuts for common operations. They wrap some utility functions that you may also use directly:</p>
-<ul>
-<li>Use <code><a href="reference/join_abcd_scenario.html">join_abcd_scenario()</a></code> to join a matched dataset to the relevant scenario data, and to pick assets in the relevant regions.</li>
-</ul>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op">&lt;-</span> <span class="va">matched</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/join_abcd_scenario.html">join_abcd_scenario</a></span><span class="op">(</span></span>
-<span>    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span>
-<span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span>
-<span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<ul>
-<li>Use <code><a href="reference/summarize_weighted_production.html">summarize_weighted_production()</a></code> with different grouping arguments to calculate scenario-targets:</li>
-</ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># portfolio level</span></span>
-<span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 756 × 9</span></span>
-<span><span class="co">#&gt;    sector_abcd technology  year scenario  tmsr    smsp region</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; </span></span>
-<span><span class="co">#&gt;  1 automotive  electric    2020 cps       1    0       global</span></span>
-<span><span class="co">#&gt;  2 automotive  electric    2020 sds       1    0       global</span></span>
-<span><span class="co">#&gt;  3 automotive  electric    2020 sps       1    0       global</span></span>
-<span><span class="co">#&gt;  4 automotive  electric    2021 cps       1.12 0.00108 global</span></span>
-<span><span class="co">#&gt;  5 automotive  electric    2021 sds       1.16 0.00653 global</span></span>
-<span><span class="co">#&gt;  6 automotive  electric    2021 sps       1.14 0.00137 global</span></span>
-<span><span class="co">#&gt;  7 automotive  electric    2022 cps       1.24 0.00213 global</span></span>
-<span><span class="co">#&gt;  8 automotive  electric    2022 sds       1.32 0.0131  global</span></span>
-<span><span class="co">#&gt;  9 automotive  electric    2022 sps       1.29 0.00273 global</span></span>
-<span><span class="co">#&gt; 10 automotive  electric    2023 cps       1.35 0.00316 global</span></span>
-<span><span class="co">#&gt; # ℹ 746 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 2 more variables: weighted_production &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></span>
-<span></span>
-<span><span class="co"># company level</span></span>
-<span><span class="va">loanbook_joined_to_abcd_scenario</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/summarize_weighted_production.html">summarize_weighted_production</a></span><span class="op">(</span><span class="va">scenario</span>, <span class="va">tmsr</span>, <span class="va">smsp</span>, <span class="va">region</span>, <span class="va">name_abcd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 13,023 × 10</span></span>
-<span><span class="co">#&gt;    sector_abcd technology  year scenario  tmsr  smsp region name_abcd           </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               </span></span>
-<span><span class="co">#&gt;  1 automotive  electric    2020 cps          1     0 global Bernardi, Bernardi …</span></span>
-<span><span class="co">#&gt;  2 automotive  electric    2020 cps          1     0 global Christiansen PLC    </span></span>
-<span><span class="co">#&gt;  3 automotive  electric    2020 cps          1     0 global Donati, Donati e Do…</span></span>
-<span><span class="co">#&gt;  4 automotive  electric    2020 cps          1     0 global DuBuque-DuBuque     </span></span>
-<span><span class="co">#&gt;  5 automotive  electric    2020 cps          1     0 global Ferrari-Ferrari SPA </span></span>
-<span><span class="co">#&gt;  6 automotive  electric    2020 cps          1     0 global Ferry and Sons      </span></span>
-<span><span class="co">#&gt;  7 automotive  electric    2020 cps          1     0 global Goyette-Goyette     </span></span>
-<span><span class="co">#&gt;  8 automotive  electric    2020 cps          1     0 global Guerra, Guerra e Gu…</span></span>
-<span><span class="co">#&gt;  9 automotive  electric    2020 cps          1     0 global Gutkowski, Gutkowsk…</span></span>
-<span><span class="co">#&gt; 10 automotive  electric    2020 cps          1     0 global Hilpert, Hilpert an…</span></span>
-<span><span class="co">#&gt; # ℹ 13,013 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 2 more variables: weighted_production &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   weighted_technology_share &lt;dbl&gt;</span></span></code></pre></div>
 <p><a href="https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>
 </div>
 </div>

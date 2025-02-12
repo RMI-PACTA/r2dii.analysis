@@ -34,15 +34,15 @@ navbar:
       text: Packages
       menu:
       - text: r2dii.data
-        href: https://rmi-pacta.github.io/r2dii.data
+        href: https://rmi-pacta.github.io/r2dii.data/
       - text: r2dii.match
-        href: https://rmi-pacta.github.io/r2dii.match
+        href: https://rmi-pacta.github.io/r2dii.match/
       - text: r2dii.analysis
-        href: https://rmi-pacta.github.io/r2dii.analysis
+        href: https://rmi-pacta.github.io/r2dii.analysis/
       - text: r2dii.plot
-        href: https://rmi-pacta.github.io/r2dii.plot
+        href: https://rmi-pacta.github.io/r2dii.plot/
       - text: pacta.multi.loanbook
-        href: https://rmi-pacta.github.io/pacta.multi.loanbook
+        href: https://rmi-pacta.github.io/pacta.multi.loanbook/
 reference:
 - title: Calculate scenario targets
   contents: has_concept("functions to calculate scenario targets")

@@ -20,7 +20,7 @@ filter_and_warn_na <- function(data, column) {
 
     data <- filter(data, !is.na(.data[[column]]))
   }
-  
+
   data
 }
 
@@ -35,7 +35,7 @@ fill_and_warn_na <- function(data, column) {
 
     data[[column]] <- tidyr::replace_na(data[[column]], 0)
   }
-  
+
   data
 }
 

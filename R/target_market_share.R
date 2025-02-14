@@ -112,7 +112,7 @@ target_market_share <- function(data,
     return(scenario)
   }
 
-  data <- join_abcd_scenario(
+  data <- join_abcd_scenario_(
     data,
     abcd,
     scenario,

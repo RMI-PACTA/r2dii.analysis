@@ -2,6 +2,7 @@ library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
 test_that("with fake data outputs known value", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   out <- join_abcd_scenario(
     fake_matched(),
     abcd = fake_abcd(),
@@ -12,6 +13,7 @@ test_that("with fake data outputs known value", {
 })
 
 test_that("returns visibly", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_visible(
     join_abcd_scenario(
       fake_matched(),
@@ -23,6 +25,8 @@ test_that("returns visibly", {
 })
 
 test_that("outputs expected names", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   expected <- setdiff(
     c(
       names(fake_matched()),
@@ -58,6 +62,8 @@ test_that("outputs expected names", {
 })
 
 test_that("is sensitive to region_isos", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   out1 <- join_abcd_scenario(
     fake_matched(),
     abcd = fake_abcd(),
@@ -76,6 +82,8 @@ test_that("is sensitive to region_isos", {
 })
 
 test_that("is case-insensitive to `plant_location` inputs", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   lowercase <- "a"
   out1 <- join_abcd_scenario(
     fake_matched(),
@@ -96,6 +104,8 @@ test_that("is case-insensitive to `plant_location` inputs", {
 })
 
 test_that("outputs a number of rows equal to matches by `scenario_source`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   matching_0 <- suppressWarnings(
     join_abcd_scenario(
       fake_matched(),
@@ -129,6 +139,7 @@ test_that("w/ loanbook, abcd or scenario with missing names errors gracefully", 
   expect_error_missing_names <- function(match_result = fake_matched(),
                                          abcd = fake_abcd(),
                                          scenario = fake_scenario()) {
+    withr::local_options(lifecycle_verbosity = "quiet")
     expect_error(
       class = "missing_names",
       join_abcd_scenario(match_result, abcd, scenario)
@@ -151,6 +162,8 @@ test_that("w/ loanbook, abcd or scenario with missing names errors gracefully", 
 })
 
 test_that("without `sector` throws no error", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   # RMI-PACTA/r2dii.analysis/pull/62#issuecomment-634651157
   without_sector <- select(fake_matched(), -sector)
   expect_error_free(
@@ -164,6 +177,8 @@ test_that("without `sector` throws no error", {
 })
 
 test_that("warns 0-rows caused by scenario or region_isos", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   join_abcd_scenario2 <- function(l, scenario = NULL, region_isos = NULL) {
     scenario <- scenario %||% fake_scenario(
       region = l$region, sector = l$sector, scenario_source = l$source
@@ -216,6 +231,8 @@ test_that("warns 0-rows caused by scenario or region_isos", {
 })
 
 test_that("include/excludes `plant_location` inside/outside a region", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   # styler: off
   region_isos_toy <- dplyr::tribble(
     ~region,         ~isos, ~source,
@@ -244,6 +261,8 @@ test_that("include/excludes `plant_location` inside/outside a region", {
 })
 
 test_that("outputs the same with upper/lower abcd$sector or abcd$technology", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   matched <- fake_matched()
   abcd <- fake_abcd()
   scenario <- fake_scenario()
@@ -261,6 +280,7 @@ test_that("outputs the same with upper/lower abcd$sector or abcd$technology", {
 })
 
 test_that("outputs full timeline of scenario #157", {
+  withr::local_options(lifecycle_verbosity = "quiet")
 
   out <- join_abcd_scenario(
     fake_matched(),
@@ -274,6 +294,7 @@ test_that("outputs full timeline of scenario #157", {
 })
 
 test_that("doesnt output sectors that aren't in input data #157", {
+  withr::local_options(lifecycle_verbosity = "quiet")
 
   out <- join_abcd_scenario(
     fake_matched(sector_abcd = "power"),
@@ -290,6 +311,7 @@ test_that("doesnt output sectors that aren't in input data #157", {
 })
 
 test_that("only extend timeline beyond t0 of abcd #157", {
+  withr::local_options(lifecycle_verbosity = "quiet")
 
   out <- join_abcd_scenario(
     fake_matched(name_abcd = c("a", "b")),
@@ -318,6 +340,8 @@ test_that("only extend timeline beyond t0 of abcd #157", {
 })
 
 test_that("columns in output match what is documented in `data_dictionary`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   out <- join_abcd_scenario(
     data = fake_matched(),
     abcd = fake_abcd(),
@@ -329,4 +353,16 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 
   expect_setequal(names(out), data_dict[["column"]])
   expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})
+
+test_that("join_abcd_scenario throws a deprecation warning", {
+  expect_warning(
+    join_abcd_scenario(
+      fake_matched(),
+      abcd = fake_abcd(),
+      scenario = fake_scenario(),
+      region_isos = region_isos_stable
+    ),
+    "deprecated in r2dii.analysis 0.5.0"
+  )
 })

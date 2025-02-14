@@ -4,10 +4,12 @@ library(r2dii.match)
 # Production --------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_error(summarize_weighted_production("bad"), "data.frame.*not.*TRUE")
 })
 
 test_that("with bad use_credit_limit errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_error(
     summarize_weighted_production(fake_master(), use_credit_limit = "bad"),
     "not TRUE"
@@ -30,6 +32,7 @@ test_that("with bad use_credit_limit errors with informative message", {
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_error_missing_names <- function(name, use_credit_limit = FALSE) {
     data <- rename(fake_master(), bad = all_of(name))
 
@@ -47,8 +50,8 @@ test_that("with data lacking crucial columns errors with informative message", {
   expect_error_missing_names("technology")
   expect_error_missing_names("year")
 })
-
 test_that("with NAs in crucial columns errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_error_crucial_NAs <- function(name, use_credit_limit = FALSE) {
     data <- fake_master(
       technology = c("ta", "ta", "tb", "tb"),
@@ -73,6 +76,7 @@ test_that("with NAs in crucial columns errors with informative message", {
 })
 
 test_that("with bad but unused loan_size_column is error free", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   bad_unused <- rename(fake_master(), bad = "loan_size_credit_limit")
   expect_error_free(
     summarize_weighted_production(bad_unused, use_credit_limit = FALSE)
@@ -85,6 +89,7 @@ test_that("with bad but unused loan_size_column is error free", {
 })
 
 test_that("with duplicated loan_size by id_loan throws error", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
     summarize_weighted_production(fake_master(loan_size_outstanding = 1:2))
@@ -100,6 +105,7 @@ test_that("with duplicated loan_size by id_loan throws error", {
 })
 
 test_that("with known input outputs as expected", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   # styler: off
   data <- fake_master(
     technology =            c("ta", "ta", "tb", "tb"),
@@ -125,6 +131,7 @@ test_that("with known input outputs as expected", {
 })
 
 test_that("outputs expected names", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_named(
     summarize_weighted_production(fake_master()),
     c(
@@ -138,6 +145,7 @@ test_that("outputs expected names", {
 })
 
 test_that("with multiple years outputs as expected", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   # styler: off
   data <- fake_master(
     technology =            c("ta", "ta"),
@@ -161,6 +169,7 @@ test_that("with multiple years outputs as expected", {
 })
 
 test_that("with grouped data returns same groups as input", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   out <- fake_master() %>%
     group_by(.data$sector_abcd) %>%
     summarize_weighted_production()
@@ -169,12 +178,14 @@ test_that("with grouped data returns same groups as input", {
 })
 
 test_that("can group by `plant_location`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   data <- fake_master(plant_location = c("a", "b"))
   out <- summarize_weighted_production(data, plant_location)
   expect_equal(nrow(out), 2L)
 })
 
 test_that("preserves groups passed to ...", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   data <- fake_master(plant_location = c("a", "b")) %>%
     group_by(plant_location)
 
@@ -187,6 +198,7 @@ test_that("preserves groups passed to ...", {
 # Percent-change ---------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_error(
     summarize_weighted_percent_change("bad"),
     "data.frame.*not.*TRUE"
@@ -194,6 +206,8 @@ test_that("with bad `data` errors with informative message", {
 })
 
 test_that("with bad use_credit_limit errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   expect_error(
     summarize_weighted_percent_change(fake_master(), use_credit_limit = "bad"),
     "not TRUE"
@@ -216,6 +230,8 @@ test_that("with bad use_credit_limit errors with informative message", {
 })
 
 test_that("with data lacking crucial columns errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   expect_error_missing_names <- function(name, use_credit_limit = FALSE) {
     data <- rename(fake_master(), bad = all_of(name))
 
@@ -247,6 +263,7 @@ test_that("with NAs in crucial columns errors with informative message", {
     )
 
     data[1, name] <- NA
+    withr::local_options(lifecycle_verbosity = "quiet")
     expect_error(
       class = "some_value_is_missing",
       summarize_weighted_percent_change(
@@ -265,6 +282,8 @@ test_that("with NAs in crucial columns errors with informative message", {
 })
 
 test_that("with bad but unused loan_size_column is error free", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   bad_unused <- rename(fake_master(), bad = "loan_size_credit_limit")
   expect_error_free(
     summarize_weighted_percent_change(bad_unused, use_credit_limit = FALSE)
@@ -277,6 +296,8 @@ test_that("with bad but unused loan_size_column is error free", {
 })
 
 test_that("with duplicated loan_size by id_loan throws error", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   expect_error(
     class = "multiple_loan_size_values_by_id_loan",
     summarize_weighted_percent_change(fake_master(loan_size_outstanding = 1:2))
@@ -292,6 +313,7 @@ test_that("with duplicated loan_size by id_loan throws error", {
 })
 
 test_that("outputs expected names", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   expect_named(
     summarize_weighted_percent_change(fake_master()),
     c("sector_abcd", "technology", "year", "weighted_percent_change")
@@ -299,6 +321,8 @@ test_that("outputs expected names", {
 })
 
 test_that("is sensitive to `use_credit_limit`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   data <- fake_master(
     name_abcd = rep(c("company a", "company b"), 2),
     year = c(2020, 2020, 2021, 2021),
@@ -315,6 +339,8 @@ test_that("is sensitive to `use_credit_limit`", {
 })
 
 test_that("with grouped data returns same groups as input", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   out <- fake_master() %>%
     group_by(.data$sector_abcd) %>%
     summarize_weighted_percent_change()
@@ -323,12 +349,14 @@ test_that("with grouped data returns same groups as input", {
 })
 
 test_that("can group by `plant_location`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   data <- fake_master(plant_location = c("a", "b"))
   out <- summarize_weighted_percent_change(data, plant_location)
   expect_equal(nrow(out), 2L)
 })
 
 test_that("outputs names that include two grouping columns", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   data <- fake_master(plant_location = c("a", "b"))
   out <- summarize_weighted_percent_change(data, plant_location, region)
 
@@ -338,6 +366,8 @@ test_that("outputs names that include two grouping columns", {
 })
 
 test_that("preserves groups passed to ...", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   data <- fake_master(plant_location = c("a", "b")) %>%
     group_by(plant_location)
 
@@ -348,6 +378,8 @@ test_that("preserves groups passed to ...", {
 })
 
 test_that("with zero initial production errors with informative message", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   data <- fake_master(production = 0)
 
   expect_error(
@@ -357,6 +389,8 @@ test_that("with zero initial production errors with informative message", {
 })
 
 test_that("with known input outputs as expected", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   data <- fake_master(
     name_abcd = rep(c("company a", "company b"), 2),
     year = c(2020, 2020, 2021, 2021),
@@ -382,6 +416,8 @@ test_that("with known input outputs as expected", {
 })
 
 test_that("with different currencies errors with informative message (#137)", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   # styler: off
   data <- fake_master(
     id_loan = c(1,2),
@@ -403,6 +439,8 @@ test_that("with different currencies errors with informative message (#137)", {
 })
 
 test_that("columns in output match what is documented in `data_dictionary`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   out <- summarize_weighted_production(data = fake_master())
 
   data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "summarize_weighted_production_output")
@@ -412,10 +450,26 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 })
 
 test_that("columns in output match what is documented in `data_dictionary`", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   out <- summarize_weighted_percent_change(data = fake_master())
 
   data_dict <- dplyr::filter(r2dii.analysis::data_dictionary, dataset == "summarize_weighted_percent_change_output")
 
   expect_setequal(names(out), data_dict[["column"]])
   expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})
+
+test_that("summarize_weighted_production throws a deprecation warning", {
+  expect_warning(
+    summarize_weighted_production(fake_master()),
+    "deprecated in r2dii.analysis 0.5.0"
+  )
+})
+
+test_that("summarize_weighted_percent_change throws a deprecation warning", {
+  expect_warning(
+    summarize_weighted_percent_change(fake_master()),
+    "deprecated in r2dii.analysis 0.5.0"
+  )
 })

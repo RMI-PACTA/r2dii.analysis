@@ -20,7 +20,8 @@ filter_and_warn_na <- function(data, column) {
 
     data <- filter(data, !is.na(.data[[column]]))
   }
-  return(data)
+
+  data
 }
 
 fill_and_warn_na <- function(data, column) {
@@ -34,7 +35,8 @@ fill_and_warn_na <- function(data, column) {
 
     data[[column]] <- tidyr::replace_na(data[[column]], 0)
   }
-  return(data)
+
+  data
 }
 
 warn_grouped <- function(data, message) {
@@ -81,6 +83,5 @@ change_to_lowercase_and_warn <- function(data, column) {
     data[[column]] <- tolower(data[[column]])
   }
 
-  return(data)
-
+  data
 }

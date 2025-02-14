@@ -62,6 +62,7 @@ Suggests:
     cli,
     covr,
     r2dii.match,
+    readr,
     rmarkdown,
     roxygen2,
     spelling,

@@ -35,22 +35,35 @@
 #' library(r2dii.match)
 #'
 #' valid_matches <- match_name(loanbook_demo, abcd_demo) %>%
-#' # WARNING: Remember to validate matches (see `?prioritize`)
+#'   # WARNING: Remember to validate matches (see `?prioritize`)
 #'   prioritize()
 #'
 #' valid_matches %>%
 #'   join_abcd_scenario(
-#'   abcd = abcd_demo,
-#'   scenario = scenario_demo_2020,
-#'   region_isos = region_isos_demo
+#'     abcd = abcd_demo,
+#'     scenario = scenario_demo_2020,
+#'     region_isos = region_isos_demo
 #'   )
 join_abcd_scenario <- function(data,
-                              abcd,
-                              scenario,
-                              region_isos = r2dii.data::region_isos,
-                              add_green_technologies = FALSE) {
+                               abcd,
+                               scenario,
+                               region_isos = r2dii.data::region_isos,
+                               add_green_technologies = FALSE) {
   lifecycle::deprecate_soft(when = "0.5.0", what = "join_abcd_scenario()")
+  join_abcd_scenario_(
+    data,
+    abcd = abcd,
+    scenario = scenario,
+    region_isos = region_isos,
+    add_green_technologies = add_green_technologies
+  )
+}
 
+join_abcd_scenario_ <- function(data,
+                                abcd,
+                                scenario,
+                                region_isos = r2dii.data::region_isos,
+                                add_green_technologies = FALSE) {
   check_portfolio_abcd_scenario(data, abcd, scenario)
 
   # Track provenance to avoid clash in the column name "source"
@@ -69,7 +82,7 @@ join_abcd_scenario <- function(data,
     mutate(
       .start_year_abcd = first(.data[["year"]]),
       .by = c("name_company", "sector", "plant_location")
-      )
+    )
 
   scenario <- scenario %>%
     arrange(.data[["year"]]) %>%
@@ -118,7 +131,7 @@ join_abcd_scenario <- function(data,
     dplyr::mutate(
       .start_year_abcd = NULL,
       .start_year_scenario = NULL
-      )
+    )
 
   out <- data %>%
     mutate(plant_location = tolower(.data$plant_location)) %>%
@@ -152,7 +165,7 @@ check_portfolio_abcd_scenario <- function(valid_matches, abcd, scenario) {
   check_crucial_names(
     scenario,
     c(scenario_columns(), "scenario_source", "region", "year")
-    )
+  )
   walk_(
     c(scenario_columns(), "scenario_source", "region", "year"),
     ~ check_no_value_is_missing(scenario, .x)
@@ -190,7 +203,7 @@ add_green_technologies_to_abcd <- function(data, scenario) {
       increasing_techs_not_in_abcd,
       by = "sector",
       relationship = "many-to-many"
-      ) %>%
+    ) %>%
     mutate(production = 0)
 
   dplyr::bind_rows(data, green_rows_to_add)

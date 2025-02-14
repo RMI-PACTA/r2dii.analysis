@@ -59,12 +59,14 @@ Imports:
     tidyselect,
     zoo
 Suggests: 
+    cli,
     covr,
     r2dii.match,
     rmarkdown,
     roxygen2,
     spelling,
     testthat (>= 3.0.0),
+    waldo,
     withr
 Config/testthat/edition: 3
 Config/Needs/website: rmi-pacta/pacta.pkgdown.rmitemplate

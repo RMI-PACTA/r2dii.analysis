@@ -1,4 +1,8 @@
 test_that("matches raw data dictionary CSVs", {
+  if (nzchar(Sys.getenv("R_CMD"))) {
+    skip("Not run in R CMD check")
+  }
+  
   paths <- list.files(test_path("../../data-raw/data_dictionary"), full.names = TRUE)
   out <- readr::read_csv(file = paths, show_col_types = FALSE)
   data_raw <- out[order(out[["dataset"]], out[["column"]]), , drop = FALSE]

@@ -1,0 +1,30 @@
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+name: testthat.yaml
+
+permissions: read-all
+
+jobs:
+  testthat:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::testthat
+
+      - name: run `testthat::test_local()`
+        run: |
+          testthat::test_local()
+        shell: Rscript {0}

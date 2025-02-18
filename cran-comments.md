@@ -1,17 +1,14 @@
 ## R CMD check results
 
-❯ checking CRAN incoming feasibility ... [4s/20s] NOTE
+❯ checking CRAN incoming feasibility ... [4s/24s] NOTE
   Maintainer: ‘Jacob Kastl <jacob.kastl@gmail.com>’
   
-  New maintainer:
-    Jacob Kastl <jacob.kastl@gmail.com>
-  Old maintainer(s):
-    Alex Axthelm <aaxthelm@rmi.org>
+  Days since last update: 5
 
 ❯ checking for future file timestamps ... NOTE
   unable to verify current time
 
-0 errors | 0 warnings | 2 notes
+0 errors ✔ | 0 warnings ✔ | 2 notes ✖
 
 ## revdepcheck results
 

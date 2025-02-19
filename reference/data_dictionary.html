@@ -12,7 +12,7 @@ the functions in this package."><meta property="og:image" content="https://rmi-p
 
     <a class="navbar-brand me-2" href="../index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,11 +38,11 @@ the functions in this package."><meta property="og:image" content="https://rmi-p
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-packages" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Packages</button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-packages"><li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.data">r2dii.data</a></li>
-    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.match">r2dii.match</a></li>
-    <li><a class="dropdown-item" href="https://rmi-pacta.github.io/r2dii.analysis">r2dii.analysis</a></li>
-    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.plot">r2dii.plot</a></li>
-    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/pacta.multi.loanbook">pacta.multi.loanbook</a></li>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-packages"><li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.data/">r2dii.data</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.match/">r2dii.match</a></li>
+    <li><a class="dropdown-item" href="https://rmi-pacta.github.io/r2dii.analysis/">r2dii.analysis</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.plot/">r2dii.plot</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/pacta.multi.loanbook/">pacta.multi.loanbook</a></li>
   </ul></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/RMI-PACTA/r2dii.analysis/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -53,7 +53,7 @@ the functions in this package."><meta property="og:image" content="https://rmi-p
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Data Dictionary</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/v0.5.0/R/data_dictionary.R" class="external-link"><code>R/data_dictionary.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/main/R/data_dictionary.R" class="external-link"><code>R/data_dictionary.R</code></a></small>
       <div class="d-none name"><code>data_dictionary.Rd</code></div>
     </div>
 
@@ -96,17 +96,17 @@ the functions in this package.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_dictionary</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 47 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    dataset                   column                          typeof   definition</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> join_abcd_scenario_output emission_factor                 double   <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> join_abcd_scenario_output id_2dii                         charact… <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> join_abcd_scenario_output id_loan                         charact… <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> join_abcd_scenario_output is_ultimate_owner               logical  <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> join_abcd_scenario_output level                           charact… <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> join_abcd_scenario_output loan_size_credit_limit          double   <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> join_abcd_scenario_output loan_size_credit_limit_currency charact… <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> join_abcd_scenario_output loan_size_outstanding           double   <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> join_abcd_scenario_output loan_size_outstanding_currency  charact… <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> join_abcd_scenario_output name_abcd                       charact… <span style="color: #BB0000;">NA</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> join_abcd_scenario_output emission_factor                 double   Company l…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> join_abcd_scenario_output id_2dii                         charact… an id use…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> join_abcd_scenario_output id_loan                         charact… Unique lo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> join_abcd_scenario_output is_ultimate_owner               logical  Flag if c…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> join_abcd_scenario_output level                           charact… the level…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> join_abcd_scenario_output loan_size_credit_limit          double   Total cre…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> join_abcd_scenario_output loan_size_credit_limit_currency charact… Currency …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> join_abcd_scenario_output loan_size_outstanding           double   Amount dr…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> join_abcd_scenario_output loan_size_outstanding_currency  charact… Currency …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> join_abcd_scenario_output name_abcd                       charact… the name …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 37 more rows</span></span>
 </code></pre></div>
     </div>

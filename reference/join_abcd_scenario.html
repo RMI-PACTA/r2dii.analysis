@@ -24,7 +24,7 @@ the analysis."><meta property="og:image" content="https://rmi-pacta.github.io/r2
 
     <a class="navbar-brand me-2" href="../index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,11 +50,11 @@ the analysis."><meta property="og:image" content="https://rmi-pacta.github.io/r2
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-packages" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Packages</button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-packages"><li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.data">r2dii.data</a></li>
-    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.match">r2dii.match</a></li>
-    <li><a class="dropdown-item" href="https://rmi-pacta.github.io/r2dii.analysis">r2dii.analysis</a></li>
-    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.plot">r2dii.plot</a></li>
-    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/pacta.multi.loanbook">pacta.multi.loanbook</a></li>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-packages"><li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.data/">r2dii.data</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.match/">r2dii.match</a></li>
+    <li><a class="dropdown-item" href="https://rmi-pacta.github.io/r2dii.analysis/">r2dii.analysis</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.plot/">r2dii.plot</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/pacta.multi.loanbook/">pacta.multi.loanbook</a></li>
   </ul></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/RMI-PACTA/r2dii.analysis/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -65,7 +65,7 @@ the analysis."><meta property="og:image" content="https://rmi-pacta.github.io/r2
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Join a data-loanbook object to the abcd and scenario</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/v0.5.0/R/join_abcd_scenario.R" class="external-link"><code>R/join_abcd_scenario.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/main/R/join_abcd_scenario.R" class="external-link"><code>R/join_abcd_scenario.R</code></a></small>
       <div class="d-none name"><code>join_abcd_scenario.Rd</code></div>
     </div>
 
@@ -139,16 +139,24 @@ scenario.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     data_dictionary</span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.match/" class="external-link">r2dii.match</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘r2dii.match’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:r2dii.data’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     data_dictionary</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:r2dii.analysis’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     data_dictionary</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rmi-pacta.github.io/r2dii.match/reference/match_name.html" class="external-link">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span><span class="co"># WARNING: Remember to validate matches (see `?prioritize`)</span></span></span>
+<span class="r-in"><span>  <span class="co"># WARNING: Remember to validate matches (see `?prioritize`)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rmi-pacta.github.io/r2dii.match/reference/prioritize.html" class="external-link">prioritize</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">valid_matches</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">join_abcd_scenario</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span></span>
-<span class="r-in"><span>  scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span></span>
-<span class="r-in"><span>  region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span></span>
+<span class="r-in"><span>    abcd <span class="op">=</span> <span class="va">abcd_demo</span>,</span></span>
+<span class="r-in"><span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span></span>
+<span class="r-in"><span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`join_abcd_scenario()` was deprecated in r2dii.analysis 0.5.0.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14,592 × 37</span></span>

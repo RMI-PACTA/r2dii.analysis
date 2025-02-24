@@ -61,7 +61,8 @@ matched <- match_name(loanbook_demo, abcd_demo) %>%
 
 ### Add Scenario Targets
 
-- Use `target_sda()` to calculate SDA targets of CO2 emissions.
+- Use `target_sda()` to calculate SDA targets of CO<sub>2</sub>
+  emissions.
 
 ``` r
 matched %>%

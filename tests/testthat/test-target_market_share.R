@@ -1,5 +1,3 @@
-library(r2dii.data)
-
 test_that("w/ bad `data`, errors with informative message", {
   expect_error(target_market_share(
     "bad",
@@ -1109,7 +1107,7 @@ test_that("input with only decreasing technologies, outputs both increasing  and
     fake_matched(),
     abcd_decreasing,
     scenario,
-    region_isos_demo
+    r2dii.data::region_isos_demo
   )
 
   expect_equal(
@@ -1406,7 +1404,7 @@ test_that("production column in scenario dataset is removed with a warning #372"
 
 test_that("region_isos only has lowercase isos #398", {
 
-  bad_region_isos <- mutate(region_isos_demo, isos = toupper(isos))
+  bad_region_isos <- mutate(r2dii.data::region_isos_demo, isos = toupper(isos))
 
   expect_warning(
     class = "column_not_in_lowercase",

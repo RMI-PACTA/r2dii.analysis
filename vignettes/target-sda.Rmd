@@ -11,11 +11,11 @@ knitr::opts_chunk$set(
 
 ## SDA Methodology
 
-The Sectoral Decarbonization Approach (SDA) is a method for setting corporate CO^2^ emissions intensity reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative ([SBTI](https://sciencebasedtargets.org/)), an international initiative on science-based target setting for companies initiated by [CDP](https://www.cdp.net/en), the [United Nations Global Compact](https://www.unglobalcompact.org/), the World Resources Institute ([WRI](https://www.wri.org/)), and the Worldwide Fund for Nature ([WWF](https://www.worldwildlife.org/)). 
+The Sectoral Decarbonization Approach (SDA) is a method for setting corporate CO~2~ emissions intensity reduction targets in line with climate science. This method was developed by the Science-Based Targets Initiative ([SBTI](https://sciencebasedtargets.org/)), an international initiative on science-based target setting for companies initiated by [CDP](https://www.cdp.net/en), the [United Nations Global Compact](https://www.unglobalcompact.org/), the World Resources Institute ([WRI](https://www.wri.org/)), and the Worldwide Fund for Nature ([WWF](https://www.worldwildlife.org/)). 
 
 In the context of PACTA, this methodology is used to calculate emission factor targets for homogenous sectors (i.e. sectors with no technology-level scenario pathways).
 
-First, the distance, $d$, between the company's CO^2^ emissions intensity per unit production (or emissions factor), $I^{Co}(t)$ at some base year,  $t_0$, and a scenario target intensity in 2050, $I^{Sc}(2050)$ is calculated. The target intensity in 2050 can be taken from any relevant climate scenario:
+First, the distance, $d$, between the company's CO~2~ emissions intensity per unit production (or emissions factor), $I^{Co}(t)$ at some base year,  $t_0$, and a scenario target intensity in 2050, $I^{Sc}(2050)$ is calculated. The target intensity in 2050 can be taken from any relevant climate scenario:
 
 $$d = I^{Co}(t_0) - I^{Sc}(2050)$$
 
@@ -31,7 +31,7 @@ $$ p(t) = \frac{I^{Sc}(t) - I^{Sc}(2050)}{I^{Sc}(t_0) - I^{Sc}(2050)}$$
 
 where $I^{in}(t)$ and $I^{Sc}(t)$ are the average market and scenario emission intensities respectively, at time $t$.
 
-This variable captures the remaining effort needed from the market to meet the target in 2050, per year. Under the SDA assumptions the CO^2^ intensity for all companies in a sector converge in 2050. Note that $p(t_0) = 1$ and $p(2050) = 0$, indicating that 100% of the expected decarbonization efforts are still to be met at the base year and 0% should be left at 2050.
+This variable captures the remaining effort needed from the market to meet the target in 2050, per year. Under the SDA assumptions the CO~2~ intensity for all companies in a sector converge in 2050. Note that $p(t_0) = 1$ and $p(2050) = 0$, indicating that 100% of the expected decarbonization efforts are still to be met at the base year and 0% should be left at 2050.
 
 The company-level emission intensity target is then defined as: 
 $$I^{Target}(t) = \left( d * p (t) * m (t) \right) + I^{Sc}(2050)$$
@@ -44,7 +44,7 @@ The SDA applied in PACTA differs slightly from the way it is applied by the SBTI
 
 Due to the lack of quantitative data on the expected market share changes throughout the entire time horizon up to 2050. $m(t)$ is set to 1 for all years. Under the SBTI method for calculating $m(t)$, there will be a higher intensity reduction target in cases where the absolute pathway of the sector exceeds the scenario target. This makes sense. However, applying this at company level is counter-intuitive:
 
-> Companies that decrease their market share would be allowed to have a higher CO^2^-Intensity than the average market actor. While, companies that are increasing their market share are forced to do more in terms of CO^2^-Intensity than ones whose market share remains constant. It follows that if a company reaches the targeted CO^2^-Intensity it would not be allowed to increase its share in the market. This is a desirable outcome.
+> Companies that decrease their market share would be allowed to have a higher CO~2~-Intensity than the average market actor. While, companies that are increasing their market share are forced to do more in terms of CO~2~-Intensity than ones whose market share remains constant. It follows that if a company reaches the targeted CO~2~-Intensity it would not be allowed to increase its share in the market. This is a desirable outcome.
 
 Under this assumption, our target calculation reduces to: 
 
@@ -88,7 +88,7 @@ matched <- match_name(loanbook, abcd) %>%
 matched
 ```
 
-* Calculate SDA targets for CO^2^ emissions intensities:
+* Calculate SDA targets for CO~2~ emissions intensities:
 
 ```{r}
 co2_intensity <- r2dii.data::co2_intensity_scenario_demo

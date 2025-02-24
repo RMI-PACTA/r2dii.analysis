@@ -1,8 +1,8 @@
-#' Add targets for \ifelse{html}{\out{CO<sup>2</sup>}}{\eqn{CO^2}{CO^2}}
+#' Add targets for \ifelse{html}{\out{CO<sub>2</sub}}{\eqn{CO_2}{CO~2~}}
 #' emissions per unit production at the portfolio level, using the SDA approach
 #'
 #' This function calculates targets of
-#' \ifelse{html}{\out{CO<sup>2</sup>}}{\eqn{CO^2}{CO^2}} emissions per unit
+#' \ifelse{html}{\out{CO<sub>2</sub}}{\eqn{CO_2}{CO~2~}} emissions per unit
 #' production at the portfolio-level, otherwise referred to as "emissions
 #' factors". It uses the [sectoral-decarbonization approach
 #' (SDA)](https://rmi-pacta.github.io/r2dii.analysis/articles/sda-target.html)

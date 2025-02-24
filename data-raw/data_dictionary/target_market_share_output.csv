@@ -6,6 +6,6 @@ target_market_share_output,region,character,the region to which the pathway is r
 target_market_share_output,scenario_source,character,the source publication from which the scenario was taken
 target_market_share_output,metric,character,"indicates if the production related values refer to the projected activities of the underlying counterparty, to the economy wide benchmark, or to allocated levels of activity based on the scenarios"
 target_market_share_output,production,double,company level production of the technology
-target_market_share_output,technology_share,double,"the share of the 'production' the given 'technology' relative to all technologies of the corresponding 'sector' for the gien combination of 'group_id', 'region', 'year' and 'metric'"
+target_market_share_output,technology_share,double,"the share of the 'production' the given 'technology' relative to all technologies of the corresponding 'sector' for the given combination of 'group_id', 'region', 'year' and 'metric'"
 target_market_share_output,scope,character,"indicates if the targets for the given technology have been calculated based on the TMSR (technology) or the SMSP (sector). High-carbon technologies that need to decrease have their targets calculated on the technology level, whereas low-carbon technologies that need to increase have them calculated on the sector level"
 target_market_share_output,percentage_of_initial_production_by_scope,double,relative change compared to the start value (by scope). Used for displaying the change in activity over time on a common scale

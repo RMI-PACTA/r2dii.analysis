@@ -1,6 +1,3 @@
-library(dplyr, warn.conflicts = FALSE)
-library(r2dii.data)
-
 test_that("with fake data outputs known value", {
   withr::local_options(lifecycle_verbosity = "quiet")
   out <- join_abcd_scenario(

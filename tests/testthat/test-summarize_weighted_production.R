@@ -1,6 +1,3 @@
-library(r2dii.data)
-library(r2dii.match)
-
 # Production --------------------------------------------------------------
 
 test_that("with bad `data` errors with informative message", {

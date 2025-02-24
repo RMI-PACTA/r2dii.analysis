@@ -1,6 +1,3 @@
-library(dplyr)
-library(r2dii.data)
-
 test_that("with fake data outputs known value", {
   out <- target_sda(
     fake_matched(
@@ -576,7 +573,7 @@ test_that("with multiple values of `country_of_domicile` outputs the expected
   out <- matched %>%
     target_sda(
       abcd,
-      co2_intensity_scenario_demo,
+      r2dii.data::co2_intensity_scenario_demo,
       region_isos = region_isos_stable
     ) %>%
     split(.$emission_factor_metric)
@@ -794,7 +791,7 @@ test_that("outputs empty tibble for sectors in `scenario` and `abcd` but not
 
 test_that("region_isos only has lowercase isos #398", {
 
-  bad_region_isos <- mutate(region_isos_demo, isos = toupper(isos))
+  bad_region_isos <- mutate(r2dii.data::region_isos_demo, isos = toupper(isos))
 
   expect_warning(
     class = "column_not_in_lowercase",

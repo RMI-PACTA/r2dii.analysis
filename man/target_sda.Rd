@@ -2,7 +2,7 @@
 % Please edit documentation in R/target_sda.R
 \name{target_sda}
 \alias{target_sda}
-\title{Add targets for \ifelse{html}{\out{CO<sub>2</sub}}{\eqn{CO_2}{CO~2~}}
+\title{Add targets for \ifelse{html}{\out{CO<sub>2</sub>}}{\eqn{CO_2}{CO~2~}}
 emissions per unit production at the portfolio level, using the SDA approach}
 \usage{
 target_sda(
@@ -40,7 +40,7 @@ the column \code{name_abcd}.
 }
 \description{
 This function calculates targets of
-\ifelse{html}{\out{CO<sub>2</sub}}{\eqn{CO_2}{CO~2~}} emissions per unit
+\ifelse{html}{\out{CO<sub>2</sub>}}{\eqn{CO_2}{CO~2~}} emissions per unit
 production at the portfolio-level, otherwise referred to as "emissions
 factors". It uses the \href{https://rmi-pacta.github.io/r2dii.analysis/articles/sda-target.html}{sectoral-decarbonization approach (SDA)}
 to calculate these targets.

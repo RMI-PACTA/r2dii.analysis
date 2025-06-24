@@ -5,7 +5,7 @@
 #' \ifelse{html}{\out{CO<sub>2</sub>}}{\eqn{CO_2}{CO~2~}} emissions per unit
 #' production at the portfolio-level, otherwise referred to as "emissions
 #' factors". It uses the [sectoral-decarbonization approach
-#' (SDA)](https://rmi-pacta.github.io/r2dii.analysis/articles/sda-target.html)
+#' (SDA)](https://rmi-pacta.github.io/r2dii.analysis/articles/target-sda.html)
 #' to calculate these targets.
 #'
 #' @template ignores-existing-groups

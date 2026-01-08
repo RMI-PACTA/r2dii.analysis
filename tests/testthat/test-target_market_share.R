@@ -1579,7 +1579,7 @@ test_that("columns in output match what is documented in `data_dictionary`", {
   expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
 })
 
-test_that("target_market_share() calculates target_* values for missing low carbon technologies for all companies (#495)", {
+test_that("target_market_share() calculates target_* values for missing low carbon technologies for all companies (#557)", {
   match_result <- fake_matched(id_loan = c("L162", "L163"), name_abcd = c("company a", "company b"))
 
   abcd <- fake_abcd(

@@ -184,10 +184,20 @@ add_green_technologies_to_abcd <- function(data, scenario) {
     unique() %>%
     inner_join(increasing_techs, by = c("sector", "technology"))
 
-  increasing_techs_not_in_abcd <- dplyr::anti_join(
-    increasing_techs_in_scenario,
+  companies_per_sector <- data %>%
+    distinct(.data$name_company, .data$sector)
+
+  increasing_techs_in_scenario_per_company <- increasing_techs_in_scenario %>%
+    inner_join(
+      companies_per_sector,
+      by = "sector",
+      relationship = "many-to-many"
+    )
+
+  increasing_techs_not_in_abcd_by_company <- dplyr::anti_join(
+    increasing_techs_in_scenario_per_company,
     data,
-    by = c("sector", "technology")
+    by = c("sector", "technology", "name_company")
   )
 
   green_rows_to_add <- data %>%
@@ -199,9 +209,9 @@ add_green_technologies_to_abcd <- function(data, scenario) {
       .data$is_ultimate_owner
     ) %>%
     summarize() %>%
-    left_join(
-      increasing_techs_not_in_abcd,
-      by = "sector",
+    inner_join(
+      increasing_techs_not_in_abcd_by_company,
+      by = c("name_company", "sector"),
       relationship = "many-to-many"
     ) %>%
     mutate(production = 0)

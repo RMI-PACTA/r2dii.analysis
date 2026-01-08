@@ -1578,3 +1578,56 @@ test_that("columns in output match what is documented in `data_dictionary`", {
   expect_setequal(names(out), data_dict[["column"]])
   expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
 })
+
+test_that("target_market_share() calculates target_* values for missing low carbon technologies for all companies (#495)", {
+  match_result <- fake_matched(id_loan = c("L162", "L163"), name_abcd = c("company a", "company b"))
+
+  abcd <- fake_abcd(
+    name_company = c(rep("company a", 8), rep("company b", 6)),
+    sector = c(rep("automotive", 2), rep("hdv", 6), rep("automotive", 6)),
+    technology = c(rep("ice", 4), rep("hybrid", 2), rep("electric", 2), rep("ice", 2), rep("hybrid", 2), rep("electric", 2)),
+    year = rep(c(2020, 2025), 7)
+  )
+
+  scen <- fake_scenario(
+    sector = "automotive",
+    technology = c(rep("ice", 2), rep("hybrid", 2), rep("electric", 2)),
+    year = rep(c(2020, 2025), 3),
+    tmsr = c(1, 0.5, 1, 1.5, 1, 1.5),
+    smsp = c(0, -0.08, 0, 0.1, 0, 0.1)
+  )
+
+  scen_technologies <- scen %>%
+    dplyr::filter(.data$sector == "automotive") %>%
+    dplyr::arrange(.data$technology) %>%
+    dplyr::distinct(.data$technology) %>%
+    dplyr::pull()
+
+  results_tms_comp <- target_market_share(
+    match_result,
+    abcd,
+    scen,
+    region_isos = region_isos_stable,
+    by_company = TRUE,
+    weight_production = FALSE
+  )
+
+  results_tms_comp_targets <- results_tms_comp %>%
+    dplyr::filter(
+      .data$name_abcd %in% c("company a", "company b"),
+      .data$sector == "automotive",
+      grepl("target_", .data$metric)
+    ) %>%
+    dplyr::distinct(.data$name_abcd, .data$technology) %>%
+    dplyr::mutate(
+      n_technology = dplyr::n_distinct(.data$technology),
+      .by = name_abcd
+    ) %>%
+    dplyr::distinct(.data$name_abcd, .data$n_technology) %>%
+    dplyr::pull(.data$n_technology)
+
+  expect_equal(
+    results_tms_comp_targets,
+    rep(length(scen_technologies), 2)
+  )
+})

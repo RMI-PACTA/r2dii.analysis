@@ -1,6 +1,6 @@
-# r2dii.analysis 0.5.3
+# r2dii.analysis (development version)
 
--   target_market_share() now correctly adds missing low carbon technologies when only some companies are missing these technologies (#557).
+-   `target_market_share()` now correctly adds missing low carbon technologies when only some companies are missing these technologies (#557).
 -   updated link to current SDA article in docs (#550).
 
 # r2dii.analysis 0.5.2

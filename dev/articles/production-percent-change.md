@@ -50,13 +50,13 @@ master <- loanbook_demo %>%
     add_green_technologies = FALSE
   )
 #> Warning: `join_abcd_scenario()` was deprecated in r2dii.analysis 0.5.0.
-#> This warning is displayed once every 8 hours.
+#> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 
 summarize_weighted_production(master)
 #> Warning: `summarize_weighted_production()` was deprecated in r2dii.analysis 0.5.0.
-#> This warning is displayed once every 8 hours.
+#> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 #> # A tibble: 168 × 5
@@ -106,7 +106,7 @@ To calculate the weighted percent change:
 # using the master dataset defined in the previous chunk:
 summarize_weighted_percent_change(master)
 #> Warning: `summarize_weighted_percent_change()` was deprecated in r2dii.analysis 0.5.0.
-#> This warning is displayed once every 8 hours.
+#> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 #> # A tibble: 168 × 4

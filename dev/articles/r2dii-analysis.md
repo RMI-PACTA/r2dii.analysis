@@ -55,7 +55,7 @@ library(tidyverse)
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.6
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
 #> ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
-#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
 #> ✔ purrr     1.2.0     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
@@ -129,7 +129,7 @@ market_share_targets_portfolio <- matched %>%
   )
 
 market_share_targets_portfolio
-#> # A tibble: 1,076 × 10
+#> # A tibble: 1,210 × 10
 #>    sector     technology  year region scenario_source metric     production
 #>    <chr>      <chr>      <int> <chr>  <chr>           <chr>           <dbl>
 #>  1 automotive electric    2020 global demo_2020       projected     145649.
@@ -137,12 +137,12 @@ market_share_targets_portfolio
 #>  3 automotive electric    2020 global demo_2020       target_sds    145649.
 #>  4 automotive electric    2020 global demo_2020       target_sps    145649.
 #>  5 automotive electric    2021 global demo_2020       projected     147480.
-#>  6 automotive electric    2021 global demo_2020       target_cps    146915.
-#>  7 automotive electric    2021 global demo_2020       target_sds    153332.
-#>  8 automotive electric    2021 global demo_2020       target_sps    147258.
+#>  6 automotive electric    2021 global demo_2020       target_cps    148314.
+#>  7 automotive electric    2021 global demo_2020       target_sds    161823.
+#>  8 automotive electric    2021 global demo_2020       target_sps    149035.
 #>  9 automotive electric    2022 global demo_2020       projected     149310.
-#> 10 automotive electric    2022 global demo_2020       target_cps    148155.
-#> # ℹ 1,066 more rows
+#> 10 automotive electric    2022 global demo_2020       target_cps    150923.
+#> # ℹ 1,200 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 ```
@@ -164,20 +164,20 @@ market_share_targets_company <- matched %>%
 #> arguments to `FALSE`?
 
 market_share_targets_company
-#> # A tibble: 14,505 × 11
+#> # A tibble: 37,349 × 11
 #>    sector    technology  year region scenario_source name_abcd metric production
 #>    <chr>     <chr>      <int> <chr>  <chr>           <chr>     <chr>       <dbl>
-#>  1 automoti… electric    2020 global demo_2020       Bernardi… proje…     17951.
-#>  2 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.
-#>  3 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.
-#>  4 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.
-#>  5 automoti… electric    2020 global demo_2020       Christia… proje…     11471.
-#>  6 automoti… electric    2020 global demo_2020       Christia… targe…     11471.
-#>  7 automoti… electric    2020 global demo_2020       Christia… targe…     11471.
-#>  8 automoti… electric    2020 global demo_2020       Christia… targe…     11471.
-#>  9 automoti… electric    2020 global demo_2020       Donati, … proje…      5611.
-#> 10 automoti… electric    2020 global demo_2020       Donati, … targe…      5611.
-#> # ℹ 14,495 more rows
+#>  1 automoti… electric    2020 global demo_2020       Bahr      proje…          0
+#>  2 automoti… electric    2020 global demo_2020       Bahr      targe…          0
+#>  3 automoti… electric    2020 global demo_2020       Bahr      targe…          0
+#>  4 automoti… electric    2020 global demo_2020       Bahr      targe…          0
+#>  5 automoti… electric    2020 global demo_2020       Beier, B… proje…          0
+#>  6 automoti… electric    2020 global demo_2020       Beier, B… targe…          0
+#>  7 automoti… electric    2020 global demo_2020       Beier, B… targe…          0
+#>  8 automoti… electric    2020 global demo_2020       Beier, B… targe…          0
+#>  9 automoti… electric    2020 global demo_2020       Bellini,… proje…          0
+#> 10 automoti… electric    2020 global demo_2020       Bellini,… targe…          0
+#> # ℹ 37,339 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 ```
@@ -248,7 +248,7 @@ data <- filter(
 qplot_techmix(data)
 #> The `technology_share` values are plotted for extreme years.
 #> Do you want to plot different years? E.g. filter . with:`subset(., year %in% c(2020, 2030))`.
-#> Warning: Removed 3 rows containing missing values or values outside the scale range
+#> Warning: Removed 2 rows containing missing values or values outside the scale range
 #> (`geom_bar()`).
 ```
 

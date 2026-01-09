@@ -101,20 +101,20 @@ matched %>%
     scenario = scenario_demo_2020,
     region_isos = region_isos_demo
     )
-#> # A tibble: 373 × 10
+#> # A tibble: 441 × 10
 #>    sector technology  year region scenario_source metric     production
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>           <dbl>
-#>  1 power  hydrocap    2020 global demo_2020       projected      16990.
-#>  2 power  hydrocap    2020 global demo_2020       target_cps     16990.
-#>  3 power  hydrocap    2020 global demo_2020       target_sds     16990.
-#>  4 power  hydrocap    2020 global demo_2020       target_sps     16990.
-#>  5 power  hydrocap    2021 global demo_2020       projected      16743.
-#>  6 power  hydrocap    2021 global demo_2020       target_cps     17004.
-#>  7 power  hydrocap    2021 global demo_2020       target_sds     17012.
-#>  8 power  hydrocap    2021 global demo_2020       target_sps     17005.
-#>  9 power  hydrocap    2022 global demo_2020       projected      16497.
-#> 10 power  hydrocap    2022 global demo_2020       target_cps     17018.
-#> # ℹ 363 more rows
+#>  1 power  hydrocap    2020 europe demo_2020       projected         0  
+#>  2 power  hydrocap    2020 europe demo_2020       target_cps        0  
+#>  3 power  hydrocap    2020 europe demo_2020       target_sds        0  
+#>  4 power  hydrocap    2020 europe demo_2020       target_sps        0  
+#>  5 power  hydrocap    2020 global demo_2020       projected     16990. 
+#>  6 power  hydrocap    2020 global demo_2020       target_cps    16990. 
+#>  7 power  hydrocap    2020 global demo_2020       target_sds    16990. 
+#>  8 power  hydrocap    2020 global demo_2020       target_sps    16990. 
+#>  9 power  hydrocap    2021 europe demo_2020       projected         0  
+#> 10 power  hydrocap    2021 europe demo_2020       target_cps       17.4
+#> # ℹ 431 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 
@@ -130,20 +130,20 @@ matched %>%
 #> This will result in company-level results, weighted by the portfolio
 #> loan size, which is rarely useful. Did you mean to set one of these
 #> arguments to `FALSE`?
-#> # A tibble: 1,408 × 11
+#> # A tibble: 2,097 × 11
 #>    sector technology  year region scenario_source name_abcd    metric production
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>        <chr>       <dbl>
-#>  1 power  hydrocap    2020 global demo_2020       Giordano, G… proje…     16990.
-#>  2 power  hydrocap    2020 global demo_2020       Giordano, G… targe…     16990.
-#>  3 power  hydrocap    2020 global demo_2020       Giordano, G… targe…     16990.
-#>  4 power  hydrocap    2020 global demo_2020       Giordano, G… targe…     16990.
-#>  5 power  hydrocap    2021 global demo_2020       Giordano, G… proje…     16743.
-#>  6 power  hydrocap    2021 global demo_2020       Giordano, G… targe…     17004.
-#>  7 power  hydrocap    2021 global demo_2020       Giordano, G… targe…     17012.
-#>  8 power  hydrocap    2021 global demo_2020       Giordano, G… targe…     17005.
-#>  9 power  hydrocap    2022 global demo_2020       Giordano, G… proje…     16497.
-#> 10 power  hydrocap    2022 global demo_2020       Giordano, G… targe…     17018.
-#> # ℹ 1,398 more rows
+#>  1 power  hydrocap    2020 europe demo_2020       Boyer, Boye… proje…          0
+#>  2 power  hydrocap    2020 europe demo_2020       Boyer, Boye… targe…          0
+#>  3 power  hydrocap    2020 europe demo_2020       Boyer, Boye… targe…          0
+#>  4 power  hydrocap    2020 europe demo_2020       Boyer, Boye… targe…          0
+#>  5 power  hydrocap    2020 europe demo_2020       Jahn         proje…          0
+#>  6 power  hydrocap    2020 europe demo_2020       Jahn         targe…          0
+#>  7 power  hydrocap    2020 europe demo_2020       Jahn         targe…          0
+#>  8 power  hydrocap    2020 europe demo_2020       Jahn         targe…          0
+#>  9 power  hydrocap    2020 global demo_2020       Boyer, Boye… proje…          0
+#> 10 power  hydrocap    2020 global demo_2020       Boyer, Boye… targe…          0
+#> # ℹ 2,087 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 
@@ -155,20 +155,20 @@ matched %>%
     # Calculate unweighted targets
     weight_production = FALSE
     )
-#> # A tibble: 373 × 10
+#> # A tibble: 441 × 10
 #>    sector technology  year region scenario_source metric     production
 #>    <chr>  <chr>      <int> <chr>  <chr>           <chr>           <dbl>
-#>  1 power  hydrocap    2020 global demo_2020       projected     121032.
-#>  2 power  hydrocap    2020 global demo_2020       target_cps    121032.
-#>  3 power  hydrocap    2020 global demo_2020       target_sds    121032.
-#>  4 power  hydrocap    2020 global demo_2020       target_sps    121032.
-#>  5 power  hydrocap    2021 global demo_2020       projected     119274.
-#>  6 power  hydrocap    2021 global demo_2020       target_cps    121129.
-#>  7 power  hydrocap    2021 global demo_2020       target_sds    121187.
-#>  8 power  hydrocap    2021 global demo_2020       target_sps    121139.
-#>  9 power  hydrocap    2022 global demo_2020       projected     117515.
-#> 10 power  hydrocap    2022 global demo_2020       target_cps    121227.
-#> # ℹ 363 more rows
+#>  1 power  hydrocap    2020 europe demo_2020       projected          0 
+#>  2 power  hydrocap    2020 europe demo_2020       target_cps         0 
+#>  3 power  hydrocap    2020 europe demo_2020       target_sds         0 
+#>  4 power  hydrocap    2020 europe demo_2020       target_sps         0 
+#>  5 power  hydrocap    2020 global demo_2020       projected     121032.
+#>  6 power  hydrocap    2020 global demo_2020       target_cps    121032.
+#>  7 power  hydrocap    2020 global demo_2020       target_sds    121032.
+#>  8 power  hydrocap    2020 global demo_2020       target_sps    121032.
+#>  9 power  hydrocap    2021 europe demo_2020       projected          0 
+#> 10 power  hydrocap    2021 europe demo_2020       target_cps       136.
+#> # ℹ 431 more rows
 #> # ℹ 3 more variables: technology_share <dbl>, scope <chr>,
 #> #   percentage_of_initial_production_by_scope <dbl>
 ```

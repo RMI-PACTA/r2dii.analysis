@@ -14,7 +14,7 @@ production forecast."><meta property="og:image" content="https://rmi-pacta.githu
 
     <a class="navbar-brand me-2" href="../index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@ production forecast."><meta property="og:image" content="https://rmi-pacta.githu
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add targets for production, using the market share approach</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/v0.5.2/R/target_market_share.R" class="external-link"><code>R/target_market_share.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.analysis/blob/main/R/target_market_share.R" class="external-link"><code>R/target_market_share.R</code></a></small>
       <div class="d-none name"><code>target_market_share.Rd</code></div>
     </div>
 
@@ -138,7 +138,7 @@ output the unweighted production values.</p></dd>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other functions to calculate scenario targets:
-<code><a href="target_sda.html">target_sda</a>()</code></p></div>
+<code><a href="target_sda.html">target_sda()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -161,20 +161,20 @@ output the unweighted production values.</p></dd>
 <span class="r-in"><span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span></span>
 <span class="r-in"><span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 373 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 441 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sector technology  year region scenario_source metric     production</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected      <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_cps     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sds     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sps     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       projected      <span style="text-decoration: underline;">16</span>743.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_cps     <span style="text-decoration: underline;">17</span>004.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sds     <span style="text-decoration: underline;">17</span>012.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sps     <span style="text-decoration: underline;">17</span>005.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> power  hydrocap    <span style="text-decoration: underline;">2</span>022 global demo_2020       projected      <span style="text-decoration: underline;">16</span>497.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> power  hydrocap    <span style="text-decoration: underline;">2</span>022 global demo_2020       target_cps     <span style="text-decoration: underline;">17</span>018.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 363 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       projected         0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       target_cps        0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       target_sds        0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       target_sps        0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected     <span style="text-decoration: underline;">16</span>990. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_cps    <span style="text-decoration: underline;">16</span>990. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sds    <span style="text-decoration: underline;">16</span>990. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sps    <span style="text-decoration: underline;">16</span>990. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 europe demo_2020       projected         0  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 europe demo_2020       target_cps       17.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 431 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
@@ -190,20 +190,20 @@ output the unweighted production values.</p></dd>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> This will result in company-level results, weighted by the portfolio</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> loan size, which is rarely useful. Did you mean to set one of these</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> arguments to `FALSE`?</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,408 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,097 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sector technology  year region scenario_source name_abcd    metric production</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       Giordano, G… proje…     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">16</span>990.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       Giordano, G… proje…     <span style="text-decoration: underline;">16</span>743.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">17</span>004.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">17</span>012.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">17</span>005.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> power  hydrocap    <span style="text-decoration: underline;">2</span>022 global demo_2020       Giordano, G… proje…     <span style="text-decoration: underline;">16</span>497.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> power  hydrocap    <span style="text-decoration: underline;">2</span>022 global demo_2020       Giordano, G… targe…     <span style="text-decoration: underline;">17</span>018.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,398 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Boyer, Boye… proje…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Boyer, Boye… targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Boyer, Boye… targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Boyer, Boye… targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Jahn         proje…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Jahn         targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Jahn         targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       Jahn         targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       Boyer, Boye… proje…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       Boyer, Boye… targe…          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2,087 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
@@ -215,20 +215,20 @@ output the unweighted production values.</p></dd>
 <span class="r-in"><span>    <span class="co"># Calculate unweighted targets</span></span></span>
 <span class="r-in"><span>    weight_production <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 373 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 441 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sector technology  year region scenario_source metric     production</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected     <span style="text-decoration: underline;">121</span>032.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_cps    <span style="text-decoration: underline;">121</span>032.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sds    <span style="text-decoration: underline;">121</span>032.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sps    <span style="text-decoration: underline;">121</span>032.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       projected     <span style="text-decoration: underline;">119</span>274.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_cps    <span style="text-decoration: underline;">121</span>129.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sds    <span style="text-decoration: underline;">121</span>187.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 global demo_2020       target_sps    <span style="text-decoration: underline;">121</span>139.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> power  hydrocap    <span style="text-decoration: underline;">2</span>022 global demo_2020       projected     <span style="text-decoration: underline;">117</span>515.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> power  hydrocap    <span style="text-decoration: underline;">2</span>022 global demo_2020       target_cps    <span style="text-decoration: underline;">121</span>227.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 363 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       projected          0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       target_cps         0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       target_sds         0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 europe demo_2020       target_sps         0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       projected     <span style="text-decoration: underline;">121</span>032.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_cps    <span style="text-decoration: underline;">121</span>032.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sds    <span style="text-decoration: underline;">121</span>032.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> power  hydrocap    <span style="text-decoration: underline;">2</span>020 global demo_2020       target_sps    <span style="text-decoration: underline;">121</span>032.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 europe demo_2020       projected          0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> power  hydrocap    <span style="text-decoration: underline;">2</span>021 europe demo_2020       target_cps       136.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 431 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span>
 </code></pre></div>

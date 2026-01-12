@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">r2dii.analysis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +90,7 @@
 </div>
 <!-- badges: start -->
 
-<p>These tools help you to assess if a financial portfolio aligns with climate goals. They summarize key metrics attributed to the portfolio (e.g. production, emission factors), and calculate targets based on climate scenarios. They implement in R the last step of the free software ‘PACTA’ (Paris Agreement Capital Transition Assessment; <a href="https://www.transitionmonitor.com/" class="external-link uri">https://www.transitionmonitor.com/</a>). Financial institutions use ‘PACTA’ to study how their capital allocation impacts the climate.</p>
+<p>These tools help you to assess if a financial portfolio aligns with climate goals. They summarize key metrics attributed to the portfolio (e.g. production, emission factors), and calculate targets based on climate scenarios. They implement in R the last step of the free software ‘PACTA’ (Paris Agreement Capital Transition Assessment). Financial institutions use ‘PACTA’ to study how their capital allocation impacts the climate.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -157,7 +157,7 @@
 <span>    scenario <span class="op">=</span> <span class="va">scenario_demo_2020</span>,</span>
 <span>    region_isos <span class="op">=</span> <span class="va">region_isos_demo</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1,076 × 10</span></span>
+<span><span class="co">#&gt; # A tibble: 1,210 × 10</span></span>
 <span><span class="co">#&gt;    sector     technology  year region scenario_source metric     production</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt;  1 automotive electric    2020 global demo_2020       projected     145649.</span></span>
@@ -165,12 +165,12 @@
 <span><span class="co">#&gt;  3 automotive electric    2020 global demo_2020       target_sds    145649.</span></span>
 <span><span class="co">#&gt;  4 automotive electric    2020 global demo_2020       target_sps    145649.</span></span>
 <span><span class="co">#&gt;  5 automotive electric    2021 global demo_2020       projected     147480.</span></span>
-<span><span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps    146915.</span></span>
-<span><span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds    153332.</span></span>
-<span><span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    147258.</span></span>
+<span><span class="co">#&gt;  6 automotive electric    2021 global demo_2020       target_cps    148314.</span></span>
+<span><span class="co">#&gt;  7 automotive electric    2021 global demo_2020       target_sds    161823.</span></span>
+<span><span class="co">#&gt;  8 automotive electric    2021 global demo_2020       target_sps    149035.</span></span>
 <span><span class="co">#&gt;  9 automotive electric    2022 global demo_2020       projected     149310.</span></span>
-<span><span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    148155.</span></span>
-<span><span class="co">#&gt; # ℹ 1,066 more rows</span></span>
+<span><span class="co">#&gt; 10 automotive electric    2022 global demo_2020       target_cps    150923.</span></span>
+<span><span class="co">#&gt; # ℹ 1,200 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
 <ul>
@@ -188,20 +188,20 @@
 <span><span class="co">#&gt; This will result in company-level results, weighted by the portfolio</span></span>
 <span><span class="co">#&gt; loan size, which is rarely useful. Did you mean to set one of these</span></span>
 <span><span class="co">#&gt; arguments to `FALSE`?</span></span>
-<span><span class="co">#&gt; # A tibble: 14,505 × 11</span></span>
+<span><span class="co">#&gt; # A tibble: 37,349 × 11</span></span>
 <span><span class="co">#&gt;    sector    technology  year region scenario_source name_abcd metric production</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 automoti… electric    2020 global demo_2020       Bernardi… proje…     17951.</span></span>
-<span><span class="co">#&gt;  2 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.</span></span>
-<span><span class="co">#&gt;  3 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.</span></span>
-<span><span class="co">#&gt;  4 automoti… electric    2020 global demo_2020       Bernardi… targe…     17951.</span></span>
-<span><span class="co">#&gt;  5 automoti… electric    2020 global demo_2020       Christia… proje…     11471.</span></span>
-<span><span class="co">#&gt;  6 automoti… electric    2020 global demo_2020       Christia… targe…     11471.</span></span>
-<span><span class="co">#&gt;  7 automoti… electric    2020 global demo_2020       Christia… targe…     11471.</span></span>
-<span><span class="co">#&gt;  8 automoti… electric    2020 global demo_2020       Christia… targe…     11471.</span></span>
-<span><span class="co">#&gt;  9 automoti… electric    2020 global demo_2020       Donati, … proje…      5611.</span></span>
-<span><span class="co">#&gt; 10 automoti… electric    2020 global demo_2020       Donati, … targe…      5611.</span></span>
-<span><span class="co">#&gt; # ℹ 14,495 more rows</span></span>
+<span><span class="co">#&gt;  1 automoti… electric    2020 global demo_2020       Bahr      proje…          0</span></span>
+<span><span class="co">#&gt;  2 automoti… electric    2020 global demo_2020       Bahr      targe…          0</span></span>
+<span><span class="co">#&gt;  3 automoti… electric    2020 global demo_2020       Bahr      targe…          0</span></span>
+<span><span class="co">#&gt;  4 automoti… electric    2020 global demo_2020       Bahr      targe…          0</span></span>
+<span><span class="co">#&gt;  5 automoti… electric    2020 global demo_2020       Beier, B… proje…          0</span></span>
+<span><span class="co">#&gt;  6 automoti… electric    2020 global demo_2020       Beier, B… targe…          0</span></span>
+<span><span class="co">#&gt;  7 automoti… electric    2020 global demo_2020       Beier, B… targe…          0</span></span>
+<span><span class="co">#&gt;  8 automoti… electric    2020 global demo_2020       Beier, B… targe…          0</span></span>
+<span><span class="co">#&gt;  9 automoti… electric    2020 global demo_2020       Bellini,… proje…          0</span></span>
+<span><span class="co">#&gt; 10 automoti… electric    2020 global demo_2020       Bellini,… targe…          0</span></span>
+<span><span class="co">#&gt; # ℹ 37,339 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: technology_share &lt;dbl&gt;, scope &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   percentage_of_initial_production_by_scope &lt;dbl&gt;</span></span></code></pre></div>
 <p><a href="https://rmi-pacta.github.io/r2dii.analysis/articles/r2dii-analysis.html">Get started</a>.</p>

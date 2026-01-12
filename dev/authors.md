@@ -29,13 +29,13 @@ Source:
 
 Kastl J, Axthelm A, Hoffart J, Lepore M, Hogedorn K, Halterman N (2026).
 *r2dii.analysis: Measure Climate Scenario Alignment of Corporate Loans*.
-R package version 0.5.2.9000,
+R package version 0.5.3.9000,
 <https://rmi-pacta.github.io/r2dii.analysis/>.
 
     @Manual{,
       title = {r2dii.analysis: Measure Climate Scenario Alignment of Corporate Loans},
       author = {Jacob Kastl and Alex Axthelm and Jackson Hoffart and Mauro Lepore and Klaus Hogedorn and Nicky Halterman},
       year = {2026},
-      note = {R package version 0.5.2.9000},
+      note = {R package version 0.5.3.9000},
       url = {https://rmi-pacta.github.io/r2dii.analysis/},
     }

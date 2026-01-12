@@ -2,6 +2,10 @@
 
 ## r2dii.analysis (development version)
 
+## r2dii.analysis 0.5.3
+
+CRAN release: 2026-01-12
+
 - [`target_market_share()`](https://rmi-pacta.github.io/r2dii.analysis/dev/reference/target_market_share.md)
   now correctly adds missing low carbon technologies when only some
   companies are missing these technologies

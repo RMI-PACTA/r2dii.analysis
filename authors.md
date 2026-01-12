@@ -25,7 +25,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/RMI-PACTA/r2dii.analysis/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/RMI-PACTA/r2dii.analysis/blob/v0.5.3/DESCRIPTION)
 
 Kastl J, Axthelm A, Hoffart J, Lepore M, Hogedorn K, Halterman N (2026).
 *r2dii.analysis: Measure Climate Scenario Alignment of Corporate Loans*.
